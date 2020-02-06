@@ -1,6 +1,4 @@
-def func(x):
-    return x + 1
-
+from app.detectron.start import start
 
 def test_answer():
-    assert func(3) == 5
+    start(True)
