@@ -3,3 +3,5 @@ bin
 pretrained
 cvreconstruction
 finalpdf
+
+*__pycache__*
