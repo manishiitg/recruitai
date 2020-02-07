@@ -75,7 +75,7 @@ def image_smoothening(img):
 
 
 def remove_noise_and_smooth(file_name):
-    logger.info('Removing noise and smoothening image')
+    logger.debug('Removing noise and smoothening image')
     img = cv2.imread(file_name, -1)
 
     # make mask of where the transparent bits are

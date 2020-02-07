@@ -4,6 +4,8 @@ import shutil
 import torch
 
 from app.config import IN_COLAB
+from app.config import BASE_PATH
+
 from app import mongo
 
 import logging
@@ -21,6 +23,9 @@ from detectron2.engine import DefaultPredictor
 setup_logger()
 import json
 from pdfminer.pdfpage import PDFTextExtractionNotAllowed
+
+from pdfminer.high_level import extract_text
+
 
 
 # You may need to restart your runtime prior to this, to let your installation take effect
@@ -46,7 +51,7 @@ else:
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-baseDirectory = os.path.dirname(os.path.abspath(__file__))
+baseDirectory = BASE_PATH + "/detectron"
 
 from app.detectron.pdf import covertPDFToImage
 from app.detectron.predict import savePredictionPartsToFile
@@ -71,9 +76,10 @@ def start(isTesting = False):
   basePath = baseDirectory + "/../../cvreconstruction"
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
-  startProcessing(files , inputDir, basePath, predictor, cfg)
+  compressedStructuredContent = startProcessing(isTesting, files , inputDir, basePath, predictor, cfg)
+  return compressedStructuredContent
 
-def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
+def startProcessing(isTesting, filestoparse, inputDir, basePath , predictor, cfg):
   for fileIdx in tqdm(range(len(filestoparse))):
     logger.info(filestoparse[fileIdx])
     if filestoparse[fileIdx]["id"] != -1:
@@ -156,7 +162,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
       # logger.debug(content)
       # pdfminer.high_level.extract_text(pdf_file, password='', page_numbers=None, maxpages=0, caching=True, codec='utf-8', laparams=None)
       try:
-        content = extractTextFromPDF(cv, cvpage)
+        content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
+        # content = textract.process(cv , page_numbers=[cvpage-1], maxpages=1)
+        content = str(content)
       except PDFTextExtractionNotAllowed as e:
         logger.critical(e)
         if filestoparse[fileIdx]["id"] != -1:
@@ -170,13 +178,14 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
         logger.critical("skipping due to error in cv extration %s " , filestoparse[fileIdx]["id"])
         continue
 
-      logger.debug(content)
+      logger.info(content)
 
       ################################
       
       cleanLineData = cleanContent(content , cvpage , jsonOutput)
-      if not cleanLineData:
-        continue
+      # if not cleanLineData:
+      #   continue
+      #   pass
 
       ########################################
 
@@ -184,7 +193,10 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
 
       ########################################
     
-      compressedStructuredContent, newstructuredContent = finalCompressedContent(cleanLineData, jsonOutput , seperateTableLineMatchedIndexes, logger)
+      compressedStructuredContent, newstructuredContent = finalCompressedContent(cleanLineData, jsonOutput , seperateTableLineMatchedIndexes, logger, predictions)
+
+      logger.debug(compressedStructuredContent)
+      logger.info("length of compressed content %s" , len(compressedStructuredContent))
 
       if filestoparse[fileIdx]["id"] != -1:
         mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
@@ -197,6 +209,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
         }
       )
 
+    return compressedStructuredContent
+
 
 def cleanContent(content , cvpage , jsonOutput):
   
@@ -207,7 +221,8 @@ def cleanContent(content , cvpage , jsonOutput):
 
   cleanLineData = []
   for line in lineData:
-    line = re.sub('\s+', ' ', line).strip()
+    line = re.sub('\s+', ' ', line).strip() # this is giving warning on server
+    # line = ' '.join(line.split())
     if len(line) > 0:
       words = line.split(" ")
       newwords = []
@@ -221,19 +236,21 @@ def cleanContent(content , cvpage , jsonOutput):
         line = " ".join(newwords)
         cleanLineData.append(line)
 
-  logger.debug("length of clean data %s", len(cleanLineData))
+  logger.info("length of clean data %s", len(cleanLineData))
   
-  if len(cleanLineData) < 3 and cvpage == 1:
-    logger.debug("very very few lines??? %s", len(cleanLineData))
+  if len(cleanLineData) < 3:
+    if cvpage > 1:
+      logger.critical("this might be empty pages. we should stop here...")
+      # right now not doing this.... its risky and not neeed
+    # else:
+    logger.critical("very very few lines??? %s", len(cleanLineData))
     logger.debug("this means unable to read from cv properly do to rare issues. in that case need to take data from image itself.")
     cleanLineData = []
     for row in jsonOutput:
       cleanLineData.append(row["correctLine"])
       logger.debug(row["correctLine"])
-
-  else:
-    logger.debug("this might be empty pages. we should stop here...")
-    return False
+  
+    
 
 
   

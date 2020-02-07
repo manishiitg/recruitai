@@ -1,7 +1,7 @@
 from pdf2image import convert_from_path
 from pathlib import Path
 import os
-from pdfminer.high_level import extract_text
+# from pdfminer.high_level import extract_text
 
 
 def covertPDFToImage(cv, output_dir, cvfilename, logger):

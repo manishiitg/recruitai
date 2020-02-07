@@ -5,3 +5,5 @@ cvreconstruction
 finalpdf
 
 *__pycache__*
+
+app/temp

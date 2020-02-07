@@ -2,8 +2,11 @@ from app.logging import logger
 import collections
 from fuzzywuzzy import fuzz
 import re
+import math
+import copy
 
-def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIndexes, logger):
+
+def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIndexes, logger, predictions):
     matchIdx = []
 
     structuredContent = []
@@ -708,7 +711,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
     ###############################################################
 
-    newstructuredContent = generateContentWithBBox(finalStructureContent)
+    newstructuredContent = generateContentWithBBox(finalStructureContent, predictions)
 
     ###############################################################
 
@@ -1050,12 +1053,12 @@ def compressTables(newstructuredContent):
     return finalStructureContent
 
 
-def generateContentWithBBox(structuredContent):
+def generateContentWithBBox(structuredContent , predictions):
     newstructuredContent = []
     for rr in structuredContent:
         if not rr["matched"] and "strayText" not in rr:
-            if "strayText" in row:
-                finalStructureContent.append(row)
+            if "strayText" in rr:
+                structuredContent.append(rr)
             continue
         if "matchedRow" in rr:
             rr["matchedRow"].pop('confidance', None)
