@@ -46,11 +46,11 @@ def create_app(test_config=None):
     token.get_token(jwt=jwt, app=app)
 
     from app.api import auth
-    from app.api import kpi
+    from app.api import skill
     from app.api import user
     
     app.register_blueprint(auth.bp)
-    app.register_blueprint(kpi.bp)
+    app.register_blueprint(skill.bp)
     app.register_blueprint(user.bp)
     
     # Scheduler which will run at interval of 60 seconds for user checkin score

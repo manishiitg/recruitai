@@ -70,7 +70,7 @@ def start(isTesting=False):
         files = getFilesToParseFromDB()
 
     for fileIdx, f in enumerate(files):
-        output_dir = os.path.join(BASE_PATH, "temp", ''.join(
+        output_dir = os.path.join(BASE_PATH + "/../temp", ''.join(
             e for e in f["file"] if e.isalnum()))
 
         logger.info("output dir %s", output_dir)

@@ -3,10 +3,8 @@ from flask import (
 )
 from bson.objectid import ObjectId
 import requests
-from app.config import URL
 from app import mongo
 from app import token
-from app.util import get_manager_profile
 import dateutil.parser
 import json
 from bson import json_util

@@ -7,3 +7,4 @@ finalpdf
 *__pycache__*
 
 app/temp
+temp/
