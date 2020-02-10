@@ -24,15 +24,18 @@ from app.logging import logger
 def similar(keyword):
     logger.info("got keyword %s", keyword)
     try:
-
+        
         if "-" in keyword:
             negative = keyword.split("-")[1]
             positive = keyword.split("-")[0]
         else:
             positive = keyword
+            negative = []
 
         if "+" in positive:
             positive = positive.split("+")
+        else:
+            positive = [positive]
 
         logger.info("positive %s and negative %s", positive, negative)
            

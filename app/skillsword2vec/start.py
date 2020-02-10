@@ -3,13 +3,10 @@ from gensim.models import Word2Vec
 
 
 
-def start(isTesting=False):
+def test():
     model = loadModel()
-    if isTesting:
-        return model.wv.most_similar(positive=['php'])
-    else:
-        pass
-
+    return model.wv.most_similar(positive=['php'])
+    
 def get_similar(positive, negative):
     model = loadModel()
     if not isinstance(positive, list):

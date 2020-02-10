@@ -20,6 +20,7 @@ logger.info(device)
 
 flair.device = device
 
+tagger  = None
 
 def start(isTesting=False):
     tagger = loadModel()
@@ -49,12 +50,17 @@ def start(isTesting=False):
 
         return process(nertoparse, tagger)
 
+def processAPI(nertoparse):
+    tagger = loadModel()
+    return process(nertoparse, tagger)
 
 def loadModel():
-    logger.info("loading model")
-    tagger = SequenceTagger.load(
-        BASE_PATH + "/../pretrained/recruit-ner-flair-augment/best-model.pt")
-    logger.info("model loaded")
+    global tagger
+    if tagger is None:
+        logger.info("loading model")
+        tagger = SequenceTagger.load(
+            BASE_PATH + "/../pretrained/recruit-ner-flair-augment/best-model.pt")
+        logger.info("model loaded")
     return tagger
 
 
@@ -94,7 +100,7 @@ def process(nertoparse, tagger):
 
                 finalNER.append(ner)
 
-        row["finalner"] = finalNER
+            row["finalner"] = finalNER
 
         mongo.db.cvparsingsample.update_one({
             "_id": row["_id"]

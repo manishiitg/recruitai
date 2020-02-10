@@ -4,7 +4,7 @@ import shutil
 import torch
 
 from app.config import IN_COLAB
-from app.config import BASE_PATH
+from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
 
 from app import mongo
 
@@ -26,7 +26,11 @@ from pdfminer.pdfpage import PDFTextExtractionNotAllowed
 
 from pdfminer.high_level import extract_text
 
+import glob
+from google.cloud import storage
 
+from app.config import storage_client
+import subprocess
 
 # You may need to restart your runtime prior to this, to let your installation take effect
 # Some basic setup
@@ -59,28 +63,50 @@ from app.detectron.ocr import extractOcrTextFromSegments
 from app.detectron.logic import chooseBBoxVsSegment, identifyTableData, finalCompressedContent
 from app.detectron.pdf import extractTextFromPDF
 
+predictor = None
+cfg = None
 
-def start(isTesting = False):
+def test():
   logger.info("loading model")
   predictor , cfg = loadTrainedModel()
   logger.info("model loaded")
-  if isTesting:
-    logger.setLevel(logging.INFO)
-    logger.info("device available %s", device)
-    files = getFilesToParseForTesting()
-  else:
-    logger.setLevel(logging.CRITICAL)
-    files = getFilesToParseFromDB()
+  logger.setLevel(logging.INFO)
+  logger.info("device available %s", device)
+  files = getFilesToParseForTesting()
+  # else:
+  #   logger.setLevel(logging.CRITICAL)
+  #   files = getFilesToParseFromDB()
 
   inputDir = baseDirectory + "/../../finalpdf"
   basePath = baseDirectory + "/../../cvreconstruction"
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
-  compressedStructuredContent = startProcessing(isTesting, files , inputDir, basePath, predictor, cfg)
+  compressedStructuredContent = startProcessing(files , inputDir, basePath, predictor, cfg)
   return compressedStructuredContent
 
-def startProcessing(isTesting, filestoparse, inputDir, basePath , predictor, cfg):
+
+
+
+def processAPI(file):
+  filestoparse = [{
+        "file" : file,
+        "id" : -1
+    }]
+
+  inputDir = baseDirectory + "/../../finalpdf"
+  basePath = baseDirectory + "/../../cvreconstruction"
+  Path(inputDir).mkdir(parents=True, exist_ok=True)
+  Path(basePath).mkdir(parents=True, exist_ok=True)
+  predictor , cfg = loadTrainedModel()
+  compressedStructuredContent = startProcessing(filestoparse, inputDir, basePath , predictor, cfg)
+
+  return compressedStructuredContent , basePath
+
+def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
+  combinedCompressedContent = {}
   for fileIdx in tqdm(range(len(filestoparse))):
+    combinedCompressedContent[fileIdx] = []
+
     logger.info(filestoparse[fileIdx])
     if filestoparse[fileIdx]["id"] != -1:
       mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, { "$set" : { "parsed" : True } })
@@ -130,6 +156,7 @@ def startProcessing(isTesting, filestoparse, inputDir, basePath , predictor, cfg
       Path(os.path.join(output_dir, foldername)).mkdir(parents=True, exist_ok=True)
       p = savePredictionPartsToFile(f , output_dir ,os.path.join(output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"])
       predictions.append(p)
+      logger.info(p)
       # break
       # doing only page 1 for now 
 
@@ -208,8 +235,12 @@ def startProcessing(isTesting, filestoparse, inputDir, basePath , predictor, cfg
           }
         }
       )
+      combinedCompressedContent[fileIdx].append(compressedStructuredContent)
 
-    return compressedStructuredContent
+    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    logger.info(x)
+
+  return combinedCompressedContent
 
 
 def cleanContent(content , cvpage , jsonOutput):
@@ -259,6 +290,8 @@ def cleanContent(content , cvpage , jsonOutput):
 
 
 def loadTrainedModel():
+  global predictor
+  if predictor is  None:
     cfg = get_cfg()
     # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
     cfg.merge_from_file(
@@ -269,7 +302,8 @@ def loadTrainedModel():
     cfg.MODEL.WEIGHTS = os.path.join("pretrained/detectron3_5000/model_final.pth")
     cfg.MODEL.DEVICE = device
     predictor = DefaultPredictor(cfg)
-    return predictor, cfg
+
+  return predictor, cfg
 
 def getFilesToParseForTesting():
   bdir = baseDirectory + "/testpdf" 
