@@ -106,6 +106,16 @@ mkdir pretrained/emailclassification/tokenizer
 gsutil -m cp -r gs://recruitaiwork/emailclassification/tokenizer pretrained/emailclassification
 
 
+
+=====
+supervisor commands
+
+supervisorctl reread
+supervisorctl update all
+supervisorctl start recruitai
+supervisorctl restart recruitai
+
+
 ###### Architecture ######
 
 Object is that it should be easily be deployed as cloud functions or docker image on server.
@@ -118,7 +128,7 @@ a) CV Process
    3. NER
    4. Classify Lines
    5. Skill Extraction
-   6. Final Data for frontend
+   6. Final Data for frontend (TBD)
 
 
    == Input will be a pdf file. This pdf file can come via a file upload, glcoud bucket,
@@ -130,18 +140,9 @@ a) CV Process
    == and database which db to use.mongo or some gcloud...
    == when entire process finishes, how to send response bcak to requester
 
-b) Classification of emails 
+b) Classification of emails (done)
+c) Word2Vec skill api (done)
 
-c) TBD. Semantic Search
-d) TBD. Candidate Scoring
-
-
-
-
-=====
-supervisor commands
-
-supervisorctl reread
-supervisorctl update all
-supervisorctl start recruitai
-supervisorctl restart recruitai
+d) TBD. Semantic Search
+e) TBD. Candidate Scoring
+f) TBD. Male/Female based on name

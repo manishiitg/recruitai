@@ -242,7 +242,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         "jsonOutput" : jsonOutput
       })
 
-    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
     logger.info(x)
 
   return combinedCompressedContent
