@@ -5,7 +5,6 @@ from bson.objectid import ObjectId
 import requests
 from app import mongo
 from app import token
-import dateutil.parser
 import json
 from bson import json_util
 
