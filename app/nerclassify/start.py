@@ -59,7 +59,6 @@ def process(data, isPageWiseData=False):
                     extractEntity[pageno][lineno] = {}
 
                 text = line["line"]
-                words = text.split()
                 prevPos = 0
                 if len(line["entity"]["entities"]) > 0:
                     for ent in line["entity"]["entities"]:
@@ -86,263 +85,264 @@ def process(data, isPageWiseData=False):
                                 extractEntity[pageno][lineno][enttype].append(
                                     text)
 
-                        logger.debug(extractEntity[pageno][lineno])
-                        logger.debug(line["line"])
-                        logger.debug(line["entity"]["entities"])
+                    logger.debug(extractEntity[pageno][lineno])
+                    logger.debug(line["line"])
+                    logger.debug(line["entity"]["entities"])
 
-                        # CARDINAL, Designation, EducationDegree, ORG,  DATE
-                        # Skills,
-                        # ExperianceYears
-                        # DOB, Email, GPE, PERSON, Phone, Language
+                    # CARDINAL, Designation, EducationDegree, ORG,  DATE
+                    # Skills,
+                    # ExperianceYears
+                    # DOB, Email, GPE, PERSON, Phone, Language
 
-                        singleEntity = ["PERSON", "Phone",
-                                        "Email", "DOB", "GPE", "LANGUAGE"]
-                        finalEntity, foundEntity = updateSingleEntity(
-                            singleEntity, extractEntity[pageno][lineno], finalEntity)
+                    singleEntity = ["PERSON", "Phone",
+                                    "Email", "DOB", "GPE", "LANGUAGE"]
+                    finalEntity, foundEntity = updateSingleEntity(
+                        singleEntity, extractEntity[pageno][lineno], finalEntity)
 
-                        if "PERSON" in extractEntity[pageno][lineno] and ("Phone" in extractEntity[pageno][lineno] or "Email" in extractEntity[pageno][lineno]):
-                            extractEntity[pageno][lineno]["classify"] = "CONTACT"
+
+                    if "PERSON" in extractEntity[pageno][lineno] and ("Phone" in extractEntity[pageno][lineno] or "Email" in extractEntity[pageno][lineno]):
+                        extractEntity[pageno][lineno]["classify"] = "CONTACT"
+                        for cIDx in contentIdx:
+                            row["compressedStructuredContent"][str(
+                                pageno)][cIDx]["classify"] = "CONTACT"
+
+                    if "Phone" in extractEntity[pageno][lineno] and "Email" in extractEntity[pageno][lineno]:
+                        extractEntity[pageno][lineno]["classify"] = "CONTACT"
+                        for cIDx in contentIdx:
+                            row["compressedStructuredContent"][str(
+                                pageno)][cIDx]["classify"] = "CONTACT"
+
+                    if "DOB" in extractEntity[pageno][lineno] or "LANGUAGE" in extractEntity[pageno][lineno]:
+                        extractEntity[pageno][lineno]["classify"] = "ENDINFO"
+                        for cIDx in contentIdx:
+                            row["compressedStructuredContent"][str(
+                                pageno)][cIDx]["classify"] = "ENDINFO"
+
+                    if "ORG" in extractEntity[pageno][lineno]:
+                        if "Designation" in extractEntity[pageno][lineno] and "EducationDegree" in extractEntity[pageno][lineno]:
+                            logger.info(
+                                "this has both designation and degree")
+                            logger.info(
+                                "need to review this as well why this happened? both designation and exp degree")
+                            logger.info(extractEntity[pageno][lineno])
+                            logger.info(line["line"])
+                            # we can look at heading also in such cases. if it matches
+                            # we ca also if it matched a table it should education mostly
+                            # this is happening in cases of accounts which i have seen. where Cost Accountant looks like a degree as well and a education qualification also
+                            extractEntity[pageno][lineno]["classify"] = "ERROR"
                             for cIDx in contentIdx:
                                 row["compressedStructuredContent"][str(
-                                    pageno)][cIDx]["classify"] = "CONTACT"
+                                    pageno)][cIDx]["classify"] = "ERROR"
 
-                        if "Phone" in extractEntity[pageno][lineno] and "Email" in extractEntity[pageno][lineno]:
-                            extractEntity[pageno][lineno]["classify"] = "CONTACT"
+                        if "Designation" in extractEntity[pageno][lineno]:
+                            logger.info("this line looks like work exp")
+
+                            obj = []
+
+                            for org in extractEntity[pageno][lineno]["ORG"]:
+                                obj.append({
+                                    "org": org
+                                })
+
+                            relatedKeys = ["Designation",
+                                            "DATE", "ExperianceYears"]
+
+                            for key in relatedKeys:
+                                if key in extractEntity[pageno][lineno]:
+                                    for idx, value in enumerate(extractEntity[pageno][lineno][key]):
+                                        if idx > len(obj) - 1:
+                                            obj.append({
+                                                "org": "",
+                                            })
+                                        obj[idx][key] = value
+
+                            finalEntity["wrkExp"].append(obj)
+                            extractEntity[pageno][lineno]["classify"] = "WRKEXP"
+
                             for cIDx in contentIdx:
                                 row["compressedStructuredContent"][str(
-                                    pageno)][cIDx]["classify"] = "CONTACT"
+                                    pageno)][cIDx]["classify"] = "WRKEXP"
 
-                        if "DOB" in extractEntity[pageno][lineno] or "LANGUAGE" in extractEntity[pageno][lineno]:
-                            extractEntity[pageno][lineno]["classify"] = "ENDINFO"
+                        elif "EducationDegree" in extractEntity[pageno][lineno]:
+                            logger.info("this line looks like education")
+
+                            obj = []
+
+                            for org in extractEntity[pageno][lineno]["ORG"]:
+                                obj.append({
+                                    "org": org
+                                })
+
+                            relatedKeys = [
+                                "EducationDegree", "DATE", "CARDINAL"]
+                            for key in relatedKeys:
+                                if key in extractEntity[pageno][lineno]:
+                                    for idx, value in enumerate(extractEntity[pageno][lineno][key]):
+                                        if idx > len(obj) - 1:
+                                            obj.append({
+                                                "org": "",
+
+                                            })
+                                        obj[idx][key] = value
+
+                            finalEntity["education"].append(obj)
+                            extractEntity[pageno][lineno]["classify"] = "EDU"
                             for cIDx in contentIdx:
                                 row["compressedStructuredContent"][str(
-                                    pageno)][cIDx]["classify"] = "ENDINFO"
+                                    pageno)][cIDx]["classify"] = "EDU"
 
-                        if "ORG" in extractEntity[pageno][lineno]:
-                            if "Designation" in extractEntity[pageno][lineno] and "EducationDegree" in extractEntity[pageno][lineno]:
+                        elif "ExperianceYears" in extractEntity[pageno][lineno]:
+                            logger.info(
+                                "this is work exp has there is exp years")
+                            obj = []
+
+                            for org in extractEntity[pageno][lineno]["ORG"]:
+                                obj.append({
+                                    "org": org
+                                })
+
+                            relatedKeys = [
+                                "DATE", "Designation", "ExperianceYears"]
+
+                            for key in relatedKeys:
+                                if key in extractEntity[pageno][lineno]:
+                                    for idx, value in enumerate(extractEntity[pageno][lineno][key]):
+                                        if idx > len(obj) - 1:
+                                            obj.append({
+                                                "org": "",
+
+                                            })
+
+                                    obj[idx][key] = value
+
+                            finalEntity["wrkExp"].append(obj)
+                            extractEntity[pageno][lineno]["classify"] = "WRKEXP"
+                            for cIDx in contentIdx:
+                                row["compressedStructuredContent"][str(
+                                    pageno)][cIDx]["classify"] = "WRKEXP"
+
+                        else:
+                            logger.info(
+                                "need to review this as well why this happened")
+                            logger.info(
+                                "unable to find.... maybe check with Pvt University etc texts")
+                            org = (
+                                " ".join(extractEntity[pageno][lineno]["ORG"][0])).lower()
+                            if "pvt" in org or "ltd" in org or "limi" in org:
+                                logger.info("looks like a company")
+                            elif "university" in org or "col" in org or "school" in org:
+                                logger.info("look like college")
+                            else:
                                 logger.info(
-                                    "this has both designation and degree")
-                                logger.info(
-                                    "need to review this as well why this happened? both designation and exp degree")
-                                logger.info(extractEntity[pageno][lineno])
+                                    "we will look at this in this? company or univ")
                                 logger.info(line["line"])
                                 # we can look at heading also in such cases. if it matches
                                 # we ca also if it matched a table it should education mostly
-                                # this is happening in cases of accounts which i have seen. where Cost Accountant looks like a degree as well and a education qualification also
+                                # . mostly it will be company only. if we find another line with edu means this a company == this is wrong because many due to education being a table it goes on multiple lines
                                 extractEntity[pageno][lineno]["classify"] = "ERROR"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classify"] = "ERROR"
 
-                            if "Designation" in extractEntity[pageno][lineno]:
-                                logger.info("this line looks like work exp")
-
-                                obj = []
-
-                                for org in extractEntity[pageno][lineno]["ORG"]:
-                                    obj.append({
-                                        "org": org
-                                    })
-
-                                relatedKeys = ["Designation",
-                                               "DATE", "ExperianceYears"]
-
-                                for key in relatedKeys:
-                                    if key in extractEntity[pageno][lineno]:
-                                        for idx, value in enumerate(extractEntity[pageno][lineno][key]):
-                                            if idx > len(obj) - 1:
-                                                obj.append({
-                                                    "org": "",
-                                                })
-                                            obj[idx][key] = value
-
-                                finalEntity["wrkExp"].append(obj)
-                                extractEntity[pageno][lineno]["classify"] = "WRKEXP"
-
+                    elif "Designation" in extractEntity[pageno][lineno] and "ExperianceYears" in extractEntity[pageno][lineno]:
+                        logger.info(
+                            "this looks like summary and current designation and exp")
+                        extractEntity[pageno][lineno]["classify"] = "SUMMARY"
+                        for cIDx in contentIdx:
+                            row["compressedStructuredContent"][str(
+                                pageno)][cIDx]["classify"] = "SUMMARY"
+                            logger.info(extractEntity[pageno][lineno])
+                            finalEntity, foundEntity = updateSingleEntity(
+                                ["Designation", "ExperianceYears"], extractEntity[pageno][lineno], finalEntity)
+                    elif "ExperianceYears" in extractEntity[pageno][lineno]:
+                        logger.info(
+                            "need to review this why this happened? orpahn ExperianceYears")
+                        logger.info(extractEntity[pageno][lineno])
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
+                            if "ExperianceYears" in finalEntity["wrkExp"][-1]:
+                                finalEntity["wrkExp"].append({
+                                    "obj": "",
+                                    "ExperianceYears": " ".join(extractEntity[pageno][lineno]["ExperianceYears"])
+                                })
+                                extractEntity[pageno][lineno]["classify"] = "WORKEXP"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = "WRKEXP"
-
-                            elif "EducationDegree" in extractEntity[pageno][lineno]:
-                                logger.info("this line looks like education")
-
-                                obj = []
-
-                                for org in extractEntity[pageno][lineno]["ORG"]:
-                                    obj.append({
-                                        "org": org
-                                    })
-
-                                relatedKeys = [
-                                    "EducationDegree", "DATE", "CARDINAL"]
-                                for key in relatedKeys:
-                                    if key in extractEntity[pageno][lineno]:
-                                        for idx, value in enumerate(extractEntity[pageno][lineno][key]):
-                                            if idx > len(obj) - 1:
-                                                obj.append({
-                                                    "org": "",
-
-                                                })
-                                            obj[idx][key] = value
-
-                                finalEntity["education"].append(obj)
+                                        pageno)][cIDx]["classify"] = "WORKEXP"
+                            else:
+                                finalEntity["wrkExp"][-1]["ExperianceYears"] = " ".join(
+                                    extractEntity[pageno][lineno]["ExperianceYears"])
+                        else:
+                            finalEntity, foundEntity = updateSingleEntity(
+                                ["ExperianceYears"], extractEntity[pageno][lineno], finalEntity)
+                    elif "Designation" in extractEntity[pageno][lineno]:
+                        logger.info(
+                            "need to review this why this happened? orpahn Designation")
+                        logger.info(extractEntity[pageno][lineno])
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
+                            if "Designation" in finalEntity["wrkExp"][-1]:
+                                finalEntity["wrkExp"].append({
+                                    "obj": "",
+                                    "Designation": " ".join(extractEntity[pageno][lineno]["Designation"])
+                                })
+                                extractEntity[pageno][lineno]["classify"] = "WORKEXP"
+                                for cIDx in contentIdx:
+                                    row["compressedStructuredContent"][str(
+                                        pageno)][cIDx]["classify"] = "WORKEXP"
+                            else:
+                                finalEntity["wrkExp"][-1]["Designation"] = " ".join(
+                                    extractEntity[pageno][lineno]["Designation"])
+                        else:
+                            finalEntity, foundEntity = updateSingleEntity(
+                                ["Designation"], extractEntity[pageno][lineno], finalEntity)
+                    elif "EducationDegree" in extractEntity[pageno][lineno]:
+                        # if previous line is education, we can append it to that
+                        logger.info(
+                            "need to review this why this happened? orphan EducationDegree")
+                        logger.info(extractEntity[pageno][lineno])
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
+                            if "EducationDegree" in finalEntity["wrkExp"][-1]:
+                                finalEntity["wrkExp"].append({
+                                    "obj": "",
+                                    "EducationDegree": " ".join(extractEntity[pageno][lineno]["EducationDegree"])
+                                })
                                 extractEntity[pageno][lineno]["classify"] = "EDU"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classify"] = "EDU"
-
-                            elif "ExperianceYears" in extractEntity[pageno][lineno]:
-                                logger.info(
-                                    "this is work exp has there is exp years")
-                                obj = []
-
-                                for org in extractEntity[pageno][lineno]["ORG"]:
-                                    obj.append({
-                                        "org": org
-                                    })
-
-                                relatedKeys = [
-                                    "DATE", "Designation", "ExperianceYears"]
-
-                                for key in relatedKeys:
-                                    if key in extractEntity[pageno][lineno]:
-                                        for idx, value in enumerate(extractEntity[pageno][lineno][key]):
-                                            if idx > len(obj) - 1:
-                                                obj.append({
-                                                    "org": "",
-
-                                                })
-
-                                        obj[idx][key] = value
-
-                                finalEntity["wrkExp"].append(obj)
-                                extractEntity[pageno][lineno]["classify"] = "WRKEXP"
+                            else:
+                                finalEntity["wrkExp"][-1]["EducationDegree"] = " ".join(
+                                    extractEntity[pageno][lineno]["EducationDegree"])
+                        else:
+                            finalEntity, foundEntity = updateSingleEntity(
+                                ["EducationDegree"], extractEntity[pageno][lineno], finalEntity)
+                    elif "DATE" in extractEntity[pageno][lineno]:
+                        logger.info(
+                            "need to review this why this happened? orphan Date")
+                        # if previous line is education, we can append it to that
+                        logger.info(extractEntity[pageno][lineno])
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
+                            if "DATE" in finalEntity["wrkExp"][-1]:
+                                finalEntity["wrkExp"].append({
+                                    "obj": "",
+                                    "DATE": " ".join(extractEntity[pageno][lineno]["Date"])
+                                })
+                                extractEntity[pageno][lineno]["classify"] = "EDU"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = "WRKEXP"
-
+                                        pageno)][cIDx]["classify"] = "EDU"
                             else:
-                                logger.info(
-                                    "need to review this as well why this happened")
-                                logger.info(
-                                    "unable to find.... maybe check with Pvt University etc texts")
-                                org = (
-                                    " ".join(extractEntity[pageno][lineno]["ORG"][0])).lower()
-                                if "pvt" in org or "ltd" in org or "limi" in org:
-                                    logger.info("looks like a company")
-                                elif "university" in org or "col" in org or "school" in org:
-                                    logger.info("look like college")
-                                else:
-                                    logger.info(
-                                        "we will look at this in this? company or univ")
-                                    logger.info(line["line"])
-                                    # we can look at heading also in such cases. if it matches
-                                    # we ca also if it matched a table it should education mostly
-                                    # . mostly it will be company only. if we find another line with edu means this a company == this is wrong because many due to education being a table it goes on multiple lines
-                                    extractEntity[pageno][lineno]["classify"] = "ERROR"
-                                    for cIDx in contentIdx:
-                                        row["compressedStructuredContent"][str(
-                                            pageno)][cIDx]["classify"] = "ERROR"
-
-                        elif "Designation" in extractEntity[pageno][lineno] and "ExperianceYears" in extractEntity[pageno][lineno]:
-                            logger.info(
-                                "this looks like summary and current designation and exp")
-                            extractEntity[pageno][lineno]["classify"] = "SUMMARY"
-                            for cIDx in contentIdx:
-                                row["compressedStructuredContent"][str(
-                                    pageno)][cIDx]["classify"] = "SUMMARY"
-                                logger.info(extractEntity[pageno][lineno])
-                                finalEntity, foundEntity = updateSingleEntity(
-                                    ["Designation", "ExperianceYears"], extractEntity[pageno][lineno], finalEntity)
-                        elif "ExperianceYears" in extractEntity[pageno][lineno]:
-                            logger.info(
-                                "need to review this why this happened? orpahn ExperianceYears")
-                            logger.info(extractEntity[pageno][lineno])
-                            if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
-                                if "ExperianceYears" in finalEntity["wrkExp"][-1]:
-                                    finalEntity["wrkExp"].append({
-                                        "obj": "",
-                                        "ExperianceYears": " ".join(extractEntity[pageno][lineno]["ExperianceYears"])
-                                    })
-                                    extractEntity[pageno][lineno]["classify"] = "WORKEXP"
-                                    for cIDx in contentIdx:
-                                        row["compressedStructuredContent"][str(
-                                            pageno)][cIDx]["classify"] = "WORKEXP"
-                                else:
-                                    finalEntity["wrkExp"][-1]["ExperianceYears"] = " ".join(
-                                        extractEntity[pageno][lineno]["ExperianceYears"])
-                            else:
-                                finalEntity, foundEntity = updateSingleEntity(
-                                    ["ExperianceYears"], extractEntity[pageno][lineno], finalEntity)
-                        elif "Designation" in extractEntity[pageno][lineno]:
-                            logger.info(
-                                "need to review this why this happened? orpahn Designation")
-                            logger.info(extractEntity[pageno][lineno])
-                            if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
-                                if "Designation" in finalEntity["wrkExp"][-1]:
-                                    finalEntity["wrkExp"].append({
-                                        "obj": "",
-                                        "Designation": " ".join(extractEntity[pageno][lineno]["Designation"])
-                                    })
-                                    extractEntity[pageno][lineno]["classify"] = "WORKEXP"
-                                    for cIDx in contentIdx:
-                                        row["compressedStructuredContent"][str(
-                                            pageno)][cIDx]["classify"] = "WORKEXP"
-                                else:
-                                    finalEntity["wrkExp"][-1]["Designation"] = " ".join(
-                                        extractEntity[pageno][lineno]["Designation"])
-                            else:
-                                finalEntity, foundEntity = updateSingleEntity(
-                                    ["Designation"], extractEntity[pageno][lineno], finalEntity)
-                        elif "EducationDegree" in extractEntity[pageno][lineno]:
-                            # if previous line is education, we can append it to that
-                            logger.info(
-                                "need to review this why this happened? orphan EducationDegree")
-                            logger.info(extractEntity[pageno][lineno])
-                            if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
-                                if "EducationDegree" in finalEntity["wrkExp"][-1]:
-                                    finalEntity["wrkExp"].append({
-                                        "obj": "",
-                                        "EducationDegree": " ".join(extractEntity[pageno][lineno]["EducationDegree"])
-                                    })
-                                    extractEntity[pageno][lineno]["classify"] = "EDU"
-                                    for cIDx in contentIdx:
-                                        row["compressedStructuredContent"][str(
-                                            pageno)][cIDx]["classify"] = "EDU"
-                                else:
-                                    finalEntity["wrkExp"][-1]["EducationDegree"] = " ".join(
-                                        extractEntity[pageno][lineno]["EducationDegree"])
-                            else:
-                                finalEntity, foundEntity = updateSingleEntity(
-                                    ["EducationDegree"], extractEntity[pageno][lineno], finalEntity)
-                        elif "DATE" in extractEntity[pageno][lineno]:
-                            logger.info(
-                                "need to review this why this happened? orphan Date")
-                            # if previous line is education, we can append it to that
-                            logger.info(extractEntity[pageno][lineno])
-                            if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
-                                if "DATE" in finalEntity["wrkExp"][-1]:
-                                    finalEntity["wrkExp"].append({
-                                        "obj": "",
-                                        "DATE": " ".join(extractEntity[pageno][lineno]["Date"])
-                                    })
-                                    extractEntity[pageno][lineno]["classify"] = "EDU"
-                                    for cIDx in contentIdx:
-                                        row["compressedStructuredContent"][str(
-                                            pageno)][cIDx]["classify"] = "EDU"
-                                else:
-                                    finalEntity["wrkExp"][-1]["DATE"] = " ".join(
-                                        extractEntity[pageno][lineno]["DATE"])
-                            else:
-                                finalEntity, foundEntity = updateSingleEntity(
-                                    ["Date"], extractEntity[pageno][lineno], finalEntity)
+                                finalEntity["wrkExp"][-1]["DATE"] = " ".join(
+                                    extractEntity[pageno][lineno]["DATE"])
                         else:
-                            if not foundEntity:
-                                logger.info(
-                                    "need to review this why this happened?")
-                                logger.info(extractEntity[pageno][lineno])
-                                logger.info("unknow ....")
-                            pass
+                            finalEntity, foundEntity = updateSingleEntity(
+                                ["Date"], extractEntity[pageno][lineno], finalEntity)
+                    else:
+                        if not foundEntity:
+                            logger.info(
+                                "need to review this why this happened?")
+                            logger.info(extractEntity[pageno][lineno])
+                            logger.info("unknow ....")
+                        pass
 
         logger.info("classification all lines of cv now")
 
@@ -365,7 +365,7 @@ def process(data, isPageWiseData=False):
         combinData[rowIdx] = {
             "finalEntity": finalEntity,
             "extractEntity": extractEntity,
-            "compressedStructuredContent" : row["compressedStructuredContent"]
+            # "compressedStructuredContent" : row["compressedStructuredContent"]
         }
         if "_id" in row:
             mongo.db.cvparsingsample.update_one({"_id": row["_id"]},
