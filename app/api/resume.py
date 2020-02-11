@@ -41,7 +41,7 @@ def fullparsing(filename):
 
     response , basePath = processAPI(os.path.join(dest, filename))
 
-    fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
+    # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
     nertoparse = []
     row = []
@@ -52,7 +52,7 @@ def fullparsing(filename):
 
     nerExtracted = extractNer(nertoparse)
 
-    fullResponse["nerExtracted"] = nerExtracted
+    # fullResponse["nerExtracted"] = nerExtracted
 
     row = {}
     row["file"] = filename
