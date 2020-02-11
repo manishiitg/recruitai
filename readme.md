@@ -3,19 +3,30 @@
 Code for different models and predictions only (no training) to deploy on production env.
 
 
+
 Few things to install
 ================================
+
+
+pip install --upgrade cython
+
+pip install numpy
+
+pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
+pip install transformers
+pip uninstall tokenizers
+pip install  tokenizers
+
+pip install google-cloud-storage
 
 
 sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 sudo apt-get install python-poppler poppler-utils
 
-===
-
 export FLASK_APP=app
 export FLASK_DEBUG=1
 flask run --host 0.0.0.0 --port 8085
-
 
  ps -aux | grep 8085
 
