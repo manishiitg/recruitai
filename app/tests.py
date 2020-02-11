@@ -1,13 +1,11 @@
 from app.detectron.start import test as startCVParsing
-from app.picture.start import start as startPictureExtract
+from app.picture.start import test as startPictureExtract
 from app.ner.start import start as startNer
 from app.skillsword2vec.start import test as teststartSkill
 from app.emailclassify.start import test as testEmailClassifyFunc
 
 
 from app.logging import logger
-
-
 
 
 def testEmailClassify():

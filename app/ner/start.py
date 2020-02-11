@@ -7,7 +7,7 @@ from app.config import BASE_PATH
 import json
 from app import mongo
 import torch
-from tqdm import tqdm_notebook as tqdm
+import tqdm 
 from flair.data import Sentence
 
 device = None
@@ -51,22 +51,27 @@ def start(isTesting=False):
         return process(nertoparse, tagger)
 
 def processAPI(nertoparse):
+    # always single file via api
     tagger = loadModel()
-    return process(nertoparse, tagger)
+    combineNer = process(nertoparse, tagger)
+    assert len(combineNer) == 1
+    return combineNer[0]
 
 def loadModel():
     global tagger
     if tagger is None:
         logger.info("loading model")
         tagger = SequenceTagger.load(
-            BASE_PATH + "/../pretrained/recruit-ner-flair-augment/best-model.pt")
+            BASE_PATH + "/../pretrained/recruit-ner-word2vec-flair/best-model.pt")
         logger.info("model loaded")
     return tagger
 
 
 def process(nertoparse, tagger):
-    for idx in tqdm(range(len(nertoparse))):
+    combineNer = {}
+    for idx in range(len(nertoparse)):
         row = nertoparse[idx]
+        combineNer[idx] = []
         compressedStructuredContent = row["compressedStructuredContent"]
 
         finalNER = []
@@ -77,38 +82,40 @@ def process(nertoparse, tagger):
                 line = lineData["line"]
                 line = bytes(line, 'utf-8').decode('ascii', 'ignore')
                 line = line.strip()
-                logger.info(line)
+                logger.debug(line)
                 if len(line) > 0:
                     if "contentIdx" not in lineData:
                         lineData["contentIdx"] = []
 
-                        contentIdx = lineData["contentIdx"]
-                        sentence = Sentence(line)
-                        # predict tags and print
-                        tagger.predict(sentence)
-                        logger.info(sentence.to_tagged_string())
-                        for entity in sentence.get_spans('ner'):
-                            logger.info(entity)
+                    contentIdx = lineData["contentIdx"]
+                    sentence = Sentence(line)
+                    # predict tags and print
+                    tagger.predict(sentence)
+                    logger.debug(sentence.to_tagged_string())
+                    for entity in sentence.get_spans('ner'):
+                        logger.debug(entity)
 
-                        ner.append({
-                            "line": line,
-                            "nerline": str(sentence.to_tagged_string()),
-                            "entity": sentence.to_dict(tag_type='ner'),
-                            "lineData": lineData,
-                            "contentIdx": contentIdx
-                        })
+                    ner.append({
+                        "line": line,
+                        "nerline": str(sentence.to_tagged_string()),
+                        "entity": sentence.to_dict(tag_type='ner'),
+                        "lineData": lineData,
+                        "contentIdx": contentIdx
+                    })
+            finalNER.append(ner)
 
-                finalNER.append(ner)
+        row["finalner"] = finalNER
+        combineNer[idx] = finalNER
 
-            row["finalner"] = finalNER
+        if "_id" in row:
+            mongo.db.cvparsingsample.update_one({
+                "_id": row["_id"]
+            }, {"$set": {
+                "nerparsed": finalNER,
+                "nerparsedv3": True
+            }})
 
-        mongo.db.cvparsingsample.update_one({
-            "_id": row["_id"]
-        }, {"$set": {
-            "nerparsed": finalNER,
-            "nerparsedv3": True
-        }})
-
+    return combineNer
 
 def getFilesToParseForTesting():
     sents = [
@@ -150,6 +157,7 @@ def nerlines(compressedStructuredContent):
     nerlines = []
 
     for row in compressedStructuredContent:
+        # logger.info(row)
         row["line"] = row["line"].strip()
         nerlines.append(row)
 
@@ -182,8 +190,7 @@ def nerlines(compressedStructuredContent):
                     nerlines[idx-1]["contentIdx"] = []
 
                 nerlines[idx-1]["contentIdx"].extend([idx-1, idx])
-                nerlines[idx -
-                         1]["contentIdx"] = list(set(nerlines[idx-1]["contentIdx"]))
+                nerlines[idx -1]["contentIdx"] = list(set(nerlines[idx-1]["contentIdx"]))
 
         else:
             nerlines[idx]["contentIdx"] = [idx]
@@ -203,5 +210,7 @@ def nerlines(compressedStructuredContent):
     logger.debug("===============================")
     for row in nerlines:
         logger.debug(row["line"])
+
+    logger.info(nerlines)
 
     return nerlines

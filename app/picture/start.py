@@ -11,7 +11,7 @@ import shutil
 import torch
 
 from app.config import IN_COLAB
-from app.config import BASE_PATH
+from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
 
 from app import mongo
 
@@ -28,7 +28,7 @@ from detectron2.utils.logger import setup_logger
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
 setup_logger()
-
+import subprocess
 
 # You may need to restart your runtime prior to this, to let your installation take effect
 # Some basic setup
@@ -51,23 +51,20 @@ else:
 
 # import some common detectron2 utilities
 
-
+predictor = None
+cfg = None
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 logger.debug(device)
 
 
-def start(isTesting=False):
+def test():
     logger.info("loading model")
     predictor, cfg = loadTrainedModel()
     logger.info("model loaded")
-    if isTesting:
-        logger.setLevel(logging.INFO)
-        logger.info("device available %s", device)
-        files = getFilesToParseForTesting()
-    else:
-        logger.setLevel(logging.CRITICAL)
-        files = getFilesToParseFromDB()
+    logger.setLevel(logging.INFO)
+    logger.info("device available %s", device)
+    files = getFilesToParseForTesting()
 
     for fileIdx, f in enumerate(files):
         output_dir = os.path.join(BASE_PATH + "/../temp", ''.join(
@@ -91,16 +88,39 @@ def start(isTesting=False):
     return files
 
 
+def processAPI(filename):
+    f = {"file" : filename}
+
+    actualfilename = os.path.basename(filename)
+
+    namenonum = ''.join(e for e in actualfilename if e.isalnum())
+
+    output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
+
+    logger.info("output dir %s", output_dir)
+    savePDFAsImage(f["file"], output_dir)
+    predictor, cfg = loadTrainedModel()
+    imageFile = process(output_dir, predictor, cfg)
+    logger.info("pic found %s", imageFile)
+    if imageFile:
+        x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + namenonum + "/picture"], shell=True)
+        logger.info(x)
+
+    return imageFile , output_dir
+
 def loadTrainedModel():
-    cfg = get_cfg()
-    # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
-    cfg.merge_from_file(model_zoo.get_config_file(
-        "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set threshold for this model
-    # Find a model from detectron2's model zoo. You can either use the https://dl.fbaipublicfiles.... url, or use the detectron2:// shorthand
-    cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"
-    cfg.MODEL.DEVICE = device
-    predictor = DefaultPredictor(cfg)
+    global predictor
+    global cfg
+    if not predictor:
+        cfg = get_cfg()
+        # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
+        cfg.merge_from_file(model_zoo.get_config_file(
+            "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+        cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set threshold for this model
+        # Find a model from detectron2's model zoo. You can either use the https://dl.fbaipublicfiles.... url, or use the detectron2:// shorthand
+        cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"
+        cfg.MODEL.DEVICE = device
+        predictor = DefaultPredictor(cfg)
     return predictor, cfg
 
 
@@ -136,14 +156,14 @@ def savePDFAsImage(cv, output_dir):
     cvdir = os.path.dirname(cv)
     cvfilename = cv.replace(cvdir, "")
     cvfilename = ''.join(
-            e for e in cvfilename if e.isalnum())
+        e for e in cvfilename if e.isalnum())
     for i, page in enumerate(pages):
-      logger.info("saving pdf image at %s" , os.path.join(output_dir,
-                               cvfilename + "page" + str(i) + '.png'))
-      page.save(os.path.join(output_dir,
+        logger.info("saving pdf image at %s", os.path.join(output_dir,
+                                                           cvfilename + "page" + str(i) + '.png'))
+        page.save(os.path.join(output_dir,
                                cvfilename + "page" + str(i) + '.png'), 'PNG')
-      # checking for pic only on the first page
-      break
+        # checking for pic only on the first page
+        break
 
 
 def process(output_dir, predictor, cfg):
@@ -187,7 +207,6 @@ def process(output_dir, predictor, cfg):
     channel_count = image.shape[2]  # i.e. 3 or 4 depending on your image
     ignore_mask_color = (255,)*channel_count
 
-  
     finalPicImage = False
 
     for idx, mask in enumerate(masks):

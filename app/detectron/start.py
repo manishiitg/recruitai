@@ -87,7 +87,7 @@ def test():
 
 
 
-def processAPI(file):
+def processAPI(file, maxPage = False):
   filestoparse = [{
         "file" : file,
         "id" : -1
@@ -98,11 +98,12 @@ def processAPI(file):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent = startProcessing(filestoparse, inputDir, basePath , predictor, cfg)
+  compressedStructuredContent = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage)
+  assert len(compressedStructuredContent) == 1
 
-  return compressedStructuredContent , basePath
+  return compressedStructuredContent[0] , basePath
 
-def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
+def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False):
   combinedCompressedContent = {}
   for fileIdx in tqdm(range(len(filestoparse))):
     combinedCompressedContent[fileIdx] = []
@@ -156,8 +157,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
       Path(os.path.join(output_dir, foldername)).mkdir(parents=True, exist_ok=True)
       p = savePredictionPartsToFile(f , output_dir ,os.path.join(output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"])
       predictions.append(p)
-      logger.info(p)
-      # break
+      logger.debug(p)
+      if maxPage and cvpages >= maxPage:
+        break
       # doing only page 1 for now 
 
     logger.info("total pages in cv %s" , cvpages)
@@ -235,10 +237,13 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg):
           }
         }
       )
-      combinedCompressedContent[fileIdx].append(compressedStructuredContent)
+      combinedCompressedContent[fileIdx].append({
+        "compressedStructuredContent" : compressedStructuredContent,
+        "jsonOutput" : jsonOutput
+      })
 
-    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
-    logger.info(x)
+    # x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    # logger.info(x)
 
   return combinedCompressedContent
 
@@ -291,6 +296,7 @@ def cleanContent(content , cvpage , jsonOutput):
 
 def loadTrainedModel():
   global predictor
+  global cfg
   if predictor is  None:
     cfg = get_cfg()
     # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
