@@ -16,6 +16,9 @@ export FLASK_APP=app
 export FLASK_DEBUG=1
 flask run --host 0.0.0.0 --port 8085
 
+
+ ps -aux | grep 8085
+
 ===
 
 Api end point exposed 
@@ -85,6 +88,7 @@ gcloud config set project recruitai-266705
 mkdir pretrained
 gsutil -m cp -r gs://recruitaiwork/detectron3_5000 pretrained/ 
 gsutil -m cp -r gs://recruitaiwork/recruit-ner-flair-augment pretrained/
+gsutil -m cp -r gs://recruitaiwork/recruit-ner-word2vec-flair pretrained/
 gsutil -m cp -r gs://recruitaiwork/word2vec/word2vecrecruitskills.model	 pretrained/
 mkdir pretrained/emailclassification
 gsutil -m cp -r gs://recruitaiwork/emailclassification/xlnet pretrained/emailclassification

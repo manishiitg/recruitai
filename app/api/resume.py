@@ -19,13 +19,82 @@ from pathlib import Path
 import os
 import json
 from app.detectron.start import processAPI
+from app.picture.start import processAPI as extractPicture 
+from app.ner.start import processAPI as extractNer
+from app.nerclassify.start import process as classifyNer
 
 from app.config import storage_client
+
+@bp.route('/<string:filename>', methods=['GET'])
+def fullparsing(filename):
+    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(filename)
+    dest = BASE_PATH + "/../temp"
+    Path(dest).mkdir(parents=True, exist_ok=True)
+    blob.download_to_filename(os.path.join(dest, filename))
+
+    fullResponse = {}
+
+    response, basedir = extractPicture(os.path.join(dest, filename))
+
+    fullResponse["picture"] = {"response" : response, "basePath" : basedir}
+
+    response , basePath = processAPI(os.path.join(dest, filename))
+
+    fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
+
+    nertoparse = []
+    row = []
+    for page in response:
+        row.append(page["compressedStructuredContent"])
+    
+    nertoparse.append({"compressedStructuredContent": row})
+
+    nerExtracted = extractNer(nertoparse)
+
+    fullResponse["nerExtracted"] = nerExtracted
+
+    row = {}
+    row["file"] = filename
+    row["nerparsed"] = nerExtracted
+    row["compressedStructuredContent"] = {}
+    for pageIdx, page in enumerate(response):
+        row["compressedStructuredContent"][str(pageIdx + 1)] = page["compressedStructuredContent"]
+    
+    combinData = classifyNer([row])
+
+    assert len(combinData) == 1
+
+    fullResponse["finalData"] = combinData[0]
+
+    return jsonify(fullResponse) , 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
-@bp.route('/<string:filename>', methods=['GET'])
+@bp.route('/picture/<string:filename>', methods=['GET'])
+def picture(filename):
+
+    # try:
+        
+    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(filename)
+    dest = BASE_PATH + "/../temp"
+    Path(dest).mkdir(parents=True, exist_ok=True)
+    blob.download_to_filename(os.path.join(dest, filename))
+
+    response, basedir = extractPicture(os.path.join(dest, filename))
+
+    
+    return jsonify(response , basedir) , 200
+    # except Exception as e:
+    #     return jsonify(str(e)) , 500
+
+
+# @bp.route('', methods=['POST', 'GET'])
+# @jwt_required
+# @token.admin_required
+@bp.route('/parse/<string:filename>', methods=['GET'])
 def parse(filename):
 
     try:
