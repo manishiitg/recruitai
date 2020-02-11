@@ -116,6 +116,7 @@ gsutil -m cp -r gs://recruitaiwork/emailclassification/xlnet pretrained/emailcla
 mkdir pretrained/emailclassification/tokenizer
 gsutil -m cp -r gs://recruitaiwork/emailclassification/tokenizer pretrained/emailclassification
 
+gsutil -m cp -r gs://recruitaiwork/cvpartsclassification pretrained/
 
 
 =====

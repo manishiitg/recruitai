@@ -1171,7 +1171,7 @@ def compressContent(finalStructureContent):
 
                     finalStructureContent[idx]["append"].append({
                         "type": "pre",
-                        "row": copy.deepcopy(finalStructureContent[idx])
+                        "row": copy.deepcopy(finalStructureContent[closestIdx])
                     })
 
                     compressedStructuredContent.append(
@@ -1203,7 +1203,7 @@ def compressContent(finalStructureContent):
 
                     finalStructureContent[idx]["append"].append({
                         "type": "append",
-                        "row": copy.deepcopy(finalStructureContent[idx])
+                        "row": copy.deepcopy(finalStructureContent[closestIdx])
                     })
                     compressedStructuredContent.append(
                         finalStructureContent[idx])
