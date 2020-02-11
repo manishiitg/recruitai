@@ -67,6 +67,16 @@ http://176.9.137.77:8085/emailclassify/get%20studio%20benfies%20%20asdf%20asfa%2
 so just the word "hello" has to be learnt as candidate. this is not correct.....
 
 
+
+
+http://176.9.137.77:8086/resume/picture/102.pdf
+get picture of candidate from resume
+
+
+http://176.9.137.77:8086/resume/102.pdf
+
+full parsing of a resume, getting all ner data and classiifcation and images
+
 === 
 cloud sdk
 
@@ -124,3 +134,14 @@ b) Classification of emails
 
 c) TBD. Semantic Search
 d) TBD. Candidate Scoring
+
+
+
+
+=====
+supervisor commands
+
+supervisorctl reread
+supervisorctl update all
+supervisorctl start recruitai
+supervisorctl restart recruitai
