@@ -1,7 +1,7 @@
 absl-py==0.9.0
 APScheduler==3.6.3
 argcomplete==1.10.0
-astroid==2.3.3
+astroid
 attrs==19.3.0
 autopep8==1.5
 beautifulsoup4==4.8.0
@@ -9,7 +9,7 @@ boto==2.49.0
 boto3==1.11.13
 botocore==1.14.13
 bpemb==0.3.0
-cachetools==4.0.0
+cachetools
 certifi==2019.11.28
 chardet==3.0.4
 Click==7.0
@@ -18,13 +18,12 @@ cycler==0.10.0
 Cython==0.29.14
 decorator==4.4.1
 Deprecated==1.2.7
-detectron2==0.1
 docutils==0.15.2
 docx2txt==0.8
 EbookLib==0.17.1
 extract-msg==0.23.1
 filelock==3.0.12
-flair==0.4.5
+flair
 Flask==1.1.1
 Flask-Cors==3.0.8
 Flask-JWT-Extended==3.24.1

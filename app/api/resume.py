@@ -1,3 +1,13 @@
+from app.picture.start import processAPI as extractPicture
+from app.config import storage_client
+from app.nerclassify.start import process as classifyNer
+from app.ner.start import processAPI as extractNer
+from app.detectron.start import processAPI
+import json
+import os
+from pathlib import Path
+from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH
+from app.logging import logger
 from app import token
 from app import mongo
 from flask import (
@@ -13,17 +23,6 @@ from flask_jwt_extended import (
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
-from app.logging import logger
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH
-from pathlib import Path
-import os
-import json
-from app.detectron.start import processAPI
-from app.picture.start import processAPI as extractPicture 
-from app.ner.start import processAPI as extractNer
-from app.nerclassify.start import process as classifyNer
-
-from app.config import storage_client
 
 @bp.route('/<string:filename>', methods=['GET'])
 def fullparsing(filename):
@@ -37,9 +36,9 @@ def fullparsing(filename):
 
     response, basedir = extractPicture(os.path.join(dest, filename))
 
-    fullResponse["picture"] = {"response" : response, "basePath" : basedir}
+    fullResponse["picture"] = {"response": response, "basePath": basedir}
 
-    response , basePath = processAPI(os.path.join(dest, filename))
+    response, basePath = processAPI(os.path.join(dest, filename))
 
     # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
@@ -47,7 +46,7 @@ def fullparsing(filename):
     row = []
     for page in response:
         row.append(page["compressedStructuredContent"])
-    
+
     nertoparse.append({"compressedStructuredContent": row})
 
     nerExtracted = extractNer(nertoparse)
@@ -59,15 +58,16 @@ def fullparsing(filename):
     row["nerparsed"] = nerExtracted
     row["compressedStructuredContent"] = {}
     for pageIdx, page in enumerate(response):
-        row["compressedStructuredContent"][str(pageIdx + 1)] = page["compressedStructuredContent"]
-    
+        row["compressedStructuredContent"][str(
+            pageIdx + 1)] = page["compressedStructuredContent"]
+
     combinData = classifyNer([row])
 
     assert len(combinData) == 1
 
     fullResponse["finalData"] = combinData[0]
 
-    return jsonify(fullResponse) , 200
+    return jsonify(fullResponse), 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
@@ -76,7 +76,7 @@ def fullparsing(filename):
 def picture(filename):
 
     # try:
-        
+
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
     dest = BASE_PATH + "/../temp"
@@ -85,8 +85,7 @@ def picture(filename):
 
     response, basedir = extractPicture(os.path.join(dest, filename))
 
-    
-    return jsonify(response , basedir) , 200
+    return jsonify(response, basedir), 200
     # except Exception as e:
     #     return jsonify(str(e)) , 500
 
@@ -98,7 +97,6 @@ def picture(filename):
 def parse(filename):
 
     try:
-        
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         blob = bucket.blob(filename)
@@ -106,12 +104,11 @@ def parse(filename):
         Path(dest).mkdir(parents=True, exist_ok=True)
         blob.download_to_filename(os.path.join(dest, filename))
 
-        response , basePath = processAPI(os.path.join(dest, filename))
+        response, basePath = processAPI(os.path.join(dest, filename))
 
-        
         return jsonify({
             "basePath": basePath,
             "response": response
-        }) , 200
+        }), 200
     except Exception as e:
-        return jsonify(str(e)) , 500
+        return jsonify(str(e)), 500
