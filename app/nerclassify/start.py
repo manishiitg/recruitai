@@ -364,7 +364,8 @@ def process(data, isPageWiseData=False):
 
         combinData[rowIdx] = {
             "finalEntity": finalEntity,
-            "extractEntity": extractEntity
+            "extractEntity": extractEntity,
+            "compressedStructuredContent" : row["compressedStructuredContent"]
         }
         if "_id" in row:
             mongo.db.cvparsingsample.update_one({"_id": row["_id"]},
