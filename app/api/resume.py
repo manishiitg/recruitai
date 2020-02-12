@@ -233,13 +233,14 @@ def fullResumeParsing(filename):
 
 
 @bp.route('/<string:filename>', methods=['GET'])
-def fullparsing(filename):
-    if int(os.environ['FLASK_DEBUG']) == 1:
-        return jsonify(fullResumeParsing(filename)), 200
-    else:
-        job = q.enqueue(fullResumeParsing, filename)
-        logger.info(job)
-        return jsonify(job.id), 200
+def fullparsing(filename):   
+    job = q.enqueue(fullResumeParsing, filename)
+    logger.info(job)
+    return jsonify(job.id), 200
+
+@bp.route('/instant/<string:filename>', methods=['GET'])
+def fullparsinginstant(filename):   
+    return jsonify(fullResumeParsing(filename)), 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
