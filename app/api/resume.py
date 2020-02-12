@@ -21,6 +21,10 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
+from app.queue import q, redis_conn
+from rq.job import Job
+
+
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
 
@@ -107,8 +111,16 @@ def testnerclassify():
     }), 200
 
 
-@bp.route('/<string:filename>', methods=['GET'])
-def fullparsing(filename):
+@bp.route('/getJobStatus/<string:jobId>', methods=['GET'])
+def getJobStatus(jobId):
+    job = Job.fetch(jobId, connection=redis_conn)
+    return jsonify({
+        "status": job.get_status(),
+        "result": job.result
+    })
+
+
+def fullResumeParsing(filename):
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
     dest = BASE_PATH + "/../temp"
@@ -209,15 +221,25 @@ def fullparsing(filename):
 
     combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
-    return jsonify({
+    logger.info("full resume parsing completed %s", filename)
+    return {
         "newCompressedStructuredContent": newCompressedStructuredContent,
         "finalEntity": combinData["finalEntity"],
         "debug": {
             "extractEntity": combinData["extractEntity"],
             "compressedStructuredContent": combinData["compressedStructuredContent"]
         }
-    }), 200
-    # return jsonify(fullResponse), 200
+    }
+
+
+@bp.route('/<string:filename>', methods=['GET'])
+def fullparsing(filename):
+    if int(os.environ['FLASK_DEBUG']) == 1:
+        return jsonify(fullResumeParsing(filename)), 200
+    else:
+        job = q.enqueue(fullResumeParsing, filename)
+        logger.info(job)
+        return jsonify(job.id), 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
