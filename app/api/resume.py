@@ -28,8 +28,6 @@ bp = Blueprint('resume', __name__, url_prefix='/resume')
 def testnerclassify():
     ret = mongo.db.cvparsingsample.find({"file": "102.pdf"})
 
-    basefile = "102pdf"
-
     baseURL = GOOGLE_BUCKET_URL
 
     data = []
@@ -146,9 +144,11 @@ def fullparsing(filename):
         row["compressedStructuredContent"][str(
             pageIdx + 1)] = page["compressedStructuredContent"]
 
-    combinData = classifyNer([row])
+    combinData = classifyNer([row])[0]
 
     newCompressedStructuredContent = {}
+
+    baseURL = GOOGLE_BUCKET_URL
 
     for pageno in combinData["compressedStructuredContent"].keys():
         pagerows = combinData["compressedStructuredContent"][pageno]
