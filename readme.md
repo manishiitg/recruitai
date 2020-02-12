@@ -140,7 +140,7 @@ a) CV Process
    3. NER
    4. Classify Lines
    5. Skill Extraction
-   6. Final Data for frontend (TBD)
+   6. Final Data for frontend
 
 
    == Input will be a pdf file. This pdf file can come via a file upload, glcoud bucket,
