@@ -31,7 +31,7 @@ def testnerclassify():
     basefile = "102pdf"
 
     baseURL = GOOGLE_BUCKET_URL
-     
+
     data = []
     for row in ret:
         data.append(row)
@@ -62,8 +62,9 @@ def testnerclassify():
                     if "matchRatio" in row["matchedRow"]:
                         del row["matchedRow"]["matchRatio"]
 
-                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace("cvreconstruction/finalpdf", baseURL)
-                
+                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
+                        "cvreconstruction/finalpdf", baseURL)
+
                 if "append" in row:
                     newAppend = []
                     for r in row["append"]:
@@ -87,10 +88,11 @@ def testnerclassify():
                                     del r["row"]["matchedRow"]["matchRatio"]
 
                             if "matchedRow" in r["row"]:
-                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace("cvreconstruction/finalpdf", baseURL)
+                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
+                                    "cvreconstruction/finalpdf", baseURL)
 
                         newAppend.append(r)
-                    
+
                     row["append"] = newAppend
 
                 newCompressedStructuredContent[pageno].append(row)
@@ -98,11 +100,11 @@ def testnerclassify():
     combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
     return jsonify({
-        "newCompressedStructuredContent" : newCompressedStructuredContent,
-        "finalEntity" : combinData["finalEntity"],
-        "debug" : {
-            "extractEntity" : combinData["extractEntity"],
-            "compressedStructuredContent" : combinData["compressedStructuredContent"]
+        "newCompressedStructuredContent": newCompressedStructuredContent,
+        "finalEntity": combinData["finalEntity"],
+        "debug": {
+            "extractEntity": combinData["extractEntity"],
+            "compressedStructuredContent": combinData["compressedStructuredContent"]
         }
     }), 200
 
@@ -146,11 +148,76 @@ def fullparsing(filename):
 
     combinData = classifyNer([row])
 
-    assert len(combinData) == 1
+    newCompressedStructuredContent = {}
 
-    fullResponse["finalData"] = combinData[0]
+    for pageno in combinData["compressedStructuredContent"].keys():
+        pagerows = combinData["compressedStructuredContent"][pageno]
+        newCompressedStructuredContent[pageno] = []
+        for row in pagerows:
+            if "classify" in row:
+                # classify = row["classify"]
+                # if "append" in row:
+                #     del row["append"]
+                if "finalClaimedIdx" in row:
+                    del row["finalClaimedIdx"]
+                if "isboxfound" in row:
+                    del row["isboxfound"]
+                if "lineIdx" in row:
+                    del row["lineIdx"]
+                if "matchedRow" in row:
+                    if "bbox" in row["matchedRow"]:
+                        del row["matchedRow"]["bbox"]
+                    if "imagesize" in row["matchedRow"]:
+                        del row["matchedRow"]["imagesize"]
+                    if "matchRatio" in row["matchedRow"]:
+                        del row["matchedRow"]["matchRatio"]
 
-    return jsonify(fullResponse), 200
+                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
+                        "cvreconstruction/finalpdf", baseURL)
+
+                if "append" in row:
+                    newAppend = []
+                    for r in row["append"]:
+                        if "row" in r:
+                            if "finalClaimedIdx" in r["row"]:
+                                del r["row"]["finalClaimedIdx"]
+                            if "isboxfound" in r["row"]:
+                                del r["row"]["isboxfound"]
+                            if "lineIdx" in r["row"]:
+                                del r["row"]["lineIdx"]
+                            if "matchedRow" in r["row"]:
+                                if "bbox" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["bbox"]
+                                if "idx" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["idx"]
+                                if "isClaimed" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["isClaimed"]
+                                if "imagesize" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["imagesize"]
+                                if "matchRatio" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["matchRatio"]
+
+                            if "matchedRow" in r["row"]:
+                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
+                                    "cvreconstruction/finalpdf", baseURL)
+
+                        newAppend.append(r)
+
+                    row["append"] = newAppend
+
+                newCompressedStructuredContent[pageno].append(row)
+
+    combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
+
+    return jsonify({
+        "newCompressedStructuredContent": newCompressedStructuredContent,
+        "finalEntity": combinData["finalEntity"],
+        "debug": {
+            "extractEntity": combinData["extractEntity"],
+            "compressedStructuredContent": combinData["compressedStructuredContent"]
+        }
+    }), 200
+    # return jsonify(fullResponse), 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
