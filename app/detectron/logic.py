@@ -665,7 +665,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                         logger.debug("found the unclamed line, lets claim it?")
                         jsonOutput[finalMaxRow["lineIdx"]]["isClaimed"] = True
                         jsonOutput[finalMaxRow["lineIdx"]]["matchRatio"] = {
-                            "ratio": ratio2,
+                            "ratio": finalMaxRow["ratio2"],
                             "line": stRow["line"],
                             "isOrphan": False
                         }
