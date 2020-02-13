@@ -234,7 +234,7 @@ def fullResumeParsing(filename):
 
 @bp.route('/<string:filename>', methods=['GET'])
 def fullparsing(filename):   
-    job = q.enqueue(fullResumeParsing, filename)
+    job = q.enqueue(fullResumeParsing, filename , result_ttl=86400) #1 day
     logger.info(job)
     return jsonify(job.id), 200
 
