@@ -24,92 +24,108 @@ from flask_jwt_extended import (
 from app.queue import q, redis_conn
 from rq.job import Job
 
+from rq import get_current_job
+
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
 
-@bp.route('/testnerclassify', methods=['GET'])
-def testnerclassify():
-    ret = mongo.db.cvparsingsample.find({"file": "102.pdf"})
+# @bp.route('/testnerclassify', methods=['GET'])
+# def testnerclassify():
+#     ret = mongo.db.cvparsingsample.find({"file": "102.pdf"})
 
-    baseURL = GOOGLE_BUCKET_URL
+#     baseURL = GOOGLE_BUCKET_URL
 
-    data = []
-    for row in ret:
-        data.append(row)
+#     data = []
+#     for row in ret:
+#         data.append(row)
 
-    combinData = classifyNer(data, True)[0]
+#     combinData = classifyNer(data, True)[0]
 
-    newCompressedStructuredContent = {}
+#     newCompressedStructuredContent = {}
 
-    for pageno in combinData["compressedStructuredContent"].keys():
-        pagerows = combinData["compressedStructuredContent"][pageno]
-        newCompressedStructuredContent[pageno] = []
-        for row in pagerows:
-            if "classify" in row:
-                # classify = row["classify"]
-                # if "append" in row:
-                #     del row["append"]
-                if "finalClaimedIdx" in row:
-                    del row["finalClaimedIdx"]
-                if "isboxfound" in row:
-                    del row["isboxfound"]
-                if "lineIdx" in row:
-                    del row["lineIdx"]
-                if "matchedRow" in row:
-                    if "bbox" in row["matchedRow"]:
-                        del row["matchedRow"]["bbox"]
-                    if "imagesize" in row["matchedRow"]:
-                        del row["matchedRow"]["imagesize"]
-                    if "matchRatio" in row["matchedRow"]:
-                        del row["matchedRow"]["matchRatio"]
+#     for pageno in combinData["compressedStructuredContent"].keys():
+#         pagerows = combinData["compressedStructuredContent"][pageno]
+#         newCompressedStructuredContent[pageno] = []
+#         for row in pagerows:
+#             if "classify" in row:
+#                 # classify = row["classify"]
+#                 # if "append" in row:
+#                 #     del row["append"]
+#                 if "finalClaimedIdx" in row:
+#                     del row["finalClaimedIdx"]
+#                 if "isboxfound" in row:
+#                     del row["isboxfound"]
+#                 if "lineIdx" in row:
+#                     del row["lineIdx"]
+#                 if "matchedRow" in row:
+#                     if "bbox" in row["matchedRow"]:
+#                         del row["matchedRow"]["bbox"]
+#                     if "imagesize" in row["matchedRow"]:
+#                         del row["matchedRow"]["imagesize"]
+#                     if "matchRatio" in row["matchedRow"]:
+#                         del row["matchedRow"]["matchRatio"]
 
-                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
-                        "cvreconstruction/finalpdf", baseURL)
+#                     row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
+#                         "cvreconstruction/finalpdf", baseURL)
 
-                if "append" in row:
-                    newAppend = []
-                    for r in row["append"]:
-                        if "row" in r:
-                            if "finalClaimedIdx" in r["row"]:
-                                del r["row"]["finalClaimedIdx"]
-                            if "isboxfound" in r["row"]:
-                                del r["row"]["isboxfound"]
-                            if "lineIdx" in r["row"]:
-                                del r["row"]["lineIdx"]
-                            if "matchedRow" in r["row"]:
-                                if "bbox" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["bbox"]
-                                if "idx" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["idx"]
-                                if "isClaimed" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["isClaimed"]
-                                if "imagesize" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["imagesize"]
-                                if "matchRatio" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["matchRatio"]
+#                 if "append" in row:
+#                     newAppend = []
+#                     for r in row["append"]:
+#                         if "row" in r:
+#                             if "finalClaimedIdx" in r["row"]:
+#                                 del r["row"]["finalClaimedIdx"]
+#                             if "isboxfound" in r["row"]:
+#                                 del r["row"]["isboxfound"]
+#                             if "lineIdx" in r["row"]:
+#                                 del r["row"]["lineIdx"]
+#                             if "matchedRow" in r["row"]:
+#                                 if "bbox" in r["row"]["matchedRow"]:
+#                                     del r["row"]["matchedRow"]["bbox"]
+#                                 if "idx" in r["row"]["matchedRow"]:
+#                                     del r["row"]["matchedRow"]["idx"]
+#                                 if "isClaimed" in r["row"]["matchedRow"]:
+#                                     del r["row"]["matchedRow"]["isClaimed"]
+#                                 if "imagesize" in r["row"]["matchedRow"]:
+#                                     del r["row"]["matchedRow"]["imagesize"]
+#                                 if "matchRatio" in r["row"]["matchedRow"]:
+#                                     del r["row"]["matchedRow"]["matchRatio"]
 
-                            if "matchedRow" in r["row"]:
-                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
-                                    "cvreconstruction/finalpdf", baseURL)
+#                             if "matchedRow" in r["row"]:
+#                                 r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
+#                                     "cvreconstruction/finalpdf", baseURL)
 
-                        newAppend.append(r)
+#                         newAppend.append(r)
 
-                    row["append"] = newAppend
+#                     row["append"] = newAppend
 
-                newCompressedStructuredContent[pageno].append(row)
+#                 newCompressedStructuredContent[pageno].append(row)
 
-    combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
+#     combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
+#     return jsonify({
+#         "newCompressedStructuredContent": newCompressedStructuredContent,
+#         "finalEntity": combinData["finalEntity"],
+#         "debug": {
+#             "extractEntity": combinData["extractEntity"],
+#             "compressedStructuredContent": combinData["compressedStructuredContent"]
+#         }
+#     }), 200
+
+
+
+@bp.route('/getCurrentJob', methods=['GET'])
+def getCurrentJob():
+    job = get_current_job()
     return jsonify({
-        "newCompressedStructuredContent": newCompressedStructuredContent,
-        "finalEntity": combinData["finalEntity"],
-        "debug": {
-            "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": combinData["compressedStructuredContent"]
-        }
-    }), 200
+        "status": job.get_status(),
+        "id": job.id
+    })
 
+@bp.route('/emptyQueue', methods=['GET'])
+def emptyQueue():
+    q.empty()
+    return jsonify({})
 
 @bp.route('/getJobStatus/<string:jobId>', methods=['GET'])
 def getJobStatus(jobId):
