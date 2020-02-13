@@ -121,125 +121,133 @@ def getJobStatus(jobId):
 
 
 def fullResumeParsing(filename):
-    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    blob = bucket.blob(filename)
-    dest = BASE_PATH + "/../temp"
-    Path(dest).mkdir(parents=True, exist_ok=True)
-    blob.download_to_filename(os.path.join(dest, filename))
+    try:
+        bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+        blob = bucket.blob(filename)
+        dest = BASE_PATH + "/../temp"
+        Path(dest).mkdir(parents=True, exist_ok=True)
+        blob.download_to_filename(os.path.join(dest, filename))
 
-    fullResponse = {}
+        fullResponse = {}
 
-    response, basedir = extractPicture(os.path.join(dest, filename))
+        response, basedir = extractPicture(os.path.join(dest, filename))
 
-    fullResponse["picture"] = {"response": response, "basePath": basedir}
+        fullResponse["picture"] = {"response": response, "basePath": basedir}
 
-    response, basePath = processAPI(os.path.join(dest, filename))
+        response, basePath = processAPI(os.path.join(dest, filename))
 
-    # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
+        # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
-    nertoparse = []
-    row = []
-    for page in response:
-        row.append(page["compressedStructuredContent"])
+        nertoparse = []
+        row = []
+        for page in response:
+            row.append(page["compressedStructuredContent"])
 
-    nertoparse.append({"compressedStructuredContent": row})
+        nertoparse.append({"compressedStructuredContent": row})
 
-    nerExtracted = extractNer(nertoparse)
+        nerExtracted = extractNer(nertoparse)
 
-    # fullResponse["nerExtracted"] = nerExtracted
+        # fullResponse["nerExtracted"] = nerExtracted
 
-    row = {}
-    row["file"] = filename
-    row["nerparsed"] = nerExtracted
-    row["compressedStructuredContent"] = {}
-    for pageIdx, page in enumerate(response):
-        row["compressedStructuredContent"][str(
-            pageIdx + 1)] = page["compressedStructuredContent"]
+        row = {}
+        row["file"] = filename
+        row["nerparsed"] = nerExtracted
+        row["compressedStructuredContent"] = {}
+        for pageIdx, page in enumerate(response):
+            row["compressedStructuredContent"][str(
+                pageIdx + 1)] = page["compressedStructuredContent"]
 
-    combinData = classifyNer([row])[0]
+        combinData = classifyNer([row])[0]
 
-    newCompressedStructuredContent = {}
+        newCompressedStructuredContent = {}
 
-    baseURL = GOOGLE_BUCKET_URL
+        baseURL = GOOGLE_BUCKET_URL
 
-    for pageno in combinData["compressedStructuredContent"].keys():
-        pagerows = combinData["compressedStructuredContent"][pageno]
-        newCompressedStructuredContent[pageno] = []
-        for row in pagerows:
-            if "classify" in row:
-                # classify = row["classify"]
-                # if "append" in row:
-                #     del row["append"]
-                if "finalClaimedIdx" in row:
-                    del row["finalClaimedIdx"]
-                if "isboxfound" in row:
-                    del row["isboxfound"]
-                if "lineIdx" in row:
-                    del row["lineIdx"]
-                if "matchedRow" in row:
-                    if "bbox" in row["matchedRow"]:
-                        del row["matchedRow"]["bbox"]
-                    if "imagesize" in row["matchedRow"]:
-                        del row["matchedRow"]["imagesize"]
-                    if "matchRatio" in row["matchedRow"]:
-                        del row["matchedRow"]["matchRatio"]
+        for pageno in combinData["compressedStructuredContent"].keys():
+            pagerows = combinData["compressedStructuredContent"][pageno]
+            newCompressedStructuredContent[pageno] = []
+            for row in pagerows:
+                if "classify" in row:
+                    # classify = row["classify"]
+                    # if "append" in row:
+                    #     del row["append"]
+                    if "finalClaimedIdx" in row:
+                        del row["finalClaimedIdx"]
+                    if "isboxfound" in row:
+                        del row["isboxfound"]
+                    if "lineIdx" in row:
+                        del row["lineIdx"]
+                    if "matchedRow" in row:
+                        if "bbox" in row["matchedRow"]:
+                            del row["matchedRow"]["bbox"]
+                        if "imagesize" in row["matchedRow"]:
+                            del row["matchedRow"]["imagesize"]
+                        if "matchRatio" in row["matchedRow"]:
+                            del row["matchedRow"]["matchRatio"]
 
-                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
-                        "cvreconstruction/finalpdf", baseURL)
+                        row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
+                            "cvreconstruction/finalpdf", baseURL)
 
-                if "append" in row:
-                    newAppend = []
-                    for r in row["append"]:
-                        if "row" in r:
-                            if "finalClaimedIdx" in r["row"]:
-                                del r["row"]["finalClaimedIdx"]
-                            if "isboxfound" in r["row"]:
-                                del r["row"]["isboxfound"]
-                            if "lineIdx" in r["row"]:
-                                del r["row"]["lineIdx"]
-                            if "matchedRow" in r["row"]:
-                                if "bbox" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["bbox"]
-                                if "idx" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["idx"]
-                                if "isClaimed" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["isClaimed"]
-                                if "imagesize" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["imagesize"]
-                                if "matchRatio" in r["row"]["matchedRow"]:
-                                    del r["row"]["matchedRow"]["matchRatio"]
+                    if "append" in row:
+                        newAppend = []
+                        for r in row["append"]:
+                            if "row" in r:
+                                if "finalClaimedIdx" in r["row"]:
+                                    del r["row"]["finalClaimedIdx"]
+                                if "isboxfound" in r["row"]:
+                                    del r["row"]["isboxfound"]
+                                if "lineIdx" in r["row"]:
+                                    del r["row"]["lineIdx"]
+                                if "matchedRow" in r["row"]:
+                                    if "bbox" in r["row"]["matchedRow"]:
+                                        del r["row"]["matchedRow"]["bbox"]
+                                    if "idx" in r["row"]["matchedRow"]:
+                                        del r["row"]["matchedRow"]["idx"]
+                                    if "isClaimed" in r["row"]["matchedRow"]:
+                                        del r["row"]["matchedRow"]["isClaimed"]
+                                    if "imagesize" in r["row"]["matchedRow"]:
+                                        del r["row"]["matchedRow"]["imagesize"]
+                                    if "matchRatio" in r["row"]["matchedRow"]:
+                                        del r["row"]["matchedRow"]["matchRatio"]
 
-                            if "matchedRow" in r["row"]:
-                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
-                                    "cvreconstruction/finalpdf", baseURL)
+                                if "matchedRow" in r["row"]:
+                                    r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
+                                        "cvreconstruction/finalpdf", baseURL)
 
-                        newAppend.append(r)
+                            newAppend.append(r)
 
-                    row["append"] = newAppend
+                        row["append"] = newAppend
 
-                newCompressedStructuredContent[pageno].append(row)
+                    newCompressedStructuredContent[pageno].append(row)
 
-    combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
+        combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
-    logger.info("full resume parsing completed %s", filename)
-    return {
-        "newCompressedStructuredContent": newCompressedStructuredContent,
-        "finalEntity": combinData["finalEntity"],
-        "debug": {
-            "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": combinData["compressedStructuredContent"]
+        logger.info("full resume parsing completed %s", filename)
+        return {
+            "newCompressedStructuredContent": newCompressedStructuredContent,
+            "finalEntity": combinData["finalEntity"],
+            "debug": {
+                "extractEntity": combinData["extractEntity"],
+                "compressedStructuredContent": combinData["compressedStructuredContent"]
+            }
         }
-    }
+
+    except Exception as e:
+        logger.info("error %s", str(e))
+        return {
+            "error": str(e)
+        }
 
 
 @bp.route('/<string:filename>', methods=['GET'])
-def fullparsing(filename):   
-    job = q.enqueue(fullResumeParsing, filename , result_ttl=86400) #1 day
+def fullparsing(filename):
+    job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
     logger.info(job)
     return jsonify(job.id), 200
 
+
 @bp.route('/instant/<string:filename>', methods=['GET'])
-def fullparsinginstant(filename):   
+def fullparsinginstant(filename):
     return jsonify(fullResumeParsing(filename)), 200
 
 # @bp.route('', methods=['POST', 'GET'])
