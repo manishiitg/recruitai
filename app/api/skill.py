@@ -40,16 +40,16 @@ def similar(keyword):
         serializedPositiveSkill = []
         for skill in positive:
             if " " in skill:
-                serializedPositiveSkill.extend(skill.split(" "))
+                serializedPositiveSkill.extend(skill.lower().split(" "))
             else:
-                serializedPositiveSkill.append(skill)
+                serializedPositiveSkill.append(skill.lower())
 
         serializedNegativeSkill = []
         for skill in negative:
             if " " in skill:
-                serializedNegativeSkill.extend(skill.split(" "))
+                serializedNegativeSkill.extend(skill.lower().split(" "))
             else:
-                serializedNegativeSkill.append(skill)
+                serializedNegativeSkill.append(skill.lower())
 
         logger.info("positive %s and negative %s", serializedPositiveSkill, serializedNegativeSkill)
            
