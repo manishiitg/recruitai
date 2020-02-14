@@ -43,17 +43,17 @@ def similar(keyword):
                 serializedPositiveSkill.extend(skill.lower().split(" "))
             else:
                 serializedPositiveSkill.append(skill.lower())
-
+ 
         serializedNegativeSkill = []
         for skill in negative:
             if " " in skill:
                 serializedNegativeSkill.extend(skill.lower().split(" "))
             else:
                 serializedNegativeSkill.append(skill.lower())
-
-        logger.info("positive %s and negative %s", serializedPositiveSkill, serializedNegativeSkill)
+ 
+        logger.info("seralized positive %s and negative %s", serializedPositiveSkill, serializedNegativeSkill)
            
-        similar = get_similar(positive, negative)
+        similar = get_similar(serializedPositiveSkill, serializedNegativeSkill)
         return jsonify(similar), 200
     except KeyError as e:
         logger.critical(e)
