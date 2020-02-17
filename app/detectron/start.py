@@ -6,7 +6,7 @@ import torch
 from app.config import IN_COLAB
 from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
 
-from app import mongo
+# from app import mongo
 
 import logging
 import os
@@ -109,8 +109,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     combinedCompressedContent[fileIdx] = []
 
     logger.info(filestoparse[fileIdx])
-    if filestoparse[fileIdx]["id"] != -1:
-      mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, { "$set" : { "parsed" : True } })
+    # if filestoparse[fileIdx]["id"] != -1:
+    #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, { "$set" : { "parsed" : True } })
     
     # copy from source directory to input directory
     cv = shutil.copy(filestoparse[fileIdx]["file"],  inputDir)  
@@ -196,14 +196,14 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         content = str(content)
       except PDFTextExtractionNotAllowed as e:
         logger.critical(e)
-        if filestoparse[fileIdx]["id"] != -1:
-          mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
-            { 
-                "$set" : {
-                  "error" : str(e)
-                }
-            }
-          )
+        # if filestoparse[fileIdx]["id"] != -1:
+        #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
+        #     { 
+        #         "$set" : {
+        #           "error" : str(e)
+        #         }
+        #     }
+        #   )
         logger.critical("skipping due to error in cv extration %s " , filestoparse[fileIdx]["id"])
         continue
 
@@ -227,16 +227,16 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       logger.debug(compressedStructuredContent)
       logger.info("length of compressed content %s" , len(compressedStructuredContent))
 
-      if filestoparse[fileIdx]["id"] != -1:
-        mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
-        { "$set" : {
-          str(cvpage) : {
-            "compressedStructuredContent" : json.dumps(compressedStructuredContent, indent=2 , sort_keys=True),
-            "jsonOutput" : json.dumps(jsonOutput, indent=2 , sort_keys=True)
-            }
-          }
-        }
-      )
+      # if filestoparse[fileIdx]["id"] != -1:
+      #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
+      #   { "$set" : {
+      #     str(cvpage) : {
+      #       "compressedStructuredContent" : json.dumps(compressedStructuredContent, indent=2 , sort_keys=True),
+      #       "jsonOutput" : json.dumps(jsonOutput, indent=2 , sort_keys=True)
+      #       }
+      #     }
+      #   }
+      # )
       combinedCompressedContent[fileIdx].append({
         "compressedStructuredContent" : compressedStructuredContent,
         "jsonOutput" : jsonOutput
@@ -322,13 +322,13 @@ def getFilesToParseForTesting():
     })
   return filestoparse
 
-def getFilesToParseFromDB():
-  ret = mongo.db.cvparsingsample.find({"parsed" : False, "dataset" : 3})
-  filestoparse = []
-  for row in ret:
-    filestoparse.append({
-        "file" : row["file"],
-        "id" : row["_id"]
-    })
+# def getFilesToParseFromDB():
+#   ret = mongo.db.cvparsingsample.find({"parsed" : False, "dataset" : 3})
+#   filestoparse = []
+#   for row in ret:
+#     filestoparse.append({
+#         "file" : row["file"],
+#         "id" : row["_id"]
+#     })
 
-  return filestoparse
+#   return filestoparse

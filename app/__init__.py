@@ -14,6 +14,8 @@ from app import token
 
 jwt = token.init_token()
 
+from app.scheduler import process_resumes
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -58,9 +60,10 @@ def create_app(test_config=None):
     app.register_blueprint(resume.bp)
     
     # Scheduler which will run at interval of 60 seconds for user checkin score
-    # checkin_score_scheduler = BackgroundScheduler()
-    # checkin_score_scheduler.add_job(checkin_score, trigger='interval', seconds=checkin_score_scheduler_seconds)
-    # checkin_score_scheduler.start()
+    checkin_score_scheduler = BackgroundScheduler()
+    checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=60*2.5)
+    checkin_score_scheduler.start()
+    process_resumes()
     
     
 
