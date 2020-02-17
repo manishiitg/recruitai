@@ -172,7 +172,8 @@ def fullResumeParsing(filename):
 
         fullResponse["picture"] = response
         
-        fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/") 
+        if response:
+            fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/") 
 
         response, basePath = processAPI(os.path.join(dest, filename))
 
