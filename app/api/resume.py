@@ -26,6 +26,8 @@ from rq.job import Job
 
 from rq import get_current_job
 
+import subprocess
+
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
@@ -140,15 +142,37 @@ def fullResumeParsing(filename):
     try:
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         blob = bucket.blob(filename)
+
+        
+
         dest = BASE_PATH + "/../temp"
         Path(dest).mkdir(parents=True, exist_ok=True)
-        blob.download_to_filename(os.path.join(dest, filename))
+        filename , file_extension = os.path.splitext(filename)
+        cvfilename = ''.join(e for e in filename if e.isalnum())  + file_extension
+        cvdir = ''.join(e for e in cvfilename if e.isalnum())
+        blob.download_to_filename(os.path.join(dest, cvfilename))
+
+
+        filename = cvfilename
+
+        logger.info("final file name %s",filename)
+
+        if ".pdf" not in filename:
+            inputFile = os.path.join(dest, filename)
+            
+            filename = filename.replace(file_extension, ".pdf")
+            #libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
+            x = subprocess.check_call(['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " +  dest ], shell=True)
+            logger.info(x)
+        
 
         fullResponse = {}
 
         response, basedir = extractPicture(os.path.join(dest, filename))
 
-        fullResponse["picture"] = {"response": response, "basePath": basedir}
+        fullResponse["picture"] = response
+        
+        fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/") 
 
         response, basePath = processAPI(os.path.join(dest, filename))
 
@@ -177,7 +201,7 @@ def fullResumeParsing(filename):
 
         newCompressedStructuredContent = {}
 
-        baseURL = GOOGLE_BUCKET_URL
+        
 
         for pageno in combinData["compressedStructuredContent"].keys():
             pagerows = combinData["compressedStructuredContent"][pageno]
@@ -202,7 +226,7 @@ def fullResumeParsing(filename):
                             del row["matchedRow"]["matchRatio"]
 
                         row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
-                            "cvreconstruction/finalpdf", baseURL)
+                            basePath + "/", GOOGLE_BUCKET_URL)
 
                     if "append" in row:
                         newAppend = []
@@ -228,7 +252,7 @@ def fullResumeParsing(filename):
 
                                 if "matchedRow" in r["row"]:
                                     r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
-                                        "cvreconstruction/finalpdf", baseURL)
+                                        basePath + "/", GOOGLE_BUCKET_URL)
 
                             newAppend.append(r)
 
@@ -242,6 +266,7 @@ def fullResumeParsing(filename):
         return {
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
+            "picture" : fullResponse["picture"],
             "debug": {
                 "extractEntity": combinData["extractEntity"],
                 "compressedStructuredContent": combinData["compressedStructuredContent"]
