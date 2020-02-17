@@ -5,7 +5,7 @@ from flair.models import SequenceTagger
 from app.logging import logger
 from app.config import BASE_PATH
 import json
-from app import mongo
+# from app import mongo
 import torch
 import tqdm 
 from flair.data import Sentence
@@ -46,9 +46,10 @@ def start(isTesting=False):
         return entities
     else:
         logger.setLevel(logging.CRITICAL)
-        nertoparse = getFilesToParseFromDB()
+        return False
+        # nertoparse = getFilesToParseFromDB()
 
-        return process(nertoparse, tagger)
+        # return process(nertoparse, tagger)
 
 def processAPI(nertoparse):
     # always single file via api
@@ -107,13 +108,13 @@ def process(nertoparse, tagger):
         row["finalner"] = finalNER
         combineNer[idx] = finalNER
 
-        if "_id" in row:
-            mongo.db.cvparsingsample.update_one({
-                "_id": row["_id"]
-            }, {"$set": {
-                "nerparsed": finalNER,
-                "nerparsedv3": True
-            }})
+        # if "_id" in row:
+        #     mongo.db.cvparsingsample.update_one({
+        #         "_id": row["_id"]
+        #     }, {"$set": {
+        #         "nerparsed": finalNER,
+        #         "nerparsedv3": True
+        #     }})
 
     return combineNer
 
@@ -132,24 +133,24 @@ def getFilesToParseForTesting():
     return sents
 
 
-def getFilesToParseFromDB():
-    ret = mongo.db.cvparsingsample.find(
-        {"nerparsedv3": {"$exists": False}, "parsed": True})
-    nertoparse = []
-    for row in ret:
-        row["compressedStructuredContent"] = []
-        for cvpage in range(1, 10):
-            # max 10 cv pages
-            cvpage = str(cvpage)
-            if cvpage in row and "compressedStructuredContent" in row[cvpage]:
-                row["compressedStructuredContent"].append(
-                    json.loads(row[cvpage]["compressedStructuredContent"]))
-            else:
-                break
+# def getFilesToParseFromDB():
+#     ret = mongo.db.cvparsingsample.find(
+#         {"nerparsedv3": {"$exists": False}, "parsed": True})
+#     nertoparse = []
+#     for row in ret:
+#         row["compressedStructuredContent"] = []
+#         for cvpage in range(1, 10):
+#             # max 10 cv pages
+#             cvpage = str(cvpage)
+#             if cvpage in row and "compressedStructuredContent" in row[cvpage]:
+#                 row["compressedStructuredContent"].append(
+#                     json.loads(row[cvpage]["compressedStructuredContent"]))
+#             else:
+#                 break
 
-            nertoparse.append(row)
+#             nertoparse.append(row)
 
-    return nertoparse
+#     return nertoparse
 
 
 def nerlines(compressedStructuredContent):
