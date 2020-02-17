@@ -19,14 +19,13 @@ pip uninstall tokenizers
 pip install  tokenizers
 
 pip install google-cloud-storage
-
+sudo apt-get install libreoffice
 
 sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 sudo apt-get install python-poppler poppler-utils
 
 export FLASK_APP=app
-export FLASK_DEBUG=1
-flask run --host 0.0.0.0 --port 8085
+export FLASK_DEBUG=1 && flask run --host 0.0.0.0 --port 8085
 
  ps -aux | grep 8085
 
@@ -98,6 +97,8 @@ sudo apt-get install apt-transport-https ca-certificates gnupg
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 
 
+sudo apt-get install libreoffice
+
 sudo apt-get update && sudo apt-get install google-cloud-sdk
 
 apt-get install python-dev libxml2-dev libxslt1-dev antiword unrtf poppler-utils pstotext tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig
@@ -111,6 +112,7 @@ gsutil -m cp -r gs://recruitaiwork/detectron3_5000 pretrained/
 gsutil -m cp -r gs://recruitaiwork/recruit-ner-flair-augment pretrained/
 gsutil -m cp -r gs://recruitaiwork/recruit-ner-word2vec-flair pretrained/
 gsutil -m cp -r gs://recruitaiwork/word2vec/word2vecrecruitskills.model	 pretrained/
+gsutil -m cp -r gs://recruitaiwork/word2vec/word2vecfull.bin pretrained/
 mkdir pretrained/emailclassification
 gsutil -m cp -r gs://recruitaiwork/emailclassification/xlnet pretrained/emailclassification
 mkdir pretrained/emailclassification/tokenizer

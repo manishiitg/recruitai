@@ -1,3 +1,4 @@
+from app.logging import logger
 from app import token
 from app import mongo
 from flask import (
@@ -15,7 +16,38 @@ from app.skillsword2vec.start import get_similar
 
 bp = Blueprint('skill', __name__, url_prefix='/skill')
 
-from app.logging import logger
+
+def processWord2VecInput(keyword):
+    if "-" in keyword:
+        negative = keyword.split("-")[1]
+        positive = keyword.split("-")[0]
+    else:
+        positive = keyword
+        negative = []
+
+    if "+" in positive:
+        positive = positive.split("+")
+    else:
+        positive = [positive]
+
+    serializedPositiveSkill = []
+    for skill in positive:
+        if " " in skill:
+            serializedPositiveSkill.extend(skill.lower().split(" "))
+        else:
+            serializedPositiveSkill.append(skill.lower())
+
+    serializedNegativeSkill = []
+    for skill in negative:
+        if " " in skill:
+            serializedNegativeSkill.extend(skill.lower().split(" "))
+        else:
+            serializedNegativeSkill.append(skill.lower())
+
+    logger.info("seralized positive %s and negative %s",
+                serializedPositiveSkill, serializedNegativeSkill)
+    return serializedPositiveSkill,  serializedNegativeSkill
+
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
@@ -24,36 +56,28 @@ from app.logging import logger
 def similar(keyword):
     logger.info("got keyword %s", keyword)
     try:
-        
-        if "-" in keyword:
-            negative = keyword.split("-")[1]
-            positive = keyword.split("-")[0]
-        else:
-            positive = keyword
-            negative = []
 
-        if "+" in positive:
-            positive = positive.split("+")
-        else:
-            positive = [positive]
+        serializedPositiveSkill, serializedNegativeSkill = processWord2VecInput(
+            keyword)
 
-        serializedPositiveSkill = []
-        for skill in positive:
-            if " " in skill:
-                serializedPositiveSkill.extend(skill.lower().split(" "))
-            else:
-                serializedPositiveSkill.append(skill.lower())
- 
-        serializedNegativeSkill = []
-        for skill in negative:
-            if " " in skill:
-                serializedNegativeSkill.extend(skill.lower().split(" "))
-            else:
-                serializedNegativeSkill.append(skill.lower())
- 
-        logger.info("seralized positive %s and negative %s", serializedPositiveSkill, serializedNegativeSkill)
-           
         similar = get_similar(serializedPositiveSkill, serializedNegativeSkill)
+        return jsonify(similar), 200
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
+# @bp.route('', methods=['POST', 'GET'])
+# @jwt_required
+# @token.admin_required
+@bp.route('/global/<string:keyword>', methods=['GET'])
+def similarGlobal(keyword):
+    logger.info("got keyword %s", keyword)
+    try:
+        serializedPositiveSkill, serializedNegativeSkill = processWord2VecInput(
+            keyword)
+
+        similar = get_similar(serializedPositiveSkill, serializedNegativeSkill, True)
         return jsonify(similar), 200
     except KeyError as e:
         logger.critical(e)

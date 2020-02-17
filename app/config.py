@@ -8,7 +8,7 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 RESUME_UPLOAD_BUCKET = "staticrecruitai.excellencetechnologies.in"
 
-GOOGLE_BUCKET_URL = "http://storage.googleapis.com/" + RESUME_UPLOAD_BUCKET + "/"
+GOOGLE_BUCKET_URL = "https://" + RESUME_UPLOAD_BUCKET + "/"
 
 storage_client = storage.Client.from_service_account_json(
             BASE_PATH + '/../RecruitAI.json')
