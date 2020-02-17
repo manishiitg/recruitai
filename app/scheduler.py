@@ -28,7 +28,7 @@ def process_resumes():
 
 
 
-        x = subprocess.check_call(['gsutil -m cp -n ' + batchfile + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+        x = subprocess.check_call(['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
         logger.info(x)
 
         os.remove(batchfile)
