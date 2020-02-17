@@ -9,7 +9,7 @@ from pathlib import Path
 import subprocess
 import os
 
-def fullResumeParsing(filename, returnFullData = False):
+def fullResumeParsing(filename):
     try:
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         blob = bucket.blob(filename)
@@ -141,9 +141,6 @@ def fullResumeParsing(filename, returnFullData = False):
                 "compressedStructuredContent": combinData["compressedStructuredContent"]
             }
         }
-
-        if returnFullData:
-            ret["compressedData"] = response
 
         return ret
 

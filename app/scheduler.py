@@ -17,6 +17,16 @@ def process_resumes():
         filename = files[0]
         batchfile = os.path.join(batchDir, filename)
 
+        # count = mongo.db.cvparsingsample.count({
+        #     "file" : filename
+        # })
+
+        # if count > 0:
+        #     logger.info("file already exists")
+        #     os.remove(batchfile)
+        #     return
+
+
 
         x = subprocess.check_call(['gsutil -m cp -n ' + batchfile + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
         logger.info(x)
@@ -24,7 +34,7 @@ def process_resumes():
         os.remove(batchfile)
 
         start_time = time.time()
-        ret = fullResumeParsing(filename, True)
+        ret = fullResumeParsing(filename)
         end_time = time.time()
 
         mongo.db.cvparsingsample.insert_one({
