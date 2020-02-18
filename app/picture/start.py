@@ -89,6 +89,7 @@ def test():
 
 
 def processAPI(filename):
+    logger.info("start picture identify on %s", filename)
     f = {"file" : filename}
 
     actualfilename = os.path.basename(filename)
