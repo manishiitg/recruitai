@@ -1,6 +1,7 @@
 import os 
 from google.cloud import storage
 
+SEARCH_URL  = "127.0.0.1:9200"
 
 MONGO_URI = "mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit"
 
@@ -18,3 +19,6 @@ try:
   IN_COLAB = True
 except:
   IN_COLAB = False
+
+
+  IS_DEV = True

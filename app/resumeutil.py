@@ -17,6 +17,7 @@ def fullResumeParsing(filename):
         dest = BASE_PATH + "/../temp"
         Path(dest).mkdir(parents=True, exist_ok=True)
         filename, file_extension = os.path.splitext(filename)
+        
         cvfilename = ''.join(
             e for e in filename if e.isalnum()) + file_extension
         cvdir = ''.join(e for e in cvfilename if e.isalnum())
@@ -28,12 +29,16 @@ def fullResumeParsing(filename):
 
         if ".pdf" not in filename:
             inputFile = os.path.join(dest, filename)
+            if len(file_extension.strip()) > 0:
+                filename = filename.replace(file_extension, ".pdf")
+            else:
+                filename = filename + ".pdf"
 
-            filename = filename.replace(file_extension, ".pdf")
             # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
             x = subprocess.check_call(
                 ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
             logger.info(x)
+
 
         fullResponse = {}
 

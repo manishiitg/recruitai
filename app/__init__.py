@@ -10,6 +10,8 @@ from app import db
 
 mongo = db.init_db()
 
+es = db.init_elastic_search()
+
 from app import token
 
 jwt = token.init_token()
