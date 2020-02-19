@@ -8,6 +8,7 @@ import time
 from pathlib import Path
 import json
 from app.db import init_redis
+from app.queue import q
 
 def process_resumes():
     batchDir = BASE_PATH + "/../batchresumeprocessing"
