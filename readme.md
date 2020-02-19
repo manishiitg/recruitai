@@ -24,8 +24,7 @@ sudo apt-get install libreoffice
 sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 sudo apt-get install python-poppler poppler-utils
 
-export FLASK_APP=app
-export FLASK_DEBUG=1 && flask run --host 0.0.0.0 --port 8085
+export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.0.0 --port 8085
 
  ps -aux | grep 8085
 

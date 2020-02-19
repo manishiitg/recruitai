@@ -308,7 +308,7 @@ def process(data, isPageWiseData=False):
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classify"] = "ERROR"
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = lineLabel
+                                        pageno)][cIDx]["classifyNN"] = lineLabel
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classifyreason"] = "org and not college or not pvt ltd"
                                     row["compressedStructuredContent"][str(
