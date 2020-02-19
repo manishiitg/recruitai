@@ -6,11 +6,11 @@ from flask_cors import CORS
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from app.search.index import createIndex
+
 from app import db
 
 mongo = db.init_db()
-
-es = db.init_elastic_search()
 
 from app import token
 
@@ -54,18 +54,25 @@ def create_app(test_config=None):
     from app.api import user
     from app.api import emailclassify
     from app.api import resume
+    from app.api import search
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
     app.register_blueprint(user.bp)
     app.register_blueprint(emailclassify.bp)
     app.register_blueprint(resume.bp)
+    app.register_blueprint(search.bp)
     
     # Scheduler which will run at interval of 60 seconds for user checkin score
     checkin_score_scheduler = BackgroundScheduler()
     checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=60) #*2.5
     checkin_score_scheduler.start()
     process_resumes()
+
+
+    # create esastic search index, ignore if already exists
+    createIndex()
+    
     
     
 

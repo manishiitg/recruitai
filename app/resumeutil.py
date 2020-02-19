@@ -8,149 +8,160 @@ from app.config import storage_client
 from pathlib import Path
 import subprocess
 import os
-
-def fullResumeParsing(filename):
-    try:
-        bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-        blob = bucket.blob(filename)
-
-        dest = BASE_PATH + "/../temp"
-        Path(dest).mkdir(parents=True, exist_ok=True)
-        filename, file_extension = os.path.splitext(filename)
-        
-        cvfilename = ''.join(
-            e for e in filename if e.isalnum()) + file_extension
-        cvdir = ''.join(e for e in cvfilename if e.isalnum())
-        blob.download_to_filename(os.path.join(dest, cvfilename))
-
-        filename = cvfilename
-
-        logger.info("final file name %s", filename)
-
-        if ".pdf" not in filename:
-            inputFile = os.path.join(dest, filename)
-            if len(file_extension.strip()) > 0:
-                filename = filename.replace(file_extension, ".pdf")
-            else:
-                filename = filename + ".pdf"
-
-            # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
-            x = subprocess.check_call(
-                ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
-            logger.info(x)
+from app.search.index import addDoc
 
 
-        fullResponse = {}
+def fullResumeParsing(filename, mongoid=None):
+    # try:
+    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(filename)
 
-        response, basedir = extractPicture(os.path.join(dest, filename))
+    dest = BASE_PATH + "/../temp"
+    Path(dest).mkdir(parents=True, exist_ok=True)
+    filename, file_extension = os.path.splitext(filename)
 
-        fullResponse["picture"] = response
+    cvfilename = ''.join(
+        e for e in filename if e.isalnum()) + file_extension
+    cvdir = ''.join(e for e in cvfilename if e.isalnum())
+    blob.download_to_filename(os.path.join(dest, cvfilename))
 
-        if response:
-            fullResponse["picture"] = fullResponse["picture"].replace(
-                basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
+    filename = cvfilename
 
-        response, basePath = processAPI(os.path.join(dest, filename))
+    logger.info("final file name %s", filename)
 
-        # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
+    if ".pdf" not in filename:
+        inputFile = os.path.join(dest, filename)
+        if len(file_extension.strip()) > 0:
+            filename = filename.replace(file_extension, ".pdf")
+        else:
+            filename = filename + ".pdf"
 
-        nertoparse = []
-        row = []
-        for page in response:
-            row.append(page["compressedStructuredContent"])
+        # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
+        x = subprocess.check_call(
+            ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
+        logger.info(x)
 
-        nertoparse.append({"compressedStructuredContent": row})
+    fullResponse = {}
 
-        nerExtracted = extractNer(nertoparse)
+    response, basedir = extractPicture(os.path.join(dest, filename))
 
-        # fullResponse["nerExtracted"] = nerExtracted
+    fullResponse["picture"] = response
 
-        row = {}
-        row["file"] = filename
-        row["nerparsed"] = nerExtracted
-        row["compressedStructuredContent"] = {}
-        for pageIdx, page in enumerate(response):
-            row["compressedStructuredContent"][str(
-                pageIdx + 1)] = page["compressedStructuredContent"]
+    if response:
+        fullResponse["picture"] = fullResponse["picture"].replace(
+            basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
 
-        combinData = classifyNer([row])[0]
+    response, basePath = processAPI(os.path.join(dest, filename))
 
-        newCompressedStructuredContent = {}
+    finalLines = []
+    for page in response:
+        for pagerow in page["compressedStructuredContent"]:
+            logger.info(pagerow)
+            finalLines.append(pagerow["line"])
 
-        for pageno in combinData["compressedStructuredContent"].keys():
-            pagerows = combinData["compressedStructuredContent"][pageno]
-            newCompressedStructuredContent[pageno] = []
-            for row in pagerows:
-                if "classify" in row:
-                    # classify = row["classify"]
-                    # if "append" in row:
-                    #     del row["append"]
-                    if "finalClaimedIdx" in row:
-                        del row["finalClaimedIdx"]
-                    if "isboxfound" in row:
-                        del row["isboxfound"]
-                    if "lineIdx" in row:
-                        del row["lineIdx"]
-                    if "matchedRow" in row:
-                        if "bbox" in row["matchedRow"]:
-                            del row["matchedRow"]["bbox"]
-                        if "imagesize" in row["matchedRow"]:
-                            del row["matchedRow"]["imagesize"]
-                        if "matchRatio" in row["matchedRow"]:
-                            del row["matchedRow"]["matchRatio"]
+    # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
-                        row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
-                            basePath + "/", GOOGLE_BUCKET_URL)
+    nertoparse = []
+    row = []
+    for page in response:
+        row.append(page["compressedStructuredContent"])
 
-                    if "append" in row:
-                        newAppend = []
-                        for r in row["append"]:
-                            if "row" in r:
-                                if "finalClaimedIdx" in r["row"]:
-                                    del r["row"]["finalClaimedIdx"]
-                                if "isboxfound" in r["row"]:
-                                    del r["row"]["isboxfound"]
-                                if "lineIdx" in r["row"]:
-                                    del r["row"]["lineIdx"]
-                                if "matchedRow" in r["row"]:
-                                    if "bbox" in r["row"]["matchedRow"]:
-                                        del r["row"]["matchedRow"]["bbox"]
-                                    if "idx" in r["row"]["matchedRow"]:
-                                        del r["row"]["matchedRow"]["idx"]
-                                    if "isClaimed" in r["row"]["matchedRow"]:
-                                        del r["row"]["matchedRow"]["isClaimed"]
-                                    if "imagesize" in r["row"]["matchedRow"]:
-                                        del r["row"]["matchedRow"]["imagesize"]
-                                    if "matchRatio" in r["row"]["matchedRow"]:
-                                        del r["row"]["matchedRow"]["matchRatio"]
+    nertoparse.append({"compressedStructuredContent": row})
 
-                                if "matchedRow" in r["row"]:
-                                    r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
-                                        basePath + "/", GOOGLE_BUCKET_URL)
+    nerExtracted = extractNer(nertoparse)
 
-                            newAppend.append(r)
+    # fullResponse["nerExtracted"] = nerExtracted
 
-                        row["append"] = newAppend
+    row = {}
+    row["file"] = filename
+    row["nerparsed"] = nerExtracted
+    row["compressedStructuredContent"] = {}
+    for pageIdx, page in enumerate(response):
+        row["compressedStructuredContent"][str(
+            pageIdx + 1)] = page["compressedStructuredContent"]
 
-                    newCompressedStructuredContent[pageno].append(row)
+    combinData = classifyNer([row])[0]
 
-        combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
+    newCompressedStructuredContent = {}
 
-        logger.info("full resume parsing completed %s", filename)
-        ret = {
-            "newCompressedStructuredContent": newCompressedStructuredContent,
-            "finalEntity": combinData["finalEntity"],
-            "picture": fullResponse["picture"],
-            "debug": {
-                "extractEntity": combinData["extractEntity"],
-                "compressedStructuredContent": combinData["compressedStructuredContent"]
-            }
-        }
+    for pageno in combinData["compressedStructuredContent"].keys():
+        pagerows = combinData["compressedStructuredContent"][pageno]
+        newCompressedStructuredContent[pageno] = []
+        for row in pagerows:
+            if "classify" in row or True: #show all for now
+                # classify = row["classify"]
+                # if "append" in row:
+                #     del row["append"]
+                if "finalClaimedIdx" in row:
+                    del row["finalClaimedIdx"]
+                if "isboxfound" in row:
+                    del row["isboxfound"]
+                if "lineIdx" in row:
+                    del row["lineIdx"]
+                if "matchedRow" in row:
+                    if "bbox" in row["matchedRow"]:
+                        del row["matchedRow"]["bbox"]
+                    if "imagesize" in row["matchedRow"]:
+                        del row["matchedRow"]["imagesize"]
+                    if "matchRatio" in row["matchedRow"]:
+                        del row["matchedRow"]["matchRatio"]
 
-        return ret
+                    row["matchedRow"]["bucketurl"] = row["matchedRow"]["filename"].replace(
+                        basePath + "/", GOOGLE_BUCKET_URL)
 
-    except Exception as e:
-        logger.info("error %s", str(e))
-        return {
-            "error": str(e)
-        }
+                if "append" in row:
+                    newAppend = []
+                    for r in row["append"]:
+                        if "row" in r:
+                            if "finalClaimedIdx" in r["row"]:
+                                del r["row"]["finalClaimedIdx"]
+                            if "isboxfound" in r["row"]:
+                                del r["row"]["isboxfound"]
+                            if "lineIdx" in r["row"]:
+                                del r["row"]["lineIdx"]
+                            if "matchedRow" in r["row"]:
+                                if "bbox" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["bbox"]
+                                if "idx" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["idx"]
+                                if "isClaimed" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["isClaimed"]
+                                if "imagesize" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["imagesize"]
+                                if "matchRatio" in r["row"]["matchedRow"]:
+                                    del r["row"]["matchedRow"]["matchRatio"]
+
+                            if "matchedRow" in r["row"]:
+                                r["row"]["matchedRow"]["bucketurl"] = r["row"]["matchedRow"]["filename"].replace(
+                                    basePath + "/", GOOGLE_BUCKET_URL)
+
+                        newAppend.append(r)
+
+                    row["append"] = newAppend
+
+                newCompressedStructuredContent[pageno].append(row)
+
+    combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
+
+    logger.info("full resume parsing completed %s", filename)
+    ret = {
+        "newCompressedStructuredContent": newCompressedStructuredContent,
+        "finalEntity": combinData["finalEntity"],
+        "picture": fullResponse["picture"]
+    }
+
+    if mongoid:
+        addDoc(mongoid, finalLines, ret)
+
+    ret["debug"] = {
+        "extractEntity": combinData["extractEntity"],
+        "compressedStructuredContent": combinData["compressedStructuredContent"]
+    }
+
+    return ret
+
+    # except Exception as e:
+    #     logger.info("error %s", str(e))
+    #     return {
+    #         "error": str(e)
+    #     }

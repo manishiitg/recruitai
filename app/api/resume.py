@@ -6,7 +6,7 @@ from app.detectron.start import processAPI
 import json
 import os
 from pathlib import Path
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
+from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL, IS_DEV
 from app.logging import logger
 from app import token
 from app import mongo
@@ -41,10 +41,12 @@ def getCurrentJob():
         "id": job.id
     })
 
+
 @bp.route('/emptyQueue', methods=['GET'])
 def emptyQueue():
     q.empty()
     return jsonify({})
+
 
 @bp.route('/getJobStatus/<string:jobId>', methods=['GET'])
 def getJobStatus(jobId):
@@ -55,16 +57,26 @@ def getJobStatus(jobId):
     })
 
 
-@bp.route('/<string:filename>', methods=['GET'])
-def fullparsing(filename):
-    job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
+
+@bp.route('/instant/<string:filename>/<string:mongoid>', methods=['GET'])
+def fullparsinginstant(filename, mongoid):
+    return jsonify(fullResumeParsing(filename, mongoid)), 200
+
+
+
+@bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
+def fullparsing(filename, mongoid = None):
+    # if IS_DEV:
+    #     isasync = False
+    # else:
+    #     isasync = True
+
+    job = q.enqueue(fullResumeParsing, filename, mongoid,
+                    is_async=True, result_ttl=86400)  # 1 day
     logger.info(job)
     return jsonify(job.id), 200
 
 
-@bp.route('/instant/<string:filename>', methods=['GET'])
-def fullparsinginstant(filename):
-    return jsonify(fullResumeParsing(filename)), 200
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
