@@ -71,8 +71,7 @@ def fullparsing(filename, mongoid = None):
     # else:
     #     isasync = True
 
-    job = q.enqueue(fullResumeParsing, filename, mongoid,
-                    is_async=True, result_ttl=86400)  # 1 day
+    job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400)  # 1 day
     logger.info(job)
     return jsonify(job.id), 200
 
