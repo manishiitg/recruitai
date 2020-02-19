@@ -58,22 +58,23 @@ def getJobStatus(jobId):
 
 
 
-@bp.route('/instant/<string:filename>/<string:mongoid>', methods=['GET'])
-def fullparsinginstant(filename, mongoid):
-    return jsonify(fullResumeParsing(filename, mongoid)), 200
+# @bp.route('/instant/<string:filename>/<string:mongoid>', methods=['GET'])
+# def fullparsinginstant(filename, mongoid):
+#     return jsonify(fullResumeParsing(filename, mongoid)), 200
 
 
 
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
 def fullparsing(filename, mongoid = None):
-    # if IS_DEV:
+    if IS_DEV:
+        return jsonify(fullResumeParsing(filename, mongoid)), 200
     #     isasync = False
     # else:
     #     isasync = True
-
-    job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400)  # 1 day
-    logger.info(job)
-    return jsonify(job.id), 200
+    else:
+        job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400)  # 1 day
+        logger.info(job)
+        return jsonify(job.id), 200
 
 
 
