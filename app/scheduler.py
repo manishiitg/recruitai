@@ -11,6 +11,7 @@ from app.db import init_redis
 from app.queue import q
 
 def process_resumes():
+    return 
     batchDir = BASE_PATH + "/../batchresumeprocessing"
     logger.info('running batch resume processing... %s' , batchDir)
 
