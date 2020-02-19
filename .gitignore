@@ -10,3 +10,5 @@ app/temp
 temp/
 
 batchresumeprocessing/
+
+instance/*

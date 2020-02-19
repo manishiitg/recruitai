@@ -7,42 +7,51 @@ from app.resumeutil import fullResumeParsing
 import time
 from pathlib import Path
 import json
+from app.db import init_redis
 
 def process_resumes():
     batchDir = BASE_PATH + "/../batchresumeprocessing"
     logger.info('running batch resume processing... %s' , batchDir)
-    Path(batchDir).mkdir(parents=True, exist_ok=True)
-    files = os.listdir(batchDir)
-    if len(files) > 0:
-        filename = files[0]
-        batchfile = os.path.join(batchDir, filename)
 
-        # count = mongo.db.cvparsingsample.count({
-        #     "file" : filename
-        # })
+    r = init_redis()
 
-        # if count > 0:
-        #     logger.info("file already exists")
-        #     os.remove(batchfile)
-        #     return
+    with r.lock("batchoperation"):
+        Path(batchDir).mkdir(parents=True, exist_ok=True)
+        files = os.listdir(batchDir)
+        if len(files) > 0:
+            filename = files[0]
+            batchfile = os.path.join(batchDir, filename)
+
+            mongo.db.cvparsingsample.delete_many({
+                "file" : filename
+            })
+
+            # count = mongo.db.cvparsingsample.count({
+            #     "file" : filename
+            # })
+
+            # if count > 0:
+            #     logger.info("file already exists")
+            #     os.remove(batchfile)
+            #     return
 
 
 
-        x = subprocess.check_call(['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
-        logger.info(x)
+            x = subprocess.check_call(['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
+            logger.info(x)
 
-        os.remove(batchfile)
+            os.remove(batchfile)
 
-        start_time = time.time()
-        ret = fullResumeParsing(filename)
-        end_time = time.time()
+            start_time = time.time()
+            ret = fullResumeParsing(filename)
+            end_time = time.time()
 
-        mongo.db.cvparsingsample.insert_one({
-            "file" : filename,
-            "isBatch" : True,
-            "fullParse" :  json.dumps(ret),
-            "timeTaken" : end_time - start_time
-        })
+            mongo.db.cvparsingsample.insert_one({
+                "file" : filename,
+                "isBatch" : True,
+                "fullParse" :  json.dumps(ret),
+                "timeTaken" : end_time - start_time
+            })
 
-    else:
-        logger.info("no files in batch")
+        else:
+            logger.info("no files in batch")
