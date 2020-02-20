@@ -19,7 +19,7 @@ def process_resumes():
 
     try:
 
-        with r.lock("batchoperation", blocking_timeout=5):
+        with r.lock("batchoperation", blocking_timeout=5, timeout=60*5):
             Path(batchDir).mkdir(parents=True, exist_ok=True)
             files = os.listdir(batchDir)
             if len(files) > 0:
@@ -58,5 +58,5 @@ def process_resumes():
 
             else:
                 logger.info("no files in batch")
-    except LockError:
-        logger.info("the lock wasn't acquired")
+    except LockError as e:
+        logger.info("the lock wasn't acquired %s", str(e))
