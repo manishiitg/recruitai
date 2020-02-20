@@ -28,6 +28,8 @@ sudo apt-get install libreoffice
 sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 sudo apt-get install python-poppler poppler-utils
 
+npm install -g pdf-text-extract
+
 export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.0.0 --port 8085
 
  ps -aux | grep 8085
@@ -173,7 +175,8 @@ f) TBD. Male/Female based on name
 
 
 TBD. small things
-a) redis lock issue test (done, testing pending)
+a) redis lock issue test (done)
 b) take cv text from nodejs as well, but they say that can take text of full page only
 or maybe try myself with textract same as nodejs
+== above is not valid. i was looking at the debug output. actually textextraction was happening
 3) delete file from filesystem when processing is done, as this is taking too much space (done)

@@ -192,8 +192,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       # pdfminer.high_level.extract_text(pdf_file, password='', page_numbers=None, maxpages=0, caching=True, codec='utf-8', laparams=None)
       try:
         content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
-        # content = textract.process(cv , page_numbers=[cvpage-1], maxpages=1)
         content = str(content)
+        #content = textract.process(cv , page_numbers=[cvpage-1], maxpages=1)
       except PDFTextExtractionNotAllowed as e:
         logger.critical(e)
         # if filestoparse[fileIdx]["id"] != -1:
@@ -206,6 +206,24 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         #   )
         logger.critical("skipping due to error in cv extration %s " , filestoparse[fileIdx]["id"])
         continue
+      except Exception as e:
+        
+        logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , filestoparse[fileIdx]["id"])
+        x = subprocess.check_output(['pdf-text-extract ' + cv], shell=True)
+        x = x.decode("utf-8") 
+        # x = re.sub(' +', ' ', x)
+        logger.info(x)
+        start = "[ '"
+        end = "' ]"
+
+        x = x.replace(start, "")
+        x = x.replace(end, "")
+        pages_data_extract = x.split("',")
+        logger.info(len(pages_data_extract))
+        logger.info(pages_data_extract)
+        logger.info(cvpage)
+        content = pages_data_extract[cvpage-1]
+        
 
       logger.info(content)
 
