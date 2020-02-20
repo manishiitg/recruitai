@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import os
 from app.search.index import addDoc
+import shutil  
 
 
 def fullResumeParsing(filename, mongoid=None):
@@ -157,7 +158,10 @@ def fullResumeParsing(filename, mongoid=None):
             "extractEntity": combinData["extractEntity"],
             "compressedStructuredContent": combinData["compressedStructuredContent"]
         }
-
+        cvdir = ''.join(e for e in filename if e.isalnum())
+        shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = False) 
+        logger.info("final filename %s", filename)
+        os.remove(BASE_PATH + "/../cvreconstruction/" + filename) 
         return ret
 
     except Exception as e:

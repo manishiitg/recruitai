@@ -7,8 +7,12 @@ Code for different models and predictions only (no training) to deploy on produc
 Few things to install
 ================================
 
+pip install torch torchvision
+
 
 pip install --upgrade cython
+
+pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
 
 pip install numpy
 
@@ -27,6 +31,10 @@ sudo apt-get install python-poppler poppler-utils
 export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.0.0 --port 8085
 
  ps -aux | grep 8085
+
+ ===
+
+ curl -XPUT -H "Content-Type: application/json" http://127.0.0.1:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 
 ===
 
@@ -159,3 +167,13 @@ c) Word2Vec skill api (done)
 d) TBD. Semantic Search
 e) TBD. Candidate Scoring
 f) TBD. Male/Female based on name
+
+
+
+
+
+TBD. small things
+a) redis lock issue test
+b) take cv text from nodejs as well, but they say that can take text of full page only
+or maybe try myself with textract same as nodejs
+3) delete file from filesystem when processing is done, as this is taking too much space
