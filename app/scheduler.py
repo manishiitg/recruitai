@@ -8,52 +8,55 @@ import time
 from pathlib import Path
 import json
 from app.db import init_redis
-from app.queue import q
+
+from redis.exceptions import LockError
 
 def process_resumes():
-    return 
     batchDir = BASE_PATH + "/../batchresumeprocessing"
-    logger.info('running batch resume processing... %s' , batchDir)
+    logger.info('running batch resume processing... %s', batchDir)
 
     r = init_redis()
 
-    with r.lock("batchoperation"):
-        Path(batchDir).mkdir(parents=True, exist_ok=True)
-        files = os.listdir(batchDir)
-        if len(files) > 0:
-            filename = files[0]
-            batchfile = os.path.join(batchDir, filename)
+    try:
 
-            mongo.db.cvparsingsample.delete_many({
-                "file" : filename
-            })
+        with r.lock("batchoperation", blocking_timeout=5):
+            Path(batchDir).mkdir(parents=True, exist_ok=True)
+            files = os.listdir(batchDir)
+            if len(files) > 0:
+                filename = files[0]
+                batchfile = os.path.join(batchDir, filename)
 
-            # count = mongo.db.cvparsingsample.count({
-            #     "file" : filename
-            # })
+                mongo.db.cvparsingsample.delete_many({
+                    "file": filename
+                })
 
-            # if count > 0:
-            #     logger.info("file already exists")
-            #     os.remove(batchfile)
-            #     return
+                # count = mongo.db.cvparsingsample.count({
+                #     "file" : filename
+                # })
 
+                # if count > 0:
+                #     logger.info("file already exists")
+                #     os.remove(batchfile)
+                #     return
 
+                x = subprocess.check_call(
+                    ['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
+                logger.info(x)
 
-            x = subprocess.check_call(['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
-            logger.info(x)
+                os.remove(batchfile)
 
-            os.remove(batchfile)
+                start_time = time.time()
+                ret = fullResumeParsing(filename)
+                end_time = time.time()
 
-            start_time = time.time()
-            ret = fullResumeParsing(filename)
-            end_time = time.time()
+                mongo.db.cvparsingsample.insert_one({
+                    "file": filename,
+                    "isBatch": True,
+                    "fullParse":  json.dumps(ret),
+                    "timeTaken": end_time - start_time
+                })
 
-            mongo.db.cvparsingsample.insert_one({
-                "file" : filename,
-                "isBatch" : True,
-                "fullParse" :  json.dumps(ret),
-                "timeTaken" : end_time - start_time
-            })
-
-        else:
-            logger.info("no files in batch")
+            else:
+                logger.info("no files in batch")
+    except LockError:
+        logger.info("the lock wasn't acquired")
