@@ -12,3 +12,5 @@ temp/
 batchresumeprocessing/
 
 instance/*
+
+node_modules/*
