@@ -178,5 +178,5 @@ TBD. small things
 a) redis lock issue test (done)
 b) take cv text from nodejs as well, but they say that can take text of full page only
 or maybe try myself with textract same as nodejs
-== above is not valid. i was looking at the debug output. actually textextraction was happening
+== done
 3) delete file from filesystem when processing is done, as this is taking too much space (done)
