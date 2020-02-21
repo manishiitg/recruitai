@@ -8,9 +8,10 @@ import time
 from pathlib import Path
 import json
 from app.db import init_redis
-from app.queue import q 
+from app.queue import q
 
 from redis.exceptions import LockError
+
 
 def process_resumes():
     batchDir = BASE_PATH + "/../batchresumeprocessing"
@@ -20,11 +21,11 @@ def process_resumes():
 
     # try:
 
-        # with r.lock("batchoperation", blocking_timeout=5, timeout=60*5):
+    # with r.lock("batchoperation", blocking_timeout=5, timeout=60*5):
     Path(batchDir).mkdir(parents=True, exist_ok=True)
 
     jobprocess = mongo.db.cvparsingsample.find_one({
-        "isProcessing" : True
+        "isProcessing": True
     })
     if jobprocess:
         jobid = jobprocess["jobid"]
@@ -34,35 +35,36 @@ def process_resumes():
         ret = job.result
 
         if status == "finished" or status == "failed":
-            
-                
+
             mongo.db.cvparsingsample.update_one({
-                "_id" : jobprocess["_id"]
-            },{
-                "isProcessing" : False,
-                "isCompleted" : True,
+                "_id": jobprocess["_id"]
+            }, {"$set": {
+                "isProcessing": False,
+                "isCompleted": True,
                 "fullParse":  json.dumps(ret),
-                "status" : status
+                "status": status
+            }
             })
         else:
             start_time = jobprocess["start_time"]
             now_time = time.time()
 
-            if (now_time - start_time ) > 30 * 60: #30min
+            if (now_time - start_time) > 30 * 60:  # 30min
                 # some issue
                 mongo.db.cvparsingsample.update_one({
-                    "_id" : jobprocess["_id"]
-                },{
-                    "isProcessing" : False,
-                    "isCompleted" : False,
+                    "_id": jobprocess["_id"]
+                }, {"$set": {
+                    "isProcessing": False,
+                    "isCompleted": False,
                     "fullParse":  json.dumps(ret),
-                    "status" : status
+                    "status": status
+                }
                 })
 
             else:
-                logger.info("waiting for existing batch job to finish... %s" , jobid)
+                logger.info(
+                    "waiting for existing batch job to finish... %s", jobid)
                 return
-    
 
     files = os.listdir(batchDir)
     if len(files) > 0:
@@ -99,9 +101,9 @@ def process_resumes():
         mongo.db.cvparsingsample.insert_one({
             "file": filename,
             "isBatch": True,
-            "isProcessing" : True,
-            "jobid" : job.id,
-            "start_time" : start_time
+            "isProcessing": True,
+            "jobid": job.id,
+            "start_time": start_time
         })
 
     else:
