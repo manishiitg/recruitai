@@ -9,9 +9,9 @@ def test():
     
 def get_similar(positive, negative, isGlobal = False):
     if isGlobal:
-        model = loadModel()
-    else:
         model = loadGlobalModel()
+    else:
+        model = loadModel()
 
     if not isinstance(positive, list):
         positive = [positive]
@@ -39,6 +39,6 @@ def loadModel():
     global model
     if model is None:
         logger.info("loading model...")
-        model = Word2Vec.load(BASE_PATH + "/../pretrained/word2vecrecruitskills.model")
+        model = Word2Vec.load(BASE_PATH + "/../pretrained/word2vecrecruitskills.bin")
     
     return model
