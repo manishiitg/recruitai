@@ -12,7 +12,7 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.skillsword2vec.start import get_similar
+from app.skillsword2vec.start import get_similar , vec_exists
 
 bp = Blueprint('skill', __name__, url_prefix='/skill')
 
@@ -33,14 +33,20 @@ def processWord2VecInput(keyword):
     serializedPositiveSkill = []
     for skill in positive:
         if " " in skill:
-            serializedPositiveSkill.extend(skill.lower().split(" "))
+            if vec_exists("_".join(skill.lower().split(" "))):
+                serializedPositiveSkill.extend("_".join(skill.lower().split(" ")))
+            else:
+                serializedPositiveSkill.extend(skill.lower().split(" "))
         else:
             serializedPositiveSkill.append(skill.lower())
 
     serializedNegativeSkill = []
     for skill in negative:
         if " " in skill:
-            serializedNegativeSkill.extend(skill.lower().split(" "))
+            if vec_exists("_".join(skill.lower().split(" "))):
+                serializedNegativeSkill.extend("_".join(skill.lower().split(" ")))
+            else:
+                serializedNegativeSkill.extend(skill.lower().split(" "))
         else:
             serializedNegativeSkill.append(skill.lower())
 

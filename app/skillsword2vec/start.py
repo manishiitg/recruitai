@@ -26,6 +26,17 @@ def get_similar(positive, negative, isGlobal = False):
 
 globalModel = None
 
+def vec_exists(word, isGlobal = False):
+    if isGlobal:
+        model = loadGlobalModel()
+    else:
+        model = loadModel()
+    try:
+      model.wv.get_vector(word)
+      return True
+    except KeyError:
+      return False
+
 def loadGlobalModel():
     global globalModel
     if globalModel is None:
