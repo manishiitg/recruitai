@@ -34,7 +34,7 @@ def processWord2VecInput(keyword):
     for skill in positive:
         if " " in skill:
             if vec_exists("_".join(skill.lower().split(" "))):
-                serializedPositiveSkill.extend("_".join(skill.lower().split(" ")))
+                serializedPositiveSkill.append("_".join(skill.lower().split(" ")))
             else:
                 serializedPositiveSkill.extend(skill.lower().split(" "))
         else:
@@ -44,7 +44,7 @@ def processWord2VecInput(keyword):
     for skill in negative:
         if " " in skill:
             if vec_exists("_".join(skill.lower().split(" "))):
-                serializedNegativeSkill.extend("_".join(skill.lower().split(" ")))
+                serializedNegativeSkill.append("_".join(skill.lower().split(" ")))
             else:
                 serializedNegativeSkill.extend(skill.lower().split(" "))
         else:
