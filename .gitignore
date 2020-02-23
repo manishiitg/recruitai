@@ -14,3 +14,5 @@ batchresumeprocessing/
 instance/*
 
 node_modules/*
+
+nvm
