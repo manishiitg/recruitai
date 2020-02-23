@@ -22,6 +22,8 @@ sudo docker-compose up -d
 
 sudo docker image build -t recruitai .
 
+docker exec -it recruitai_ai_1 /bin/bash
+
 sudo docker container run --name recruitai \
       -v $(pwd)/pretrained:/workspace/pretrained \
       -v $(pwd)/batchprocessing:/workspace/batchprocessing \
@@ -47,7 +49,14 @@ https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stoppe
 
 curl localhost:9200/_cat/health
 
+setup filebeat dashboards 
+./filebeat setup --dashboards --strict.perms=false -E setup.kibana.host=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
 
+
+# if elastic search is not running try this once
+sudo sysctl -w vm.max_map_count=262144
+
+sudo docker-compose logs -f
 
 Few things to install
 ================================

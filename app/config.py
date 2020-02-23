@@ -1,10 +1,16 @@
 import os 
 from google.cloud import storage
+from app.logging import logger
 
-SEARCH_URL  = os.getenv('ELASIC_SEARCH_URL', "127.0.0.1:9200")
 
-REDIS_HOST = os.getenv('REDIS_URL', "127.0.0.1")
-REDIS_PORT = os.getenv('REDIS_PORT', "6379")
+SEARCH_URL  = "elasticsearch:9200"
+
+logger.info("ES URL %s",SEARCH_URL)
+
+REDIS_HOST = "redis"
+REDIS_PORT = "6379"
+
+
 
 MONGO_URI = os.getenv('RECRUIT_BACKEND_DB', "mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit")
 
@@ -24,5 +30,6 @@ except:
   IN_COLAB = False
 
 
-IS_DEV = os.getenv("IS_DEV", True)
+IS_DEV = os.getenv("IS_DEV", False)
 # if true, this will parse cv instantly instead of rq worker
+logger.info("is dev? %s",IS_DEV)

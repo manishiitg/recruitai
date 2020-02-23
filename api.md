@@ -52,6 +52,6 @@ http://176.9.137.77:8086/resume/picture/102.pdf
 get picture of candidate from resume
 
 
-http://176.9.137.77:8086/resume/102.pdf
+http://176.9.137.77:8086/resume/102.pdf/123
 
 full parsing of a resume, getting all ner data and classiifcation and images
