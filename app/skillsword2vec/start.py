@@ -41,7 +41,7 @@ def loadGlobalModel():
     global globalModel
     if globalModel is None:
         logger.info("loading model...")
-        globalModel = Word2Vec.load(BASE_PATH + "/../pretrained/word2vecfull.bin")
+        globalModel = Word2Vec.load(BASE_PATH + "/../pretrained/word2vec/word2vecfull.bin")
     
     return globalModel
 
@@ -50,6 +50,6 @@ def loadModel():
     global model
     if model is None:
         logger.info("loading model...")
-        model = Word2Vec.load(BASE_PATH + "/../pretrained/word2vecrecruitskills.bin")
+        model = Word2Vec.load(BASE_PATH + "/../pretrained/word2vec/word2vecrecruitskills.bin")
     
     return model
