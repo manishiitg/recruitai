@@ -42,7 +42,6 @@ RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apsched
     numpy gensim flair opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy
 # RUN pip install -r requirements.txt
 
-ADD app /workspace/app
 COPY RecruitAI.json /workspace/
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -52,16 +51,23 @@ RUN apt-get update && apt-get install google-cloud-sdk -y
 
 RUN gcloud auth activate-service-account --key-file=RecruitAI.json
 RUN gcloud config set project recruitai-266705
-RUN gcloud auth list
 RUN gsutil ls
-
-RUN mkdir -p /workspace/pretrained
-# -n to prevent redownloading should be removed in production
-RUN gsutil -m cp -r -n gs://recruitaiwork/ /workspace/pretrained/ 
 
 RUN pip install gunicorn 
 
+VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
+
 RUN apt-get update && \
-	apt-get install supervisor && \
+	apt-get install supervisor -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
+
+COPY ./supervisor/conf.d/recruitai.conf /etc/supervisor/conf.d/recruitai.conf
+
+RUN truncate -s 0 /workspace/logs/*.log
+
+ADD app /workspace/app
+
+CMD ["/usr/bin/supervisord"]
+
+EXPOSE 5000

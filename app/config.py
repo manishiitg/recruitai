@@ -1,16 +1,16 @@
 import os 
 from google.cloud import storage
 
-SEARCH_URL  = "127.0.0.1:9200"
+SEARCH_URL  = os.getenv('ELASIC_SEARCH_URL', "127.0.0.1:9200")
 
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
+REDIS_HOST = os.getenv('REDIS_URL', "127.0.0.1")
+REDIS_PORT = os.getenv('REDIS_PORT', "6379")
 
-MONGO_URI = "mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit"
+MONGO_URI = os.getenv('RECRUIT_BACKEND_DB', "mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit")
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
-RESUME_UPLOAD_BUCKET = "staticrecruitai.excellencetechnologies.in"
+RESUME_UPLOAD_BUCKET = os.getenv("CV_BUCKET_URL","staticrecruitai.excellencetechnologies.in")
 
 GOOGLE_BUCKET_URL = "https://" + RESUME_UPLOAD_BUCKET + "/"
 
@@ -24,4 +24,5 @@ except:
   IN_COLAB = False
 
 
-IS_DEV = True
+IS_DEV = os.getenv("IS_DEV", True)
+# if true, this will parse cv instantly instead of rq worker
