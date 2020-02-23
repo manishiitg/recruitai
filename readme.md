@@ -2,6 +2,51 @@
 
 Code for different models and predictions only (no training) to deploy on production env.
 
+Initial Data Copy
+===================
+
+gcloud auth activate-service-account --key-file=RecruitAI.json
+gcloud config set project recruitai-266705
+gsutil ls
+mkdir pretrained
+gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
+mkdir logs
+mkdir batchprocessing
+sudo mkdir /var/log/recruitai
+
+Docker
+===========
+
+sudo docker-compose build
+sudo docker-compose up -d
+
+sudo docker image build -t recruitai .
+
+sudo docker container run --name recruitai \
+      -v $(pwd)/pretrained:/workspace/pretrained \
+      -v $(pwd)/batchprocessing:/workspace/batchprocessing \
+      -v $(pwd)/cvreconstruction:/workspace/cvreconstruction \
+      -v $(pwd)/logs:/workspace/logs \
+      -d -p 8086:5000 \
+      recruitai 
+
+# if need to debug via bash
+sudo docker container run -it --rm \
+      -v $(pwd)/pretrained:/workspace/pretrained \
+      -v $(pwd)/batchprocessing:/workspace/batchprocessing \
+      -v $(pwd)/cvreconstruction:/workspace/cvreconstruction \
+      -v $(pwd)/logs:/workspace/logs \
+      recruitai bash
+
+docker container logs recruitai
+
+docker container rm -f recruitai
+
+# helper functions
+https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stopped-or-removed-permission-denied-error
+
+curl localhost:9200/_cat/health
+
 
 
 Few things to install
@@ -38,63 +83,6 @@ export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && 
 
  curl -XPUT -H "Content-Type: application/json" http://127.0.0.1:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 
-===
-
-Api end point exposed 
-
-http://176.9.137.77:8085/skill/reactjs+php+html-jquery
-(to get similar skills or negative skils + means similar skills and - means negative skills)
-
-
-http://176.9.137.77:8085/emailclassify/i%20want%20to%20apply%20for%20a%20job%20as%20react%20developer/job%20application
-(this to classify email as candidate or general)
-
-http://176.9.137.77:8085/emailclassify/get%20studio%20benfies%20%20asdf%20asfa%20sdfasd%20fasdf%20asdfasd%20fasdf%20asfd%20sdf%20s/agency
-
-####### need to work on this classifier more ###############
-e.g
-http://176.9.137.77:8085/emailclassify/get%20studio%20benfies%20%20asdf%20asfa%20sdfasd%20fasdf%20asdfasd%20fasdf%20asfd%20sdf%20s/thomas
-
-returns
-[
-  {
-    "ai": {
-      "pipe1": {
-        "other": 0.9968185424804688
-      }
-    }, 
-    "body": "get studio benfies  asdf asfa sdfasd fasdf asdfasd fasdf asfd sdf s", 
-    "subject": "thomas"
-  }
-]
-
-
-http://176.9.137.77:8085/emailclassify/get%20studio%20benfies%20%20asdf%20asfa%20sdfasd%20fasdf%20asdfasd%20fasdf%20asfd%20sdf%20s/hello
-
-[
-  {
-    "ai": {
-      "pipe1": {
-        "candidate": 0.9458337426185608
-      }
-    }, 
-    "body": "get studio benfies  asdf asfa sdfasd fasdf asdfasd fasdf asfd sdf s", 
-    "subject": "hello"
-  }
-]
-
-so just the word "hello" has to be learnt as candidate. this is not correct.....
-
-
-
-
-http://176.9.137.77:8086/resume/picture/102.pdf
-get picture of candidate from resume
-
-
-http://176.9.137.77:8086/resume/102.pdf
-
-full parsing of a resume, getting all ner data and classiifcation and images
 
 === 
 cloud sdk

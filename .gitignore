@@ -16,3 +16,5 @@ instance/*
 node_modules/*
 
 nvm
+
+logs
