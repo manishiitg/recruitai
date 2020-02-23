@@ -10,6 +10,9 @@ from bson import json_util
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+@bp.route('/ping', methods=['GET'])
+def ping():
+   return jsonify("pong")
 
 @bp.route('/register', methods=['POST'])
 def register():

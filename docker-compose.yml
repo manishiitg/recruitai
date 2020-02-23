@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+    ai:
+        image: recruitai
+        build: .
+        ports:
+            - "8086:5000"
+        volumes:
+            - ./pretrained:/workspace/pretrained 
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs 
+        environment:
+            - ELASTIC_SEARCH_URL=elasticsearch:9200
+            - REDIS_URL=redis
+            - REDIS_PORT=6379
+            - RECRUIT_BACKEND_DB=mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit
+            - CV_BUCKET_URL=staticrecruitai.excellencetechnologies.in
+            - IS_DEV=True
+    
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+        container_name: elasticsearch
+        volumes:
+            - type: bind
+              source: ./elasticsearch/config/elasticsearch.yml
+              target: /usr/share/elasticsearch/config/elasticsearch.yml
+              read_only: true
+            - type: volume
+              source: elasticsearch
+              target: /usr/share/elasticsearch/data
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        environment:
+            ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+            ELASTIC_PASSWORD: 
+            # Use single node discovery in order to disable production mode and avoid bootstrap checks
+            # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+            discovery.type: single-node
+        
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.6.0
+        environment:
+            SERVER_NAME: kibana.local
+            ELASTICSEARCH_URL: http://elasticsearch:9200
+        volumes:
+            - type: bind
+              source: ./kibana/config/kibana.yml
+              target: /usr/share/kibana/config/kibana.yml
+              read_only: true
+        ports:
+            - "5601:5601"
+    logstash:
+        image: docker.elastic.co/logstash/logstash:7.6.0
+        volumes:
+            - type: bind
+              source: ./logstash/config/logstash.yml
+              target: /usr/share/logstash/config/logstash.yml
+              read_only: true
+            - type: bind
+              source: ./logstash/pipeline
+              target: /usr/share/logstash/pipeline
+              read_only: true
+        ports:
+        - "5000:5000/tcp"
+        - "5000:5000/udp"
+        - "9600:9600"
+        environment:
+            LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+        depends_on:
+            - elasticsearch
+
+    redis:
+        image: redis
+        expose:
+            - 6379
+volumes: 
+    elasticsearch:
