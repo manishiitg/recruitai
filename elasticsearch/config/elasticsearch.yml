@@ -4,7 +4,7 @@
 #
 cluster.name: "docker-cluster"
 network.host: 0.0.0.0
-
+bootstrap.memory_lock: true
 ## X-Pack settings
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html
 #
