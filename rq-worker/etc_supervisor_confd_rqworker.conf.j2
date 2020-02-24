@@ -1,0 +1,24 @@
+[supervisord]
+nodaemon=true
+
+[program:rqworker]
+command=rq worker {{env['RQ_QUEUE']}} -u redis://{{env['REDIS_HOST']}}:{{env['REDIS_PORT']}}/{{env['REDIS_DB']}} --logging_level {{env['LOG_LEVEL']}} --path /pythonimports
+process_name=%(program_name)s%(process_num)01d
+
+; If you want to run more than one worker instance, increase this
+numprocs=1
+redirect_stderr=true
+
+; This is the directory from which RQ is ran. Be sure to point this to the
+; directory where your source code is importable from. rq-scheduler depends
+; on this directory to correctly import functions.
+directory=/pythonimports
+
+; RQ requires the TERM signal to perform a warm shutdown. If RQ does not die
+; within 10 seconds, supervisor will forcefully kill it
+stopsignal=TERM
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+
+autostart=true
+autorestart=true
