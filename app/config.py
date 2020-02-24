@@ -3,12 +3,12 @@ from google.cloud import storage
 from app.logging import logger
 
 
-SEARCH_URL  = "elasticsearch:9200"
+logger.info(os.environ)
 
-logger.info("ES URL %s",SEARCH_URL)
+SEARCH_URL  = os.getenv('ELASTIC_SEARCH_URL',"elasticsearch:9200")
 
-REDIS_HOST = "redis"
-REDIS_PORT = "6379"
+REDIS_HOST = os.getenv('REDIS_DB',"redis")
+REDIS_PORT = os.getenv('REDIS_PORT',"6379")
 
 
 
@@ -23,13 +23,19 @@ GOOGLE_BUCKET_URL = "https://" + RESUME_UPLOAD_BUCKET + "/"
 storage_client = storage.Client.from_service_account_json(
             BASE_PATH + '/../RecruitAI.json')
 
-try:
-  import google.colab
-  IN_COLAB = True
-except:
-  IN_COLAB = False
+IN_COLAB = False
 
 
-IS_DEV = os.getenv("IS_DEV", False)
+IS_DEV = os.getenv("IS_DEV", "False")
+if IS_DEV == "False":
+    IS_DEV = False
+else:
+    IS_DEV = True
+
+if IS_DEV:
+    RESUME_INDEX_NAME = os.getenv('RESUME_INDEX_NAME',"devresume")
+else:
+    RESUME_INDEX_NAME = os.getenv('RESUME_INDEX_NAME',"resume")
+
 # if true, this will parse cv instantly instead of rq worker
 logger.info("is dev? %s",IS_DEV)

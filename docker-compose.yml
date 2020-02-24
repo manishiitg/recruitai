@@ -40,6 +40,8 @@ services:
               read_only: true
         ports:
             - "5601:5601"
+        depends_on:
+            - elasticsearch
         networks:
             - ai
 
@@ -73,9 +75,10 @@ services:
             - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
             - /var/lib/docker:/var/lib/docker:ro
             - /var/run/docker.sock:/var/run/docker.sock
+            - /var/log/recruitai:/var/log/recruitai:ro
         command: ["--strict.perms=false"]
         depends_on:
-            - elasticsearch
+            - logstash
         networks:
             - ai
     redis:
@@ -84,21 +87,47 @@ services:
             - 6379
         networks:
             - ai
+        
+    # rq-worker:
+    #     image: rq-worker
+    #     build: ./rq-worker
+    #     environment: 
+    #         - REDIS_HOST=redis
+    #         - REDIS_PORT=6379
+    #         - REDIS_DB=0
+    #     volumes: 
+    #         - ./app:/pythonimports
+    #     networks:
+    #         - ai
+    
+    rq-dashboard:
+        image: eoranged/rq-dashboard
+        environment: 
+            - RQ_DASHBOARD_REDIS_URL=redis://redis:6379
+        ports:
+            - 9181:9181
+        networks:
+            - ai
 
     ai:
         image: recruitai
         build: .
         ports:
-            - "8086:5000"
+            - "8086:5001"
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs 
+            - ./app:/workspace/app
         environment:
+            - ELASTIC_SEARCH_URL=elasticsearch:9200
+            - REDIS_DB=redis
+            - REDIS_PORT=6379
             - RECRUIT_BACKEND_DB=mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit
             - CV_BUCKET_URL=staticrecruitai.excellencetechnologies.in
-            - IS_DEV=True
+            - IS_DEV=False
+            - RESUME_INDEX_NAME=resume
         depends_on:
             - elasticsearch
             - redis

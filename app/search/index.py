@@ -3,14 +3,12 @@ from datetime import datetime
 from app.logging import logger
 from app import db
 import json
+from app.config import RESUME_INDEX_NAME
 
 
 def createIndex():
     es = db.init_elastic_search()
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName = RESUME_INDEX_NAME
 
     ret = es.indices.create(index=indexName, ignore=400, body={
         "mappings": {
