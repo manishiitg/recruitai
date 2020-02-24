@@ -20,17 +20,32 @@ Docker
 sudo docker-compose build
 sudo docker-compose up -d
 
+docker exec -it recruit_ai_1 bash
+
+
+
 sudo docker image build -t recruitai .
 
-docker exec -it recruitai_ai_1 /bin/bash
 
 sudo docker container run --name recruitai \
       -v $(pwd)/pretrained:/workspace/pretrained \
       -v $(pwd)/batchprocessing:/workspace/batchprocessing \
       -v $(pwd)/cvreconstruction:/workspace/cvreconstruction \
-      -v $(pwd)/logs:/workspace/logs \
-      -d -p 8086:5000 \
-      recruitai 
+      -v $(pwd)/app:/workspace/app \
+      -v /var/log/recruit:/workspace/logs \
+      -d -p 8085:8085 \
+      recruitai FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.--port 8085
+
+sudo docker container run --name recruitai \
+      -v $(pwd)/pretrained:/workspace/pretrained \
+      -v $(pwd)/batchprocessing:/workspace/batchprocessing \
+      -v $(pwd)/cvreconstruction:/workspace/cvreconstruction \
+      -v $(pwd)/app:/workspace/app \
+      -v /var/log/recruit:/workspace/logs \
+      -d -p 8085:8085 \
+      recruitai bash
+
+      
 
 # if need to debug via bash
 sudo docker container run -it --rm \
@@ -49,6 +64,9 @@ https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stoppe
 
 curl localhost:9200/_cat/health
 
+localhost:9181  for rq worker dashboard
+localhost:5601 for kibana and log viewer
+
 setup filebeat dashboards 
 ./filebeat setup --dashboards --strict.perms=false -E setup.kibana.host=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
 
@@ -57,6 +75,9 @@ setup filebeat dashboards
 sudo sysctl -w vm.max_map_count=262144
 
 sudo docker-compose logs -f
+
+tail -f /var/log/recruitai/flask_out.log
+tail -f /var/log/recruitai/flask_err.log
 
 Few things to install
 ================================

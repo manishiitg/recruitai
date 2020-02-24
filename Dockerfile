@@ -53,9 +53,9 @@ RUN gcloud auth activate-service-account --key-file=RecruitAI.json
 RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
-RUN pip install gunicorn 
+RUN pip install gunicorn rq
 
-VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
+VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs","/workspace/app"]
 
 RUN apt-get update && \
 	apt-get install supervisor -y && \
@@ -63,10 +63,11 @@ RUN apt-get update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./supervisor/conf.d/recruitai.conf /etc/supervisor/conf.d/recruitai.conf
+COPY ./supervisor/conf.d/queue.conf /etc/supervisor/conf.d/queue.conf
 
 RUN truncate -s 0 /workspace/logs/*.log
 
-ADD app /workspace/app
+# ADD app /workspace/app, using volume instead
 
 CMD ["/usr/bin/supervisord"]
 
