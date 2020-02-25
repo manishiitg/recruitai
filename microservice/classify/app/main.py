@@ -1,4 +1,5 @@
 
+from app.logging import logger
 import pika
 
 
