@@ -3,7 +3,6 @@ from pathlib import Path
 import shutil
 import torch
 
-from app.config import IN_COLAB
 from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
 
 # from app import mongo
@@ -38,17 +37,11 @@ import subprocess
 logger = setup_logger()
 
 # import some common libraries
-if IN_COLAB:
-    from google.colab.patches import cv2_imshow
-else:
-    def cv2_imshow(im):
-        pass
+def cv2_imshow(im):
+  pass
 
 
-if IN_COLAB:
-    from tqdm import tqdm_notebook as tqdm
-else:
-    from tqdm import tqdm
+from tqdm import tqdm
 
 
 # import some common detectron2 utilities

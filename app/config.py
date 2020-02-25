@@ -10,7 +10,8 @@ SEARCH_URL  = os.getenv('ELASTIC_SEARCH_URL',"elasticsearch:9200")
 REDIS_HOST = os.getenv('REDIS_DB',"redis")
 REDIS_PORT = os.getenv('REDIS_PORT',"6379")
 
-
+BATCH_PROCESSING_DELAY = os.getenv("BATCH_PROCESSING_DELAY", "60")
+BATCH_PROCESSING_DELAY = int(BATCH_PROCESSING_DELAY)
 
 MONGO_URI = os.getenv('RECRUIT_BACKEND_DB', "mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit")
 

@@ -1,8 +1,10 @@
-from app.picture.start import processAPI as extractPicture
+# from app.picture.start import processAPI as extractPicture
 from app.config import storage_client
-from app.nerclassify.start import process as classifyNer
-from app.ner.start import processAPI as extractNer
-from app.detectron.start import processAPI
+# from app.nerclassify.start import process as classifyNer
+# from app.ner.start import processAPI as extractNer
+# from app.detectron.start import processAPI
+
+
 import json
 import os
 from pathlib import Path
@@ -28,10 +30,11 @@ from rq import get_current_job
 
 import subprocess
 
-from app.resumeutil import fullResumeParsing
+# from app.resumeutil import fullResumeParsing
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
+from app.rabbit import sendMessage
 
 @bp.route('/getCurrentJob', methods=['GET'])
 def getCurrentJob():
@@ -66,58 +69,66 @@ def getJobStatus(jobId):
 
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
 def fullparsing(filename, mongoid = None):
-    logger.info("is dev %s", IS_DEV)
-    if IS_DEV:
-        logger.info("imedite processing")
-        return jsonify(fullResumeParsing(filename, mongoid)), 200
-    else:
-        logger.info("rq worker")
-        job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400, timeout=500)  # 1 day
-        logger.info(job)
-        return jsonify(job.id), 200
+    # logger.info("is dev %s", IS_DEV)
+    # if IS_DEV:
+    #     logger.info("imedite processing")
+    #     return jsonify(fullResumeParsing(filename, mongoid)), 200
+    # else:
+        # logger.info("rq worker")
+        
+    # job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400, job_timeout="10m")  # 1 day
+    # logger.info(job)
+    # return jsonify(job.id), 200
+
+    sendMessage({
+        "filename" : filename,
+        "mongoid" : mongoid
+    })
+
+    return jsonify(""), 200
 
 
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
-@bp.route('/picture/<string:filename>', methods=['GET'])
-def picture(filename):
+# @bp.route('/picture/<string:filename>', methods=['GET'])
+# def picture(filename):
 
-    # try:
+#     # try:
 
-    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    blob = bucket.blob(filename)
-    dest = BASE_PATH + "/../temp"
-    Path(dest).mkdir(parents=True, exist_ok=True)
-    blob.download_to_filename(os.path.join(dest, filename))
+#     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+#     blob = bucket.blob(filename)
+#     dest = BASE_PATH + "/../temp"
+#     Path(dest).mkdir(parents=True, exist_ok=True)
+#     blob.download_to_filename(os.path.join(dest, filename))
 
-    response, basedir = extractPicture(os.path.join(dest, filename))
+#     response, basedir = extractPicture(os.path.join(dest, filename))
 
-    return jsonify(response, basedir), 200
-    # except Exception as e:
-    #     return jsonify(str(e)) , 500
+#     return jsonify(response, basedir), 200
+#     # except Exception as e:
+#     #     return jsonify(str(e)) , 500
 
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
-@bp.route('/parse/<string:filename>', methods=['GET'])
-def parse(filename):
+# @bp.route('/parse/<string:filename>', methods=['GET'])
+# def parse(filename):
 
-    try:
+#     try:
 
-        bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-        blob = bucket.blob(filename)
-        dest = BASE_PATH + "/../temp"
-        Path(dest).mkdir(parents=True, exist_ok=True)
-        blob.download_to_filename(os.path.join(dest, filename))
+#         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+#         blob = bucket.blob(filename)
+#         dest = BASE_PATH + "/../temp"
+#         Path(dest).mkdir(parents=True, exist_ok=True)
+#         blob.download_to_filename(os.path.join(dest, filename))
 
-        response, basePath = processAPI(os.path.join(dest, filename))
+#         response, basePath = processAPI(os.path.join(dest, filename))
 
-        return jsonify({
-            "basePath": basePath,
-            "response": response
-        }), 200
-    except Exception as e:
-        return jsonify(str(e)), 500
+#         return jsonify({
+#             "basePath": basePath,
+#             "response": response
+#         }), 200
+#     except Exception as e:
+#         return jsonify(str(e)), 500

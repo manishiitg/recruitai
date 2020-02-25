@@ -13,33 +13,34 @@ RUN apt-get update \
     && apt-get install -y curl software-properties-common gnupg
 
 
-RUN pip install --upgrade cython
-RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
-RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
+# RUN pip install --upgrade cython
+# RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+# RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
 RUN pip install transformers
 RUN pip uninstall -y tokenizers
 RUN pip install tokenizers
 RUN pip install google-cloud-storage
 
 
-RUN add-apt-repository ppa:libreoffice/ppa -y
-RUN apt-get update && apt-get -y autoclean
-RUN apt-get install libreoffice-core --no-install-recommends -y
-RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -y
-RUN apt-get install python-poppler poppler-utils -y \
-    && apt-get -y autoclean
+# RUN add-apt-repository ppa:libreoffice/ppa -y
+# RUN apt-get update && apt-get -y autoclean
+# RUN apt-get install libreoffice-core --no-install-recommends -y
+# RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -y
+# RUN apt-get install python-poppler poppler-utils -y \
+#     && apt-get -y autoclean
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
-RUN apt-get -y install nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
+# RUN apt-get -y install nodejs
 
-RUN node --version
-RUN npm --version
+# RUN node --version
+# RUN npm --version
 
-RUN npm install -g pdf-text-extract
+# RUN npm install -g pdf-text-extract
 
 
-RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apscheduler redis rq elasticsearch \
-    numpy gensim flair opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy
+RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apscheduler redis elasticsearch \
+    numpy gensim flair fuzzywuzzy
 # RUN pip install -r requirements.txt
 
 COPY RecruitAI.json /workspace/
@@ -53,7 +54,8 @@ RUN gcloud auth activate-service-account --key-file=RecruitAI.json
 RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
-RUN pip install gunicorn rq
+RUN pip install gunicorn
+RUN pip install -e git+https://github.com/nvie/rq.git@master#egg=rq
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs","/workspace/app"]
 
@@ -65,9 +67,12 @@ RUN apt-get update && \
 COPY ./supervisor/conf.d/recruitai.conf /etc/supervisor/conf.d/recruitai.conf
 COPY ./supervisor/conf.d/queue.conf /etc/supervisor/conf.d/queue.conf
 
-RUN truncate -s 0 /workspace/logs/*.log
+RUN truncate -s 0 /workspace/logs/flask*.log
 
 # ADD app /workspace/app, using volume instead
+
+
+RUN pip install pika
 
 CMD ["/usr/bin/supervisord"]
 

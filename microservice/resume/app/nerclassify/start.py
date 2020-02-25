@@ -1,7 +1,7 @@
 from app.logging import logger
 import logging
 import json
-from app import mongo
+# from app import mongo
 from app.cvlinepredict.start import predict as predictLineLabel
 
 
@@ -476,17 +476,17 @@ def process(data, isPageWiseData=False):
             "extractEntity": extractEntity,
             "compressedStructuredContent": row["compressedStructuredContent"]
         }
-        if "_id" in row:
-            mongo.db.cvparsingsample.update_one({"_id": row["_id"]},
-                                                {
-                "$set": {
-                    "nerExtracted": True,
-                    "finalEntity": json.dumps(finalEntity),
-                    "extractEntity": json.dumps(extractEntity),
-                    "compressedStructuredContent": row["compressedStructuredContent"]
-                }
-            }
-            )
+        # if "_id" in row:
+        #     mongo.db.cvparsingsample.update_one({"_id": row["_id"]},
+        #                                         {
+        #         "$set": {
+        #             "nerExtracted": True,
+        #             "finalEntity": json.dumps(finalEntity),
+        #             "extractEntity": json.dumps(extractEntity),
+        #             "compressedStructuredContent": row["compressedStructuredContent"]
+        #         }
+        #     }
+        #     )
 
         logger.info("total lines %s", len(nerparsed))
 
