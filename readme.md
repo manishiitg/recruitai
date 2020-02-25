@@ -22,9 +22,9 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-docker compose up -d --scale=resumemq=2
+docker compose up -d --scale=resumemq=2@
 
-
+sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue resume
 
 sudo docker image build -t recruitai .
 
