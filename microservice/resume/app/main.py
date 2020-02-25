@@ -445,6 +445,9 @@ class ReconnectingExampleConsumer(object):
             except KeyboardInterrupt:
                 self._consumer.stop() 
                 break
+            except Exception as e:
+                LOGGER.critical(str(e))
+                
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
