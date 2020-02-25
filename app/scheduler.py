@@ -8,7 +8,7 @@ from pathlib import Path
 import json
 from app.db import init_redis
 from app.queue import q
-from app.rabbit import sendMessage
+from app.publisher.resume import sendMessage
 
 from redis.exceptions import LockError
 
