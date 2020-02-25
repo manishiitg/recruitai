@@ -28,13 +28,13 @@ from rq.job import Job
 
 from rq import get_current_job
 
+from app.publisher.resume import sendMessage
+
 import subprocess
 
 # from app.resumeutil import fullResumeParsing
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
-
-from app.rabbit import sendMessage
 
 @bp.route('/getCurrentJob', methods=['GET'])
 def getCurrentJob():
