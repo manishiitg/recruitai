@@ -1145,9 +1145,9 @@ def compressContent(finalStructureContent):
                         else:
                             directionY = "up"
 
-            logger.debug("closest box found is for %", row["line"])
+            logger.debug("closest box found is for %s", row["line"])
             logger.debug(closestBox)
-            logger.debug("distance %", maxDist)
+            logger.debug("distance %s", maxDist)
             logger.debug(directionX)
             logger.debug(directionY)
             percentDist = (maxDist/maxImageDist) * 100

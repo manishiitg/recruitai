@@ -20,12 +20,18 @@ from app.logging import logger
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
-@bp.route('/<string:body>/<string:subject>', methods=['GET', 'POST'])
+@bp.route('/', methods=[ 'POST'])
+@bp.route('/<string:body>/<string:subject>', methods=['GET'])
 def classify(body = None, subject = None):
     try:
         if request.method == 'POST':
-            data = request.json("data")
-            return jsonify(classifyData(data)), 200
+            
+            return jsonify(classifyData([
+                {
+                    "subject" : request.json.get('subject', ""),
+                    "body" : request.json.get('body', ""),
+                }
+            ])), 200
         else:
             return jsonify(classifyData([
                 {

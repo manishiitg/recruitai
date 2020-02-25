@@ -3,7 +3,6 @@ from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, IS_DEV
 import subprocess
 from app.logging import logger
 from app import mongo
-from app.resumeutil import fullResumeParsing
 import time
 from pathlib import Path
 import json
@@ -11,7 +10,6 @@ from app.db import init_redis
 from app.queue import q
 
 from redis.exceptions import LockError
-
 
 def process_resumes():
     batchDir = BASE_PATH + "/../batchresumeprocessing"
@@ -94,7 +92,7 @@ def process_resumes():
 
         # ret = fullResumeParsing(filename)
 
-        job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
+        # job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
 
         # end_time = time.time()
 

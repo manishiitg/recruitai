@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        hostname: rabbitmq
+        ports:
+            # The standard AMQP protocol port
+            - '5672:5672'
+            # HTTP management UI
+            - '15672:15672'
+        networks:
+            - ai
+
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
         container_name: elasticsearch
@@ -128,11 +140,41 @@ services:
             - CV_BUCKET_URL=staticrecruitai.excellencetechnologies.in
             - IS_DEV=False
             - RESUME_INDEX_NAME=resume
+            - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600
+            - BATCH_PROCESSING_DELAY=60
         depends_on:
             - elasticsearch
             - redis
         networks:
             - ai
+
+    resumemq:
+        # If needed, Docker Compose will automatically run consumer/Dockerfile.
+        build: microservice/resume
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/resume/app:/workspace/app            
+        # Environment variables:
+        environment:
+            # The location of the RabbitMQ server.  "amqp" is the protocol;
+            # "rabbitmq" is the hostname.  Note that there is not a guarantee
+            # that the server will start first!  Telling the pika client library
+            # to try multiple times gets around this ordering issue.
+            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            CV_BUCKET_URL: 'staticrecruitai.excellencetechnologies.in'
+            REDIS_HOST: 'redis'
+            REDIS_PORT : '6379'
+            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
+            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
+    
+        # Again, run on the private network.  Needed to see the "rabbitmq"
+        # magic Docker DNS name.
+        networks:
+            - ai
+        
 volumes: 
     elasticsearch:
 
