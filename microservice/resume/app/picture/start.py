@@ -13,7 +13,7 @@ import torch
 from app.config import IN_COLAB
 from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
 
-from app import mongo
+# from app import mongo
 
 import logging
 import os
@@ -76,14 +76,14 @@ def test():
         logger.info("pic found %s", imageFile)
         files[fileIdx]["imageFile"] = imageFile
 
-        if files[fileIdx]["id"] != -1:
-            mongo.db.cvparsingsample.update_one({"_id": files[fileIdx]["id"]},
-                                                {
-                "$set": {
-                    "imageFile": imageFile
-                }
-            }
-            )
+        # if files[fileIdx]["id"] != -1:
+        #     mongo.db.cvparsingsample.update_one({"_id": files[fileIdx]["id"]},
+        #                                         {
+        #         "$set": {
+        #             "imageFile": imageFile
+        #         }
+        #     }
+        #     )
 
     return files
 
@@ -138,15 +138,16 @@ def getFilesToParseForTesting():
 
 
 def getFilesToParseFromDB():
-    ret = mongo.db.cvparsingsample.find({"parsed": False, "dataset": 3})
-    filestoparse = []
-    for row in ret:
-        filestoparse.append({
-            "file": row["file"],
-            "id": row["_id"]
-        })
+    # ret = mongo.db.cvparsingsample.find({"parsed": False, "dataset": 3})
+    # filestoparse = []
+    # for row in ret:
+    #     filestoparse.append({
+    #         "file": row["file"],
+    #         "id": row["_id"]
+    #     })
 
-    return filestoparse
+    # return filestoparse
+    return []
 
 
 def savePDFAsImage(cv, output_dir):

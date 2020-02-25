@@ -10,6 +10,9 @@ from app.search.index import createIndex
 
 from app import db
 
+from app.config import BATCH_PROCESSING_DELAY
+
+
 mongo = db.init_db()
 
 from app import token
@@ -65,17 +68,13 @@ def create_app(test_config=None):
     
     # Scheduler which will run at interval of 60 seconds for user checkin score
     checkin_score_scheduler = BackgroundScheduler()
-    checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=60) #*2.5
+    checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=BATCH_PROCESSING_DELAY) #*2.5
     checkin_score_scheduler.start()
     # process_resumes() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
 
 
     # create esastic search index, ignore if already exists
     createIndex()
-    
-    
-    
-
 
     try:
         print("create app..")

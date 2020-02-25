@@ -8,7 +8,7 @@ from app.config import storage_client
 from pathlib import Path
 import subprocess
 import os
-from app.search.index import addDoc
+# from app.search.index import addDoc
 import shutil  
 
 
@@ -151,8 +151,8 @@ def fullResumeParsing(filename, mongoid=None):
             "picture": fullResponse["picture"]
         }
 
-        if mongoid:
-            addDoc(mongoid, finalLines, ret)
+        # if mongoid:
+        #     addDoc(mongoid, finalLines, ret)
 
         ret["debug"] = {
             "extractEntity": combinData["extractEntity"],
@@ -160,7 +160,7 @@ def fullResumeParsing(filename, mongoid=None):
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = False) 
-        logger.info("final filename %s", filename)
+        logger.info("processing completed, final filename %s", filename)
         os.remove(BASE_PATH + "/../cvreconstruction/" + filename) 
         return ret
 

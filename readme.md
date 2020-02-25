@@ -22,6 +22,8 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
+docker compose up -d --scale=resumemq=2
+
 
 
 sudo docker image build -t recruitai .
@@ -198,3 +200,13 @@ b) take cv text from nodejs as well, but they say that can take text of full pag
 or maybe try myself with textract same as nodejs
 == done
 3) delete file from filesystem when processing is done, as this is taking too much space (done)
+4) need to work on test cases
+5) need to setup metricbeat
+
+
+
+
+in the micro service
+a) store results in redis
+b) create another mq for elastic search?
+c) directly write to mongodb of recruit
