@@ -9,11 +9,12 @@ import json
 from app.db import init_redis
 from app.queue import q
 from app.publisher.resume import sendMessage
+from app.publisher.classify import sendBlockingMessage
 
 from redis.exceptions import LockError
 
 def process_resumes():
-
+    sendBlockingMessage()
     
     logger.info("this needs to redone now because right now my code is always pushing to mongodb no dev")
 

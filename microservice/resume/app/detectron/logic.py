@@ -163,7 +163,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
                     if line.startswith(indexOfList):
                         # this looks like a list
-                        logger.debug("looks like a list", line)
+                        logger.debug("looks like a list %s", line)
                         line = line[len(indexOfList):].strip()
                         isStartingWithList = True
                         break
