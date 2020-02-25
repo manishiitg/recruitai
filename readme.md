@@ -10,7 +10,7 @@ gcloud config set project recruitai-266705
 gsutil ls
 mkdir pretrained
 gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
-mkdir logs
+<!-- mkdir logs -->
 mkdir batchprocessing
 sudo mkdir /var/log/recruitai
 
@@ -22,7 +22,7 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-docker compose up -d --scale=resumemq=2@
+docker compose up -d --scale=resumemq=2
 
 sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue resume
 
@@ -206,7 +206,8 @@ or maybe try myself with textract same as nodejs
 
 
 
-in the micro service
+in the micro service(done)
 a) store results in redis
 b) create another mq for elastic search?
-c) directly write to mongodb of recruit
+c) directly write to mongodb of recruit (done)
+d) we are not writing to elastic search
