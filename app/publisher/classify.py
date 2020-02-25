@@ -1,4 +1,4 @@
-from app.logging import logger as LOGGER
+ from app.logging import logger as LOGGER
 import os
 import pika
 import functools
@@ -7,6 +7,8 @@ import json
 
 SERVER_QUEUE = 'rpc.classify.queue'
 
+amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+
 def sendBlockingMessage():
      """ Here, Client sends "Marco" to RPC Server, and RPC Server replies with
     "Polo".
@@ -14,7 +16,8 @@ def sendBlockingMessage():
     in this very simple example both are running in the same thread and sharing
     connection and channel.
     """
-    with pika.BlockingConnection() as conn:
+    
+    with pika.BlockingConnection(pika.URLParameters(amqp_url)) as conn:
         channel = conn.channel()
 
         # Set up client
