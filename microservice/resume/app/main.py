@@ -312,10 +312,11 @@ class ExampleConsumer(object):
         if r.exists(key):
             ret = r.get(key)
             ret = json.loads(ret)
+            LOGGER.info("redis key exists")
             if "error" not in ret:
                 self.updateInDB(ret , message["mongoid"])
-                self.acknowledge_message(delivery_tag)
             else:
+                LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
         else:
             doProcess = True
@@ -327,27 +328,31 @@ class ExampleConsumer(object):
 
             
 
-        # cb = functools.partial(self.acknowledge_message, self._channel, delivery_tag)
+        # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
+        # threadsafe callback is only on blocking connection
 
         self.acknowledge_message(delivery_tag)
 
     def updateInDB(self, ret, mongoid):
-        isErorr = False
+        isError = False
         if "error" in ret:
-            isErorr = True
+            isError = True
             
         LOGGER.info("mongo id %s", mongoid)
-        ret = db.emailStored({
-            "_id" : ObjectId(mongoid)
-        }, {
-            "$set": {
-                "cvParsedInfo": json.dumps(ret),
-                "cvParsedAI": isErorr,
-                "updatedTime" : datetime.now()
-            }
-        })
-        logger.info(ret)
+        if ObjectId.is_valid(mongoid):
+            ret = db.emailStored.update_one({
+                "_id" : ObjectId(mongoid)
+            }, {
+                "$set": {
+                    "cvParsedInfo": json.dumps(ret),
+                    "cvParsedAI": not isError,
+                    "updatedTime" : datetime.now()
+                }
+            })
+            LOGGER.info(ret)
+        else:
+            LOGGER.info("invalid mongoid")
 
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a

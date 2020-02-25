@@ -15,7 +15,7 @@ RUN pip install pika
 
 RUN add-apt-repository ppa:libreoffice/ppa -y
 RUN apt-get update && apt-get -y autoclean
-RUN apt-get install libreoffice-core --no-install-recommends -y
+RUN apt-get install libreoffice -y
 RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -y
 RUN apt-get install python-poppler poppler-utils -y \
     && apt-get -y autoclean
@@ -57,6 +57,8 @@ RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
 RUN pip install transformers beautifulsoup4 redis pymongo
+
+RUN apt-get install default-jdk -y
 
 # ADD app /workspace/app, using volume instead
 

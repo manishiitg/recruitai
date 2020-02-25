@@ -7,36 +7,15 @@ WORKDIR /workspace
 COPY requirements.txt /workspace/
 
 
-# update the repository sources list
-# and install dependencies
 RUN apt-get update \
     && apt-get install -y curl software-properties-common gnupg
 
 
-# RUN pip install --upgrade cython
-# RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
-# RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
 
 RUN pip install transformers
 RUN pip uninstall -y tokenizers
 RUN pip install tokenizers
 RUN pip install google-cloud-storage
-
-
-# RUN add-apt-repository ppa:libreoffice/ppa -y
-# RUN apt-get update && apt-get -y autoclean
-# RUN apt-get install libreoffice-core --no-install-recommends -y
-# RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -y
-# RUN apt-get install python-poppler poppler-utils -y \
-#     && apt-get -y autoclean
-
-# RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
-# RUN apt-get -y install nodejs
-
-# RUN node --version
-# RUN npm --version
-
-# RUN npm install -g pdf-text-extract
 
 
 RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apscheduler redis elasticsearch \
