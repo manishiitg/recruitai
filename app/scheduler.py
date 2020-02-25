@@ -8,10 +8,17 @@ from pathlib import Path
 import json
 from app.db import init_redis
 from app.queue import q
+from app.rabbit import sendMessage
 
 from redis.exceptions import LockError
 
 def process_resumes():
+
+    
+    logger.info("this needs to redone now because right now my code is always pushing to mongodb no dev")
+
+    return
+
     batchDir = BASE_PATH + "/../batchresumeprocessing"
     logger.info('running batch resume processing... %s', batchDir)
 
@@ -89,6 +96,11 @@ def process_resumes():
         os.remove(batchfile)
 
         start_time = time.time()
+
+        sendMessage({
+            "filename" : filename,
+            "mongoid" : mongoid
+        })
 
         # ret = fullResumeParsing(filename)
 
