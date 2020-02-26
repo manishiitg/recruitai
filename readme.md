@@ -211,3 +211,4 @@ a) store results in redis
 b) create another mq for elastic search?
 c) directly write to mongodb of recruit (done)
 d) we are not writing to elastic search
+f) make app also inta seperate api microservice

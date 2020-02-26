@@ -141,7 +141,7 @@ services:
             - IS_DEV=False
             - RESUME_INDEX_NAME=resume
             - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600
-            - BATCH_PROCESSING_DELAY=60
+            - BATCH_PROCESSING_DELAY=1
         depends_on:
             - elasticsearch
             - redis
@@ -175,6 +175,23 @@ services:
         networks:
             - ai
         
+    classifymq:
+        # If needed, Docker Compose will automatically run consumer/Dockerfile.
+        build: microservice/classify
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/classify/app:/workspace/app            
+        # Environment variables:
+        environment:
+            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            
+        # Again, run on the private network.  Needed to see the "rabbitmq"
+        # magic Docker DNS name.
+        networks:
+            - ai
 volumes: 
     elasticsearch:
 
