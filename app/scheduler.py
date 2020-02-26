@@ -8,14 +8,23 @@ from pathlib import Path
 import json
 from app.db import init_redis
 from app.queue import q
-from app.publisher.resume import sendMessage
 from app.publisher.classify import sendBlockingMessage
 
 from redis.exceptions import LockError
+import random
+
 
 def process_resumes():
-    sendBlockingMessage()
-    
+    for i in range(1000):
+        logger.info(i)
+        randInt = random.randint(0, 10000)
+        rec = sendBlockingMessage(dict(ping=randInt))
+        logger.info(rec)
+        if rec["pong"] == randInt:
+            logger.info("all good")
+        else:
+            logging.info("values changing")
+
     logger.info("this needs to redone now because right now my code is always pushing to mongodb no dev")
 
     return
@@ -98,10 +107,10 @@ def process_resumes():
 
         start_time = time.time()
 
-        sendMessage({
-            "filename" : filename,
-            "mongoid" : mongoid
-        })
+        # sendMessage({
+        #     "filename" : filename,
+        #     "mongoid" : mongoid
+        # })
 
         # ret = fullResumeParsing(filename)
 
