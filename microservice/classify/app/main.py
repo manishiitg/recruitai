@@ -3,28 +3,59 @@ from app.logging import logger
 import pika
 
 
-SERVER_QUEUE = 'rpc.classify.queue'
 
+import functools
+import time
+from app.logging import logger as LOGGER
+import pika
+import json
+import threading
+
+from datetime import datetime
+import os 
+
+EXCHANGE = ""
+SERVER_QUEUE = "rpc.classify.queue"
+
+amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+
+from app.emailclassify.start import classifyData, loadModel, loadTokenizer, test
+
+import time
+
+def on_recv_req(ch, method, properties, body):
+    logger.info(body)
+    body = json.loads(body)
+    logger.info(body)
+    if isinstance(body, dict):
+        if "ping" in body:
+            time.sleep(5)            
+            ret = dict(pong=body["ping"])
+            ret = json.dumps(ret)
+            ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=ret)
+        else:
+            ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body='Invalid Object Format')
+    if isinstance(body, list):
+        ret = classifyData(body)
+        logger.info("classify response %s", ret)
+        ret = json.dumps(ret)
+        ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=ret)
+    else:
+        ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body='Internal Error From Clasify')
 
 def main():
-    with pika.BlockingConnection(pika.URLParameters(amqp_url)) as conn:
-        channel = conn.channel()
 
-        # Set up server
+    test()
+    conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
+    ch = conn.channel()
 
-        channel.queue_declare(queue=SERVER_QUEUE,
-                              exclusive=True,
-                              auto_delete=True)
-        channel.basic_consume(on_server_rx_rpc_request, queue=SERVER_QUEUE)
+    # declare a queue
+    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True) #exclusive=True,
+    ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
+    ch.start_consuming()
+
+
+
+if __name__ == '__main__':
     
-        channel.start_consuming()
-
-
-def on_server_rx_rpc_request(ch, method_frame, properties, body):
-    print('RPC Server got request:', body)
-
-    ch.basic_publish('', routing_key=properties.reply_to, body='Polo')
-
-    ch.basic_ack(delivery_tag=method_frame.delivery_tag)
-
-    print('RPC Server says good bye')
+    main()

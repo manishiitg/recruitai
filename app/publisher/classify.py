@@ -1,53 +1,36 @@
- from app.logging import logger as LOGGER
+from app.logging import logger
 import os
 import pika
-import functools
-import time
 import json
-
-SERVER_QUEUE = 'rpc.classify.queue'
+ROUTING_KEY = 'rpc.classify.queue'
+EXCHANGE = ""
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-def sendBlockingMessage():
-     """ Here, Client sends "Marco" to RPC Server, and RPC Server replies with
-    "Polo".
-    NOTE Normally, the server would be running separately from the client, but
-    in this very simple example both are running in the same thread and sharing
-    connection and channel.
-    """
-    
-    with pika.BlockingConnection(pika.URLParameters(amqp_url)) as conn:
-        channel = conn.channel()
 
-        # Set up client
+def handle(channel, method, properties, body):
+    message = body.decode()
+    logger.info("received: %s", message)
+    return json.loads(message)
 
-        # NOTE Client must create its consumer and publish RPC requests on the
-        # same channel to enable the RabbitMQ broker to make the necessary
-        # associations.
-        #
-        # Also, client must create the consumer *before* starting to publish the
-        # RPC requests.
-        #
-        # Client must create its consumer with no_ack=True, because the reply-to
-        # queue isn't real.
 
-        channel.basic_consume(on_client_rx_reply_from_server,
-                              queue='amq.rabbitmq.reply-to',
-                              no_ack=True)
+def sendBlockingMessage(obj):
+
+    connection = pika.BlockingConnection(pika.URLParameters(amqp_url))
+    channel = connection.channel()
+
+    with connection, channel:
+        message = json.dumps(obj)
+        next(channel.consume(queue="amq.rabbitmq.reply-to", auto_ack=True,
+                            inactivity_timeout=0.1))
         channel.basic_publish(
-            exchange='',
-            routing_key=SERVER_QUEUE,
-            body='Marco',
-            properties=pika.BasicProperties(reply_to='amq.rabbitmq.reply-to'))
+            exchange=EXCHANGE, routing_key=ROUTING_KEY, body=message.encode(),
+            properties=pika.BasicProperties(reply_to="amq.rabbitmq.reply-to",expiration='300'))
+        logger.info("sent: %s", message)
 
-        channel.start_consuming()
+        for (method, properties, body) in channel.consume(
+                queue="amq.rabbitmq.reply-to", auto_ack=True):
+            return handle(channel, method, properties, body)
 
-def on_client_rx_reply_from_server(ch, method_frame, properties, body):
-    print('RPC Client got reply:', body)
 
-    # NOTE A real client might want to make additional RPC requests, but in this
-    # simple example we're closing the channel after getting our first reply
-    # to force control to return from channel.start_consuming()
-    print('RPC Client says bye')
-    ch.close()
+    

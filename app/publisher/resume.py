@@ -331,12 +331,8 @@ class MQPublisher(object):
 def sendMessage(obj):
     # obj is a json object to send message
     # very basic and simple right now 
+
+    LOGGER.info("send resume 0arsuing to queue")
     mq = MQPublisher(amqp_url, obj)
     mq.run()
-    
-
-
-# def test():
-#     channel = init_channel()
-#     logger.info("testing message by sending to exchange")
-#     channel.basic_publish(exchange=EXCHANGE, routing_key=ROUTING_KEY,body=b'Test message.')
+    pass

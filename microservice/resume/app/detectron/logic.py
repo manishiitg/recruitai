@@ -184,7 +184,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                 # conflict can arise because matchString can match multiple line in jsonoutput
                 # so we need to find the best math
                 matchString = " ".join(line.split(" ")[0:matchStrIndex])
-                if len(matchString) < 5:
+                if len(matchString) < 5 and matchStrIndex == 2:
                     matchStrIndex += 1
                     continue
 

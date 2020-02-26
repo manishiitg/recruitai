@@ -32,8 +32,6 @@ from app.publisher.resume import sendMessage
 
 import subprocess
 
-# from app.resumeutil import fullResumeParsing
-
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
 @bp.route('/getCurrentJob', methods=['GET'])
@@ -69,17 +67,6 @@ def getJobStatus(jobId):
 
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
 def fullparsing(filename, mongoid = None):
-    # logger.info("is dev %s", IS_DEV)
-    # if IS_DEV:
-    #     logger.info("imedite processing")
-    #     return jsonify(fullResumeParsing(filename, mongoid)), 200
-    # else:
-        # logger.info("rq worker")
-        
-    # job = q.enqueue(fullResumeParsing, filename, mongoid, result_ttl=86400, job_timeout="10m")  # 1 day
-    # logger.info(job)
-    # return jsonify(job.id), 200
-
     sendMessage({
         "filename" : filename,
         "mongoid" : mongoid

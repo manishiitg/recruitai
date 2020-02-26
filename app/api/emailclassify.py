@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.emailclassify.start import classifyData
+from app.publisher.classify import sendBlockingMessage
 
 bp = Blueprint('emailclassify', __name__, url_prefix='/emailclassify')
 
@@ -26,14 +26,15 @@ def classify(body = None, subject = None):
     try:
         if request.method == 'POST':
             
-            return jsonify(classifyData([
+            return jsonify(sendBlockingMessage([
                 {
                     "subject" : request.json.get('subject', ""),
                     "body" : request.json.get('body', ""),
                 }
             ])), 200
         else:
-            return jsonify(classifyData([
+            
+            return jsonify(sendBlockingMessage([
                 {
                     "subject" : subject,
                     "body" : body
