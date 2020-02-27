@@ -20,8 +20,7 @@ def fourChannels(img):
 
     return img
 
-
-def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cfg, thing_classes=[]):
+def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cfg, thing_classes=[], save_viz = True, save_withoutbbox = True):
     logger.debug("reading filename %s", os.path.join(inputFolder, filename))
 
     # Image data
@@ -80,12 +79,13 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
     if len(masks) == 0:
         logger.info("unable to find anything from file %s", filename)
 
-    v = Visualizer(
-        im[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1)
-    v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    vizimag = v.get_image()[:, :, ::-1]
-    finalfilename = os.path.join(outputFolder, filename + "_viz_.png")
-    cv2.imwrite(finalfilename, vizimag)
+    if save_viz:
+      v = Visualizer(
+          im[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1)
+      v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+      vizimag = v.get_image()[:, :, ::-1]
+      finalfilename = os.path.join(outputFolder, filename + "_viz_.png")
+      cv2.imwrite(finalfilename, vizimag)
 
     # original image
     # -1 loads as-is so if it will be 3 or 4 channel as the original
@@ -122,29 +122,32 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
             # rois.append(polyrois)
 
         # logger.info(rois)
-
-        mask = np.zeros(image.shape, dtype=np.uint8)
-        cv2.fillPoly(mask, np.array([rois], dtype=np.int32), ignore_mask_color)
-        # from Masterfool: use cv2.fillConvexPoly if you know it's convex
-
-        # apply the mask
-        masked_image = cv2.bitwise_and(image, mask)
         bbox = boxeswh[idx]
-
+        
+        # apply the mask
         x = int(bbox[0])
         y = int(bbox[1])
         w = int(bbox[2])
         h = int(bbox[3])
-
-        nimg = masked_image[y:y+h, x:x+w]
-
-        # save the result
         fullname, file_extension = os.path.splitext(filename)
         filenameonlyalnum = ''.join(e for e in filename if e.isalnum())
-        finalfilename = os.path.join(outputFolder, filenameonlyalnum + "_" + str(idx) +
-                                     "_" + str(classname) + "_" + str(score.item()) + ".png")
-        logger.debug("writing image %s", finalfilename)
-        cv2.imwrite(finalfilename, nimg)
+        if not save_withoutbbox:
+          mask = np.zeros(image.shape, dtype=np.uint8)
+          cv2.fillPoly(mask, np.array([rois], dtype=np.int32), ignore_mask_color)
+          # from Masterfool: use cv2.fillConvexPoly if you know it's convex
+
+          # apply the mask
+          masked_image = cv2.bitwise_and(image, mask)
+          
+
+          nimg = masked_image[y:y+h, x:x+w]
+
+          # save the result
+          
+          finalfilename = os.path.join(outputFolder , filenameonlyalnum + "_" + str(idx) + \
+              "_" + str(classname) + "_" + str(score.item()) + ".png")
+          logger.info("writing image %s", finalfilename)
+          cv2.imwrite(finalfilename, nimg)
 
         padding = 10
         paddingX = x - padding
@@ -189,7 +192,6 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
         "imageheight": outputs["instances"].image_size[0],
         "filename": filename
     }
-
 
 def cmp(name):
     if "_viz_" in name:

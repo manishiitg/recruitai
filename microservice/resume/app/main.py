@@ -19,6 +19,7 @@ from bson.objectid import ObjectId
 client = MongoClient(RECRUIT_BACKEND_DB) 
 db = client[RECRUIT_BACKEND_DATABASE]
 
+import traceback
 
 class ExampleConsumer(object):
     """This is an example consumer that will handle unexpected interactions
@@ -338,14 +339,14 @@ class ExampleConsumer(object):
         isError = False
         if "error" in ret:
             isError = True
-            
+        ret = json.loads(json.dumps(ret))
         LOGGER.info("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
             }, {
                 "$set": {
-                    "cvParsedInfo": json.dumps(ret),
+                    "cvParsedInfo": ret,
                     "cvParsedAI": not isError,
                     "updatedTime" : datetime.now()
                 }
@@ -446,6 +447,7 @@ class ReconnectingExampleConsumer(object):
                 self._consumer.stop() 
                 break
             except Exception as e:
+                print(traceback.format_exc())
                 LOGGER.critical(str(e))
                 
             self._maybe_reconnect()

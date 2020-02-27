@@ -148,7 +148,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       foldername = ''.join(e for e in f if e.isalnum())
       Path(os.path.join(output_dir, foldername)).mkdir(parents=True, exist_ok=True)
-      p = savePredictionPartsToFile(f , output_dir ,os.path.join(output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"])
+      p = savePredictionPartsToFile(f , output_dir ,os.path.join(basePath,output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"], save_viz=True, save_withoutbbox=True)
       predictions.append(p)
       logger.debug(p)
       if maxPage and cvpages >= maxPage:

@@ -59,7 +59,6 @@ RUN gsutil ls
 RUN pip install transformers beautifulsoup4 redis pymongo
 
 RUN apt-get install default-jdk -y
-
 # ADD app /workspace/app, using volume instead
 
 CMD ["/usr/bin/supervisord"]
