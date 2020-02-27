@@ -207,8 +207,9 @@ or maybe try myself with textract same as nodejs
 
 
 in the micro service(done)
-a) store results in redis
+a) store results in redis (done)
 b) create another mq for elastic search?
 c) directly write to mongodb of recruit (done)
 d) we are not writing to elastic search
 f) make app also inta seperate api microservice
+g) fix the async exception in resume mq

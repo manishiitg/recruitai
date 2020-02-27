@@ -9,15 +9,25 @@ amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connectio
 
 
 def handle(channel, method, properties, body):
+    if body is None:
+        return body
     message = body.decode()
     logger.info("received: %s", message)
     return json.loads(message)
 
 
-def sendBlockingMessage(obj):
+ # cb = functools.partial(self.acknowledge_message, delivery_tag)
+# self._connection.add_callback_threadsafe(cb)
+# threadsafe callback is only on blocking connection
 
+def getConnection():
     connection = pika.BlockingConnection(pika.URLParameters(amqp_url))
     channel = connection.channel()
+    return connection, channel
+
+def sendBlockingMessage(obj):
+
+    connection, channel = getConnection()
 
     with connection, channel:
         message = json.dumps(obj)
@@ -29,8 +39,11 @@ def sendBlockingMessage(obj):
         logger.info("sent: %s", message)
 
         for (method, properties, body) in channel.consume(
-                queue="amq.rabbitmq.reply-to", auto_ack=True):
+                queue="amq.rabbitmq.reply-to", auto_ack=True,inactivity_timeout=60):
             return handle(channel, method, properties, body)
+
+        # channel.close()
+        # connection.close()
 
 
     

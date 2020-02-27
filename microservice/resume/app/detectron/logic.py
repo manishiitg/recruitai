@@ -729,6 +729,8 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 def chooseBBoxVsSegment(jsonOutput, jsonOutputbbox):
     tableRow = []
     finalJsonOutput = []
+    if len(jsonOutput) == 0:
+        jsonOutput = jsonOutputbbox
     for i, row in enumerate(jsonOutput):
         # we will remove the bbox images from this and keep only one.
         # either the bbox image or the roi image
