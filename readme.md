@@ -213,3 +213,4 @@ c) directly write to mongodb of recruit (done)
 d) we are not writing to elastic search
 f) make app also inta seperate api microservice
 g) fix the async exception in resume mq
+f) move amqurl to config. small task

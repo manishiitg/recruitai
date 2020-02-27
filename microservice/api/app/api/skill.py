@@ -12,48 +12,9 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.skillsword2vec.start import get_similar , vec_exists
+from app.publisher.skill import sendBlockingMessage
 
 bp = Blueprint('skill', __name__, url_prefix='/skill')
-
-
-def processWord2VecInput(keyword):
-    if "-" in keyword:
-        negative = keyword.split("-")[1]
-        positive = keyword.split("-")[0]
-    else:
-        positive = keyword
-        negative = []
-
-    if "+" in positive:
-        positive = positive.split("+")
-    else:
-        positive = [positive]
-
-    serializedPositiveSkill = []
-    for skill in positive:
-        if " " in skill:
-            if vec_exists("_".join(skill.lower().split(" "))):
-                serializedPositiveSkill.append("_".join(skill.lower().split(" ")))
-            else:
-                serializedPositiveSkill.extend(skill.lower().split(" "))
-        else:
-            serializedPositiveSkill.append(skill.lower())
-
-    serializedNegativeSkill = []
-    for skill in negative:
-        if " " in skill:
-            if vec_exists("_".join(skill.lower().split(" "))):
-                serializedNegativeSkill.append("_".join(skill.lower().split(" ")))
-            else:
-                serializedNegativeSkill.extend(skill.lower().split(" "))
-        else:
-            serializedNegativeSkill.append(skill.lower())
-
-    logger.info("seralized positive %s and negative %s",
-                serializedPositiveSkill, serializedNegativeSkill)
-    return serializedPositiveSkill,  serializedNegativeSkill
-
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
@@ -63,10 +24,9 @@ def similar(keyword):
     logger.info("got keyword %s", keyword)
     try:
 
-        serializedPositiveSkill, serializedNegativeSkill = processWord2VecInput(
-            keyword)
-
-        similar = get_similar(serializedPositiveSkill, serializedNegativeSkill)
+        similar = sendBlockingMessage({
+            "keyword" : keyword
+        })
         return jsonify(similar), 200
     except KeyError as e:
         logger.critical(e)
@@ -80,10 +40,10 @@ def similar(keyword):
 def similarGlobal(keyword):
     logger.info("got keyword %s", keyword)
     try:
-        serializedPositiveSkill, serializedNegativeSkill = processWord2VecInput(
-            keyword)
-
-        similar = get_similar(serializedPositiveSkill, serializedNegativeSkill, True)
+        similar = sendBlockingMessage({
+            "keyword" : keyword, 
+            "isGlobal": True
+        })
         return jsonify(similar), 200
     except KeyError as e:
         logger.critical(e)
