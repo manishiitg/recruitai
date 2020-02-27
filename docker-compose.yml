@@ -18,7 +18,7 @@ services:
         container_name: elasticsearch
         volumes:
             - type: bind
-              source: ./elasticsearch/config/elasticsearch.yml
+              source: ./config/elasticsearch/config/elasticsearch.yml
               target: /usr/share/elasticsearch/config/elasticsearch.yml
               read_only: true
             - type: volume
@@ -47,7 +47,7 @@ services:
             ELASTICSEARCH_URL: http://elasticsearch:9200
         volumes:
             - type: bind
-              source: ./kibana/config/kibana.yml
+              source: ./config/kibana/config/kibana.yml
               target: /usr/share/kibana/config/kibana.yml
               read_only: true
         ports:
@@ -61,11 +61,11 @@ services:
         image: docker.elastic.co/logstash/logstash:7.6.0
         volumes:
             - type: bind
-              source: ./logstash/config/logstash.yml
+              source: ./config/logstash/config/logstash.yml
               target: /usr/share/logstash/config/logstash.yml
               read_only: true
             - type: bind
-              source: ./logstash/pipeline
+              source: ./config/logstash/pipeline
               target: /usr/share/logstash/pipeline
               read_only: true
         ports:
@@ -84,7 +84,7 @@ services:
         user:
             root
         volumes:
-            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+            - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
             - /var/lib/docker:/var/lib/docker:ro
             - /var/run/docker.sock:/var/run/docker.sock
             - /var/log/recruitai:/var/log/recruitai:ro
@@ -99,18 +99,6 @@ services:
             - 6379
         networks:
             - ai
-        
-    # rq-worker:
-    #     image: rq-worker
-    #     build: ./rq-worker
-    #     environment: 
-    #         - REDIS_HOST=redis
-    #         - REDIS_PORT=6379
-    #         - REDIS_DB=0
-    #     volumes: 
-    #         - ./app:/pythonimports
-    #     networks:
-    #         - ai
     
     rq-dashboard:
         image: eoranged/rq-dashboard
@@ -121,9 +109,8 @@ services:
         networks:
             - ai
 
-    ai:
-        image: recruitai
-        build: .
+    api:
+        build: microservice/api
         ports:
             - "8086:5001"
         volumes:
@@ -131,7 +118,7 @@ services:
             - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs 
-            - ./app:/workspace/app
+            - ./microservice/api/app:/workspace/app
         environment:
             - ELASTIC_SEARCH_URL=elasticsearch:9200
             - REDIS_DB=redis
@@ -141,7 +128,7 @@ services:
             - IS_DEV=False
             - RESUME_INDEX_NAME=resume
             - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600
-            - BATCH_PROCESSING_DELAY=1
+            - BATCH_PROCESSING_DELAY=60
         depends_on:
             - elasticsearch
             - redis
@@ -159,19 +146,14 @@ services:
             - ./microservice/resume/app:/workspace/app            
         # Environment variables:
         environment:
-            # The location of the RabbitMQ server.  "amqp" is the protocol;
-            # "rabbitmq" is the hostname.  Note that there is not a guarantee
-            # that the server will start first!  Telling the pika client library
-            # to try multiple times gets around this ordering issue.
             AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             CV_BUCKET_URL: 'staticrecruitai.excellencetechnologies.in'
             REDIS_HOST: 'redis'
             REDIS_PORT : '6379'
             RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
             RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
-    
-        # Again, run on the private network.  Needed to see the "rabbitmq"
-        # magic Docker DNS name.
+        # mode: replicated
+        # replicas: 2
         networks:
             - ai
         

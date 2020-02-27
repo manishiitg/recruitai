@@ -4,7 +4,7 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
 
-COPY requirements.txt /workspace/
+# COPY requirements.txt /workspace/
 
 
 RUN apt-get update \
