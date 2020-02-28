@@ -1,5 +1,4 @@
 from app.nerclassify.start import process as classifyNer
-from app.ner.start import processAPI as extractNer
 from app.detectron.start import processAPI
 from app.picture.start import processAPI as extractPicture
 from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
@@ -16,7 +15,8 @@ from threading import Thread
 
 from app.publishsearch import sendBlockingMessage
 
-def fullResumeParsing(filename, mongoid=None):
+
+def fullResumeParsing(filename, mongoid=None, skills = None):
     # try:
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
@@ -64,6 +64,10 @@ def fullResumeParsing(filename, mongoid=None):
             logger.info(pagerow)
             finalLines.append(pagerow["line"])
 
+    if mongoid:
+        t = Thread(target=addToSearch, args=(mongoid,finalLines,ret))
+        t.start()
+
     # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
     nertoparse = []
@@ -72,6 +76,8 @@ def fullResumeParsing(filename, mongoid=None):
         row.append(page["compressedStructuredContent"])
 
     nertoparse.append({"compressedStructuredContent": row})
+
+    
 
     nerExtracted = extractNer(nertoparse)
 
@@ -158,8 +164,6 @@ def fullResumeParsing(filename, mongoid=None):
     if mongoid:
         t = Thread(target=addToSearch, args=(mongoid,finalLines,ret))
         t.start()
-
-        
 
     ret["debug"] = {
         "extractEntity": combinData["extractEntity"],

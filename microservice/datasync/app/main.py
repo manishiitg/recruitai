@@ -38,8 +38,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'resume'
-    ROUTING_KEY = 'resume.parsing'
+    QUEUE = 'datasync'
+    ROUTING_KEY = 'datasync'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -306,53 +306,12 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
-        if skills in message:
-            skills = message["skills"]
-        else:
-            skills = None
+        
 
-
-        key = message["filename"] + "" + message["mongoid"]
+        key = message["mongoid"]
 
         key = ''.join(e for e in key if e.isalnum()) 
 
-        LOGGER.info("redis key %s", key)
-
-        doProcess = False
-        
-        if r.exists(key):
-            ret = r.get(key)
-            ret = json.loads(ret)
-            LOGGER.info("redis key exists")
-            if "error" not in ret:
-
-                if skills:
-                    skillExtracted =  extractSkillMessage({
-                        "action" : "extractSkill",
-                        "mongoid" : mongoid,
-                        "skills" : skills.split(",")
-                    })
-                    ret["skillExtracted"] = skillExtracted
-
-                self.updateInDB(ret , message["mongoid"])
-            else:
-                LOGGER.info("redis key exists but previously error status so reprocessing")
-                doProcess = True
-        else:
-            doProcess = True
-                
-        if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"])
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-            if skills:
-                skillExtracted =  extractSkillMessage({
-                    "action" : "extractSkill",
-                    "mongoid" : mongoid,
-                    "skills" : skills.split(",")
-                })
-                ret["skillExtracted"] = skillExtracted
-                
-            self.updateInDB(ret, message["mongoid"])
 
             
 
@@ -362,25 +321,6 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid):
-        isError = False
-        if "error" in ret:
-            isError = True
-        ret = json.loads(json.dumps(ret))
-        LOGGER.info("mongo id %s", mongoid)
-        if ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "cvParsedInfo": ret,
-                    "cvParsedAI": not isError,
-                    "updatedTime" : datetime.now()
-                }
-            })
-            LOGGER.info(ret)
-        else:
-            LOGGER.info("invalid mongoid")
 
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
@@ -502,10 +442,6 @@ from app.cvlinepredict.start import loadModel
 from app.ner.start import loadModel as loadModelTagger
 
 def main():
-    loadTrainedModel()
-    loadPicModel()
-    loadModel()
-    loadModelTagger()
     
     consumer = ReconnectingExampleConsumer(amqp_url)
     consumer.run()

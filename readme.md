@@ -214,11 +214,18 @@ d) we are not writing to elastic search (done)
 f) make app also inta seperate api microservice (done)
 g) fix the async exception in resume mq
 f) move amqurl to config. small task
-g) seperate pic/ner/ner classify into seperate micro services
 h) for the micro services make input / output patterns so its configurable and not limited to just mongo
 i) create stats and proper log tracking across services
 j) see api gateway like kong and see linkerd.io with kubernotes and open trace for logging
 h) make recruit node and angular also docker based
 g) there is an issue, suppose any micro service is down. but api is fired, even in microervice is started in next 5sec it doesn't repose. it only responds to new api request not old onces
+
 h) need to look at candidate resume text data sync for faster processing and this can be used to update elastic search as well
-g) integrate candidate skill with add resume process
+
+
+g) integrate candidate skill with add resume process (done but testing pending)
+
+
+g) seperate pic/ner/ner classify into seperate micro services(postponed)
+ner, nerclassify, picture. == i don't see much advantage of doing this except just to make code clean
+== can do it later (not important)
