@@ -49,12 +49,15 @@ def create_app(test_config=None):
     from app.api import emailclassify
     from app.api import resume
     from app.api import search
+    from app.api import skillextract
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
     app.register_blueprint(emailclassify.bp)
     app.register_blueprint(resume.bp)
     app.register_blueprint(search.bp)
+    app.register_blueprint(skillextract.bp)
+    
     
     # Scheduler which will run at interval of 60 seconds for user checkin score
     # checkin_score_scheduler = BackgroundScheduler()

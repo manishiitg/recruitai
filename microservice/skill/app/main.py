@@ -67,7 +67,7 @@ def processWord2VecInput(keyword):
 
 
 
-def thread_task( ch, method_frame, properties, body, is_thread):
+def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
     if isinstance(body, dict):
@@ -83,32 +83,20 @@ def thread_task( ch, method_frame, properties, body, is_thread):
 
             logger.info("similar response %s", similar)
             ret = json.dumps(similar)
-            if is_thread:
-                send_result(ch, method_frame,properties, msg)
-            else:
-                add_threadsafe_callback(ch, method_frame,properties,ret)
+            add_threadsafe_callback(ch, method_frame,properties,ret)
             
 
         elif "ping" in body:
             time.sleep(5)            
             ret = dict(pong=body["ping"])
             ret = json.dumps(ret)
-            if is_thread:
-                    send_result(ch, method_frame,properties, msg)
-            else:
-                add_threadsafe_callback(ch, method_frame,properties,ret)
+            add_threadsafe_callback(ch, method_frame,properties,ret)
         else:
-            if is_thread:
-                send_result(ch, method_frame,properties, msg)
-            else:
-                add_threadsafe_callback(ch, method_frame,properties, 'Invalid Object Format')
+            add_threadsafe_callback(ch, method_frame,properties, 'Invalid Object Format')
         
     
     else:
-        if is_thread:
-                send_result(ch, method_frame,properties, msg)
-        else:
-            add_threadsafe_callback(ch, method_frame,properties,'Wrong Input Format For Skill Only Dict')
+        add_threadsafe_callback(ch, method_frame,properties,'Wrong Input Format For Skill Only Dict')
 
 
 def add_threadsafe_callback(ch,  method_frame,properties, msg):
@@ -121,11 +109,11 @@ def send_result(ch, method_frame,properties, msg):
 
 def on_recv_req(ch, method, properties, body):
     logger.info(body)
-    # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body, True))
+    # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     # t.start()
     # logger.info(t.is_alive())
     # no need of thread for now as its very less time taking task
-    thread_task( ch, method, properties, body , False )
+    thread_task( ch, method, properties, body )
 
 def main():
 
@@ -145,5 +133,4 @@ def main():
 
 
 if __name__ == '__main__':
-    
     main()
