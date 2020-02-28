@@ -18,11 +18,12 @@ from app.publisher.resume import sendMessage
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
-@bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
-def fullparsing(filename, mongoid = None):
+@bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET'])
+def fullparsing(filename, mongoid = None, skills = None):
     sendMessage({
         "filename" : filename,
-        "mongoid" : mongoid
+        "mongoid" : mongoid,
+        "skills" : skills
     })
 
     return jsonify(""), 200
