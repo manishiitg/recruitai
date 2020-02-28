@@ -1,6 +1,5 @@
 from app.logging import logger
 from app import token
-from app import mongo
 from flask import (
     Blueprint, flash, jsonify, abort, request
 )
@@ -12,9 +11,10 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.search.index import addDoc, deleteDoc, searchDoc, deleteAll, getDoc, addMeta
+from app.publisher.search import sendBlockingMessage
 
 bp = Blueprint('search', __name__, url_prefix='/search')
+
 
 
 # @bp.route('', methods=['POST', 'GET'])
@@ -26,9 +26,24 @@ def addDocument(id, line=None):
     try:
         if request.method == 'POST':
             data = request.json.get('lines', [])
-            ret = addDoc(id, data, {})
+
+            ret = sendBlockingMessage({
+                "id": id,
+                "lines" : data,
+                "extra_data" : {},
+                "action" : "addDoc"
+            })
+            # ret = addDoc(id, data, {})
+
+            
         else:
-            ret = addDoc(id, [line], {})
+            ret = sendBlockingMessage({
+                "id": id,
+                "lines" : [line],
+                "extra_data" : {},
+                "action" : "addDoc"
+            })
+            # ret = addDoc(id, [line], {})
 
         return jsonify(ret), 200
 
@@ -40,7 +55,12 @@ def addDocument(id, line=None):
 @bp.route('/add-meta/<string:mongoid>', methods=['POST'])
 def addMetaDoc(mongoid):
     try:
-        return jsonify(addMeta(mongoid, request.json.get("data"))), 200
+        ret = sendBlockingMessage({
+            "id": mongoid,
+            "meta" : request.json.get("data"),
+            "action" : "addMeta"
+        })
+        return jsonify(ret), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
@@ -49,7 +69,11 @@ def addMetaDoc(mongoid):
 @bp.route('/deleteDoc/<string:mongoid>', methods=['GET'])
 def deleteDocument(mongoid):
     try:
-        return jsonify(deleteDoc(mongoid)), 200
+        ret = sendBlockingMessage({
+            "id": mongoid,
+            "action" : "deleteDoc"
+        })
+        return jsonify(ret), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
@@ -58,7 +82,11 @@ def deleteDocument(mongoid):
 @bp.route('/getDoc/<string:mongoid>', methods=['GET'])
 def getDocument(mongoid):
     try:
-        return jsonify(getDoc(mongoid)), 200
+        ret = sendBlockingMessage({
+            "id": mongoid,
+            "action" : "getDoc"
+        })
+        return jsonify(ret), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
@@ -67,7 +95,11 @@ def getDocument(mongoid):
 @bp.route('/search/<string:search>', methods=['GET'])
 def search(search):
     try:
-        return jsonify(searchDoc(search)), 200
+        ret = sendBlockingMessage({
+            "search": search,
+            "action" : "searchDoc"
+        })
+        return jsonify(ret), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
@@ -76,7 +108,10 @@ def search(search):
 @bp.route('/deleteAll', methods=['GET'])
 def deleteAllDocument():
     try:
-        return jsonify(deleteAll()), 200
+        ret = sendBlockingMessage({
+            "action" : "deleteAll"
+        })
+        return jsonify(ret), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500

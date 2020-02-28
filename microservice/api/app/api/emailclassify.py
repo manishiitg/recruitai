@@ -1,5 +1,4 @@
 from app import token
-from app import mongo
 from flask import (
     Blueprint, flash, jsonify, abort, request
 )

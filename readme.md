@@ -210,7 +210,10 @@ in the micro service(done)
 a) store results in redis (done)
 b) create another mq for elastic search?
 c) directly write to mongodb of recruit (done)
-d) we are not writing to elastic search
-f) make app also inta seperate api microservice
+d) we are not writing to elastic search (done)
+f) make app also inta seperate api microservice (done)
 g) fix the async exception in resume mq
 f) move amqurl to config. small task
+g) seperate pic/ner/ner classify into seperate micro services
+h) for the micro services make input / output patterns so its configurable and not limited to just mongo
+i) create stats and proper log tracking across services

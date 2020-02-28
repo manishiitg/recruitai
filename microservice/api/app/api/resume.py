@@ -1,17 +1,8 @@
-# from app.picture.start import processAPI as extractPicture
-from app.config import storage_client
-# from app.nerclassify.start import process as classifyNer
-# from app.ner.start import processAPI as extractNer
-# from app.detectron.start import processAPI
-
-
 import json
 import os
 from pathlib import Path
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL, IS_DEV
 from app.logging import logger
 from app import token
-from app import mongo
 from flask import (
     Blueprint, flash, jsonify, abort, request
 )
@@ -23,47 +14,9 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.queue import q, redis_conn
-from rq.job import Job
-
-from rq import get_current_job
-
 from app.publisher.resume import sendMessage
 
-import subprocess
-
 bp = Blueprint('resume', __name__, url_prefix='/resume')
-
-@bp.route('/getCurrentJob', methods=['GET'])
-def getCurrentJob():
-    job = get_current_job()
-    return jsonify({
-        "status": job.get_status(),
-        "id": job.id
-    })
-
-
-@bp.route('/emptyQueue', methods=['GET'])
-def emptyQueue():
-    q.empty()
-    return jsonify({})
-
-
-@bp.route('/getJobStatus/<string:jobId>', methods=['GET'])
-def getJobStatus(jobId):
-    job = Job.fetch(jobId, connection=redis_conn)
-    return jsonify({
-        "status": job.get_status(),
-        "result": job.result
-    })
-
-
-
-# @bp.route('/instant/<string:filename>/<string:mongoid>', methods=['GET'])
-# def fullparsinginstant(filename, mongoid):
-#     return jsonify(fullResumeParsing(filename, mongoid)), 200
-
-
 
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
 def fullparsing(filename, mongoid = None):
