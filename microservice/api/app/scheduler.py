@@ -1,33 +1,19 @@
 import os
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, IS_DEV
+from app.config import BASE_PATH
 import subprocess
 from app.logging import logger
-from app import mongo
 import time
 from pathlib import Path
 import json
-from app.db import init_redis
-from app.queue import q
-# from app.publisher.classify import sendBlockingMessage
-
-from redis.exceptions import LockError
 import random
 
 
 def process_resumes():
-    # for i in range(1000):
-    #     logger.info(i)
-    #     randInt = random.randint(0, 10000)
-    #     rec = sendBlockingMessage(dict(ping=randInt))
-    #     logger.info(rec)
-    #     if rec["pong"] == randInt:
-    #         logger.info("all good")
-    #     else:
-    #         logging.info("values changing")
-
+   
     logger.info("this needs to redone now because right now my code is always pushing to mongodb no dev")
 
     return
+
 
     batchDir = BASE_PATH + "/../batchresumeprocessing"
     logger.info('running batch resume processing... %s', batchDir)

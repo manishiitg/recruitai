@@ -120,13 +120,7 @@ services:
             - /var/log/recruitai:/workspace/logs 
             - ./microservice/api/app:/workspace/app
         environment:
-            - ELASTIC_SEARCH_URL=elasticsearch:9200
-            - REDIS_DB=redis
-            - REDIS_PORT=6379
-            - RECRUIT_BACKEND_DB=mongodb://staging_recruit:staging_recruit@5.9.144.226:27017/staging_recruit
-            - CV_BUCKET_URL=staticrecruitai.excellencetechnologies.in
             - IS_DEV=False
-            - RESUME_INDEX_NAME=resume
             - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600
             - BATCH_PROCESSING_DELAY=60
         depends_on:
@@ -136,7 +130,6 @@ services:
             - ai
 
     resumemq:
-        # If needed, Docker Compose will automatically run consumer/Dockerfile.
         build: microservice/resume
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -144,7 +137,6 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
-        # Environment variables:
         environment:
             AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             CV_BUCKET_URL: 'staticrecruitai.excellencetechnologies.in'
@@ -158,7 +150,6 @@ services:
             - ai
         
     classifymq:
-        # If needed, Docker Compose will automatically run consumer/Dockerfile.
         build: microservice/classify
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -166,17 +157,12 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
-        # Environment variables:
         environment:
             AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            
-        # Again, run on the private network.  Needed to see the "rabbitmq"
-        # magic Docker DNS name.
         networks:
             - ai
 
     skillmq:
-        # If needed, Docker Compose will automatically run consumer/Dockerfile.
         build: microservice/skill
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -188,8 +174,47 @@ services:
         environment:
             AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             
-        # Again, run on the private network.  Needed to see the "rabbitmq"
-        # magic Docker DNS name.
+        networks:
+            - ai
+    
+    searchmq:
+        build: microservice/search
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/search/app:/workspace/app            
+        environment:
+            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            ELASTIC_SEARCH_URL: 'elasticsearch:9200'
+            RESUME_INDEX_NAME: 'resume'
+        networks:
+            - ai
+
+    searchmq:
+        build: microservice/skillextract
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/skillextract/app:/workspace/app            
+        environment:
+            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+        networks:
+            - ai
+
+    skillextract:
+        build: microservice/skillextract
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/skillextract/app:/workspace/app            
+        environment:
+            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
         networks:
             - ai
 volumes: 

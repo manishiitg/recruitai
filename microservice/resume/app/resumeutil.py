@@ -12,6 +12,9 @@ import os
 import shutil  
 import traceback
 
+from threading import Thread
+
+from app.publishsearch import sendBlockingMessage
 
 def fullResumeParsing(filename, mongoid=None):
     # try:
@@ -152,8 +155,11 @@ def fullResumeParsing(filename, mongoid=None):
         "picture": fullResponse["picture"]
     }
 
-    # if mongoid:
-    #     addDoc(mongoid, finalLines, ret)
+    if mongoid:
+        t = Thread(target=addToSearch, args=(mongoid,finalLines,ret))
+        t.start()
+
+        
 
     ret["debug"] = {
         "extractEntity": combinData["extractEntity"],
@@ -171,3 +177,12 @@ def fullResumeParsing(filename, mongoid=None):
     #     return {
     #         "error": str(e)
     #     }
+
+
+def addToSearch(mongoid, finalLines, ret):
+    sendBlockingMessage({
+        "id": mongoid,
+        "lines" : finalLines,
+        "extra_data" : ret,
+        "action" : "addDoc"
+    })

@@ -9,7 +9,6 @@ from flask import g, current_app, jsonify
 
 from bson.objectid import ObjectId
 
-from app import mongo
 
 
 def init_token():
@@ -30,8 +29,8 @@ def get_token(jwt, app):
    @jwt.user_loader_callback_loader
    def user_loader_callback(identity):
        print("user_loader_callback")
-       user = mongo.db.users.find_one({
-           "username": identity})
+    #    user = mongo.db.users.find_one({
+    #        "username": identity})
        print('load the user by its identity')
        print('load identity by user')
        if user is None or "username" not in user:

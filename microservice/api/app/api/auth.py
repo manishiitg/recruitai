@@ -3,7 +3,7 @@ from flask import (
 )
 from bson.objectid import ObjectId
 import requests
-from app import mongo
+# from app import mongo
 from app import token
 import json
 from bson import json_util
