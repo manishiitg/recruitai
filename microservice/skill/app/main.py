@@ -81,8 +81,8 @@ def thread_task( ch, method_frame, properties, body, is_thread):
             
             similar = get_similar(serializedPositiveSkill, serializedNegativeSkill, isGlobal)
 
-            logger.info("similar response %s", ret)
-            ret = json.dumps(ret)
+            logger.info("similar response %s", similar)
+            ret = json.dumps(similar)
             if is_thread:
                 send_result(ch, method_frame,properties, msg)
             else:

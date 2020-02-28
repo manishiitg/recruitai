@@ -21,6 +21,9 @@ db = client[RECRUIT_BACKEND_DATABASE]
 
 import traceback
 
+amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+
+
 class ExampleConsumer(object):
     """This is an example consumer that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
@@ -446,9 +449,9 @@ class ReconnectingExampleConsumer(object):
             except KeyboardInterrupt:
                 self._consumer.stop() 
                 break
-            except Exception as e:
-                print(traceback.format_exc())
-                LOGGER.critical(str(e))
+            # except Exception as e:
+            #     print(traceback.format_exc())
+            #     LOGGER.critical(str(e))
                 
             self._maybe_reconnect()
 
@@ -480,7 +483,6 @@ def main():
     loadModel()
     loadModelTagger()
     
-    amqp_url = 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     consumer = ReconnectingExampleConsumer(amqp_url)
     consumer.run()
 

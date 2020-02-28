@@ -6,14 +6,7 @@ from flask_cors import CORS
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from app.search.index import createIndex
-
-from app import db
-
 from app.config import BATCH_PROCESSING_DELAY
-
-
-mongo = db.init_db()
 
 from app import token
 
@@ -49,19 +42,16 @@ def create_app(test_config=None):
     def error_500(error):
         return make_response({}, 500)
 
-    db.get_db(mongo=mongo, app=app)
     token.get_token(jwt=jwt, app=app)
 
     from app.api import auth
     from app.api import skill
-    from app.api import user
     from app.api import emailclassify
     from app.api import resume
     from app.api import search
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
-    app.register_blueprint(user.bp)
     app.register_blueprint(emailclassify.bp)
     app.register_blueprint(resume.bp)
     app.register_blueprint(search.bp)
@@ -71,10 +61,6 @@ def create_app(test_config=None):
     # checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=BATCH_PROCESSING_DELAY) #*2.5
     # checkin_score_scheduler.start()
     # process_resumes() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
-
-
-    # create esastic search index, ignore if already exists
-    createIndex()
 
     try:
         print("create app..")
