@@ -95,6 +95,9 @@ services:
             - ai
     redis:
         image: redis
+        command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
+        volumes:
+            - redis-data:/data
         expose:
             - 6379
         networks:
@@ -138,7 +141,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             CV_BUCKET_URL: 'staticrecruitai.excellencetechnologies.in'
             REDIS_HOST: 'redis'
             REDIS_PORT : '6379'
@@ -158,7 +161,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
         networks:
             - ai
 
@@ -172,7 +175,7 @@ services:
             - ./microservice/skill/app:/workspace/app            
         # Environment variables:
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             
         networks:
             - ai
@@ -186,7 +189,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
             ELASTIC_SEARCH_URL: 'elasticsearch:9200'
             RESUME_INDEX_NAME: 'resume'
         networks:
@@ -201,7 +204,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
         networks:
             - ai
 
@@ -214,11 +217,33 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/skillextract/app:/workspace/app            
         environment:
-            AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            REDIS_HOST: 'redis'
+            REDIS_PORT : '6379'
+        networks:
+            - ai
+
+
+    datasyncmq:
+        build: microservice/datasync
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/datasync/app:/workspace/app            
+        environment:
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
+            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
+            CRON_SCHEDULE: '0 0 * * *'
+            REDIS_HOST: 'redis'
+            REDIS_PORT : '6379'
         networks:
             - ai
 volumes: 
     elasticsearch:
+    redis-data:
 
 networks:
     ai:

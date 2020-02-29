@@ -16,7 +16,8 @@ import os
 EXCHANGE = ""
 SERVER_QUEUE = "rpc.skillextract.queue"
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+
 
 from app.skillextract.start import start as extractSkill
 from app.skillsword2vec.start import loadModel

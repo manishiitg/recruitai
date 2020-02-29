@@ -2,29 +2,22 @@ import functools
 import time
 from app.logging import logger as LOGGER
 import pika
-from app.resumeutil import fullResumeParsing
 import json
 import threading
-from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
 
-import redis
+
 from datetime import datetime
 import os 
 
-r = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
-
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-
-client = MongoClient(RECRUIT_BACKEND_DB) 
-db = client[RECRUIT_BACKEND_DATABASE]
 
 import traceback
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.publishskill import sendBlockingMessage as extractSkillMessage
+from app.publishsearch import sendBlockingMessage
+from app.scheduler import startSchedule
 
+from app.process import process
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -303,14 +296,17 @@ class TaskQueue(object):
         print(fmt1.format(thread_id, delivery_tag, body))
         LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
-        message = json.loads(body)
+        body = json.loads(body)
         LOGGER.info(body)
 
-        
-
-        key = message["mongoid"]
-
-        key = ''.join(e for e in key if e.isalnum()) 
+        if "action" in body:
+            action = body["action"]
+            if action == "syncJobProfile":
+                process("syncJobProfile", body["id"])
+            elif action == "syncCandidate":
+                process("syncCandidate", body["id"])
+            else:
+                process("full")
 
 
             
@@ -436,15 +432,12 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-from app.detectron.start import loadTrainedModel 
-from app.picture.start import loadTrainedModel as loadPicModel
-from app.cvlinepredict.start import loadModel
-from app.ner.start import loadModel as loadModelTagger
-
 def main():
     
-    consumer = ReconnectingExampleConsumer(amqp_url)
+    startSchedule()
+    consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
+    
 
 if __name__ == '__main__':
     main()

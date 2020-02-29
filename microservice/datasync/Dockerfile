@@ -17,5 +17,6 @@ RUN truncate -s 0 /workspace/logs/datasync*.log
 RUN pip install pika
 RUN pip install redis
 RUN pip install apscheduler
+RUN pip install pymongo
 
 CMD ["/usr/bin/supervisord"]
