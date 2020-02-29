@@ -1,5 +1,6 @@
 from app.nerclassify.start import process as classifyNer
 from app.detectron.start import processAPI
+from app.ner.start import processAPI as extractNer
 from app.picture.start import processAPI as extractPicture
 from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
 from app.logging import logger
@@ -65,7 +66,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             finalLines.append(pagerow["line"])
 
     if mongoid:
-        t = Thread(target=addToSearch, args=(mongoid,finalLines,ret))
+        t = Thread(target=addToSearch, args=(mongoid,finalLines,{}))
         t.start()
 
     # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}

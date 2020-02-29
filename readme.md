@@ -22,7 +22,7 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-docker compose up -d --scale=resumemq=2
+sudo docker compose up -d --scale=resumemq=6
 
 sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue resume
 
@@ -229,3 +229,6 @@ g) integrate candidate skill with add resume process (done but testing pending)
 g) seperate pic/ner/ner classify into seperate micro services(postponed)
 ner, nerclassify, picture. == i don't see much advantage of doing this except just to make code clean
 == can do it later (not important)
+
+
+i) nodejs needs to add authentication to their api

@@ -19,6 +19,10 @@ nlp = spacy.load('en')
 
 from bson.objectid import ObjectId
 
+import redis
+r = redis.Redis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0)
+
+
 import nmslib 
 import time
 
@@ -338,8 +342,9 @@ def queryMatrix(model, findSkills , isGeneric = False) :
 def getSampleData(mongoid):
     docLines = {}
 
-    client = MongoClient(os.getenv("RECRUIT_BACKEND_DB" , "mongodb://176.9.137.77:27017/hr_recruit_dev"))
-    db = client.hr_recruit_dev
+    client = MongoClient(os.environ.get("RECRUIT_BACKEND_DB" , "mongodb://176.9.137.77:27017/hr_recruit_dev"))
+    db = client[os.environ.get("RECRUIT_BACKEND_DATABASe" , "hr_recruit_dev")]
+    
 
     logger.info("getting sample for %s", mongoid)
     
@@ -351,32 +356,71 @@ def getSampleData(mongoid):
         else:
             skip = 0
 
-        logger.info("final mongo id %s", mongoid)
-        logger.info("skip %s", skip)
-        ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1}).limit(200).skip(skip)
+        
+        if r.exists("job_" + mongoid):
+            logger.info("data from redis")
+            data = r.get("job_" + mongoid)
+            # logger.info("data from redis %s", data)
+            data = json.loads(data)
+            logger.info("candidate full data found %s", len(data))
+        else:
+            
+
+            logger.info("final mongo id %s", mongoid)
+            logger.info("skip %s", skip)
+            ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1})
+            jobMap = []
+            
+            for row in ret:
+                row["_id"] = str(row["_id"])
+                r.set(row["_id"], json.dumps(row, default=str))
+                jobMap.append(row)
+
+            data = jobMap
+            r.set("job_" + mongoid  , json.dumps(jobMap))
+
     elif "," in mongoid:
         mongoid = mongoid.split(",")
-        ret = db.emailStored.find({ 
-            "_id" : {
-                "$in" : [ObjectId(_.strip()) for _ in mongoid]
-            }
-        })
+
+        data = []
+        for mid in mongoid:
+            if r.exists(mid):
+                logger.info("data from redis")
+                row = r.get(mid)
+                data.append(json.loads(row))
+            else:
+                logger.info("data from mongo")
+                row = db.emailStored.find_one({ 
+                    "_id" : ObjectId(mid)
+                })
+                row["_id"] = str(row["_id"])
+                r.set(mid, json.dumps(row))
+                data.append(row)
+
+            
     else:
-        ret = db.emailStored.find({ 
-            "_id" : ObjectId(mongoid)
-        })
+        if r.exists(mongoid):
+            logger.info("data from redis")
+            row = json.loads(r.get(mongoid))
+            data = [row]
+        else:
+            logger.info("data from mongo")
+            row = db.emailStored.find_one({ 
+                "_id" : ObjectId(mongoid)
+            })
+            row["_id"] = str(row["_id"])
+            data = [row]
+            r.set(mongoid, json.dumps(ret) , default=str)
 
-    data = []
-    for row in ret:
-        row["_id"] = str(row["_id"])
-        data.append(row)
-
-    # logger.info(row)
-
-    
+    logger.info("processing data")    
 
     doc2Idx = {}
     total_documents = 0
+    shouldTokenize = True
+
+    if len(data) > 50:
+        shouldTokenize = False
+
     for docIndex, row in enumerate(data):
         docLines[docIndex] = []
         doc2Idx[docIndex] = row["_id"]
@@ -401,8 +445,13 @@ def getSampleData(mongoid):
 
                 # logger.info(line["classify"])
                 # logger.info(line["line"])
-                doc = nlp(line["line"].lower())
-                line = [d.text for d in doc]
+
+                if shouldTokenize:
+                    doc = nlp(line["line"].lower()) #this is making slower for large data
+                    line = [d.text for d in doc]
+                else:
+                    line = line["line"].lower().split(" ")
+                    
                 ngrams = generate_ngrams(" ".join(line), 3)
                 line.extend(["_".join(n.split(" ")) for n in ngrams])
                 docLines[docIndex].append(line)
