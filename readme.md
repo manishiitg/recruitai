@@ -22,7 +22,7 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-sudo docker compose up -d --scale=resumemq=6
+sudo docker-compose up -d --scale=resumemq=6
 
 sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue resume
 
@@ -213,11 +213,20 @@ c) directly write to mongodb of recruit (done)
 d) we are not writing to elastic search (done)
 f) make app also inta seperate api microservice (done)
 g) fix the async exception in resume mq
-f) move amqurl to config. small task
-h) for the micro services make input / output patterns so its configurable and not limited to just mongo
+f) move amqurl to config. small task (done)
+
+h) for the micro services make input / output patterns so its configurable and not limited to just mongo (skipped)
+== i think output should be on mongodb.
+== because if we make expressapi, then need to worry about authentication, security, server going down etc.
+== no need to create any api
+== better to directly use mongodb access. 
+
 i) create stats and proper log tracking across services
+
 j) see api gateway like kong and see linkerd.io with kubernotes and open trace for logging
+
 h) make recruit node and angular also docker based
+
 g) there is an issue, suppose any micro service is down. but api is fired, even in microervice is started in next 5sec it doesn't repose. it only responds to new api request not old onces
 
 h) need to look at candidate resume text data sync for faster processing and this can be used to update elastic search as well
@@ -230,5 +239,5 @@ g) seperate pic/ner/ner classify into seperate micro services(postponed)
 ner, nerclassify, picture. == i don't see much advantage of doing this except just to make code clean
 == can do it later (not important)
 
-
-i) nodejs needs to add authentication to their api
+h) need to put test for every micro service 
+i) need to setup swagger for api
