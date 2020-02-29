@@ -21,5 +21,6 @@ RUN pip install scipy
 RUN pip install gensim
 RUN pip install spacy
 RUN python -m spacy download en
+RUN pip install redis
 
 CMD ["/usr/bin/supervisord"]

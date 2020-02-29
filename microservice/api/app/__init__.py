@@ -50,6 +50,7 @@ def create_app(test_config=None):
     from app.api import resume
     from app.api import search
     from app.api import skillextract
+    from app.api import datasync
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
@@ -57,6 +58,7 @@ def create_app(test_config=None):
     app.register_blueprint(resume.bp)
     app.register_blueprint(search.bp)
     app.register_blueprint(skillextract.bp)
+    app.register_blueprint(datasync.bp)
     
     
     # Scheduler which will run at interval of 60 seconds for user checkin score

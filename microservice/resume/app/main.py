@@ -306,7 +306,7 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
-        if skills in message:
+        if "skills" in message:
             skills = message["skills"]
         else:
             skills = None
@@ -351,7 +351,7 @@ class TaskQueue(object):
                     "skills" : skills.split(",")
                 })
                 ret["skillExtracted"] = skillExtracted
-                
+
             self.updateInDB(ret, message["mongoid"])
 
             
@@ -507,7 +507,7 @@ def main():
     loadModel()
     loadModelTagger()
     
-    consumer = ReconnectingExampleConsumer(amqp_url)
+    consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
 if __name__ == '__main__':
