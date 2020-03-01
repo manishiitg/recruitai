@@ -22,3 +22,4 @@ RUN pip install -e .
 VOLUME [ "/label-studio/ner" ]
 
 CMD ["label-studio", "start", "ner"]
+
