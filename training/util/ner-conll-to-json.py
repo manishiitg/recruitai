@@ -1,3 +1,4 @@
+import json
 import uuid
 
 
@@ -23,9 +24,16 @@ def convert_conll_to_label_studio_nerfile(file):
     tagName = ""
     words = []
     tags = []
+    # this is when assumention thet there are two lines i.e 2 lines spaces between cv data
+    # and single line data between actua llines
+
+    has_two_lines = True
+    count_empty_line = 0
 
     for (word, tag) in result:
         if isinstance(word, str) and len(word.strip()) == 0:
+            count_empty_line += 1
+
             # new line
             if len(tagText) > 0:
                 tags.append({
@@ -36,13 +44,39 @@ def convert_conll_to_label_studio_nerfile(file):
                 tagText = []
                 isTagFound = False
 
-            lines.append({
-                "line": " ".join(words),
-                "tags": tags
-            })
-            words = []
-            tags = []
-            continue
+            
+            
+            if has_two_lines:
+                if count_empty_line == 1:
+                    word = "\n"
+                    tag = "O"
+
+                if count_empty_line == 2:
+                    lines.append({
+                        "line": " ".join(words),
+                        "tags": tags
+                    })
+                    words = []
+                    tags = []
+                    continue
+            else:
+                lines.append({
+                    "line": " ".join(words),
+                    "tags": tags
+                })
+                words = []
+                tags = []
+                continue
+                
+
+            
+
+        else:
+            count_empty_line = 0
+
+
+        if tag == "Skills":
+            tag = "O"
 
         words.append(word)
 
@@ -64,7 +98,7 @@ def convert_conll_to_label_studio_nerfile(file):
             tagText.append(word)
             tagName = tag
 
-    final_json = []
+    final_json = {}
 
     for line in lines:
         tags = line["tags"]
@@ -80,8 +114,8 @@ def convert_conll_to_label_studio_nerfile(file):
                 "to_name": "text",
                 "type": "labels",
                 "value": {
-                    "start": line.index(tag["text"] , lineIndex),
-                    "end": line.index(tag["text"]  , lineIndex) + len(tag["text"]),
+                    "start": line.index(tag["text"], lineIndex),
+                    "end": line.index(tag["text"], lineIndex) + len(tag["text"]),
                     "labels": [
                         tag["tagName"]
                     ],
@@ -91,24 +125,40 @@ def convert_conll_to_label_studio_nerfile(file):
             lineIndex += len(tag["text"])
             result.append(res)
 
-        obj = {
+        completion = {
             "completions": [{
-                "id": 1,
+                "id": uuid.uuid4().hex,
                 "lead_time": 20,
-                "result": result
-            }], 
-            "data": {
-                "text": line
-            },
-            "id": len(final_json)
+                "result": result,
+                "data" : {
+                    "text": line
+                },
+                "id": len(final_json),
+                "task_path": "../tasks.json"
+            }]
         }
-        final_json.append(obj)
+        data = json.dumps(completion, indent=1)
+        with open('ner/completions/' + str(len(final_json)) + '.json', 'w') as f:
+            f.write(data)
+
+        obj = {
+            "data" : {
+                "text": line,
+                "id": len(final_json)
+            }
+
+        }
+        final_json[str(len(final_json))] = obj
+        
 
     return final_json
 
 
-final_json = convert_conll_to_label_studio_nerfile("ner-v1-full.txt")
+from pathlib import Path
+Path("../../label-studio/ner/completions").mkdir(parents=True, exist_ok=True)
 
-import json
-with open('ner-label-studio.json', 'w') as f:
-    json.dump(final_json, f)
+final_json = convert_conll_to_label_studio_nerfile("ner-full.txt")
+
+data = json.dumps(final_json, indent=1)
+with open('../../label-studio/ner/tasks.json', 'w') as f:
+    f.write(data)

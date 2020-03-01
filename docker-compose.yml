@@ -120,6 +120,7 @@ services:
             - ./label-studio/ner/project:/label-studio/ner
         networks:
             - ai   
+
     api:
         build: microservice/api
         ports:
@@ -249,6 +250,7 @@ services:
             REDIS_PORT : '6379'
         networks:
             - ai
+
 volumes: 
     elasticsearch:
     redis-data:
