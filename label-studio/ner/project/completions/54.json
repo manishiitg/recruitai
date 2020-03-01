@@ -1,90 +1,126 @@
 {
  "completions": [
   {
-   "id": 1,
+   "id": 54,
    "lead_time": 20,
    "result": [
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "0e1b8113e9c7475a81a5360324c4575a",
+     "id": "54d98dd939d84b1b974a319186106263",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 23,
-      "end": 27,
+      "start": 0,
+      "end": 13,
       "labels": [
-       "DATE"
+       "PERSON"
       ],
-      "text": "2012"
+      "text": "Vamsi krishna"
      }
     },
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "bf2dcc69da70402790d974a4678f2bfe",
+     "id": "1b415efff2ca46b6a33af42e175430ae",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 28,
-      "end": 34,
+      "start": 14,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hyderbad Telangana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d79078db5838489689366890f5c53b32",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 141,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hyderbad Telangana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ebd3b868c724e61bf91b0ae313153f3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 178,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "93f48c7f53b9448092937818fdc1fc7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 220,
+      "end": 223,
       "labels": [
        "EducationDegree"
       ],
-      "text": "B.Tech"
+      "text": "Bsc"
      }
     },
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "4248992981174557baa1bc6836d97b93",
+     "id": "9be23ee682654ad1a6abaf7f769c40db",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 57,
-      "end": 61,
+      "start": 224,
+      "end": 239,
       "labels": [
        "ORG"
       ],
-      "text": "UPTU"
+      "text": "Shri gnanambika"
      }
     },
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "4ad6ccae77ea410eae83fb9dfbd4c7dc",
+     "id": "3c22cf5764254c85a4df84afdccbbc7d",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 67,
-      "end": 73,
+      "start": 242,
+      "end": 254,
       "labels": [
-       "CARDINAL"
+       "ORG"
       ],
-      "text": "67.33%"
-     }
-    },
-    {
-     "from_name": "ner",
-     "honeypot": true,
-     "id": "f4ce665d211f4f038928922f8c602e07",
-     "source": "$text",
-     "to_name": "text",
-     "type": "labels",
-     "value": {
-      "start": 113,
-      "end": 116,
-      "labels": [
-       "CARDINAL"
-      ],
-      "text": "67%"
+      "text": "gree college"
      }
     }
-   ]
+   ],
+   "data": {
+    "text": "Vamsi krishna hyderbad Telangana - Email me on Indeed: indeed.com/r/Vamsi-krishna/15906b55159d4088 Willing to relocate to: hyderbad Telangana \n WORK EXPERIENCE Software developer Microsoft Iam need What i am EDUCATION \n Bsc Shri gnanambika d gree college SKILLS Analytics, Research https://www.indeed.com/r/Vamsi-krishna/15906b55159d4088 \n"
+   },
+   "task_path": "../tasks.json"
   }
  ]
 }
