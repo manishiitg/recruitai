@@ -1,90 +1,158 @@
 {
  "completions": [
   {
-   "id": 1,
+   "id": 49,
    "lead_time": 20,
    "result": [
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "a7c3319447514b31ab5853e9266594ab",
+     "id": "477258861133492bab0c8d6dc705597e",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 11,
-      "end": 25,
+      "start": 17,
+      "end": 27,
       "labels": [
-       "Designation"
+       "PERSON"
       ],
-      "text": "Java Developer"
+      "text": "KM. RUPALI"
      }
     },
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "d99f0c0bb11b4176a0f0411558ed11fe",
+     "id": "b80b819362a64c1e82ad2832f3073edb",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 42,
-      "end": 50,
-      "labels": [
-       "Designation"
-      ],
-      "text": "training"
-     }
-    },
-    {
-     "from_name": "ner",
-     "honeypot": true,
-     "id": "660043281f884a3fa04b7e0f303f27f7",
-     "source": "$text",
-     "to_name": "text",
-     "type": "labels",
-     "value": {
-      "start": 59,
-      "end": 75,
-      "labels": [
-       "ORG"
-      ],
-      "text": "Trisect Training"
-     }
-    },
-    {
-     "from_name": "ner",
-     "honeypot": true,
-     "id": "2d0fe2e87e6c4ad9bf90582f632dfb58",
-     "source": "$text",
-     "to_name": "text",
-     "type": "labels",
-     "value": {
-      "start": 86,
-      "end": 91,
+      "start": 39,
+      "end": 60,
       "labels": [
        "GPE"
       ],
-      "text": "Noida"
+      "text": "Vijay Nagar Ghaziabad"
      }
     },
     {
      "from_name": "ner",
      "honeypot": true,
-     "id": "3fa135f836e04bc5ad62963e055184fa",
+     "id": "f19cb2e26b5d4322a48a6a0b5b399ed2",
      "source": "$text",
      "to_name": "text",
      "type": "labels",
      "value": {
-      "start": 97,
-      "end": 118,
+      "start": 73,
+      "end": 83,
       "labels": [
-       "DATE"
+       "Phone"
       ],
-      "text": "Jan 2019 to May 2019."
+      "text": "7668238088"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a808eeccaaf449eda7b4a3f5b7eec5d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 123,
+      "labels": [
+       "Email"
+      ],
+      "text": "bansalrupali585@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6811786edb624ac69a29294dd22f9153",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 387,
+      "end": 420,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma in Information Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b3c219fae4c54d1fa8c3adc3365d5313",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 426,
+      "end": 431,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPBTE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4827eb6b15794b149659f4e58a719f43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 501,
+      "end": 511,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "KM. Rupali"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bf7d05d587a848ec9a9984acc0cee206",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 572,
+      "end": 582,
+      "labels": [
+       "DOB"
+      ],
+      "text": "10/07/2001"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6d0483e36884416f9ea57bbf3d0049bc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 728,
+      "end": 735,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "(RUPALI"
      }
     }
-   ]
+   ],
+   "data": {
+    "text": "CIRRICULAM VITAE KM. RUPALI Address: - Vijay Nagar Ghaziabad Contact No: 7668238088 \n Email ID: - bansalrupali585@gmail.com OBJECTIVE: To work in an origination where hard work punctuality and honesty toward the job is motto, where I can use my capabilities and talent for the benefits of the organization as well for my own growth. \n ACADEMICS QUALIFICATION: 10th Passed from U.P Board Diploma in Information Technology from UPBTE \n TECHNICAL KNOWLEDGE HTML 5 CSS3 BOOTSTRAP PERSONAL PROFILE: Name : KM. Rupali \n Father s Name : Mr. Chandraprakash Bansal Date of Birth : 10/07/2001 \n Declaration:- I certify that the information furnished by me above is correct to the best of my knowledge and belief. \n Date . SIGNATURE Place (RUPALI \n"
+   },
+   "task_path": "../tasks.json"
   }
  ]
 }
