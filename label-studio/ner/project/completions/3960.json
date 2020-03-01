@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d4c8e21d1de466a90a760ffdc37c5fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sudaya Puranik"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43dd4447b9d14773a11705344a0dd141",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Principal Engineer Technical"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e081e90aec64507ace39783994edfb8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

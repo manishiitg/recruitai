@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "392d7c3acd5b4d3a99f8db584ce6476f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2cc09fe0ee604537a8a5c7f852af5909",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 72,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MMMUT Gorakhpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4268223efab84bb18eae9583ae0c4f0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 84,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.38"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "902fda7be1074172b2ec51598bc2cb13",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 95,
+      "end": 99,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "10.0"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acb33d3915b44acf9a2436e0459cc79f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 120,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2015-2018)"
+     }
+    }
+   ]
+  }
+ ]
+}

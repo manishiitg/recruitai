@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f668e21a46b14b29a7f522ecd99ff1e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "B. Gokul Gokul,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b087ac4a2d8242fdab48a879825c5c8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 29,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b20d8fd9d62d4c6c83fc64e258128827",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sayani Goswami"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41c713aaf21e43f9935347b998cb0fbe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 31,
+      "labels": [
+       "ORG"
+      ],
+      "text": "I Phone solution"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d147d86f72946508dda33ee225abfa4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 42,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d1ec9ea97b04cb9824d31cfa67be230",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 63,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kolkata, West Bengal"
+     }
+    }
+   ]
+  }
+ ]
+}

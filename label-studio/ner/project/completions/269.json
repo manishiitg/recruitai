@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de6e34ba9be442e6806c058d0cc886ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 56,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21bdb1a95e574e1f95ec51d4de6bfee8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 71,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SDET Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "47612abc0a64483390465245623aaf16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 83,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4975baeda4f6474aa806bcf5a4518db7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 94,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5be018f1ffc449892968cfe78acb76c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh-India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "138ef29f84a348209f181fb8facdbe8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 42,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab7c14b9232d453b9eb10868b912bb40",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "09/01/2017."
+     }
+    }
+   ]
+  }
+ ]
+}

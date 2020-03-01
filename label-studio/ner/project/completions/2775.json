@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ab7327e730442b29aa4ccf15e0d4d12",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 31,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SQL Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7dd6753c8a74419a98aa78353a7592c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 42,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b2736b331ffa42fa853e340e212259d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Feb 2016 02"
+     }
+    }
+   ]
+  }
+ ]
+}

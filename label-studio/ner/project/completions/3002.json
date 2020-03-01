@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e812c75f27246baaa56c11b793c93b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 64,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23b4ba5015c541e58e4b6cddc3e86d68",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "28c8e6c7f8e74485b998634cf574fcf9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

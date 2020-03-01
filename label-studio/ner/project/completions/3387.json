@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8546d991481b4b5e8e5c0adc1a43a30a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 68,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Business development"
+     }
+    }
+   ]
+  }
+ ]
+}

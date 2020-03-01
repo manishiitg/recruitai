@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "24303e5224df4f4ea1281d12ab44854d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Somanath Behera"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa4de446b9f74430990b15aa86bb4715",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 26,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Associate,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9db41a5378bd4c4c98afc5738d87a53a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cognizant technology Solutions,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cdb512df73bf475f972c2de489d241ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 89,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

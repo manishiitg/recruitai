@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a171cd21efd042df97a14693580e9c51",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Busitants Incorporated (Mycon Solution LLC)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be074765d8c94645bc9f07724cba1d51",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 104,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Nov 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0a0e096b26444d3b4cd2893fb275f05",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 116,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Feb 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

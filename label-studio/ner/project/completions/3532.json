@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd88af29bb5948d1b6045fe047a226f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 23,
+      "labels": [
+       "DOB"
+      ],
+      "text": "05/11/1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a39c89d941844bb9b4ae20433eadc00",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 51,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi, English."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45a36a2e20ad4d369c3061e15509492c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 109,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Najafgarh, New Delhi- 43"
+     }
+    }
+   ]
+  }
+ ]
+}

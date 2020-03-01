@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f039b206861546759e531dc78eb04cc7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 52,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BOARD Uttar Pradesh Technical University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f657506f95b4213a1f3dfce0b13af14",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 133,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Meerut Institute of 2019 Engineering and Technology, Meerut"
+     }
+    }
+   ]
+  }
+ ]
+}

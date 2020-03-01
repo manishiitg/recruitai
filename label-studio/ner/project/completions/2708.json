@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e75b32dff07343d9aa0518365a204c69",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CGtech IT Services Pvt.Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e360c4fad64c471db336e0342938be06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 85,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur"
+     }
+    }
+   ]
+  }
+ ]
+}

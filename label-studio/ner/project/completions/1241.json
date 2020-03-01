@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "70d5130ec88947b282fbebeba032f260",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 34,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Cluster HR Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b1403bb5fa054a5ebf1b45150d2aef7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 68,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

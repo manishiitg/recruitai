@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da8a9cc8b28b4a028542629fa58ca1a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Partha sarKar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33f917f89b0c46acbb88e6cec9f54647",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 64,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "14 years of experience"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b016a8f1a5fc468bb39d2c41389fcacb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 480,
+      "end": 499,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "one year experience"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "934e385550784f6ea97306ed2e2d716c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 546,
+      "end": 590,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, CSS, Javascript, Jquery, PHP and MySQL"
+     }
+    }
+   ]
+  }
+ ]
+}

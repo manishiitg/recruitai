@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "afc448511b8045688323aefdefbc5c47",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Neha Choudhary"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c62a68fea434fdea832680b1339da9c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 37,
+      "labels": [
+       "Phone"
+      ],
+      "text": "838138604"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1cc34b484dd9450594624829e36616ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 73,
+      "labels": [
+       "Email"
+      ],
+      "text": "neha.choudhary138@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

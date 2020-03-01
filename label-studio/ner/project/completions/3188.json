@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ab21485bff146adb92f81f76654eabb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 44,
+      "labels": [
+       "ORG"
+      ],
+      "text": "HIPAD Technology India Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5df45904fce45c59fbafe992a33a36d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 80,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Graduate Engineer Trainee(GET)"
+     }
+    }
+   ]
+  }
+ ]
+}

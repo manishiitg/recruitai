@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4d2e7ac05874e6baae98a18603a63bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 47,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Operations Center Shift Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6391cc5b06d6478a8f4ff73bda92a67b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45ad965f253741c8bb5ca7f76348429c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 100,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2012 to January 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

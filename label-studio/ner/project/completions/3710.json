@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dab59b4101ab439bb474145367acbf14",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 29,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2015 to October 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

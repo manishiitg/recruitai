@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a849e02badf440089756a21dbdc01bbb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 74,
+      "labels": [
+       "GPE"
+      ],
+      "text": "BulandShahr Uttarpradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

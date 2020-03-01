@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b27a5b1ed5f40bfa2e8a41c7e7cfeb7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Pune University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "495946193a21496fb360a6240a16aaed",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 63,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76a27119355d478580f145253fc4f8f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 70,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70.35%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "77ef6f377d7546ddb7c70f972d470ac3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Pune University"
+     }
+    }
+   ]
+  }
+ ]
+}

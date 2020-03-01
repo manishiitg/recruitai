@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52d0990b08764bf899e365819be89afc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfec0543c32e4df9a25187906efeb90a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 54,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2003 to 2005"
+     }
+    }
+   ]
+  }
+ ]
+}

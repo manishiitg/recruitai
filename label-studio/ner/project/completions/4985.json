@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a588621d90044de8afe620c928774a7c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sikkim Manipal University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a0bc4411dddb48e48581b9c0126fad82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 30,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "633f5a836d974a518df8fd560bfc385e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 72,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68.8%"
+     }
+    }
+   ]
+  }
+ ]
+}

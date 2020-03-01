@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f0ab5a5750f542ad9723f39ca1079c3e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 39,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bff93c2ed56349338f35929ced7e387b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 132,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Gurukul Institute of technology Muradnagar"
+     }
+    }
+   ]
+  }
+ ]
+}

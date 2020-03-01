@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a44d26e5f2ac4525993a447b423cf908",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 97,
+      "end": 122,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "GDM (Business Management)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "940a03a5fb48433c85bcd1bbadac22c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 138,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IIMAS Chennai"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d4054fa91db459f93bc94716bc21117",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 141,
+      "end": 149,
+      "labels": [
+       "DATE"
+      ],
+      "text": "010-2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "925634f1af69472eb68be82489040a55",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 152,
+      "end": 154,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "0%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d46359c9f66c4c75848c336aac0a382b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 159,
+      "end": 174,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": ".E (Electronics"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d5fc535051644b6b265849a8697ca7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 179,
+      "end": 189,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SCT Bhopal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7395ae408dd4fe4a8959df50feeea1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 206,
+      "end": 214,
+      "labels": [
+       "DATE"
+      ],
+      "text": "006-2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be9b3933849641bb8e89cc03c1d1378c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 217,
+      "end": 219,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "9%"
+     }
+    }
+   ]
+  }
+ ]
+}

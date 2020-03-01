@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2428f6ec9d924e2a927c08fce0dc9d01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "NIRAJ KUMAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a89e7ca4f3e4b54abf42926a9a3b017",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 66,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f131c5dfd14247ab9b30c7fa3110abbd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2260b413b294491c904a4895634bf8c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 95,
+      "labels": [
+       "Email"
+      ],
+      "text": "Niraj18197smi@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

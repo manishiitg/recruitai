@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab218e04b4364a838b8d7886458ad291",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Thiruvananthapuram, Kerala"
+     }
+    }
+   ]
+  }
+ ]
+}

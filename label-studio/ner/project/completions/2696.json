@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0aaf1ee0d14645bd8a8a5d7148be1c4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 40,
+      "labels": [
+       "Designation"
+      ],
+      "text": "trainee engineer"
+     }
+    }
+   ]
+  }
+ ]
+}

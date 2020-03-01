@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1bb185f948384ca4990adfd7929ae10a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Rishabh soni"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5189c2fe26d646c8a0246370786648b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 36,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Anuppur, Madhya Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

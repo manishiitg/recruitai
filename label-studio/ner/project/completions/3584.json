@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e47467dca9dd48549d9d9307d9828bd8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Indian Institutes of Technology IIT Kanpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e47df9148a14c9faac343bdb90f3a67",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 52,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2004"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dcf02d41225446f4a2fc28b199a3d921",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 95,
+      "end": 120,
+      "labels": [
+       "Skills"
+      ],
+      "text": "JAVA, C++, C, Matlab, SQL"
+     }
+    }
+   ]
+  }
+ ]
+}

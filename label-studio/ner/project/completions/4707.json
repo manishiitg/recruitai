@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55710e1426b44fc4b2c36e7abe93e868",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Red Cross Society"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7d77a603d70d4315a066e55c063b4441",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 76,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015 to 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

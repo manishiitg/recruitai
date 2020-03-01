@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80605bc01fb44ab894d96650d933e03f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 36,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ICICI Bank Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8fda8075ebb4b9cb6dde5056e9a898e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kishangarh, Rajasthan"
+     }
+    }
+   ]
+  }
+ ]
+}

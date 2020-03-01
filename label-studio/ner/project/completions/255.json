@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3d4542e691f443f9b3bfd41c7d71121",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d5bc7656f2c42cdae2c3eb8816e51b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Humanlinks technology pvt ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7de8b60e244d4c1886eba54db3a81e2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 57,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

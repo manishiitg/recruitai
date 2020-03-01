@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d0a12f3d0df8400e95d826d4bc87e819",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.S Children Academy"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "390d5d8ff8bc48baaee75258d62b857e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 113,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C, C++, HTML5, CSS3, MySQL, .NET 4.0"
+     }
+    }
+   ]
+  }
+ ]
+}

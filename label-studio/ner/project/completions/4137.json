@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df8b4495e36d4a0eb6d8feb420f99975",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 18,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "8.4CGPA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75b2fc0bb9374f11a8271f0c5626ee96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CETPA Infotech pvt ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

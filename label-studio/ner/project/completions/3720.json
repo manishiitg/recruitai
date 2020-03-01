@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6827760adfac4040bb33c7ab0ef1bb3b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3479edc4b964eaaa089c4ee3a8a3e55",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 36,
+      "labels": [
+       "ORG"
+      ],
+      "text": "POORNAM INFOVISION"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "069cbfd08192471d836dca51210a1b21",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 52,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kochi, Kerala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6930a5ce46de49ffb1ed676e963b3215",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2009 to August 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

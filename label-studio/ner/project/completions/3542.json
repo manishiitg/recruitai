@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc74e8630aff4d8b8489d10b507a101b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 79,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1+ Year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c02ecfb1147740af959a2e3b579d160e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 121,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Front-End Developer."
+     }
+    }
+   ]
+  }
+ ]
+}

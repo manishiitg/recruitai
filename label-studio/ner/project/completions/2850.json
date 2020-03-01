@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "377d355d4c144034873faaf5de45483f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 33,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PUNEET SINGH Vill-Salarpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2c91c97c9f6471597d2be5efbfe40e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Amroha"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "595fe214758f48e08f1ed065af2a0855",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 100,
+      "labels": [
+       "Email"
+      ],
+      "text": "Puneetsingh547@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b1de8f7bf9545ab9ad0be9877240298",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 127,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+919650552124"
+     }
+    }
+   ]
+  }
+ ]
+}

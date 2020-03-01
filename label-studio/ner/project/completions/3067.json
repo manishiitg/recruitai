@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed7b003653a54f97b842ce067c6c4ec3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Nov, 2016."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca232c2f81544fc6a3f19a01e793d04d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 119,
+      "labels": [
+       "DATE"
+      ],
+      "text": "18th Feb-14th Apr, 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

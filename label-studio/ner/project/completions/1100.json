@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cecaa5887477424d90348c7a8f5cee66",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5b18d954c88455dba3c535819e47ccf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 10,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.2%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "131b53fdb6bf4e51a2751d3936ebeb8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SHIVAJI INTER COLLEGE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c26bd4a17d0a4208ac9cd0d5c750972b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "109d040eeb4343bdb5b70b01c5ee0b6a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 74,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "73.5%"
+     }
+    }
+   ]
+  }
+ ]
+}

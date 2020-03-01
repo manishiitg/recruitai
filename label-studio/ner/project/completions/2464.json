@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82328a9f056c47de908fe1263462cafe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 58,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "408dfe656f184f35b4f88b3e02172f7c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 78,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82287456c80f48cc8264e80244fa1216",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 118,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    }
+   ]
+  }
+ ]
+}

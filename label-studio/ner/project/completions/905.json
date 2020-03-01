@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f949cbeb905640e8a6efa28d124a33d4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "5dots"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "39c9e8856170454db6059fec8000c8a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2018)."
+     }
+    }
+   ]
+  }
+ ]
+}

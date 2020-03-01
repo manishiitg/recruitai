@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c320c39444d4712848471523d8eb270",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23d5fd031b0e4cf895c34fc4f7bdd674",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 70,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Malayalam English Kannada (Oral only) Tamail (Oral only)"
+     }
+    }
+   ]
+  }
+ ]
+}

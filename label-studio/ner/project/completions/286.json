@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7a351d22f064ea7b20c43472b559a61",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CONCENTRIX"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2fc5a869ff5744ab9139f6a1ec40770d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 69,
+      "labels": [
+       "DATE"
+      ],
+      "text": "12/03/2018- CURRENTLY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98954a2768de4e679a19ca0d2a27552d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 93,
+      "labels": [
+       "Designation"
+      ],
+      "text": "ADMIN"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "db564fc55386430da05435049b7dd075",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 109,
+      "labels": [
+       "ORG"
+      ],
+      "text": "(YT OPERATIONS)"
+     }
+    }
+   ]
+  }
+ ]
+}

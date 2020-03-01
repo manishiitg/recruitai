@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76f91e5f847e43bf9d5daec6fb6c726b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 13,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cisco"
+     }
+    }
+   ]
+  }
+ ]
+}

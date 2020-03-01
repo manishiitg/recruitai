@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6efe6e71c1bb42bb8031e9594014686a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 144,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Google Adwords Social Media Marketing Branding Marketing Management Digital Marketing Marketing Strategies Product Development"
+     }
+    }
+   ]
+  }
+ ]
+}

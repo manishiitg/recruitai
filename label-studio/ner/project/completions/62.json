@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3db40bc7ec30465183b9e5717247b6ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 20,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Krishna Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64c9afadb8d64ca195de3dd15e61c614",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 56,
+      "labels": [
+       "GPE"
+      ],
+      "text": "SEC 23B DWARKA"
+     }
+    }
+   ]
+  }
+ ]
+}

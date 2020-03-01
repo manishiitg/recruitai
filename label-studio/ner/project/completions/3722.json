@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "644c1b4382a9411c887451acf45aa951",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 96,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    }
+   ]
+  }
+ ]
+}

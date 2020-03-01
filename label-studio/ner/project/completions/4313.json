@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4da864ed38e8412a98ac6b8daeceb6de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 28,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "SANYA SETIA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa815ca12353467bbbb8fdce46964a16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 49,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Naveen Shahadra,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "83a8e8d0a25a4057ba48d208d88376ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 62,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi-110032"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9bd81bf5f0334530b785d66c483170f2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 79,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9999771891"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e6dad1e27154bde8c17554332b59308",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 109,
+      "labels": [
+       "Email"
+      ],
+      "text": "setia_sanya@yahoo.com"
+     }
+    }
+   ]
+  }
+ ]
+}

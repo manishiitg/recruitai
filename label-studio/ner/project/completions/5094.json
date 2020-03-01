@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "653398ec2cc2433dae05e3c194097d58",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 140,
+      "end": 227,
+      "labels": [
+       "Skills"
+      ],
+      "text": "CORE PHP, HTML 5, CSS, JAVASCRIPT, Bootstrap 3, Jquery, JSON API, JSON, AJAX, Wordpress"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3bb725f8e4fe493a86ef25e2630ad9db",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Talent Magnifier"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1fd7990b9787429bb5fdd1f88fd5bdff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 86,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Digital Marketing"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc0f4492445647268120f9e67411ac10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 101,
+      "labels": [
+       "Designation"
+      ],
+      "text": "EO Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "434786c486d645ada9dcaec6a772d878",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 129,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1 Year 3 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c2f51ba1c0f4faf90b3f62e03d87d89",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 140,
+      "end": 157,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Laxmi Nagar Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

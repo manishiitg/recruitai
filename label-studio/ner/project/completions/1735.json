@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c5313174ab149c5b4ec3a153371477d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 37,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "66%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bd9bbc0e2fc047c394e6bb8d8d56966e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "India today convent academy"
+     }
+    }
+   ]
+  }
+ ]
+}

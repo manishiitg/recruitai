@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a85ac14d0fc4a21a4145b5a3c96998c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 132,
+      "end": 142,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Punjab, IN"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a886e7044fab4aa98b3575045e48ac6d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 45,
+      "labels": [
+       "DATE"
+      ],
+      "text": "-"
+     }
+    }
+   ]
+  }
+ ]
+}

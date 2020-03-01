@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c0e5025ebee34f3299ada34bdcccc4e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 16,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5bb482e34f424389a9c1b1927dff9311",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhubaneshwar, Orissa"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7f6d978dea446e9b3f23fa386b9003b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 107,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2007 to April 2011"
+     }
+    }
+   ]
+  }
+ ]
+}

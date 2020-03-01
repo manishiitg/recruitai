@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "002d3c804a9a4f37900763d071ba708a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 67,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Institute of Technology and Management"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "532a61c793d94855bbd28f8b44864119",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 92,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gorakhpur, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7c8f8b2700f48adadb289eb9c46c0aa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 116,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Technology,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f23369398e64484aeaf3fc73fd8c673",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 126,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

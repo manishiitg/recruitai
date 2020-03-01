@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "147fba0be7804ca993c59cb464ea1112",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 51,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Support Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33417aaca59446d9a6ead12557fe8615",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 62,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b1fca4240f3946bfa6956eb8810d26e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai"
+     }
+    }
+   ]
+  }
+ ]
+}

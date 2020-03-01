@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ffc5a8db90a34e98984e65e3b6303fbf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nagarjuna university"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89eee9f3add34977937e1c4a2ba3d600",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 25,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1999"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed850497557c4a4d8a2d54f2724ab4a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 96,
+      "labels": [
+       "Skills"
+      ],
+      "text": ".NET (Less than 1 year), ASP (Less than 1 year), DATABASE (Less"
+     }
+    }
+   ]
+  }
+ ]
+}

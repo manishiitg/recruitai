@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0fe8235aadef4608ba4eb94285535b41",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 65,
+      "labels": [
+       "DOB"
+      ],
+      "text": "24th feb. 1995"
+     }
+    }
+   ]
+  }
+ ]
+}

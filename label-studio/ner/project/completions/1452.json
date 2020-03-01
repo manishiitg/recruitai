@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92145d4afd03474e99870b1fb0cdbeaa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8943fc3ba6f4447aab3342b0c18c03b9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 32,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78122fcf94d04ae28fa003c8ab4a979f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 50,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B. Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "090980f820864f7e83ed828bbb44c5ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ECE Vidya Bharati Institute Of Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4696d6156fdf48ea8cf9736a0ddcb61f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 122,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Andhra Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

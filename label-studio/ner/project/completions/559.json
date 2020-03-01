@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e36975c39083455b9d0ca59c0a38cc1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 37,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Tamil, English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7912c901aa9743c48f7e1fd5796d8c85",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 37,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Tamil, English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "13260ab42e8049d4a10b4b6042ec5bc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 88,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Tamil, English, Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

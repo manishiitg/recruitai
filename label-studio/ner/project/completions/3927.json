@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6741ab9877d8454ba1a8a95d42575971",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Engineer / Electrical Supervisor"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8acefe734cd14fc7bbca46337677d9f5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 66,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Site at Shendra MIDC"
+     }
+    }
+   ]
+  }
+ ]
+}

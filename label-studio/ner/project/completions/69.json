@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c79e0a4ea6594dc58f99b89e3cd1910c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 95,
+      "labels": [
+       "DOB"
+      ],
+      "text": "17th February 1990"
+     }
+    }
+   ]
+  }
+ ]
+}

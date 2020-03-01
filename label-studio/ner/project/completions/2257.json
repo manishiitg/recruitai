@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d25302db79334d1c9c28b7a8996e6618",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 51,
+      "labels": [
+       "Designation"
+      ],
+      "text": "intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acd716a4216846d5be6b137a00bf5500",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Optimal virtual"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aee4d90ed9b8492ab89aadb8639e9b44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 86,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5594f45a0534646921bc83859a4d949",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 102,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7b682a687054880b86b281e8e5a42b4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 106,
+      "end": 116,
+      "labels": [
+       "DATE"
+      ],
+      "text": "till date."
+     }
+    }
+   ]
+  }
+ ]
+}

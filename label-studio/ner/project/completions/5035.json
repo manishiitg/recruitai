@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c616495937824dfd893c4a9e5f841131",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 10,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aede799533214d779d30afb48baff3d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 69,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Robosapiens Technologies."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1fc45dab27fd45b5a28290000caae5d4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "45 Days"
+     }
+    }
+   ]
+  }
+ ]
+}

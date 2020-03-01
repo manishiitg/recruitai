@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64ebbdc63d74484e9f138acb4857936f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1993 to 1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "861997432b9148fea92983bec6d02ac9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 122,
+      "labels": [
+       "Skills"
+      ],
+      "text": "MENTORING (10+ years), SCHEDULING (9 years), ORACLE (9 years), SOLUTIONS (9 years), BENEFITS (4 years)"
+     }
+    }
+   ]
+  }
+ ]
+}

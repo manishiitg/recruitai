@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "42b2a5af2bf3440cbec3cc67e88fdd10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Urshila Lohani"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f87134bab6184c649bbab172d57662fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 49,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Corporate Account Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "04d2b9dc58ce48209e40a5a6986100af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 76,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurgaon, Haryana"
+     }
+    }
+   ]
+  }
+ ]
+}

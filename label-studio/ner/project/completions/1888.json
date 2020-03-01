@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4b0902d07330496195bda1fd40c9c917",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 71,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Masters"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cce3214ce6da4aaab50adb04ddb4757e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 134,
+      "labels": [
+       "ORG"
+      ],
+      "text": "National Institute Of Mass Communication"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "72e1e27c2bc54c04b34230b25beec7b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 135,
+      "end": 144,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

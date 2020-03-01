@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b57efa6a15af4e06a7d8a98aa43df277",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Radius Synergies International Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9109503dd7d94812a5ff056cecd090a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 77,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Junior Project Engineer"
+     }
+    }
+   ]
+  }
+ ]
+}

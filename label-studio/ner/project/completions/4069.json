@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "36f71f62da46478cb4da36f6db79b709",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "Email"
+      ],
+      "text": "ahmedkamran331@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b8f4a9d263f240d0bdb5667c3355036f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 39,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9634293801"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4818d8da2ed144a5bb89adce40359736",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 64,
+      "labels": [
+       "Email"
+      ],
+      "text": "ahmedkamran331@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ba0f59e59cd4b19942e094bea3ab05f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 114,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Faculty of Engineering & Technology Agra College,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e178802aa514a9d9819b78007163b4d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 120,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Agra."
+     }
+    }
+   ]
+  }
+ ]
+}

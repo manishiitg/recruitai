@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "22c30df92f51400fa34c08d9cb93b19e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 81,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Agile Methodologies (6 years),"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6381a89a331f4761b94ccd608f21e702",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 221,
+      "labels": [
+       "Skills"
+      ],
+      "text": "(2 years), Agile (10+ years), Product Roadmap (2 years), Stakeholder Management (10+ years), Risk Management (10+ years)"
+     }
+    }
+   ]
+  }
+ ]
+}

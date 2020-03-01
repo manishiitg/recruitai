@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abac5099407a4f1897369387a111c917",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1d6c4fc038ad471db61387d6194f4b21",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 15,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2009-2012)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "621be2077e014a60b8792d6f9eb33cca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CSJM Kanpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4dc9a6cb20e4ba69b06b0fefa24e526",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 41,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7d9ea7aa8ed74c4a918e531228662ddb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 88,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "57.6%"
+     }
+    }
+   ]
+  }
+ ]
+}

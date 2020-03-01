@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ae951b24573499fa02eec9d9a84093c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 142,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Selenium Webdriver, Xamarin.UITest, Protractor, Speflow"
+     }
+    }
+   ]
+  }
+ ]
+}

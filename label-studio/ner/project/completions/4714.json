@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0be9140a527c4722a41a478ce596d986",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 109,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Root info solutions pvt. ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

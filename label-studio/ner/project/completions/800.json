@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be4ef817a99e478dadc578e802090197",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 45,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelors in mechanical engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ecd2394168240999c910e173ebab45d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IEC university"
+     }
+    }
+   ]
+  }
+ ]
+}

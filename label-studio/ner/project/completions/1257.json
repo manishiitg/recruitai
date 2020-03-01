@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a6866ae12f047bbab96ab2e75b20555",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "Designation"
+      ],
+      "text": "software"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e285bd56c0144c98a393ebb5d0d1cf6d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 34,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft,Infosis, Google"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7bd3d02230624c95b710b54eee2c251c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 45,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a5aec3813b64eec98f45512669dd00a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

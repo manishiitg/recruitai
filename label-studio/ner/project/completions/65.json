@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a05a5db2c34a4f6d98772e6f5c736407",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b4ffac38a7b45b188a9508eeba8ba90",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 81,
+      "labels": [
+       "DATE"
+      ],
+      "text": "18 months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7204e9d436e4f9a9421beb28e1eaf45",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 117,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "diploma software engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7ed14a810104c6db06f53d337f09038",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 127,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NIIT"
+     }
+    }
+   ]
+  }
+ ]
+}

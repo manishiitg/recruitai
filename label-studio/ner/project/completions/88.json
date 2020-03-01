@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e1c6abb3edbd4d8885fc40746f290aef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 34,
+      "labels": [
+       "Email"
+      ],
+      "text": "rk.rohitmaurya563@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

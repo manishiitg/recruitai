@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07b9c1b243bf468fa5be1d5727054ed9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ashutosh"
+     }
+    }
+   ]
+  }
+ ]
+}

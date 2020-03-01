@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c0b808250e244f295f8f90a19cca4a8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 147,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2017- December 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c49edf622f3b4963838c503ae1827e76",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 148,
+      "end": 173,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TCS Eli Lilly and Company"
+     }
+    }
+   ]
+  }
+ ]
+}

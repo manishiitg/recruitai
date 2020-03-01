@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "57a9a2db4b104cf3b3b4fa2258f2f40b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shailendra Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c806af9f7964ff495e0fc56715ac51e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 34,
+      "labels": [
+       "Phone"
+      ],
+      "text": "011146469"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ca1cb110ea64c45a87f68aa931e6aef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 74,
+      "labels": [
+       "Email"
+      ],
+      "text": "programmer.shailendra@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

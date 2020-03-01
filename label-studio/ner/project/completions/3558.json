@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "064f0a42ed074f2b999b122ab51eddb9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Jharkhand Academic Council"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "006d73088c144f8eabe1da1f6c116cfc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 37,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60.8%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a9cb7b2b6efe49dd984d83b0a9e8b977",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Gyan Deep High Schcool"
+     }
+    }
+   ]
+  }
+ ]
+}

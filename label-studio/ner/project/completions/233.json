@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35183b76ae574a20b8b422ca7803c4be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Zaheer Uddin"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "efc9dbdbf58741c084a044f5b1664357",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 38,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Project Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "daa19d3c0a9944abbf5576b8166be2cf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

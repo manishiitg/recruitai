@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "475a6e7cb17347b1933f74ceb3628f70",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "Email"
+      ],
+      "text": "himanshu112233@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98fca9953b17449c895ade7fca60652d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "10th"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "85401819bd4547cf8297c887e49b1a0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 19,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f0777576a6e492da6c333547db3d301",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Inter College)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92faef5f3e6f4fdfbef73cb776a90add",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6db5d8648f464b60afec6d0b5cc46b4f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 156,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C, JAVA, Java EE, Servlet, jsp, JavaScript, Rest API, SQL, HTML, CSS, PHP."
+     }
+    }
+   ]
+  }
+ ]
+}

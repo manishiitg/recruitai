@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf81e10863474886971b6644fdb9f776",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc(PCM)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a54a65aef61491b83ba93eef3480d18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 22,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Haridwar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9dfe0e85bf24c55848c90021a4f6c5a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 32,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2006 12th"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f995bcb7c3e3459aa78b3bf8af6edf3d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 41,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UK Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4d7d481ad86491db29252cecea648a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 46,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2004"
+     }
+    }
+   ]
+  }
+ ]
+}

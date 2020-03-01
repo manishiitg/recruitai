@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d27728f854b04dce99c0433d66922090",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 25,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mintlogix Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aad3007765e54b08a2efe7aa1e385d46",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 46,
+      "labels": [
+       "DATE"
+      ],
+      "text": "24th August 2018."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "013fc8f51e0049be82e4d0563d0a1a70",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mintlogix Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "540e866a42ae4b29a25e8a7dd63f7103",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 80,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

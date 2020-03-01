@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "895c1aa6be1b4c21bc9347688984f59e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 65,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2-"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19bde3816e964b4198eb40f1bdafdb23",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 71,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b77e9b2444e64a7ea0bf8f1b85245632",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 106,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Shrinathji Institute Of Technology"
+     }
+    }
+   ]
+  }
+ ]
+}

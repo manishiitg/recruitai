@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91d16e9753244ea1bb04990bd1d84bce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 63,
+      "labels": [
+       "GPE"
+      ],
+      "text": "GHAZIPUR, UTTAR PRADESH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2539fc65566c49d2a4b4f25231dd554e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 84,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+918115550533"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8736eb11c92c4390be0c55f197d3ae12",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 101,
+      "labels": [
+       "Email"
+      ],
+      "text": "gzp563@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

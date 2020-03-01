@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e191cf12dd75411d97204bfff1d760d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Vartulz Technologies Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4768fcf8bb6747479ed3a82e5c46f531",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 80,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "614d209f16f24e819c416e2c1eeff919",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 125,
+      "labels": [
+       "Designation"
+      ],
+      "text": "UI/UX Designing and Development"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5835a9a6af804cddb755d55cf5566b7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 144,
+      "end": 152,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "8 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "072f9a7831f446048ff12d9505c29074",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 155,
+      "end": 177,
+      "labels": [
+       "DATE"
+      ],
+      "text": "anuary 2019- till date"
+     }
+    }
+   ]
+  }
+ ]
+}

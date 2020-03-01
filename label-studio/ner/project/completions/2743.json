@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80ad735136464c71b1662e7b55b84361",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 173,
+      "labels": [
+       "Skills"
+      ],
+      "text": "JAVA, C#, WPF, XAML, Robot Framework, Scrum, Guice, ATDD, SOA, Fixed Income, CoreNLP, SOLID programming, OOPs, NLP, Microservice architecture."
+     }
+    }
+   ]
+  }
+ ]
+}

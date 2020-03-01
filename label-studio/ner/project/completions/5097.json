@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7d4c7114bc404345ab5ad47c809b7f1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 60,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer (PHP)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6d5fdbfd977c4cc185fbdd7a94985298",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TechAbilit IT Solutions"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "046ddca3974c468c971175a78edb4c5e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 118,
+      "end": 132,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1 August 2017."
+     }
+    }
+   ]
+  }
+ ]
+}

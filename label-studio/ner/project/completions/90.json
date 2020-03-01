@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8f54960ebfc54cf4bd733729a9f5890a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Educo International India Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac96af264903403f953754c5bf5b29d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "OCTOBER 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03ce2c009c3f4458936c531fcc654563",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 58,
+      "labels": [
+       "DATE"
+      ],
+      "text": "PRESENT"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1dd15520bc174fed8e1bbf7700ea901f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 76,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    }
+   ]
+  }
+ ]
+}

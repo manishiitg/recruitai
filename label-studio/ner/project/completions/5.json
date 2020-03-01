@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff93c46f4ed244dca0821c2208766e0d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 29,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Rooh-e-Jaipur"
+     }
+    }
+   ]
+  }
+ ]
+}

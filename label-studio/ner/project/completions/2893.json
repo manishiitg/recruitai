@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9049b39e4b9d42d985d394f99070cdb2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1d4a1241180c4e3b87f999d7eecab73b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 30,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "495d35641b5b442a890935ab27b1c015",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 42,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d8baf38cb294e9b970b1677749bdb5a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ddc2728b3ce040899c4b2feece3d9d7c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41d64a7a482546c3862bcd5e20d16f8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

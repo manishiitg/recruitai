@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7fbd48f10b04e538a76a098373c44d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 5,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TCS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b467a365e800432493fc867b0ebe618a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 47,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "25e9a11464d542639d1e813673c5f065",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TCS"
+     }
+    }
+   ]
+  }
+ ]
+}

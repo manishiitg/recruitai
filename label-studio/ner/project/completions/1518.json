@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d3ee0f2777094045adbbe5bef8d0b0d3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 105,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Genpact India"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d92c1be3ff7b4066a597d06f7bd6a5c8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 38,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad"
+     }
+    }
+   ]
+  }
+ ]
+}

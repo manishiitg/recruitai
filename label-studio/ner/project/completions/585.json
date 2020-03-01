@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0af1b2c0e9f845a3a1189d9b82d3f458",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 96,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Profile: IndiaMART is an Indian E-commerce"
+     }
+    }
+   ]
+  }
+ ]
+}

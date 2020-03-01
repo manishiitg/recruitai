@@ -1,0 +1,186 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de9445bffe1048719dbd55e02226286e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 28,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Vanisb Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c796734911e24bd9adcae2f10282de86",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 48,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Java Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43c0f5be1df24256909a62bc0d899a77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 62,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c21edd30b43a4d309f71ac306add12d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 77,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2019."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a403b4605164841abbd03137a945211",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 117,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Vanisb Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f364d8ed4cb43e98a65dc7c16fad492",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 129,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1.2 Year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30d7b8455c6943278cc194ea5995c3a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 135,
+      "end": 139,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c30905f3c302420c93ffec11260cc70b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 143,
+      "end": 155,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2019)."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29f56267498e485ea1db814334fb567f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 167,
+      "end": 184,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Supersoft Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c6a445c82134f968a4af13992ff323f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 190,
+      "end": 204,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Java Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e9e39c36106498cba252abceb984876",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 228,
+      "end": 249,
+      "labels": [
+       "DATE"
+      ],
+      "text": "st April to Till Date"
+     }
+    }
+   ]
+  }
+ ]
+}

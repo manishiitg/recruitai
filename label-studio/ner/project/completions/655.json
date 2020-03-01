@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "316fe22773954f9f90b908215e1c0276",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 44,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "78.00%"
+     }
+    }
+   ]
+  }
+ ]
+}

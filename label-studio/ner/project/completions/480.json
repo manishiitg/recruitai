@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a532346432514f899bd2611c4482c246",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Malapuram,Kerala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bd1804a77cdb4adea31f51560894270b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 85,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

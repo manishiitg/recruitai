@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71ed26d0a8a74ed6a02261c0a0d01aba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "70dc2304215945e8bf624bf6ef2f7a83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 39,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Syed Ammal Arts and Science College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14f995f797014a978a50c842c7b146a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 54,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ramanathapuram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de13fa6f89644333a52c911a9c987028",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Alagappa University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "485f28f0ca1640bb880e2456a9fd616e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 79,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    }
+   ]
+  }
+ ]
+}

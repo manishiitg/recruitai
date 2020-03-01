@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "956dc075e9fc44d3b6484d9d703c8ee8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "noo"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "10c977bfa80d496fa6423be0bdc9381d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "nkad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5cade47053249fda7b80cdc9684439d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ophy"
+     }
+    }
+   ]
+  }
+ ]
+}

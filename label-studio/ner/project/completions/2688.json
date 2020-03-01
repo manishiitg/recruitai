@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4b51739578d4658824deec25871bb0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 26,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5d9cee237d9498eb5c1513cb9d2a6c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Neudesic"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd3cf3b9039c4c78afa7fd85cc3d3648",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 93,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Test Automation Engineer."
+     }
+    }
+   ]
+  }
+ ]
+}

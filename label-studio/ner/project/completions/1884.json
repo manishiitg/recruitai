@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6446db80c1de47b593f19a133110c151",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 86,
+      "labels": [
+       "Email"
+      ],
+      "text": "avdheshmahto@yahoo.com"
+     }
+    }
+   ]
+  }
+ ]
+}

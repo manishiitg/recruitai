@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "27d403a1a5944c23bfccccd1f6547e1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 34,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ed04a085d6144e6bf621022a005ed73",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 41,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6fc0985774544859a56854d91dc6ab63",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 86,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "66.6%."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7418a0370f6e471ea22d02b26bd87078",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 120,
+      "labels": [
+       "ORG"
+      ],
+      "text": "B.S.A College Of Engg & Tech"
+     }
+    }
+   ]
+  }
+ ]
+}

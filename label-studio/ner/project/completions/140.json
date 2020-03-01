@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e241f3008ac043559181e385221acb8e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Magadh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3226f09bb955401eac8d5d013c1af4f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 25,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c882d875b14f4f6c952e130a530e9fc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 37,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bihar"
+     }
+    }
+   ]
+  }
+ ]
+}

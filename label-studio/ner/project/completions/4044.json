@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5aecb90030bb44f2b8510f8fe77b7363",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 20,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "NIRMAL"
+     }
+    }
+   ]
+  }
+ ]
+}

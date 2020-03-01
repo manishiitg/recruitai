@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c460e186f1c46db91a7bfa9c105e969",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1744d585ff5d40249cb69b42c98d5836",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 10,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.2%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c775fa98d18646888737029bc051ae42",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 24,
+      "labels": [
+       "GPE"
+      ],
+      "text": "AGRA"
+     }
+    }
+   ]
+  }
+ ]
+}

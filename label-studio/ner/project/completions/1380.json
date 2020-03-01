@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "506aecb2a6f54569a1bb25f33bdb82f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shishir Kumar Singh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "187f2f4838b04cb584125d3075281fce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 95,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de9ce1991fee49d2b4496c0069dd4f60",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 105,
+      "end": 131,
+      "labels": [
+       "Email"
+      ],
+      "text": "shishirsingh1992@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2f4c149aff34c909774faa6dddc752f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 144,
+      "end": 154,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9634073552"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16ab75cef38d430ab8451d3ad665ede7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 31,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "pradeep chauhan pradeep chauhan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "356d710d4e7740a3b57c6349e456aa16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 52,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida, Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

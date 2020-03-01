@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "31198735bab1441e9d3f586a8ab6e6e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 36,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Data Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6bdaf167a8ad444bb2701d1e74355713",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 53,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(15th March 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c93dcc5a815447d5a13e76c276c6512f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 63,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d83f9905b5144838061a2f36184cc91",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 92,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Redcarpet tech pvt ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

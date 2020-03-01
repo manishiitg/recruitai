@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ba78f0e13b742ea895794291bfeac00",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012 - 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "106a6e4e04fd49829cc987bb694bbe76",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 43,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "81.2%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b2944793afc54e238f4b2204f3cdc9f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 64,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Adarsh Inter College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bbe3305788aa474f9f02a7a48a16d6fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 102,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "81%"
+     }
+    }
+   ]
+  }
+ ]
+}

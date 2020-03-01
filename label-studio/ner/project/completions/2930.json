@@ -1,0 +1,186 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e33343c6915b4718a0efb175d6c15a0d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 33,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kiran Bala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "299679e0663c45debcc7c30cf301b221",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 107,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mass Communication K.R. Mangalam University,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2110a23a9d7443cd92862d6ce4cdf225",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 123,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurugram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a01a54e2ea749638ef2034407cf9da7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 128,
+      "end": 138,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9711909988"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8bc86f43a42e4fe2a58ec77afe6b6e4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 149,
+      "end": 173,
+      "labels": [
+       "Email"
+      ],
+      "text": "kiranbkhanna75@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8fd860f5b62f407ab370f96b39053c10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 178,
+      "end": 196,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Manasvi Maheshwari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8844fe7a3dee46768d5536a4d6b5d98a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 197,
+      "end": 216,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Assistant Professor"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bc32e9e16edc4526a9777cd5e5af0b94",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 259,
+      "end": 284,
+      "labels": [
+       "ORG"
+      ],
+      "text": "K.R. Mangalam University,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bcf7a2c3a3d245dba6f8d1ca8f5a41bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 285,
+      "end": 300,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Sohna, Gurugram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "574b225ad639455c846bd57cb04faf9e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 305,
+      "end": 315,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9999311086"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "528d368995c440fabe6796d11cf23656",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 326,
+      "end": 354,
+      "labels": [
+       "Email"
+      ],
+      "text": "manasvi.maheshwari@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

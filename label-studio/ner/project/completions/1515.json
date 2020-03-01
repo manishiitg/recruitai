@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "38c91d7151bc4fda8e9146e4a652a170",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Genpact India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "72e26fdcf1cd433da36d8bab3f66eea7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 103,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Incident Coordinator"
+     }
+    }
+   ]
+  }
+ ]
+}

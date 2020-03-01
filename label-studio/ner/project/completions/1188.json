@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "904b57a11fc248f290b248578a378524",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 21,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sonu chaurasia"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d71b9e145b542e7b71e77b138f02bb3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 90,
+      "labels": [
+       "DOB"
+      ],
+      "text": "19-11-1992"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "59239ed9458140e2923193e1473f0bd5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 206,
+      "end": 213,
+      "labels": [
+       "GPE"
+      ],
+      "text": "panipat"
+     }
+    }
+   ]
+  }
+ ]
+}

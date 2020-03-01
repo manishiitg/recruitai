@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1718d52609e14d05bd943e219340a686",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 12,
+      "labels": [
+       "DOB"
+      ],
+      "text": "06-06-1994"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "720c0c8ee5dc4ff689dbcc3ecb421fe9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 74,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

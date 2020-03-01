@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "085c7d643fc947948d28bf34ceb20139",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 128,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "kansha Jain"
+     }
+    }
+   ]
+  }
+ ]
+}

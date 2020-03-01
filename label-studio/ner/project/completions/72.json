@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cdf55e64e0964429bee19782b630eac2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 29,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "rishna Kumar"
+     }
+    }
+   ]
+  }
+ ]
+}

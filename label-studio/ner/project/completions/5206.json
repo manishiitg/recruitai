@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ae2a0302e414d6a8f901785654474c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 53,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Tanwar"
+     }
+    }
+   ]
+  }
+ ]
+}

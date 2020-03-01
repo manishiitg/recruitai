@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3bc9222f1bc407a84245b2dcefdf98a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 27,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41e8a6c6ccfb4abf911dde1c74d724af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPTU Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6078427ed13f4c1aa659a5078d7a3e97",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 53,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4033b92c54714dfc8ea9d51f7aa9e134",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 79,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "64%."
+     }
+    }
+   ]
+  }
+ ]
+}

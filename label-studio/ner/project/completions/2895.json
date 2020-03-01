@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "26516d65b859438a802fa1a69cfdbaf0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 34,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Engineering Central Academy School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "66c14be4c7094e85afa5eddcfdfbceca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 39,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2006"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cadf9302d62e48e0884ed0953a4fe639",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 103,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    }
+   ]
+  }
+ ]
+}

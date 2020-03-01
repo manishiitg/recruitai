@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c2e1f7e10da342fd86e07c2ea589829a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Simran Singh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "357f93f8968e4f10b46b66ad59c0deb3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Graphic Era University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f330315370244877a65a342594bad008",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 44,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Dehradun"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e69ff977f2aa4e3aa817b73d5405a343",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 86,
+      "labels": [
+       "Email"
+      ],
+      "text": "ssinghssimran@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f6036e5c256f47d6b101fb288d1a0560",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 119,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8218868269 7457894656"
+     }
+    }
+   ]
+  }
+ ]
+}

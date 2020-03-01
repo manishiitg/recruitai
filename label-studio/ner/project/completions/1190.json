@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49cc1bd5f75248c7abea3556031e94b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 25,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sonu"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,250 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c932dd4cbfb42b78399d5629ea60ceb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 29,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f810f2bf9b114de79edcc0f2358f4eca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AIT/GGSIPU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "31c020ef783347b3aeb643a9d42f9201",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 96,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurugram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "90dd9fbc7e5949288e9eb60154aabbe1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 104,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "829c30e1fd014c6598cf5609fe2d1b95",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 117,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67.39"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea533cae849c41e88293223154d1794f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 145,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "RPVV kishan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0185f78716d74a468becce6b0c870a4e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 157,
+      "end": 162,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4116ad6f68bf45fbafa6cec66a00fa81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 166,
+      "end": 170,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "262e6ddda60b4775aaa32c22720b3ad8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 176,
+      "end": 182,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "78.67%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f79905bb4704f8fb7646888734a57d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 199,
+      "end": 223,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ramjas No. 2/CBSE, Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f319af4a058a42978bd3796705804b7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 227,
+      "end": 231,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2006"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9416eef6d494fdd857c5888ca3ce6d1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 237,
+      "end": 242,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "76.5%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "02216eb74d7d440386a02fdfe52faa4b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 275,
+      "end": 300,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Digital Baharat Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3635b259173b4feea57cbb506f3d22a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 304,
+      "end": 330,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer Trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f397f7584ae143b68874f0bd0607709b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 336,
+      "end": 344,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 19,"
+     }
+    }
+   ]
+  }
+ ]
+}

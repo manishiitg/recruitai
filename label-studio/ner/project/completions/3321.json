@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff18af1e6e1b4c929cc3590ae29f607a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 59,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Manual Testing SQL Very Well in HTML , CSS"
+     }
+    }
+   ]
+  }
+ ]
+}

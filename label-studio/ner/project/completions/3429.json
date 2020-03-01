@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b1396e70f1ee4dc8ba3505a5ec2ee852",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f67363297d94b3b861508a1c963bcb5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 8,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "57%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b173924954f345a3b1af85667ca8e1a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 83,
+      "labels": [
+       "ORG"
+      ],
+      "text": "General G. L girls high school Bihar Examination Board,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2776e48d330461aa3307d2875f50fa0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 90,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna."
+     }
+    }
+   ]
+  }
+ ]
+}

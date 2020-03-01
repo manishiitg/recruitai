@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e76b0c53f7db4205b246cf6ca05bc5e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 17,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "025f4a5ba674481bb0ba3f9dbf368031",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 64,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Maharaja Ganga Singh University, Bikaner."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a6e1e9c93814f5db868ec4104e6e579",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 88,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6bab6b46425942a8aa9a99cc7a09261b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 117,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sec. Education"
+     }
+    }
+   ]
+  }
+ ]
+}

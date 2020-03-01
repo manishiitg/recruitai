@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "efba9085d21849059ebf36c340e74bf7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 62,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CBSE Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "476c611d216649c4a639974c4c6c1329",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d4ada2aaf4764ba78de7057f7322731d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 132,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NIOS Board."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8310d049bbc4e058ae9ca2862c4f34c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 147,
+      "end": 151,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    }
+   ]
+  }
+ ]
+}

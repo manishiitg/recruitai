@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd676ad6ba2443e9ad860c79c96c68d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 28,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8249462349 8339931083"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f5e4b163f334862b5b15d433971d0e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 63,
+      "labels": [
+       "Email"
+      ],
+      "text": "routpriyambada009@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

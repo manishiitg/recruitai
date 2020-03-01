@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53c3c4c6fb5a4311af32b617e56bbc1d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 27,
+      "labels": [
+       "Email"
+      ],
+      "text": "ajeetyadav70520@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b22e1ca36d2841ab9edc892eb067ca29",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 127,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "32d7fb4afd5047f2b2208bdb0b84460a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Surbhi Shradha"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67762693f5c946919046cc743ee60c12",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 57,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "20008852e79d47ff8af83b68011d2dc2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 89,
+      "labels": [
+       "Email"
+      ],
+      "text": "urbhishradha1@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cdbf20c36e734e4993c5a6432c1f42c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 113,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-9540777928"
+     }
+    }
+   ]
+  }
+ ]
+}

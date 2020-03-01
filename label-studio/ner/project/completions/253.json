@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b967724480db43dfa9759a338ab8f707",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP DEVELOPER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa7faa0ba8854b9fa46262c6f873d8a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 37,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "8 MONTH EXPERIENCE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ccf2f3d902bd498386ea75402b63f509",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 44,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Pankaj"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be4464d7007d4bae9fafad50f9523004",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 73,
+      "labels": [
+       "Email"
+      ],
+      "text": "pankaj.shishodia11@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c891ec231c4403d8bd04c22a0769371",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 84,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8755728373"
+     }
+    }
+   ]
+  }
+ ]
+}

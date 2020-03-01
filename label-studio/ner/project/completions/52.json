@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f39725b97c21483fb05be03f0d7f97ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Progressive InfoTech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1952931122f64b0d9e736e41be72794a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 86,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Server engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "22c6cf4b6dc64e23b377b31ae8b4edc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 108,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2014 to June 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

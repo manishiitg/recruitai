@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89cce058fbd844c682c16a1c8a1267ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b46d750d80a646e8a143c772316459bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e659aad91914b0eb79a8163dfd4ee4d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 47,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012-2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5282094cea404f99a31733123ffd4853",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "54%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da6a93ff985945929106a575492b2d46",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 68,
+      "labels": [
+       "ORG"
+      ],
+      "text": "School BSEB"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "83e14f3982d641a5825a8e9cc204036c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 74,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna"
+     }
+    }
+   ]
+  }
+ ]
+}

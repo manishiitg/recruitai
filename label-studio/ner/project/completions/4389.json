@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "914938b8ffd6421f9514e1c24d3a0908",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "7+ years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e4fda4bf78c4412e8fee6e058f148c16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 243,
+      "end": 256,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LG soft India"
+     }
+    }
+   ]
+  }
+ ]
+}

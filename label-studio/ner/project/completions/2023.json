@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "378af0a1d3634106990c825e3c7dc01a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Unbox Innovations,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "61c3a2b710914e34b6d9c4ca50f1f3bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 25,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mumbai"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff1bdcc1dc194cc1b7ece0e0bda4bf36",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 42,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Digital Marketer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b1c99c6aed714c18bc1a65d957b3a6bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e8a7cf7249a74478bf59148401b72ccb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "PRESENT"
+     }
+    }
+   ]
+  }
+ ]
+}

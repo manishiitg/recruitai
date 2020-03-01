@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "919eb77089624584b3a2cccb5f8796c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 48,
+      "labels": [
+       "Email"
+      ],
+      "text": "dubeyrubi7@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

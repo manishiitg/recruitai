@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d0a4b71a8c44f1e9a1744e48de81792",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Wonderpillars pvt ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ce77ecb446e4f13a086f0ebe3ffb869",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 109,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Junior Web Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b996cfaa29a42ba9a7d856fecde0b5a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 131,
+      "labels": [
+       "DATE"
+      ],
+      "text": "6 months"
+     }
+    }
+   ]
+  }
+ ]
+}

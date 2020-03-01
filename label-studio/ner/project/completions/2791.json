@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "deca00f2e21348d8bc8ca60cd32d44a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 35,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "336666e403b448d088af7578bc1097b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 64,
+      "labels": [
+       "Designation"
+      ],
+      "text": "software trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "998b60a4bc444492b290a6253978a008",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 89,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Adsvento Media, Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

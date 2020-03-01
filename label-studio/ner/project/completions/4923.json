@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8fb762c00c574b52a681414d7f8493d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 83,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ANKIT ABHIJEET"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,234 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9b1bb31a6cf941a2af91296645791c8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 30,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.C.A"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a6b548cbec0a4eafae91392577f92df9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 41,
+      "labels": [
+       "DATE"
+      ],
+      "text": "015-2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29a55285ad82435ea74bfd826504e3f3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 67,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74.5%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d198b992913f4722b1829d198855fba6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 77,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AKTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78a35a037aeb488e950e4096232fc8cd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 85,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "97757c46e2734ece9689362d10840cfa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 91,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.C.A"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7cdc6089f0c44ab9807044208cba0c08",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 100,
+      "labels": [
+       "DATE"
+      ],
+      "text": "012-15"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "39833dd32bfc4b4aa99ccc912d25f896",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 126,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71.7%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4db97cf487b64cab8d52a1b361b40325",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 132,
+      "end": 137,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DBRAU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b86fd9337313409583db5d09654e8384",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 138,
+      "end": 142,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Agra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ba8e4cfceea4f09863d1888417083a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 163,
+      "end": 168,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67.0%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55889a7b1ccd4d4b907fe2e8bb310aa2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 172,
+      "end": 182,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P Board."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "800789b5757f4c6c8a16211c5e31bd9e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 202,
+      "end": 207,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70.0%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a43a0b512f5a4e0a882097139b3203bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 172,
+      "end": 182,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P Board."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e8ced176de44d74a864e1f45fd52c43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 23,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "10years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5205b65167644bf5a4965879ef498aa8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 36,
+      "labels": [
+       "Designation"
+      ],
+      "text": "G4S Security"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d6807bc5be304fa48a6576a2d21b940a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 47,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d956899ad0f94e78ab350c4e12a4c14c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 74,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhubaneshwar, Orissa"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a713106ad1e34a82853213c0a2eae861",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 88,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka - hyderbad, Telangana - Chennai, Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

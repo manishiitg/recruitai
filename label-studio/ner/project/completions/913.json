@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7619da596d7409c88368c9f4a72661f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 49,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SAP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89c8c39c7aad4b63af59b58fe30ce9ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 65,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    }
+   ]
+  }
+ ]
+}

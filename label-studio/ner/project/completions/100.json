@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5b1a7df73e2444a864ee313791d9126",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Akansha Jain"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21501ca279db46a6b3c3fd9b13ec2421",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 30,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune, Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

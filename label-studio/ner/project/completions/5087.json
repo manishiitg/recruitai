@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "85aba250c3184d479e3a554bb3585ba4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 34,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B Tech CSE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "809d9e3471eb4bec80a0630a852e6832",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "College of Engineering Roorkee, Uttrakhand"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ccc31bd8ba984f419bef6d34c91f3b08",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 98,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014."
+     }
+    }
+   ]
+  }
+ ]
+}

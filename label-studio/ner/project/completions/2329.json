@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e364e92a98f418692795e9ddb9ffc3d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 69,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tekshpers"
+     }
+    }
+   ]
+  }
+ ]
+}

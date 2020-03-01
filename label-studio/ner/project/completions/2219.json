@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5170d2dbe474fc8a14419ae0e812606",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1bc3d8ed62984ed1891d11f530d0f97a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 130,
+      "end": 134,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BSNL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ddf2af3e72e46da8d86525e961c5ea8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014."
+     }
+    }
+   ]
+  }
+ ]
+}

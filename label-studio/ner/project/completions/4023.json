@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d17b361f3d1b43cf8fefaaad244f0a94",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 23,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GITS, Gwalior"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "841e1c11d37d41cc8709b08c6c462292",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 27,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.E"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "11cba00545894532938938c614a30a16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 51,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2013 - June 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf9e25fecce04c999bb143c08cbd4dbd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 116,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GITS, Gwalior"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6355ec2b50ee4b458a4cc413ae836091",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 126,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74.3"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "790f346049cf449aacd2c08114cd8a83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 82,
+      "labels": [
+       "Designation"
+      ],
+      "text": "System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b9b1db354bb4dcd931520503569da82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 98,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dd2285bd5a5d4d4390c19afcebdb7d9c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 114,
+      "labels": [
+       "DATE"
+      ],
+      "text": "09/2017 09/2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1986ba18160849fc81350fa5acc3179b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 132,
+      "labels": [
+       "DOB"
+      ],
+      "text": "26 November, 1994"
+     }
+    }
+   ]
+  }
+ ]
+}

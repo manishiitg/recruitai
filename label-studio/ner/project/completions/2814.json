@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b3d878d49cbe4f14a19dd80089d3dd84",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 12,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1419bc25d6a64281bb872ac73f78ac73",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Engineering Vivekananda Engineering College for Women"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e61793df3536454e92aa9ad8f52e3037",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 112,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai, Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "54e5a32423de40b1b70719252debc9b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 15,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "319d0f28a5ef4adfb1a6551671173651",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Surendranath college Barrackpore"
+     }
+    }
+   ]
+  }
+ ]
+}

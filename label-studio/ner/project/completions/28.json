@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a46280848a604de587c5e8a8334eaa7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "560b5daf22084ef9abc734f85f9cc6c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 48,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1.5 years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7989bccbb1b34c088d47a02fe50a4116",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 118,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Html5,Css3,php, Codeigniter, Drupal7"
+     }
+    }
+   ]
+  }
+ ]
+}

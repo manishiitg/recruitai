@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b6634e551a243c79e6392cbe540a335",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69.4% 77.6% 91.2%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3df24f5be7974dc89f1899bb69cc18db",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 78,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Allahabad"
+     }
+    }
+   ]
+  }
+ ]
+}
