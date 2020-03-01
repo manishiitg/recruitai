@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d1e94e0628640d79369d427c2ee40f5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Avinash Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5cbb147ded0468aa1da7af172a7c514",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 39,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Testing Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9dfbbffc24af42eb90458092e544a673",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 248,
+      "end": 255,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Avinash"
+     }
+    }
+   ]
+  }
+ ]
+}

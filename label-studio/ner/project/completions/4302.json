@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "265b8996d32f4ff1b212d1a29ee4d29a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 91,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(11/2017 Present)"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fdd6e0412838499b9ecea430b3681327",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 32,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "4.6 years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29f1b4db3c024e3a8dad78cf573bc80e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 104,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SAP PI/XI and Dell Boomi developer"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5939e0477ffc429a948f99d0597440af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 26,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Pursuing MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5756be1c9604ccea34f273bf916e38d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 37,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IGNOU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a8e2a9f695049dba7bef87442a59bd5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 41,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc2de93c0fc14695be055d445cb1f280",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 37,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IGNOU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f57e4f06b8bd464ea95791e881fbfbfc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 62,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Six Month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "678ebf96d5284156964ce755380407ed",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 71,
+      "labels": [
+       "Designation"
+      ],
+      "text": "training"
+     }
+    }
+   ]
+  }
+ ]
+}

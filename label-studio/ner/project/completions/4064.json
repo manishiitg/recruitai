@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e7d64ed5db35431ea0a6bb1abee82506",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 54,
+      "labels": [
+       "DOB"
+      ],
+      "text": "01 Sep 1997"
+     }
+    }
+   ]
+  }
+ ]
+}

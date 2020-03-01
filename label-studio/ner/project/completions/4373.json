@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a55f7227d619460fa90bba74fea45b4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 41,
+      "labels": [
+       "ORG"
+      ],
+      "text": "F.M. Junior College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b1205672076745969d53dbc2dd76db06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Balasore, Orissa"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b68bc6d853b04a2492efd137d9c06020",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 84,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2003 to April 2005"
+     }
+    }
+   ]
+  }
+ ]
+}

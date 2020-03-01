@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5476c6592894201b1164a913c394a9d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7379acbb0d5499f82a46395b1a23656",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd851252cc474d28a003d1f81c2ecae6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9908ea6ca544f059cb8da1d6cd5bef5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bareilly, Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

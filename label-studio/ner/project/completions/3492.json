@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "58ea5639b06148dea82b3ccbe53415c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ram-Eesh International School,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9a28b47d3cbf4811b881295802fd0faf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 49,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Greater Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8a84481999f4a5f9441d30f3d4b04a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 54,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d415dbe95dea46de9930f5372030de70",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 62,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "10 CGPA"
+     }
+    }
+   ]
+  }
+ ]
+}

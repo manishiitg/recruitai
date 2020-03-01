@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7951f17322d244f0bfa926b88c6d0d19",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 128,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer Science in Computer Science Engineering"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "433e01cf166c425b8f160a75118b9ec7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 19,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "7 month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29f044af096a46928b4942de0907246f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Varbs Infotech Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e57ae81a37b742848c47ddfdc4824fdb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 76,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer."
+     }
+    }
+   ]
+  }
+ ]
+}

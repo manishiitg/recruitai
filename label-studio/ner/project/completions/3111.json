@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f6c507130c14345bed4e1ee777e517f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2013 to October 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b2ff529c31847e4aa4d8b635b6b1367",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 62,
+      "labels": [
+       "Designation"
+      ],
+      "text": "TECHNICAL SUPPORT ENGINEER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a91d626240ec4e799bc07f756c6fe8e6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Corporation"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a29c4507738e4915a82755233fd25890",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 163,
+      "end": 172,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "342645284a55463dab4b0e53be8c5bc2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 61,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a9b342f255d4a64a83d8eac6531c785",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "|2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "baa518dd7e444e488e6c9b07a15bca7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": ".P.R.T.O.U"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "27b0e292715a488cb6362f07696ba823",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 106,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "4.42%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a030a0f771fa4b2ebc8f877ddc3088f6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 61,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c5bf873c1a146aca8558bc117c63156",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 153,
+      "end": 156,
+      "labels": [
+       "DATE"
+      ],
+      "text": "017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7254b149597c4c71ac5570b1e016ddd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 164,
+      "end": 175,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Abdul Kalam"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "047f8df61fbc4e3284efc3a436a2e38b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 182,
+      "end": 188,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aff1b63c81a54b68ab9bc17513bc4e48",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 191,
+      "end": 196,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "3.20%"
+     }
+    }
+   ]
+  }
+ ]
+}

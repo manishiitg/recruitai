@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "604902a9bbdc4949b79220488485fe35",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 38,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ARSHI SAFDAR arshisafdar1997@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5909e910d0e4ee9a93eb7b943430600",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 49,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8789976490"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "253d844e848c4ab6a705ee8a6cf7d51a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 62,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7631314770"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "574f2d68e7d44ee9831e6243b19b0d89",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AMITY UNIVERSITY,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d110d9f5925147559c92e508fd5c888d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 97,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA|"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df7e6a2c6ca846eda6d5026ea6da3286",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 102,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    }
+   ]
+  }
+ ]
+}

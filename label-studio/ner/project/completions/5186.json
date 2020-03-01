@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "11242bf9c192497f8f28fa9f7e8f587f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 77,
+      "labels": [
+       "DOB"
+      ],
+      "text": "06-June-1993"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef85742478b241a3a620a071d3f44c59",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 101,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English,Hindi,Urdu"
+     }
+    }
+   ]
+  }
+ ]
+}

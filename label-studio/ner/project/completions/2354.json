@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ed2e1d015694416a5bfd34d61344a32",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MP Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06ec9827d7844834bb2791a59443f35f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 27,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2005-06)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e1e858d4ce24c2f910b34e4e213a84a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 30,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "76"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d3ce4a40db744f4f861e7738f237133c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 86,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML5, CSS3, JavaScript,"
+     }
+    }
+   ]
+  }
+ ]
+}

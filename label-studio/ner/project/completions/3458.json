@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb616a20db4c4908b07904a9e4014aff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 63,
+      "labels": [
+       "Designation"
+      ],
+      "text": "DIGITAL MARKETER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "77aff4d53f2b47ccab77f7501979f5dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "JULY 2019-"
+     }
+    }
+   ]
+  }
+ ]
+}

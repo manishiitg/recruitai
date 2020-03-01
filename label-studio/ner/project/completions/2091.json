@@ -1,0 +1,234 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bd90cf70c8b44f9795cc9a5fe0e21864",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 15,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ca9dd89561e4ed488a3f2f5abc32274",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 33,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "490402f9967641e99b278fc4c437d02a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 69,
+      "labels": [
+       "Designation"
+      ],
+      "text": "CASHIER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a44f0abbaed4b80be6c739060ea52ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 111,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M/s Bharat Bhushan and sons, Ghaziabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9dd17589354b49d1a4e9951e814777c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 140,
+      "labels": [
+       "DATE"
+      ],
+      "text": "pril 2015- November 2015)."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4fb3e02c726461a98572516971b4b24",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 151,
+      "end": 166,
+      "labels": [
+       "Designation"
+      ],
+      "text": "FITNESS TRAINER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7985c10525434751805ac2916fe6d3a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 171,
+      "end": 191,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SALES REPRESENTATIVE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7f5b99a95e424089bf164ecb8f137df3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 195,
+      "end": 200,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Pulse"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "280ca3a99e3c45d79c1a28856471b095",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 239,
+      "end": 258,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018- August 2018)."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c657886d821a47dbb04255d17e812d4f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 285,
+      "end": 299,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2018."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "049e99115bdd4683a9190b3c30d306c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 312,
+      "end": 319,
+      "labels": [
+       "Designation"
+      ],
+      "text": "trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "edd95523760948ac84ad2304fab46002",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 326,
+      "end": 338,
+      "labels": [
+       "ORG"
+      ],
+      "text": "YFC projects"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a0bfff42b496417bae1c5ceced5636e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 343,
+      "end": 350,
+      "labels": [
+       "DATE"
+      ],
+      "text": "4 weeks"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07082393af5d43aa8f5c5b6abb9ae22d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 353,
+      "end": 361,
+      "labels": [
+       "DATE"
+      ],
+      "text": "uly 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

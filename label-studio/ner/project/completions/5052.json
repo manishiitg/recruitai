@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7fc593d8ae1641518a28edc4e9881ad7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 90,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Account executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c52df701ef7743b9985ef32f4c4a2fae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 103,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HR Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab3229e067a4440bae93025eacdac8ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 121,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b366d96242d34e56a2246b8abaa9c8ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 140,
+      "end": 162,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Shri Karni Electrotech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a788a5aad9b4552a038771e4f10fa49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 170,
+      "end": 206,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Delhi International Airport Limited."
+     }
+    }
+   ]
+  }
+ ]
+}

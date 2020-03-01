@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3e03808ced6d476f9d237d0918fce9b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 63,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b2af4dc1df724194a92f7dfdc6f890fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98e8be15e9b24067918719948ae85310",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 90,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2017"
+     }
+    }
+   ]
+  }
+ ]
+}

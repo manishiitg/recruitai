@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14487d5b5a764f73ab2c098239299e52",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 16,
+      "labels": [
+       "DATE"
+      ],
+      "text": "12th June 1992"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "70a6a371fb81419fabe89c7f8c603bf6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 49,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi, English"
+     }
+    }
+   ]
+  }
+ ]
+}

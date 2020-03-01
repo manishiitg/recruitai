@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "416bca5c6f494c5184626f6433d65483",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Sbsstc B.tech(computer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0e5f5d3aac264597b67ad3243b36b291",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "5.6"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "414748e2f62444ba9e57d8260e607582",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "31fc9492ca9a48b7a42e1757379039d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 111,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Java HTML ,CSS ,Java scricpt"
+     }
+    }
+   ]
+  }
+ ]
+}

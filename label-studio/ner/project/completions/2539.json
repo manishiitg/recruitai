@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "003a588db22544608e32f2f4df25b2f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Maneesh kumar Chaurasiya"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d95392c3f3df435d9338213caa649c6f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 39,
+      "labels": [
+       "Phone"
+      ],
+      "text": "503813346"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c1fc826bac947969c30abe0a04fca59",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 72,
+      "labels": [
+       "Email"
+      ],
+      "text": "mkchaurasiya99@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "280ec25dbd4248e99f76930dca18f24b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 119,
+      "labels": [
+       "DOB"
+      ],
+      "text": "10July, 1993"
+     }
+    }
+   ]
+  }
+ ]
+}

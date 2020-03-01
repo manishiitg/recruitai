@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "59ebd30946e643db928e7ad374249fe8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Stanford University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "18abae3402734e7894a5c0a7a7c5bf44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "University of Washington"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a64caac3f18c41b59cbc2835ff2d3e2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 126,
+      "labels": [
+       "ORG"
+      ],
+      "text": "University of California"
+     }
+    }
+   ]
+  }
+ ]
+}

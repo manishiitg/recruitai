@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac3cc965fef5470c9ad19a174fe57215",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UniSoftCorner Pvt Ltd. India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c8a81f1650042a1875ff3bc66abc4d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 88,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP Developer."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a69f3ea92e6648139fee0812f75fc3a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 148,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Virtue Mantra Technologies, Bhaniyawala,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "02320b41219b4905970c1f85a942bcf1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 168,
+      "end": 182,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP Developer."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00354479f666472aa0bb41df4ee4fb2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 201,
+      "end": 239,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Asian Institute of Computer Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d0da515f1b049b9a7ba2dd32d60d98c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 277,
+      "end": 294,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 10th 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d84d92efd7e64a0988782e17ba01f481",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 298,
+      "end": 316,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 15th 2018."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee451ef209c24202b72d01d5dd90148a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 338,
+      "end": 367,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DeskTym Enterprises Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bc3d73bb10b74c478de5114743154477",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 254,
+      "end": 264,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Saharanpur"
+     }
+    }
+   ]
+  }
+ ]
+}

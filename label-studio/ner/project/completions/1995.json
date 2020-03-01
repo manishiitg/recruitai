@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "932159024ee743f19d10c6ff8eeb37ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Boundless Education Services Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b56ce7bbfb374c66bf40c75243331e18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 95,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP/Front-End Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86c15cd231224e08aa8f4db9b92de9ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 106,
+      "end": 115,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

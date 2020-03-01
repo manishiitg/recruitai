@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f21e9e4762f46d4b7182fb7ea978028",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ANAND KUMAR MAURYA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fc15be0665f7453f89623d2014263129",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 32,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+918115550533"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f24b2fdc1fd4b4db0d0b0f19475a573",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 49,
+      "labels": [
+       "Email"
+      ],
+      "text": "gzp563@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

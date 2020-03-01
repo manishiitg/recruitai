@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb78e2cbb455499ca4e6015bff258906",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 92,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Angular4+, JavaScript, Typescript, Bootstrap, Html, CSS"
+     }
+    }
+   ]
+  }
+ ]
+}

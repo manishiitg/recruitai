@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b132dec80f3b4821879e4dcdd89a3cd0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Gandhi Institute of Science And Technology (GITAM) University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84a60abeb293437fb1b2070f99ee6b57",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0327f8f3ee07491f819415d2864d576c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 85,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

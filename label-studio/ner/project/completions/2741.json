@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5e64f7de5524c5dbfa5a040ae655f22",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Service"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3cf624ebb646495ca864ea83cbade2c3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 77,
+      "labels": [
+       "DATE"
+      ],
+      "text": "two months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8e5942fc1a884280b95d2900fa606c45",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 90,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad"
+     }
+    }
+   ]
+  }
+ ]
+}

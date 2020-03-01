@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f2637e04c09417b96952ad2d1f0c3b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Thiagarajar School of Management"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78cf61cbfc994d9ca77cb3f76b65374d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 53,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Madurai Tamil Nadu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2b8f906a0454793aafe13aebea640c4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 57,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "54b9b4300b2c4b8fb8df3f497ac87496",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 101,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sri Sathya Sai Institute of Higher Learning"
+     }
+    }
+   ]
+  }
+ ]
+}

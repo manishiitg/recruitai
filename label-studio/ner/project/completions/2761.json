@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c644766d466448d4acf62f8374087ae7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 36,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2013 to July 2014 September 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69ce466bab124236898c63f2487d05c9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 50,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2017)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4087fb2e5ab7404aa95eb51419ee07de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 66,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Test Management"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c30c30b64f54719a4d81270491ec34c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Akshay Dubey"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "565c3a7c157142a6a3857c50b038457c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

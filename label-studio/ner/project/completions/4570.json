@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b77ab457cda64cda96dd491c2b659b9f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Jaspreet Kaur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88d179aa80b14f8b8a0b780e63143d5e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oceanic Consultants"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f299a443a744670a84bd2375aead8b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 51,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HR Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8129f5b9636e491caeca95e90addf13e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 70,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad, Haryana"
+     }
+    }
+   ]
+  }
+ ]
+}

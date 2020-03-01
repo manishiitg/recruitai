@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e4075673e33f427aa3f10c6b3933fc0e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RRMY inter college"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "74e5404301c344618af646b4e23648e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 43,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c27cd2c94b745738a2dd69d5d3acf7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7295b659f144ee1873c40518bef9cd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 59,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9872639779"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea69e1e0ffa04599a8d227ed049daf93",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 99,
+      "labels": [
+       "GPE"
+      ],
+      "text": "sitamarhi ,Bihar"
+     }
+    }
+   ]
+  }
+ ]
+}

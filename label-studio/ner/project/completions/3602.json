@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8c510c4a2e6e406f9cfe7df068a7f886",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "C.B.S.E. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c5fb6f0f1144e1fbb01a37629feef96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 12TH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0668ce7df6504dfabc4a587f42e9d9fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "C.B.S.E. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7595caef55d84b89ae234d7c9d36e6b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 106,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "34e894a400ef41df869d59f824b39ba3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 119,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BA Programme"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7513e8ec62034daa8c47e557b56f6c85",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 142,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DU (SOL)"
+     }
+    }
+   ]
+  }
+ ]
+}

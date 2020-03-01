@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96ba1966223a43f38ce27ccce608e3c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 45,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "66.75"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a7e996535e8474aa29351a8e227a52f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 77,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1227536ca5204cc8a3e789d36609cce0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 96,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B-Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ae6d6787f324f4095309566cc205b40",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 105,
+      "end": 111,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.48%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b978419c101d4d7f905a977b7972bbcd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 121,
+      "labels": [
+       "DATE"
+      ],
+      "text": "AKTU-2017"
+     }
+    }
+   ]
+  }
+ ]
+}

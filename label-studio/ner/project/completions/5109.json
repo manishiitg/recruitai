@@ -1,0 +1,218 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0b2744e660094639b3a09f0e2b7d1544",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 33,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "TECH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c396757cdee42ca8ebef83a42268e08",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 81,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ishna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bd6ffe573ced4199bdbbbc2750de5f2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 91,
+      "labels": [
+       "ORG"
+      ],
+      "text": "stitute"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca2e60833b2949da8b7ffd3f9c733f19",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 67,
+      "labels": [
+       "ORG"
+      ],
+      "text": "gineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f400b88e6d2941439e325379d96b763c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "d"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acaa083750e74f849364795a59c2d751",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 120,
+      "labels": [
+       "ORG"
+      ],
+      "text": "chnology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eff42e10403945849cbd298eb73074e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 156,
+      "end": 157,
+      "labels": [
+       "ORG"
+      ],
+      "text": "."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67b5734ceff44eb79549aae45fc62713",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 164,
+      "labels": [
+       "ORG"
+      ],
+      "text": "P.J."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "307ca08b111747d29bc88c8cdd79e396",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 167,
+      "end": 170,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DUL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "42926b06b5f8450b87dd13edf7a8efa7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 173,
+      "end": 176,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LAM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "daede8719ab54f459bd15af70bb91a6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 179,
+      "end": 186,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CHNICAL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3e2ca3062fc40e3a8bb4739ecbb4cd2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 189,
+      "end": 197,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IVERSITY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0497660c49fa44af816284524ecfd2e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 212,
+      "end": 216,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": ".2%."
+     }
+    }
+   ]
+  }
+ ]
+}

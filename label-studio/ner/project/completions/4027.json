@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7e51f1f8d1c49c99c59eb59843fcf19",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kendriya Vidyalaya"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c157e096c315439fbeb1c5b6a17c1f3d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 126,
+      "labels": [
+       "DATE"
+      ],
+      "text": "10th May 2010 - July 2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35e052ecdfe649c297791bb1a25d3923",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 152,
+      "end": 179,
+      "labels": [
+       "ORG"
+      ],
+      "text": "kendriya Vidyalaya, Gwalior"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c40e3eac3d964a709ff9ce9bf7a32c40",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 225,
+      "end": 233,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English,"
+     }
+    }
+   ]
+  }
+ ]
+}

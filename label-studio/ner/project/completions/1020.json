@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "38b4fba67d254fc18e9538a100e5d31d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 47,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Adixsoft Technology Private Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "490391dc462045a79eb334e2061a2c61",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 79,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Front End Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

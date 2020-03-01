@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc9b3e24a9ab43738cc52e7f8329b9a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 96,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Core Java , JavaScript, JQuery, SQL , JDBC , Swing , JSP"
+     }
+    }
+   ]
+  }
+ ]
+}

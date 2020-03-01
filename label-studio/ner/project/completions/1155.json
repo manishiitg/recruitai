@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca1dd42b6ff745399ed7da8774bb5957",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 40,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019 JULY 04 to 2019 JULY 31."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "44fb0091a1494c808244949ccfcad7c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 49,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "8 Days"
+     }
+    }
+   ]
+  }
+ ]
+}

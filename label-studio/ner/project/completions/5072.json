@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "59ba3f368a06457c91d9a600b740cae9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kiwitech Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ecd732a22c7e4810834157ebe0a197a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "21st June 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a6360768a7346a983fc0e8695043450",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Virtual Employee Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a9577dda087f45b0bc6eae931b7bbebf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 112,
+      "labels": [
+       "DATE"
+      ],
+      "text": "16th August 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "63055857ccc14551b33b04f64d287a3b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 116,
+      "end": 131,
+      "labels": [
+       "DATE"
+      ],
+      "text": "20th June 2018."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3173c7fb2ed4c4598395c689d6e0433",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 132,
+      "end": 145,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

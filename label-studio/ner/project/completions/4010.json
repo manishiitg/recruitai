@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f78053ee6dd2433fbfc35b06fd3502b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 122,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Business Development Rep"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "348dd64ef0f44efda5b1ad290b824276",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 129,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oracle"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d4d43a22d38240398f2d6d3b3504503a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 132,
+      "end": 160,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2011 to April 2013"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c64ae669d3c4566b1d51bcfa1d0a9b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 46,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2016 - May 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ddc27d03d3fa4603a8c7b9d9521475c4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 106,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ackbench Internet Services Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

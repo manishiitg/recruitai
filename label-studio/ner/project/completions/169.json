@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f16db33b5d6c4038a3103564963108cc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 33,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "409ee75b711b4fc7ac406ab2a907829d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 94,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nitte Meenakshi Institute of Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1461837a15024bfa851717096604aca5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 97,
+      "end": 116,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

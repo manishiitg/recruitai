@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b22169d7bcd24b29b2f523b77e46691b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Board Shree Binzani nagar College"
+     }
+    }
+   ]
+  }
+ ]
+}

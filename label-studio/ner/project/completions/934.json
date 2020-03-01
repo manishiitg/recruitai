@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0b76ea27c97a4200b4d71b0344c76a02",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Amar Tiwari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "682a8626397e4b6baef0f793eff0a9d4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 33,
+      "labels": [
+       "Phone"
+      ],
+      "text": "897030949"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c8249735dad74ff7a8215b9e93ec0b13",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 64,
+      "labels": [
+       "Email"
+      ],
+      "text": "tiwariamar03@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

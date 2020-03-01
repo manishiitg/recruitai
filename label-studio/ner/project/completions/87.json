@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5170b74f470c4d2b897c6188c463ab62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shashikant Kushwaha"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f32abe3b4da84af6abf09de8b99f7629",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 37,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c14961b4ddd4cef916b099f23b30d84",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 66,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9540050922 7011286315"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d514b2e63644769866bfe8e4dd6191a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 126,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Tilak Nagar (New Delhi)"
+     }
+    }
+   ]
+  }
+ ]
+}

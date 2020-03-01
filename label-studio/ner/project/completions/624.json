@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ece6efd093847d1a219dd8a98687783",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 85,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma in Information Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d008981051814176a2f4aaa9cf25b2b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 96,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPBTE"
+     }
+    }
+   ]
+  }
+ ]
+}

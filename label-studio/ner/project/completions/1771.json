@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d69e9c59ad22496a9f6542e90da0e4df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 12,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69be2e0ef7c04c6e9502a0dbeba6dca7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 23,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IGNOU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d135906277cc491b972096eabd5493fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Netexpert India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "918106e2f90547f490d0bed98eadd364",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015."
+     }
+    }
+   ]
+  }
+ ]
+}

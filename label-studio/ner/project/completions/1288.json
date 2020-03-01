@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80faf33510ce4411ac311e4b0c21a79b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 28,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA in Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bf9ed8b2a84943bc9c0aef178490032c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 66,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai, Tamil Nadu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "883aa26426c14130b267adb108da126d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 80,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2009"
+     }
+    }
+   ]
+  }
+ ]
+}

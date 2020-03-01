@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "db27f1574b604f318172bdc3ae110b0b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma in"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dd5dba9271334022b9245f713a3e01c9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mrac Gtti"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab7a68c5e4884879a660fac4f1329a4b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kolkata, West Bengal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df1b3702aec445b6bcd5600f7ea5130c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "years)"
+     }
+    }
+   ]
+  }
+ ]
+}

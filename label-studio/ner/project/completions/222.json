@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03b1d54f1acb4a1394d1fa3184e100ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "VIMLESH KR. VICKY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b93b9d39ced4527ab7a761b7a371ebd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 45,
+      "labels": [
+       "Email"
+      ],
+      "text": "vickycse15@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "623de5f8950a4a17aff5c287ba46a2ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 65,
+      "labels": [
+       "Phone"
+      ],
+      "text": "80057571854"
+     }
+    }
+   ]
+  }
+ ]
+}

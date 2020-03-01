@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b8e921c46eff4665a0902427189830dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6084fb62b05b47919d85e487dbaf2643",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 45,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7417148171"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e6f0dadeb1cd441e9ff646aed2eb3678",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 79,
+      "labels": [
+       "Email"
+      ],
+      "text": "ayush8484agarwal@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5b49b00d7f1469d9f3a3b2553bb87eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 66,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Associate Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "594e470fb0b8443b85fa2b583c1c9512",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cognizant Technology Solutions"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "57d713eaea124dc8861f75c3b79f0132",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 120,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

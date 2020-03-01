@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ebb05b07b5ab491f8f3ee50b0be44bd5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1997"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e62af522baeb4974ae71da91d4e401f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1999"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9829aba682d453b98c87723fdc4e37f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 46,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma in INDUSTRIAL ELECTRONICS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bca3f29a02c546c5a6ec5dc9f97a7c01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Technical Board of Education Bombay"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f35b31d53794956a69013d270a33b75",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 103,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mumbai Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

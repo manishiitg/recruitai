@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69941d0ad9e3476a8f24e7648eaa4516",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 23,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Prabhu Prasad Mohapatra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bb94434a7f654cfba24e7812f5b235ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhubaneswar, Orissa"
+     }
+    }
+   ]
+  }
+ ]
+}

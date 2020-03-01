@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a87d09f6d8f94e489617b9a3a3263745",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 36,
+      "labels": [
+       "Designation"
+      ],
+      "text": "web developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b791e534a87d4d119f4180e6f8493d4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Agile Softech pvt.ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45c1ddaac77e41678ac7bddc7c7dde77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "KonnectShift"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4dfe9dfda59d4efaa6b23474af5074b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 74,
+      "labels": [
+       "Designation"
+      ],
+      "text": "igital Marketing Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92e2009393894d45b1b5aaca41750244",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 92,
+      "labels": [
+       "DATE"
+      ],
+      "text": "ug 2018-Present"
+     }
+    }
+   ]
+  }
+ ]
+}

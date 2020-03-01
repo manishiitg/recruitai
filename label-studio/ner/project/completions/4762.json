@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "722d5dd3bf5d46dc98947b9095c82dd2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 116,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Karmveer Singh"
+     }
+    }
+   ]
+  }
+ ]
+}

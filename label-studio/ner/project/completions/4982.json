@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f71816c16ff54b8980746ffb5309f0d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "SANDEEP SINGH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9558726223144a6afe9d2216b4a1ce3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 43,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7503208277 9911666409"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "447ef4ba4a8249269ab1b356e9a6ed6a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 93,
+      "labels": [
+       "Email"
+      ],
+      "text": "sandeep.php3004@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e74eed3faa7f49a3b40fa90c0853d30c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "solution Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d082edd4d053453b8e5d811b0352ed0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 58,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "229fd7c895584e51b121be5d90e7ce79",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75c277e0cd1246538d6ad681b8e33c66",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mohammed Ashiq M"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad6616f3c8c6490baa3221bbff93cd8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 74,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur"
+     }
+    }
+   ]
+  }
+ ]
+}

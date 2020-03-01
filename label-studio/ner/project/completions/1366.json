@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45adb218cf2c4e53aaa74ba6f5e886ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 48,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BE in Computer Science and Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bfc66650216e423d925deb90ca34c269",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Vivekananda Engineering College for Women"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "58fc201beead4322a64f72ab5c79cd8e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 100,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai"
+     }
+    }
+   ]
+  }
+ ]
+}

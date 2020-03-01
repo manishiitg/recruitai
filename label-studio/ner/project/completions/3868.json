@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64c6a3978e5c4b6caffb849864bf5bdd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 113,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "achelor's in international business and finance"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb9cdaeff3a34216ae1111ea0272f4ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 135,
+      "end": 156,
+      "labels": [
+       "ORG"
+      ],
+      "text": "jamia millia islamia)"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,266 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c401469dbd9488fa4b4b14ce3e30bc8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 26,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "QUALIFIED GATE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abdf63ad9a65473f95895f298489dfa5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 31,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88b79af320f24413a610bcbd52370587",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 41,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "91.4"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c1d0a184c99488ab97516972bcf8921",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 75,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "52/100"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c4759c88def4dbd98223c9df49a285a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 87,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "478/1000"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf286cc603894e28b869131aac2a2a15",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 97,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "9 687"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5625e758b57f458ea462fe9a983b9470",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 128,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "QUALIFIED GATE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "93ec24856fc44cf88fac05f564d983f3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 129,
+      "end": 133,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80a3bbc1c4324356bf925a9dc88c6050",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 139,
+      "end": 143,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "89.6"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0e8c5e9ca24143a3bf805fa8f730c3f8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 156,
+      "end": 161,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Marks"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23d2c8b5e5e44bc1ac4a02840c43305f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 171,
+      "end": 174,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "337"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "836d942c984f4e5e9bb501b55f203ee9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 197,
+      "end": 200,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "385"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a00209d9679049b4a3a95e0ab618c0b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 204,
+      "end": 208,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82c1e3fed4bb40a39f096e1d7b54805b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 222,
+      "end": 228,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "15 525"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a73d07ef630e43a28f901c1e0ec7fb43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 107,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f0bceedc2e3744018a1857d7c3ab3552",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 306,
+      "end": 312,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi,"
+     }
+    }
+   ]
+  }
+ ]
+}

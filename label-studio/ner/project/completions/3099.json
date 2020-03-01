@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c96fda6bb98d4c709fca4696d079c43a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2015 to Present"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a989623ce7ab4fbe8b3aa95ffcf581e1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 61,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Professional Technology Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b8b682edda93404a8b04b10d2a0eb756",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CSC"
+     }
+    }
+   ]
+  }
+ ]
+}

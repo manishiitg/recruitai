@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cfb6110647e74e6f9f743b849927e29d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 101,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Maneesh Kumar Chaurasiya"
+     }
+    }
+   ]
+  }
+ ]
+}

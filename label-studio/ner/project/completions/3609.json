@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06790ed15baa4dd1a5a3ec04b8d84873",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 46,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Nitin Kumar Shakya NITIN KUMAR SHAKYA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a482aca02aa427a9e5ee03585f356a2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 71,
+      "labels": [
+       "Email"
+      ],
+      "text": "Shakya.nitin14@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d789b988044451dbd8356480e187a1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 99,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9457931622,9555215095"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21e4e7e13dc7486aaddfd094074763aa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 130,
+      "end": 161,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ghaziabad, Uttar Pradesh-201007"
+     }
+    }
+   ]
+  }
+ ]
+}

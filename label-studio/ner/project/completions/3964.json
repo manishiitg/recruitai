@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8205e7b35e55425aba34c4a1c38869be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oracle India Private Limited,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ce99d4989a74c4a899166643f321e7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 50,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a0af20e894a440e888fdcab3322f655",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 98,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Principal Engineer Technical Staff"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c509aeb0bf7a4e2c8d4283c87f83a00f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 135,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2005 - till date"
+     }
+    }
+   ]
+  }
+ ]
+}

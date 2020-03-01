@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06787d330ec34f0aa15bac5fa3696964",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Magical Cloud Solutions pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c0c1d1ad16034ac194b42cb84541888e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 115,
+      "labels": [
+       "DATE"
+      ],
+      "text": "17th March 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71d9a51cf7b34bb687908126e2c7ec9f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 134,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2017"
+     }
+    }
+   ]
+  }
+ ]
+}

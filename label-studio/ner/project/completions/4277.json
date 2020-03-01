@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee5c3aec0bcd45a2b2f9dc135656afd3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3a0120f8c6574be4b7489bddbaa02376",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Marketing IIT Roorkee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d60bf5f36a124066838e09b10d7b45c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Roorkee, Uttarakhand"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7f36fc58bea3468885362c3b809294d4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008 to 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

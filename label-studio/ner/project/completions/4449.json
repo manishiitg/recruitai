@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d2a2204cbdf4703a9515160c20b55e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "New Horizon College,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45d4f5de20df45bfb56ffeb161bf7e42",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 66,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore, Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "734ae5ba06d24a51912bb6a952fff805",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    }
+   ]
+  }
+ ]
+}

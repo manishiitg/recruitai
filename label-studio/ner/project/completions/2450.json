@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c23c016627aa4ff395ce8eb91ff73c01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 101,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C2,ELB,VPC,S3,cloudfront,IAM,Route 53, cloudwatch, SNS"
+     }
+    }
+   ]
+  }
+ ]
+}

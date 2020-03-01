@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1385942ffa754ab79d38309c03163047",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 23,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.TECH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e682cf400a644f7ab68bb4df7632e62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GRAPHIC ERA UNIVERSITY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19991aa9b6044c928e05f15e5760b4ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 86,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Dehra Dun, Uttarakhand"
+     }
+    }
+   ]
+  }
+ ]
+}

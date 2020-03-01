@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "939e27f6529641ea9c6aa7733f0f897e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "AKANKSHA GUPTA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac606e85007b4e87998ddc634d4ffdb6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 49,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bbbb6c8a0b844ded96c4944810561477",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 80,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9627834211;"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4f11d5105a9470c80b80bc042aa4a69",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 95,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7065265249"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41c9dd31a2d84862b3d418c9623b5f61",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 104,
+      "end": 120,
+      "labels": [
+       "Email"
+      ],
+      "text": "agupta8895@gmail"
+     }
+    }
+   ]
+  }
+ ]
+}

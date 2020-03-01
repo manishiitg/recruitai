@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88ff3cefa11a4c459c7d51a41f797ec0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Aarti Pimplay"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "443d39bd67574a4fbcc55d59e8ac204d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Operations Center Shift Manager"
+     }
+    }
+   ]
+  }
+ ]
+}

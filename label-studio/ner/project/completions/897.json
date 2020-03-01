@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d43f21e69b7a49408e88927943b51afc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "592aa2d638e4484989230e81fe06bef9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 61,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ohan Arya"
+     }
+    }
+   ]
+  }
+ ]
+}

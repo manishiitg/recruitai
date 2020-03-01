@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68489daf91454454974be31d3f4710fb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 25,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Anju Kumari"
+     }
+    }
+   ]
+  }
+ ]
+}

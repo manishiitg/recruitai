@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45999ffc05404eed8f2fd18a166fb532",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 32,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "113e3a84da2e45c7aeaf1705ff1154e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "WAP INSTITUTE"
+     }
+    }
+   ]
+  }
+ ]
+}

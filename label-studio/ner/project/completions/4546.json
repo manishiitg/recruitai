@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9bdb9e75853b43e1bf31b9b5149ec2ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "622db478580441ff9c99d2af127b56ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 96,
+      "labels": [
+       "Designation"
+      ],
+      "text": "training"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86bd3217c532413db2f4020516e1846c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 130,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ducat Institute"
+     }
+    }
+   ]
+  }
+ ]
+}

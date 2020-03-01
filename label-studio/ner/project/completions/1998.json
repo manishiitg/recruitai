@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f321a9e1e2f405692f7f04c88dbdc4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 72,
+      "labels": [
+       "Skills"
+      ],
+      "text": "PHP, Laravel, MYSql, HTML5.0, CSS, JavaScript, Jquery, AJAX"
+     }
+    }
+   ]
+  }
+ ]
+}

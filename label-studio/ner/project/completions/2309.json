@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bb854c1cdfc7402aa2906459858cc5d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 103,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Java C++ Programming"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b701661a04a4aaa96eede337e4a0649",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "72.6%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9fd4fd4f67b544c6a8d9e57e0d8dc0db",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 6,
+      "end": 10,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da6416e0869a451b9305d0e6045bd392",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 18,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd30c675f5a44d4785ea5c440dbea110",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "B.S.F. polytechnic"
+     }
+    }
+   ]
+  }
+ ]
+}

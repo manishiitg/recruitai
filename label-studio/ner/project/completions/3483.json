@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1166095af3714fe78246d1ca1b1270e6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 18,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018-19"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d942ce69bb2a45748fae02ed4c2ece20",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 31,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Adv. Diploma"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2aa064d232bb49b08345b2f3e5072aab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 21,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "87ca1738761b4731aa216fd3d4635b81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sach.tech.pvt"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa78c577839d40db8997050e1fe3d680",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 186,
+      "end": 208,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Aptron Pvt. Ltd.noida."
+     }
+    }
+   ]
+  }
+ ]
+}

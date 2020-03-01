@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe27ab9c701849329d29c63ccd32882f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 40,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71d0d8fd5a1f41ec9e3f9aa0b012cc54",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BCET College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3108f1d02f934a8589fb751e020d5f4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "015-17"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16d3bfdece5c4f3bbe6d3b661c34c828",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 96,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cabefa985c2d4bf38ca76dba471905a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 111,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ABA College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9cababcb192945afbef868f86cd35e04",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 131,
+      "end": 137,
+      "labels": [
+       "DATE"
+      ],
+      "text": "012-15"
+     }
+    }
+   ]
+  }
+ ]
+}

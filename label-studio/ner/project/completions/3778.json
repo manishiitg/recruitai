@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d6d733faaae486495b24890c712dec7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 75,
+      "labels": [
+       "Skills"
+      ],
+      "text": "JavaScript JQUERY Bootstrap Wordpress Photoshop"
+     }
+    }
+   ]
+  }
+ ]
+}

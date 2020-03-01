@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "61cc0d9ebaeb42d291e41a3967488747",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 39,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, CSS, BOOTSTRAP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d1db25a1de1e40feb0c7fb0e7c82896b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 98,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Javascript, Jquery, Ajax"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d35e4a1635c14e38b0fb0d35d60da3d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 149,
+      "end": 168,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct-2018 - Jun-2019"
+     }
+    }
+   ]
+  }
+ ]
+}

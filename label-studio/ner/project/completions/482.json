@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "857f79bf86644bc5af40553c764621de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Designer and Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ccb688d91f44692aed7d022abd4a25d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 52,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1-3-2019"
+     }
+    }
+   ]
+  }
+ ]
+}

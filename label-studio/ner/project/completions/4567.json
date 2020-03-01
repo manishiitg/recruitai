@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f3a548a70a274daab6c6b244a0e7cadf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 28,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "51edb1f87b104fe497e073efb757a0e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 37,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "795192629b994eeebff2f35e4e6d517e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6505ca8c5b1e403597c695171a70538a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 89,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "5.0 CGPA"
+     }
+    }
+   ]
+  }
+ ]
+}

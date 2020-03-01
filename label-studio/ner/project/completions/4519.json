@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ccdddb76df12426da95b5a3134e028bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 14,
+      "labels": [
+       "Designation"
+      ],
+      "text": "trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be0bfe6ada604523a991f2397ddad66d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BHEL Haridwar."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dce6ab041ffb4e3ea0b556f78f56ae5c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3766e03a5964b2f8fdcb3e9c5f8bf77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SOFCON"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a69558289018439091ea50de6fa77350",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5904149866142d39a4906291f26e2e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 69,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f36917ec4fc445288d53f0fee61b1bd6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 101,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Development Internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43761bf15d35493eb1b0c5181833db02",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 105,
+      "end": 124,
+      "labels": [
+       "ORG"
+      ],
+      "text": "PARAKITE SOLUTIONS."
+     }
+    }
+   ]
+  }
+ ]
+}

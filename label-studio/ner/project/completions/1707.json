@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c29106a7df8471ebd521ef4dff81368",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 43,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Nikhil Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c95de4ed39aa4be389a9707190b39179",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 106,
+      "labels": [
+       "DOB"
+      ],
+      "text": "16th April 1995"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d32117603f074686b123c0a09c3795d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 200,
+      "end": 205,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

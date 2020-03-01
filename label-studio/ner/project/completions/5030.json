@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0cf9c16a488142a3a000eabba3d9a13d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SEO Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35f095084d20460e98d73f7fd278d77c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 23,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1.4 years"
+     }
+    }
+   ]
+  }
+ ]
+}

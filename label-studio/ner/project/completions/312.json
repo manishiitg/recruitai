@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80aff9179eb24eb1966eafeb2681a1df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 55,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C, C++, Core Java,JDBC,JSP,HTML"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c2a369d0ea5a4543ba39a861b11ffac7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 148,
+      "end": 157,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a4e6916693f94690936b1e678175c0d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 226,
+      "end": 228,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68"
+     }
+    }
+   ]
+  }
+ ]
+}

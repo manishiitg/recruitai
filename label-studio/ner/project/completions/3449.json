@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ffb55b81e85b4d4a8e1f26fc07c219e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 36,
+      "labels": [
+       "ORG"
+      ],
+      "text": "pvt. ltd. delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea7d9f3aa20947609f5055d4f369dab1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 53,
+      "labels": [
+       "Designation"
+      ],
+      "text": "DIGITAL MARKETER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16656e34fd26465c82b5f221c48552b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 78,
+      "labels": [
+       "DATE"
+      ],
+      "text": "DECEMBER 2017- JUNE 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

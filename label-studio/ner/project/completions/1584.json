@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "59655508c46048b8a57b1a9cc5135ad1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 31,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Program Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e0aa98ca5c74900a2754a14e24d1c28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 85,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Vadodara, Gujarat"
+     }
+    }
+   ]
+  }
+ ]
+}

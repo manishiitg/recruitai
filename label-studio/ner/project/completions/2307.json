@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "320f6d96b9f04a9e83ff91866ed6a1ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Sep 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f979c83a4b2543efab50618965afec42",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 37,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab80e3580d534c6e93af27b20cb7d1c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 69,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jun 2017 - Jul 2017"
+     }
+    }
+   ]
+  }
+ ]
+}

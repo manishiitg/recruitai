@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3597688f506e4e098b24f00584bd9b73",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mayank"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e56cb659b5314c05b658683d7ee16835",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 86,
+      "labels": [
+       "DOB"
+      ],
+      "text": "06th july 1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab4ea4f9105a4706918b4cc5ad51666e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 149,
+      "end": 162,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English,Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

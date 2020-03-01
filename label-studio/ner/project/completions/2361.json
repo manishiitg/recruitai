@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d8923d4cf4e4f989e83c9f900bafbd6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 28,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Chief Coordinator"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de5c31445b6b4abbbc9b5ab9c724fab5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 36,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LEAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68283eb883ea4acdb35cbfa83736813a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 52,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Palghat, Kerala"
+     }
+    }
+   ]
+  }
+ ]
+}

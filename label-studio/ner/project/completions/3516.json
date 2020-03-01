@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef14469328e44133ae58dee1b98f94fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 44,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Karishma Tyagi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b9f7ef66ab3948db868149a46f409605",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 61,
+      "labels": [
+       "DOB"
+      ],
+      "text": "07/03/95"
+     }
+    }
+   ]
+  }
+ ]
+}

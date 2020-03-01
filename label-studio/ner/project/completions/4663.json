@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9557759a087349b59fbddbb822cfceb4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 42,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttam Nagar, New Delhi-110059"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d35a3e489c714be8b8179d58617a8217",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 73,
+      "labels": [
+       "Email"
+      ],
+      "text": "avdheshmahto@yahoo.com"
+     }
+    }
+   ]
+  }
+ ]
+}

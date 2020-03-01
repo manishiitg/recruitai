@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4175f1917402453ab92b89fd7548e327",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012 to 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "168cfc1410c146d890e9accbf15f37db",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 40,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1e5b617f4244343b2b55a6f7a07573d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0a0fcc4d5704fa98bc54223caed34e1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 88,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SECONDRY SCHOOL, STEPPING STONES SCHOOL"
+     }
+    }
+   ]
+  }
+ ]
+}

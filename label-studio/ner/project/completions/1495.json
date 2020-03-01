@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e88a84f7c93947c4a6b82f5047a6bd4a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 63,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Combina BPM Tech Pvt.Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ea0a4632b824278b1b0f46bdd51eab4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 121,
+      "labels": [
+       "DATE"
+      ],
+      "text": "arch 2017- Nov 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa4d2a33f6a747029a9e0bf2fa91378a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 145,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Creative Lipi Webtech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "18a1f4cd65f34bfca68c9a02a2f6699d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 148,
+      "end": 170,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ndiaMART InterMESH Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ada31e53c9ed439eaf17603c4e5e72cd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 175,
+      "end": 190,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Quality Checker"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "560d29465726406fa8574d87a6146a4d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 191,
+      "end": 212,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2016- March 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "784723cf0c9c42c1b5a078efec52e216",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 239,
+      "end": 245,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B-TECH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f6d177e07bd34766984edfa4369db510",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 274,
+      "end": 306,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Rajasthan College Of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d99c63024c54514aea370f7b2c99ff4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 322,
+      "end": 325,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74%"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dab79e3097fe46f0bd011623219781cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 22,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-7418151741"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8087479549f4dbdb5eb1f7ac55b316d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 56,
+      "labels": [
+       "Email"
+      ],
+      "text": "mohamedijas1993@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

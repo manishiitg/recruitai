@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d37afbb240a4595ad8199650b7c560b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 34,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00851b2066f44cb886e7fe106cb3c2d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 79,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2017 June 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

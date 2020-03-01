@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f24454593b2f402a8c4ee65aef0e732b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 80,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Corporate Account Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eb9d008b63db45f881e8163e98c7b001",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 107,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurgaon, Haryana"
+     }
+    }
+   ]
+  }
+ ]
+}

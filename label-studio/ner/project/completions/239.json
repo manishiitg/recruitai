@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68c268d040da4a6d8ef3a54e40186f5b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Lead"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1651408b7c4b401fbba1a816db07514c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c56cd0d7bbf54d0f8f14dd7a6fabd247",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013 to July 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

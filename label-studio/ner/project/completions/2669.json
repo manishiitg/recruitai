@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "250d5642b44b41f588bbf0747e5d5f92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 92,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "diploma"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "585868b5acc640faa0740595cbf00a6d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 157,
+      "end": 186,
+      "labels": [
+       "ORG"
+      ],
+      "text": "overnment Polytechnic College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07617ec419974ea9a7044203754aec61",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 199,
+      "end": 212,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttarpradesh,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c5b08efe66f4cf59fe9492a6f67cf69",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 213,
+      "end": 223,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015-2018,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a61d35017884416788ca829513184d1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 235,
+      "end": 240,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "4.89%"
+     }
+    }
+   ]
+  }
+ ]
+}

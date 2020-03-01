@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8e96eacf966e4cd48b753deab8691328",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "DOB"
+      ],
+      "text": "31 july 1995"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "587230356c08489f825dc41a29443394",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 73,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hopal"
+     }
+    }
+   ]
+  }
+ ]
+}

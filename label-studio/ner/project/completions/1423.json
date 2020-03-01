@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9471cb30813a48f286aaa5c756d27914",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 19,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "100cec537fde41e0ad93eace583bd3d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "Designation"
+      ],
+      "text": "ERO"
+     }
+    }
+   ]
+  }
+ ]
+}

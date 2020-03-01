@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2bdf5922ccc149e9a00116bfaa3b36e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhubaneswar, Odisha,"
+     }
+    }
+   ]
+  }
+ ]
+}

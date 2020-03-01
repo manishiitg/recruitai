@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e53b4c243ea40b6acf803b8cf954965",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 61,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "61.8%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "01f4a3d403b14dc68472074d886131e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91a7b6f4d1154485af5de6c04c0c9a65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 72,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "66.0%"
+     }
+    }
+   ]
+  }
+ ]
+}

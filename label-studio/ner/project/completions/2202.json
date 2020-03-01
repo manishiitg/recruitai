@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bfee4b5a9138478681762e4d2869317d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 47,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 6, 2017 April 30, 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9db220b04cb548e79605f2cc7813861b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Wfm pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

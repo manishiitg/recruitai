@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "212dc80d36544dbbb8211a02dd6d0bcb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4cdfa2c6d504561b22ec1bbd30ae794",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75fdb12966d04735bbe18f42e639aafc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 41,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Hosanna National High School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "27c3fa886cc44823b2bec8106b837615",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 46,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2006"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a373b9d187f4b3188ff3c6082efefa1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 163,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C+ (Less than 1 year), Citrix (Less than 1 year), integration (2 years), INTEGRATOR (2 years), Java (2 years)"
+     }
+    }
+   ]
+  }
+ ]
+}

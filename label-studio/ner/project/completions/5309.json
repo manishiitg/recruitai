@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96d5c5e23e624563aae40a77ea9a64ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 44,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech(IT)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96735d20834949eda3272864fb77e198",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GL Bajaj Institute of Technology & Management"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd07c759852341bcb0440333ad977720",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 110,
+      "end": 114,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f55b1db939b2438b8ad11ca561f12319",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 118,
+      "end": 123,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017."
+     }
+    }
+   ]
+  }
+ ]
+}

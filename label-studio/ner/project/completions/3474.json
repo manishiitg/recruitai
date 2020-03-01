@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "783e4a76663b4c599943bc32156cf2f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 41,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RichiCircuitronix Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "17dde767f3fe4a568d062025e4e7bb7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 79,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 years and 8 months"
+     }
+    }
+   ]
+  }
+ ]
+}

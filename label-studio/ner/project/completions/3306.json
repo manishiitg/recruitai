@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c9ef09cb24048318bd4ba6901c896c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 18,
+      "labels": [
+       "Designation"
+      ],
+      "text": "beta tester"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2324b8119cd4e289a01eec012113cbd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bhagabati Nodal High School,Sarakana"
+     }
+    }
+   ]
+  }
+ ]
+}

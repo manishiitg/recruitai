@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9e3f172f73bd4e9fab172287c9f54887",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Pranay Sathu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "091a14d1b65c4061b70fbcfc856502ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 46,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Test Automation Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b89e21fae4494168a1e64fde02361b41",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 67,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

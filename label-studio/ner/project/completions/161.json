@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "118c052e6efb4523aa09d21afd96539b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 29,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Self-employed"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f57d5aad30bd430cb13b954ff2ad432c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 78,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "31e3a3f9743c41079e6874f766c1fa7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 89,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

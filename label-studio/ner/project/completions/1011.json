@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cbd2cbc3ae6b4b83bb4dfee2abce9ce5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 26,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "45 Days of"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1761aa3cfeab491d86e4bbab658a3791",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 34,
+      "labels": [
+       "Designation"
+      ],
+      "text": "trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b78c8e63b5c43cdac15b3929d977bb9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 52,
+      "labels": [
+       "Designation"
+      ],
+      "text": "UI developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "714358b862cd471bb3defe45ab6ad2f6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 81,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SNS System Private Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "265def4a6ba6443b9320baa0ed9c2a92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 116,
+      "end": 124,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NIIT Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "09ea725321ae40d8aa6a71de02a67221",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 149,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(June 2018 to July 2018)"
+     }
+    }
+   ]
+  }
+ ]
+}

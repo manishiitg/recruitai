@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f0e28360fb214f409d59886bb5a9f65a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 35,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Data Entry Operator"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b43a914de7f84e6c8dde295fdeb0f734",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55da5710282a43c3be87d772d4965ea2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 59,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc"
+     }
+    }
+   ]
+  }
+ ]
+}

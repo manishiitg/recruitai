@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c5e735199124f2c9a1c0cb4be874aa8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Aditya Tiwari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03ad934d75bc4021992043b9d6199e4b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 45,
+      "labels": [
+       "Email"
+      ],
+      "text": "aditya.ace@hotmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82411876b1d14620869d7ec09e478b0b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 73,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7987365166"
+     }
+    }
+   ]
+  }
+ ]
+}

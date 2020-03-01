@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56bd371e39b145d0a1c477663c9a10b4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 32,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3-months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c09479c8caa647a9a65b657cbcc17003",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 94,
+      "labels": [
+       "ORG"
+      ],
+      "text": "D.M.Net Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc084d0a957a40e7a6fd64343bc1f86a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 95,
+      "end": 98,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP"
+     }
+    }
+   ]
+  }
+ ]
+}

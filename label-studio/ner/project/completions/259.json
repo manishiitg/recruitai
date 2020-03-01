@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "311c52beddac4ed79c9011326783b903",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AKTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a3eb530bb5d45efa49aa044aed5cf01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 17,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68 %"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4de7a778ab0409095b5e0687c6db356",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 22,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1dcbdf0ad5674011b09336514530aeab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 26,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2964a3eb805e4d90af261899adc75ac2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RVHETI Dadri CCSU Meerut"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "188d829459c446e3907dd0e6bc2796b9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 56,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "64 %"
+     }
+    }
+   ]
+  }
+ ]
+}

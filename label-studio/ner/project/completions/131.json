@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55a8efdb9014494989987f2e0432a5a3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 104,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Saroj Institute of Technology & Management, Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f05f93afb2d94e20ad32aebddf993789",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 111,
+      "end": 118,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P.T.U"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "63b0da917b8d40c9a43efe8983b61a3d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 129,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015-16"
+     }
+    }
+   ]
+  }
+ ]
+}

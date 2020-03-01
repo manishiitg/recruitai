@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3843fb2f88784194a2248b2760882c75",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 34,
+      "labels": [
+       "DOB"
+      ],
+      "text": "2nd September 1992"
+     }
+    }
+   ]
+  }
+ ]
+}

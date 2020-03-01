@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f637acc819b4004b3bc2f28856d492b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "amarjyot sodhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e927dffdc90e47f1962c0f4b522e0af8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 39,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Voice and Accent Trainer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b5db72a241f4eff846c844a35a95810",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 93,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 years"
+     }
+    }
+   ]
+  }
+ ]
+}

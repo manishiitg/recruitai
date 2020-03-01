@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee699ed62e47468fa47d8a8b4b85a0c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 29,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2010-2014)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "648976e9de4b4c98b65a80440ae4416c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c5ee4cdd40248d0aee1dbf3ac73ed25",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 135,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CHSS, Azamgarh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "79cd4635fe644e689b9163e4237e2bd5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 155,
+      "end": 163,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UP Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b479cdf10014aee83f9b045152f2acb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 155,
+      "end": 163,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UP Board"
+     }
+    }
+   ]
+  }
+ ]
+}

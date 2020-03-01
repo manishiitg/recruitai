@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b621d276180418b9e09dcc6da6eda0b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Magadh university"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e262bf7ad2dd4825a5996e4e1b77a8df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna, Bihar"
+     }
+    }
+   ]
+  }
+ ]
+}

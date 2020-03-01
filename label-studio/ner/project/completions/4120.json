@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84a98c3c439b4081a86124113df54793",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 39,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kasturi Ram College of Higher Education"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "630d67f94133475cb1e07b91e9957b11",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 43,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "78%"
+     }
+    }
+   ]
+  }
+ ]
+}

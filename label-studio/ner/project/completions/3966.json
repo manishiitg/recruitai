@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23e53fac46024a4cb8b979a62cd28dc8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 35,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1 year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "935d7e364390491aaa896a934a4c476b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 89,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3+ years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "702d6f8208fd454facea48c2c6f86cc1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 164,
+      "end": 172,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "8+ years"
+     }
+    }
+   ]
+  }
+ ]
+}

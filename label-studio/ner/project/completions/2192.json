@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bec6d17bdbbf482ab25431b48ee1f1f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Arham Alam"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b43d0447772408694649a54227f5b47",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 18,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.Tech("
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ddfb3b69d5b24a3bab6122867f8cdcce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 77,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7454833973"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a55d178cb23f45ed939464c230b00726",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 108,
+      "labels": [
+       "Email"
+      ],
+      "text": "arhamalam13@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "17189fdfabcb489eba0af6a0d0d7ec91",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Systems Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4e879ad459240be8053870ad40f71de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Corporation"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1d9bf2ac87c64343bf090ee79b16082e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad Telangana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f381859b83b489093000f06128d2faa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 91,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2012 to January 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

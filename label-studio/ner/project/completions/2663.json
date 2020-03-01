@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e989776645145b3be20513d0ea24257",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 23,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c14026da657e4c34ae2892b4cf20949c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 123,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Communication Shri Vaishnav Institute of Technology and Science, RGPV University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4efcdc58024f4c7986060a017b2268ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 148,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Madhya Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

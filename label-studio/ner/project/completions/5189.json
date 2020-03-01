@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49f1072d6c674002a3312a0e53414b67",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Process executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "20b461fc3b5943afa29f65b7d7ec4505",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cognizant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "10f8835fb48b49929b2b41360194b352",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 143,
+      "end": 149,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1 year"
+     }
+    }
+   ]
+  }
+ ]
+}

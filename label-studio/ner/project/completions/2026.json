@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ab4c62dfe564931b3318ed960dc2dc6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nwebkart.com, Bhubaneswar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7dfd96b9b444712ad381ad57da6068a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 39,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Summer Intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf7de2ba5dfd44c4a118e51e74c87873",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 60,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2018 - June 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71dad91bd1584c0f9ac40f4b65c935d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 86,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi,"
+     }
+    }
+   ]
+  }
+ ]
+}

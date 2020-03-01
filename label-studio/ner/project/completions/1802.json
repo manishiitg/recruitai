@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "accaa6eaa3bb48d1bcd7d65f88113e2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 45,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Nodia"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a1bdc3f9fa8a4c0bb8d02b1f0a49a04f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 64,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9599582607"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c88b6fd651af4377b0723be931aff590",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 97,
+      "labels": [
+       "Email"
+      ],
+      "text": "jkumari2929@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

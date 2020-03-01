@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0992a263a1fb4befa3ad5c7b5d48a584",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Dilliraja Baskaran"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b9bf264391c74945a66c81532b2da151",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 29,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

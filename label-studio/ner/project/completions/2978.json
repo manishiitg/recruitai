@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca0a0966d49044b9953c30f1dd6c51f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "AMAN JAIN"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67719c12829843b39d015d5ebb9dde32",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 38,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8910515025"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8a5ba46b2e247c39cd4fab8c7b16585",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 73,
+      "labels": [
+       "Email"
+      ],
+      "text": "amanjainbagra@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b5aa749bc034324b8bb32f0d3b0d422",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 133,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ghaziabad"
+     }
+    }
+   ]
+  }
+ ]
+}

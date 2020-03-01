@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2786ba9a2b524f48a53ab7099f9f9839",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Aug 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "31de9b7e387d4c1ca43fe243141f92a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 38,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Feb 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "46c33d855931449bb586968b4ed11eee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "EDGISS IT SERVICES PRIVATE LIMITED"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "08809337a8cb4b2098fcf17bca0ffdd0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "(Noida)"
+     }
+    }
+   ]
+  }
+ ]
+}

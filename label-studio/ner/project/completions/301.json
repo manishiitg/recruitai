@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e7ab85f2cea4c93943cc975c40912f5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.E"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6dbc9bc11a6a4302817d5a578f9d911c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "PES College of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c8ded80339646129916b0a7bac175ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 50,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mandya,"
+     }
+    }
+   ]
+  }
+ ]
+}

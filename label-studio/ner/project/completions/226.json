@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c0d9fdad5cad4d1bbde8bebad5c22040",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35d3099e7e1e48588cc737ddf754497a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 10,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "95.0%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8bb0c24c289c499dbe15ca8b1d346c95",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 15,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94e057a9935f45c185ab80b471a7ec58",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 28,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Eight months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "72fc5e396ef64964ae94838a1d3d7f5d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Primezone Infotech Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "895fddcbbf2f4577b27afaf9afbbc7c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "GPE"
+      ],
+      "text": "(Noida)"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0166b4d3363e414e8d35c2360810bb43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Just Dial Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

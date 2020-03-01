@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1eb2f1b3ba7d4b949f416f49a5178c97",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 22,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ead7ebe34454dfb8a4f9630f1c59f26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6447ae268014402ca6cc7db4d0908090",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 60,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

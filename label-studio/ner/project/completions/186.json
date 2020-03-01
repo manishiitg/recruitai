@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d03c53f01794fc6838a18c9ba99e61b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 40,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune Maharashtra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acc84af4efa64338b90f56e607fe624c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 82,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Microsoft Student Partner"
+     }
+    }
+   ]
+  }
+ ]
+}

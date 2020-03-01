@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71d24517427547f3bd4d829a2a9f2013",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 46,
+      "labels": [
+       "GPE"
+      ],
+      "text": "athura"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64a73de85ab04e75b3fc214c66b3edbf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 77,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "997b8ca30610481fabbef50332c2826a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    }
+   ]
+  }
+ ]
+}

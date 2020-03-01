@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6c14125acf848308fa4b9540c093e92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bal Bharti Sr. Sec. School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "db47f3656762491b8a6d2dd08ed4bbb9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 47,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008-09"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92ea53bde4584f5bae0cf2d1cac6af20",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 53,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "77.83"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e53b6c6e8c9345b0ac66a816ba57443e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 60,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.tech"
+     }
+    }
+   ]
+  }
+ ]
+}

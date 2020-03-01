@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f05ddae22b43430485522d2be04cc9f2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Communication Supervisor"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f9ea22a079946ce96fcf30ace4c9508",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 34,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8cd0007ba18044e4b3424106c972398a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 40,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a48b9a1aac8c4d939139e4a8e7ee1945",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 69,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2011 to July 2012"
+     }
+    }
+   ]
+  }
+ ]
+}

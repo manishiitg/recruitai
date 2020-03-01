@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ee0baf972654a64b28e82c4894b5334",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 20,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8c93f915ac364750b48b9329b5b33fe1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P Board Allahabad High school"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cb1a23c48b624323a87d338a5276f655",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 65,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a92213e78b91423b909cb879e54417f8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P Board Allahabad"
+     }
+    }
+   ]
+  }
+ ]
+}

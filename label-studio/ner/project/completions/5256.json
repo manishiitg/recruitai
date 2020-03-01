@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa997787b47547438695ddb4ce1aa398",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 54,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cenveo Publisher Services India Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d473cde814b045f7b5b9886222cf3e8a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 64,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d634e22cd1c048418b2cb1809a70cafd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 77,
+      "labels": [
+       "DATE"
+      ],
+      "text": "date"
+     }
+    }
+   ]
+  }
+ ]
+}

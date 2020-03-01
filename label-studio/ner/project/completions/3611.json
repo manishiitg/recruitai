@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ba787df65a845b1a96401c86d852bcc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 104,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Android Core Java Object-oriented programming Tools Used -Android Studio"
+     }
+    }
+   ]
+  }
+ ]
+}

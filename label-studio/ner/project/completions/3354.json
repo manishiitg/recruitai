@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98d52dd7995c4993aa8e297da5784f1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "November 2009 to June 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "173725c6b9574e838781d4b7439c1842",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 37,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c760299e7dd84a29b649d32fcaf1cb3d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009 - June 2013)"
+     }
+    }
+   ]
+  }
+ ]
+}

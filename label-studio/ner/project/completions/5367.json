@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d2d8f09680f48aaa2b3b83b9fb63688",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 47,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2017 to till date"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0546d1b69c404d4cb7fc53de62d083d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 84,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Quality Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9787b6b03ddc49879139e948384aff7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 96,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Team Lead"
+     }
+    }
+   ]
+  }
+ ]
+}

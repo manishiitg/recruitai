@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e6e2d33eead648db83329d7181344ac5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bipin Tripathi Kumaon Institute of Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a54a5569645740a3832b220dee2ebd6f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttarakhand Technical University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2786648bbeed4d0aa9339f4c36cd3427",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 95,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Dehradun"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b06510e31d434067873d77d5a4ce8f2f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 29,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Puneet"
+     }
+    }
+   ]
+  }
+ ]
+}

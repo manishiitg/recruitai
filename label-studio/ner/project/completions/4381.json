@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f5ab00cc0b74ddbb41a7d2f9a41f674",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 99,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Extol Institute of Management Bhopal"
+     }
+    }
+   ]
+  }
+ ]
+}

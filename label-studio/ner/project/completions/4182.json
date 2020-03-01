@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c17e1ba7b52543c783549792e92ac20d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 36,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Maharana Pratap Engineering College,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9fa6e3edcdff4130ba3086a0f268d3f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "865dde5f32284949935df7b5f912ce2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 50,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Dr.APJ"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "994e9a8f79514fd8b405b5390f79f62c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Abdul Kalam University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca06d08956f64418920ec27e424a0f69",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 78,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3a94ad3525984b4db8328f5d5e3cb013",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 81,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65"
+     }
+    }
+   ]
+  }
+ ]
+}

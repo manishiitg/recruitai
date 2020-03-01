@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d88a93269254dfc9fbb0db86754da9e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 18,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc,Mecs"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7cdfacb7699c41239652bf94de3d9841",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 77,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ards collage kadapa"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cb1ce1d790054c349284f49e6aa43955",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 104,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Cuddapah, Andhra Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b806ce4a3fc4d7a9659539758dff807",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 131,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Sixteen months"
+     }
+    }
+   ]
+  }
+ ]
+}

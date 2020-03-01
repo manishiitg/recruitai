@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a45f7c09cc8b42c48bd5918f641e84b3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 30,
+      "labels": [
+       "Designation"
+      ],
+      "text": "BUSINESS DEVELOPMENT EXECUTIVE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e2a76ee8a56240e4a36e736b7b105b54",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 77,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Aug 2012 - Mar 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad9985dfb3654e288421c3d6ef688453",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b545732cbb1b44fdb43f1e6e71ef8cd0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 119,
+      "end": 125,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "90.00%"
+     }
+    }
+   ]
+  }
+ ]
+}

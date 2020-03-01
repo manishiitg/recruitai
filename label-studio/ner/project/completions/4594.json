@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "104d9b32bd4e42998dba50c825638c26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SOLITAIRE INFOSYS PVT. LTD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68ce82a2f1b94abeb1088b5947dab2af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 51,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chandigarh, Chandigarh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b99bfccc9994969ba3c42bb7751c254",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2011 to October 2011"
+     }
+    }
+   ]
+  }
+ ]
+}

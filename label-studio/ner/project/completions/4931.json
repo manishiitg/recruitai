@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b9000a818cf464ba7c4ce7f751e3476",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mark Integration & Technology Solutions LLP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f12fed19528745009241855f51527ada",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 110,
+      "end": 131,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Aug 2014 to July 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc19878a3c934382be0fddedb63f58cc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 146,
+      "end": 163,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Assistant Manager"
+     }
+    }
+   ]
+  }
+ ]
+}

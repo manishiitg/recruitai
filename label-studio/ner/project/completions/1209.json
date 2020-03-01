@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9201556de0744c3d96cef1c39fd0b9ea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "Phone"
+      ],
+      "text": "07764948132"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7870e3dfe690438aa7e952c1438d2f24",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 36,
+      "labels": [
+       "Email"
+      ],
+      "text": "ahmadtausif1@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

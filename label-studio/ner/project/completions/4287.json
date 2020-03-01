@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a2e75a1d509495b98dbb668397863c9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ISC Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f415e708d45140a8813621bc6365531f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 85,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ghazipur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2793c0c704da436a8f2836998e5ff7b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 139,
+      "end": 158,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.T. John s School,"
+     }
+    }
+   ]
+  }
+ ]
+}

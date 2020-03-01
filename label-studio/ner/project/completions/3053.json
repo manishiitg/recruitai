@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "13e3fdb99b194117aaabaae13ec97051",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 7,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Gwalior"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21e6a9187a47439196daf9bcfd4580bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 98,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Java script, Android & basic knowledge of Python"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94602e7aadee45559c3f91dbd3de7796",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 221,
+      "end": 225,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NSDC"
+     }
+    }
+   ]
+  }
+ ]
+}

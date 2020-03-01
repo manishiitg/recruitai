@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c76a428870314f94ac29d7e6a3b51ba2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e6f95432e03943bf80db1b089299fa7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 33,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "75%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f250e22f68b454d9a1bb71f95f69404",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 59,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Training"
+     }
+    }
+   ]
+  }
+ ]
+}

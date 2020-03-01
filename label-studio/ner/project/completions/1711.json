@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b95b3399d804898907dc0bbccdac3a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Meerut"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1220ed864e7b42908e0f15072f3fcca3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 19,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d28e4e08568b433eb6a08e8611f02c06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 52,
+      "labels": [
+       "Phone"
+      ],
+      "text": "675610115"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4d0506ded444ca5902cb894555767cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 88,
+      "labels": [
+       "Email"
+      ],
+      "text": "Shubhamtrivedi0002@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

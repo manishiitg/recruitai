@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5837cf2763a4ee6b5fc2cfd5b50d1dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 35,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Rahul Mishra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd65dfad89fb4e4489affe5cb527bf91",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 61,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8851519499"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "524bb3518fed4bcbaaf9aab275f9e7b9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 97,
+      "end": 115,
+      "labels": [
+       "GPE"
+      ],
+      "text": "vaishali Ghaziabad"
+     }
+    }
+   ]
+  }
+ ]
+}

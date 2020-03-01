@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb86c4048ad049bea0b5a472303117eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 23,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Service Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "122f2c942b6a47298c380427f0728109",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 27,
+      "labels": [
+       "ORG"
+      ],
+      "text": "EMC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "406ba6ab517b415699a94e52551cf48a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 55,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2011 to June 2013"
+     }
+    }
+   ]
+  }
+ ]
+}

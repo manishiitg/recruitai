@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c5de6e6942e418494f9c535afaa733d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "LAKSHYA GUPTA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e55d5b35f3a94e73a7d7a93ac2cca2b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 32,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9958708837"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4dd4fb2cf754283af76019dc75ca683",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 64,
+      "labels": [
+       "Email"
+      ],
+      "text": "uptalaksh1996@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

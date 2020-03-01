@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19d449fcab91458eb3b3235f9ab03720",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2007"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bbb0e654bc1743a78b068d2d4408de28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 22,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d34cc139ba804f42903fa71f13fb38ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 85,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Virtual Academy"
+     }
+    }
+   ]
+  }
+ ]
+}

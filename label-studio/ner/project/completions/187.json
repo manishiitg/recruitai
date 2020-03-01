@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45eb13c412394cb8a43eb2ec56079477",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MICROSOFT"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "301b97a4afcc40d08b9f9d7b7f5ab70b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 37,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2015 to July 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

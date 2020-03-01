@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "48c8f89574394b9b90c5a491d8506aef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 36,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kumar Vaibhav."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "32c2257adfef418fb74354762d18e88d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 133,
+      "labels": [
+       "DOB"
+      ],
+      "text": "4th Aug 1996."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5604c184d78a486c9210c0458d210f57",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 158,
+      "end": 173,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi, English."
+     }
+    }
+   ]
+  }
+ ]
+}

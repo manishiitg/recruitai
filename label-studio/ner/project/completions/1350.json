@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1dbafb0445c84be9962a1efdb7807f68",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 42,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical support engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1febb67ed43a46f6aa4536a190199d2c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 52,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75eeeda311c344e98231a58cf9b630a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 89,
+      "labels": [
+       "Designation"
+      ],
+      "text": "TECHNICAL SUPPORT ENGINEER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ebe7cc15766040c0a5a656bfdf0a4bd6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 170,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Corporation - Microsoft India Global Technical Support Center"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4978f5803f0d4e0ba3d9d906f6c15175",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 173,
+      "end": 181,
+      "labels": [
+       "ORG"
+      ],
+      "text": "icrosoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a28514666ae547ee81b1bc1b88ce6eec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 190,
+      "end": 199,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    }
+   ]
+  }
+ ]
+}

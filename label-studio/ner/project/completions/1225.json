@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf60986d2d014e9783761b372454c925",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Guru Gobind Singh Indraprastha University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06c94c4675364b3e87ec6bc1e249e701",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ceed465f5294ec693c64690e193cef4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 102,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA-2016 (Marketing- Major/ HR - Minors)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f87c5ea748cb4dc9a1556902691cf8b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 111,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d099a64014744139018c28f83a01769",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 2011 2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "614c046d30aa46a98a3834b0d8c6c315",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ducat"
+     }
+    }
+   ]
+  }
+ ]
+}

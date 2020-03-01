@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9aedb4df83741cfb5a4b3321837cb12",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct '2010 - Dec"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92ea4edb7a2847f98e39ad996247028a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 41,
+      "labels": [
+       "DATE"
+      ],
+      "text": "011"
+     }
+    }
+   ]
+  }
+ ]
+}

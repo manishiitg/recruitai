@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4843ef04c0c94224bae482de29592886",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Rama University,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7839d14aa06d480ba9c3be6ed184bb92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 138,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IIT Kanpur, TECHKRITY 15"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "04ac4747b42c4b21963207a28532eec7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 141,
+      "end": 163,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CPTA INFOTECH PVT. LTD"
+     }
+    }
+   ]
+  }
+ ]
+}

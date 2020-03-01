@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d4256e5305844838843cc3c4bcc54b25",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 42,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94b5e185f2d54584bba748ba54eda2fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 89,
+      "labels": [
+       "DOB"
+      ],
+      "text": "4th July 1989"
+     }
+    }
+   ]
+  }
+ ]
+}

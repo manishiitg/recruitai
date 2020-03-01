@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "debc2ec181b949ef8e462d8bd6515bc3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 54,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Master of Computer Applications"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d0db66ce2d14ddb8db355374793f664",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 102,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttarakhand Technical University, Dehradun"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98e01a652b5d4d8fa60f33d019afc420",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 111,
+      "end": 116,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "173f2cb02dcc4fad9bd3982c379e26f3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 150,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer Applications"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f080b367c18458db24f4fd852bd075b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 156,
+      "end": 178,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CCS University, Meerut"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "239e43ac252d4b90ab0aa22e08cc17cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 187,
+      "end": 192,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abc41cb55d1746d7882d114b7256d004",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 104,
+      "labels": [
+       "Skills"
+      ],
+      "text": "MENTORING (5 years), TRAINING (5 years), PROGRAM MANAGER (2 years), PROJECT MANAGEMENT (2 years),"
+     }
+    }
+   ]
+  }
+ ]
+}

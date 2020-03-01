@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0bf09d398f2d431eadd13225ad85cb06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 34,
+      "labels": [
+       "Email"
+      ],
+      "text": "ishangreat.kumar@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac47b29eab724823992216598fb04f2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 49,
+      "labels": [
+       "Phone"
+      ],
+      "text": "560188073"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5d144de94ad47ed83ea21ca1e7a0a3c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "VIVEK GUPTA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d4ed4bd7ef44eb3865f2f7600873400",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 39,
+      "labels": [
+       "Email"
+      ],
+      "text": "vivek05nov@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "22c077153bb64725b3d3e2b6d32ea3f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 63,
+      "labels": [
+       "Phone"
+      ],
+      "text": "6393226279"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0d5bec2c087c4bf9ac4b4ca5071d8790",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 99,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Vivek Gupta"
+     }
+    }
+   ]
+  }
+ ]
+}

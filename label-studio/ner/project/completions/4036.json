@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0d3e95654b7f41beb4ee8c952914a0c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ENS Enterprise Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c0022c1378d42128ea1097a22f6012f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 68,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Associate Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d757d40ebf174e8eaf36baf9bda70c72",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 79,
+      "labels": [
+       "DATE"
+      ],
+      "text": "18"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30a4bfe8d792451a929446abc3b7e14a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 90,
+      "labels": [
+       "DATE"
+      ],
+      "text": "14 June"
+     }
+    }
+   ]
+  }
+ ]
+}

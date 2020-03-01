@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4e6eaf532b8f49d395a29ae84683e692",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 21,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Himanshu Tomar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7278d2b371ae4d03852553d4d942e8d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 58,
+      "labels": [
+       "GPE"
+      ],
+      "text": "AGRA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b541b95d17394172be92be3b856fbbd0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 82,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8859665859"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0c63649579c4c2eb984c90acca8c689",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 121,
+      "labels": [
+       "Email"
+      ],
+      "text": "thakur.himanshu007@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

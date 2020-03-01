@@ -1,0 +1,122 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4ebe592240241ae93a71e9b5dfee74b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 73,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Marketing Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad6d856dd9cf475aa615fc77c8210f0a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 110,
+      "labels": [
+       "ORG"
+      ],
+      "text": "B R MEP Engineers Private Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15823552a3f041b2a65afb0da67ec435",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 134,
+      "labels": [
+       "DATE"
+      ],
+      "text": "JUNE 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df3e625ee50243afb25522c9963fd7a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 146,
+      "end": 184,
+      "labels": [
+       "ORG"
+      ],
+      "text": "KILIMANJARO MANAGEMENT PRIVATE LIMITED"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f212b82ca210424d91224ff71eb6d73e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 189,
+      "end": 197,
+      "labels": [
+       "DATE"
+      ],
+      "text": "8 months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "83c5a8bd62c741208543eba0e8972d46",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 203,
+      "end": 221,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Management Trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9717158b1d044fc4886181df7018ce85",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 232,
+      "end": 239,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 weeks"
+     }
+    }
+   ]
+  }
+ ]
+}

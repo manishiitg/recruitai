@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00763e0ede724023952bcdb202ea656f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c0a29d65c7c4b119f3c2da7d66c7d5c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 97,
+      "labels": [
+       "Skills"
+      ],
+      "text": "CODA (4 years), Cognos (4 years), Database (4 years), Eclipse (Less than 1 year), IBM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50577795de8b47559d96f97694d62bc0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 114,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "years)"
+     }
+    }
+   ]
+  }
+ ]
+}

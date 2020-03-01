@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0286bdc214a8408fb4743eac52c4be49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 37,
+      "labels": [
+       "ORG"
+      ],
+      "text": "K S U M Vidyalaya, Kharesar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e3bebf6a52c496399e00ec7ac89dd5f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 44,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2009)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f23799b0ac174be59421ca05f8ee3618",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 55,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63.5%"
+     }
+    }
+   ]
+  }
+ ]
+}

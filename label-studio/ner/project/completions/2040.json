@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1601b1bdcf0a4be1a5b4457cec9fa0ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kshama"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e8b1c78f4fd247af93683d703bb548c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 35,
+      "labels": [
+       "Email"
+      ],
+      "text": "kshamajan23@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "418d84a1d5ce44c480502f2f38ade4f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 57,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+918090400552"
+     }
+    }
+   ]
+  }
+ ]
+}

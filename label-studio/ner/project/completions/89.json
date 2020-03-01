@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9462f437f90647479788deaf644aa255",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 79,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Core Java Servlet JSP MySQL JavaScript HTML CSS SVG Bootstrap"
+     }
+    }
+   ]
+  }
+ ]
+}
