@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b3884270a25426387c209a8a3f44c55",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 36,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8797083306054145b5643e746e9258e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 89,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DSITM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ea1a7c2284b4991a21f79e531c4b1b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 144,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr. A.P.J. ABDUL KALAM TECHNICAL UNIVERSITY, LUCKNOW"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a772021b00245d3a4df20e32c3ac10a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 175,
+      "end": 182,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "75.00%."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3001afdc4eb4f53b742f08d882d41c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 192,
+      "end": 202,
+      "labels": [
+       "DATE"
+      ],
+      "text": "year 2018)"
+     }
+    }
+   ]
+  }
+ ]
+}

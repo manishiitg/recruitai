@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "63dd224068d74470bf3517077f44368c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2013 to January 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c8607fc5e1947c9a642be9add50c728",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 46,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oceanic Consultants,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c72c7f785264e7b903ad2ed70776a51",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1996,"
+     }
+    }
+   ]
+  }
+ ]
+}

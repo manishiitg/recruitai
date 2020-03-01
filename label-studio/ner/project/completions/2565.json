@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8734096fe6af4cfd8c43e589acdd720c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 21,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh, India,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ec570b15791c4fa1bbc2e3d066e77086",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 63,
+      "labels": [
+       "Phone"
+      ],
+      "text": "457584510"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ebe7fe16e2b344bf890797d142cfb3ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 92,
+      "labels": [
+       "Email"
+      ],
+      "text": "s23saxena@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

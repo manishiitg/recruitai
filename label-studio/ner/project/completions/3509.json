@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dad22ca986bc438eb28b39a865b98900",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 3,
+      "end": 5,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed66726f07474d8fb97eab1caa86f3be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 49,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GNOU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "32229c7fd72a499989c6f3c0e499db71",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 71,
+      "labels": [
+       "ORG"
+      ],
+      "text": "| | CCS |"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2efdc0f46f224b5db9c11c42a973cb0f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0357f07d47f64db19c101673d2e3d047",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 84,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": ".Sc."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "edd74f93201c48eeb268ab68f62c4ece",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 100,
+      "labels": [
+       "ORG"
+      ],
+      "text": "|University | |"
+     }
+    }
+   ]
+  }
+ ]
+}

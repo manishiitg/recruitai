@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfcf3d4130c84da19d33bf20000f2f98",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 49,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Engineer / Electrical Supervisor,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acb907068c7d43ddafe7ae72a0f89c20",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 81,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Shendra MIDC Aurangabad"
+     }
+    }
+   ]
+  }
+ ]
+}

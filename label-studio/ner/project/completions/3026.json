@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "13de3dfc15334ed69e24cdd4f6c9f4e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Prateek Singhal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d263b9089b38482ba94922cf6c9aeac2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 107,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

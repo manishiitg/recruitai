@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8393cd68c9a346beb15bf07489c827ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 115,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Html Developer, Wordpress"
+     }
+    }
+   ]
+  }
+ ]
+}

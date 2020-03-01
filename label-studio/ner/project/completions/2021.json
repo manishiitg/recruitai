@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef192e3b791c41c8ac0853ce1fad8c3b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 31,
+      "labels": [
+       "DOB"
+      ],
+      "text": "21/02/1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea15aa3b4d364409bb875f6ff4e6feb7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 51,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5eb6475135641f3a8a575f1ff2a80a7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 59,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "24ece56768a74ca8beef3c3d2f38b918",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 43,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b1817469631403fb185ccba927d5ff6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 47,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a1cfbc0d2f0e4fe58a077f6c43bdc32e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 52,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1446526052464a949b3ce34a1a160258",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 56,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e7044b60b40d4c73aa79727a4bd5e7ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013 10+2 2011"
+     }
+    }
+   ]
+  }
+ ]
+}

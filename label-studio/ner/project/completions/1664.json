@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b180711e61a45a7b9950c3dec0296a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "KAPIL DEV SHARMA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9f412142f364215aaac4e5590bc1be5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 53,
+      "labels": [
+       "Email"
+      ],
+      "text": "kapildevsharma940@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94a2683bd28d4a4f99caa6562dce7892",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 76,
+      "labels": [
+       "Phone"
+      ],
+      "text": "6396232851"
+     }
+    }
+   ]
+  }
+ ]
+}

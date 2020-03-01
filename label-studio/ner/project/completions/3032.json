@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4b6c8cdc7412459b912012326f3aef0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 126,
+      "end": 135,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c18c48b13214ecd80f3434b9522a98e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 139,
+      "end": 178,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bharat Institute of Technology, Meerut."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80a3373347d949ca92b63cd458cfca9a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 334,
+      "end": 353,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Indian Institute Of"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ae361a68a3c4f1d9e45755a887993e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 376,
+      "end": 389,
+      "labels": [
+       "DATE"
+      ],
+      "text": "22nd Aug-18th"
+     }
+    }
+   ]
+  }
+ ]
+}

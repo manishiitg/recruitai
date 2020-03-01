@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a0a3a41a92b474582f08c0240df6a1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 33,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "One month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "228eb17a5d0c4d83b2e16ed334502cca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BHARAT SANCHAR NIGAM LIMITED(BSNL)"
+     }
+    }
+   ]
+  }
+ ]
+}

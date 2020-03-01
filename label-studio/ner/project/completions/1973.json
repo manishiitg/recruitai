@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "415e68fcd5804639a3b91e76ddbe29a7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 38,
+      "labels": [
+       "Skills"
+      ],
+      "text": "SEO, SEM, SMM, Google"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "902c3c31106041969ba99e619596c9ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DEWAN INSTITUTE OF MANAGEMENT STUDIES, MEERUT"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ad334095c7e41c2a6894f3de078f894",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 89,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B BA"
+     }
+    }
+   ]
+  }
+ ]
+}

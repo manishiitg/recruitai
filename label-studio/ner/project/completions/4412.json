@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a15bf23be80d4c12a41be4d3634a6b05",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Central Academy School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bf26e37927a94294ac9af8c5f0d014db",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 36,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Aditya Tiwari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da4d64966a2b4c59bb6a791b88e256ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 64,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.com"
+     }
+    }
+   ]
+  }
+ ]
+}

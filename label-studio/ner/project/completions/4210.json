@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9097d3add6a5420e857e9167aa4023f8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ramakrishna Rao DevOps"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "122a3ccb43784c8ba73d16a88cf19a18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8dabfa4c1ae2494184185511bb3f641e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tech Mahindra Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da548eed8fce4b0f898c0f299af9bed7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 74,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

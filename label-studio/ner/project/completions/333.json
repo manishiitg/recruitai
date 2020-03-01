@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a050ffe707ae477b96783ddbd576beb2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ramkrishan Bhatt"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0038e2bf5a8e431da9b68784aec31927",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "python developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5acde09d9f345f19fdeb9a0d8296802",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 65,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d67774d0a9144bb19c7cd3aa4324ff56",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr MGR University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b41a3a923de4b098a00261a28ea8003",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 38,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai (Tamil Nadu)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "edc4fafd31674e57a04d6d4052035848",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 45,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3d6c0fe9d0044c5bc2c8c61889bdcc3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 80,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71%"
+     }
+    }
+   ]
+  }
+ ]
+}

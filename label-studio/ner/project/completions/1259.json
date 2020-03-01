@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b4637ee514e47519f3f14961c24bdc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ARSHAD JAMAL KHAN"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e65aa6d69c4740cea766c80108721209",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 90,
+      "labels": [
+       "GPE"
+      ],
+      "text": "IWAN (BIHAR)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3fd70d10e1c497893242af80d83deb7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 144,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9807785352 8809871786"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12e0f15482574a0faa7d63e5e5efc9ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 152,
+      "end": 176,
+      "labels": [
+       "Email"
+      ],
+      "text": "rshadjkhan1996@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

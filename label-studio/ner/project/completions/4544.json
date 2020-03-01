@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b293a1d7d444ac383efdf0ac48a3f63",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "56%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7da1176812b24d47b685f70293834431",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.G.R.R Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1502968ba714cb1bef387989cc3398a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 48,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60%"
+     }
+    }
+   ]
+  }
+ ]
+}

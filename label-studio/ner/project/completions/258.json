@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12ec1b93a903437a95b7f47112597f78",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 95,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5f6d939352f48da85f837ed9e4dc987",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 103,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ABES EC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d32a44ccbf1944afb4fbb0f5ce51babb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 104,
+      "end": 113,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ghaziabad"
+     }
+    }
+   ]
+  }
+ ]
+}

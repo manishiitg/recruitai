@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "822a932de5cb401cb153c4108aa8b63d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 23,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4444545d6915466681ad7a91de7e7839",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 123,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Communication Shri Vaishnav Institute of Technology and Science, RGPV University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b39fa56b32b46b6b769d3cadc68ac83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 126,
+      "end": 147,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Indore Madhya Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

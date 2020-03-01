@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4daacc0efd214ac7a8ee92cf38d299ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 16,
+      "labels": [
+       "GPE"
+      ],
+      "text": "BANGALORE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a2429791a46430d83300c380d3265d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 25,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mohammad"
+     }
+    }
+   ]
+  }
+ ]
+}

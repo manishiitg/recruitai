@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "11b996f03e0d418087ddbd34a3dba1cf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 63,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eb343dfd56cd4a10bcf50c36e2372807",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 73,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    }
+   ]
+  }
+ ]
+}

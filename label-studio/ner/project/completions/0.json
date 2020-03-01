@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "47a47a3ea33b4477a6077396be8430be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kapil Choudhary"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3937a573c8b434794f17d5e008e4347",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 42,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-9828603355"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a9501ef59e2446c9a02e997fece7c9f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 80,
+      "labels": [
+       "Email"
+      ],
+      "text": "kapilchoudhary086@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07ec8e16af624ebc98b42813b1bd4951",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 92,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurgaon, IN"
+     }
+    }
+   ]
+  }
+ ]
+}

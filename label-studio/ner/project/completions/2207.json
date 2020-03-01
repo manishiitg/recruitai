@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ff398bed13b498c9b7959f8af5bcf6f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 203,
+      "end": 229,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ahmad foods India Pvt Ltd:"
+     }
+    }
+   ]
+  }
+ ]
+}

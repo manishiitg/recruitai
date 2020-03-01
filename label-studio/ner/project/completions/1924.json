@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "971f1e43ae65458a8624b787f9e6cc6d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 32,
+      "labels": [
+       "Email"
+      ],
+      "text": "wati.mayi16@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "39cf08c707b948d2909c76fc573c941e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 64,
+      "labels": [
+       "Phone"
+      ],
+      "text": "776672278 8117984499"
+     }
+    }
+   ]
+  }
+ ]
+}

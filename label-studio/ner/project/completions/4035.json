@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "79da7fcea29542b883915837378e4025",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 20,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PHP Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8663cd37f99546ce9d342497da2d6542",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 45,
+      "labels": [
+       "DATE"
+      ],
+      "text": "7 Jun 19 to 20 July 19"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5aa14f0b09264a2abf5437e3c33b9f17",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Design 'N' Buy"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3237fae83289408a85d14f30b3da222e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 101,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2018-December 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

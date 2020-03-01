@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ce0e99a0b4954b07923a92239e82b4c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 7,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015 12"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "def42524c97344f0bcc3ccd0e8c80e8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 15,
+      "labels": [
+       "ORG"
+      ],
+      "text": "VRSB IC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53843a6841e34bf2a54f9cf583e12abe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 30,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kalaunda Dadri"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "85e48f5e4881439f9dc7ac5b81e5fd60",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 44,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60 %"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6895e45c03694506a6bc8a1ea49d8d1e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    }
+   ]
+  }
+ ]
+}

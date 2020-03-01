@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "281ae1f5d5f84b5e84304082370b23e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 103,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

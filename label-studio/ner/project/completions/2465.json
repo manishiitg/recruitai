@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "815824e3cd114132b8fed1907bde825d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "659e433d641a43e38ea11eef9b5614ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M.A.K.A.U.T, Management, Kolaghat"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3f49fae0cc740e9897ebc51f3da57fa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 105,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kolkata"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb647c2fa048428587aaa470003e6a9f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 106,
+      "end": 109,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.9"
+     }
+    }
+   ]
+  }
+ ]
+}

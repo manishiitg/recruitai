@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9d3fe8656ae4b0a9f70505fbe81e429",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Jharkhand Academic Council"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76a487ac9ac24af3acd04689cd231d2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 37,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "76.6%"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "844b74fbc6e34993aed7d199840ed454",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Tanvir Singh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eac7c5cb740b4fc2880ec0c2b67b6c3c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Jalandhar, Punjab"
+     }
+    }
+   ]
+  }
+ ]
+}

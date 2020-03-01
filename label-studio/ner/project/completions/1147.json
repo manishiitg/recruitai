@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bfe51a7b3b5642179079cb2b068efd1f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 33,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chhatarpur MP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14063759898a4b5c8448d0473a29cdeb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 52,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "(Shubham"
+     }
+    }
+   ]
+  }
+ ]
+}

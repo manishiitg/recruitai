@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b05c626d21904f9389a8241bd0483d01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai, Tamil Nadu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bb99845c37194a8aa53e84466e18039e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 104,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mysore, Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5348928f825e4b4bbe727481fcaa272d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 127,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

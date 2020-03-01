@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "376da37eb6a64748a521a10b65bcd789",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d703726fd6474c03bec70f80847335b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 71,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer and Tester"
+     }
+    }
+   ]
+  }
+ ]
+}

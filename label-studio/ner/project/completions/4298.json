@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3e1a660fd374a35af5e051f78bb1461",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 28,
+      "labels": [
+       "Email"
+      ],
+      "text": "divyanshbahuguna96@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "81c95da0e9504be9a31d8e051f85a1ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 39,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9557221566"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0894d5ae452c4f588c1c939df4d66e06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 54,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida Dehradun"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f70931bd882413996642a4723e7408e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 97,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech(Computer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "421b65bb8bcb4cec99353b2268889aee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 154,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttaranchal University, Dehradun"
+     }
+    }
+   ]
+  }
+ ]
+}

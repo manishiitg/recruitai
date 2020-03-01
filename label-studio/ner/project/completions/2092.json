@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69bcd922012f47fb972336ed0c99361f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 105,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Robokart.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa9bfea1f5a94c49ba6147a2b6e96330",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 195,
+      "end": 206,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ACC Cement."
+     }
+    }
+   ]
+  }
+ ]
+}

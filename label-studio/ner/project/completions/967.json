@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7d336834faeb469099940ee9cfd3dcab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Galgotias University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b3d0bdbd8c4408dbb824a62f5a87505",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 58,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

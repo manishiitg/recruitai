@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f361b1c6c2c4f39a003516d8ef03aae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Customer Relations Officer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9695df1befa54fc0803efa5b7318c419",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "HGS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "305f204ad6944dcea7f23f479d8890d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 62,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2011 to July 2012"
+     }
+    }
+   ]
+  }
+ ]
+}

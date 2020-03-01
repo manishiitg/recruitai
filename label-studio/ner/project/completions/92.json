@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee2a34450d2d471cb39308d03ed69567",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 31,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML5, CSS3, Jquery, JavaScript"
+     }
+    }
+   ]
+  }
+ ]
+}

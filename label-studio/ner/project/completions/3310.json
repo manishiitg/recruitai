@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b87ffa08e9746ef8de1296945a4d20c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 40,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Associate Test Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5848f4a47864b9dbbfef4ce22d0290b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 52,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Wipro(April"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2bac3a5a40474982b4697319c00279c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad56354668d74e67bb6775d7518ac13d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "18c264956fb14856ac3702beb6089c5c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 105,
+      "end": 117,
+      "labels": [
+       "Designation"
+      ],
+      "text": "UI Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9061dc98ead44059b33a98e9b9c0f4e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Digital Marketing Excutive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c47ebe283a314cecb3383acb0b0a2f7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Graphotive Production PVT LTD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "319862f9252b40cd900dfbafe723ead6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 85,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Greater Noida, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c3f0f1ef35441aa92f4ff55a60e6704",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 108,
+      "labels": [
+       "DATE"
+      ],
+      "text": "12 may 2019 to Present"
+     }
+    }
+   ]
+  }
+ ]
+}

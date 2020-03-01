@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ffe7f58679d412788273f9d3c490f2f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dalmia College, Rajgangpur"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cedef19b1ed747ccbf6b8292eee17fe4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 32,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.COM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0dfc3ae6385c4589a5053a26b62580b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2014 - April 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a60bd258f8f48369bba23a557e94655",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 95,
+      "end": 98,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "0+2"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33a140714ba64c3980b9257012eebb93",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 104,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f982faf4da354047865b4ae26ab9d2f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ABES Engineering College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac568043c0984992905287d46410ae8d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 50,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6d0f69f116b44952b5bbc69b4e13fe43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 57,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69.14%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5f7d6c9991548119ebd5d245ae8b3ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sunderdeep College"
+     }
+    }
+   ]
+  }
+ ]
+}

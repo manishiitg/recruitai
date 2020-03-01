@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ada693729c64ae2b9f042022d9bac38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 61,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C,C++, Java, PHP,Node js"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ec96e7f1f3047c1b1a52d0e3aeac6a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 100,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, CSS, JavaScript"
+     }
+    }
+   ]
+  }
+ ]
+}

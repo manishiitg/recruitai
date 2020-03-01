@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e85edf7d70944b7a8a084176f50586e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 100,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BJ(MC)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84470075c42145e6ab4dc54ac24ece6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 114,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IP UNIVERSITY"
+     }
+    }
+   ]
+  }
+ ]
+}

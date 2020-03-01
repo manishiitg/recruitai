@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76d473dd7e5846dea00c4fb464fffd24",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 14,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Test Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3c661bc142c40998aa856327450d6e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 44,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "15+Yrs"
+     }
+    }
+   ]
+  }
+ ]
+}

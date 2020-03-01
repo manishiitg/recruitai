@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "767976a4f24740048f992a6f0af79349",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8298083272"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b8892ce92ab42dba428732d99da4faf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e7f045736d774a20b6764a9177ee9448",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kuldeep Tiwari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "876ccb546c7d43df8c5eaf0cba66d809",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 56,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma In Computer Science & Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ddaa3069bef945e3998f473a506267e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 82,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7355409983"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6cbf17ea2eed43eba4553fd58ef0529c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 118,
+      "labels": [
+       "Email"
+      ],
+      "text": "kuldiptiwari1001@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98da9aff6f484548aa13523884de7439",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 129,
+      "end": 134,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA"
+     }
+    }
+   ]
+  }
+ ]
+}

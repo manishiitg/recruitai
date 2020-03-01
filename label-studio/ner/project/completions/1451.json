@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "db4b5475730449c89b4b1552ba6c015e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 66,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Systems Engineer"
+     }
+    }
+   ]
+  }
+ ]
+}

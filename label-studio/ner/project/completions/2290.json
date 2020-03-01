@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ec800d67d1aa4a969f46f542d30548b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 58,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma (Computer Science & Engg.)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c67386de1f4d44ca996fcd8234925a38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BTEUP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "99f8c1120f684d5d89cc9b8a5fbac734",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8169de22acb8481592dd6f1aa23ba40c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 93,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018."
+     }
+    }
+   ]
+  }
+ ]
+}

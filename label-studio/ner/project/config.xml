@@ -1,0 +1,17 @@
+<View>
+  <Labels name="ner" toName="text">
+    <Label value="PERSON" background="red"/>
+    <Label value="Email" background="darkorange"/>
+    <Label value="Phone" background="orange"/>
+    <Label value="EducationDegree" background="green"/>
+    <Label value="CARDINAL" background="darkblue"/>
+    <Label value="ORG" background="blue"/>
+    <Label value="DATE" background="purple"/>
+    <Label value="ExperianceYears" background="#842"/>
+    <Label value="Designation" background="#428"/>
+    <Label value="GPE" background="#482"/>
+    <Label value="DOB" background="rgba(0,0,0,0.8)"/>
+    <Label value="LANGUAGE" background="lightgrey"/>
+  </Labels>
+  <Text name="text" value="$text"/>
+</View>

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "735d2e50b4eb4198b4ac05b31324c245",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Soumya Balan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1063a17b12944e51b8858a3aab366dbc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 23,
+      "labels": [
+       "Designation"
+      ],
+      "text": "IT SUPPORT"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8c93e2a404504f9c980c43cfdc5d9f47",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 47,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kerala"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed684a7e301e4ca4b8554ae17007bc7b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "Designation"
+      ],
+      "text": "ORDINATOR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe66bb83bfa64c06865dbdc5770e7407",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 21,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MARKETINGCO"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7bd6d090d7e842d1889348df879cf597",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2015 to June 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6deec4bea8b7477489878dbb8f0680ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 77,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kerala, India"
+     }
+    }
+   ]
+  }
+ ]
+}

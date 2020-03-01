@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac09dcc1b06e48a58f248c4d79e7f0c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 103,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "diploma in mechanical engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94d586cd190a4851bf5f7fa70e9bc4e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 119,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71.1 Marks"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a1cd9039db546f79f0a6106dfb1465e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 147,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Aryabhatta Polytechnic"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45063e67167440c3b7d906a69ea60e44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 151,
+      "end": 156,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015."
+     }
+    }
+   ]
+  }
+ ]
+}

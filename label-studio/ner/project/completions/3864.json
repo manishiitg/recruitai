@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52c1930261fe4709b3b5393cd1124e2f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "JAUN SHAHI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7d0b3558941465e86758472a0c8ba16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 79,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Okhla, New Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

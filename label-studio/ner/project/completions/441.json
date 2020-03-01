@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a32d5a7402b495bbd38aaa79e39f1f8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "AMANDEEP KAUR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "11686be2442e454794d3e85fbb012938",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 51,
+      "labels": [
+       "GPE"
+      ],
+      "text": "faridabad,Haryana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a9d66bc7fd62458183308d2a5fb9c290",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 71,
+      "labels": [
+       "Phone"
+      ],
+      "text": "915355041"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a5b3c3419e342e8a89dc2b7074781cf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 111,
+      "labels": [
+       "Email"
+      ],
+      "text": "mankaur2695@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

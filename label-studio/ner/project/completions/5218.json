@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "542a80b055404d88b9d455418d32f233",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012 - 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "551841e0d5514140b1cabe2251636422",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 44,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "732ea1023f254061955ee98f43b63180",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kanpur Institute of Technology,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "11a991fa72a344728a76dab2c1438e01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 105,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbc818f571cc4ea9bd09eacd5a25875e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Primezone Infotech Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bdbd0363ffc64b1f92c2bc109a5cd6a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f452c2c5034478a83960cca8daab7e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 103,
+      "labels": [
+       "DATE"
+      ],
+      "text": "ay 17-July 17"
+     }
+    }
+   ]
+  }
+ ]
+}

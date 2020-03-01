@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0dce0af1b52a4408beff56d80e73362c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Vamsi krishna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "105bc73b0b28431c9d6da8183472112f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hyderbad Telangana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f05b46608c4433793f8c0bd8fab9fed",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 141,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hyderbad Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

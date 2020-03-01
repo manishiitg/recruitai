@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e7d6d7eeaaf4c09940e13edeae0bebc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 50,
+      "labels": [
+       "DOB"
+      ],
+      "text": "17th March 1991."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "73ecf0fd78ad4130aa080d8c87d30b8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 75,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "40c5386963474214a90f1b3b0fcfd514",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 85,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

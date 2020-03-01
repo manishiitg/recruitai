@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35878dbf01e64148964babfe0d7d05a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 41,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d9862409d90d479f80930791c6ca3379",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 85,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Knight Learning Solutions Private Ltd,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a76074fefff047e4bc282eef81441959",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 91,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c2510ab2d716447080b8906cc70229ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 105,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 year"
+     }
+    }
+   ]
+  }
+ ]
+}

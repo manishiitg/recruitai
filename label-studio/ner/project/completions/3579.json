@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e6e3ac8f4fd4fe19b2ade7026258aca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "62d5bc5365224576952243fe25730776",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 24,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tavant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b2663d81cce84fddaa964886546ff634",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 47,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore, Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6cfd6e86fb304954a4e624a51a623319",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2005 to April 2006"
+     }
+    }
+   ]
+  }
+ ]
+}

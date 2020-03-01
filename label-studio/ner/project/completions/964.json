@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d244e805a1cf402aaa7adad9b793d43c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 52,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eb046801dc014e3e88175ff3e5cac677",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 57,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.62"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1cc32dae0c7a48ff81b5986761694f11",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 121,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr. Bhim Rao R.B (P.G) College, Narich, Ambedkar University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1350a3ee7dd644aaa1eff04e7922cfb5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 126,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Agra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "819ac30080fc40c1926f2f6052ffa55e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 126,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Agra"
+     }
+    }
+   ]
+  }
+ ]
+}

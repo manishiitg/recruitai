@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "645b764551a24b0bb3ed4f9b9411a47c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Test Automation Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d74ebbc2f60847fc876c734f6341266d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 54,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d82dd10263442db9894209c196d9a91",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2017"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ebdfa6acf744eeb89cfa56cdd0f86aa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 46,
+      "labels": [
+       "ORG"
+      ],
+      "text": "WIZI Logic Pvt. Ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5edc6869ec04d0092fa63b1c11c1119",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 39,
+      "labels": [
+       "Email"
+      ],
+      "text": "arya.avinash92@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e383a197a1714127bb17202c14abc791",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 81,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Testing Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6bb6c29c7674e57a7bc9aabc18b9bfa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 100,
+      "labels": [
+       "ORG"
+      ],
+      "text": "QAInfotech Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00b5abb7ccee488b8a6f3d31966c342c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 101,
+      "end": 114,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+919471282112"
+     }
+    }
+   ]
+  }
+ ]
+}

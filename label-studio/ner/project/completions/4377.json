@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "660e0a8cdd5f4fed906188b7151f2839",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 24,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Pushpendra Mishra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8672a48d55f54232bf87162c98096ffd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 75,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhopal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b0f865088f6444199971f0a496734bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 97,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-7440829416"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "25c1b6bc3bf14c82b75af99492887892",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 117,
+      "labels": [
+       "Email"
+      ],
+      "text": "anilm6513@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

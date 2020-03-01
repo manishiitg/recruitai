@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac759ede5b514ecb84884674843b015e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 22,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kasganj, U.P"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2166bfad0e844095bf11b3529e44b673",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 46,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c243e89863f74d4aad9a3dd9f375940b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 58,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    }
+   ]
+  }
+ ]
+}

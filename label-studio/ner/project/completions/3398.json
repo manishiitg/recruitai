@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "32e81cc4c07248899e905fe636a7ae8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 97,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Computer Science and Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "99ef1d4420204a30a1ec980eea76d32f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 129,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Graphic Era University Dehradun"
+     }
+    }
+   ]
+  }
+ ]
+}

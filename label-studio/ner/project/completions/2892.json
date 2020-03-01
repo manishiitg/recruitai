@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "618bb249657841dfa3cf499caa9221b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sweety Garg"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ad360d9aeb64b20a5eea92dc0edc63a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

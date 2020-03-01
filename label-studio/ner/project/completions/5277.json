@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "148233b795d54404a297fc13489d1a2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 56,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "one year two month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0eb8f3c42ce4d0991e266596d9e640b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 78,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Admin supervisor"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29f66374a26244d392add16bfe6ee118",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Indigo Airlines"
+     }
+    }
+   ]
+  }
+ ]
+}

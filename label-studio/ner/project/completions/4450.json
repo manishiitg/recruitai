@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0e676729916749de9ca2518eab4b6b4c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 27,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.S.C Vijnana Vihara School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5d17cb6d9214007835dec4516109164",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 39,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2007"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3347151f1b994e7b9036a618fe693c82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 115,
+      "labels": [
+       "Skills"
+      ],
+      "text": "powerpoint, vlookup, formula, filters, paint, recruitment, (1"
+     }
+    }
+   ]
+  }
+ ]
+}

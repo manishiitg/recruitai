@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f1f99c91f644f04a5d7e07578cb6fb9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ce59fe962ca64b3097b7c006c5a1a34c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dharam Samaj Bal Mandir, Aligarh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "413e54d1f4b042b2b86aee877d155ee0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 66,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.6%"
+     }
+    }
+   ]
+  }
+ ]
+}

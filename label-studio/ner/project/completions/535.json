@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d631d283db9e4c99b206fd4da9c92be3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "KUMAR VAIBHAV"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4959d76facd9424a9cf943f4ba8495ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 56,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d40419315a04de2bef1296fab8b4a65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 67,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7210010606"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c9799999dbc4c4b91a5c2f9cf51d8e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 93,
+      "labels": [
+       "Email"
+      ],
+      "text": "kumarvaibhav947@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8753fd3a3d8246d2a9bfd137ed0e6e5b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 68,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sales"
+     }
+    }
+   ]
+  }
+ ]
+}

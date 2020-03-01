@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c9f185ac55340f381f79c408e00586a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 22,
+      "labels": [
+       "GPE"
+      ],
+      "text": "in Comput"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad61a6189f624cfaa5d4dc10d1710bb6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 33,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Applicat"
+     }
+    }
+   ]
+  }
+ ]
+}

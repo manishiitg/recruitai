@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f35fc113d7434f7a8c7cfa06795d841b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Unicode Systems Pvt.Ltd.,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2704c84543654baaab87cc107c8b906c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 83,
+      "labels": [
+       "DATE"
+      ],
+      "text": "13 August 2018 to Till date"
+     }
+    }
+   ]
+  }
+ ]
+}

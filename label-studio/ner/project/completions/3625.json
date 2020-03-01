@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "26fe8e54ee0742d7bfd4e1a762ba1114",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 14,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "066c15d467a547e092675f5b34c1a638",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 22,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech:"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75521544cd84486389c186dbbcb3f911",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Information Technology RAJ KUMARGOEL ENGINEERING COLLEGE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a063e68c0ac4d38bb2e20faa8b5e8fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 92,
+      "labels": [
+       "GPE"
+      ],
+      "text": "GHAZIABAD UP"
+     }
+    }
+   ]
+  }
+ ]
+}

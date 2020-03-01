@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49876a9eee1b48dfa21100e11d63f773",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 12,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7f094218940744f2a9721fe85434b1ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 20,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PRAGATI"
+     }
+    }
+   ]
+  }
+ ]
+}

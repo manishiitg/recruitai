@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30e80af8675b4ee1b6f2981d987399dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 2,
+      "labels": [
+       "DATE"
+      ],
+      "text": "10"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b353464030f243fa8f51c5dcf81f7c4e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IC Dadri UP Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "920e3868e0aa4bd59a910dc311eb9e61",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 38,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "56 %"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2cc674d3dd874f6c9e4b1320090b28a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 43,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    }
+   ]
+  }
+ ]
+}

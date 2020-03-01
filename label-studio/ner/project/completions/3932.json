@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9a3e60e7712d480fbd574eaece53b23a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 29,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2013 to February 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "73ae1737fee3487eaeecaf66997c8e81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 37,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NAGPUR)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e370afdaf2994563aff4a05331d5e642",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 58,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2013 to Feb 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c656c553ff14e3fad0eea7cca3e6a3a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 122,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "389906b17f8542ed88fb5b7154c52944",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 136,
+      "end": 157,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Shift Supervisor &amp"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7895b1cd203447cfaebf02ef2141d7f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f660f86ab5c433da1e8d7926926dbd9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 8,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30eac93f9b62440f8881516497334830",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "K.P.S. Inter UP BOARD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2475c3c1a8042f6ba4c4fbaa45e462a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 47,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2007"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c3ba269e60a4e4dbbc2e8ba3240b832",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 51,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "62%"
+     }
+    }
+   ]
+  }
+ ]
+}

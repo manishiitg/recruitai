@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d7012fe2d2740e19f63ec5033e41e94",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 17,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 Year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb4af1a049824f7cadd7e4a04e5805d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 52,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Quality Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cb84ad4c5e094990b974b4e5e4309cdb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 72,
+      "labels": [
+       "ORG"
+      ],
+      "text": "High Brow Market"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff8d795189ee4f4ba4568c1b0ce9ac80",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 110,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Investment Advisor Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15625c91e8c34066807345d535b6bf19",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 184,
+      "end": 196,
+      "labels": [
+       "DATE"
+      ],
+      "text": "October 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0b7b02be10c24e7bb9f2f04752a41ee4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 200,
+      "end": 215,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2018."
+     }
+    }
+   ]
+  }
+ ]
+}

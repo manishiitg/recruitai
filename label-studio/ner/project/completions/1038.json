@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "58931ea559124d88b0224a2158245229",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 30,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr. APJ Abdul Kalam University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5754bb86af9d4ada920d6c12c428b4f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5e48a33467c40b39a2052d7ac9681e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 42,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74.13%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "899b06d1ec9b429abae24c85e27a4910",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 62,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cde4b17acec1461a9fb6adfa8325b4f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr. Bhim Rao Ambedkar Univ."
+     }
+    }
+   ]
+  }
+ ]
+}

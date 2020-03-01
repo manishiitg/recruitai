@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d396f90e3af54f1a8a6c6afe4a06e90b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 29,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4bb9796985244ffe9030b1f3f7e86d96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 52,
+      "labels": [
+       "Phone"
+      ],
+      "text": "503981251"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2f70a49c6ad44258934d2fc9c3fee99",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 79,
+      "labels": [
+       "Email"
+      ],
+      "text": "Nagarb96@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

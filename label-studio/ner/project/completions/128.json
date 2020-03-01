@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d34fa1d781a448e8a347563201e1774f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 65,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Business Development Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "547727e69e984663908515652821bf84",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 92,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Phoenix Media Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "814885773e924125bd1de00af19ecc15",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 115,
+      "labels": [
+       "GPE"
+      ],
+      "text": "haziabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "baeae585a6b444c7ac4190c98502738f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 122,
+      "end": 133,
+      "labels": [
+       "DATE"
+      ],
+      "text": "18 Jul 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f3f62479e24c4bdd941665f912b83cc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 137,
+      "end": 148,
+      "labels": [
+       "DATE"
+      ],
+      "text": "31 Aug 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c1ca731da21c48b7b2d9829861685fa0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 151,
+      "end": 159,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "850d01f08f184e08974c1ed763d58681",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 170,
+      "labels": [
+       "Designation"
+      ],
+      "text": "internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "27e29af31de34cbeaf66fe22077a0bd4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 187,
+      "end": 205,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "875de86363bc4d46b2d12022557592b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 220,
+      "end": 254,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IQRA Software Technologies Pvt Ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

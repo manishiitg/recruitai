@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e2c628d629d64f759c7c548b68e48064",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune, Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

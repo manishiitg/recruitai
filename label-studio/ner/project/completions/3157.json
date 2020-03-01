@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c58672e1cc94e098618d8c209c6531f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "DEOVRAT VISHWAKARMA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ad04c29111a4cbb8f818827eb27dd01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 50,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91- 8299416044"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5f8294a025e4b1a944acffc89788353",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 86,
+      "labels": [
+       "Email"
+      ],
+      "text": "vishwadeovrat1893@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

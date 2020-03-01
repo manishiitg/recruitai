@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6408f4273b284087806ea0cc9a5c3ada",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 67,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Vyosys Technologies Pvt ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da935a943b0142a38cfa387fa1aac9c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 95,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2019 Present"
+     }
+    }
+   ]
+  }
+ ]
+}

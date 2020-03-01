@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "81ee4a95716a497b937d26b46d407e8d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 67,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tech Vyas Solution Pvt. Ltd.,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2235592b9019400fb4a5402245726f28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LGF Satyam House"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5dc2f4bd2ad0491b89608e73be1da378",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 116,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi-110019"
+     }
+    }
+   ]
+  }
+ ]
+}

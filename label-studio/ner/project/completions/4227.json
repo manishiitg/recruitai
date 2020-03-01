@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6deb8fca48124cdc853221d52c8207fe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "DevOps Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "81713f9495f14c569b07e1a0327b30ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tech Mahindra Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfeb1917a03140d88851c407869c0b4a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 77,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2018 to Present"
+     }
+    }
+   ]
+  }
+ ]
+}

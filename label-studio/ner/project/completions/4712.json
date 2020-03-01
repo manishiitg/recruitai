@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7fa7c10d9624a88bb228fe1a226c635",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Triple M Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e15b916e5ac47f58b2505d4aa0db835",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013 to 2014"
+     }
+    }
+   ]
+  }
+ ]
+}

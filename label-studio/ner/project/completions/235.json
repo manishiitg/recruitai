@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c393f4658ea4c9a83eb25161df10707",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 41,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Project Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f2a4cedfaa44c949427bcb4859e8bec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 46,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DELL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82a4450b8d204cdb94e8f9fb251d27a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 76,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2015 to May 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

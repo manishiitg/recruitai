@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ba96e5701d24f988090395b09fc030e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 20,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "59%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e8d0a979fa7455e85ed4d4603209d88",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Carmel Public School CBSE Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4e83224f367841f38abe5e07bb1837b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 66,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013."
+     }
+    }
+   ]
+  }
+ ]
+}

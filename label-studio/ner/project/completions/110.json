@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "adeea46ff6364ec587aaab45e786916f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 31,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mohammad Tufel"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "253c2b48484644b08236139ffb20e6ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 53,
+      "labels": [
+       "Phone"
+      ],
+      "text": "379106215"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "daae10571ddf410dbe92080f50dd60d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 82,
+      "labels": [
+       "Email"
+      ],
+      "text": "morehaan25@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

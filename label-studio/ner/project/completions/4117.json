@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b59c83abfd34a66ad84a0c6740e3a8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 33,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "KARTIK GOYAL kartikg479@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "856e3ac1866b4d0aa087577e9a482926",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 44,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9818865265"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "058844397a4f4fd5a1c2fe7e2c8d62ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

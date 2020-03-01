@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ade1d3edf35e48599532d5e0b23efec8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 84,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    }
+   ]
+  }
+ ]
+}

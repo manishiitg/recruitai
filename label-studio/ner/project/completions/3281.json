@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b4a180ceaf247ef9292fbf4b0d08069",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infotree Service"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eedea84b6be44431a18be2cc822e3bd2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 25,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jul 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c76b752716d4af6b74a4bcfdb55ab6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 38,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Sept 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45ebef4299a64adfac06718af2879d1b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 54,
+      "labels": [
+       "Designation"
+      ],
+      "text": "IT Recruiter"
+     }
+    }
+   ]
+  }
+ ]
+}

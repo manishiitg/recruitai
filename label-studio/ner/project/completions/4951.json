@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac9716212bc5411e9bba154177a4596f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 19,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.E(ECE),"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8467cdce5bf47f6b4d4dff2570de738",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 81,
+      "labels": [
+       "ORG"
+      ],
+      "text": "University of North Bengal (Siliguri Institute of Technology)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03e807059b7c4fb98dde376a504189de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 86,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2004"
+     }
+    }
+   ]
+  }
+ ]
+}

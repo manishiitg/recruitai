@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ab924c87e214a2196911e77d5fad88f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 24,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9958629443"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ee29f64227b41378ccf38cd7456ad7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 50,
+      "labels": [
+       "DOB"
+      ],
+      "text": "27/08/1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c4fc3d29ec84f78ab87d1d405c34dd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 84,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "HINDI&ENGLISH"
+     }
+    }
+   ]
+  }
+ ]
+}

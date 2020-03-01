@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3204bd0d1701477782fc5fdbd1b09e0b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Board Allahabad),Shri Jai Singh Inter College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19491be0ad1c4a759c4824100c70ef36",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 99,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bulandshahr"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16c1d8c537ac4d7081cb8241679a570b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 106,
+      "labels": [
+       "DATE"
+      ],
+      "text": "004)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "90f9caba9db3484c980b145cf10c5e77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 118,
+      "end": 121,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.2"
+     }
+    }
+   ]
+  }
+ ]
+}

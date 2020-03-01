@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be428ec11c91460383205b7f0c7e66b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cost2action Pvt. Ltd Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86314d7ae7a4473a9d953c35245bef60",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "arch 2018 May 2018)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbe04c040e67401f90151d50e1aa6259",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 79,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 Month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b54202bab15472c8c8f90f0b78d9a82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 90,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Internship"
+     }
+    }
+   ]
+  }
+ ]
+}

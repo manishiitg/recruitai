@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "65a0bd262eed4c678215e8d7a96e0154",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ANKIT KUMAR MISHRA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "acae664516814dd6b0c7f45caf0be521",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 56,
+      "labels": [
+       "Email"
+      ],
+      "text": "itkumarmishra445@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06b45971a76b43de917ca312f8b996ea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 80,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-7004192856"
+     }
+    }
+   ]
+  }
+ ]
+}

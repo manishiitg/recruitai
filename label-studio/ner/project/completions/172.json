@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "962de39e70314636a941b09bba7697ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 38,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Viny Khandelwal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea7d8e564219456aa360bb900ca50dd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 82,
+      "labels": [
+       "Email"
+      ],
+      "text": "khandelwal.viny@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

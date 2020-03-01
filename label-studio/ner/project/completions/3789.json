@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "728e57d8d1504a8fa90d95090f2dcc83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mintlogix Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3a4e5b5c038949f08fe5fe159c4f2842",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

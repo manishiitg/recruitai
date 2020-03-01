@@ -1,0 +1,170 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "caf515dce56c49b387b2a1a2a026bafe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 2,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff5f92ac59174fbe8f7234812f1b52d1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "773b6b51956f40b6a69bf3cb6308e933",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 44,
+      "labels": [
+       "ORG"
+      ],
+      "text": "J B College,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a995fd7d203748dfa646ef958d659e76",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 56,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8601b212e8494377abd79397ba6bdbdb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a1a7e3fb1f904cb7854f88bed83f31af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 92,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kendriya Vidyalaya,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a55bff99d3a43ebbf575ea8482dcf30",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 117,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ffeffdd881a94ba2b44380bb26ffd3e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 137,
+      "labels": [
+       "DATE"
+      ],
+      "text": "010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84f84f69c8d744558b9e97c29e203c7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 91,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kendriya Vidyalaya"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "42e9c0919d96478eb6514c1e2403a26c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 183,
+      "end": 186,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    }
+   ]
+  }
+ ]
+}

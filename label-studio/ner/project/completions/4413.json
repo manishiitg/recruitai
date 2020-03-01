@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5198dc6fd87543c3b32f171f832a0cd9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d490c5bb3ef41e1b76fae4ca92f0d0f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 39,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ST. Aloysius College Commerce"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "430047dbd62c43a583ecb5b71688fbe1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "681f7f9c93904b51a8fb7be3b895af1d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "BUNTY GOSWAMI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "547b6382da8d419d892d23af21cd5009",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 38,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9213120419,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8c58ee07f124045947c6051391d31e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 72,
+      "labels": [
+       "Email"
+      ],
+      "text": "goswamibunty268@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "afa5e65fb4874013ba8c6f124b655d41",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 114,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

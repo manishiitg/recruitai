@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4afa0f02f6e74037add61ebbd9b7968b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Delhi Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "08f6d1044102423584eccead3f0f383d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d5a89c0bbef475db15dc428be33a9be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 48,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6ae013addfd144c6b4f0ff4abd54df41",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Delhi Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea3c1623e3c34cecacdc4a7a0e17af32",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 97,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur, Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

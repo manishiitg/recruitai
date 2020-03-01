@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c8041c86ac5640f584dee9a712891bf5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 68,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07e19836a08043f99d13aedbb5d12ea4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 91,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Graphic Era University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12d0b800478b45a987f5ba91457e555a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 101,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016-2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "901ef517631d4790bf4b018725efad2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 105,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "9.3"
+     }
+    }
+   ]
+  }
+ ]
+}

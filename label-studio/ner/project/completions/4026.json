@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "af4f9743a5824862bb030d642a69ce1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "kendriya Vidyalaya,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f45dbd0bb72142ce9168eb3048eed93a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gwalior"
+     }
+    }
+   ]
+  }
+ ]
+}

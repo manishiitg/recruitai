@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "58c3925645df404d8f11ea620568be14",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Team Lead"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "197fbd5ad4c046eea8e56698955d88ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 60,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Red Hat Inc. PUNE, INDIA"
+     }
+    }
+   ]
+  }
+ ]
+}

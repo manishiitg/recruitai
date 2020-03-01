@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c524b09b319148ca9860c4daf4252f68",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "ORG"
+      ],
+      "text": "L OGIC SOLUTIONS PVT LTD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a360504c9efd4b88aa85d1e777ecebda",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 53,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Thiruvananthapuram, Kerala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d6ec5112ba764bd787d9d0918fc0459e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 86,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2007 to September 2009"
+     }
+    }
+   ]
+  }
+ ]
+}

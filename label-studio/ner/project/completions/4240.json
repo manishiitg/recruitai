@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "61b112a8c9b0440181b3537f9d460254",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Puneet Bhandari"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c774eaca6d846f487670aa631b9df24",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune, Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

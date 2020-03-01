@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca202c8bbdf5491fb81bf8344aca4840",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Rohit Kalka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88217191ced14827ba8b02c171a49979",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi-110019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0485975fefe543b8b637cb98d93767fb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 52,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9773758140"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2de02db10f4c41feb8ef17ca5159a10b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 86,
+      "labels": [
+       "Email"
+      ],
+      "text": "rohitsameer95@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

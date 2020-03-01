@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3686fb169e814188a8fb5021123eb3ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 86,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.sc(IT)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55776fbe065f43998af74ac00cec5027",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 110,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kuvempu university"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d21138a6e0c84796a6ead47c72714b03",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 118,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    }
+   ]
+  }
+ ]
+}

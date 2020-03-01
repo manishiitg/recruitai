@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7a68a6892a84277ba1e7dc387eec2f3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 28,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mr. Vipin Sharma"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b1f6c5545d046659b2f69ad8efbfed9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 45,
+      "labels": [
+       "DOB"
+      ],
+      "text": "16th April, 1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19c2a7d8b30c49f5ad3a733ea5c5eca4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 72,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4a25866969884fd6810e50bd82e3ba3b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 94,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kashipur"
+     }
+    }
+   ]
+  }
+ ]
+}

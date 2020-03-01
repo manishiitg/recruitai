@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "609edea4afcb44609710c63be40bcc6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Christ University Faculty of Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33ab3967b24b4ed7a352937a52cb5d96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 62,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f0f9dd4764041e1a5952ea8fe59abf3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    }
+   ]
+  }
+ ]
+}

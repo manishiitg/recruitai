@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3cf41ec03bd54d2c9618dc4ed46daf7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 62,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.TECH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "87101bd1a9c24d0e9a5252424c0443eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 126,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Allahabad"
+     }
+    }
+   ]
+  }
+ ]
+}

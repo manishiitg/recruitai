@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bfa223c582da48c2b647ed472fe22fe5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 24,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida (U.P)"
+     }
+    }
+   ]
+  }
+ ]
+}

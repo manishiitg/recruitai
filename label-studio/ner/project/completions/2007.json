@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b27b2463e7274f0a9d3e37ca50386f03",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Techno NJR COE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "172bb9b20aeb4407ac2862769cb8089a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 89,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Rajasthan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0b316201b9a44effaf3d2c618bf623eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 162,
+      "end": 168,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ICRTET"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc989a5ebbc145c2a68e82307d10397d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 217,
+      "end": 227,
+      "labels": [
+       "ORG"
+      ],
+      "text": "K.B.H Poly"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00344adc5b204a81bacc422446b90ad3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 315,
+      "end": 319,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DISQ"
+     }
+    }
+   ]
+  }
+ ]
+}

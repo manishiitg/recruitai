@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4790c31217d490aae8d34c0e3220e35",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 118,
+      "labels": [
+       "Skills"
+      ],
+      "text": ".NET (3 years), ASP (1 year), ASP.NET (1 year), C# (1 year), databases. (1 year), C++, Css, Javascript, Html, C"
+     }
+    }
+   ]
+  }
+ ]
+}

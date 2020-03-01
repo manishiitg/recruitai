@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7eaef327a5d94ac3a64c04d2ddde18bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 64,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.Tech(Computer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "57f023474d314abab65f7c96da09bb81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 107,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bhagwant Institute Science) Of Technology,"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "113bf00ec232425ea045d79b3807ba86",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 38,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B. Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1115b55e6a134582b5da42fc3abe30c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 53,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008-2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8289659e4bef4d22bbcce82e6f53d34f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IIMT ENGINEERING COLLEGE"
+     }
+    }
+   ]
+  }
+ ]
+}

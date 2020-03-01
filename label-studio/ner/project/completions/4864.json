@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7ca8221f1f04402ad7ee7b6bfe8f502",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 53,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, CSS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c3c9b19371c4ffbacf6078a9e5fb25f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 70,
+      "labels": [
+       "Skills"
+      ],
+      "text": "MySQL"
+     }
+    }
+   ]
+  }
+ ]
+}

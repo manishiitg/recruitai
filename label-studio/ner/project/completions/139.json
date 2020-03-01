@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "129a3fc4d1534abaa482d5f7d5e052d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Magadh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "395a2a866a6749c58ab4a2efe5d55db4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna, Bihar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "02b5a90397404d67a32bd7ca3d84ca3e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 42,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 1999"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29c9002158b342a89905a36ef85bb477",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2001"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4da4c522042e499b89f24c29ebe65206",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 60,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "51ea99987dc04ace88402537ea3b54dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 126,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Back End Technologies Mobile Technologies Front End Technologies Database Server VMS IDE"
+     }
+    }
+   ]
+  }
+ ]
+}

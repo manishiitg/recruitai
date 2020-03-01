@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78e2279bb69343e09f6b03eea283045c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kendriya Vidyalaya"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "04af3d0a8b134947a76cacfbd0ab615e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CBSE Board,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43f728905f194801ae0c332c2dc89aff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 109,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "62.6%,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78507f6818c24a2eb561b39adc120e39",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 110,
+      "end": 114,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2005"
+     }
+    }
+   ]
+  }
+ ]
+}

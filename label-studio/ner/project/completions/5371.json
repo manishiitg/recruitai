@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b04506bfc9d9443e876d4583f60dbb7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 20,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ad5eac2086446d89b84c97bfa39e619",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 55,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2011 to July 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bce59451af194a2584f0d4127522d591",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 85,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Quality Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ac2ab0208574d96bf33b35189a988ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 97,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Team Lead"
+     }
+    }
+   ]
+  }
+ ]
+}

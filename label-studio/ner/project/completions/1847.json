@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "32cdaa13eeb444128719cfae45b19e12",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 192,
+      "labels": [
+       "Skills"
+      ],
+      "text": "LAMP (Linux, Apache, MySQL, PHP), WAMP & XAMPP, OOP s, MVC, CodeIgniter Framework, Ajax, JavaScript, jQuery , Anjular 2 ,XML, Addon, HTML5, DHTML, XHTML, CSS3,Bootstrap,Modernizr"
+     }
+    }
+   ]
+  }
+ ]
+}

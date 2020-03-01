@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ce40bb3ea4854093b6cefc3420371fd6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 41,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7008430630,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "46712b9969884e8c8eea9da852eecdc5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 56,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9439195233"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a582140cee6f4f7d97d66bbcd6886751",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 84,
+      "labels": [
+       "Email"
+      ],
+      "text": "bibhu5233@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "61da501f44d24a34aa28b320c2620a8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 105,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "BIBHUTI BUSAN BEHERA"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "461175ddc0ab44a2b721d6304a01d28c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Hannu Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de902359ec5a457a8383378ad811ebaf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 36,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "514a66f006ee4e3fa291d7f2a161b197",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "15th June 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c99aa8252cee4e73853068c4d18e58ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "15th July 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

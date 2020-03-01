@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b830321f24b5479cbbe783736103b990",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 17,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA,MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfa713fe903e490b92310b2a597494b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 56,
+      "labels": [
+       "Skills"
+      ],
+      "text": "KGISL SKILLS C++, Hacking, Programming"
+     }
+    }
+   ]
+  }
+ ]
+}

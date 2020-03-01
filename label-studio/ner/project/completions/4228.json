@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb77d553a29e45849835f670753f5738",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "DATE"
+      ],
+      "text": "15 Years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "342c9299efc8465294d32ae0c02bf312",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 60,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Consultant"
+     }
+    }
+   ]
+  }
+ ]
+}

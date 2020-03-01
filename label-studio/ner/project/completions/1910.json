@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4af87878d84a4dba8ef7c4fa0acb77ea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ABESIT Institute of technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "57e7d7a2603943dc8dc209ae561f2c97",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 71,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BTech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8c7d072a174d4d568eccdebe62af4e99",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 77,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "61.58"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "85ad2e82b2d74c49b2657b06fb6ca2d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "97641b970cfd4ace9af029bf0e2dd8ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 110,
+      "labels": [
+       "ORG"
+      ],
+      "text": "P.C senior secondary school"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0608f4599909459e871066d79413f765",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 129,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "71.60"
+     }
+    }
+   ]
+  }
+ ]
+}

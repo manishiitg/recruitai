@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d02de12206e748e789b05497b7b94b29",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "hitendra Kumar"
+     }
+    }
+   ]
+  }
+ ]
+}

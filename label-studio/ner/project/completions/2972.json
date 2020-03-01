@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2cfefaa12ff474f910f2b39fb311e26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 48,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Cuddapah, Andhra Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a0add9acbef44432ababf9494e44bfeb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 77,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Vijayawada, Andhra Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0896ea615163406a9f0a3f76d795053d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 109,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Visakhapatnam, Andhra Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

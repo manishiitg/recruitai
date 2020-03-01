@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0e52e57a4fbe470fb1b3a2bf63ea6c7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 2,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b2aa72e74df540f5a406b11c90e6d514",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50e60a43707c41c5844d32483cfa4123",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "J B College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a04a98f73d64b308f91a431d425bce0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 55,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d08375f1ac85428483498f2b3dfd41f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 113,
+      "end": 116,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "470961b3d3264d0bbfcde8ada858f2ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 182,
+      "end": 185,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    }
+   ]
+  }
+ ]
+}

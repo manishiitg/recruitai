@@ -110,8 +110,16 @@ services:
         ports:
             - 9181:9181
         networks:
-            - ai
-
+            - ai   
+    
+    label-studio-ner:
+        build: label-studio/ner
+        ports:
+            - 8000:8200 
+        volumes:
+            - ./label-studio/ner/project:/label-studio/ner
+        networks:
+            - ai   
     api:
         build: microservice/api
         ports:

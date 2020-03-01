@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d942e12f19c4ec6ae68aeb30c5925b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 92,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Master of Science"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8edefaa3d74a4259974e83c722afdfbe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 187,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Keptbug Technologies, Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa2a5b8d21f046f49f166e507b9ba5e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 193,
+      "end": 210,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41c37638834b456b8f9ccb096b124828",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 234,
+      "end": 258,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, CSS, JS, ANGULARJS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2633e81c621e4105ae2435689823c2a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 308,
+      "end": 334,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ERD Technologies Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f4ca87c693e4b69a9dabda591594619",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 182,
+      "end": 187,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

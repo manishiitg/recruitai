@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "65e4136ffc584b919cbcfd28abe77df5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SPY-MONK India Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3f87759c281408f991331faf0bfc690",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 84,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Designing"
+     }
+    }
+   ]
+  }
+ ]
+}

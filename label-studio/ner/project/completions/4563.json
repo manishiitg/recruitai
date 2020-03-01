@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "279810df68564b7986c2f677ab91af56",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 116,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MOBEINNOVATION SOFTWARE PVT LIMITED"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92001778745c4f8aa5104b6d7607a740",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 130,
+      "end": 146,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SOFTWARE TRAINEE"
+     }
+    }
+   ]
+  }
+ ]
+}

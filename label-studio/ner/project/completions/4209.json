@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f55c35619f02404199be22beb37e3537",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 76,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Badarpur Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7f6c6c87a1b4428a02d029ce811713c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 43,
+      "labels": [
+       "Email"
+      ],
+      "text": "patilpuja2514@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef32e7e31125411999cceee1f13e0b0e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 69,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Pooja"
+     }
+    }
+   ]
+  }
+ ]
+}

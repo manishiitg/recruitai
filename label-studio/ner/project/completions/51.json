@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4bd15c956b7b45cf8c99e189715b28e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Hitachi micro clinic"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f9a8323d1354ad7ad8928df1890c42f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 85,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Server support engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3a16f8e04b984279b1db85a5b38ec74c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 95,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "522442b1c0de4832b87a111b5b55fb65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 107,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Dec 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

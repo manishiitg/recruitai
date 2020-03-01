@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0d915406125547d0a6428cac69f533ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 27,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Programmer Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9d50f56babae4b3c900d8b8e8c015c6c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 37,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cognizant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7d06b8cfba3f4ed6b0837f1d5373dc62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 50,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ae768ea3532c46b38b635d31656ac9df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 62,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2013"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03867caa79754d8c9dfd24c6db7952b9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d3a1ecd4a66142cd9273d4740dd1b902",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Harcourt Butler Technological University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d3106a169e6a486e8ec7dbe6646fc2f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 49,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "75%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0df5afa569be411598ff1379acd412fe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 189,
+      "end": 191,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a743895fd6949a198b382f2dcedb403",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 213,
+      "end": 218,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.C.A"
+     }
+    }
+   ]
+  }
+ ]
+}

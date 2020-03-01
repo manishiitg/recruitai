@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eb7e90e6c53c4c3ebeaa985382a7f960",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 21,
+      "labels": [
+       "GPE"
+      ],
+      "text": "BSS Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9966404b14a44dd8a83b42762c66f838",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 36,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b88087dea4246b8af6ae4c39974c230",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 40,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "53%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5421818e12f24b50863771311516a637",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 60,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BSS Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c23b4423bd2d454c9398c9c598b69966",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012-2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29208268fed64829baf88f6db1d7e5ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 79,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "81%"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0e1b8113e9c7475a81a5360324c4575a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 27,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bf2dcc69da70402790d974a4678f2bfe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 34,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4248992981174557baa1bc6836d97b93",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UPTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ad6ccae77ea410eae83fb9dfbd4c7dc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 73,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67.33%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4ce665d211f4f038928922f8c602e07",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 113,
+      "end": 116,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67%"
+     }
+    }
+   ]
+  }
+ ]
+}

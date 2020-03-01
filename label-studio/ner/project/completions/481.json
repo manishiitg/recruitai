@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfff30862fb340438704ea23243c6a82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Convices Solution Pvt Ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

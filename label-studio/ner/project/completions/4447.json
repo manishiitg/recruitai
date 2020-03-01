@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b034df73ebb348058b6462dbf344e500",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1month 10days"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c40bae73897e4ce28a2849d1a8d5e427",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 239,
+      "end": 244,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Aegis"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8bcbd94d89a14374b34100d3b7355b59",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 251,
+      "end": 260,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HR Intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d54058278774e9bb6af3f7b4261e42e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 261,
+      "end": 274,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2months 4days"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eef2b28de4ca431e87ba6b32322ccba4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 275,
+      "end": 284,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a5e2e783af847a0af31c7df3b98503b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 302,
+      "end": 309,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2dfa0875b1f4d58937b3b8047a5fcb1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 310,
+      "end": 322,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HR Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9f4c695b6b14a229d2e7e384cc3f5ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 323,
+      "end": 343,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September2016 -April"
+     }
+    }
+   ]
+  }
+ ]
+}

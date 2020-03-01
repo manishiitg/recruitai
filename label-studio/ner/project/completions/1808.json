@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "36ad9ad7603c4bbfaa3003d757308177",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 28,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "six month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9382c94994ac4df99cdea7a16b370630",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 39,
+      "labels": [
+       "Designation"
+      ],
+      "text": "internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4dcb727efb46421b87a03fd1feb683c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "fudicia solution."
+     }
+    }
+   ]
+  }
+ ]
+}

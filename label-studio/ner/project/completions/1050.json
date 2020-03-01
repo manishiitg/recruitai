@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "20ad6d3b8914443eb2d3dffa5c3beebc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 67,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a6956117c9da43e782b0821494d15bb8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 101,
+      "labels": [
+       "Designation"
+      ],
+      "text": "ASP.net Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

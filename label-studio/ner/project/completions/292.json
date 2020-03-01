@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21a3f0fb4f814923b212c403001fd9ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 67,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Escalation Specialist"
+     }
+    }
+   ]
+  }
+ ]
+}

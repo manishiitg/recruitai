@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd257f7ab2374d37bb2e3087c1c3c16d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 77,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C# .NET, CPP, C"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cf4ac5c841354325ac8eab56cdaf3e96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 124,
+      "labels": [
+       "Skills"
+      ],
+      "text": "ASP.NET, HTML, CSS, JavaScript"
+     }
+    }
+   ]
+  }
+ ]
+}

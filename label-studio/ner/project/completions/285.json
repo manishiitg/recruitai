@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "265df3cbf89c4f7da83d163b188fa295",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 25,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BA (PROGRAME)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "87182f7389b747cb84663704b1f0b0de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Shivaji College Raja Garden University Of Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b044348a7c34b71b687f94f1ec9e363",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 78,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "0%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3066bd9ddcba498fa3c0284834f0ed82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 83,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    }
+   ]
+  }
+ ]
+}

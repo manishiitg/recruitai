@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3578b01b0b44967a9c061afecad872d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

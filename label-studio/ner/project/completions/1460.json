@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "895a64c63255466c90a84ed1daf42132",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 63,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Mobiloitte Technology,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee61b27d9a90496e9e091bc5d9fa4cd5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 73,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "407a4916a01f4af68fbf641a7377dda9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 98,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Angular Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07c6ac8af9474d94baa44c836109f230",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 110,
+      "end": 127,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Dec 2018 May 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

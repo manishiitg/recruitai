@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c053cffa3e0438f8ba0fb631ae1bc7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 67,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Rajasthan"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41b5b38c6c4c4cd291d1c30c6bf2e4c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 127,
+      "labels": [
+       "ORG"
+      ],
+      "text": "College of Engineering Roorkee."
+     }
+    }
+   ]
+  }
+ ]
+}

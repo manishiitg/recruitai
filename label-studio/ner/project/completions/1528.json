@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "808e5cfd37c043b699bed88d93934394",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "467fdebdece149418d5ebb734e51f7a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Osmania University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c2f3235906fc40fcacfcca4830fd0f4e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 88,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

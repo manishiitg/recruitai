@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d26b9de2fc344ae893f04c39c05a23de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 90,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e7c013be4d94912af22fe63b39b5653",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 96,
+      "labels": [
+       "DATE"
+      ],
+      "text": "018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cda77c3e8304480388774d92d521c461",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 148,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BRILLICA SERVICES, Dehradun(Certificate"
+     }
+    }
+   ]
+  }
+ ]
+}

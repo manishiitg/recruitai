@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b11f8c670d943a7b2a8aae0577219f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011 - 2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8572d2a3bd18447fb7d56e0772949560",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board, Christ Church Intermediate College,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "70714c40c6e74f72b1b1a281518f4b92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kanpur."
+     }
+    }
+   ]
+  }
+ ]
+}
