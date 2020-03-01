@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e58d073ad324b8fb9a41f09695982b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 85,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ba9e520091f147f3b043ac656ad5d03f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 99,
+      "labels": [
+       "DATE"
+      ],
+      "text": "till date."
+     }
+    }
+   ]
+  }
+ ]
+}

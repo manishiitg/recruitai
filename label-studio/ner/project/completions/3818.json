@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "94ad278d5d6a4af59ff9b779a9a55b8b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Trident Academy of Creative and Technology, Bbsr"
+     }
+    }
+   ]
+  }
+ ]
+}

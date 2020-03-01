@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23520021ef5046b396571926c954ecf5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "P.P.T.M Arts & Science College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91e4f2e40c664809992dfdaf62061847",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 83,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July- 2016 - March 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "37fa6f3093af4cf7bfe9a9468b57c4d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 35,
+      "labels": [
+       "DOB"
+      ],
+      "text": "09th December 1995"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a98060e9aca48af89c24325c6966c3c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 69,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English & Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

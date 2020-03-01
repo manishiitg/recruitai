@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "75d8b14abdc84bf8bcd7504b0ba5da3b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PRATIK PATHAK"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "74e99d43ec174e8888b080cafee81964",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 40,
+      "labels": [
+       "Email"
+      ],
+      "text": "prateekpathak825@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6ad4874c9194480596b0502923c99139",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 56,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9911729136"
+     }
+    }
+   ]
+  }
+ ]
+}

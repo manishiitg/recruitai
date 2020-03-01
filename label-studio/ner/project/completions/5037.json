@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b51ed252729e430a826019cbfb507f44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 52,
+      "labels": [
+       "ORG"
+      ],
+      "text": "EBriks InfoTech Pvt.Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b62a0eb79bea48b4a7631cde88e40fcc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 79,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SEO Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "337ff71ad27b481099dd0c7e8a2184e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 98,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Months"
+     }
+    }
+   ]
+  }
+ ]
+}

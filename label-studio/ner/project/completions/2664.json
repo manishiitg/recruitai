@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "72aaa498569341ffbbf40dbf20d2f977",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "St. Paul H.S. School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1274ec79fdff426fb4ae6cbd86942c92",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 63,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Indore, Madhya Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

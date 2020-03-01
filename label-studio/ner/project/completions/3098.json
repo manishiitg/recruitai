@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "81d1634ede534a2e807f4f9f4f52be0a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 68,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Architect"
+     }
+    }
+   ]
+  }
+ ]
+}

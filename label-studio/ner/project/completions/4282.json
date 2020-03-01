@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "40338cc3d622439aaa5ee0c203d19de6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 34,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ajay Pratap Singh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a5f4beae3554c8a8a21aabd630037f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 96,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ghazipur, U.P."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7af1d55a346040ceaa72b6d07f47f691",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 133,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+918563908011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88231b2486884fa88a918c67ccd70735",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 141,
+      "end": 168,
+      "labels": [
+       "Email"
+      ],
+      "text": "ajayprajput.aryan@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

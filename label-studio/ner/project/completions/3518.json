@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f0dbb54457e44e6bb3f7145eb12097ea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 30,
+      "labels": [
+       "GPE"
+      ],
+      "text": "DELHI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ecf3e01564948d89f9704d8f1ede282",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 39,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Karishma"
+     }
+    }
+   ]
+  }
+ ]
+}

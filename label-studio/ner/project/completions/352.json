@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f9dabbaa10184605b3045bf33002745c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Karan Turkar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d52dd47ea69e4f3bb85be9754a339016",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 37,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Balaghat, Madhya Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ce9b3c4bbf3a49849834960adc95d4b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 57,
+      "labels": [
+       "DOB"
+      ],
+      "text": "14nd May, 1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e25d10bc084047f9bcf893d92d1557fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 94,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

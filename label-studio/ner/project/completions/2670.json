@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "17c4371c7d27457f93b1f0c4189be3b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 66,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Board Allahabad),C.L Inter College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "90cb9c87f96a44598c335c12fbd87d2c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 89,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bulandshahr"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67e4839dff964ad39bcdfc00066ceac9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 95,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12c35d6151794ebe83bb438da00820d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 109,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6%"
+     }
+    }
+   ]
+  }
+ ]
+}

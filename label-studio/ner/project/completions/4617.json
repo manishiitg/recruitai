@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "37a70370ed594260a2109d436fce27a3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "JPR TECHNOSOFT LLP NOIDA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0eb12a7e3965445687dea603645270e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 90,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(05/1/2019) till now"
+     }
+    }
+   ]
+  }
+ ]
+}

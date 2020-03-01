@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e93152eb69124599bb3be35d6a11a6bc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 38,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7edf4a3f6610470ab92e167921e75544",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited Infosys"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbe6a46f42344bada681725a81f8c7ab",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 91,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2016 to Present"
+     }
+    }
+   ]
+  }
+ ]
+}

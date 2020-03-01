@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "072add7c76e14bb49393eb5071867739",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 56,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "34216dcfcf684dd0b77f8ea64e27c312",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 100,
+      "labels": [
+       "DOB"
+      ],
+      "text": "16thjune, 1997"
+     }
+    }
+   ]
+  }
+ ]
+}

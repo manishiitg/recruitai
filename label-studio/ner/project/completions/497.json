@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ade80def4c9a488a95efa7136ab0a952",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "DATE"
+      ],
+      "text": "10th 2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "24b0a43edab342698ab0ccbc3985378b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 56,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Maharshi Dayanand"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cb076966351747b0a84567ae3b3c4bea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 112,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Rohtak Central Board of Secondary Education"
+     }
+    }
+   ]
+  }
+ ]
+}

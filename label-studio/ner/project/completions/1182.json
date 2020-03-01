@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "303b46728a4748339265c44c0fac3a0a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Trinet solution Pt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9cbb5f8dc4364188bba723508efb47dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 75,
+      "labels": [
+       "Designation"
+      ],
+      "text": "web developer"
+     }
+    }
+   ]
+  }
+ ]
+}

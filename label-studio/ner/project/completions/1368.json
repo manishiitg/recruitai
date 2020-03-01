@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ad7bc8fa5204372bf5807ced5d66709",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 156,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Linux (Less than 1 year), Microsoft Office (Less than 1 year), MS OFFICE (Less than 1 year), problem solving (Less than 1 year)"
+     }
+    }
+   ]
+  }
+ ]
+}

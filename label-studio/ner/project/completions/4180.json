@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d411c9d60d024da997b0fba086c09cfb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "SACHIN KUMAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2f538d2c6b949fa99b21dbb80523db9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 49,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8756749904"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9d69e0c1e6cd462f9d8649bc7bec662a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 76,
+      "labels": [
+       "Email"
+      ],
+      "text": "sachinkatiyar064@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

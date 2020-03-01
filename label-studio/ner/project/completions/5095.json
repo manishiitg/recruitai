@@ -1,0 +1,170 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b367e6de6e7c4c26864e356db8fd4332",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 31,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.E."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5706a67822e543049349d578954f4a25",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 105,
+      "labels": [
+       "ORG"
+      ],
+      "text": "R.G.P.V, Bhopal university"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df8e70f370c54a3ebb6861ae770be108",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 113,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1daf229b3ba9448f8400a42081ea6bbf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 119,
+      "end": 122,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.3"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9386be162bd74ae6aca742b19e77575d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 154,
+      "end": 185,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bihar School Examination Board,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a79a6df5bff4b51a50f58eddf0c95a8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 202,
+      "end": 206,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e18addcd1280477392278fd05d543da8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 212,
+      "end": 217,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "66.6%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8df3cbb2df454888989220a6d84baa1e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 154,
+      "end": 185,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bihar School Examination Board,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a79934de0ce49dabe3634b63fa9201c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 285,
+      "end": 289,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cab1d9f6d9714f1e82c62cbfca15485b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 295,
+      "end": 299,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60.3"
+     }
+    }
+   ]
+  }
+ ]
+}

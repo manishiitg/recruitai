@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a5e5480ade24a6599cad67306e4f711",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 46,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2154dae64cc24919aa7d274398253228",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Latitude Fintech Pvt Ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

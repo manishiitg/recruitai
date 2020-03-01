@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8e6b06d74f064db0ac45c39c4eede7e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 36,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Volunteer Contestant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e31d44bd6b3346b39429828787b28239",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Yappon Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "73bc3924bf6846628503fec65dae1f7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017 to 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "01034eb1cd3f4384b6f4cc72c88f473b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 87,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Analyst Programmer"
+     }
+    }
+   ]
+  }
+ ]
+}

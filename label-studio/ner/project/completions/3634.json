@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d1030249e1654c878729f13393004a28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 24,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior software engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "762707f3d45747788be5a7383d76435d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 47,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "9 years"
+     }
+    }
+   ]
+  }
+ ]
+}

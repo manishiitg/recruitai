@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dfa86192fb384bd3b27f3eb8228a0a2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 39,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Advance Diploma in Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbcb1bf02b7d4d5cad31d1fc6e0146ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 46,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2011)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "201eaa9af8474206a9932b73a5e9c5f5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 83,
+      "labels": [
+       "Designation"
+      ],
+      "text": "FO"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7185928f88564391828ac0a403b30e8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 122,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Banking Margdarshak Finance Company"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "150ce4e09ec141cfa0020125fff45fcd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 129,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2017)"
+     }
+    }
+   ]
+  }
+ ]
+}

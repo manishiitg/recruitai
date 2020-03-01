@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e979562d39514da88b9cd9d38e15b75a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 32,
+      "labels": [
+       "Email"
+      ],
+      "text": "anurag12190@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2ec829102824866862379ae4b2cd862",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 58,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8574160693"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6eb4a5cdeefd4514b93c3154676678d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 87,
+      "labels": [
+       "Designation"
+      ],
+      "text": "ANGULAR DEVELOPER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ec2b55a9c60c4ca4a7ed4c98ef09a9c8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 112,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Atventus India Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

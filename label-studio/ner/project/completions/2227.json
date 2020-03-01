@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0dd683a0286a4298a0d53913315dbbff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 46,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sales and marketing specialist"
+     }
+    }
+   ]
+  }
+ ]
+}

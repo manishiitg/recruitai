@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96bca38d628f45758f64428495e306b9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63.59% 60% 8.8"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b9f4183223e48e4af6747a367b6caee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "4 week"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1cea276f4524c779f3ee5bfcb455428",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BSNL, Patna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c692204baa834d779b796d6848112749",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "18/6/18"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4b1c873e6d64d948085501b054feabf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "13/7/18."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43f7f681c6314b7f8b46996cebb1c146",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 89,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 week"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0452f9173a38497e87b06f3d15864925",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 122,
+      "labels": [
+       "ORG"
+      ],
+      "text": "East Central Railway"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bdbe01e74785431ea5b8482d0249876b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 167,
+      "end": 185,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1/6/15 to 12/7/15."
+     }
+    }
+   ]
+  }
+ ]
+}

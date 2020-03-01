@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c0dc3fa4708d4f8d858acd3c8775b138",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 19,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.C.A."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86dacea470a94f1f9db1cc116b4701b4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "International Institute For Special Education"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1cadff7f88dc4797a47f73ce5c2450be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 82,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 -16"
+     }
+    }
+   ]
+  }
+ ]
+}

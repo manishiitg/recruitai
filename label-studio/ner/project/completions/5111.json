@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5a751dd05824fea924e8898f228ac4e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 25,
+      "labels": [
+       "ORG"
+      ],
+      "text": "N.S.S"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5242442d144d4ed99f4a43fd9c913660",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 31,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ter"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fc3c2a8b8a1a4423aaea0fbb9ff21ef3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "llege,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe1c949e9ace455a9e0b1508174308e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 47,
+      "labels": [
+       "ORG"
+      ],
+      "text": "oria"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00185ddf27034685aa522fe47d9739e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "tar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b172704791f34c4ea64ded3c6cf38bfb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "adesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d0f6b87955964b8bb743fb35b5210ddd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 67,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ard"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4a6a7fa59a843b98d83ca5e7fdf44d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "07"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed5b0f78b780401da6faaf0006d6b49a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 87,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": ".60%"
+     }
+    }
+   ]
+  }
+ ]
+}

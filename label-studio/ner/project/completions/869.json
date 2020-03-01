@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "46b16121b8524ad39186456fbcb65df6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "ORG"
+      ],
+      "text": "St Georges Grammar School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ea4938c8cc84c55bf89b0eabd6d510f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3ec84a39862243c29c7db00130b0ca5d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

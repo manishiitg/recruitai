@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6ebcd43122845238b7948894255614b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 67,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA BCA"
+     }
+    }
+   ]
+  }
+ ]
+}

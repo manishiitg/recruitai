@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "35aef7a40df14abe87846b495378f569",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 42,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor's in Commerce"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89f0a34f205b41ce999d861a98c56a65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NMKRV College, Bangalore University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ce796913293745cbb1e86844a95d1b73",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 91,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore,"
+     }
+    }
+   ]
+  }
+ ]
+}

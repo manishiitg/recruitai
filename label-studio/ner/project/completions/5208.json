@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bd2a354a5eb94629ae7639bb635ac464",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 23,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Anand Tanwar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f90c20ddeccc4d7f952419f7605ab88b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 48,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurgaon, Haryana"
+     }
+    }
+   ]
+  }
+ ]
+}

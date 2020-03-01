@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56bcfed245f24905b126aea127027faa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 63,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b389b8920394410cac5c1a3bc8099705",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 70,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "4weeks"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c6f6c60bc7e46068aa467f8be59ad06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 64,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NATIONAL INSTITUTE OF TECHNOLOGY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "571e385ed72c4523aea932a9e407a0be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 71,
+      "labels": [
+       "GPE"
+      ],
+      "text": "RAIPUR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0623b0ef2c6b43d5a8f5114371854bf0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 104,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NIT RAIPUR"
+     }
+    }
+   ]
+  }
+ ]
+}

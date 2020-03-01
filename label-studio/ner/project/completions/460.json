@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5d7f3d18bbd4f37abfe4850b55dcd62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 42,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Manager Masters equipments"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2efb33857dc0488a8f71ce6b648d8f20",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Trichur Kerala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6196806bfc714cd781b876d5b3d7cbf2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c77aa878c194e8b85d1f27415cfe16f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 81,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa4dd944e8c7422abf4215ddfdcf7932",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 56,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Amroha (UP.)"
+     }
+    }
+   ]
+  }
+ ]
+}

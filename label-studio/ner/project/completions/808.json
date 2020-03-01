@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7da6538462b84f0fae65587f77f30d50",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SGM Inter college"
+     }
+    }
+   ]
+  }
+ ]
+}

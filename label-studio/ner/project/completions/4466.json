@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "97e88e4e48914fde9a8f5b16bb810876",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "22e5bea784044560913b8d1f97119524",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 27,
+      "labels": [
+       "Skills"
+      ],
+      "text": "PHP,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "452e8a54d3ae4d95886940dfe1fac7c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 398,
+      "end": 409,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Laravel, C,"
+     }
+    }
+   ]
+  }
+ ]
+}

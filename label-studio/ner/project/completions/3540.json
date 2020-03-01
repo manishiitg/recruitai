@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f09ef64436b4b08917d76924cc338c5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 104,
+      "end": 128,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML5|CSS3 & BOOTSTRAP 4"
+     }
+    }
+   ]
+  }
+ ]
+}

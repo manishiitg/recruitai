@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bddc1942287e430fb554464cb38cf1ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhangel, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6fd79b2f2888423d8602dbeee750fc5f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 48,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8700020685"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "92ff9c1375274a9984ff06c988b96c39",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 81,
+      "labels": [
+       "Email"
+      ],
+      "text": "satishumarraaz@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

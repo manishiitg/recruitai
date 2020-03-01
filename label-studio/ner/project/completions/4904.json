@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f5ba572296b4781ac17fe7b9c218977",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 89,
+      "labels": [
+       "Skills"
+      ],
+      "text": "PPC, SMM, SEO and Paid MArketing Tools"
+     }
+    }
+   ]
+  }
+ ]
+}

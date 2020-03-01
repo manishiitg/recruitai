@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4e5088817c6497189025914e13bc82a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 28,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Network Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f69e4b4251864a8bbb8581a6f2ba1e94",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 91,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Reliance Telecom, Telecom Network Solutions & Sterling Telecom"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "210fe69e15a347e2a18ecf0ba30c5e62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 112,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jul,2004 - Jan, 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

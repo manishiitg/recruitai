@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a0bca9cc819a4ec8830fe97d1417982f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.TECH GRADUTAE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "428c4d5a7f5145a3b6ed846f7a76f4b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 63,
+      "labels": [
+       "ORG"
+      ],
+      "text": "[ SKYLINE INSTITUTE OF ENGINEERING & TECHNOLOGY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f61ef78b4ed54eccb9e33a5f0538651f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 72,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gr.Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b93796440c224ada9c4ca29f11308a89",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 122,
+      "labels": [
+       "ORG"
+      ],
+      "text": "KS INTERACTIVE SOLUTION PVT LTD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "276aeaf01fbe41a8a544692422e7e8a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 152,
+      "labels": [
+       "DATE"
+      ],
+      "text": "OV 12TH 2018 SEPT 30TH 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14aa79c543ac428eb7a9b2e4c86684b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "C.V. AYUSH AGARWAL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a77eddb314b54f3793eeb4f302e6f16a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 87,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Moradabad"
+     }
+    }
+   ]
+  }
+ ]
+}

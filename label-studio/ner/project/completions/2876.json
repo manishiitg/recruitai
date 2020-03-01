@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d07348322c504347a2776dd7c7c7fb4b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 88,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B. tech(IT)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76104b68c0c74194a6d01ebe97737d5f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 98,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e82226282944060a9b1b1c2c0391197",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 133,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Krishna Engineering College, Mohan"
+     }
+    }
+   ]
+  }
+ ]
+}

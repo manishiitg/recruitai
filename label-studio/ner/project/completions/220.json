@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8bf51edf8da41b5824c5d4302ace8a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 23,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, PHP, MySQL"
+     }
+    }
+   ]
+  }
+ ]
+}

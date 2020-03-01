@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dcc97118d7b74bde9b9b353a19ec01d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Programmer Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7a92c19e5654b3f8c0f55f58626dd35",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infoland Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "212286875b16460487b448e1f4cc77c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2003 to August 2004"
+     }
+    }
+   ]
+  }
+ ]
+}

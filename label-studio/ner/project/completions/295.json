@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7256740d10a4ddaa2e5efb18de5a773",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 23,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sales Associate"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abcf757dc6a042869338c615ceef67fb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 41,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Convergys AT&T"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa552245f74d4d2ebc08f349f86c028c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "January 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be3d75abcdd14bb0b89abfe2c4adf0bc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

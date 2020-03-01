@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5119054d1fc24c00a6ecd4729c85eb5a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 14,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "df5bbd1f8c7c404589e9656cff3f3e04",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "(IGNOU)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6313154936a34d3ea863df35ea19c4d4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 26,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b0b4d9713e74fc499d3d0d7c835ab40",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "(IGNOU)"
+     }
+    }
+   ]
+  }
+ ]
+}

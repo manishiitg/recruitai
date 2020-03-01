@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "51820ad483a742678af5d41ce48f35c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IEC College of Engineering and Technology Greater Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d497e509fa3f49e9b428ac639db4c11d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 67,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 - 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

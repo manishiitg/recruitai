@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "db2cf8471cfa4118992112c3000867f2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 77,
+      "labels": [
+       "ORG"
+      ],
+      "text": "K.R MANGALAM UNIVERSITY, Sohna,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "05fb518009d941429c65b20e825ca744",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 86,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurugram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1fa992f217414ef69d783c10535f1539",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 105,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Lab Assistant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d10590fda21432587011b13f4a713b3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 126,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

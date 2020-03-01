@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ba7785e665541cd97fe68898c4c86ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 31,
+      "labels": [
+       "Email"
+      ],
+      "text": "er.amansingh7@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ac45a6f7af447428eb2ee0f127099f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 54,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 years"
+     }
+    }
+   ]
+  }
+ ]
+}

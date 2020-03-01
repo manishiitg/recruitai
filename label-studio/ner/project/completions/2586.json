@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de51f61a73784ee9b3dc11d572a1a36d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sri Chitra Gupt Inter College Manipuri"
+     }
+    }
+   ]
+  }
+ ]
+}

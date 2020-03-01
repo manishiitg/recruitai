@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8995a2bbc0974819831c1e0b58965629",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 149,
+      "end": 154,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.B.A"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8e0e7f5d4b084c61abb8a79d176e13e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 181,
+      "labels": [
+       "ORG"
+      ],
+      "text": "APG Shimla University"
+     }
+    }
+   ]
+  }
+ ]
+}

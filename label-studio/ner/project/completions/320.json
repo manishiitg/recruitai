@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb59357340e54b0381c01e5ef9f95ffb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

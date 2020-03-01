@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac244e5ebd5f4a8b8e2bc94f481fff1d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 64,
+      "labels": [
+       "DOB"
+      ],
+      "text": "7th-January-1999"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "25b7a36cdd394734807e2f8b3a29c40d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 219,
+      "end": 239,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7632de0529ea49cca0869c12993c951b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 298,
+      "end": 312,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

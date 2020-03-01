@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d78f4e84e15e43ae9dbc1dd08945de19",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "Skills"
+      ],
+      "text": "JavaScript Jquery HTML CSS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea9b314fa12d44d9bb464fbbabe6e9ea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Educo International India Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3360cae2f240403eb4a7f57c82e36130",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 88,
+      "labels": [
+       "DATE"
+      ],
+      "text": "SEPTEMBER 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ff22a61b2ed4ef5b3f79dfe16d07879",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 98,
+      "labels": [
+       "DATE"
+      ],
+      "text": "PRESENT"
+     }
+    }
+   ]
+  }
+ ]
+}

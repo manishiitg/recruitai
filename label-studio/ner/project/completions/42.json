@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0482859154964d22b6002fa55162481e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 25,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2009 to May 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc484bec0621436da624f9e457746b46",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 44,
+      "labels": [
+       "Designation"
+      ],
+      "text": "fire training"
+     }
+    }
+   ]
+  }
+ ]
+}

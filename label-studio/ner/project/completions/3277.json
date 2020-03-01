@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e5465e86f0149c58ce1c3b0dac92402",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Eros Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a791318751448f2af094eee5d7883a3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "251a15126ad8428aa505916135cb904d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 38,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16bee6d3ddcb4a8b91491777bfa2720d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 61,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical IT Recruiter"
+     }
+    }
+   ]
+  }
+ ]
+}

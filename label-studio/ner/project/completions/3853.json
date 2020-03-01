@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c120acf06374d86bea154df0597dd80",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "SACHIN KUMAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07c014e269df4348b6cae78cd72d58d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 87,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad, Haryana-121003"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da996484fa49435c997d352170e2587c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 107,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-8802828239"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9b762585b0004dad9f3e9af4e3fd91f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 119,
+      "end": 135,
+      "labels": [
+       "Email"
+      ],
+      "text": "k31817@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

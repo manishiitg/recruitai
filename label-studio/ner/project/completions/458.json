@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e809cfec7fcf44ce9afd7433d600896b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Fenil Francis"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b56edc2e42d40a7a8a843313dd53b16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "head of operation and logistics"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76aec01eccd84a5e86506fe6498bed7c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 61,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Trichur, Kerala"
+     }
+    }
+   ]
+  }
+ ]
+}

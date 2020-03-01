@@ -1,0 +1,186 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e46d2f489cf4efc99253486c3a05b26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 46,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 Years, 8 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c7c69b1521474b339efb3da9ba516df6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 76,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tata Consultancy Services."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ec2d928b4f804c1ba389be93643a995a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 97,
+      "labels": [
+       "Designation"
+      ],
+      "text": "System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c4ec13054564a0ca30a6ec40e7106e1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 123,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tata Consultancy Services"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad3c79e70e3148fcb4a351d61be643b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 142,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2019 Till Date"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5bc64bb797d444deb83cd171baabab26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 148,
+      "end": 173,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Assistant System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d39290b81eb648108d229dc0ee1a4cfd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 174,
+      "end": 199,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tata Consultancy Services"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "914756987f66472b8d830c44abbb61ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 200,
+      "end": 217,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2018 Jan 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16f9b478c74141f09bf2443e5f10485b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 223,
+      "end": 256,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Assistant System Engineer Trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56df23ecc25245f389e099c7746c8d45",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 257,
+      "end": 282,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tata Consultancy Services"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7efc20fb84345c5ba173232d566ec89",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 283,
+      "end": 300,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2017 Jan 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

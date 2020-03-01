@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ebb9733b5c846dfb3bb9b21882c5aea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 73,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Master of Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d4e268f8e85e4d1f8811b0403c5891ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 85,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017 - 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2befd7244ea7487e9ca405c6392e50be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2848d85f27ad4c5e8292c1715632b627",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 68,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Pune University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "029a36305d3b4c0aa74838944a13236b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 91,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lonavale Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

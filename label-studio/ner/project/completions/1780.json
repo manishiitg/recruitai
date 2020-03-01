@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84dccea57ce0453487934e17ef718309",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Nida Khan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "636ffad3715f4e78ba997c03d39680a8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 32,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Tech Support Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f956f6254db4293bb02c986ffa99021",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Teleperformance"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "384d7d96325c4ae6b60719135bae4642",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Jaipur, Rajasthan"
+     }
+    }
+   ]
+  }
+ ]
+}

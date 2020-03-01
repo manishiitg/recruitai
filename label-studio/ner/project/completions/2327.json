@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9327b961e5dd4a5f8d2de0a07c5ecf9a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M.C.A, Krishna Institute of Engineering and Technology,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "60cd8f4a51c14da888ba820d718bef3e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 65,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ghaziabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96c8daf2830f48178acaabcfac7daf2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 81,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019)"
+     }
+    }
+   ]
+  }
+ ]
+}

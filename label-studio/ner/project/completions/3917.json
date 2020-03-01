@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e1fd561b12db4a069a0fe324ed22d9d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 16,
+      "labels": [
+       "ORG"
+      ],
+      "text": "INFOSYS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4882875b5cd648d3b44871fb6afd8ec7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 37,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Process Associate"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ab6f2921a4b149cd8818168d3cad5aa4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 96,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2009 to September 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

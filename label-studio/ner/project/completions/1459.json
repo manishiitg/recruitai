@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ce9f13e1452478ca87c498921e6ccb3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 64,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Angular 6 | Javascript | ionic| C | C++ | Java"
+     }
+    }
+   ]
+  }
+ ]
+}

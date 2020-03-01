@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b4ad11910db43c79693426c9db3a417",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 31,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "00490f0b1eff4979bff3eac05b0c620f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 71,
+      "labels": [
+       "ORG"
+      ],
+      "text": "marketing-tourism Calicut University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c47570c1cc4496b955aa68c4ca88f7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 89,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Calicut, Kerala"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3f66f0045954385a6f4e6b2b55d2843",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 94,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "83009d2ae43c4002966142ddb2e3cd65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 102,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    }
+   ]
+  }
+ ]
+}

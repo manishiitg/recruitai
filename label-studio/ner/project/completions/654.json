@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "08b0ab473375417aa0af2ae2cb455bde",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015-2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6f1412463499441189f853dbc9ab82be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Maharaja Agrasen Institute of Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b2ac8200fbc496fb75b9acc8f1491f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 67,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74.84%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c108d5447d2471a8380d768c8032811",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 85,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma 2012-2015"
+     }
+    }
+   ]
+  }
+ ]
+}

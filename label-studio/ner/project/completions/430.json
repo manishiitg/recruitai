@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f23388f170b344d598ec64a8898b9b6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 33,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9e6f45f3ba284af5b41278e0755bb31e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 42,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.6"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76389581db6c415eb148db0ea06bd582",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 117,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Madanapalle Institute of Technology"
+     }
+    }
+   ]
+  }
+ ]
+}

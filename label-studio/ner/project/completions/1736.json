@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9bfc750ecbfb46d4a1744d728c5cd522",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 8,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.6"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68d9019f1d6d48e28ec8a50e5694caf0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 84,
+      "labels": [
+       "Email"
+      ],
+      "text": "Zee-Smartprice"
+     }
+    }
+   ]
+  }
+ ]
+}

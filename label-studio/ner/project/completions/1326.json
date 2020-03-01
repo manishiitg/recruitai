@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f0532025cf044242be3eda29ab78f31e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "Designation"
+      ],
+      "text": "System Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f450a914ee140429f4a0c870a5812e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 70,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2005"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "782f439dad8947de8a89d0bb236403f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 84,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2006"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9586c56f135c4e73b035955d021341fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Anna University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3ece507bf354011b1e6cac202c8b9d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 78,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Automation, Testing, Mobile Testing, SDET, Scrum Master"
+     }
+    }
+   ]
+  }
+ ]
+}

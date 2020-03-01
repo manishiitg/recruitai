@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "19526a615cb7470ea7e21539c788603e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 140,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Eclipse, Citrix, SQL Server Data, SOAP UI, NWDS, Solution"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6f7bbe30c051436a81c1b90df1208541",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 30,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Yogesh Kumar Srivastava"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c955783c8efd42c8bfe137e69b23d7b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 37,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f22a3a7c1154af98e56455af240b971",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 102,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9709659133"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3cef7321521a491d8ae7c3063fa8db10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 111,
+      "end": 132,
+      "labels": [
+       "Email"
+      ],
+      "text": "yogesh00195@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

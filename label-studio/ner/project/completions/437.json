@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8310323fb6764664bb7c9bbb2238864a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 38,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "K. Ashok kumar"
+     }
+    }
+   ]
+  }
+ ]
+}

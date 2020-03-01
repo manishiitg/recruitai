@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9acf64d97744cd4b83d8e8a45227529",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 42,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Mainframe,COBOL,JCL,DB2,IMSDB,IMSDC"
+     }
+    }
+   ]
+  }
+ ]
+}

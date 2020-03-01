@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a4cc0c604374454ba76ef374a6b8179d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2006"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ee7beecb1174451a4ae2e9e33a7d97d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 27,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12928ddfec384d579b41a44faca78111",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Electronics and Communications Nagarjuna University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "51d952a476a947718d577ce304f3ab7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 87,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2005"
+     }
+    }
+   ]
+  }
+ ]
+}

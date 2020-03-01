@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f69c3f897c6b466f9ca44ae3263ef6cc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 105,
+      "labels": [
+       "Designation"
+      ],
+      "text": "voice and accent trainer"
+     }
+    }
+   ]
+  }
+ ]
+}

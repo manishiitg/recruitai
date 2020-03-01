@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f329b365a0604176ab8553364d016fb2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 23,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7047154288b44f8bb3e93c85112b234",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 68,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IZSOFT Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6c331aca008d491fac657490c1af66a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 84,
+      "labels": [
+       "Designation"
+      ],
+      "text": "UI Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a42bb850de674f6882c7cbde16369ade",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 114,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Feb -1- 2019 to till now"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d8bd8520022948ccadafb851323e5011",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 128,
+      "end": 141,
+      "labels": [
+       "Designation"
+      ],
+      "text": "UI Developer."
+     }
+    }
+   ]
+  }
+ ]
+}

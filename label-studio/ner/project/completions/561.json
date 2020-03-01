@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "525aa78570f74e2b9a74519efc9b3f8d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 35,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mohamed Ijaz. S"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4238fc2b1721482e96685fc470ec8b01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 68,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Sc."
+     }
+    }
+   ]
+  }
+ ]
+}

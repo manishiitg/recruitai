@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0cbfb417d3ce4926800981a7b9a073ec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Digital Marketing."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ddfff9c360c468fb026451857bcb737",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 67,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 year's"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7fa8edf564414905a06a29ef0ec81ce2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 194,
+      "end": 223,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Army Wife Welfare Association"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "24990d23bc394e2cbd7b92e1379fb03b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 254,
+      "end": 265,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kudi Firang"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0b61269831264785b003462ce583ec59",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 266,
+      "end": 292,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 years of work experience"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ecf9163e3cf64126baba98537d3998a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 296,
+      "end": 333,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infrastructure Management and Support"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ef9a024928c41bb924963aca7e9dc94",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 337,
+      "end": 340,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TCS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f6bc019c31a046fe8493372c10b812ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 337,
+      "end": 340,
+      "labels": [
+       "ORG"
+      ],
+      "text": "TCS"
+     }
+    }
+   ]
+  }
+ ]
+}

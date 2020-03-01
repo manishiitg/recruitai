@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "02f3cc622ff148129a8b563d829bc4aa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.B.T.E.R."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc3eb2f0e3ff4c7ba8c29ecbabbe38f9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 38,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6bb6deaa1e3049f9bb8d47ae80b9ddfa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttarakhand Board High School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4c5183dfa214d7ebf3e7333ffd63a93",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 88,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9538858f55d3407bb8c8a57b70291ea4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 111,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttarakhand Board"
+     }
+    }
+   ]
+  }
+ ]
+}

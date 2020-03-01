@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "807a2fe38cbf4af4b89e602699d6b51d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "P.G.D.C.A"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d02fe304d55540709fb81ec4baa7e3b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nagarjuna University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "892c35be29b5467db06b306477c4b605",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 65,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 1998"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "47ce5a60a48c455cb6ebbc85d104fd75",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 71,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Sc."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ba04dc9a917c4dcd80716ed847b4383c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M.P.C"
+     }
+    }
+   ]
+  }
+ ]
+}

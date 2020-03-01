@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee1cb03f447c4616966c2d8376cee2d9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Rachit Gupta"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45acfc78a01e4426a18015e00a846076",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 47,
+      "labels": [
+       "Email"
+      ],
+      "text": "gupta.rachit1997@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b01b40ce91dd4141b8255c12ded4d81d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 68,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8395061203"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "172f7d47c32a4f8c9ba41164848cc6b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 81,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9643684600"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a6746d1a577f498f932fe57ca6818264",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 173,
+      "end": 186,
+      "labels": [
+       "Designation"
+      ],
+      "text": "web developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b24aaefe94940d4a6dc2004928e1906",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 213,
+      "end": 235,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML5,CSS3,PHP,DRUPAL7"
+     }
+    }
+   ]
+  }
+ ]
+}

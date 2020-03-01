@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d0a461b34f7543ff8706da892c3bd1ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "RAJEEV RANJAN"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "befa11628a5544acaebed5ae6ad06300",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 67,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

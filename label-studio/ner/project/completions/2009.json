@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8dc7ab130897492da049d9f06f540256",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "DOB"
+      ],
+      "text": "25 April 1996"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5888760689e42218ea685a02b0c3a7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 88,
+      "end": 92,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06ed662fcac14023818fe09152f19330",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 144,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi, Marathi, English."
+     }
+    }
+   ]
+  }
+ ]
+}

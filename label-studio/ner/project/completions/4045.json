@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1338c20ae77142a598b0b7213f8ada6b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ashutosh Singh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe82cc2077cb46c0989a9e903ac5ca98",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 119,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Dehradun, Uttarakhand-248009, India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b6a61dd498ee42abb70575ebd96a8f0c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 132,
+      "end": 153,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9696896592,7017659790"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a3fdb1b0f3ec4f4abc6c0aa41ab65a39",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 162,
+      "end": 184,
+      "labels": [
+       "Email"
+      ],
+      "text": "chauhansam94@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

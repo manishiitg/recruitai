@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c7a48fbdc8f4bb993e3b0176a3c0983",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 7,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011-15"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86d9bec36cd44699b646addc68fbaddf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 14,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63.45%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8cc3f6621b1b4d67a0072d3c0ad72e75",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 40,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bcafad3a5be244b0a4d683d3a4eb33e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 47,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67.83%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dd98629b2edd4228944b9140688dbfff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2007"
+     }
+    }
+   ]
+  }
+ ]
+}

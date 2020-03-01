@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "afe7b656f9b349489dfa05d0d84be76a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Chitendra Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "406703d42d924e57a267c8e73e65aa99",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 35,
+      "labels": [
+       "Phone"
+      ],
+      "text": "09473567892"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "02151df5eb404a91b6cd145728463b88",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 66,
+      "labels": [
+       "Email"
+      ],
+      "text": "chitendra.raja@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30b7eec0d40b403b911a7c533204cf8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 103,
+      "labels": [
+       "GPE"
+      ],
+      "text": "mroha"
+     }
+    }
+   ]
+  }
+ ]
+}

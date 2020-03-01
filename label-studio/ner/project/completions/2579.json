@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "36cfcbdefb4c41289cb7732de79e8635",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sales Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0bdaa7a3a6314b75aa907dc2d6387b13",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cholamandalam business services dst of Cholamandalam DBS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3b9aa215c3ea4e9f903bb86e8943b81d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 89,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2009"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "909888eb89df484b910597000351b24e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 20,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shubham"
+     }
+    }
+   ]
+  }
+ ]
+}

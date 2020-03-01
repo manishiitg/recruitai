@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f51adcf5c0b44f8bb394028542ab5b18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 65,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7ea4e223114403899f34724aa582f3a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 85,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Year- 2007"
+     }
+    }
+   ]
+  }
+ ]
+}

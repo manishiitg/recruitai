@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eaec9f05e1a940a8aba87b8da9b2acf7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 47,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2 + year of extensive experience"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d0535c5c2d784f49b65906bdf0dbabe8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 83,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SpinSci Technologies LLC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f244e176037c418a904ecbbbfff906c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 106,
+      "end": 123,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "16322f3e3ae7448080f1338dc8797bfe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 129,
+      "end": 167,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 1, 2016 to February 28, 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "157e3beab09e4f2aa276244d43a7d2c5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 172,
+      "end": 202,
+      "labels": [
+       "DATE"
+      ],
+      "text": "November 26th 2018 to Present."
+     }
+    }
+   ]
+  }
+ ]
+}

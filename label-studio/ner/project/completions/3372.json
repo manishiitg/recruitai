@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b878123e405348d0ad809b0f87fd1dbd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DELHI PUBLIC SCHOOL"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50c4bac2b04949898277eeb381f95d9a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 26,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    }
+   ]
+  }
+ ]
+}

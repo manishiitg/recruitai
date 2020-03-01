@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "99a60869e1f94419a56ed95504f8f49c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 83,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML/HTML5, CSS,BOOTSTRAP, JAVASCRIPT, SQL,JQUERY,PHP,C and C++."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ffaa6a99a04340d9bff5044a76c651c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 115,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f6490b247d2460593859392ff8e09ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 116,
+      "end": 126,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "908955cb907f4ea09eaaa2a1bd4404e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 151,
+      "end": 156,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

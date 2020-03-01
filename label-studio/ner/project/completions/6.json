@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d63d17ba8f094afe91966d0934788d00",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Business Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb3276ed56574e83a2cb82cd8d7e009f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 42,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Business Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

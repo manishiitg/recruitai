@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ccc0da0db89f4ea7a4d98aeead8e7bc8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 25,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "95e8238c5fb9445e99d177618244fe7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f3e13494b73145c9823d1ee1dd78a138",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 55,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune, Maharashtra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f277e0fd2943483d8e43b79d59ae00fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 80,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2016 to Present"
+     }
+    }
+   ]
+  }
+ ]
+}

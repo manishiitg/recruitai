@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f6afd6e7dfe143c7a3204c1582f41fc8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 99,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": ". Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8e3512b1f3448a08319d6fa34f186fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 126,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IMALAYAN UNIVERSITY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "08df7739d989413296f87e62842d9bd2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 129,
+      "end": 132,
+      "labels": [
+       "DATE"
+      ],
+      "text": "018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e6898b2956754af9b24821305a2dde6b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 137,
+      "end": 148,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "iploma (EE)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e759b9274f004781baccf04c98a534ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 151,
+      "end": 160,
+      "labels": [
+       "ORG"
+      ],
+      "text": ".S.B.T. E"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fcd6eacad688485ca9269bf45a27d1be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 163,
+      "end": 171,
+      "labels": [
+       "DATE"
+      ],
+      "text": "012-2014"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "238d4f3d56914c02a3af4d24d7cc9699",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SR ENGINEERING COLLEGE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ee8435c34284825ae1f40ed951a3823",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 133,
+      "end": 246,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C# (Less than 1 year), Database (Less than 1 year), Java (Less than 1 year), JIRA (Less than 1 year), load runner"
+     }
+    }
+   ]
+  }
+ ]
+}

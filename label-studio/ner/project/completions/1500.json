@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2cda86af64264296b38971e0e7307baf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Rajasthan college of engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "003983c2a9b3400dbfc58e12e30c7c53",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 286,
+      "end": 290,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RCEW"
+     }
+    }
+   ]
+  }
+ ]
+}

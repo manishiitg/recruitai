@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f874059cb824b379ff9041112a95593",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Uttar Pradesh Technical University- Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "629f196de24a45148f5ab49f2fd7eeea",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 77,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bhoomi Group of Institutions"
+     }
+    }
+   ]
+  }
+ ]
+}

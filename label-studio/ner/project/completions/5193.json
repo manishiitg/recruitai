@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f2c70665d8b24614982e480e593789fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 39,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Bengali"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac7b0126cafc43d49da0195a68c8e489",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 61,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5ccff8847934128a02a46de5cc12c85",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 74,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e0d0c6e5e50642ed81ec1ad2e649835c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 90,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Assamese"
+     }
+    }
+   ]
+  }
+ ]
+}

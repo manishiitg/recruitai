@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0e21954d7f3414daaa44d90a4f7c96b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Arham"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8b4c333e267419482130802cacb7671",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 38,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Sales Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8f225a46a3ae4c1399bf138ee69f6f3f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 44,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nokia"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b72f3bd01ff64b96b19adf90a0529f99",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 63,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft mobile"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9a64ef68d400422bb584c7940cc5c567",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 76,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2005"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2198f0115694fa8989a5a87626e2b2c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 90,
+      "labels": [
+       "DATE"
+      ],
+      "text": "April 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

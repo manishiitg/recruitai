@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8217d4e40c32496d84eb223eaa231e58",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 32,
+      "labels": [
+       "Email"
+      ],
+      "text": "rikki.rajesh@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

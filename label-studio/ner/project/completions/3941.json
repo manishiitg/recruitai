@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ccf9fdb32464a52b0238e37e591f358",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BSACET,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d45b6241e95541ca97826e40620663b6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mathura"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ad56d5e9e81b410fa1f8d9f3f15a3fa5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 92,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010-14"
+     }
+    }
+   ]
+  }
+ ]
+}

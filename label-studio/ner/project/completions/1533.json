@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e0987d7169d74416841d1a54b2072be8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 47,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be1ab1557e06479688fbd6a9527b3524",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 56,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Training"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "23220d23716a4377b257963833f3174e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 79,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Olympiadbox Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f35d07247fcf4094a0fc55060ef681c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 103,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2018 present"
+     }
+    }
+   ]
+  }
+ ]
+}

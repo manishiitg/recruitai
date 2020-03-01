@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bdff079d36ac47ccb5da32b35f01efd2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 89,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Windows XP, Windows 7, Windows 8, 8.1, Linux, Windows 10 Language"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a2eea53c09742549beb987f53206ab5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 171,
+      "labels": [
+       "Skills"
+      ],
+      "text": "JAVA, .NET, PHP, JSP, Wordpress, Angular JS, SQL, JAVASCRIPT, C, C++, HTML, CSS"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50df4a6ae15148f7af8f6a81e213abc3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 102,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML,CSS, JavaScript, Bootstrap, JQuery, PHP, MySQL Databases, Python, Data Analytics,MS Office"
+     }
+    }
+   ]
+  }
+ ]
+}

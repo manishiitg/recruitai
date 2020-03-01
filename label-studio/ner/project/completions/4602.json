@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ac05dc08a4e43b882617ef9d6d6a8f6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 29,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Masters of Business"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a44a18e1aca54aa28b365a2bb5dcadc4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Administration Mohali Campus"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88a7a5607e60474885b3c1f320b9ea6f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 75,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mohali, Punjab"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b29a32a354d44109f831499f9c41f65",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 80,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    }
+   ]
+  }
+ ]
+}

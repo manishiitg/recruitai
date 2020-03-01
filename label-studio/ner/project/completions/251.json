@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "788c175eaf414be49a149ef2539bfb0d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "EDUCATION BSc Osmania University 2007 Board"
+     }
+    }
+   ]
+  }
+ ]
+}

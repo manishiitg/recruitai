@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d85a08ec79bf4361b171e6eac7f36420",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Karthik G V"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2fe78d5847d440c7835eb264c427b8bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 59,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Program Manager, Product Manager, Product Owner"
+     }
+    }
+   ]
+  }
+ ]
+}

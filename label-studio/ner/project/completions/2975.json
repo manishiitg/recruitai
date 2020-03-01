@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bc6dab040a8c42a09fdaa764cb330577",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "63eb6b1933474d0e8f64aebfa3e342a2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 21,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d10e5a0652bf48abbaec175d0f477538",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 53,
+      "labels": [
+       "Skills"
+      ],
+      "text": "ms office, internet,java"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "efbffc1aaa7e41d591855378d968980d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 72,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "ess than 1 year)"
+     }
+    }
+   ]
+  }
+ ]
+}

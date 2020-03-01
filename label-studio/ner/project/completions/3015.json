@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "36fbcfe2f42d48729d1544820602ae81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 89,
+      "labels": [
+       "DOB"
+      ],
+      "text": "Sept 15 , 1998"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "682b93f709364027934e9096f5924a03",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 143,
+      "end": 160,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English and Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

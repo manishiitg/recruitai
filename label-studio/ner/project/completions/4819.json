@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6a86768854449f699d2d119812fe4ed",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 48,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.Sc."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7df04325265346c39bf24149713c4c22",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 71,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.A"
+     }
+    }
+   ]
+  }
+ ]
+}

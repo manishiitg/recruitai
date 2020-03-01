@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33674a2290894bfc8f064f1208dfb5a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Tamil and English"
+     }
+    }
+   ]
+  }
+ ]
+}

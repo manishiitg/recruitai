@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f13a975cb76741caa635699cce580dc9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 39,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Integrated infotech pvt.ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "551432a5f37a4d619a1d87d15532cf76",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 43,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C++"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d107e3f1ca442f2b062c18d654b9c2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 52,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "817d3d9fda354ce68fcd0d391b791277",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 72,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c98c3a8ec1f6417dafa86aa309df3ec7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 94,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Internshala Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e30a6291c8545b88a956875d005786d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 117,
+      "end": 121,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d238901fd2549feb8f1c4aa0af1e677",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 135,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9d4455f9c6a542bd9b3ccd381488bd9f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 136,
+      "end": 143,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Trainee"
+     }
+    }
+   ]
+  }
+ ]
+}

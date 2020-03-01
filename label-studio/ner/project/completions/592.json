@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9931ec63d1954333af2f08d84a06a011",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 64,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b245bec213f4e55aa70bb86a64df116",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 119,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Jaipuria Institute of Management"
+     }
+    }
+   ]
+  }
+ ]
+}

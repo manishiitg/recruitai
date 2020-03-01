@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0aa0d7c1556a4a869b67b1a1844c732a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 99,
+      "labels": [
+       "ORG"
+      ],
+      "text": "College of Engineering & Rajasthan Technical Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f990572149664903a79f84d51584b410",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 111,
+      "end": 132,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bikaner Public School"
+     }
+    }
+   ]
+  }
+ ]
+}

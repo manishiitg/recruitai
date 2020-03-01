@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91bc5f6bb8c94deabad289cd5985fddf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Northcorp Software Pvt ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a389798e59d44ac9ebe3d3d61bcc581",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 79,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Java Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "05a04c5ea7fb4aa481f4de24b53b592f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 95,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

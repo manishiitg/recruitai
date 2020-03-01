@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "87b560694d7842339e8ea0165bf40bd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Rohan Arya"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6895fc3cb9364d219b0093475db5579c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 41,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e35ea079c2be40369ca642363c68a6f2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 63,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91 9761341903"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "01e62c6d4fcc4f0894cc2641e53f9a5f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 83,
+      "labels": [
+       "Email"
+      ],
+      "text": "rohanrvit@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

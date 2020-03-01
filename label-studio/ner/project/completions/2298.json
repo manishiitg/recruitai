@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c8f6f66d5fc541c496deb30096dd2aa3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Ajeet"
+     }
+    }
+   ]
+  }
+ ]
+}

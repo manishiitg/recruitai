@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1eacc51606584216a4efddec597f40ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 65,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    }
+   ]
+  }
+ ]
+}

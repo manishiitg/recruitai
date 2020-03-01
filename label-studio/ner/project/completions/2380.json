@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e2951351e2404c049ca83a68763e8e26",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 96,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bombardier Transportation, Canada"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "402dc6c5de2d4a13904ed9791b0ced6b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "62.00"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5acc9fbbf78442b1a529ef6144e83c96",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Children s Academy School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "88af25bca47341a89d2216c642fbe69b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010-11"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bfd88ac4a7e846a9bb3883a7bcc6b4a5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 62,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "69.08"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "481ac0853fd842079bf31e16ef638157",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "(Mohd"
+     }
+    }
+   ]
+  }
+ ]
+}

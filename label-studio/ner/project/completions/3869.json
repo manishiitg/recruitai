@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "deac50fbaf8747df968a3b72481a130f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 80,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78e91729f829413ba0e47c936f52922b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 97,
+      "end": 119,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LIVEINDIA news channel"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f00200a14db41d0bd7666e654767c93",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 124,
+      "end": 130,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "37days"
+     }
+    }
+   ]
+  }
+ ]
+}

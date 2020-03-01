@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9345adf485924ff1adf774b76446bd31",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Tanu Rajput"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e74a65ea85db4daf8cdca06c6bd75ea5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 76,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dce28883a6894d6fbc118cd8ddd74ddb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 99,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7906438997"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98e2cd4eb34846209f5202caf8c3851a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 124,
+      "labels": [
+       "Email"
+      ],
+      "text": "rajput.tanu765@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

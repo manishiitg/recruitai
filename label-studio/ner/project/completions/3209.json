@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "09d5003ee13140b989c09f197c8d13b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 33,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Maximo Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "169f8d555bbb49358ae6ac64d62090d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 49,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "af2004af8546475f8e0b75fd8ea8b609",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 71,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai, Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

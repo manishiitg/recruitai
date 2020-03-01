@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a973c6eaf8d4044af4b5e50fc2744c5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 52,
+      "labels": [
+       "Designation"
+      ],
+      "text": "INTERNSHIP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8e29841a8ca9426191aa3f39042b3c23",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 91,
+      "labels": [
+       "ORG"
+      ],
+      "text": "VENERA TECHNOLOGIES, Noida."
+     }
+    }
+   ]
+  }
+ ]
+}

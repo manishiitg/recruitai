@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c160f4623b2442a90ea52ee696384b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3bc53f618304c10857c4faa0a6e9622",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Computer Application Madurai Kamaraj University - Madurai, Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

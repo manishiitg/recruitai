@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e8b920eca90461487f3421d40bed28f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 74,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sr. Program Manager / Product Owner, Architect, Consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cafe315b337e4e8bb2e1bcef8604bc66",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1636a2bf5a534b53bd0637c0a024d6b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 113,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "403789af0efe4513a2336e4b24641e52",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 30,
+      "labels": [
+       "Skills"
+      ],
+      "text": "core java Html, css Javascript"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "93972a3d6779482a9eb59bffe0224d99",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 89,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43c294a6e37541828afdd6ea2523e006",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 103,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GEHU Dehradun"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c8da97342cd4d018326418bc2cf9584",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 26,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nandha Engineering College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2d7bcb6edec8451bb2b6cf514cbbd67a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 46,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Erode, Tamil Nadu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a2202a18a5847fd8e0fdd537db205f7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 51,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    }
+   ]
+  }
+ ]
+}

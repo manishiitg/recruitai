@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15b415fcfd024b27b2c7140776911f48",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UP Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "05e0774159ae4cc5aa5cca3bc8998215",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 64,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b55a805411b24760b9a195e9da5de473",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "UP Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9165aa661a714d14a07f837d210b1784",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 107,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015."
+     }
+    }
+   ]
+  }
+ ]
+}

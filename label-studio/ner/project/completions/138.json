@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49200c8fb0b54b96830c7c39a55997b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 35,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Data Entry Operator"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c11160da3c34365a6cd9b5d1c9966c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 45,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53f0171b3a944986a19899d6f1f9ee03",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna, Bihar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e5de35727184879be767c911127f133",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 71,
+      "end": 74,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BSc"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c82bd3cb64a042a7b3509f60d2f94412",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Math"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "012b05aba571441fa02e64b221c4fece",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ed4b0c7453849498f8e394173b99b05",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 44,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d86df71bcfa4ca4ae2f34a73ac6572c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "(Punjab Technical University)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "25dd6c305b8c43d98834d2792a442d6f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 79,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a51d51fcd13b436484aee72eed47740e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 87,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Diploma"
+     }
+    }
+   ]
+  }
+ ]
+}

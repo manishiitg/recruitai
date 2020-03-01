@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa2bf233b4dc4e78b01fc585cb93b05d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 34,
+      "labels": [
+       "Email"
+      ],
+      "text": "umarshashiveer@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7113873d799465fba6a5cf62a07f094",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 70,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mohali ,Punjab"
+     }
+    }
+   ]
+  }
+ ]
+}

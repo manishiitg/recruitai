@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d7cbfaef77843debe26f356c5b861ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 98,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SOLITAIRE INFOSYS"
+     }
+    }
+   ]
+  }
+ ]
+}

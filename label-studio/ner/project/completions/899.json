@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2793236eb61d4256b93008d60e99cdc1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 25,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8737872951 8009562179"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7323fbcaef8549de83fab4b0b58db866",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 54,
+      "labels": [
+       "Email"
+      ],
+      "text": "jdwivedi98@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

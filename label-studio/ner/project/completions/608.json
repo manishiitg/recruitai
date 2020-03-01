@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91f70c092a484be1b96e4794924a370a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55c57f09cc384e878aac4147f23551be",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 24,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tech Trainees"
+     }
+    }
+   ]
+  }
+ ]
+}

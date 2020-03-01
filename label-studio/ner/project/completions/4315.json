@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aac5eeb4b90f4796832ce2487bc9a50a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 115,
+      "end": 147,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Graduation in English Literature"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee5e8458e88849afa704b1452b4a26e9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 153,
+      "end": 190,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dyal Singh College, Delhi University."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fcfd3ea0cef04437817e6e65cfdb34d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 191,
+      "end": 219,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Completed A1 level in French"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd351c5b93d8455688d2fc02d8d63505",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 225,
+      "end": 250,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Alliance Francaise, Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

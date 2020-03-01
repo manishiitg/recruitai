@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ea3969ee1a74ee3bcb383d0bb644fce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Commerce"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c51b681c5c3d48fc878e38c416d679a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dev Samaj College for Women"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "af447e8eb3724b50b791a21f8f0303b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 73,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chandigarh, Chandigarh"
+     }
+    }
+   ]
+  }
+ ]
+}

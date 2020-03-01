@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4795a65d8dd24fd7985e0697e1a50ac0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 50,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mehboob Alam"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "341bb664e7bb4ba1906cbd5a46e22eeb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 83,
+      "labels": [
+       "DOB"
+      ],
+      "text": "7thJanurary1992"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2810930ea00e44e5b2d5f95c36a0d1d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 121,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "nglish, Hindi &Urdu"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c05ac8382fa492297f5029190567c67",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mansi Jena"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3532a8386a9a48f394fab13497d67ce0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 54,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SEO (Search Engine Optimization) Specialist"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d2340d09ff12454b8a38d6b061cf74f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 75,
+      "labels": [
+       "Email"
+      ],
+      "text": "manijena18@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cd2b2ca8e8334cdd8887d0a4a4557a0e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 90,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-8376871943"
+     }
+    }
+   ]
+  }
+ ]
+}

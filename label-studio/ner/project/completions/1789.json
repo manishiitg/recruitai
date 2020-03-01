@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dffc4cd417574d95b3e00eda499bb257",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PRAGATI SRIVASTAVA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d5d3cdf7e0d84de2ae00acc2a2eb313a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 31,
+      "labels": [
+       "Phone"
+      ],
+      "text": "735-548-7314"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6d9957a8ceb54ef6a66e823938573e00",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 62,
+      "labels": [
+       "Email"
+      ],
+      "text": "pragatisrivastava846@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43621b708a1b488485c73652bb62cf43",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 192,
+      "end": 206,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida / Delhi."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b00875863fb74e128ec90d341753388f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2013 to Present"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c1dce0a5c79d4bc8bb427a3a87202013",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 128,
+      "end": 138,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "4.8 years)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8d89fea841da44e9a95c585daac2973d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 169,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "4.4 years"
+     }
+    }
+   ]
+  }
+ ]
+}

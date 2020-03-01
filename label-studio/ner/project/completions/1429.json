@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f7bd000fb6b41598ceca61592186e9b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sonia Chauhan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f50774225b74b629c09e89dab1b64c2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 32,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c061e9b13f034b9cbc91901dfaac59bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 62,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8178937839, 9069465650"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b8b777a64094220afeadd8226630fca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 110,
+      "labels": [
+       "GPE"
+      ],
+      "text": "New Delhi, Delhi, India"
+     }
+    }
+   ]
+  }
+ ]
+}

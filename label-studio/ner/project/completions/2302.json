@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2da5c53602d54b378bdd88d59adc94ee",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 25,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Development"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aca5a9e9f58e4612bea9f4ce82f9cf2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "I2vsys"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43e1e573c8da4560bdfaaba3e4c74e48",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 42,
+      "labels": [
+       "GPE"
+      ],
+      "text": "(Gurgaon)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "611adc2678b34dc99b6bdd9c37bd084b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 51,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8dcf99c0ab28442bb64bc649df357e1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 61,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

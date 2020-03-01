@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d90ea6c76ad5433b8b035fd7b5ccb764",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "48a2284e04f34058aa440e8ca33b33dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 13,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.5* CPI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0eafcb8299b64eb892d17743348a2b2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 45,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.29%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed2bbd391953414cb095341a04e1b547",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 98,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "NAGAR,ALLAHABAD"
+     }
+    }
+   ]
+  }
+ ]
+}

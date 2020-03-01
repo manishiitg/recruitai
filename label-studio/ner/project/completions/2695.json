@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b00046bc2ad4f33ab23d521e73b3067",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 61,
+      "labels": [
+       "Designation"
+      ],
+      "text": "GET"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a628b02bc6447b48e5d4ec75d10c497",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 89,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Engineer Trainee)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5afe58962bed430992a2a9e0f2eed2d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 109,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2017 Till Date"
+     }
+    }
+   ]
+  }
+ ]
+}

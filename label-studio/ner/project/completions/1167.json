@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "344059362a7b4b1d9fb258e590d3b2c9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c07c546feac4201be7f81bf06f3c318",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 51,
+      "labels": [
+       "Designation"
+      ],
+      "text": "System Engg"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "754722ee5c7e48e69b6b439bd3cdf219",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 96,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Tooltech Global Engineering Pune pvt ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

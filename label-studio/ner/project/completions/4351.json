@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c35112efe16f4abf855f90f1fab0961c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct2018 -July2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "01583604ac1c4a1eb671175a84d10c13",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Service tesk representative"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d145f221f2ab464f862ab93e6dd2a864",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AEGIS(Reliance Corporate Private Limited)"
+     }
+    }
+   ]
+  }
+ ]
+}

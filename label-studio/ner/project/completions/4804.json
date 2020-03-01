@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0405acd8cbd2444dbfced34b85f1703d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 46,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Divine Autotech Pvt Ltd(Renault)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f6473a7daa4462cbd04f8f7591d5540",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 69,
+      "labels": [
+       "Designation"
+      ],
+      "text": "EDP Incharge"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a3f65971c854e98a819f1e066d67419",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 109,
+      "labels": [
+       "DATE"
+      ],
+      "text": "7TH FEB 2017 To 31th APRIL 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

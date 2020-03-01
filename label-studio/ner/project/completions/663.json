@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5b370f69392406f9760b1328306d293",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 38,
+      "labels": [
+       "Designation"
+      ],
+      "text": "TECHNICAL ANALYST"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7d4003a42a54e5ea71c6e387d1a2514",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DMRC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53698219d0b54afdba323838930c95de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 69,
+      "labels": [
+       "DATE"
+      ],
+      "text": "une-July 2016"
+     }
+    }
+   ]
+  }
+ ]
+}

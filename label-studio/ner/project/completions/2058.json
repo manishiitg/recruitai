@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4b57faf80f343d093c9df2563ee61a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CGC LANDRAN,Chandigarh SRM University,Chennai Board/University"
+     }
+    }
+   ]
+  }
+ ]
+}

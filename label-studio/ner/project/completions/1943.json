@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aad436afa9474d868355cf8b18d39689",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AKTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5fd34a9bb664346aeb41e5ea60612ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 17,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "edc702fcca6a4acc9a00cfbe77217eba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 24,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70.01%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "751b3c74215d40819cef90532b21754d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "E. H. M. Inter College Gonda"
+     }
+    }
+   ]
+  }
+ ]
+}

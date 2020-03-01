@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c27f1b6cfb8a4fb9aaf530074b727d57",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Krishna Prasad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56a5fbf2a41e43bc9698044cb161ae55",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 32,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna City, Bihar"
+     }
+    }
+   ]
+  }
+ ]
+}

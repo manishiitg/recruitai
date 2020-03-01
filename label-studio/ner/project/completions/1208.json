@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa578aa022eb4989aa70d06190f2cf34",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "TAUSIF AHMAD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "159cd9e716a44ac8bb98e7325102f18e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 85,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ebabf68bb2ab46bbab36ee76f1c9583e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present July 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

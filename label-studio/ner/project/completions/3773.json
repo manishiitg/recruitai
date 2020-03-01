@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e51816d85984d65a008eab523de0d38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 38,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Executive HTML Developer,"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3cbedf0186c4602a6cf1d5857f09f53",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 24,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2013-2015 2010-2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89af0fc449a64cfe9f3250120c8d26a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 72,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b76a8ab403bb44ceb3fed3e62bb8ddb4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Amber Systems Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a883a13b09d3468990a387c1195d4d85",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 134,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August, 2016 to September, 2018"
+     }
+    }
+   ]
+  }
+ ]
+}
