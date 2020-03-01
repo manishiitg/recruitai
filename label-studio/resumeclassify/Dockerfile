@@ -19,7 +19,7 @@ EXPOSE ${PORT}
 
 RUN pip install -e .
 
-VOLUME [ "/label-studio/ner" ]
+VOLUME [ "/label-studio/classify" ]
 
-CMD ["label-studio", "start", "ner"]
+CMD ["label-studio", "start", "classify"]
 

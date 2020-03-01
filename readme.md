@@ -14,6 +14,8 @@ gsutil -m cp -r gs://recruitaiwork/* pretrained/
 mkdir batchprocessing
 sudo mkdir /var/log/recruitai
 
+http://144.76.110.170:5001/#/datasets
+
 Docker
 ===========
 
@@ -229,7 +231,7 @@ h) make recruit node and angular also docker based
 
 g) there is an issue, suppose any micro service is down. but api is fired, even in microervice is started in next 5sec it doesn't repose. it only responds to new api request not old onces
 
-h) need to look at candidate resume text data sync for faster processing and this can be used to update elastic search as well
+h) need to look at candidate resume text data sync for faster processing and this can be used to update elastic search as well (done testing pending)
 
 
 g) integrate candidate skill with add resume process (done but testing pending)
