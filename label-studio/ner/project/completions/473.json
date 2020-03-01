@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2dc44481b39143e3a4787ade92491cf1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bihar School Examination Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "be07dfc01dce4162b19c02e1109f212c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 62,
+      "labels": [
+       "DATE"
+      ],
+      "text": "year 2013,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e3f8eb2a71704ee3a4e0d98f08977100",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 81,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67%"
+     }
+    }
+   ]
+  }
+ ]
+}

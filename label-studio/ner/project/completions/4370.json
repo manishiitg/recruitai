@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2ad4f02746b4b4ba8c27ba6783c4024",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52c6c8f442ab4782bb4efb43f346b750",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited, Chennai"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c33de6fd2dc548b4977e261a0c0c6660",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f956341d59e42839eeec56bab749fd1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 98,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mysore, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

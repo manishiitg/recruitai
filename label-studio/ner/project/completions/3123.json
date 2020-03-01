@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "70b74a3386184dd495f892faa8a72510",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 12,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BE"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9f6b4b4985d441dfb34e8de7876be945",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Engineering Vivekananda Engineering College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7e405558df346878607ab8a298ac4fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 112,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai, Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

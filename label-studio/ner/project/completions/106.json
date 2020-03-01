@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d6a529415ec415da9d082d1f4a79071",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010 to 2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8021a28be5af49af8c8288259aaa7023",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 159,
+      "labels": [
+       "Skills"
+      ],
+      "text": "BI (1 year), BUSINESS INTELLIGENCE (1 year), DATABASE (1 year), ETL (1 year), EXTRACT, TRANSFORM, AND LOAD (1 year)"
+     }
+    }
+   ]
+  }
+ ]
+}

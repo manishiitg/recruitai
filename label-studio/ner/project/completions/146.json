@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "28d1856aa1774957b225f8f819931881",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "78%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e943db994c32409aba375625724bded9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 52,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C, PHP , Python"
+     }
+    }
+   ]
+  }
+ ]
+}

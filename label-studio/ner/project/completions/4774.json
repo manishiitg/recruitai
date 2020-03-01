@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a4e121715187413da09a9f93720bd94c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 45,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2017 - June 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "55409dd28d6f4094b2391e0d8b40c24a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "INBISCO Exclusive Salesman"
+     }
+    }
+   ]
+  }
+ ]
+}

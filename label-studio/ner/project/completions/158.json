@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c881a5645a94de298b2831dd9e1515a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Viny Khandelwal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e887c0dd2b1943bba09e95fa8e504d28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 64,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SELF EMPLOYED"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "05049cbc5a3842218e87b187044970d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 88,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kullu, Himachal Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

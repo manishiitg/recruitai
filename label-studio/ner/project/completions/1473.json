@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "168d986202b54fd7833d529da5220b1e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 54,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f903f1eb56146b69a95e77558681f3a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Biju Patnayak University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5fead68c40574240b892275339d82980",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 99,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016."
+     }
+    }
+   ]
+  }
+ ]
+}

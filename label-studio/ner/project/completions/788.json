@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9cd00f7070e466d83d5d1778d12bd02",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 40,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "DIPLOMA IN Computer Science& Engineering"
+     }
+    }
+   ]
+  }
+ ]
+}

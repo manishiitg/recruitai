@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c55df416f094b7cbac4bdc005d973ff",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BAAS Inter College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c10c38225b704bea9eab234c4a6fb4b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 73,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Allahabad"
+     }
+    }
+   ]
+  }
+ ]
+}

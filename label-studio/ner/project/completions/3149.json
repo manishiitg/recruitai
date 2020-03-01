@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2dcd7d86081143469a68d0379186d19a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 17,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0cbe85520cec44fab261d9300055c469",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 35,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "605b3483568d40b8b337c4fab1781207",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 46,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Telugu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21f89e18cb404a6eb51fdc7abadbef38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 66,
+      "labels": [
+       "ORG"
+      ],
+      "text": "HDFC Bank,"
+     }
+    }
+   ]
+  }
+ ]
+}

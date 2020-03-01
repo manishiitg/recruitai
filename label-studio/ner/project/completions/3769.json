@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15daa58ec8b54253be29e0229f8ed3b7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 42,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Punjab"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "81172cb366fe4cdea2b357ffc20f020f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 28,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2011 to November 2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5781c75c044c4520af41d30dc00a1829",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 35,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mysore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b886cb49735a430b9c8f1bb136cf198a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 53,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1st Aug 2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a42fce20edb4617af19ce5f31f7849f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "30 Nov 2011."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d58a8f3b313e439b9bb9ad1d29d138ca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 136,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited, Chennai"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e9aba6c1e24b48ba9974b64961775a16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 142,
+      "end": 158,
+      "labels": [
+       "DATE"
+      ],
+      "text": "24th June, 2014."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "76a657e092564811841e097ffdffc2fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 180,
+      "end": 189,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Cognizant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "350617c380b6484c8133a7d38c9344b8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 195,
+      "end": 210,
+      "labels": [
+       "DATE"
+      ],
+      "text": "14th July, 2014"
+     }
+    }
+   ]
+  }
+ ]
+}

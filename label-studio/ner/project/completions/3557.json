@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f3decf9dc0a646f9be4a3042d717d8d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 14,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56e3cc1dc1524bd6abf398e47be23e87",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 20,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70.4%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c1779016976241ae9c56d4912c2bafa5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 73,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Science Jamshedpur Women s College"
+     }
+    }
+   ]
+  }
+ ]
+}

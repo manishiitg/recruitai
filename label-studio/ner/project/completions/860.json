@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6ce416d03f704af8ad1bfa885a3b480d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 35,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Saurabh Sandhikar SAURABH SANDHIKAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9d177c113d6148708eafbb6c7aa44721",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 55,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

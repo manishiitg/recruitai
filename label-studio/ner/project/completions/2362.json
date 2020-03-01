@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15cbfecbb06e4ab38bf13f5d933ae922",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Chief Coordinator"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9fbbe9bd8a794ac48d33f58fe62236cf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LEAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "877d8517013e467caf3e2917d3107532",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 86,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2011 to July 2013"
+     }
+    }
+   ]
+  }
+ ]
+}

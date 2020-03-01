@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0902fd037d554547b0e412d814aa72f6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.E"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50772ea96f5d48aa9cd380ba8b7e9b54",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 31,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Sinhgad Institute"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d27a9b95567f47abae91f91254359ce4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 36,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0173398f4ef34b6aa6fc4de7ec8a651c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lonavale Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

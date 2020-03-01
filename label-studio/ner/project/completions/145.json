@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "66e58f52ee2849d89de429cce53a6788",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "ORG"
+      ],
+      "text": "C.C.S.University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7e6b0ab20eb4442b80c2b164a7f28173",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 21,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "38385f383a2e43318cc518c2b7bd1a42",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 28,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "61.36%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0c773b758c5640279f8a01549dfc5f5b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 46,
+      "labels": [
+       "ORG"
+      ],
+      "text": "T.S.Inter College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b1363ff9efa4b2483e3d6785189c063",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 62,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60.2%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1102f8bba8a74a4eaf0c2fd2d7e4364c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.N.Bhatt HS School"
+     }
+    }
+   ]
+  }
+ ]
+}

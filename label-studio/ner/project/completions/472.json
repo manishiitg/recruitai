@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6b10a0f85928460ab82b712fec8d3bc0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 17,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2adc62e46bf14811a0176eae55c87d97",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Konark Institute of Science And Technology"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "96d690ef52a94fc9bb10ba302fbdabde",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 109,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2015-2019)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3046421a265b4cedab9cbc60bde3ed7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 125,
+      "end": 129,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.00"
+     }
+    }
+   ]
+  }
+ ]
+}

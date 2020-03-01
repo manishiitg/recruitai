@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ee95046671141788e2bf5c3b23a6b49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Samsung R&D"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7cd8c44b3a5048af9b8016483b7ea2f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 76,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct- 2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8c1470b54344203acb07a4f9f93fc88",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 89,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2014,"
+     }
+    }
+   ]
+  }
+ ]
+}

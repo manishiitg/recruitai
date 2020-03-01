@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "945ddcb5887d4bdc83183f3d89df5cec",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M/s Thomson Press India Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e94979be3c03414ca9528abef2b65eb7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 63,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f6a9385e8555444fbcd6ff6dc76006a7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 102,
+      "labels": [
+       "DATE"
+      ],
+      "text": "6th June 2005 to March 2011"
+     }
+    }
+   ]
+  }
+ ]
+}

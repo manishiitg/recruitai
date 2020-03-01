@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c8bdeafa4f24cdeb1a1c40e59014230",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 26,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1 Year 6 Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "adaa4a66059d4cc29f94c33edcfb2019",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 100,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Bootstarp, JQuery, HTML, CSS, HTML 5"
+     }
+    }
+   ]
+  }
+ ]
+}

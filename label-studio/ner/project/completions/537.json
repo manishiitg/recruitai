@@ -1,0 +1,122 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "12acf8d7d06d4475a8c6126c30c19f10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 50,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c92c71e2bb449339b55e60a922b4cca",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Multitv Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f5273b9a6fe042018a918fbef518414c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 83,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurugram"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e812a820c1984e759212f198294fb9f2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 105,
+      "labels": [
+       "DATE"
+      ],
+      "text": "JAN - 2019 To Current"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4eb8c2eedb74c08ba02efeee1dea528",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 329,
+      "end": 340,
+      "labels": [
+       "Designation"
+      ],
+      "text": "QA Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b16e9c4d81ea4cef925d8fa21386a2dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 344,
+      "end": 370,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ERD Technologies Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc852b09045049a7b350dccd5aa120fd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 219,
+      "end": 224,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    }
+   ]
+  }
+ ]
+}

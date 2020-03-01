@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "24f9ce3c5aad40b0b8a3911579d37982",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 71,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c2c6c3f988c4087afdf58e45d47cb1b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Maharishi Markandeshwar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbaf4540916641c3855fb374056cfd56",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 110,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Ambala, Punjab"
+     }
+    }
+   ]
+  }
+ ]
+}

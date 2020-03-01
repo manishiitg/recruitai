@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "40c72cc737e04878abe8ad9f213e53a9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 48,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    }
+   ]
+  }
+ ]
+}

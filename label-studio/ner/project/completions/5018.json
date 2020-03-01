@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64587600cef64b438b0499ea6c090330",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 35,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0bf020425c56417d88e62f1b4186f1ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 66,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CCS University"
+     }
+    }
+   ]
+  }
+ ]
+}

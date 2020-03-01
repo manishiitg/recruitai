@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ffd0ba5a5e764e6d80fd7fb52f48c4e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 33,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9cbc451462a44457b86c679522454c82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 109,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr APJ Abdul Kalam University (Maharaja Agrasen College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a15e6af58224b35965aa3d10fa0fcb5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 125,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Engg. & Tech."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4baf8c8c7345404ca8a38001f7d49d8e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 126,
+      "end": 131,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015."
+     }
+    }
+   ]
+  }
+ ]
+}

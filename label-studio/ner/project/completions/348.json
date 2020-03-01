@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe5b8c4775e54b89b8a37d19cd05f242",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Digital Baharat Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

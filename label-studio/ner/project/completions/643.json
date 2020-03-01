@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fbc2fa9074984d328e0f7d5fd1b64392",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 8,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017-NOW"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "30f4e1d6f5bb47e6bccfbe78ccd59e7b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Indira Gandhi University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "17cca7e0bcf24a2c9092b226bf35177e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 39,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "M.COM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a64cadff586f45cc9dc928333d30c9eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 64,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed61c9c6c52642ae86a31e6879a411ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "University Of Delhi"
+     }
+    }
+   ]
+  }
+ ]
+}

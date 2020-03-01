@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bc09096120a94287b257b3507650d3cc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 28,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Sales Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "21de1d44429c471eb56aafbc728851d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 57,
+      "labels": [
+       "DATE"
+      ],
+      "text": "September 2018 December 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b599e8064cd40b9974b0080511be28d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 100,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LG Electronics India Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

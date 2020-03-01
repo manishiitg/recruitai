@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "556608dd4c554d0ba2267788a6408be3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 34,
+      "labels": [
+       "Email"
+      ],
+      "text": "soniarajvansi9876@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "28497e7760f44921bb8cc40f0dacf591",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 21,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PRATIBHA KUMARI SINGH"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7c9c1321d6144488abe40d8c82bf669",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 44,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-8354873214"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff29b141d7784212bc9783345e8124e7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 73,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Gurgaon"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7365c14038ae402c8b378d0525e107fc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 103,
+      "labels": [
+       "Email"
+      ],
+      "text": "pratisinghk@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d7b7bf616103490c8a26658723c3a66e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "68.2"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "de0df970eae74b8dbbb5c9d5e79afc10",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 24,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "56.4"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c2c0b0ab45324992a312133d7535a399",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 53,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.5"
+     }
+    }
+   ]
+  }
+ ]
+}

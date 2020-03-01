@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "725ec5da2ab64c0a9d0f2765941d2409",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 35,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ardent Computech Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "710c0c1b868747b29ee8f9e35de1e2bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 55,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Kolkata West Bengal"
+     }
+    }
+   ]
+  }
+ ]
+}

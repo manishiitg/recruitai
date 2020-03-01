@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "60b5aa3188cb416db50a8cff565b0596",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Samsung R&D"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "529c8358f68543b7b8e724f713b46bf3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2057d615340a4c569ad18f1eb1746a56",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 76,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Oct- 2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "17108ed81fc24924848141394906df08",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 80,
+      "end": 89,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Jan 2014,"
+     }
+    }
+   ]
+  }
+ ]
+}

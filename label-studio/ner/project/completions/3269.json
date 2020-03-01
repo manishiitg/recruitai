@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef3786bba01b4d7e9e2a5a1d5de5b10a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 97,
+      "labels": [
+       "Skills"
+      ],
+      "text": "CODA (4 years), Cognos (4 years), Database (4 years), Eclipse (Less than 1 year), IBM"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d9d119d5a3cb4cda820719d2aa69a2a3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 114,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "years)"
+     }
+    }
+   ]
+  }
+ ]
+}

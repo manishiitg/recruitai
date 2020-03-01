@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d057613b9553451c921d79562d8ca2b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 140,
+      "end": 162,
+      "labels": [
+       "DATE"
+      ],
+      "text": "FEB-2019 TO JUNE 2019)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "350e22e4721e4ff796f1e610459d6ece",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 166,
+      "end": 177,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CDAC, NOIDA"
+     }
+    }
+   ]
+  }
+ ]
+}

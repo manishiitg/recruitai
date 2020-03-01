@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "34ebc480015445eda5e0830c4ccb7efc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 20,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CBSE Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aea0aa810f3f45f4a4877a52b200ea8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 62,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fa121c9685094750aad7adc96cb33ec9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 113,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Maharishi Dayanand University Rohtak"
+     }
+    }
+   ]
+  }
+ ]
+}

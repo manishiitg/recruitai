@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5397535d91154c72b9c447af131d1a88",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 95,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "4.5 YEARS"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dff98403ce814a318b78d07d9aa7b107",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 124,
+      "labels": [
+       "Designation"
+      ],
+      "text": "BUSINESS DEVELOPMENT MANAGER"
+     }
+    }
+   ]
+  }
+ ]
+}

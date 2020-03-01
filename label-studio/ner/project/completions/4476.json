@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "79c0150c0d734f7fbdbc772344267a2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 74,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer/Designer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3546c2d6b7a34cda9732f9233abb2558",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 111,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Boundless Education Services Pvt Ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

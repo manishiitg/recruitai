@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d27446b3d77949cfaf0c932303c6e29e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 94,
+      "end": 99,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": ".Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ee43b65abd7e4041b5e9398631ac39d8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 135,
+      "labels": [
+       "ORG"
+      ],
+      "text": "BES Engineering |Dr. A.P.J. Abdul"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f29081be72c453190454cad8fceac7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 138,
+      "end": 142,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "8.7%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f4a479d8f611455f80c317e352d4a572",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 145,
+      "end": 148,
+      "labels": [
+       "DATE"
+      ],
+      "text": "018"
+     }
+    }
+   ]
+  }
+ ]
+}

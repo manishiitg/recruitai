@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c0b3a9a8fe594de6a4cbcf3cec0bc0a0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 21,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Gaurav Ghosh"
+     }
+    }
+   ]
+  }
+ ]
+}

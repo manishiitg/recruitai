@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6134b94cd98649dbac9b11e6c8c310e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 69,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Arabic Language Trainer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1a38e8c3a13b4f939a6dcccfadc22343",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 103,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

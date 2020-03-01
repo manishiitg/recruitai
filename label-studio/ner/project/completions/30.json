@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "362922ae66f6418db854509c4f94b3f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 42,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1.5 years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c144e4e503dd4931ae10e44339f2e342",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 153,
+      "end": 175,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ornate Techno Services"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b72ae60ca85947e4a640cef69838c427",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 190,
+      "end": 210,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Junior Web Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f41cc47ce7d546b2baaa8c7eba14421c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 224,
+      "end": 230,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1 year"
+     }
+    }
+   ]
+  }
+ ]
+}

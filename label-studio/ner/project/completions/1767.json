@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "36be0ef7a61f45d88e70472cd89223ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 46,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "LOKESH KUMAR CHAURASIA"
+     }
+    }
+   ]
+  }
+ ]
+}

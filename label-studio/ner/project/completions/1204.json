@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6ced2fec05bd4e018b1f8c11d46282e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 25,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7992472930"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3dd552ead86d4cf08d75b06e5df9fe82",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 38,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff6fd09e3e6540bb90aa41c4578b6806",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 68,
+      "labels": [
+       "Email"
+      ],
+      "text": "sikhaswarnim@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "968644f979394afaab6326ba9998af1a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 22,
+      "labels": [
+       "DATE"
+      ],
+      "text": "AUGUST 2011 - MAY 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4b184e705134e94aff47cf822e61a4a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 28,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.8%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b12bb0e08cd243a18f07849724e5ae49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 60,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RASHTRIYA INTER COLLEGE,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe5c071eaf6e4c9fb60f2b4fb6f4659a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 103,
+      "labels": [
+       "DATE"
+      ],
+      "text": "JULY 2010 - JUNE 2011"
+     }
+    }
+   ]
+  }
+ ]
+}

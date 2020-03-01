@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d30d28f5a0df4c4085e7f7dd64de0343",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 30,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "(RUPALI"
+     }
+    }
+   ]
+  }
+ ]
+}

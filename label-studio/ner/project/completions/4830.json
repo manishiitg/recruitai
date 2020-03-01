@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2496364bdf1e491995133fdcdc26e11a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 56,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nuts Software Solutions Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4bd8a365a4aa47dd9f6cb372ad333313",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 62,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3df4bbcf48b048539dbe0ae1334e261b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 86,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Development"
+     }
+    }
+   ]
+  }
+ ]
+}

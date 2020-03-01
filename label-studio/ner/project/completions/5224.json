@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "747748efcaf14dc5ba0b1225e32c1156",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 57,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Corwhite Solutions Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

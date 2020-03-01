@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac099559daec413c89ca28db2957fbde",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 97,
+      "labels": [
+       "ORG"
+      ],
+      "text": "i3indya Technologies."
+     }
+    }
+   ]
+  }
+ ]
+}

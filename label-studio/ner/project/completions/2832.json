@@ -1,0 +1,122 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7aa4979f72fd4250a7fe4ac4bf118aa2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Harsh Kumar Gupta"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "892f0a8c6c124e9e936a383d4eb012ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 35,
+      "labels": [
+       "Email"
+      ],
+      "text": "hkg1850@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f97211d96f94a86a175f8d08bec971d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 46,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7017771560"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ace955aef8364d71a6a958a25cddd981",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 63,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Systems Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98b78cadcda54f4fbe60122387f61b1c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 64,
+      "end": 75,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c9b918e8357489293aa00b52ae8547e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 81,
+      "labels": [
+       "GPE"
+      ],
+      "text": "India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d0f26b9bf0049b0835d161dc7e5c98a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 95,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2+ yrs"
+     }
+    }
+   ]
+  }
+ ]
+}

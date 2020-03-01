@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc9afab3e5854b7eb88a663d27cd305c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 28,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Dhirendra Singh Rawat"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e4c0d0ce4594593924556fcfcf4dc30",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 68,
+      "labels": [
+       "Email"
+      ],
+      "text": "dhirendra.rawat786@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "58df8af50f2a41d6a75e750d41c26260",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 82,
+      "end": 104,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9837231418, 9870466545"
+     }
+    }
+   ]
+  }
+ ]
+}

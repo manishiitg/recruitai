@@ -1,0 +1,186 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c4e11eb3d4c04afdba7e8ccd44dc1ef7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "763d2e5a85df4192872acc47a6918ee4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 28,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0fadfb669f514b17bbe9343eef4a16bd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 37,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "55%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98fd5d751e24441599b8b4cbd4de0db0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 43,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dcdff2905bd347c5844d89124bf00cd6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 63,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ddee6936e2b46e0bca90ff0716341dc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 71,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "74"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "651d59ff98b441e4ad2fdc5f026fa298",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 92,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc6cf9b079ce443885729d34746aaea5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 113,
+      "end": 138,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Combina BPM Tech Pvt.Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e53650dd389947edaaea0bdaa19e5ce1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 139,
+      "end": 159,
+      "labels": [
+       "DATE"
+      ],
+      "text": "March 2017- Nov 2017"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6558637e3e954600913c0693072c3c7f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 174,
+      "end": 190,
+      "labels": [
+       "Designation"
+      ],
+      "text": "E- mail Markting"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6856dc4174ab4f239e5ade36e78f96c5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 195,
+      "end": 210,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Quality Checker"
+     }
+    }
+   ]
+  }
+ ]
+}

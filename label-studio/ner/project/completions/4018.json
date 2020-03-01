@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c6b69961da1487a976d0e469c5d0330",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 39,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C++, Java, Advance Java, C#."
+     }
+    }
+   ]
+  }
+ ]
+}

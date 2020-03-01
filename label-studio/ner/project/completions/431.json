@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b90942aee9464e0caa50d3081a725bb9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 14,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Sc"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2fba6a36a08444588c2ec4bc683a87b1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 35,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "9%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "611f4b2fc3aa4585b77f36e8899a6020",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 80,
+      "labels": [
+       "ORG"
+      ],
+      "text": "S.V. University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a5bb8e7d750642f1887ff0ec2ea565f6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 92,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Tirupati AP"
+     }
+    }
+   ]
+  }
+ ]
+}

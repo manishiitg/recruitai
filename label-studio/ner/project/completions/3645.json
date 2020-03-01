@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ba54c7dc8654458aa6d8919184f092e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 27,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Syam Prasad Devendla"
+     }
+    }
+   ]
+  }
+ ]
+}

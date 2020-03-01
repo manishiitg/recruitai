@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9710f43ecd0e459bb8c7d4f71640e4a2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 31,
+      "labels": [
+       "GPE"
+      ],
+      "text": "ew Delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "227a0476340c40c7838c85ecefd0f36b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 57,
+      "labels": [
+       "DOB"
+      ],
+      "text": "9-03-1997"
+     }
+    }
+   ]
+  }
+ ]
+}

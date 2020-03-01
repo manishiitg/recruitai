@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f7dcb07941e4cd19142aeb88eab7e8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 44,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NEW DELHI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fb0fef9fcacf4202846c278750ec68c0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 58,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "PAWAN GUPTA"
+     }
+    }
+   ]
+  }
+ ]
+}

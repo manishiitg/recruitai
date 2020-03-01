@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "79ded0f4d2254f5986145e64d091b594",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 85,
+      "labels": [
+       "ORG"
+      ],
+      "text": "M/s Techbooks Intl Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49a3e6b5c88f4a5e855134a5773c4e2b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 82,
+      "labels": [
+       "DOB"
+      ],
+      "text": "26/07/1997"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "83f3f1d2b085487c8e213bc302debb55",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 100,
+      "end": 129,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi and Basic Urdu"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a38441a165ee4cdc9f5ffe214b4a5034",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 174,
+      "end": 185,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bulandshahr"
+     }
+    }
+   ]
+  }
+ ]
+}

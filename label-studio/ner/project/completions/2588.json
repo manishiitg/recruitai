@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "062f605c4e834d59b345572060dd5c64",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "50%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3dfed941dd44e85baf6603295508be9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 8,
+      "labels": [
+       "DATE"
+      ],
+      "text": "1998"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d9ff28e580cd44b4ab27d5a744312e16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 78,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SDI Computer"
+     }
+    }
+   ]
+  }
+ ]
+}

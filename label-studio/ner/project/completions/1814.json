@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ae41d66cc8f4121b9a7c2f971a1cf67",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Gaurav Ghosh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67179260a3fc4e0d847350082b96bedd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 51,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Varanasi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49501725d22243f9aedc240fb6225cb3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 83,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8960092084"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7bf3c20fcf6483f8894035b87b88abb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 86,
+      "end": 96,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9140751845"
+     }
+    }
+   ]
+  }
+ ]
+}

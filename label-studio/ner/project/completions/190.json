@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ae0edc1faf70415bb0d3db3812a46e44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MICROSOFT"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "78c69f0d2b91476fb51f31d0e64b46cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 94,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2014"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7b0bce0c5d194e3c8fe96430864901fa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 98,
+      "end": 111,
+      "labels": [
+       "DATE"
+      ],
+      "text": "December 2015"
+     }
+    }
+   ]
+  }
+ ]
+}

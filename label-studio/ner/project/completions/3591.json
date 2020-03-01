@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c59706ab59b04220a8dee866327675f1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shreya Agnihotri"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "486d0f8d956c4535a8fb10b42c52f877",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 39,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior System Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8228224310364e9ca0d71fe23b5b5425",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "22fa924dd0b84b3c94c481f397257bbf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 89,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bengaluru, Karnataka"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52283495aa3d4d5489fd914d8e2cae37",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 143,
+      "end": 159,
+      "labels": [
+       "Phone"
+      ],
+      "text": "c1755567027a0205"
+     }
+    }
+   ]
+  }
+ ]
+}

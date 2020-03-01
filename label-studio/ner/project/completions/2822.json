@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b0e9e80797ba4fdcb97bfa79605f4f05",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "91e1f6f1ad144f9ca7396cde962b2bba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 10,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "65.6%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bc9cb15bc0044047b987f6f1681fde49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 77,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML 5, CSS 3, JAVASCRIPT."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "698661bd7c544094890bd5658109343c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 30,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Ahuja Radios"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8706977460ae451c8775784e504929a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May-2012 to Nov 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "03aee40f590644fb85a7b3658711e303",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 115,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Graduate Engineer Trainee."
+     }
+    }
+   ]
+  }
+ ]
+}

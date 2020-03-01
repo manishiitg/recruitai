@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5fea93069b0347588a8c41645fa6f6c8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Aanirudh Razdan"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d453c694eaf41dd9c7a5933f6d39d2a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 43,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Support Executive"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "270978eaa13446ee8b79ad79cacb9bce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Teleperformance"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e0a1be6a63345759fe563c16a3c650c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 79,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Jaipur, Rajasthan"
+     }
+    }
+   ]
+  }
+ ]
+}

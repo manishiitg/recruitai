@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e0cb470119749629ceac6c52ef0811f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Stellar Informatics(P) Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "eacc34be385b4a119183323f081f8863",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 74,
+      "labels": [
+       "DATE"
+      ],
+      "text": "August 2018 to Present"
+     }
+    }
+   ]
+  }
+ ]
+}

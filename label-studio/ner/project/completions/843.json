@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6cd578c7d2524686b558c19a2b7393e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ABHISHEK SHUKLA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8796eb98f15b4a91a7d07d2953318248",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 32,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Senior Engineer,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "beea29a36a6a430fa3577c67077f6742",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 75,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8390137443"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8e11130a9464723842c106a34850b3a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 83,
+      "end": 104,
+      "labels": [
+       "Email"
+      ],
+      "text": "ershuklabhi@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

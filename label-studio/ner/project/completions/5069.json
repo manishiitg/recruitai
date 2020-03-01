@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "565ffa80c5c14fc6be6dea2dedf4fa23",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 40,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Front End Developer,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "582df5eec300458ab6cdb5ce8bef045f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 72,
+      "end": 78,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6679c27dfa214c8aa81662d8f4b946a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 126,
+      "labels": [
+       "ORG"
+      ],
+      "text": "College of Engineering Roorkee, Uttrakhand"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "01e884cd900b4429aaa5ed01a9f41cb4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 290,
+      "end": 346,
+      "labels": [
+       "Skills"
+      ],
+      "text": "React.js, React-Redux, JavaScript, HTML5, CSS3, Bootstra"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4ebfb0c67f8e4228a7c4cacb2d887f8d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 362,
+      "end": 370,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": ".9 years"
+     }
+    }
+   ]
+  }
+ ]
+}

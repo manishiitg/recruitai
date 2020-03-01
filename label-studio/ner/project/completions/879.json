@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a147d1970bab400a8b731a03bc38ea64",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 24,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SEO intern"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca94230dff334599b7b002db03bc0949",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 44,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

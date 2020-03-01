@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69e1c30547054225a64c023fc1d54830",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "B.I.E.C,Patna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f30fa0f5d20a4215980e7954a56957ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 59,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4b8de530505643b78b311742b32859d7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "B.S.E.B"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "84953288484144a5bd909cc46ce36b6a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 51,
+      "labels": [
+       "GPE"
+      ],
+      "text": "atna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f47582576686476ca6079c01e19e771a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 97,
+      "end": 101,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2007"
+     }
+    }
+   ]
+  }
+ ]
+}

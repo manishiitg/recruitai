@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d8315a39c89345e4ac2a43d4146b6d89",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "64c5462742284c9b971a8705008bc60c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 9,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "10+2"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a19f4a1f17d44199eaecddfc6ccd6a6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "NJA Sen. Sec"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b456838969a14c72a66b686e635dccc2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 57,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "54.34 ."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e92021beb5964c5681d16b4ccb35d55c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B. E."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b547cc1862274cc08d10aedb069209cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Chitkara University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68417d8f5bda4eb295f59281b9e8a99e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 45,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 to 2018"
+     }
+    }
+   ]
+  }
+ ]
+}

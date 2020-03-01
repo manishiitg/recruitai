@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8901c5d0cd394145a0368a4d29ded918",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 12,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Kumar"
+     }
+    }
+   ]
+  }
+ ]
+}

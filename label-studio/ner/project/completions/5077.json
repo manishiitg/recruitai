@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52ba67a20c4646b3ba7661d82ddef9cf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 185,
+      "end": 203,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Kiwitech Pvt. Ltd."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "71d92be3fa5c4a0695ed44948ffff754",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 226,
+      "end": 239,
+      "labels": [
+       "DATE"
+      ],
+      "text": "February 2019"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "37d0c8b0db674d51b86e7142248c2941",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 12,
+      "labels": [
+       "GPE"
+      ],
+      "text": "NOIDA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2edbb69328e34f048792daa42c99c729",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 13,
+      "end": 32,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Shekhar Raj Chauhan"
+     }
+    }
+   ]
+  }
+ ]
+}

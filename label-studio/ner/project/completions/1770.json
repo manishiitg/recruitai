@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "841cf019e49c4dd5b7e0e864a8377e97",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 59,
+      "end": 64,
+      "labels": [
+       "GPE"
+      ],
+      "text": "delhi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b07def3af63744b8bef3f77660f49b18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 69,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2010"
+     }
+    }
+   ]
+  }
+ ]
+}

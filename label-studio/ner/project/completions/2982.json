@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b01ff9df4e64c65b5acc095f73a44ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 106,
+      "labels": [
+       "ORG"
+      ],
+      "text": "KARMICK INSTITUTE"
+     }
+    }
+   ]
+  }
+ ]
+}

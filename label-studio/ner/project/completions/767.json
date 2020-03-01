@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5f72af55c98d4875819bf72c6fcd4afd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 25,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Training"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d3f565f4d22a45b3b3d3511e1ed3680c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "DESH BHAGAT UNIVERSITY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "67f562d7b6d1422c8458803c54003e83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 236,
+      "end": 245,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6th month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e12846fc212b41489fc5a1d46a9979b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 260,
+      "end": 276,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Python developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9e293d48db114d469048ec140fefab7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 280,
+      "end": 302,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CETPA INFOTECH PVT.LTD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "651d310d88e04e27a65c4f0847d731ce",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 303,
+      "end": 317,
+      "labels": [
+       "GPE"
+      ],
+      "text": "(Noida, DELHI)"
+     }
+    }
+   ]
+  }
+ ]
+}

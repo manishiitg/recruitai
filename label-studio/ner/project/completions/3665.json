@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ed179a8e169245fdae4dbe3c4de661cc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 39,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

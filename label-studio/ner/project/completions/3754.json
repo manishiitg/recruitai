@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b75a94fc6e7b4d958e049b1c118cc808",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 33,
+      "labels": [
+       "DATE"
+      ],
+      "text": "25 days"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6274baa164d46f5b47e7d62f7b52f5a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 45,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

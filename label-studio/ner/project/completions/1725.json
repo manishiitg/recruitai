@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "226e72b3c914414a915ccb534728060a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bharat Institute of Technology, Meerut."
+     }
+    }
+   ]
+  }
+ ]
+}

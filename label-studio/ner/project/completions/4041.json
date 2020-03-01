@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "09e6dab7f8cb4e50b97222ec84e1778e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 27,
+      "labels": [
+       "DOB"
+      ],
+      "text": "28-05-1995."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2f115db3e69a47d1a768aae0fd5f0d79",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 83,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi."
+     }
+    }
+   ]
+  }
+ ]
+}

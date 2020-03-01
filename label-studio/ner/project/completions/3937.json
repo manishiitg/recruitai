@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fcc1d36923634735b23e887e9c7367cd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 110,
+      "labels": [
+       "Skills"
+      ],
+      "text": "(Less than 1 year), AUTOCAD (Less than 1 year), EXCEL (Less than 1 year),"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7fa7b29a3fdc45ff84e5a1146ef42a8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 111,
+      "end": 113,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MS"
+     }
+    }
+   ]
+  }
+ ]
+}

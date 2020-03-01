@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "951ffacbd6dc4ef99ea1e53c1da1f96b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Laya A"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "66defc8a4a6b4d4e9cc317de744d1391",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 25,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Cluster HR Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5f86c60f0b348879d15b9a21d9d90d6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 59,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Chennai Tamil Nadu"
+     }
+    }
+   ]
+  }
+ ]
+}

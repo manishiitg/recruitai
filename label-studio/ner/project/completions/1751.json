@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "922e6281f00945519ef02ff110e66201",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Aptron private ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

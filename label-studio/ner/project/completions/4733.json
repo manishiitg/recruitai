@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8a4aace23e149cb83add55586e84c36",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 58,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML 5, CSS 3 and Angular Js ,Angular 6"
+     }
+    }
+   ]
+  }
+ ]
+}

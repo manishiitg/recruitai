@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b4512004ee944a56b5b56166f436e40c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 38,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bsc(mpc)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b51f3e7f525f45609c0c1a369f8f49a1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 42,
+      "end": 61,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of science"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5b87e075c56142b8aaa09990777b76d5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 90,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Acharya Nagarjuna University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "775586e0ce414093809d8aa1a98a95dc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 93,
+      "end": 113,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

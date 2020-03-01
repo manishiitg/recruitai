@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ba05d5c757547eaa659cd90ff3b9419",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.5"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3d7b6f2873ee4d14a042123430ae4e7d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 9,
+      "end": 23,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SRM University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6a0314fdd0bd4d1ebe9fabcf67123461",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 31,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.2CGPA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1770271456574f16854b381ba46b16fe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 40,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "58%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a475f373942d4d6cba1271db963a458c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 49,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7341fde133b4451b85296d4eff17b11e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 99,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Shyamnandan Shahy College,Muzaffarpur High School"
+     }
+    }
+   ]
+  }
+ ]
+}

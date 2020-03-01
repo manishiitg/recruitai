@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29cb8bec8bde46bd951c6dbec9caef9b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 174,
+      "end": 190,
+      "labels": [
+       "DOB"
+      ],
+      "text": "4th January 1989"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1f65e75a99284fb18b6fb1daefa98050",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 248,
+      "end": 261,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "nglish, Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

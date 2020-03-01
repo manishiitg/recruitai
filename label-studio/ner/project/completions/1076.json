@@ -1,0 +1,106 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cc92f2273ea848a48b62d1ced11fe2e4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 21,
+      "labels": [
+       "ORG"
+      ],
+      "text": "XII BSS Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "446eb56280cf4a598287b3e5785540de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 36,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b3f13d48b4674143b93871beb50a0deb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 40,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "53%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3c6b9277668e431eb88230de16e8ae28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 60,
+      "labels": [
+       "ORG"
+      ],
+      "text": "X BSS Public School"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a712838e75c4480381535c523b58afe8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2012-2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ab111f140bd46a5bc97b83174c4ab18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 79,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "81%"
+     }
+    }
+   ]
+  }
+ ]
+}

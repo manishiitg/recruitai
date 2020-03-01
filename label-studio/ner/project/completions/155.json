@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "991841bb2e8047e4a16f51bdbc07258c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 38,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15c08ffc24084dd5962513bcb5423309",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 55,
+      "labels": [
+       "GPE"
+      ],
+      "text": "haziabad"
+     }
+    }
+   ]
+  }
+ ]
+}

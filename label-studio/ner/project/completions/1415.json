@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aae3683f0de046d681d62abb307b0a83",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 73,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Post Graduate Diploma in Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd7a119df5b54eea9f0b1f6134fd4277",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 79,
+      "end": 101,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Government Polytechnic"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9d433ebb144149d0880c37b639eceeef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 109,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f7f87d88f8a4321a89e7a84fdc451c6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 113,
+      "end": 117,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9e54d1364bc44899a7d2aac4d999c298",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 126,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%"
+     }
+    }
+   ]
+  }
+ ]
+}

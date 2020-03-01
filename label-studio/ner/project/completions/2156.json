@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dcc8c7c92ad64c53bfa40db8bf2eb40c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 91,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML 5, CSS 3 (CSS Grid), SAAS, BOOTSTRAP 4, JAVASCRIPT (ES-2015 or ES-6), JQUERY"
+     }
+    }
+   ]
+  }
+ ]
+}

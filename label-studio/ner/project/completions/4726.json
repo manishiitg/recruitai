@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "93f55a548b3e481e97001ffd301e1a38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 40,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Azamgarh (U.P.)"
+     }
+    }
+   ]
+  }
+ ]
+}

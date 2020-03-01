@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2f3fcb717214a399f98dc82279d1db9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 160,
+      "end": 166,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Odisha"
+     }
+    }
+   ]
+  }
+ ]
+}

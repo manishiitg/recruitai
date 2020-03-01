@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe1d98d326ef4182bc1a95143ef4646c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Six-months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6e311d0b4777462099d87185745b2589",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 47,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CETPA Infotech pvt ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b7f93077d1a744e78b5ff722b5e3c7b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 67,
+      "labels": [
+       "Designation"
+      ],
+      "text": "SEO Executive."
+     }
+    }
+   ]
+  }
+ ]
+}

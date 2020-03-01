@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ba37672e172e48f5b11f22c8769fae98",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 13,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ce9cab09d0b4adfb5dfa55018c76eef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Visvesvaraya Technological University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f61d5d400ce74354a7583d3ad1359187",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 64,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014 to 2016"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1034e1bd223245979c5714cc12dbd38e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 68,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "BBM"
+     }
+    }
+   ]
+  }
+ ]
+}

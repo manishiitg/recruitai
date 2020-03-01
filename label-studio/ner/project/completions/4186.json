@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "039f44fd1e644737beb69d4bcdabdc32",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 111,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Nobillio Technologies Private Limited."
+     }
+    }
+   ]
+  }
+ ]
+}

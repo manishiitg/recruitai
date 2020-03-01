@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "efc61a830810405fa067fe38c56a86e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 42,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Bhuwanpati Agro Foods Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

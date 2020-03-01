@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "caed86e0ee7540f5abffccd4c2e63867",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "(VIVEK"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ef652d0df5e5484aaae3981cbaf70326",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 54,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LG soft India"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5e7b9edb2e9a46de95cc73dc43fd086f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 65,
+      "labels": [
+       "GPE"
+      ],
+      "text": "angalore"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "501da24e3b9246cb9e1666e16d49c58b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 251,
+      "end": 266,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Tester Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5925a1b9d7747b181b688fb97708c77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 312,
+      "end": 319,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LG Soft"
+     }
+    }
+   ]
+  }
+ ]
+}

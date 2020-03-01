@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2c2afd42cc804adb926e8e299e60d8b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 58,
+      "end": 126,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Java/J2EE, .Net 4.5, MS.Net Tech.[ASP.Net, C#, VB.Net, Web services,"
+     }
+    }
+   ]
+  }
+ ]
+}

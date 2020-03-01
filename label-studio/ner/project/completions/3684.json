@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "004018dec458442e9adff469ceba9c71",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 44,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Dr. A.P.J. Abdul Kalam Technical University,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b60256481f95463893cf9e34badc704b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 52,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Lucknow"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a570743bc4b848618f85135087edbe2e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 58,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63.4%"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "587a2608ee7c4a35ba28357556bbc3f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 52,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "3 year"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45bc761372764d31b82969b6df4b57ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 94,
+      "labels": [
+       "ORG"
+      ],
+      "text": "ncandescent Papers Pvt. Ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4107ca58a4bc4244a2b5d1bceb89a3ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 52,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Two years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7040eb828c3c43cf80836fd5ae974b23",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 101,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C++ programing"
+     }
+    }
+   ]
+  }
+ ]
+}

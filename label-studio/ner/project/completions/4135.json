@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ff3452b690e4a7e916868d158cd61da",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 6,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MRSPTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "37549ef8e2834a15a9aa5d5e7a05ed8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 7,
+      "end": 18,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015 - 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "823ed56dead0489f808813ff5086faf0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 21,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "75"
+     }
+    }
+   ]
+  }
+ ]
+}

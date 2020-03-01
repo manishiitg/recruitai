@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5a90d3f45a0849c0906e4c3861ab75dc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 24,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "7.5 years"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f7096ee64f12441f933abecc71f3b1a2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 70,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "499fa4dee82b485dbabe55787354ceae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 171,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Django, Flask, Web2py, Tensorflow, jupyter Notebook"
+     }
+    }
+   ]
+  }
+ ]
+}

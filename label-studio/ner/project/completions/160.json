@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f13650bd49c549728a3973248b2976a4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 27,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Operation Analyst"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "93eace7543cd423292e9b31e60f87f6b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 48,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft Server"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ca1639ce95c24becad7b93c752c8faf6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 104,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Application Support engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a9fd5e8b53af422d8eaa466e7348f603",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 109,
+      "end": 137,
+      "labels": [
+       "ORG"
+      ],
+      "text": "PricewaterhouseCoopers, USA."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "97811c4653274b4ebcd5177ff279b14a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 148,
+      "end": 165,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Technical Support"
+     }
+    }
+   ]
+  }
+ ]
+}

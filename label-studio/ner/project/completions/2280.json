@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c3ea2d8f1ab34cefa733905a7143948f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 37,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Technology (EC)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1e009a2e35943158fa91d04aecdfc6e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 43,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "(56%)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b945c0256f1d48f58e031b2a0281cea0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 54,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011-2016,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5aaa8b336aba43e79640b581c125274b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 55,
+      "end": 101,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Don Bosco Institute Of Technologies,Bangaluru."
+     }
+    }
+   ]
+  }
+ ]
+}

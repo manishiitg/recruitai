@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "900c0926504a4314b48163e3bda4f697",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 29,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "NIKHIL KUMAR"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "28b4b323ba56415189639b41cd3d5de6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 51,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-7827281439"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e8c5066c4f3546ed8698cc574766775d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 84,
+      "end": 107,
+      "labels": [
+       "Email"
+      ],
+      "text": "nikhilkmr5250@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c91247749e44670aa0dab53d784a63c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 112,
+      "end": 134,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Vijay Nagar, Ghaziabad"
+     }
+    }
+   ]
+  }
+ ]
+}

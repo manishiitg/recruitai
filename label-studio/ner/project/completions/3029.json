@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f3dc23d928b84eab9376ab7c8066f83f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Smalsus Info"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "29a7557bd9924efd96343d53de0a7538",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 79,
+      "labels": [
+       "DATE"
+      ],
+      "text": "November 2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ab11e24d39d477ead362041b648b349",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 102,
+      "end": 120,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f2d54cd2ae474757b132384193ea0a29",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 129,
+      "labels": [
+       "ORG"
+      ],
+      "text": "SHAREWEB"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50b50cf3ccc04dfda7e0009f9cf28e4d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 130,
+      "end": 152,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(January 2019 PRESENT)"
+     }
+    }
+   ]
+  }
+ ]
+}

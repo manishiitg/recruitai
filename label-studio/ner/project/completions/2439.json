@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ab628ca4d294c3a933e998c4e4be4b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 72,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Developer Support Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15ebc2e6fbaf474ab75fa28d35fb8fe1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 88,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft iGTSC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0a87d01caabb4cd58cf33a4cb9a2c8fb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 91,
+      "end": 117,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bangalore Urban, Karnataka"
+     }
+    }
+   ]
+  }
+ ]
+}

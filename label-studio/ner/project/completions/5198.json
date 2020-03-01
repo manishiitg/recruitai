@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b5e92a11685f4a2dba735c0b171cc8bf",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 37,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Designer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2e919c1a8f5f46ef9ed189e3f62168df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Gravity Multimedia."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a0677a5ea9ec4d09a0668b2efcaac715",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 90,
+      "end": 100,
+      "labels": [
+       "DATE"
+      ],
+      "text": "arch. 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53a91b4c7c434933ae56aaa82d065995",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 133,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Web Designer,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4def51bcb5f241b9b3f7333cece01c31",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 351,
+      "end": 375,
+      "labels": [
+       "Skills"
+      ],
+      "text": "HTML, XHTML, HTML5, CSS,"
+     }
+    }
+   ]
+  }
+ ]
+}

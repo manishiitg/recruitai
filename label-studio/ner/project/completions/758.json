@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "18ed6159746d401e95cc37dc4f2afa59",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "MAHADEV KUMAR SAHNI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f98d8f9d256345dc963cc7da40d6a3ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 34,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91-8727823490"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d8493c5cf10c4ad1920ce013fe353fdc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 56,
+      "labels": [
+       "Email"
+      ],
+      "text": "mahadevk781@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82820add8e9e49f2ab648422ed0128da",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "SHUBHAM TRIVEDI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4e381c271e44400195fb14d04b4c1c47",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 23,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "44145334ff1a47dea2fa0858c7af9072",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 44,
+      "end": 89,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Engineering), Bharat Institute of Technology,"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "45b9129141104fd5880af0d7a262bca9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 14,
+      "end": 34,
+      "labels": [
+       "Email"
+      ],
+      "text": "sohamray94@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e5eaa820064c45eba14a39895dc54ec4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 63,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Indira School of Communication"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d615dc1c31884ca9acb0c71ee574964f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 28,
+      "labels": [
+       "Designation"
+      ],
+      "text": "PRODUCT MARKETING"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14f40f0a3d0e47159e4d264f21fa47b2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 48,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "EXPERIENCE- 3 YEARS"
+     }
+    }
+   ]
+  }
+ ]
+}

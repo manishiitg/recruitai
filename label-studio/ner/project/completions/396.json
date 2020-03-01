@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "51cb2d61835f40538c51641d3e4b6156",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 77,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Technology in Electronics and Communication Engineering"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "80c1d4c03a0944caa7504fb98c6f6a28",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 120,
+      "labels": [
+       "ORG"
+      ],
+      "text": "GLA Institute of Technology and Management"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4822660161bb420184417cc85a4b90ed",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 123,
+      "end": 145,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Mathura, Uttar Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

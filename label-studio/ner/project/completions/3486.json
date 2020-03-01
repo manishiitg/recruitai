@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ac93133e273a4bbab90d2775cfb08e6a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 27,
+      "labels": [
+       "DOB"
+      ],
+      "text": "9th Dec 1991"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "65c3d57d2de74292af90fb5406acd79a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 45,
+      "end": 63,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English, Hindi and"
+     }
+    }
+   ]
+  }
+ ]
+}

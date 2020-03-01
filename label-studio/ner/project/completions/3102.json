@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f0a908a4e994882879db5f5b2e1d368",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 20,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Associate consultant"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6922236cf70a4b5a87c0155ed89dfa31",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 21,
+      "end": 24,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CMC"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0f7133f3960d44c0be8fdb7133ee20f4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 36,
+      "labels": [
+       "DATE"
+      ],
+      "text": "July 2003"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dd27c4a56dff47fc8cdffdceb80e53d2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 49,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2004"
+     }
+    }
+   ]
+  }
+ ]
+}

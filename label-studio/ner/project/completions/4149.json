@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "54a398ee1be04c2a86bd5f530ea4d7f0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 30,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "2year 1 month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e87b0e35a1154ff899be6def1035ded9",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 34,
+      "end": 54,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software development"
+     }
+    }
+   ]
+  }
+ ]
+}

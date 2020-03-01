@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "589af04c51d446d7994bd1b2e714ed8d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Krishna Prasad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "244ce6047c994ad090200c6af40c0d42",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 27,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna, Bihar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0db9281383f644ce803211cf49fbd31e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 119,
+      "end": 131,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Patna, Bihar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dd58541403f8423bbc249ac83c62a77e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 148,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Danapur, Bihar"
+     }
+    }
+   ]
+  }
+ ]
+}

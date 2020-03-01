@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "28d2a65a88b449fb8874ae3ad1b0171b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "ORG"
+      ],
+      "text": "IGNOU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1c1d523b05c048338386e2bbe2403d1b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 6,
+      "end": 12,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60.11%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2df16d26cb0a491db82ab7ad42b57ab1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 50,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b8ae401ac9454e2b839d22ac4caf2d67",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 55,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CA"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "95338e3af2f04de683722dfea0144941",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 62,
+      "end": 66,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "60 %"
+     }
+    }
+   ]
+  }
+ ]
+}

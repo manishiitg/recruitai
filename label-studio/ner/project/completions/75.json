@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "25922da1fd0a46189f256dd88dd7886a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 87,
+      "labels": [
+       "Skills"
+      ],
+      "text": ".NET Framework , ASP.NET , C#.NET, ,ADO.Net, jQuery"
+     }
+    }
+   ]
+  }
+ ]
+}

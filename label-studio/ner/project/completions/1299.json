@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "aa8a87d03fa7462da9bfebc8fc5a2d2c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 46,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Global Production Support Lead"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "43bd7bba1b234c5a94995125babc7911",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 49,
+      "end": 60,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f2dcbabdfbf6477683bf935e113ee58f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 78,
+      "labels": [
+       "Designation"
+      ],
+      "text": "(Technology Lead)"
+     }
+    }
+   ]
+  }
+ ]
+}

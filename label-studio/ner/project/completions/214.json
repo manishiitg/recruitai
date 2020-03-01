@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e107914ddb6447c892b0ea3a84378487",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 14,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Priyansh Kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4842c187ccb9430c890698d64ed82223",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 49,
+      "labels": [
+       "Email"
+      ],
+      "text": "priyansh_shiraj@outlook.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f251f2e250424ce882b8ab66d95ae3bb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 88,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8006377600"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6895058aed164d8d91bce792c3b65d8f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 104,
+      "end": 110,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Meerut"
+     }
+    }
+   ]
+  }
+ ]
+}

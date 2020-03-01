@@ -1,0 +1,122 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b380a516abc7453d9fe7f57b39a29f79",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MBA in Marketing"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2a13b450ab284238b121a1bc5a0f2f25",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 22,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "JSS Noida."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d89a2b5e03d84337a741e928f04dbd22",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 64,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor in Mathematics (B.Sc.)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0d79a6c7778a40c29e20fcaf6a9557b5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 70,
+      "end": 95,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Aligarh Muslim University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7f4f4aa9c04f4c5e8810c1fc5870b6e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 105,
+      "end": 115,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CBSE board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9192cb016c48441a8baf86043c258d05",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 131,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "8.6(CGPA)."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "49bc927dba904b58a434f59d195ce624",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 157,
+      "end": 161,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "70%."
+     }
+    }
+   ]
+  }
+ ]
+}

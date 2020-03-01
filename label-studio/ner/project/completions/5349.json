@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9c9a3f5a4d4b4f72864457b9ebfbe7ad",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 3,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "61%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "164f6bfcae804e30a4d986a63611500c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 69,
+      "labels": [
+       "Skills"
+      ],
+      "text": "C, C++, HTML, CSS, SQL, .NET,"
+     }
+    }
+   ]
+  }
+ ]
+}

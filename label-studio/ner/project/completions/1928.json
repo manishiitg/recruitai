@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c6c34a497de24c8bbb235ba3215942b0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 83,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Naresh I Technologies, Hyderabad."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3cca13e37c7741e397df4c2c3ca8d1e3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 50,
+      "end": 72,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Naresh I Technologies,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4fac8e6528bd4b97b3efd7f564ff16d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 82,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c1501f2fa99f4d70a3438a11e2538ee0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 119,
+      "end": 141,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Naresh I Technologies,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b723690ace5f49d2961492895f9d56c7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 142,
+      "end": 151,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Hyderabad"
+     }
+    }
+   ]
+  }
+ ]
+}

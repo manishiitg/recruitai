@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "dc8d03dcef6d49ecaab71907b0d46037",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 27,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "RAJAN SOOD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5c212766c78340c0a466ba4ff924eba3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 63,
+      "labels": [
+       "Email"
+      ],
+      "text": "rajan.sood9@rediffmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "62bba0961b774558aff21864baa51e22",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 76,
+      "labels": [
+       "Phone"
+      ],
+      "text": "910934125"
+     }
+    }
+   ]
+  }
+ ]
+}

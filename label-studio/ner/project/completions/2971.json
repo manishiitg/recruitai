@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d86ce98a7ca465ab58925f0c8954f06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 18,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Raja Chandra Mouli"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "86295f058da943cfa018d53245c00c15",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 43,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Cuddapah, Andhra Pradesh"
+     }
+    }
+   ]
+  }
+ ]
+}

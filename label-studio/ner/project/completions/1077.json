@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7c503994f7284f44b2f818d678281157",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "Designation"
+      ],
+      "text": "INTERNSHIP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f62acb4b98d74fd0bfc1a41ca627d39c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 11,
+      "end": 33,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Apex TG India Pvt. Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d558c29396e049fca6af2f999a6ffa75",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 60,
+      "labels": [
+       "DATE"
+      ],
+      "text": "0 May 2018 13 July 2018)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "143ddd88b4a6481a934926b39db45a6a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 61,
+      "end": 70,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "(45 days)"
+     }
+    }
+   ]
+  }
+ ]
+}

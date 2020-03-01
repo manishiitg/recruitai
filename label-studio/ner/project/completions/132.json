@@ -1,0 +1,154 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c462d36d577b438dba823714ff057f5e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 69,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Computer Application"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d740ffa7cd0d424e94ca981521bc6d50",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 106,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Awadhoot Bhagwan Ram PG College"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "686eada6474c4f12b89971b13b8d4102",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 120,
+      "end": 125,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MGKVP"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8a5ca971331a4372b0ad308c2b81ae22",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 138,
+      "end": 146,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Varanasi"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f9c0659cc4514d99bf51c6c962cba018",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 155,
+      "end": 165,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014. 12th"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33c3e55bdcb641389143989767b70225",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 171,
+      "end": 181,
+      "labels": [
+       "ORG"
+      ],
+      "text": "CBSE Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "375b9c59a8104d4b8a6aa49185cb2211",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 185,
+      "end": 195,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011. 10th"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b548d119efa4e6d9c6663fc108dd6dc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 201,
+      "end": 211,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d982684d6e27472e9a0ca77abfb7fb39",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 215,
+      "end": 220,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2009."
+     }
+    }
+   ]
+  }
+ ]
+}

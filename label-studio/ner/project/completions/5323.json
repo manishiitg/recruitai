@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7573889ad6104f238016969b3398b6a3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 43,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AsiaTech INC: AsiaTech INC"
+     }
+    }
+   ]
+  }
+ ]
+}

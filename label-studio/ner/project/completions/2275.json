@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3478e41887e648caa902e5124bead8ef",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 28,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HARDWARE & SOFTWARE ENGINEER"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0ecc81f738d64dcdba7e53200b3f6b49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 74,
+      "labels": [
+       "ORG"
+      ],
+      "text": "RFID and Zigbee technologies Teleperformance:"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c5854c65b200436fa0743b238e8997e8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 18,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "50c28e39ba9f452096531987b6ecac9e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 63,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "67.44%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "048f62ca9b72494595c6e36834d3cb81",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 67,
+      "end": 71,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2018"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bf3c425989ee43889f0c1be5d80e0d7e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 149,
+      "end": 154,
+      "labels": [
+       "ORG"
+      ],
+      "text": "MMMUT"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9bc328dfd2534dac8917a4bacc30c4eb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 4,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f2ad879e0ada4a18bba1b085cc60dc9b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 5,
+      "end": 11,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "51.66%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "afecabc90c754b3d9ff0aa8d0ecde89d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 24,
+      "end": 31,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "MCA BCA"
+     }
+    }
+   ]
+  }
+ ]
+}

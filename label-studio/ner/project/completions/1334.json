@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "da26d1708c374da8966354865cb5fd88",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 365,
+      "end": 425,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Excellent business skills, project management, presentation,"
+     }
+    }
+   ]
+  }
+ ]
+}

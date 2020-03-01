@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "61c5a3cf030b4593bf2e4fb4fec2ccac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 27,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "KM. RUPALI"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "979ff4dc03b741f58d2d15ffe9bfc9ac",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 39,
+      "end": 60,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Vijay Nagar Ghaziabad"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "63302e5db30b4aaebcac5e7b5d828a91",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 83,
+      "labels": [
+       "Phone"
+      ],
+      "text": "7668238088"
+     }
+    }
+   ]
+  }
+ ]
+}

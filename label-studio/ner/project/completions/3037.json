@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8df23600c3af4f03b4fbf33f3b2c55ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 4,
+      "end": 40,
+      "labels": [
+       "ORG"
+      ],
+      "text": "APJ Abdul Kalam Technical University"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c9c617779e9e439d82464b1ba6acad18",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 41,
+      "end": 46,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "63.4%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4f7e2f970a594df8b4bf4e6242362a44",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 47,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2014-2018"
+     }
+    }
+   ]
+  }
+ ]
+}

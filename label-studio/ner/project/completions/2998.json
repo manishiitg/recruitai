@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "82876fd8a638485facd4db99c675c026",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 27,
+      "labels": [
+       "Phone"
+      ],
+      "text": "8910515025"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a8786292e1e64509a9bab98abf6cbfcd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 38,
+      "end": 61,
+      "labels": [
+       "Email"
+      ],
+      "text": "amanjainbagra@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

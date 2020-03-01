@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2b52aa3cdb164199bf0b662ec801f107",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 51,
+      "end": 82,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Limited Tekskills India Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4b560199c4a0457aac76afad3672ae62",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 58,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys Limited"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c8b91ba9fd2a49bab34ec3a16544fcbe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 120,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Pune, Maharashtra"
+     }
+    }
+   ]
+  }
+ ]
+}

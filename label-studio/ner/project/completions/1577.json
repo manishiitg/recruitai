@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9659ef5fd44d424d81fc38ce6cac5f47",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 39,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 Month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cdd482595b1441e79523832fc4454397",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 56,
+      "labels": [
+       "Designation"
+      ],
+      "text": "training"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d21c0d19057340679de93f0091d5eb41",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 87,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Piford Technology Pvt. ltd."
+     }
+    }
+   ]
+  }
+ ]
+}

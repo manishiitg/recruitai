@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fd79ce2a64fe4a2ba165fcafa7097a08",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 31,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Sonu chaurasia"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1b032ee27c5a4a579142b0605a861db5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 77,
+      "end": 84,
+      "labels": [
+       "GPE"
+      ],
+      "text": "panipat"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f58fed4a2a7b41268f011aaaf032a83d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 103,
+      "end": 124,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9641900005 9729308235"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "494b1c8c714640b1b90e60b2927d5e40",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 134,
+      "end": 160,
+      "labels": [
+       "Email"
+      ],
+      "text": "sonu.chaurasia76@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

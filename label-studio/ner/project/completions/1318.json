@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "720c917124d246ec9c8d084fba1af71e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Team Lead"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15d744716ffb4ffa8a1c76ce46a294e6",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 29,
+      "labels": [
+       "ORG"
+      ],
+      "text": "British Telecomm UK"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7acaf8eea8b14521a00d2e6d87c1b47d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 59,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2006 to July 2010"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6d51eedc69314c85aead989d3021a523",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 23,
+      "end": 26,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "6.7"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "cb310b63fa634355bd0c20d68d6503e5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 27,
+      "end": 40,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "Hindi English"
+     }
+    }
+   ]
+  }
+ ]
+}

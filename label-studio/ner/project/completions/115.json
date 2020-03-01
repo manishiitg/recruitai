@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8eba111e7632475dbf1d084ebe3e3062",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 28,
+      "end": 75,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Core PHP , HTML, Css ,Java Script And Photoshop"
+     }
+    }
+   ]
+  }
+ ]
+}

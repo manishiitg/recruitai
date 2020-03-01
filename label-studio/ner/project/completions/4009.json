@@ -1,0 +1,90 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6af021094b6043f1bdffd6fb22e1329b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Account Manager"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9b922162bb0b41f88dafc26f5085d54a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oracle"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3543c89ea5874c358e41bee66786e635",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 45,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a2f67a9abfd740a49da3e901705e798e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 56,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2013"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "761607e08ae747c6ac709ba61d3d5ceb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 60,
+      "end": 68,
+      "labels": [
+       "DATE"
+      ],
+      "text": "May 2014"
+     }
+    }
+   ]
+  }
+ ]
+}

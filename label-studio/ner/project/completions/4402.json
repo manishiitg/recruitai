@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f55c40b6c4c14555bc37bbe147c9188c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LG"
+     }
+    }
+   ]
+  }
+ ]
+}

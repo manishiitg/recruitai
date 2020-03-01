@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4c7d97b499a1448a81864d740230adb2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 27,
+      "labels": [
+       "ORG"
+      ],
+      "text": "U.P. Board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b6d32a8004b643aaa91d515fffac37ba",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 31,
+      "end": 35,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ff9fab5c76d943baac8ae3443be5a85f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 54,
+      "end": 60,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "55.1%."
+     }
+    }
+   ]
+  }
+ ]
+}

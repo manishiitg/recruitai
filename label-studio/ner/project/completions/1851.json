@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3f601a74bebf446fb98ec5521c0081df",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 30,
+      "end": 53,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Beryl System Pvt. Ltd.,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d8620267cf674622aee26d853b07cd23",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 95,
+      "end": 114,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Faridabad, Haryana-"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0015e16085264121bede0b740bd3c029",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 135,
+      "end": 152,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33ddff676d674e3592ddb2ca7aa74b38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 159,
+      "end": 177,
+      "labels": [
+       "DATE"
+      ],
+      "text": "3rd December 2018."
+     }
+    }
+   ]
+  }
+ ]
+}

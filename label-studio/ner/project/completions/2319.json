@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98fa0a90d3b546a1936681885627145c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 17,
+      "end": 27,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Amit kumar"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "68d9163124724edd8d1f85875e2f0011",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 59,
+      "labels": [
+       "Email"
+      ],
+      "text": "mitchauhankiet@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "813cf8b9b9b74a15bd0ab73610125bd0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 73,
+      "end": 83,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9639307637"
+     }
+    }
+   ]
+  }
+ ]
+}

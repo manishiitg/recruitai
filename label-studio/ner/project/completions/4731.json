@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fe59cb71ec9b45f6a49dfa6c789bdc35",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 44,
+      "labels": [
+       "ORG"
+      ],
+      "text": "C.H.S.E, Odisha"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8b2f062cfd9a44e8aa024b1b6a6a1604",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 78,
+      "end": 83,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Sc."
+     }
+    }
+   ]
+  }
+ ]
+}

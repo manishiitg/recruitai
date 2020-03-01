@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d9222b7e7a0c4bc7a67a4ccd66a77df7",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 25,
+      "end": 68,
+      "labels": [
+       "ORG"
+      ],
+      "text": "yundai Construction Equipment India Pvt Ltd"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "41956244b89a4e9495141d80bb7f28cb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 69,
+      "end": 81,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017-present"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "52411007bc854cd2b8581d3ea0f60970",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 234,
+      "end": 259,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Graduate Engineer Trainee"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "56e166e918884f588c0bb742cca7fe0e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 262,
+      "end": 276,
+      "labels": [
+       "DATE"
+      ],
+      "text": "une 17 June 18"
+     }
+    }
+   ]
+  }
+ ]
+}

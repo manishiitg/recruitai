@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "620144528cd2434ca8c10e3a29725c27",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 51,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Lakshmi Narain college of Technology, Indore (RGPV)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f8881d65b2724693a7308cf924f7085b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 75,
+      "labels": [
+       "DATE"
+      ],
+      "text": "June 2004 - August 2008"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "430b24b66a3e43b086bc155502a90026",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 136,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor of Engineering [B.E.], Electonics and Communication"
+     }
+    }
+   ]
+  }
+ ]
+}

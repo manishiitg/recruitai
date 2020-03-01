@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5d9cca339be2449999d54521e6d91ceb",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 10,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Mohd Aamir"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9095b0416a694c579dd7cc075c0f3dfc",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 44,
+      "labels": [
+       "Email"
+      ],
+      "text": "mohdaamir999993@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "4d8dd551e47a45a18ee351e3b42eb4dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 53,
+      "end": 67,
+      "labels": [
+       "Phone"
+      ],
+      "text": "+91 9999939927"
+     }
+    }
+   ]
+  }
+ ]
+}

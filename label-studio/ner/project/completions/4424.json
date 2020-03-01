@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3898b39071f2469791636df69f56f069",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 13,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Asha Subbaiah"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "98194cbfb49244a2a52091ed9ed4b99d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 24,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Microsoft"
+     }
+    }
+   ]
+  }
+ ]
+}

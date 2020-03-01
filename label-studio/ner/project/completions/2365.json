@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3697e2e228f1436f9dd0b9427c1f5e06",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 46,
+      "end": 50,
+      "labels": [
+       "ORG"
+      ],
+      "text": "LEAD"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abb3c1d753374643b18cf2c7bdb3208b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 107,
+      "end": 129,
+      "labels": [
+       "ORG"
+      ],
+      "text": "College of Management."
+     }
+    }
+   ]
+  }
+ ]
+}

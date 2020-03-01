@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1ace5626b4eb483c91cdab6f6601da8c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 32,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ajeev Ranjan"
+     }
+    }
+   ]
+  }
+ ]
+}

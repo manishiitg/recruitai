@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5ee02e44c58a4fc4b86fb53d86a0cbfe",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 18,
+      "labels": [
+       "GPE"
+      ],
+      "text": "ty"
+     }
+    }
+   ]
+  }
+ ]
+}

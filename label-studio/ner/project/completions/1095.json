@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "c006c8fd6f9b4061b3446842ba015707",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 2,
+      "end": 18,
+      "labels": [
+       "Phone"
+      ],
+      "text": "(+91)-9628331423"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a227d22a2d3b48e28cb2e60eb0c9cd70",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 19,
+      "end": 32,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "VATSAL PANEDY"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5476b04631fb4a37afeba3e36ccbfa11",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 74,
+      "end": 99,
+      "labels": [
+       "Email"
+      ],
+      "text": "pandeyvatsal475@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

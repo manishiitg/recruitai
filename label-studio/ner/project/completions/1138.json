@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d1a08c914631459081b7bde4073acf5e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 59,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B. tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "06b0a60262cd41b28e94e21c5ee1e50a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 65,
+      "end": 84,
+      "labels": [
+       "ORG"
+      ],
+      "text": "R.G.P.V University,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e57f51bf2cce4b16a4fb568e0f702883",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 85,
+      "end": 91,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bhopal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "14f84dc6f68a473882d822f97f483f45",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 92,
+      "end": 98,
+      "labels": [
+       "DATE"
+      ],
+      "text": "(2016)"
+     }
+    }
+   ]
+  }
+ ]
+}

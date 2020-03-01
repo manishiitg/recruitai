@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2800e66e80194ed5ba6132fd3b67d3c1",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 36,
+      "end": 45,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Telangana"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "028a5add7fb846f283b20194e30a0484",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 48,
+      "end": 67,
+      "labels": [
+       "GPE"
+      ],
+      "text": "hyderbad, Telangana"
+     }
+    }
+   ]
+  }
+ ]
+}

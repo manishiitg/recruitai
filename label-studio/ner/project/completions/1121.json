@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "971dffe28b2543aaa0e01018428ecefa",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 5,
+      "labels": [
+       "ORG"
+      ],
+      "text": "amity"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a94ae9ca5934a6ab59531176ac8465b",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 8,
+      "end": 28,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Noida, Uttar Pradesh"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "53a54252d9934da5b46d5e89a98b023a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 41,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2011 to 2013"
+     }
+    }
+   ]
+  }
+ ]
+}

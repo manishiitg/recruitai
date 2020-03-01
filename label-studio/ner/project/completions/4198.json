@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "33d22348f2b24f9786fabd356e3a3e77",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 32,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Government State board"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "ea772af859734012aadbb7a8134d9e95",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 37,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2015"
+     }
+    }
+   ]
+  }
+ ]
+}

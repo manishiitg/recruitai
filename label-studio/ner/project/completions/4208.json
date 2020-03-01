@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "0432a0e2873a4721a386f9589c3d45ae",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 30,
+      "labels": [
+       "Phone"
+      ],
+      "text": "9015307614"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "2ccf127954e84b28b9ced0693e302776",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 75,
+      "end": 90,
+      "labels": [
+       "LANGUAGE"
+      ],
+      "text": "English & Hindi"
+     }
+    }
+   ]
+  }
+ ]
+}

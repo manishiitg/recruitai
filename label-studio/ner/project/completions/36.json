@@ -1,0 +1,138 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "958616207d5e4280b2551761fc08cc7a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 9,
+      "labels": [
+       "DATE"
+      ],
+      "text": "7/06/2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "e358dd0bc8f34f17a0b0d144683f91dd",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 22,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AXP Internal"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1cba01b1d6d4badbbd01c47d79b28af",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 37,
+      "end": 51,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2017 2013 2010"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "abdb2b7a6e864f5ba6c7d0196ba29e72",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 52,
+      "end": 58,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "B.Tech"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "d871d06d453f4da6b68efda8e3e1e7d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 89,
+      "end": 93,
+      "labels": [
+       "ORG"
+      ],
+      "text": "AKTU"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8681680b832c44aa9d709a1615862158",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 99,
+      "end": 104,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "64.6%"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "18d663321b4048a3ae80fa611ca25b38",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 157,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Chitra Gupt Inter College School Moradabad,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f20b430397c541cab06e1c7f01869514",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 114,
+      "end": 154,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Chitra Gupt Inter College School Moradab"
+     }
+    }
+   ]
+  }
+ ]
+}

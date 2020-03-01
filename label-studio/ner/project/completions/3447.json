@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "bcc02dda61a6406cb5c08dd2bfec97e2",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "tanya aneja Karnal,"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "09d9daec7d634b3ba95b1e820d0e1570",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 20,
+      "end": 62,
+      "labels": [
+       "Email"
+      ],
+      "text": "Haryana8950133113 tanyanaeja4apr@gmail.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5549f58da45d49d681f2585dca6d2c51",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 143,
+      "end": 158,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "1.5+ experience"
+     }
+    }
+   ]
+  }
+ ]
+}

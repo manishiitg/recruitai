@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7f9b9503a92477097c7374c798ef8a8",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 15,
+      "end": 19,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "ANAN"
+     }
+    }
+   ]
+  }
+ ]
+}

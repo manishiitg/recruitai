@@ -1,0 +1,58 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "89aaa6f1f2ac4e4a975505b50668134c",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 68,
+      "end": 75,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "6 month"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "10033fa3ee9c40d1bcd9a6911142687d",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 76,
+      "end": 86,
+      "labels": [
+       "Designation"
+      ],
+      "text": "internship"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "f1478cccbd0d4a8d9e2d7623b548820a",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 87,
+      "end": 121,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Extramarks Education India Pvt ltd"
+     }
+    }
+   ]
+  }
+ ]
+}

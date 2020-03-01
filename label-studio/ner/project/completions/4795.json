@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "44b63b2562cc4ccdbe20382ef6a31ca5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 16,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Delhi University"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "efa36ff2cba04deabe5bcc36672f602e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 26,
+      "end": 60,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Bachelor degree (Computer Science)"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "90d0e9f9b3634ce78169ca97c8f6f247",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 66,
+      "end": 94,
+      "labels": [
+       "ORG"
+      ],
+      "text": "R.G.P.V. University, Bhopal."
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fdd69c3d65614752840862d4e1a55f16",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 121,
+      "end": 144,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Agiloworks Technologies"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "903dac62ac3445e195eed7d4dea82a39",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 150,
+      "end": 168,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Software Developer"
+     }
+    }
+   ]
+  }
+ ]
+}

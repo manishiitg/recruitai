@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "5cf2b146dc2a42d8a6c3ed131abe2c63",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 43,
+      "end": 61,
+      "labels": [
+       "ORG"
+      ],
+      "text": "St. Jude's School,"
+     }
+    }
+   ]
+  }
+ ]
+}

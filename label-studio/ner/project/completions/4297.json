@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "69843b32edba4400a6cd3bd4e47db5de",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 17,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Divyansh Bahuguna"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "07b0ae937fe14f7abd6459e1cd227311",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 18,
+      "end": 35,
+      "labels": [
+       "Designation"
+      ],
+      "text": "Frontend Engineer"
+     }
+    }
+   ]
+  }
+ ]
+}

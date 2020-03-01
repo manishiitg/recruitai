@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "3357708d48d54642bb3aa0e5b67d0786",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2016 - 2019"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7ee7841d40c4466ea7b8469b8e011c68",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 38,
+      "labels": [
+       "EducationDegree"
+      ],
+      "text": "Master"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "15e8a1df277b414aa7a945b39842ad74",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 96,
+      "end": 99,
+      "labels": [
+       "CARDINAL"
+      ],
+      "text": "7.5"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "a7357b3e806c46d28910a471c50a47c5",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 108,
+      "end": 112,
+      "labels": [
+       "DATE"
+      ],
+      "text": "2019"
+     }
+    }
+   ]
+  }
+ ]
+}

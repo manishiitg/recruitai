@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b74d5f478ab446f9adfe46c45a5a0b1e",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 10,
+      "end": 26,
+      "labels": [
+       "Email"
+      ],
+      "text": "shivdevverma.com"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "8ae5275422f64a109210a207e036db49",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 35,
+      "end": 57,
+      "labels": [
+       "Email"
+      ],
+      "text": "shivdevverma@gmail.com"
+     }
+    }
+   ]
+  }
+ ]
+}

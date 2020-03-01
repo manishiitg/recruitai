@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1818bf02a686476e8c0915227b8a3716",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 15,
+      "labels": [
+       "Designation"
+      ],
+      "text": "HVAC Technician"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "b46a97c491374834880e006a2961f232",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 16,
+      "end": 37,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Infosys and microsoft"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "6fe9966ba8c04a0097569224fb7b0ed4",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 40,
+      "end": 53,
+      "labels": [
+       "DATE"
+      ],
+      "text": "November 2015"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "60c075d1c9ba4b6ca32800d8d9f67269",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 57,
+      "end": 64,
+      "labels": [
+       "DATE"
+      ],
+      "text": "Present"
+     }
+    }
+   ]
+  }
+ ]
+}

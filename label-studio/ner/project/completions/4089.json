@@ -1,0 +1,74 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9ce380f0f75b49488c68cea07ef27f69",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 0,
+      "end": 11,
+      "labels": [
+       "PERSON"
+      ],
+      "text": "Srabani Das"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "7a765c5c8ff648f499c8f5f5fcaf1b01",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 12,
+      "end": 29,
+      "labels": [
+       "Designation"
+      ],
+      "text": "software engineer"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "9a7426d4d93547d1b00c2f349d489d9f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 32,
+      "end": 38,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Oracle"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "47d5a60ce44a4f4a8286d088fb85d9e0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 56,
+      "end": 75,
+      "labels": [
+       "GPE"
+      ],
+      "text": "Bishnupur, MANIPUR,"
+     }
+    }
+   ]
+  }
+ ]
+}

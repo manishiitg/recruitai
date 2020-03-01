@@ -1,0 +1,26 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e0cdd6ae9e343a4a82a3ab37af2f4d0",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 33,
+      "end": 67,
+      "labels": [
+       "Skills"
+      ],
+      "text": "Core Java , Mysql , Servlet , Jsp,"
+     }
+    }
+   ]
+  }
+ ]
+}

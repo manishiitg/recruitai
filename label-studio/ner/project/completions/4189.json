@@ -1,0 +1,42 @@
+{
+ "completions": [
+  {
+   "id": 1,
+   "lead_time": 20,
+   "result": [
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "1e7a50bf2404403786c53becb8d2ea4f",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 29,
+      "end": 40,
+      "labels": [
+       "ExperianceYears"
+      ],
+      "text": "Four Months"
+     }
+    },
+    {
+     "from_name": "ner",
+     "honeypot": true,
+     "id": "fad09b58bcbb4a6982f2361f85112fc3",
+     "source": "$text",
+     "to_name": "text",
+     "type": "labels",
+     "value": {
+      "start": 81,
+      "end": 86,
+      "labels": [
+       "ORG"
+      ],
+      "text": "Croma"
+     }
+    }
+   ]
+  }
+ ]
+}
