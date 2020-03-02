@@ -99,7 +99,7 @@ def processAPI(filename):
     output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
 
     logger.info("output dir %s", output_dir)
-    savePDFAsImage(f["file"], output_dir)
+    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)
     predictor, cfg = loadTrainedModel()
     imageFile = process(output_dir, predictor, cfg)
     logger.info("pic found %s", imageFile)
@@ -107,7 +107,7 @@ def processAPI(filename):
         x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + namenonum + "/picture"], shell=True)
         logger.info(x)
 
-    return imageFile , output_dir
+    return imageFile , output_dir, finalImages, output_dir2
 
 def loadTrainedModel():
     global predictor
@@ -159,13 +159,44 @@ def savePDFAsImage(cv, output_dir):
     cvfilename = cv.replace(cvdir, "")
     cvfilename = ''.join(
         e for e in cvfilename if e.isalnum())
+    
+    finalPages = []
+
+    basecv = os.path.basename(cv)
+    filename, file_extension = os.path.splitext(basecv)
+    cvfilename = ''.join(e for e in filename if e.isalnum())  + file_extension
+    basePath = BASE_PATH + "/../cvreconstruction"
+    logger.info("final filename  %s" , os.path.join(basePath,cvfilename))
+    cv = shutil.copy(cv,  os.path.join(basePath,cvfilename))  
+    logger.info("final file name %s" , cv)
+    output_dir2 = os.path.join(basePath,''.join(e for e in basecv if e.isalnum()))
+
+    Path(output_dir2).mkdir(parents=True, exist_ok=True)
+
     for i, page in enumerate(pages):
         logger.info("saving pdf image at %s", os.path.join(output_dir,
                                                            cvfilename + "page" + str(i) + '.png'))
         page.save(os.path.join(output_dir,
                                cvfilename + "page" + str(i) + '.png'), 'PNG')
+
+
+        subpagecvfilename = os.path.join(
+            "", output_dir2, "page" + str(i) + '.png')
+        logger.debug("saving cv images to %s", subpagecvfilename)
+
+        shutil.copy(os.path.join(output_dir,
+                               cvfilename + "page" + str(i) + '.png'),  subpagecvfilename)  
+
+
+        finalPages.append(subpagecvfilename)
         # checking for pic only on the first page
         break
+
+
+    x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    logger.info(x)
+
+    return finalPages, output_dir2
 
 
 def process(output_dir, predictor, cfg):
