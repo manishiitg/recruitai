@@ -18,6 +18,8 @@ from app.publisher.resume import sendMessage
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
+@bp.route('/<string:filename>', methods=['GET'])
+@bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET'])
 def fullparsing(filename, mongoid = None, skills = None):
     sendMessage({
