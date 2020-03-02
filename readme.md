@@ -10,7 +10,6 @@ gcloud config set project recruitai-266705
 gsutil ls
 mkdir pretrained
 gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
-<!-- mkdir logs -->
 mkdir batchprocessing
 sudo mkdir /var/log/recruitai
 
