@@ -8,11 +8,11 @@ import threading
 from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
 
 import redis
-from datetime import datetime
 import os 
 
 r = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
 
+from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
@@ -326,7 +326,7 @@ class TaskQueue(object):
             LOGGER.info("redis key exists")
             if "error" not in ret:
 
-                if skills:
+                if "error" not in ret and skills:
                     skillExtracted =  extractSkillMessage({
                         "action" : "extractSkill",
                         "mongoid" : mongoid,
@@ -344,7 +344,7 @@ class TaskQueue(object):
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-            if skills:
+            if "error" not in ret and skills:
                 skillExtracted =  extractSkillMessage({
                     "action" : "extractSkill",
                     "mongoid" : mongoid,
