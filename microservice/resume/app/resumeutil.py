@@ -2,7 +2,7 @@ from app.nerclassify.start import process as classifyNer
 from app.detectron.start import processAPI
 from app.ner.start import processAPI as extractNer
 from app.picture.start import processAPI as extractPicture
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
+from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL, RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
 from app.logging import logger
 from app.config import storage_client
 from pathlib import Path
@@ -14,11 +14,38 @@ import traceback
 
 from threading import Thread
 
+import json
+
 from app.publishsearch import sendBlockingMessage
+
+from datetime import datetime
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+import time
+
+
+client = MongoClient(RECRUIT_BACKEND_DB) 
+db = client[RECRUIT_BACKEND_DATABASE]
 
 
 def fullResumeParsing(filename, mongoid=None, skills = None):
     # try:
+
+    timer = time.time()
+    if mongoid and ObjectId.is_valid(mongoid):
+        ret = db.emailStored.update_one({
+            "_id" : ObjectId(mongoid)
+        }, {
+            "$set": {
+                "pipeline": [{
+                    "stage" : 0,
+                    "name": "started",
+                    "start_time" : time.time()
+                }]
+            }
+        })
+
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
 
@@ -43,21 +70,71 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             filename = filename + ".pdf"
 
         # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
+        logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
         x = subprocess.check_call(
             ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
         logger.info(x)
 
+        if os.path.exists(os.path.join(dest, filename)):
+            logger.info("file converted")
+        else:
+            logger.info("unable to convert file to pdf")
+            return {
+                "error" : "unable to convert file to pdf"
+            }
+
+
     fullResponse = {}
 
-    response, basedir = extractPicture(os.path.join(dest, filename))
+    response, basedir, finalImages, output_dir2 = extractPicture(os.path.join(dest, filename))
+
+    for img in finalImages:
+        img = img.replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
 
     fullResponse["picture"] = response
 
     if response:
-        fullResponse["picture"] = fullResponse["picture"].replace(
-            basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
+        fullResponse["picture"] = fullResponse["picture"].replace(output_dir2 + "/", GOOGLE_BUCKET_URL)
+
+    if mongoid and ObjectId.is_valid(mongoid):
+        ret = db.emailStored.update_one({
+            "_id" : ObjectId(mongoid)
+        }, {
+            "$push": {
+                "pipeline": {
+                    "stage" : 1,
+                    "name": "picture",
+                    "timeTaken": time.time() - timer,
+                    "debug" : {
+                        "response": json.loads(json.dumps(response)), 
+                        "basedir" : basedir, 
+                        "cvimage": finalImages
+                    }
+                }
+            }
+        })
+        timer = time.time()
+
 
     response, basePath = processAPI(os.path.join(dest, filename))
+
+    if mongoid and ObjectId.is_valid(mongoid):
+        ret = db.emailStored.update_one({
+            "_id" : ObjectId(mongoid)
+        }, {
+            "$push": {
+                "pipeline": {
+                    "stage" : 2,
+                    "name": "resume_construction",
+                    "timeTaken": time.time() - timer,
+                    "debug" : {
+                        "response": json.loads(json.dumps(response)), 
+                        "basePath" : basePath
+                    }
+                }
+            }
+        })
+        timer = time.time()
 
     finalLines = []
     for page in response:
@@ -68,6 +145,21 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     if mongoid:
         t = Thread(target=addToSearch, args=(mongoid,finalLines,{}))
         t.start()
+        t.join()
+
+        if mongoid and ObjectId.is_valid(mongoid):
+            ret = db.emailStored.update_one({
+                "_id" : ObjectId(mongoid)
+            }, {
+                "$push": {
+                    "pipeline": {
+                        "stage" : 3,
+                        "name": "searchIdx",
+                        "timeTaken": time.time() - timer
+                    }
+                }
+            })
+        timer = time.time()
 
     # fullResponse["compressedContent"] = {"response" : response, "basePath" : basePath}
 
@@ -78,9 +170,23 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
 
     nertoparse.append({"compressedStructuredContent": row})
 
-    
 
     nerExtracted = extractNer(nertoparse)
+
+    if mongoid and ObjectId.is_valid(mongoid):
+        ret = db.emailStored.update_one({
+            "_id" : ObjectId(mongoid)
+        }, {
+            "$push": {
+                "pipeline": {
+                    "stage" : 4,
+                    "name": "ner",
+                    "debug" : json.loads(json.dumps(nerExtracted)),
+                    "timeTaken": time.time() - timer
+                }
+            }
+        })
+        timer = time.time()
 
     # fullResponse["nerExtracted"] = nerExtracted
 
@@ -93,6 +199,21 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             pageIdx + 1)] = page["compressedStructuredContent"]
 
     combinData = classifyNer([row])[0]
+
+    if mongoid and ObjectId.is_valid(mongoid):
+        ret = db.emailStored.update_one({
+            "_id" : ObjectId(mongoid)
+        }, {
+            "$push": {
+                "pipeline": {
+                    "stage" : 4,
+                    "name": "classify",
+                    "debug" : json.loads(json.dumps(combinData)),
+                    "timeTaken": time.time() - timer
+                }
+            }
+        })
+        timer = time.time()
 
     newCompressedStructuredContent = {}
 
@@ -159,7 +280,8 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     ret = {
         "newCompressedStructuredContent": newCompressedStructuredContent,
         "finalEntity": combinData["finalEntity"],
-        "picture": fullResponse["picture"]
+        "picture": fullResponse["picture"],
+        "timeTaken": time.time() - timer
     }
 
     if mongoid:
