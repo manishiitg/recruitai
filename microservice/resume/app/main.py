@@ -306,6 +306,9 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        if message["mongoid"] is None:
+            message["mongoid"] = ""
+
         if "skills" in message:
             skills = message["skills"]
         else:
@@ -326,10 +329,10 @@ class TaskQueue(object):
             LOGGER.info("redis key exists")
             if "error" not in ret:
 
-                if "error" not in ret and skills:
+                if "error" not in ret and skills and ObjectId.is_valid(message["mongoid"]):
                     skillExtracted =  extractSkillMessage({
                         "action" : "extractSkill",
-                        "mongoid" : mongoid,
+                        "mongoid" : message["mongoid"],
                         "skills" : skills.split(",")
                     })
                     ret["skillExtracted"] = skillExtracted
@@ -344,10 +347,10 @@ class TaskQueue(object):
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-            if "error" not in ret and skills:
+            if "error" not in ret and skills and ObjectId.is_valid(message["mongoid"]):
                 skillExtracted =  extractSkillMessage({
                     "action" : "extractSkill",
-                    "mongoid" : mongoid,
+                    "mongoid" : message["mongoid"],
                     "skills" : skills.split(",")
                 })
                 ret["skillExtracted"] = skillExtracted

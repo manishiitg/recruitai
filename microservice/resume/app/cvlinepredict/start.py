@@ -12,7 +12,12 @@ from transformers import (WEIGHTS_NAME,
                                   BertForSequenceClassification,
                                   BertTokenizer)
 
-BASE_MODEL_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/output"
+from transformers import (WEIGHTS_NAME,
+                                  DistilBertConfig,
+                                  DistilBertForSequenceClassification,
+                                  DistilBertTokenizer)
+
+BASE_MODEL_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/distil-v2"
 TOKENIZER_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/"
 
 logger.info("xlnet base model path %s", BASE_MODEL_PATH)
@@ -30,7 +35,7 @@ def predict(text):
     sentPiecetokenizer = loadTokenizer()
     prob = torch.nn.Softmax()
 
-    label_list = ['WRK', 'EDU', 'SKILL', 'SUMMARY', 'PRJ', 'INFO']
+    label_list = ['CONTACT', 'WRK', 'ENDINFO', 'PRJ', 'EDU', 'SKILL', 'INFO', 'SUMMARY']
     prediction =  False
 
     with torch.no_grad():
@@ -90,12 +95,20 @@ def loadModel():
     global xlnetTokenizer
     if not xlnetModel:
         
-        model_class = BertForSequenceClassification
-        tokenizer_class = BertTokenizer
+        # model_class = BertForSequenceClassification
+        # tokenizer_class = BertTokenizer
+
+        model_class = DistilBertForSequenceClassification
+        tokenizer_class = DistilBertTokenizer
 
         args = {}
         args["model_type"] = "bert"
-        args["model_name_or_path"] = "bert-base-cased"
+        args["model_name_or_path"] = BASE_MODEL_PATH #"bert-base-cased"
+        args["lower_case"] = False
+        args["output_dir"] = BASE_MODEL_PATH
+
+        args["model_type"] = "distilbert"
+        args["model_name_or_path"] = BASE_MODEL_PATH # "distilbert-base-uncased"
         args["lower_case"] = False
         args["output_dir"] = BASE_MODEL_PATH
 
