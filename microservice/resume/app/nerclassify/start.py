@@ -276,17 +276,17 @@ def process(data, isPageWiseData=False):
                                 " ".join(extractEntity[pageno][lineno]["ORG"][0])).lower()
                             if "pvt" in org or "ltd" in org or "limi" in org:
                                 logger.info("looks like a company")
-                                extractEntity[pageno][lineno]["classify"] = "WRKEXP"
+                                extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = "WRKEXP"
+                                        pageno)][cIDx]["classify"] = "WRK"
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classifyreason"] = "org and pvt ltd"
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["contentIdx"] = contentIdx
                             elif "university" in org or "col" in org or "school" in org:
                                 logger.info("look like college")
-                                extractEntity[pageno][lineno]["classify"] = "WRKEXP"
+                                extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classify"] = "EDU"
@@ -332,7 +332,7 @@ def process(data, isPageWiseData=False):
                         logger.info(
                             "need to review this why this happened? orpahn ExperianceYears")
                         logger.info(extractEntity[pageno][lineno])
-                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WRK":
                             if "ExperianceYears" in finalEntity["wrkExp"][-1]:
                                 finalEntity["wrkExp"].append({
                                     "obj": "",
@@ -340,10 +340,10 @@ def process(data, isPageWiseData=False):
                                     "pageno" : pageno,
                                     "contentIdx" : contentIdx
                                 })
-                                extractEntity[pageno][lineno]["classify"] = "WORKEXP"
+                                extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = "WORKEXP"
+                                        pageno)][cIDx]["classify"] = "WRK"
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classifyreason"] = "exp yr and prev work"
                                     row["compressedStructuredContent"][str(
@@ -359,7 +359,7 @@ def process(data, isPageWiseData=False):
                         logger.info(
                             "need to review this why this happened? orpahn Designation")
                         logger.info(extractEntity[pageno][lineno])
-                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WORKEXP":
+                        if lineno > 0 and extractEntity[pageno][lineno - 1] == "WRK":
                             if "Designation" in finalEntity["wrkExp"][-1]:
                                 finalEntity["wrkExp"].append({
                                     "obj": "",
@@ -367,10 +367,10 @@ def process(data, isPageWiseData=False):
                                     "pageno" : pageno,
                                     "contentIdx" : contentIdx
                                 })
-                                extractEntity[pageno][lineno]["classify"] = "WORKEXP"
+                                extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
-                                        pageno)][cIDx]["classify"] = "WORKEXP"
+                                        pageno)][cIDx]["classify"] = "WRK"
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["classifyreason"] = "designation and prev work"
                                     row["compressedStructuredContent"][str(
