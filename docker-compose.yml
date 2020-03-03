@@ -204,19 +204,6 @@ services:
         networks:
             - ai
 
-    searchmq:
-        build: microservice/search
-        volumes:
-            - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
-            - ./cvreconstruction:/workspace/cvreconstruction 
-            - /var/log/recruitai:/workspace/logs  
-            - ./microservice/search/app:/workspace/app            
-        environment:
-            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-        networks:
-            - ai
-
     skillextractmq:
         build: microservice/skillextract
         volumes:
