@@ -57,7 +57,7 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1
+        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 5))
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -391,8 +391,9 @@ class TaskQueue(object):
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
         LOGGER.info('Acknowledging message %s', delivery_tag)
-        
-        self._channel.basic_ack(delivery_tag)
+
+        if self._channel:
+            self._channel.basic_ack(delivery_tag)
 
             
 
@@ -488,7 +489,7 @@ class ReconnectingTaskQueue(object):
             reconnect_delay = self._get_reconnect_delay()
             LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
             time.sleep(reconnect_delay)
-            self._consumer = ExampleConsumer(self._amqp_url)
+            self._consumer = TaskQueue(self._amqp_url)
 
     def _get_reconnect_delay(self):
         if self._consumer.was_consuming:
