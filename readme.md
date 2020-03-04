@@ -25,7 +25,7 @@ docker exec -it recruit_ai_1 bash
 
 sudo docker-compose up -d --scale=resumemq=6
 
-sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue resume
+sudo docker exec -it recruitai_resumemq_1 bash
 
 sudo docker image build -t recruitai .
 
@@ -48,6 +48,13 @@ sudo docker container run --name recruitai \
       -d -p 8085:8085 \
       recruitai bash
 
+sudo docker container run -it recruitai_resumemq_1 \
+      -v $(pwd)/pretrained:/workspace/pretrained \
+      -v $(pwd)/batchprocessing:/workspace/batchprocessing \
+      -v $(pwd)/cvreconstruction:/workspace/cvreconstruction \
+      -v $(pwd)/app:/workspace/app \
+      -d \
+      recruitai_resumemq_1 bash
       
 
 # if need to debug via bash
