@@ -453,6 +453,7 @@ def getSampleData(mongoid):
                     line = line["line"].lower().split(" ")
                     
                 ngrams = generate_ngrams(" ".join(line), 3)
+                ngrams.extend(generate_ngrams(" ".join(line), 2))
                 line.extend(["_".join(n.split(" ")) for n in ngrams])
                 docLines[docIndex].append(line)
 
