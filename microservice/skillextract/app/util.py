@@ -5,7 +5,7 @@ def generate_ngrams(s, n):
     s = s.lower()
     
     # Replace all none alphanumeric characters with spaces
-    s = re.sub(r'[^a-zA-Z0-9\s]', ' ', s)
+    # s = re.sub(r'[^a-zA-Z0-9\s]', ' ', s)
     
     # Break sentence in the token, remove empty tokens
     tokens = [token for token in s.split(" ") if token != ""]
