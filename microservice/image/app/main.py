@@ -21,9 +21,9 @@ db = client[RECRUIT_BACKEND_DATABASE]
 
 import traceback
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+from app.publisher import sendMessage
 
-from app.publishskill import sendBlockingMessage as extractSkillMessage
+amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 
 class TaskQueue(object):
@@ -38,7 +38,7 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'resume'
+    QUEUE = 'image'
     ROUTING_KEY = 'resume.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
@@ -57,7 +57,7 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 5))
+        self._prefetch_count = 2
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -318,6 +318,7 @@ class TaskQueue(object):
         key = message["filename"]
 
         key = ''.join(e for e in key if e.isalnum()) 
+        key = "picture_" + key
 
         LOGGER.info("redis key %s", key)
 
@@ -327,63 +328,29 @@ class TaskQueue(object):
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
-            if "error" not in ret:
-
-                if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                    skillExtracted =  extractSkillMessage({
-                        "action" : "extractSkill",
-                        "mongoid" : message["mongoid"],
-                        "skills" : skills.split(",")
-                    })
-                    ret["skillExtracted"] = skillExtracted
-
-                self.updateInDB(ret , message["mongoid"])
-            else:
+            if "error" in ret:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
         else:
             doProcess = True
                 
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message)
+            ret = fullResumeParsing(message["filename"], message["mongoid"])
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-            if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                skillExtracted =  extractSkillMessage({
-                    "action" : "extractSkill",
-                    "mongoid" : message["mongoid"],
-                    "skills" : skills.split(",")
-                })
-                ret["skillExtracted"] = skillExtracted
-
-            self.updateInDB(ret, message["mongoid"])
-
-            
+        
+        finalImages = ret[0] 
+        output_dir2 = ret[1]
+        cvdir = ret[2]
+        message["cvdir"] = cvdir
+        message["output_dir2"] = output_dir2
+        message["finalImages"] = finalImages
+        sendMessage(message)
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
         self.acknowledge_message(delivery_tag)
-
-    def updateInDB(self, ret, mongoid):
-        isError = False
-        if "error" in ret:
-            isError = True
-        ret = json.loads(json.dumps(ret))
-        LOGGER.info("mongo id %s", mongoid)
-        if ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "cvParsedInfo": ret,
-                    "cvParsedAI": not isError,
-                    "updatedTime" : datetime.now()
-                }
-            })
-            LOGGER.info(ret)
-        else:
-            LOGGER.info("invalid mongoid")
 
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
@@ -500,16 +467,8 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-from app.detectron.start import loadTrainedModel 
-from app.picture.start import loadTrainedModel as loadPicModel
-from app.cvlinepredict.start import loadModel
-from app.ner.start import loadModel as loadModelTagger
 
 def main():
-    loadTrainedModel()
-    loadPicModel()
-    loadModel()
-    loadModelTagger()
     
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()

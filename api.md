@@ -55,3 +55,9 @@ get picture of candidate from resume
 http://176.9.137.77:8086/resume/102.pdf/123
 
 full parsing of a resume, getting all ner data and classiifcation and images
+
+
+
+http://144.76.110.170:8086/gender/manish
+
+returns gender for a name
