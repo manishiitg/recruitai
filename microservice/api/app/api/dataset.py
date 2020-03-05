@@ -20,9 +20,8 @@ def candidate(id):
 
     issuetype = request.json.get('type', None)
 
-    # issuetype are NER, CLASSIFY, EMAILCLASSIFY, IMAGEVIZ
-
-    if issuetype == "NER":
-        
+    # issuetype are NER, CLASSIFY, EMAILCLASSIFY, IMAGEVIZ      
+    # 
+    # # not used right now  
 
     return jsonify(""), 200
