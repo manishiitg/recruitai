@@ -1,0 +1,50 @@
+FROM  pytorch/pytorch
+LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
+
+WORKDIR /workspace
+
+RUN pip install google-cloud-storage
+RUN pip install pika
+
+RUN apt-get update \
+    && apt-get install -y curl software-properties-common gnupg
+
+RUN add-apt-repository ppa:libreoffice/ppa -y
+RUN apt-get update && apt-get -y autoclean
+RUN apt-get install libreoffice -y
+RUN apt-get install python-poppler poppler-utils -y \
+    && apt-get -y autoclean
+
+RUN pip install pdfminer.six pdf2image
+# RUN pip install -r requirements.txt
+
+VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
+
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN apt-get install apt-transport-https ca-certificates -y
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+RUN apt-get update && apt-get install google-cloud-sdk -y
+
+RUN pip install gunicorn
+
+RUN apt-get update && \
+	apt-get install supervisor -y && \
+    apt-get -y autoclean && \
+	rm -rf /var/cache/apk/*
+
+COPY ./supervisor/conf.d/picture.conf /etc/supervisor/conf.d/picture.conf
+
+RUN truncate -s 0 /workspace/logs/picture*.log
+
+COPY ./app/RecruitAI.json /workspace
+
+RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
+RUN gcloud config set project recruitai-266705
+RUN gsutil ls
+
+RUN pip install redis pymongo
+
+RUN apt-get install default-jdk -y
+# ADD app /workspace/app, using volume instead
+
+CMD ["/usr/bin/supervisord"]
