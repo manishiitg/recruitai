@@ -394,7 +394,7 @@ def getSampleData(mongoid):
                     "_id" : ObjectId(mid)
                 })
                 row["_id"] = str(row["_id"])
-                r.set(mid, json.dumps(row))
+                r.set(mid, json.dumps(row, default=str))
                 data.append(row)
 
             
@@ -410,7 +410,7 @@ def getSampleData(mongoid):
             })
             row["_id"] = str(row["_id"])
             data = [row]
-            r.set(mongoid, json.dumps(row) , default=str)
+            r.set(mongoid, json.dumps(row, default=str))
 
     logger.info("processing data")    
 
