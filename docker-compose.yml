@@ -219,7 +219,38 @@ services:
             REDIS_PORT : '6379'
         networks:
             - ai
+    
+    gendermq:
+        build: microservice/gender
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/gender/app:/workspace/app            
+        environment:
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            REDIS_HOST: 'redis'
+            REDIS_PORT : '6379'
+        networks:
+            - ai
 
+    imagemq:
+        build: microservice/image
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/image/app:/workspace/app            
+        environment:
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            REDIS_HOST: 'redis'
+            REDIS_PORT : '6379'
+            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
+            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
+        networks:
+            - ai
 
     datasyncmq:
         build: microservice/datasync

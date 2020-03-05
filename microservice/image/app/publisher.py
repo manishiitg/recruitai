@@ -23,8 +23,7 @@ class MQPublisher(object):
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
     # PUBLISH_INTERVAL = 1
-    # QUEUE = 'resume'
-    QUEUE = 'image'
+    QUEUE = 'resume'
     ROUTING_KEY = 'resume.parsing'
 
     def __init__(self, amqp_url, message):
@@ -333,7 +332,7 @@ def sendMessage(obj):
     # obj is a json object to send message
     # very basic and simple right now 
 
-    LOGGER.info("send resume 0arsuing to queue")
+    LOGGER.info("send resume to queue")
     mq = MQPublisher(amqp_url, obj)
     mq.run()
     pass
