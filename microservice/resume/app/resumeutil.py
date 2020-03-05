@@ -325,6 +325,6 @@ def addToSearch(mongoid, finalLines, ret):
     })
 
 def getGender(name):
-    getGenderMessage({
+    return getGenderMessage({
         "name" : name
     })
