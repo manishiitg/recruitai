@@ -115,7 +115,8 @@ def start(findSkills, mongoid, isGeneric = False):
 
 
     avg_closest_dist = closest_dist/len(findSkills)
-    logger.info("avg distance between query words %s", avg_dist/avg_count)
+    if avg_count != 0:
+        logger.info("avg distance between query words %s", avg_dist/avg_count)
     logger.info("max distance %s", max_dist)
     logger.info("avg closest distance %s", avg_closest_dist)
     logger.info("max closest distance %s", max_closest_dist)
