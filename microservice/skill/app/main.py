@@ -106,6 +106,8 @@ def add_threadsafe_callback(ch,  method_frame,properties, msg):
 
 def send_result(ch, method_frame,properties, msg):
     ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=msg)
+    if ch.is_open:
+        ch.basic_ack(method_frame.delivery_tag)
 
 def on_recv_req(ch, method, properties, body):
     logger.info(body)

@@ -39,7 +39,7 @@ class TaskQueue(object):
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
     QUEUE = 'image'
-    ROUTING_KEY = 'resume.parsing'
+    ROUTING_KEY = 'image.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
