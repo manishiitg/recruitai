@@ -25,7 +25,7 @@ class MQPublisher(object):
     # PUBLISH_INTERVAL = 1
     # QUEUE = 'resume'
     QUEUE = 'image'
-    ROUTING_KEY = 'resume.parsing'
+    ROUTING_KEY = 'image.parsing'
 
     def __init__(self, amqp_url, message):
         """Setup the example publisher object, passing in the URL we will use

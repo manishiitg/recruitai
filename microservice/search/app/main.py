@@ -72,6 +72,8 @@ def add_threadsafe_callback(ch,  method_frame,properties, msg):
 
 def send_result(ch, method_frame,properties, msg):
     ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=msg)
+    if ch.is_open:
+        ch.basic_ack(method_frame.delivery_tag)
 
 def on_recv_req(ch, method, properties, body):
     logger.info(body)
@@ -83,7 +85,7 @@ def on_recv_req(ch, method, properties, body):
 
 def main():
 
-    createIndex()
+    
     global conn
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
@@ -94,6 +96,8 @@ def main():
     # .basic_qos(prefetch_count=1)
     ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
     ch.start_consuming()
+
+
 
 
 
