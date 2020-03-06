@@ -6,7 +6,14 @@ import json
 from app.config import RESUME_INDEX_NAME
 
 
+indexCreated = False
+
 def createIndex():
+    global indexCreated 
+    if indexCreated:
+        return 
+    
+    indexCreated = True
     es = db.init_elastic_search()
     indexName = RESUME_INDEX_NAME
 
@@ -22,6 +29,8 @@ def createIndex():
 
 
 def addDoc(mongoid, lines, extra_data={}):
+    
+    createIndex()
     if IS_DEV:
         indexName = "devresume"
     else:
