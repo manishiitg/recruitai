@@ -74,7 +74,7 @@ https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stoppe
 
 curl localhost:9200/_cat/health
 
-localhost:9181  for rq worker dashboard
+localhost:9200 elastic search url
 localhost:5601 for kibana and log viewer
 
 setup filebeat dashboards 
