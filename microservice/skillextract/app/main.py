@@ -90,7 +90,6 @@ def send_result(ch, method_frame,properties, msg):
 def on_recv_req(ch, method, properties, body, args):
     logger.info(body)
     (conn, thrds) = args
-    delivery_tag = method.delivery_tag
     t = threading.Thread(target = thread_task, args = (conn, ch, method, properties, body))
     t.start()
     # threads.append(t)
@@ -112,7 +111,7 @@ def main():
     #     auto_delete=False)
 
     # declare a queue
-    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True) #exclusive=True,
+    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True, durable=True) #exclusive=True,
     ch.basic_qos(prefetch_count=10)
     threads = []
     on_message_callback = functools.partial(on_recv_req, args=(conn, threads))
