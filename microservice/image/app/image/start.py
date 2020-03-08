@@ -1,5 +1,6 @@
 from app.logging import logger
 from pdf2image import convert_from_path
+from pdf2image.exceptions import PDFPageCountError 
 import json
 from PIL import Image
 from pathlib import Path
@@ -15,6 +16,8 @@ import os
 import random
 import re
 import subprocess
+import traceback
+import sys
 
 # You may need to restart your runtime prior to this, to let your installation take effect
 # Some basic setup
@@ -33,15 +36,20 @@ def processAPI(filename):
     output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
 
     logger.info("output dir %s", output_dir)
-    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)
-    
+    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)    
     return finalImages, output_dir2
 
 
 def savePDFAsImage(cv, output_dir):
     shutil.rmtree(output_dir, ignore_errors=True)
     logger.info("reading pdf %s", cv)
-    pages = convert_from_path(cv)
+    try:
+        pages = convert_from_path(cv)
+    except PDFPageCountError as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return {"error" : str(e)} , None
+
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     cvdir = os.path.dirname(cv)
     cvfilename = cv.replace(cvdir, "")
