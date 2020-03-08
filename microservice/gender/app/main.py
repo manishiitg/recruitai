@@ -54,11 +54,25 @@ def add_threadsafe_callback(ch,  method_frame,properties, msg):
         functools.partial(send_result, ch, method_frame,properties, msg)
     )
 
+
+def ack_message(ch, delivery_tag):
+    """Note that `ch` must be the same pika channel instance via which
+    the message being ACKed was retrieved (AMQP protocol constraint).
+    """
+    if ch.is_open:
+        ch.basic_ack(delivery_tag)
+    else:
+        # Channel is already closed, so we can't ACK this message;
+        # log and/or do something that makes sense for your app in this case.
+        pass
+    
 def send_result(ch, method_frame,properties, msg):
     ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=msg)
+    ack_message(ch, method_frame.delivery_tag)
 
-def on_recv_req(ch, method, properties, body):
+def on_recv_req(ch, method, properties, body, args):
     logger.info(body)
+    (conn, thrds) = args
     # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     # t.start()
     # logger.info(t.is_alive())
@@ -72,12 +86,27 @@ def main():
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
 
+    threads = []
     # declare a queue
-    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True) #exclusive=True,
+    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
     # ch
     # .basic_qos(prefetch_count=1)
-    ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
-    ch.start_consuming()
+    on_message_callback = functools.partial(on_recv_req, args=(conn, threads))
+    ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_message_callback)
+    try:
+        ch.start_consuming()
+    except KeyboardInterrupt:
+        ch.stop_consuming()
+        # for t in threads:
+        #     logger.info("waiting for thread to complete")
+        #     t.join()
+
+    # Wait for all to complete
+    for thread in threads:
+        thread.join()
+
+    conn.close()
+
 
 
 
