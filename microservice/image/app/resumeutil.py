@@ -17,8 +17,14 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+import traceback
+from subprocess import CalledProcessError
+
+import sys
+
 import time
 
+from google.api_core.exceptions import NotFound
 
 client = MongoClient(RECRUIT_BACKEND_DB) 
 db = client[RECRUIT_BACKEND_DATABASE]
@@ -38,7 +44,13 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     cvfilename = ''.join(
         e for e in filename if e.isalnum()) + file_extension
     cvdir = ''.join(e for e in cvfilename if e.isalnum())
-    blob.download_to_filename(os.path.join(dest, cvfilename))
+    try:
+        blob.download_to_filename(os.path.join(dest, cvfilename))
+    except  Exception as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return {"error" : str(e)}
+
 
     filename = cvfilename
 
@@ -52,10 +64,16 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             filename = filename + ".pdf"
 
         # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
-        logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
-        x = subprocess.check_call(
-            ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
-        logger.info(x)
+
+        try:
+            logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
+            x = subprocess.check_call(
+                ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
+            logger.info(x)
+        except CalledProcessError as e:
+            logger.critical(str(e))
+            traceback.print_exc(file=sys.stdout)
+            return {"error" : str(e)}
 
         if os.path.exists(os.path.join(dest, filename)):
             logger.info("file converted")
@@ -73,6 +91,8 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     cvdir = ''.join(e for e in cvfilename if e.isalnum())
 
     finalImages, output_dir2 = processAPI(os.path.join(dest, filename))
+    if "error" in finalImages:
+        return finalImages
 
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
@@ -91,4 +111,9 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         timer = time.time()
 
 
-    return [finalImages, output_dir2, cvdir]
+    return {
+        "finalImages" : finalImages, 
+        "output_dir2" : output_dir2, 
+        "cvdir" : cvdir , 
+        "filename": filename
+    }
