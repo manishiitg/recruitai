@@ -421,7 +421,7 @@ class ReconnectingTaskQueue(object):
             reconnect_delay = self._get_reconnect_delay()
             LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
             time.sleep(reconnect_delay)
-            self._consumer = ExampleConsumer(self._amqp_url)
+            self._consumer = TaskQueue(self._amqp_url)
 
     def _get_reconnect_delay(self):
         if self._consumer.was_consuming:
