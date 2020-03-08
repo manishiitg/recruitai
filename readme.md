@@ -30,6 +30,9 @@ sudo docker exec -it recruitai_resumemq_1 bash
 sudo docker image build -t recruitai .
 
 
+sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue image
+
+
 sudo docker container run --name recruitai \
       -v $(pwd)/pretrained:/workspace/pretrained \
       -v $(pwd)/batchprocessing:/workspace/batchprocessing \

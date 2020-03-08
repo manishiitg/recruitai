@@ -57,7 +57,7 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 2
+        self._prefetch_count = 5
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -328,7 +328,8 @@ class TaskQueue(object):
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
-            if "error" in ret:
+            if "error" in ret or isinstance(ret, list):
+                # new response type is dict not list
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
         else:
@@ -336,14 +337,16 @@ class TaskQueue(object):
                 
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
+            if "error" in ret:
+                self.acknowledge_message(delivery_tag)
+                return 
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
         
-        finalImages = ret[0] 
-        output_dir2 = ret[1]
-        cvdir = ret[2]
-        message["cvdir"] = cvdir
-        message["output_dir2"] = output_dir2
-        message["finalImages"] = finalImages
+        
+        message["cvdir"] = ret["cvdir"]
+        message["output_dir2"] = ret["output_dir2"]
+        message["finalImages"] = ret["finalImages"]
+        message["filename"] = ret["filename"]
         sendMessage(message)
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
