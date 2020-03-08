@@ -1,0 +1,1 @@
+this repo contains code for scrappers used to extract both candidate and jobs ddata from naukri/timesjobs/indeed

@@ -425,9 +425,13 @@ def getSampleData(mongoid):
     for docIndex, row in enumerate(data):
         docLines[docIndex] = []
         doc2Idx[docIndex] = row["_id"]
-        if "debug" not in row["cvParsedInfo"]:
-            logger.info("data not proper")
+        if "cvParsedInfo" not in row:
+            logger.info("data not proper cvParsedInfo missing")
             continue
+        else:
+            if "debug" not in row["cvParsedInfo"]:
+                logger.info("data not proper debug missing")
+                continue
         
         
         total_documents += 1
