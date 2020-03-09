@@ -51,7 +51,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         traceback.print_exc(file=sys.stdout)
         return {"error" : str(e)}
 
-
+    org_cv_filename = cvfilename
     filename = cvfilename
 
     logger.info("final file name %s", filename)
@@ -109,6 +109,12 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             }
         })
         timer = time.time()
+        
+        shutil.rmtree(os.path.join(dest, cvdir) , ignore_errors = False) 
+        if os.path.exists(os.path.join(dest, org_cv_filename)):
+            os.remove(os.path.join(dest, org_cv_filename)) 
+        if os.path.exists(os.path.join(dest, filename)):
+            os.remove(os.path.join(dest, filename)) 
 
 
     return {
