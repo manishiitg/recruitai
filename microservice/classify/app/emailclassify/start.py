@@ -68,6 +68,10 @@ def predict(model,tokenizer, sentPiecetokenizer,inboxdata):
                 print("very less words to predict")
                 continue
 
+            if len(text) > 511:
+                text = text[0:511]
+
+
             encoded = sentPiecetokenizer.encode(text)
             
             input_ids = torch.tensor(tokenizer.encode(encoded.tokens, add_special_tokens=True)).unsqueeze(0)  # Batch size 1
