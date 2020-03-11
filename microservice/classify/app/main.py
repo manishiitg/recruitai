@@ -54,8 +54,20 @@ def add_threadsafe_callback(ch,  method_frame,properties, msg):
         functools.partial(send_result, ch, method_frame,properties, msg)
     )
 
+def ack_message(ch, delivery_tag):
+    """Note that `ch` must be the same pika channel instance via which
+    the message being ACKed was retrieved (AMQP protocol constraint).
+    """
+    if ch.is_open:
+        ch.basic_ack(delivery_tag)
+    else:
+        # Channel is already closed, so we can't ACK this message;
+        # log and/or do something that makes sense for your app in this case.
+        pass
+    
 def send_result(ch, method_frame,properties, msg):
     ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=msg)
+    ack_message(ch, method_frame.delivery_tag)
 
 def on_recv_req(ch, method, properties, body):
     logger.info(body)
@@ -74,8 +86,7 @@ def main():
 
     # declare a queue
     ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
-    # ch
-    # .basic_qos(prefetch_count=1)
+    # ch.basic_qos(prefetch_count=1)
     ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
     ch.start_consuming()
 
