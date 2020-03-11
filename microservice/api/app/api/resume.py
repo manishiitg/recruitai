@@ -16,17 +16,37 @@ from flask_jwt_extended import (
 
 from app.publisher.resume import sendMessage
 
+import requests
+
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
-@bp.route('/<string:filename>', methods=['GET'])
-@bp.route('/<string:filename>/<string:mongoid>', methods=['GET'])
-@bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET'])
+@bp.route('/<string:filename>', methods=['GET','POST'])
+@bp.route('/<string:filename>/<string:mongoid>', methods=['GET','POST'])
+@bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET','POST'])
 def fullparsing(filename, mongoid = None, skills = None):
+
+    meta = {}
+
+    if request.method == 'POST':
+        meta = request.json
+
     sendMessage({
         "filename" : filename,
         "mongoid" : mongoid,
-        "skills" : skills
+        "skills" : skills,
+        "meta" : meta
     })
+
+    if "instant" in meta:
+        if "callback_url" in meta:
+            meta["org_request"] = {
+                "filename" : filename,
+                "mongoid" : mongoid,
+                "skills" : skills
+            }
+            r = requests.post(meta["callback_url"], json=meta)
+            return jsonify(r.status_code), 200
+
 
     return jsonify(""), 200
 
