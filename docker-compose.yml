@@ -57,42 +57,42 @@ services:
         networks:
             - ai
 
-    logstash:
-        image: docker.elastic.co/logstash/logstash:7.6.0
-        volumes:
-            - type: bind
-              source: ./config/logstash/config/logstash.yml
-              target: /usr/share/logstash/config/logstash.yml
-              read_only: true
-            - type: bind
-              source: ./config/logstash/pipeline
-              target: /usr/share/logstash/pipeline
-              read_only: true
-        ports:
-        - "5000:5000/tcp"
-        - "5000:5000/udp"
-        - "9600:9600"
-        environment:
-            LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-        depends_on:
-            - elasticsearch
-        networks:
-            - ai
+    # logstash:
+    #     image: docker.elastic.co/logstash/logstash:7.6.0
+    #     volumes:
+    #         - type: bind
+    #           source: ./config/logstash/config/logstash.yml
+    #           target: /usr/share/logstash/config/logstash.yml
+    #           read_only: true
+    #         - type: bind
+    #           source: ./config/logstash/pipeline
+    #           target: /usr/share/logstash/pipeline
+    #           read_only: true
+    #     ports:
+    #     - "5000:5000/tcp"
+    #     - "5000:5000/udp"
+    #     - "9600:9600"
+    #     environment:
+    #         LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    #     depends_on:
+    #         - elasticsearch
+    #     networks:
+    #         - ai
 
-    filebeat:
-        image: "docker.elastic.co/beats/filebeat:7.6.0"
-        user:
-            root
-        volumes:
-            - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-            - /var/lib/docker:/var/lib/docker:ro
-            - /var/run/docker.sock:/var/run/docker.sock
-            - /var/log/recruitai:/var/log/recruitai:ro
-        command: ["--strict.perms=false"]
-        depends_on:
-            - logstash
-        networks:
-            - ai
+    # filebeat:
+    #     image: "docker.elastic.co/beats/filebeat:7.6.0"
+    #     user:
+    #         root
+    #     volumes:
+    #         - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    #         - /var/lib/docker:/var/lib/docker:ro
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #         - /var/log/recruitai:/var/log/recruitai:ro
+    #     command: ["--strict.perms=false"]
+    #     depends_on:
+    #         - logstash
+    #     networks:
+    #         - ai
     redis:
         image: redis
         command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
