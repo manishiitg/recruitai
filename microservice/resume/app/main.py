@@ -337,7 +337,7 @@ class TaskQueue(object):
                     })
                     ret["skillExtracted"] = skillExtracted
 
-                self.updateInDB(ret , message["mongoid"])
+                self.updateInDB(ret , message["mongoid"], message)
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
@@ -355,7 +355,7 @@ class TaskQueue(object):
                 })
                 ret["skillExtracted"] = skillExtracted
 
-            self.updateInDB(ret, message["mongoid"])
+            self.updateInDB(ret, message["mongoid"], message)
 
             
 
@@ -365,7 +365,7 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid):
+    def updateInDB(self, ret, mongoid , message):
         isError = False
         if "error" in ret:
             isError = True
@@ -382,6 +382,25 @@ class TaskQueue(object):
                 }
             })
             LOGGER.info(ret)
+
+
+            try:
+                if "meta" in message:
+                    meta = message["meta"]
+                    if "callback_url" in meta:
+                        message["parsed"] = {
+                            "cvParsedInfo": ret,
+                            "cvParsedAI": not isError,
+                            "updatedTime" : datetime.now()
+                        }
+                        meta["message"] = message
+                        r = requests.post(meta["callback_url"], json=meta)
+
+            except Exception as e:
+                traceback.print_exc()
+                LOGGER.critical(e)
+
+            
         else:
             LOGGER.info("invalid mongoid")
 

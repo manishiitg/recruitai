@@ -20,6 +20,7 @@ client = MongoClient(RECRUIT_BACKEND_DB)
 db = client[RECRUIT_BACKEND_DATABASE]
 
 import traceback
+import requests
 
 from app.publisher import sendMessage
 
@@ -315,6 +316,7 @@ class TaskQueue(object):
             skills = None
 
 
+
         key = message["filename"]
 
         key = ''.join(e for e in key if e.isalnum()) 
@@ -347,6 +349,17 @@ class TaskQueue(object):
         message["output_dir2"] = ret["output_dir2"]
         message["finalImages"] = ret["finalImages"]
         message["filename"] = ret["filename"]
+
+        try:
+            if "meta" in message:
+                meta = message["meta"]
+                if "callback_url" in meta:
+                    meta["message"] = message
+                    r = requests.post(meta["callback_url"], json=meta)
+        except Exception as e:
+                traceback.print_exc()
+                LOGGER.critical(e)
+
         sendMessage(message)
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
