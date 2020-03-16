@@ -10,7 +10,7 @@ from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
 import redis
 import os 
 
-r = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
+redis_conn = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -58,7 +58,9 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 5
+        self._prefetch_count = 1  
+        # libreoffice can only convert file one at a time. we cannot use threads for this
+        # it gets stuck foroever if we do multiple together
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -326,8 +328,8 @@ class TaskQueue(object):
 
         doProcess = False
         
-        if r.exists(key):
-            ret = r.get(key)
+        if redis_conn.exists(key):
+            ret = redis_conn.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
             if "error" in ret or isinstance(ret, list):
@@ -342,7 +344,7 @@ class TaskQueue(object):
             if "error" in ret:
                 self.acknowledge_message(delivery_tag)
                 return 
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+            redis_conn.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
         
         
         message["cvdir"] = ret["cvdir"]
@@ -354,8 +356,8 @@ class TaskQueue(object):
             if "meta" in message:
                 meta = message["meta"]
                 if "callback_url" in meta:
-                    meta["message"] = message
-                    r = requests.post(meta["callback_url"], json=meta)
+                    meta["message"] = json.loads(json.dumps(message))
+                    requests.post(meta["callback_url"], json=meta)
         except Exception as e:
                 traceback.print_exc()
                 LOGGER.critical(e)

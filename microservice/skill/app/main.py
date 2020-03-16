@@ -49,7 +49,8 @@ def processWord2VecInput(keyword):
             else:
                 serializedPositiveSkill.extend(skill.lower().split(" "))
         else:
-            serializedPositiveSkill.append(skill.lower())
+            if vec_exists(skill.lower()):
+                serializedPositiveSkill.append(skill.lower())
 
     serializedNegativeSkill = []
     for skill in negative:
@@ -59,7 +60,8 @@ def processWord2VecInput(keyword):
             else:
                 serializedNegativeSkill.extend(skill.lower().split(" "))
         else:
-            serializedNegativeSkill.append(skill.lower())
+            if vec_exists(skill.lower()):
+                serializedNegativeSkill.append(skill.lower())
 
     logger.info("seralized positive %s and negative %s",
                 serializedPositiveSkill, serializedNegativeSkill)
