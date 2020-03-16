@@ -252,3 +252,10 @@ ner, nerclassify, picture. == i don't see much advantage of doing this except ju
 
 h) need to put test for every micro service 
 i) need to setup swagger for api
+j) need to remove the doc to pdf code from resumemq as its part of imagemq now
+
+
+g)
+# data sync mq
+ # this is very very slow for full job profile 
+# need to add bulk to search or something
