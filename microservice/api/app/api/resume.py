@@ -28,7 +28,8 @@ def fullparsing(filename, mongoid = None, skills = None):
     meta = {}
 
     if request.method == 'POST':
-        meta = request.json
+        meta = request.json['data']
+        logger.info(meta)
 
     sendMessage({
         "filename" : filename,
@@ -44,6 +45,7 @@ def fullparsing(filename, mongoid = None, skills = None):
                 "mongoid" : mongoid,
                 "skills" : skills
             }
+            logger.info("acalling callback url %s", meta["callback_url"])
             r = requests.post(meta["callback_url"], json=meta)
             return jsonify(r.status_code), 200
 
