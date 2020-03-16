@@ -47,45 +47,46 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                 }
             })
 
-        bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-        blob = bucket.blob(filename)
+        # bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+        # blob = bucket.blob(filename)
 
-        dest = BASE_PATH + "/../temp"
-        Path(dest).mkdir(parents=True, exist_ok=True)
-        filename, file_extension = os.path.splitext(filename)
+        # dest = BASE_PATH + "/../temp"
+        # Path(dest).mkdir(parents=True, exist_ok=True)
+        # filename, file_extension = os.path.splitext(filename)
 
-        cvfilename = ''.join(
-            e for e in filename if e.isalnum()) + file_extension
-        cvdir = ''.join(e for e in cvfilename if e.isalnum())
-        blob.download_to_filename(os.path.join(dest, cvfilename))
+        # cvfilename = ''.join(
+        #     e for e in filename if e.isalnum()) + file_extension
+        # cvdir = ''.join(e for e in cvfilename if e.isalnum())
+        # blob.download_to_filename(os.path.join(dest, cvfilename))
 
-        filename = cvfilename
+        # filename = cvfilename
 
-        logger.info("final file name %s", filename)
+        # logger.info("final file name %s", filename)
 
-        if ".pdf" not in filename:
-            inputFile = os.path.join(dest, filename)
-            if len(file_extension.strip()) > 0:
-                filename = filename.replace(file_extension, ".pdf")
-            else:
-                filename = filename + ".pdf"
+        # if ".pdf" not in filename:
+        #     inputFile = os.path.join(dest, filename)
+        #     if len(file_extension.strip()) > 0:
+        #         filename = filename.replace(file_extension, ".pdf")
+        #     else:
+        #         filename = filename + ".pdf"
 
-            # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
-            logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
-            x = subprocess.check_call(
-                ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
-            logger.info(x)
+        #     # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
+        #     logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
+        #     x = subprocess.check_call(
+        #         ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
+        #     logger.info(x)
 
-            if os.path.exists(os.path.join(dest, filename)):
-                logger.info("file converted")
-            else:
-                logger.info("unable to convert file to pdf")
-                return {
-                    "error" : "unable to convert file to pdf"
-                }
+        #     if os.path.exists(os.path.join(dest, filename)):
+        #         logger.info("file converted")
+        #     else:
+        #         logger.info("unable to convert file to pdf")
+        #         return {
+        #             "error" : "unable to convert file to pdf"
+        #         }
 
 
         fullResponse = {}
+        dest = BASE_PATH + "/../cvreconstruction"
 
         response, basedir = extractPicture(os.path.join(dest, filename))
         # , finalImages, output_dir2
