@@ -23,11 +23,6 @@ def handle(channel, method, properties, body):
 # self._connection.add_callback_threadsafe(cb)
 # threadsafe callback is only on blocking connection
 
-def getConnection():
-    connection = pika.BlockingConnection(pika.URLParameters(amqp_url))
-    channel = connection.channel()
-    return connection, channel
-
 def sendBlockingMessage(obj):
 
     connection, channel = getConnection()
