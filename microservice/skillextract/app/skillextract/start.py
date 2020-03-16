@@ -348,7 +348,7 @@ def getSampleData(mongoid):
     
 
     logger.info("getting sample for %s", mongoid)
-    
+    data = None
     if "all" in mongoid:
         mongoid = mongoid.replace("all:", "")
         if ":" in mongoid:
@@ -409,15 +409,19 @@ def getSampleData(mongoid):
             row = db.emailStored.find_one({ 
                 "_id" : ObjectId(mongoid)
             })
-            row["_id"] = str(row["_id"])
-            data = [row]
-            r.set(mongoid, json.dumps(row, default=str))
+            if row:
+                row["_id"] = str(row["_id"])
+                data = [row]
+                r.set(mongoid, json.dumps(row, default=str))
 
     logger.info("processing data")    
 
     doc2Idx = {}
     total_documents = 0
     shouldTokenize = True
+
+    if not data:
+        return [], 0, None
 
     if len(data) > 50:
         shouldTokenize = False

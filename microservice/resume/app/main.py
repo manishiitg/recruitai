@@ -21,6 +21,8 @@ db = client[RECRUIT_BACKEND_DATABASE]
 
 import traceback
 
+import requests
+
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 from app.publishskill import sendBlockingMessage as extractSkillMessage
@@ -314,6 +316,9 @@ class TaskQueue(object):
         else:
             skills = None
 
+        meta = {}
+        if "meta" in message:
+            meta = message["meta"]
 
         key = message["filename"]
 
@@ -330,12 +335,15 @@ class TaskQueue(object):
             if "error" not in ret:
 
                 if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                    skillExtracted =  extractSkillMessage({
-                        "action" : "extractSkill",
-                        "mongoid" : message["mongoid"],
-                        "skills" : skills.split(",")
-                    })
-                    ret["skillExtracted"] = skillExtracted
+                    if len(skills) > 0:
+                        skillExtracted =  extractSkillMessage({
+                            "action" : "extractSkill",
+                            "mongoid" : message["mongoid"],
+                            "skills" : skills.split(","),
+                            "meta" : meta
+                        })
+
+                        ret["skillExtracted"] = skillExtracted
 
                 self.updateInDB(ret , message["mongoid"], message)
             else:
@@ -348,12 +356,14 @@ class TaskQueue(object):
             ret = fullResumeParsing(message["filename"], message["mongoid"], message)
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
             if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                skillExtracted =  extractSkillMessage({
-                    "action" : "extractSkill",
-                    "mongoid" : message["mongoid"],
-                    "skills" : skills.split(",")
-                })
-                ret["skillExtracted"] = skillExtracted
+                if len(skills) > 0:
+                    skillExtracted =  extractSkillMessage({
+                        "action" : "extractSkill",
+                        "mongoid" : message["mongoid"],
+                        "skills" : skills.split(","),
+                        "meta" : meta
+                    })
+                    ret["skillExtracted"] = skillExtracted
 
             self.updateInDB(ret, message["mongoid"], message)
 
@@ -383,26 +393,28 @@ class TaskQueue(object):
             })
             LOGGER.info(ret)
 
-
-            try:
-                if "meta" in message:
-                    meta = message["meta"]
-                    if "callback_url" in meta:
-                        message["parsed"] = {
-                            "cvParsedInfo": ret,
-                            "cvParsedAI": not isError,
-                            "updatedTime" : datetime.now()
-                        }
-                        meta["message"] = message
-                        r = requests.post(meta["callback_url"], json=meta)
-
-            except Exception as e:
-                traceback.print_exc()
-                LOGGER.critical(e)
-
-            
         else:
             LOGGER.info("invalid mongoid")
+
+        try:
+            
+            if "meta" in message:
+                meta = message["meta"]
+                if "callback_url" in meta:
+                    message["parsed"] = {
+                        "cvParsedInfo": ret,
+                        "cvParsedAI": not isError,
+                        "updatedTime" : datetime.now()
+                    }
+                    meta["message"] = json.loads(json.dumps(message, default=str))
+                    requests.post(meta["callback_url"], json=meta)
+
+        except Exception as e:
+            traceback.print_exc()
+            LOGGER.critical(e)
+
+            
+        
 
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a

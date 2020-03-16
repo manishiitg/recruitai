@@ -27,7 +27,7 @@ import time
 import threading
 import functools
 import traceback
-
+import requests
 # conn  = None
 
 # threads = []
@@ -50,6 +50,20 @@ def thread_task( conn, ch, method_frame, properties, body):
                 try:
                     ret = extractSkill(findSkills, mongoid)
                     ret = json.dumps(ret,default=str)
+
+                    try:
+                        if "meta" in body:
+                            meta = body["meta"]
+                            if "callback_url" in meta:
+                                body["extractSkill"] = ret
+                                meta["message"] = json.loads(json.dumps(body))
+                                requests.post(meta["callback_url"], json=meta)
+
+                    except Exception as e:
+                        traceback.print_exc()
+                        LOGGER.critical(e)
+
+                        
                 except Exception as e:
                     ret = str(e)
                     traceback.print_exc()

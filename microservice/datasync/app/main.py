@@ -315,6 +315,7 @@ class TaskQueue(object):
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
+        LOGGER.info("completed processing")
         self.acknowledge_message(delivery_tag)
 
 
