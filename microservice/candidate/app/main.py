@@ -2,15 +2,10 @@ import functools
 import time
 from app.logging import logger as LOGGER
 import pika
-from app.resumeutil import fullResumeParsing
 import json
 import threading
 from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
-
-import redis
 import os 
-
-r = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -23,11 +18,11 @@ import traceback
 
 import requests
 
+from app.classify.start import process
+
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.publishskill import sendBlockingMessage as extractSkillMessage
-
-from app.publishcandidate import sendMessage as extractCandidateClassifySkill
+from app.skillextract.start import start as extractSkill
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -41,8 +36,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'resume'
-    ROUTING_KEY = 'resume.parsing'
+    QUEUE = 'candidate'
+    ROUTING_KEY = 'candidate.classify'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -309,66 +304,38 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        if "id" in message:
+            self.acknowledge_message(delivery_tag)
+            return
+
         if message["mongoid"] is None:
             message["mongoid"] = ""
-
-        if "skills" in message:
-            skills = message["skills"]
-        else:
-            skills = None
 
         meta = {}
         if "meta" in message:
             meta = message["meta"]
 
-        key = message["filename"]
+        prob, label =  process(message["mongoid"])
 
-        key = ''.join(e for e in key if e.isalnum()) 
-
-        LOGGER.info("redis key %s", key)
-
-        doProcess = False
-        
-        if r.exists(key):
-            ret = r.get(key)
-            ret = json.loads(ret)
-            LOGGER.info("redis key exists")
-            if "error" not in ret:
-
-                if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                    if len(skills) > 0:
-                        skillExtracted =  extractSkillMessage({
-                            "action" : "extractSkill",
-                            "mongoid" : message["mongoid"],
-                            "skills" : skills.split(","),
-                            "meta" : meta
-                        })
-
-                        ret["skillExtracted"] = skillExtracted
-
-                self.updateInDB(ret , message["mongoid"], message)
-            else:
-                LOGGER.info("redis key exists but previously error status so reprocessing")
-                doProcess = True
-        else:
-            doProcess = True
+        if label:
+            skills = extractSkill(label, message["mongoid"])
                 
-        if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message)
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-            if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                if len(skills) > 0:
-                    skillExtracted =  extractSkillMessage({
-                        "action" : "extractSkill",
-                        "mongoid" : message["mongoid"],
-                        "skills" : skills.split(","),
-                        "meta" : meta
-                    })
-                    ret["skillExtracted"] = skillExtracted
+        try:
+            
+            if "meta" in message:
+                meta = message["meta"]
+                if "callback_url" in meta:
+                    message["candidateClassify"] = {
+                        "prob" : prob,
+                        "label" : label,
+                        "skills" : skills
+                    }
+                    meta["message"] = json.loads(json.dumps(message, default=str))
+                    requests.post(meta["callback_url"], json=meta)
 
-            extractCandidateClassifySkill(message["mongoid"])
-            self.updateInDB(ret, message["mongoid"], message)
-
+        except Exception as e:
+            traceback.print_exc()
+            LOGGER.critical(e)
             
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
@@ -377,43 +344,6 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid , message):
-        isError = False
-        if "error" in ret:
-            isError = True
-        ret = json.loads(json.dumps(ret))
-        LOGGER.info("mongo id %s", mongoid)
-        if ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "cvParsedInfo": ret,
-                    "cvParsedAI": not isError,
-                    "updatedTime" : datetime.now()
-                }
-            })
-            LOGGER.info(ret)
-
-        else:
-            LOGGER.info("invalid mongoid")
-
-        try:
-            
-            if "meta" in message:
-                meta = message["meta"]
-                if "callback_url" in meta:
-                    message["parsed"] = {
-                        "cvParsedInfo": ret,
-                        "cvParsedAI": not isError,
-                        "updatedTime" : datetime.now()
-                    }
-                    meta["message"] = json.loads(json.dumps(message, default=str))
-                    requests.post(meta["callback_url"], json=meta)
-
-        except Exception as e:
-            traceback.print_exc()
-            LOGGER.critical(e)
 
             
         
@@ -533,16 +463,10 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-from app.detectron.start import loadTrainedModel 
-from app.picture.start import loadTrainedModel as loadPicModel
-from app.cvlinepredict.start import loadModel
-from app.ner.start import loadModel as loadModelTagger
+from app.classify.start import loadModel
 
 def main():
-    loadTrainedModel()
-    loadPicModel()
     loadModel()
-    loadModelTagger()
     
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
