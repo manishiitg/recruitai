@@ -270,6 +270,22 @@ services:
         networks:
             - ai
 
+    candidatemq:
+        build: microservice/candidate
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./batchprocessing:/workspace/batchprocessing 
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/candidate/app:/workspace/app            
+        environment:
+            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
+            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
+        networks:
+            - ai
+        
+
 volumes: 
     elasticsearch:
     redis-data:

@@ -61,3 +61,8 @@ full parsing of a resume, getting all ner data and classiifcation and images
 http://144.76.110.170:8086/gender/manish
 
 returns gender for a name
+
+
+http://144.76.110.170:8086/classify/candidate/5e65d5b6904e4a548c9755a0
+
+to classify candidate globally and get his skills
