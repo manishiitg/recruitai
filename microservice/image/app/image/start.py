@@ -25,6 +25,34 @@ import sys
 
 # import some common detectron2 utilities
 
+
+
+def test_pdfToimage():
+    filename = os.path.join(BASE_PATH + "/testingdata", "test.pdf")
+    assert type(filename)==str
+    f = {"file" : filename}
+    actualfilename = os.path.basename(filename)
+    namenonum = ''.join(e for e in actualfilename if e.isalnum())
+    output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
+    assert "file" in f 
+    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)   
+    assert len(finalImages)!=0 
+    return finalImages, output_dir2
+
+
+def test_docToimage():
+    filename = os.path.join(BASE_PATH + "/testingdata", "test.doc")
+    assert type(filename)==str
+    f = {"file" : filename}
+    actualfilename = os.path.basename(filename)
+    namenonum = ''.join(e for e in actualfilename if e.isalnum())
+    output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
+    assert "file" in f 
+    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)   
+    assert len(finalImages)!=0 
+    return finalImages, output_dir2
+
+
 def processAPI(filename):
     logger.info("start picture identify on %s", filename)
     f = {"file" : filename}
