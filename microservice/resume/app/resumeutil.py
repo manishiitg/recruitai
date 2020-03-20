@@ -204,11 +204,11 @@ def fullResumeParsing(filename, mongoid=None, message = None):
 
         if "finalEntity" in combinData:
             if "PERSON" in combinData["finalEntity"]:
-                person = combinData["finalEntity"]["PERSON"]
+                person = combinData["finalEntity"]["PERSON"]["obj"]
 
-            if len(person) > 0:
-                gender  =  getGender(person)
-                combinData["finalEntity"]["gender"] = gender
+                if len(person) > 0:
+                    gender  =  getGender(person)
+                    combinData["finalEntity"]["gender"] = gender
                 
 
         if mongoid and ObjectId.is_valid(mongoid):

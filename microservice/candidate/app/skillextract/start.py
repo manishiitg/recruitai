@@ -22,13 +22,11 @@ from bson.objectid import ObjectId
 import random
 
 db = None
-
 def initDB():
     global db
     if db is None:
         client = MongoClient(os.environ.get("RECRUIT_BACKEND_DB" , "mongodb://176.9.137.77:27017/hr_recruit_dev"))
         db = client[os.environ.get("RECRUIT_BACKEND_DATABASe" , "hr_recruit_dev")]
-    
     return db
 
 def start(domain, mongoid, isGeneric = True):
