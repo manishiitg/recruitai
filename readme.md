@@ -259,3 +259,7 @@ g)
 # data sync mq
  # this is very very slow for full job profile 
 # need to add bulk to search or something
+
+h) setup stats for ai, inclding time taken, pending etc how long it will take
+i) setup priority tasks for latest cvs
+j) make files common and reusable between microservices

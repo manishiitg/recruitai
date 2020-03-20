@@ -304,9 +304,14 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
-        if "id" in message:
-            self.acknowledge_message(delivery_tag)
-            return
+        LOGGER.info("message %s",message)
+        LOGGER.info(type(message))
+
+        if isinstance(message, str):
+            message = {
+                "mongoid" : message
+            }
+
 
         if message["mongoid"] is None:
             message["mongoid"] = ""
