@@ -110,11 +110,11 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         })
         timer = time.time()
         
-        shutil.rmtree(os.path.join(dest, cvdir) , ignore_errors = False) 
-        if os.path.exists(os.path.join(dest, org_cv_filename)):
-            os.remove(os.path.join(dest, org_cv_filename)) 
-        if os.path.exists(os.path.join(dest, filename)):
-            os.remove(os.path.join(dest, filename)) 
+    shutil.rmtree(os.path.join(dest, cvdir) , ignore_errors = False) 
+    if os.path.exists(os.path.join(dest, org_cv_filename)):
+        os.remove(os.path.join(dest, org_cv_filename)) 
+    if os.path.exists(os.path.join(dest, filename)):
+        os.remove(os.path.join(dest, filename)) 
 
 
     return {

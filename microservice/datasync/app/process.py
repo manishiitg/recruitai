@@ -34,6 +34,8 @@ def process(findtype = "", mongoid = None):
         )
     elif findtype == "syncJobProfile":
         logger.info("syncJobProfile")
+        job_profile_id = mongoid
+        
         ret = db.emailStored.find({ 
             "job_profile_id" : mongoid,
             "cvParsedInfo.debug" : {"$exists" : True} } , 

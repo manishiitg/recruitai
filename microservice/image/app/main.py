@@ -332,13 +332,16 @@ class TaskQueue(object):
             ret = redis_conn.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
+            LOGGER.info(ret)
             if "error" in ret or isinstance(ret, list):
                 # new response type is dict not list
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
         else:
             doProcess = True
-                
+
+        timer = time.time()
+
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
             if "error" in ret:
@@ -351,6 +354,20 @@ class TaskQueue(object):
         message["output_dir2"] = ret["output_dir2"]
         message["finalImages"] = ret["finalImages"]
         message["filename"] = ret["filename"]
+
+        mongoid = message["mongoid"]
+        if mongoid and ObjectId.is_valid(mongoid):
+            ret = db.emailStored.update_one({
+                "_id" : ObjectId(mongoid)
+            }, {
+                "$set": {
+                    "cvimage": {
+                            "images": ret["finalImages"],
+                            "time_taken" : time.time() - timer
+                    }
+                }
+            })
+            timer = time.time()
 
         try:
             if "meta" in message:
