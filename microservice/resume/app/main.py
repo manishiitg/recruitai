@@ -309,6 +309,9 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        if "mongoid" not in message:
+            message["mongoid"] = ""
+            
         if message["mongoid"] is None:
             message["mongoid"] = ""
 
@@ -347,6 +350,9 @@ class TaskQueue(object):
                         ret["skillExtracted"] = skillExtracted
 
                 self.updateInDB(ret , message["mongoid"], message)
+                extractCandidateClassifySkill({
+                    "mongoid" : message["mongoid"]
+                })
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
@@ -366,8 +372,10 @@ class TaskQueue(object):
                     })
                     ret["skillExtracted"] = skillExtracted
 
-            extractCandidateClassifySkill(message["mongoid"])
             self.updateInDB(ret, message["mongoid"], message)
+            extractCandidateClassifySkill({
+                "mongoid" : message["mongoid"]
+            })
 
             
 
