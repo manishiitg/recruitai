@@ -19,6 +19,8 @@ from pymongo import MongoClient
 
 from bson.objectid import ObjectId
 
+import spacy
+nlp = spacy.load('en')
 
 model = None
 tokenizer = None
@@ -29,10 +31,21 @@ BASE_MODEL_PATH = BASE_PATH + "/../pretrained/candidateclassify/distilbert"
 label_list = []
 
 db = None
+def initDB():
+    global db
+    if db is None:
+        client = MongoClient(RECRUIT_BACKEND_DB) 
+        db = client[RECRUIT_BACKEND_DATABASE]
+
+    return db
+
 
 def process(candidate_id):
-    lines = getCandidateLines(candidate_id)
-    if len(lines) == 0:
+    text = getCandidateLines(candidate_id)
+    logger.info("candidate id :%s:", candidate_id)
+    logger.info(text)
+    db = initDB()
+    if len(text) == 0:
         db.emailStored.update_one({
         "_id" : ObjectId(candidate_id),
         }, {
@@ -44,7 +57,7 @@ def process(candidate_id):
         })
         return 0, False
     else:
-        prob, label =  predict(lines[0])
+        prob, label =  predict(text)
         db.emailStored.update_one({
         "_id" : ObjectId(candidate_id),
         }, {
@@ -58,52 +71,52 @@ def process(candidate_id):
         return prob, label
     pass
 
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(RECRUIT_BACKEND_DB) 
-        db = client[RECRUIT_BACKEND_DATABASE]
-
-    return db
 
 def getCandidateLines(candidate_id):
     db = initDB()
-    ret = db.emailStored.find({
+    row = db.emailStored.find_one({
         "_id" : ObjectId(candidate_id),
         'cvParsedInfo.newCompressedStructuredContent': {"$exists": True}
     })
 
     candidates = []
 
+    wrklines = []
+    alllines = []
+    if row is not None and "newCompressedStructuredContent" in row["cvParsedInfo"]:    
+        for page in row["cvParsedInfo"]["newCompressedStructuredContent"]:
+            for pagerow in row["cvParsedInfo"]["newCompressedStructuredContent"][page]:
+                line = pagerow["line"]
 
-    for row in ret:
-        wrklines = []
-        alllines = []
-        if "newCompressedStructuredContent" in row["cvParsedInfo"]:    
-            for page in row["cvParsedInfo"]["newCompressedStructuredContent"]:
-                for pagerow in row["cvParsedInfo"]["newCompressedStructuredContent"][page]:
-                    line = pagerow["line"]
-                    if len(line) == 0:
-                        continue
 
-                    if "classify" in pagerow:
-                        classify = pagerow["classify"]
-                        if classify == "WRK" or classify == "WRKEXP":
-                            wrklines.append(line)
-                            alllines.append(line)
+            
+                doc = nlp(line)
+                line = " ".join([d.text for d in doc]  )
 
-                        if classify == "SUMMARY" or classify == "NOENTITY":
-                            alllines.append(line)
+                if len(line) == 0:
+                    continue
 
-                    elif "classifyNN" in pagerow and pagerow["classifyNN"] is not False:  
-                        classifyNN = pagerow["classifyNN"]
-                    
-                        if classifyNN[0] == "WRK":
-                            wrklines.append(line)
-                            alllines.append(line)
+                if "classify" in pagerow:
+                    classify = pagerow["classify"]
+                    if classify == "WRK" or classify == "WRKEXP":
+                        
+                        wrklines.append(line)
+                        alllines.append(line)
 
-                        if classifyNN[0] == "SUMMARY" or classifyNN[0] == "NOENTITY":
-                            alllines.append(line)
+                    if classify == "SUMMARY" or classify == "NOENTITY":
+                        alllines.append(line)
+
+                elif "classifyNN" in pagerow and pagerow["classifyNN"] is not False:  
+                    classifyNN = pagerow["classifyNN"]
+                
+                    if classifyNN[0] == "WRK":
+                        wrklines.append(line)
+                        alllines.append(line)
+
+                    if classifyNN[0] == "SUMMARY" or classifyNN[0] == "NOENTITY":
+                        alllines.append(line)
+        else:
+            logger.info("row not found")
 
 
 
@@ -117,7 +130,10 @@ def getCandidateLines(candidate_id):
     else:
         candidates.append(" ".join(wrklines))
 
-    return candidates
+    if len(candidates) == 0:
+        return ""
+    else:
+        return candidates[0]
 
 
 def predict(text):
@@ -126,8 +142,8 @@ def predict(text):
     max_p = 0
     max_label = False
     with torch.no_grad():
-        if len(text.split(" ")) < 10:
-            return False
+        if len(text.split(" ")) < 5:
+            return 0, False
 
         if len(text) >= 512:
             text = text[:512]
