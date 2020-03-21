@@ -263,3 +263,5 @@ g)
 h) setup stats for ai, inclding time taken, pending etc how long it will take
 i) setup priority tasks for latest cvs
 j) make files common and reusable between microservices
+
+k) datasync need to do bulk search index

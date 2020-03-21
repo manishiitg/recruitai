@@ -283,12 +283,16 @@ def matchCourse(education):
 
 
 
-def workExp(wrkExpList):
+def cleanWorkExp(wrkExp):
+    wrkExp = re.sub('[^a-zA-Z0-9\n\.]', ' ', wrkExp)
+    wrkExp = wrkExp.lower()
+    wrkExp = re.sub(' +', ' ', wrkExp)
+    return wrkExp
+
+def designation(wrkExpList):
     work_corpus = {}
     for wrkExp in wrkExpList:
-        wrkExp = re.sub('[^a-zA-Z0-9\n\.]', ' ', wrkExp)
-        wrkExp = wrkExp.lower()
-        wrkExp = re.sub(' +', ' ', wrkExp)
+        workExp = cleanWorkExp(workExp)
         # words = wrkExp.split(" ")
         # for word in words:
         if wrkExp not in work_corpus:
@@ -381,14 +385,18 @@ def workExp(wrkExpList):
 
 
     return merged_data
+
+def cleanLocation(gpe):
+    gpe = re.sub('[^a-zA-Z0-9\n\.]', ' ', gpe)
+    gpe = gpe.lower()
+    gpe = re.sub(' +', ' ', gpe)
+    return gpe
     
 def location(gpeList):
     gpe_corpus = {}
 
     for gpe in gpeList:
-        gpe = re.sub('[^a-zA-Z0-9\n\.]', ' ', gpe)
-        gpe = gpe.lower()
-        gpe = re.sub(' +', ' ', gpe)
+        gpe = cleanLocation(gpe)
         if gpe not in gpe_corpus:
             gpe_corpus[gpe] = 0
         
