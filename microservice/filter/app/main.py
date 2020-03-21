@@ -13,7 +13,7 @@ SERVER_QUEUE = "rpc.filter.queue"
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.skillsword2vec.start import loadModel, loadGlobalModel, get_similar, vec_exists
+from app.filter.start import start
 
 import time
 
@@ -76,7 +76,9 @@ def on_recv_req(ch, method, properties, body):
 
 def main():
 
-    loadModel()
+    start("softwaredeveloper","candidate")
+
+    return
     # loadGlobalModel()
     global conn
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))

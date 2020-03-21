@@ -32,6 +32,47 @@ def candidate(id):
         logger.critical(e)
         return jsonify(str(e)), 500
 
+@bp.route('/classify-moved/<string:id>/<string:from_id>/<string:to_id>', methods=['GET'])
+def classifyMoved(candidate_id, from_id, to_id):
+    logger.info("got job profile from %s", from_id)
+    logger.info("got job profile to %s", to_id)
+
+    try:
+
+        sendMessage({
+            "candidate_id" : candidate_id,
+            "from_id" : from_id,
+            "to_id" : to_id,
+            "action" : "classifyMoved"
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/job-profile-moved/<string:id>/<string:from_id>/<string:to_id>', methods=['GET'])
+def jobprofileMoved(candidate_id, from_id, to_id):
+    logger.info("got job profile from %s", from_id)
+    logger.info("got job profile to %s", to_id)
+
+    try:
+
+        sendMessage({
+            "candidate_id" : candidate_id,
+            "from_id" : from_id,
+            "to_id" : to_id,
+            "action" : "syncJobProfileChange"
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
 @bp.route('/job-profile/<string:id>', methods=['GET'])
 def jobprofile(id):
     logger.info("got job profile id %s", id)
@@ -41,6 +82,22 @@ def jobprofile(id):
         sendMessage({
             "id" : id,
             "action" : "syncJobProfile"
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
+@bp.route('/full', methods=['GET'])
+def full():
+
+    try:
+
+        sendMessage({
+            "action" : "full"
         })
 
         return jsonify([]), 200
