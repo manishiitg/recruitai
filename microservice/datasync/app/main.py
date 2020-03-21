@@ -17,7 +17,7 @@ amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?conn
 from app.publishsearch import sendBlockingMessage
 from app.scheduler import startSchedule
 
-from app.process import process
+from app.process import process, syncJobProfileChange, classifyMoved
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -305,6 +305,10 @@ class TaskQueue(object):
                 process("syncJobProfile", body["id"])
             elif action == "syncCandidate":
                 process("syncCandidate", body["id"])
+            elif action == "syncJobProfileChange":
+                syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"])
+            elif action == "classifyMoved":
+                classifyMoved(body["candidate_id"], body["from_id"], body["to_id"])
             else:
                 process("full")
 
