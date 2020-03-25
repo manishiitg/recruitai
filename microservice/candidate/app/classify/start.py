@@ -10,8 +10,6 @@ import random
 import numpy as np
 import torch.functional as F
 
-from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
-
 from app.config import BASE_PATH
 from app.logging import logger
 import json
@@ -34,8 +32,8 @@ db = None
 def initDB():
     global db
     if db is None:
-        client = MongoClient(RECRUIT_BACKEND_DB) 
-        db = client[RECRUIT_BACKEND_DATABASE]
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
     return db
 

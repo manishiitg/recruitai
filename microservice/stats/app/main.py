@@ -9,13 +9,11 @@ from datetime import datetime
 import os 
 
 EXCHANGE = ""
-SERVER_QUEUE = "rpc.filter.queue"
+SERVER_QUEUE = "rpc.stats.queue"
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.filter.start import fetch, indexAll, index
-
-from app.score.start import get_education_display, get_candidate_score
+from app.stats.start import start
 
 import time
 
@@ -30,27 +28,9 @@ def thread_task( ch, method_frame, properties, body):
     logger.info(body)
     if isinstance(body, dict):
         if "fetch" in body:
-            fetch_type = body["fetch"]
-            fetch_id = body["id"]
-            action = body["action"]
+            pass
+
             
-            # job_profile, candidate, full_map
-            if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type)
-                # logger.info(ret)
-                add_threadsafe_callback(ch, method_frame,properties,ret)
-            else:
-                ret = index(fetch_id, fetch_type)
-                ret = json.dumps(ret)
-                add_threadsafe_callback(ch, method_frame,properties, ret)
-        elif body["action"] == "candidate_score":
-            ret = get_candidate_score(body["id"])
-            ret = json.dumps(ret)
-            add_threadsafe_callback(ch, method_frame,properties,ret)
-        elif body["action"] == "get_education_display":
-            ret = get_education_display(body["degree"])
-            ret = json.dumps(ret)
-            add_threadsafe_callback(ch, method_frame,properties,ret)
 
         elif "ping" in body:
             time.sleep(5)            
@@ -84,7 +64,7 @@ def on_recv_req(ch, method, properties, body):
 
 def main():
 
-    # indexAll()
+    start()
     global conn
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()

@@ -2,7 +2,7 @@ from app.nerclassify.start import process as classifyNer
 from app.detectron.start import processAPI
 from app.ner.start import processAPI as extractNer
 from app.picture.start import processAPI as extractPicture
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL, RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
+from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
 from app.logging import logger
 from app.config import storage_client
 from pathlib import Path
@@ -26,9 +26,14 @@ from bson.objectid import ObjectId
 import time
 
 
-client = MongoClient(RECRUIT_BACKEND_DB) 
-db = client[RECRUIT_BACKEND_DATABASE]
+db = None
+def initDB():
+    global db
+    if db is None:
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
+    return db
 
 def fullResumeParsing(filename, mongoid=None, message = None):
     try:
@@ -100,6 +105,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
             fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL)
 
         if mongoid and ObjectId.is_valid(mongoid):
+            db = initDB()
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
             }, {
