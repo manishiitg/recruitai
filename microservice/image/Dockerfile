@@ -47,4 +47,6 @@ RUN pip install redis pymongo
 RUN apt-get install default-jdk -y
 # ADD app /workspace/app, using volume instead
 
+RUN pip install psutil
+
 CMD ["/usr/bin/supervisord"]
