@@ -65,6 +65,8 @@ def on_recv_req(ch, method, properties, body):
 def main():
 
     start()
+
+    return
     global conn
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()

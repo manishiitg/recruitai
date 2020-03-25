@@ -8,7 +8,8 @@ import threading
 import redis
 import os 
 
-redis_conn = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -332,8 +333,8 @@ class TaskQueue(object):
 
         doProcess = False
         
-        if redis_conn.exists(key):
-            ret = redis_conn.get(key)
+        if r.exists(key):
+            ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
             LOGGER.info(ret)
@@ -351,7 +352,7 @@ class TaskQueue(object):
             if "error" in ret:
                 self.acknowledge_message(delivery_tag)
                 return 
-            redis_conn.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
         
         
         message["cvdir"] = ret["cvdir"]

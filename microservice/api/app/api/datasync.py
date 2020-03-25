@@ -58,13 +58,13 @@ def filter_index(id,fetch):
     
     try:
 
-        sendFilterMessage({
+        ret = sendFilterMessage({
             "id" : id,
             "fetch" : fetch,
             "action" : "index"
         })
 
-        return jsonify([]), 200
+        return jsonify(ret), 200
     
     except KeyError as e:
         logger.critical(e)

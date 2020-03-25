@@ -25,7 +25,8 @@ def initDB():
     return db
 
 import redis
-r = redis.Redis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+
 
 def moveKey(candidate_id, from_key, to_key):
     from_job_profile_data = r.get(from_key)
@@ -80,14 +81,20 @@ def process(findtype = "full", mongoid = ""):
         
         ret = db.emailStored.find({ 
             "job_profile_id" : mongoid,
-            "cvParsedInfo.debug" : {"$exists" : True} } , 
+            # "cvParsedInfo.debug" : {"$exists" : True} 
+            } , 
            {"body": 0}
         )
     else:
         logger.info("full")
-        r.flushdb()
-        ret = db.emailStored.find({ 
-            "cvParsedInfo.debug" : {"$exists" : True} } , 
+        # r.flushdb()
+        # this is wrong. this remove much more data like resume parsed information etc
+        
+        for key in r.scan_iter():
+            if "candidate_" in key or "job_" in key:
+                r.delete(key)
+                
+        ret = db.emailStored.find({ } , 
             {"body": 0}
         )
 
@@ -139,6 +146,15 @@ def process(findtype = "full", mongoid = ""):
             job_profile_map[job_profile_id][row["_id"]] = row
 
         if len(finalLines) == 0:
+            if "subject" not in row:
+                row["subject"] = ""
+            
+            if "sender_mail" not in row:
+                row["sender_mail"] = ""
+
+            if "from" not in row:
+                row["from"] = ""
+
             finalLines = [
                 row["subject"],
                 row["from"],
@@ -208,6 +224,8 @@ def process(findtype = "full", mongoid = ""):
     if findtype == "syncJobProfile":
         if job_profile_id is not None:
             for job_profile_id in job_profile_map:
+                logger.info("job profile key %s", "job_" + job_profile_id)
+
                 ret = r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
                 logger.info(ret)
 
@@ -221,20 +239,34 @@ def process(findtype = "full", mongoid = ""):
     
     if findtype == "full":
 
-        r.set("full_data" , json.dumps(full_map , default=json_util.default))
+        # r.set("full_data" , json.dumps(full_map , default=json_util.default))
         
         for job_profile_id in job_profile_map:
+            logger.info("filter sync job %s ", job_profile_id)
             r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
+            ret = updateFilter({
+                "id" : job_profile_id,
+                "fetch" : "job_profile",
+                "action" : "index"
+            })
+            logger.info("updating filter %s" , ret)
 
         for candidate_label in candidate_map:
+            logger.info("filter sync candidate_label %s ", candidate_label)
             r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
+            ret = updateFilter({
+                "id" : candidate_label,
+                "fetch" : "candidate",
+                "action" : "index"
+            })
+            logger.info("updating filter %s" , ret)
 
-        logger.info("full data filter")
-        addFilter({
-            "id" : 0,
-            "fetch" : "full_data",
-            "action" : "index"
-        })
+        # logger.info("full data filter")
+        # addFilter({
+        #     "id" : 0,
+        #     "fetch" : "full_data",
+        #     "action" : "index"
+        # })
         logger.info("full data completed")
 
     # for t in threads:
@@ -271,6 +303,9 @@ def addFilter(obj):
     
 
 def addToSearch(mongoid, finalLines, ret):
+    return
+
+
     try:
         sendBlockingMessage({
             "id": mongoid,

@@ -62,7 +62,8 @@ def getSampleCriteria():
     return criteria
 
 
-r = redis.Redis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+
 
 db = None
 def initDB():
@@ -238,33 +239,34 @@ def getSkillScore(criteria, row, total_weight, max_score):
       if "cvParsedInfo" in row:     
         if "skillExtracted" in row["cvParsedInfo"] and row["cvParsedInfo"]["skillExtracted"] is not None:
           skillExtracted = row["cvParsedInfo"]["skillExtracted"]
-          score = skillExtracted[str(row["_id"])]["score"]
-          skillCandidateScore = 0
+          if str(row["_id"]) in skillExtracted:
+            score = skillExtracted[str(row["_id"])]["score"]
+            skillCandidateScore = 0
 
-          for value in values:
-            weight = values[value]
-            found = False
-            for skill in score:
-              if skill in value:
-                found = True
-                max_dist = 0    
-                for key in score[skill]:  
-                  dist = score[skill][key]
-                  if dist < .75:
-                    dist = 1 - dist
+            for value in values:
+                weight = values[value]
+                found = False
+                for skill in score:
+                    if skill in value:
+                        found = True
+                        max_dist = 0    
+                        for key in score[skill]:  
+                            dist = score[skill][key]
+                            if dist < .75:
+                                dist = 1 - dist
 
-                    # print(dist , " ===== " , skill  , " ======  ", key)
-                    if dist > max_dist:
-                      max_dist = dist
-                    
-                
-                break
+                                # print(dist , " ===== " , skill  , " ======  ", key)
+                                if dist > max_dist:
+                                    max_dist = dist
+                                
+                            
+                            break
 
-            if found:
-              skillCandidateScore += max_dist * weight / total_value_weight
-              logger.info("skill score %s %s %s" , skillCandidateScore , max_dist, value)
-            else:
-              logger.info("strange skill not found %s", value)
+                    if found:
+                        skillCandidateScore += max_dist * weight / total_value_weight
+                        logger.info("skill score %s %s %s" , skillCandidateScore , max_dist, value)
+                    else:
+                        logger.info("strange skill not found %s", value)
 
       if skillCandidateScore > 0:
           candidate_score += skillCandidateScore *  criteria["skills"]["weight"]/total_weight * max_score
