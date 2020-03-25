@@ -387,8 +387,8 @@ def process(data, isPageWiseData=False):
                             "need to review this why this happened? orphan EducationDegree")
                         logger.info(extractEntity[pageno][lineno])
                         if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
-                            if "EducationDegree" in finalEntity["wrkExp"][-1]:
-                                finalEntity["wrkExp"].append({
+                            if "EducationDegree" in finalEntity["education"][-1]:
+                                finalEntity["education"].append({
                                     "obj": "",
                                     "EducationDegree": " ".join(extractEntity[pageno][lineno]["EducationDegree"]),
                                     "pageno" : pageno,
@@ -403,7 +403,7 @@ def process(data, isPageWiseData=False):
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["contentIdx"] = contentIdx
                             else:
-                                finalEntity["wrkExp"][-1]["EducationDegree"] = " ".join(
+                                finalEntity["education"][-1]["EducationDegree"] = " ".join(
                                     extractEntity[pageno][lineno]["EducationDegree"])
                         else:
                             finalEntity, foundEntity = updateSingleEntity(

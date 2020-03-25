@@ -5,6 +5,8 @@ from app import db
 import json
 from app.config import RESUME_INDEX_NAME
 
+import traceback
+
 
 indexCreated = False
 
@@ -52,14 +54,21 @@ def addMeta(mongoid, meta):
         indexName = 'resume'
 
     es = db.init_elastic_search()
-    ret = es.update(index=indexName, id=mongoid, body={
-        "doc" : {
-            "extra_data" : {
-                "meta" : meta
+    
+    
+    try:
+        ret = es.update(index=indexName, id=mongoid, body={
+            "doc" : {
+                "extra_data" : {
+                    "meta" : meta
+                }
             }
-        }
-    })
-    logger.info(ret)
+        })
+        logger.info(ret)
+    except es.exceptions.NotFoundError as e:
+        logger.critical(e)
+        traceback.print_exception(e)
+
     return ret
 
 
