@@ -37,6 +37,9 @@ def initDB():
     return db
 
 def deleteDirContents(folder):
+    if not os.path.exists(folder):
+        return 
+
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         try:
@@ -56,15 +59,12 @@ def killlibreoffice():
 def fullResumeParsing(filename, mongoid=None, skills = None):
     
     killlibreoffice()
-
-
     timer = time.time()
-
-    
 
     dest = BASE_PATH + "/../temp"
     deleteDirContents(dest)
-    deleteDirContents(BASE_PATH + "/../cvreconstruction")
+    # deleteDirContents(BASE_PATH + "/../cvreconstruction")
+    # this cannot be done because resumemq needs files from cvreconstruction
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)

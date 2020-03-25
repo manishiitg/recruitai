@@ -43,6 +43,7 @@ def cv2_imshow(im):
 
 from tqdm import tqdm
 
+import time
 
 # import some common detectron2 utilities
 
@@ -74,13 +75,17 @@ def test():
   basePath = baseDirectory + "/../../cvreconstruction"
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
-  compressedStructuredContent = startProcessing(files , inputDir, basePath, predictor, cfg)
+
+
+  compressedStructuredContent , timeAnalysis = startProcessing(files , inputDir, basePath, predictor, cfg)
   return compressedStructuredContent
 
 
 
 
 def processAPI(file, maxPage = False):
+
+
   filestoparse = [{
         "file" : file,
         "id" : -1
@@ -91,14 +96,20 @@ def processAPI(file, maxPage = False):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage)
+  compressedStructuredContent , timeAnalysis = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage)
   assert len(compressedStructuredContent) == 1
 
-  return compressedStructuredContent[0] , basePath
+  return compressedStructuredContent[0] , basePath , timeAnalysis
 
 def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False):
+  timeAnalysis = {}
+
   combinedCompressedContent = {}
   for fileIdx in tqdm(range(len(filestoparse))):
+
+    timeAnalysis[fileIdx] = {}
+    start_time = time.time()
+
     combinedCompressedContent[fileIdx] = []
 
     logger.info(filestoparse[fileIdx])
@@ -138,6 +149,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     outputFolder = ""
     files = os.listdir(  os.path.join(output_dir)  )
 
+    timeAnalysis[fileIdx]["basic_stuff"] = time.time() - start_time
+    start_time = time.time()
+
     predictions = []
     cvpages = 0
     for f in files:
@@ -151,6 +165,10 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       p = savePredictionPartsToFile(f , output_dir ,os.path.join(basePath,output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"], save_viz=True, save_withoutbbox=True)
       predictions.append(p)
       logger.debug(p)
+
+      timeAnalysis[fileIdx]["savePredictionPartsToFile" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
+
       if maxPage and cvpages >= maxPage:
         break
       # doing only page 1 for now 
@@ -162,7 +180,10 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       logger.debug("fetching contents from %s", output_dir)
       outputFolder = ""
+
       jsonOutputbbox, jsonOutput = extractOcrTextFromSegments(cvpage, output_dir, outputFolder)  
+      timeAnalysis[fileIdx]["extractOcrTextFromSegments" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
 
       ##################################
 
@@ -170,6 +191,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       logger.debug(" bbox image len %s",len(jsonOutputbbox))
 
       jsonOutput, tableRow = chooseBBoxVsSegment(jsonOutput, jsonOutputbbox)
+      timeAnalysis[fileIdx]["chooseBBoxVsSegment" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
 
       ##################################
 
@@ -186,6 +209,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       try:
         content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
         content = str(content)
+        timeAnalysis[fileIdx]["extract_text" + str(cvpages)] = time.time() - start_time
+        start_time = time.time()
         #content = textract.process(cv , page_numbers=[cvpage-1], maxpages=1)
       except PDFTextExtractionNotAllowed as e:
         logger.critical(e)
@@ -223,6 +248,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       ################################
       
       cleanLineData = cleanContent(content , cvpage , jsonOutput)
+      timeAnalysis[fileIdx]["cleanContent" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
       # if not cleanLineData:
       #   continue
       #   pass
@@ -230,10 +257,14 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       ########################################
 
       seperateTableLineMatchedIndexes , jsonOutput =  identifyTableData(cleanLineData, tableRow,jsonOutput)
+      timeAnalysis[fileIdx]["identifyTableData" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
 
       ########################################
     
       compressedStructuredContent, newstructuredContent = finalCompressedContent(cleanLineData, jsonOutput , seperateTableLineMatchedIndexes, logger, predictions)
+      timeAnalysis[fileIdx]["finalCompressedContent" + str(cvpages)] = time.time() - start_time
+      start_time = time.time()
 
       logger.debug(compressedStructuredContent)
       logger.info("length of compressed content %s" , len(compressedStructuredContent))
@@ -255,8 +286,11 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
     x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
     logger.info(x)
+    timeAnalysis[fileIdx]["gsutil" + str(cvpages)] = time.time() - start_time
+    start_time = time.time()
+    
 
-  return combinedCompressedContent
+  return combinedCompressedContent , timeAnalysis
 
 
 def cleanContent(content , cvpage , jsonOutput):
