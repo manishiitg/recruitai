@@ -5,8 +5,6 @@ import pika
 from app.resumeutil import fullResumeParsing
 import json
 import threading
-from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
-
 import redis
 import os 
 
@@ -16,8 +14,14 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-client = MongoClient(RECRUIT_BACKEND_DB) 
-db = client[RECRUIT_BACKEND_DATABASE]
+db = None
+def initDB():
+    global db
+    if db is None:
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
+
+    return db
 
 import traceback
 import requests
@@ -357,6 +361,7 @@ class TaskQueue(object):
 
         mongoid = message["mongoid"]
         if mongoid and ObjectId.is_valid(mongoid):
+            db = initDB()
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
             }, {

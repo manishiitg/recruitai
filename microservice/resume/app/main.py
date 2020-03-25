@@ -5,8 +5,6 @@ import pika
 from app.resumeutil import fullResumeParsing
 import json
 import threading
-from app.config import RECRUIT_BACKEND_DB, RECRUIT_BACKEND_DATABASE
-
 import redis
 import os 
 
@@ -16,9 +14,14 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-client = MongoClient(RECRUIT_BACKEND_DB) 
-db = client[RECRUIT_BACKEND_DATABASE]
+db = None
+def initDB():
+    global db
+    if db is None:
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
+    return db
 import traceback
 
 import requests
@@ -26,6 +29,7 @@ import requests
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 from app.publishskill import sendBlockingMessage as extractSkillMessage
+from app.publishfilter import sendBlockingMessage as extractCandidateScore
 
 from app.publishcandidate import sendMessage as extractCandidateClassifySkill
 
@@ -353,6 +357,10 @@ class TaskQueue(object):
                 extractCandidateClassifySkill({
                     "mongoid" : message["mongoid"]
                 })
+                extractCandidateScore({
+                    "action" : "candidate_score",
+                    "id" : message["mongoid"]
+                })
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
@@ -376,6 +384,10 @@ class TaskQueue(object):
             extractCandidateClassifySkill({
                 "mongoid" : message["mongoid"]
             })
+            extractCandidateScore({
+                "action" : "candidate_score",
+                "id" : message["mongoid"]
+            })
 
             
 
@@ -392,6 +404,7 @@ class TaskQueue(object):
         ret = json.loads(json.dumps(ret))
         LOGGER.info("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
+            db = initDB()
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
             }, {

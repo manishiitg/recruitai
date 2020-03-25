@@ -12,8 +12,81 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.datasync import sendMessage
+from app.publisher.filter import sendBlockingMessage as sendFilterMessage
 
 bp = Blueprint('datasync', __name__, url_prefix='/datasync')
+
+
+@bp.route('/filter/get/candidate_score/<string:id>', methods=['GET'])
+def candidate_score(id):
+    
+    try:
+
+        ret = sendFilterMessage({
+            "id" : id,
+            "action" : "candidate_score"
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
+@bp.route('/filter/get/education/display', methods=['GET'])
+@bp.route('/filter/get/education/display/<string:degree>', methods=['GET'])
+def education_display(degree = ""):
+    
+    try:
+
+        ret = sendFilterMessage({
+            "degree" : degree,
+            "action" : "get_education_display"
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
+
+@bp.route('/filter/index/<string:id>/<string:fetch>', methods=['GET'])
+def filter_index(id,fetch):
+    
+    try:
+
+        sendFilterMessage({
+            "id" : id,
+            "fetch" : fetch,
+            "action" : "index"
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
+def filter_fetch(id,fetch):
+    
+
+    try:
+
+        ret = sendFilterMessage({
+            "id" : id,
+            "fetch" : fetch,
+            "action" : "fetch"
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
 
 @bp.route('/candidate/<string:id>', methods=['GET'])
 def candidate(id):
