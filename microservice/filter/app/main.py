@@ -79,7 +79,7 @@ def on_recv_req(ch, method, properties, body):
     logger.info(body)
     t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     t.start()
-    logger.info(t.is_alive())
+    # logger.info(t.is_alive())
     # thread_task( ch, method, properties, body )
 
 def main():
@@ -90,9 +90,8 @@ def main():
     ch = conn.channel()
 
     # declare a queue
-    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True) #exclusive=True,
-    # ch
-    # .basic_qos(prefetch_count=1)
+    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
+    # ch.basic_qos(prefetch_count=1)
     ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
     ch.start_consuming()
 

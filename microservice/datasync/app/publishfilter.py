@@ -43,14 +43,14 @@ def sendBlockingMessage(obj):
     
     message = json.dumps(obj)
     next(channel.consume(queue="amq.rabbitmq.reply-to", auto_ack=True,
-                        inactivity_timeout=0.1))
+                        inactivity_timeout=.1))
     channel.basic_publish(
         exchange=EXCHANGE, routing_key=ROUTING_KEY, body=message.encode(),
         properties=pika.BasicProperties(reply_to="amq.rabbitmq.reply-to",expiration='300'))
     logger.info("sent: %s", message)
 
     for (method, properties, body) in channel.consume(
-            queue="amq.rabbitmq.reply-to", auto_ack=True,inactivity_timeout=60):
+            queue="amq.rabbitmq.reply-to", auto_ack=True,inactivity_timeout=300):
         return handle(channel, method, properties, body)
 
 
