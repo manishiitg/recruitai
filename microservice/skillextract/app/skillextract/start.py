@@ -44,7 +44,7 @@ def start(findSkills, mongoid, isGeneric = False):
 
     if total_documents == 0:
         logger.info("not docs found")
-        return
+        return ""
 
     logger.info("skills %s", findSkills)
 
@@ -81,7 +81,7 @@ def start(findSkills, mongoid, isGeneric = False):
     #generate query matrix
 
 
-    query_matrix, skillVec, querySkill = queryMatrix(model, findSkills)
+    query_matrix, skillVec, querySkill, notFound = queryMatrix(model, findSkills)
 
     query_qty = query_matrix.shape[0]
     logger.info("query qty: %s", query_qty)
@@ -294,7 +294,50 @@ def start(findSkills, mongoid, isGeneric = False):
             logger.info(sortDist)
             finalSkillList[doc2Idx[docIdx]] = sortDist
 
-    return finalSkillList
+
+    skillScore = getSkillScore(model, docLines, doc2Idx, finalSkillList, querySkill, notFound)
+
+    logger.info("skill Score %s", skillScore)
+
+    ret = {}
+
+    for id in finalSkillList:
+        ret[id] = {
+            "skill" : finalSkillList[id],
+            "score" : skillScore[id]
+        }
+
+    return ret
+
+
+def getSkillScore(model, docLines, doc2Idx, finalSkillList, querySkill, notFoundWords):
+
+
+    finalResult = {}
+    for docIndex in docLines:
+        finalResult[doc2Idx[docIndex]] = {}
+        for lineIdx, line in enumerate(docLines[docIndex]):
+            for word in line:
+                if word.lower() in notFoundWords:
+                    finalResult[doc2Idx[docIndex]][word] = {
+                        word: 0
+                    }
+
+        for qskill in querySkill:
+            qskillvec = querySkill[qskill]
+            finalResult[doc2Idx[docIndex]][qskill] = {}
+            for skill in finalSkillList[doc2Idx[docIndex]]:
+                org_dist = finalSkillList[doc2Idx[docIndex]][skill]
+                foundSkillVec = model.wv.get_vector(skill)
+        
+                dist = cosine(qskillvec, foundSkillVec)
+
+                finalResult[doc2Idx[docIndex]][qskill][skill] = dist
+
+    return finalResult
+
+
+
 
 
 def getWordMatrix(docLines, model):
@@ -328,17 +371,19 @@ def queryMatrix(model, findSkills , isGeneric = False) :
 
     querySkill = {}
     skillVec = []
+    notFound = []
     for skill in findSkills:
         try:
             querySkill[skill] = model.wv.get_vector(skill)
             skillVec.append(model.wv.get_vector(skill))
         except KeyError:
+            notFound.append(skill.lower())
             continue
 
     query_matrix = numpy.zeros( (len(querySkill), 300), dtype='float32')
     for idx, key in enumerate(querySkill):
         query_matrix[idx] = querySkill[key]
-    return query_matrix , skillVec, querySkill
+    return query_matrix , skillVec, querySkill, notFound
 
 
 db = None
@@ -346,8 +391,8 @@ db = None
 def initDB():
     global db
     if db is None:
-        client = MongoClient(os.environ.get("RECRUIT_BACKEND_DB" , "mongodb://176.9.137.77:27017/hr_recruit_dev"))
-        db = client[os.environ.get("RECRUIT_BACKEND_DATABASe" , "hr_recruit_dev")]
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
     return db
 
@@ -371,7 +416,11 @@ def getSampleData(mongoid):
             logger.info("data from redis")
             data = r.get("job_" + mongoid)
             # logger.info("data from redis %s", data)
-            data = json.loads(data)
+            dataMap = json.loads(data)
+            data = []
+            for key in dataMap:
+                data.append(dataMap[key])
+                
             logger.info("candidate full data found %s", len(data))
         else:
             
