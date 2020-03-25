@@ -66,3 +66,7 @@ returns gender for a name
 http://144.76.110.170:8086/classify/candidate/5e65d5b6904e4a548c9755a0
 
 to classify candidate globally and get his skills
+
+
+
+http://144.76.110.170:8086/datasync/filter/fetch/0/full_data

@@ -261,7 +261,11 @@ g)
 # need to add bulk to search or something
 
 h) setup stats for ai, inclding time taken, pending etc how long it will take
-i) setup priority tasks for latest cvs
+
 j) make files common and reusable between microservices
 
-k) datasync need to do bulk search index
+l) delete job profile, etc won't update data sync right now. this is a problem.
+when we do full datasync it should delete all previous keys and create new.
+we can schedule this one or twice a day as well (completed)
+
+m) need to make this muti account with priority & setup priority tasks for latest cvs
