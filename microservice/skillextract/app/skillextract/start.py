@@ -20,7 +20,8 @@ nlp = spacy.load('en')
 from bson.objectid import ObjectId
 
 import redis
-r = redis.Redis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+
 
 
 import nmslib 

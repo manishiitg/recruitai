@@ -25,6 +25,9 @@ docker exec -it recruit_ai_1 bash
 
 sudo docker-compose up -d --scale=resumemq=6
 
+# running this multiple either via scale or prefetch queue is taking more time than running one at time
+
+
 sudo docker exec -it recruitai_resumemq_1 bash
 
 sudo docker image build -t recruitai .
