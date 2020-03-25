@@ -147,7 +147,7 @@ def removeBordersFromTable(filename):
     return or_image
 
 
-def extractOcrTextFromSegments(cvpage, output_dir , outputFolder):
+def extractOcrTextFromSegments(cvpage, output_dir , outputFolder, increase_dpi_for_small_image = False):
     folders = []
 
     for file in os.listdir(output_dir):
@@ -237,7 +237,7 @@ def extractOcrTextFromSegments(cvpage, output_dir , outputFolder):
                         if len(word) > 0:
                             correctWords.append(word)
 
-                if len(confidance) <= 3:
+                if len(confidance) <= 3 and increase_dpi_for_small_image:
                     # this can be very short word. we should increase dpi for this and check
                     image_withdpi = process_image_for_ocr(filename, True)
                     fullname_withdpi, file_extension_withdpi = os.path.splitext(
