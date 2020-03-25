@@ -26,9 +26,14 @@ import time
 
 from google.api_core.exceptions import NotFound
 
-client = MongoClient(RECRUIT_BACKEND_DB) 
-db = client[RECRUIT_BACKEND_DATABASE]
+db = None
+def initDB():
+    global db
+    if db is None:
+        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
+        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
+    return db
 
 def fullResumeParsing(filename, mongoid=None, skills = None):
 
@@ -68,7 +73,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         try:
             logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
             x = subprocess.check_call(
-                ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
+                ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True, timeout=30)
             logger.info(x)
         except CalledProcessError as e:
             logger.critical(str(e))
@@ -98,6 +103,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
 
     if mongoid and ObjectId.is_valid(mongoid):
+        db = initDB()
         ret = db.emailStored.update_one({
             "_id" : ObjectId(mongoid)
         }, {
