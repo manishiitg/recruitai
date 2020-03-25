@@ -26,7 +26,7 @@ def initDB():
     global db
     if db is None:
         client = MongoClient(os.environ.get("RECRUIT_BACKEND_DB"))
-        db = client[os.environ.get("RECRUIT_BACKEND_DATABASe")]
+        db = client[os.environ.get("RECRUIT_BACKEND_DATABASE")]
     return db
 
 def start(domain, mongoid, isGeneric = True):

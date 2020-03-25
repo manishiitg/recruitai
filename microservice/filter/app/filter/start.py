@@ -9,7 +9,7 @@ import json
 
 from app.filter.util import getCourseDict
 
-r = redis.Redis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
 
 def indexAll():
     data = r.get("full_data")
@@ -45,10 +45,13 @@ def indexAll():
 
 
 def fetch(mongoid, filter_type="job_profile"):
-    if filter_type == "full_data":
-        return r.get("full_data_filter")
+    
 
-    ret =  r.get(mongoid + "_filter")
+    if filter_type == "full_data":
+        ret = r.get("full_data_filter")
+    else:
+        logger.info("fetching for %s", mongoid)
+        ret =  r.get(mongoid + "_filter")
     if ret is None:
         return ""
     else:
@@ -56,6 +59,7 @@ def fetch(mongoid, filter_type="job_profile"):
 
 def index(mongoid, filter_type="job_profile"):
     data = [] 
+
     if filter_type == "full_data":
         data = r.get("full_data")
         if data:
@@ -63,10 +67,12 @@ def index(mongoid, filter_type="job_profile"):
             data = []
             for dkey in dataMap:
                 data.append(dataMap[dkey])
+        else:
+            data = []
 
-            key = "full_data"
+        key = "full_data"
             
-    if filter_type == "job_profile":
+    elif filter_type == "job_profile":
         data = r.get("job_" + mongoid)
         if data:            
             dataMap = json.loads(data)
@@ -76,6 +82,7 @@ def index(mongoid, filter_type="job_profile"):
         data = []
         for dkey in dataMap:
             data.append(dataMap[dkey])
+
         key = mongoid
         
 
@@ -89,8 +96,10 @@ def index(mongoid, filter_type="job_profile"):
         data = []
         for dkey in dataMap:
             data.append(dataMap[dkey])
+
         key = mongoid
 
+    logger.info("data len %s" , len(data))
     return generateFilterMap(key, data)
 
     

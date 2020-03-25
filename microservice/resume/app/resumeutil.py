@@ -39,6 +39,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
     try:
 
         timer = time.time()
+        db = initDB()
         if mongoid and ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
@@ -114,17 +115,29 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                         "stage" : 1,
                         "name": "picture",
                         "timeTaken": time.time() - timer,
-                        "debug" : {
-                            "response": json.loads(json.dumps(response)), 
-                            "basedir" : basedir
-                        }
+                        # "debug" : {
+                        #     "response": json.loads(json.dumps(response)), 
+                        #     "basedir" : basedir
+                        # }
                     }
                 }
             })
-            timer = time.time()
+            
+        timer = time.time()
 
 
-        response, basePath = processAPI(os.path.join(dest, filename))
+        response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename))
+
+        logger.info("========================================== time analysis ==========================================")
+        for fileIdx in timeAnalysis:
+            logger.info("file idx %s" , fileIdx)
+            for work in timeAnalysis[fileIdx]:
+                logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
+
+
+        logger.info("total time taken %s", (time.time() - timer))
+
+        logger.info("========================================== time analysis ==========================================")
 
         if mongoid and ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
@@ -134,11 +147,13 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                     "pipeline": {
                         "stage" : 2,
                         "name": "resume_construction",
+                        "timeAnalysis" : json.loads(json.dumps(timeAnalysis)),
                         "timeTaken": time.time() - timer,
-                        "debug" : {
-                            "response": json.loads(json.dumps(response)), 
-                            "basePath" : basePath
-                        }
+                        "start_time" : time.time(),
+                        # "debug" : {
+                        #     "response": json.loads(json.dumps(response)), 
+                        #     "basePath" : basePath
+                        # }
                     }
                 }
             })
@@ -163,6 +178,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                         "pipeline": {
                             "stage" : 3,
                             "name": "searchIdx",
+                            "start_time" : time.time(),
                             "timeTaken": time.time() - timer
                         }
                     }
@@ -189,7 +205,8 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                     "pipeline": {
                         "stage" : 4,
                         "name": "ner",
-                        "debug" : json.loads(json.dumps(nerExtracted)),
+                        "start_time" : time.time(),
+                        # "debug" : json.loads(json.dumps(nerExtracted)),
                         "timeTaken": time.time() - timer
                     }
                 }
@@ -223,9 +240,10 @@ def fullResumeParsing(filename, mongoid=None, message = None):
             }, {
                 "$push": {
                     "pipeline": {
-                        "stage" : 4,
+                        "stage" : 5,
                         "name": "classify",
-                        "debug" : json.loads(json.dumps(combinData)),
+                        "start_time" : time.time(),
+                        # "debug" : json.loads(json.dumps(combinData)),
                         "timeTaken": time.time() - timer
                     }
                 }
