@@ -10,9 +10,4 @@ storage_client = storage.Client.from_service_account_json(
             BASE_PATH + '/RecruitAI.json')
 
 GOOGLE_BUCKET_URL = "https://" + RESUME_UPLOAD_BUCKET + "/"
-
-RECRUIT_BACKEND_DB = os.getenv("RECRUIT_BACKEND_DB")
-
-RECRUIT_BACKEND_DATABASE = os.getenv("RECRUIT_BACKEND_DATABASE")
-
 IN_COLAB = False
