@@ -8,7 +8,8 @@ import threading
 import redis
 import os 
 
-r = redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=os.getenv("REDIS_PORT",6379), db=0)
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -65,6 +66,8 @@ class TaskQueue(object):
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 5))
+        self._prefetch_count = 1
+
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -344,6 +347,7 @@ class TaskQueue(object):
 
                 if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
                     if len(skills) > 0:
+                        
                         skillExtracted =  extractSkillMessage({
                             "action" : "extractSkill",
                             "mongoid" : message["mongoid"],
