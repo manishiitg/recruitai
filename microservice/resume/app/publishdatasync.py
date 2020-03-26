@@ -10,7 +10,7 @@ import json
 amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 
-class MQPublisher(object):
+class DataSyncPublisher(object):
     """This is an example publisher that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
     If RabbitMQ closes the connection, it will reopen it. You should
@@ -23,9 +23,8 @@ class MQPublisher(object):
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
     # PUBLISH_INTERVAL = 1
-    # QUEUE = 'resume'
-    QUEUE = 'image'
-    ROUTING_KEY = 'image.parsing'
+    QUEUE = 'datasync'
+    ROUTING_KEY = 'datasync'
 
     def __init__(self, amqp_url, message):
         """Setup the example publisher object, passing in the URL we will use
@@ -166,7 +165,7 @@ class MQPublisher(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         self._channel.queue_declare(
-            queue=queue_name, durable=True, callback=self.on_queue_declareok, arguments = {'x-max-priority': 10})
+            queue=queue_name, durable=True, callback=self.on_queue_declareok)
 
     def on_queue_declareok(self, _unused_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -264,14 +263,10 @@ class MQPublisher(object):
         if self._channel is None or not self._channel.is_open:
             return
 
-        if "priority" not in self.message:
-            self.message["priority"] = 1
-
         properties = pika.BasicProperties(
             app_id='aiapi-publisher',
             content_type='application/json',
-            delivery_mode = 2,
-            priority=self.message["priority"])
+            delivery_mode = 2)
 
         message = self.message
 
@@ -337,7 +332,7 @@ def sendMessage(obj):
     # obj is a json object to send message
     # very basic and simple right now 
 
-    LOGGER.info("send resume 0arsuing to queue")
-    mq = MQPublisher(amqp_url, obj)
+    LOGGER.info("data sync")
+    mq = DataSyncPublisher(amqp_url, obj)
     mq.run()
     pass

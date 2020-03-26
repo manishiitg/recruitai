@@ -98,13 +98,15 @@ def start(findSkills, mongoid, isGeneric = False):
     if len(skillVec) == 0:
         return "empty skills"
 
-    for idx, vec in enumerate(skillVec):
-        top1 = model.wv.most_similar(positive=[findSkills[idx]] , topn=1)
+    for idx, key in enumerate(querySkill):
+        vec = querySkill[key]
+        top1 = model.wv.most_similar(positive=[key] , topn=1)
         closest_dist += top1[0][1]
         if top1[0][1] > max_closest_dist:
             max_closest_dist = top1[0][1]
 
-        for idx2, vec2 in enumerate(skillVec):
+        for idx2, key2 in enumerate(querySkill):
+            vec2 = querySkill[key2]
             if idx2 <= idx:
                 continue
 
@@ -327,13 +329,16 @@ def getSkillScore(model, docLines, doc2Idx, finalSkillList, querySkill, notFound
         for qskill in querySkill:
             qskillvec = querySkill[qskill]
             finalResult[doc2Idx[docIndex]][qskill] = {}
-            for skill in finalSkillList[doc2Idx[docIndex]]:
-                org_dist = finalSkillList[doc2Idx[docIndex]][skill]
-                foundSkillVec = model.wv.get_vector(skill)
-        
-                dist = cosine(qskillvec, foundSkillVec)
+            if doc2Idx[docIndex] in finalSkillList:
+                for skill in finalSkillList[doc2Idx[docIndex]]:
+                    org_dist = finalSkillList[doc2Idx[docIndex]][skill]
+                    foundSkillVec = model.wv.get_vector(skill)
+            
+                    dist = cosine(qskillvec, foundSkillVec)
 
-                finalResult[doc2Idx[docIndex]][qskill][skill] = dist
+                    finalResult[doc2Idx[docIndex]][qskill][skill] = dist
+            else:
+                finalSkillList[doc2Idx[docIndex]] = {}
 
     return finalResult
 
