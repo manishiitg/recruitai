@@ -163,13 +163,24 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       foldername = ''.join(e for e in f if e.isalnum())
       Path(os.path.join(output_dir, foldername)).mkdir(parents=True, exist_ok=True)
       p = savePredictionPartsToFile(f , output_dir ,os.path.join(basePath,output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"], save_viz=True, save_withoutbbox=True)
-      predictions.append(p)
-      logger.debug(p)
 
       timeAnalysis[fileIdx]["savePredictionPartsToFile" + str(cvpages)] = time.time() - start_time
       start_time = time.time()
+      
+      if p is None:
+        logger.critical("if not predictions found we are breaking out")
+        break
+
+
+      predictions.append(p)
+      logger.debug(p)
+
+      
 
       if maxPage and cvpages >= maxPage:
+        break
+        
+      if cvpages > 5:
         break
       # doing only page 1 for now 
 
