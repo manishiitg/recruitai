@@ -48,7 +48,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
     if im is None:
         logger.info("unable to read image %s",
                     os.path.join(inputFolder, filename))
-        return
+        return None
 
     outputs = predictor(im)
 
