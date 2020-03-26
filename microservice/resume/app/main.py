@@ -33,6 +33,7 @@ from app.publishskill import sendBlockingMessage as extractSkillMessage
 from app.publishfilter import sendBlockingMessage as extractCandidateScore
 
 from app.publishcandidate import sendMessage as extractCandidateClassifySkill
+from app.publishdatasync import sendMessage as datasync
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -62,7 +63,7 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = []
+        self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 5))
@@ -202,7 +203,7 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb)
+        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -327,6 +328,11 @@ class TaskQueue(object):
         else:
             skills = None
 
+        if "priority" in message:
+            LOGGER.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", message["priority"])
+        else:
+            LOGGER.info("priority not found")
+
         meta = {}
         if "meta" in message:
             meta = message["meta"]
@@ -365,6 +371,10 @@ class TaskQueue(object):
                     "action" : "candidate_score",
                     "id" : message["mongoid"]
                 })
+                datasync({
+                    "id" : message["mongoid"],
+                    "action" : "syncCandidate"
+                })
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
@@ -391,6 +401,10 @@ class TaskQueue(object):
             extractCandidateScore({
                 "action" : "candidate_score",
                 "id" : message["mongoid"]
+            })
+            datasync({
+                    "id" : message["mongoid"],
+                "action" : "syncCandidate"
             })
 
             

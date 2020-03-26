@@ -17,25 +17,58 @@ from flask_jwt_extended import (
 from app.publisher.resume import sendMessage
 
 import requests
+import time
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
 @bp.route('/<string:filename>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET','POST'])
-def fullparsing(filename, mongoid = None, skills = None):
+@bp.route('/<string:filename>/<string:mongoid>/<string:skills>/<int:priority>', methods=['GET','POST'])
+def fullparsing(filename, mongoid = None, skills = None, priority = 0):
 
     meta = {}
 
     if request.method == 'POST':
         meta = request.json['data']
-        logger.info(meta)
+        logger.info("meta from api %s", meta)
+
+    
+    days = 0
+    if "cv_timestamp_seconds" in meta:
+        cv_date = meta["cv_timestamp_seconds"]
+        cur_time = time.time()
+
+        if cv_date == 0: 
+            # manual candidate
+            priority = 10
+        else:
+            days =  abs(cur_time - cv_date)  / (60 * 24 )
+
+            if days < 1:
+                priority = 9
+            elif days < 7:
+                priority = 8
+            elif days < 30:
+                priority = 7
+            elif days < 90:
+                priority = 6
+            elif days < 365:
+                priority = 5
+            elif days < 365 * 2:
+                priority = 4
+            else:
+                priority = 1
+
+
+
 
     sendMessage({
         "filename" : filename,
         "mongoid" : mongoid,
         "skills" : skills,
-        "meta" : meta
+        "meta" : meta,
+        "priority" : priority
     })
 
     if "instant" in meta:
@@ -50,7 +83,11 @@ def fullparsing(filename, mongoid = None, skills = None):
             return jsonify(r.status_code), 200
 
 
-    return jsonify(""), 200
+    return jsonify({
+        "priority" : priority,
+        "server_current_time" : time.time(),
+        "days" : days
+    }), 200
 
 
 
