@@ -134,19 +134,20 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
 
-    if mongoid and ObjectId.is_valid(mongoid):
-        db = initDB()
-        ret = db.emailStored.update_one({
-            "_id" : ObjectId(mongoid)
-        }, {
-            "$set": {
-                "cvimage": {
-                        "images": finalImages,
-                        "time_taken" : time.time() - timer
-                }
-            }
-        })
-        timer = time.time()
+    # if mongoid and ObjectId.is_valid(mongoid):
+    #     db = initDB()
+    #     ret = db.emailStored.update_one({
+    #         "_id" : ObjectId(mongoid)
+    #     }, {
+    #         "$set": {
+    #             "cvimage": {
+    #                     "images": finalImages,
+    #                     "time_taken" : time.time() - timer
+    #             }
+    #         }
+    #     })
+    #     timer = time.time()
+    # this is already done in main.py so not sure why its needed here
         
     shutil.rmtree(os.path.join(dest, cvdir)) 
     if os.path.exists(os.path.join(dest, org_cv_filename)):
