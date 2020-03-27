@@ -404,7 +404,7 @@ class TaskQueue(object):
             })
             datasync({
                     "id" : message["mongoid"],
-                "action" : "syncCandidate"
+                    "action" : "syncCandidate"
             })
 
             
