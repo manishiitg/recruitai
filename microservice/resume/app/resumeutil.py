@@ -166,24 +166,24 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                 finalLines.append(pagerow["line"])
 
         if mongoid:
-            # t = Thread(target=addToSearch, args=(mongoid,finalLines,{}))
-            # t.start()
-            # # t.join()
+            t = Thread(target=addToSearch, args=(mongoid,finalLines,{}))
+            t.start()
+            # t.join()
 
-            # if mongoid and ObjectId.is_valid(mongoid):
-            #     ret = db.emailStored.update_one({
-            #         "_id" : ObjectId(mongoid)
-            #     }, {
-            #         "$push": {
-            #             "pipeline": {
-            #                 "stage" : 3,
-            #                 "name": "searchIdx",
-            #                 "start_time" : time.time(),
-            #                 "timeTaken": time.time() - timer
-            #             }
-            #         }
-            #     })
-            # timer = time.time()
+            if mongoid and ObjectId.is_valid(mongoid):
+                ret = db.emailStored.update_one({
+                    "_id" : ObjectId(mongoid)
+                }, {
+                    "$push": {
+                        "pipeline": {
+                            "stage" : 3,
+                            "name": "searchIdx",
+                            "start_time" : time.time(),
+                            "timeTaken": time.time() - timer
+                        }
+                    }
+                })
+            timer = time.time()
 
             # doing this with datasync now 
             pass
@@ -327,8 +327,8 @@ def fullResumeParsing(filename, mongoid=None, message = None):
             t.start()
 
         ret["debug"] = {
-            "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": combinData["compressedStructuredContent"]
+            # "extractEntity": combinData["extractEntity"],
+            # "compressedStructuredContent": combinData["compressedStructuredContent"]
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = False) 

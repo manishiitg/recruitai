@@ -6,9 +6,16 @@ import json
 from app.config import RESUME_INDEX_NAME
 
 import traceback
+import redis
+import os
 
+r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
 
 indexCreated = False
+
+
+def getIndex():
+    return RESUME_INDEX_NAME
 
 def createIndex():
     global indexCreated 
@@ -17,7 +24,7 @@ def createIndex():
     
     indexCreated = True
     es = db.init_elastic_search()
-    indexName = RESUME_INDEX_NAME
+    indexName = getIndex()
 
     ret = es.indices.create(index=indexName, ignore=400, body={
         "mappings": {
@@ -33,25 +40,20 @@ def createIndex():
 def addDoc(mongoid, lines, extra_data={}):
     
     createIndex()
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName = getIndex()
 
     es = db.init_elastic_search()
     ret = es.index(index=indexName, id=mongoid, body={
         "resume": " ".join(lines),
-        "extra_data": extra_data,
+        # "extra_data": json.loads(json.dumps(extra_data, default=str)),
+        "extra_data": {},
         "refresh": True,
         "timestamp": datetime.now()})
     logger.info(ret)
     return ret
 
 def addMeta(mongoid, meta):
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName = getIndex()
 
     es = db.init_elastic_search()
     
@@ -60,12 +62,13 @@ def addMeta(mongoid, meta):
         ret = es.update(index=indexName, id=mongoid, body={
             "doc" : {
                 "extra_data" : {
-                    "meta" : meta
+                    # "meta" : json.loads(json.dumps(extra_data, default=str))
+                    "meta" : {}
                 }
             }
         })
         logger.info(ret)
-    except es.exceptions.NotFoundError as e:
+    except Exception as e:
         logger.critical(e)
         traceback.print_exception(e)
 
@@ -73,33 +76,24 @@ def addMeta(mongoid, meta):
 
 
 def getDoc(mongoid):
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName = getIndex()
 
     es = db.init_elastic_search()
     return es.get(index=indexName, id=mongoid)
 
 
 def deleteDoc(mongoid):
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName = getIndex()
 
     es = db.init_elastic_search()
     return es.delete(index=indexName, id=mongoid)
 
 
 def searchDoc(searchText):
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName  = getIndex()
 
     es = db.init_elastic_search()
-    return es.search(
+    ret = es.search(
         index=indexName,
         body={
             "query":
@@ -111,13 +105,25 @@ def searchDoc(searchText):
                 }
         }
     )
+    hits = ret["hits"]
+    for idx, hit in enumerate(hits["hits"]):
+        id = hit["_id"]
+        data = r.get(id)
+        if not data:
+            data = {}
+        else:
+            data = json.loads(data)
+
+        del ret["hits"]["hits"][idx]["_source"]["extra_data"]
+
+        ret["hits"]["hits"][idx]["_source"]["redis-data"] = data
+
+
+    return ret
 
 
 def deleteAll():
-    if IS_DEV:
-        indexName = "devresume"
-    else:
-        indexName = 'resume'
+    indexName  = getIndex()
 
     es = db.init_elastic_search()
     return es.delete_by_query(indexName, {
