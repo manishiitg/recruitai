@@ -303,9 +303,6 @@ def addFilter(obj):
     
 
 def addToSearch(mongoid, finalLines, ret):
-    return
-
-
     try:
         sendBlockingMessage({
             "id": mongoid,
