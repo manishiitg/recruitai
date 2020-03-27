@@ -496,16 +496,15 @@ def getSampleData(mongoid):
         if "cvParsedInfo" not in row:
             logger.info("data not proper cvParsedInfo missing")
             continue
-        else:
-            if "debug" not in row["cvParsedInfo"]:
-                logger.info("data not proper debug missing")
-                continue
+        
         
         
         total_documents += 1
 
-        for page in row["cvParsedInfo"]["debug"]["compressedStructuredContent"]:
-            for line in row["cvParsedInfo"]["debug"]["compressedStructuredContent"][page]:
+        cvParsedInfo = row["cvParsedInfo"]
+        for page in cvParsedInfo["newCompressedStructuredContent"]:
+            for line in cvParsedInfo["newCompressedStructuredContent"][page]:
+
                 if "classify" not in line:
                     line["classify"] = ""
 
