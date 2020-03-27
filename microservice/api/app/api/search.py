@@ -26,11 +26,17 @@ def addDocument(id, line=None):
     try:
         if request.method == 'POST':
             data = request.json.get('lines', [])
+            meta_data = request.json.get('meta_data', {})
+
+            data = {}
+            meta_data = {}
+
+            # we are not storing meta any more in elastic search. instead of using redis with datasync
 
             ret = sendBlockingMessage({
                 "id": id,
                 "lines" : data,
-                "extra_data" : {},
+                "extra_data" : meta_data,
                 "action" : "addDoc"
             })
             # ret = addDoc(id, data, {})
@@ -55,12 +61,14 @@ def addDocument(id, line=None):
 @bp.route('/add-meta/<string:mongoid>', methods=['POST'])
 def addMetaDoc(mongoid):
     try:
-        ret = sendBlockingMessage({
-            "id": mongoid,
-            "meta" : request.json.get("data"),
-            "action" : "addMeta"
-        })
-        return jsonify(ret), 200
+        # ret = sendBlockingMessage({
+        #     "id": mongoid,
+        #     "meta" : request.json.get("data"),
+        #     "action" : "addMeta"
+        # })
+        # return jsonify(ret), 200
+        # we are not storing meta any more in elastic search. instead of using redis with datasync
+        return jsonify({}), 200
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500

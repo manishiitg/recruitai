@@ -16,5 +16,6 @@ RUN truncate -s 0 /workspace/logs/search*.log
 
 RUN pip install pika
 RUN pip install elasticsearch
+RUN pip install redis
 
 CMD ["/usr/bin/supervisord"]
