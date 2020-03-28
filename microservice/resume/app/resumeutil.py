@@ -94,34 +94,38 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         fullResponse = {}
         dest = BASE_PATH + "/../cvreconstruction"
 
-        response, basedir = extractPicture(os.path.join(dest, filename))
+        #pic is not being shown anywhere on frontend and 90% cv's dont have it
+        # i think it should be trained with document layour analysic
+        # or i can use a smaller detectron2 model for this.
+        # for now just disableing it 
+        # response, basedir = extractPicture(os.path.join(dest, filename))
         # , finalImages, output_dir2
 
         # for img in finalImages:
         #     img = img.replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
 
-        fullResponse["picture"] = response
+        # fullResponse["picture"] = response
 
-        if response:
-            fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL)
+        # if response:
+        #     fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL)
 
-        if mongoid and ObjectId.is_valid(mongoid):
-            db = initDB()
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$push": {
-                    "pipeline": {
-                        "stage" : 1,
-                        "name": "picture",
-                        "timeTaken": time.time() - timer,
-                        # "debug" : {
-                        #     "response": json.loads(json.dumps(response)), 
-                        #     "basedir" : basedir
-                        # }
-                    }
-                }
-            })
+        # if mongoid and ObjectId.is_valid(mongoid):
+        #     db = initDB()
+        #     ret = db.emailStored.update_one({
+        #         "_id" : ObjectId(mongoid)
+        #     }, {
+        #         "$push": {
+        #             "pipeline": {
+        #                 "stage" : 1,
+        #                 "name": "picture",
+        #                 "timeTaken": time.time() - timer,
+        #                 # "debug" : {
+        #                 #     "response": json.loads(json.dumps(response)), 
+        #                 #     "basedir" : basedir
+        #                 # }
+        #             }
+        #         }
+        #     })
             
         timer = time.time()
 
@@ -216,6 +220,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
             })
             timer = time.time()
 
+        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ner time taken %s ", time.time() - timer)
         # fullResponse["nerExtracted"] = nerExtracted
 
         row = {}

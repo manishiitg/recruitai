@@ -17,6 +17,8 @@ amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?conn
 from app.publishsearch import sendBlockingMessage
 from app.scheduler import startSchedule
 
+import time
+
 from app.process import process, syncJobProfileChange, classifyMoved
 
 class TaskQueue(object):
@@ -279,8 +281,8 @@ class TaskQueue(object):
         :param pika.Spec.BasicProperties: properties
         :param bytes body: The message body
         """
-        LOGGER.info('Received message # %s from %s: %s',
-                    basic_deliver.delivery_tag, properties.app_id, body)
+        LOGGER.info('Received message # %s from %s:',
+                    basic_deliver.delivery_tag, properties.app_id)
 
         delivery_tag = basic_deliver.delivery_tag
         t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
@@ -292,25 +294,43 @@ class TaskQueue(object):
 
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
-        fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        print(fmt1.format(thread_id, delivery_tag, body))
-        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        # fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
+        # print(fmt1.format(thread_id, delivery_tag, body))
+        # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         body = json.loads(body)
-        LOGGER.info(body)
+        # LOGGER.info(body)
+
+        if "cur_time" in body:
+            cur_time = body["cur_time"]
+        else:
+            cur_time = time.time()
 
         if "action" in body:
             action = body["action"]
             if action == "syncJobProfile":
-                process("syncJobProfile", body["id"])
+                process("syncJobProfile", cur_time, body["id"])
             elif action == "syncCandidate":
-                process("syncCandidate", body["id"])
+
+                if "field" in body:
+                    field = body["field"].split(",")
+                else:
+                    field = []
+                
+                if "doc" in body:
+                    doc = body["doc"]
+                else:
+                    doc = None
+
+                
+
+                process("syncCandidate", cur_time, body["id"], field, doc)
             elif action == "syncJobProfileChange":
                 syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"])
             elif action == "classifyMoved":
                 classifyMoved(body["candidate_id"], body["from_id"], body["to_id"])
             else:
-                process("full")
+                process("full" , cur_time)
 
 
             

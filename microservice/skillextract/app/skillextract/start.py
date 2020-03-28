@@ -497,6 +497,9 @@ def getSampleData(mongoid):
             logger.info("data not proper cvParsedInfo missing")
             continue
         
+        if "newCompressedStructuredContent" not in row["cvParsedInfo"]:
+            logger.info("data not proper newCompressedStructuredContent cvParsedInfo missing")
+            continue
         
         
         total_documents += 1
