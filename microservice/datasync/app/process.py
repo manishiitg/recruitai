@@ -29,18 +29,36 @@ r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ
 
 
 def moveKey(candidate_id, from_key, to_key):
+
+    logger.info(" from key %s", from_key)
+    logger.info(" to key %s", to_key)
+
+
     from_job_profile_data = r.get(from_key)
+    if not from_job_profile_data:
+        logger.info("from not found some issue")
+        return
+
+
     from_job_profile_data = json.loads(from_job_profile_data)
 
     to_job_profile_data = r.get(to_key)
+    if not to_job_profile_data:
+        logger.info("from not found some issue")
+        return
+
     to_job_profile_data = json.loads(to_job_profile_data)
 
-    del from_job_profile_data[candidate_id]
+    if candidate_id in from_job_profile_data:
+        del from_job_profile_data[candidate_id]
+    
     db = initDB()
     row = db.emailStored.find_one({ 
             "_id" : ObjectId(candidate_id) } , 
             {"body": 0}
         )
+        # .sort([("sequence", -1),("updatedAt", -1)])
+            # sort gives ram error
     if row:
         to_job_profile_data[candidate_id] = row
         r.set(candidate_id  , json.dumps(row,default=json_util.default))
@@ -58,8 +76,70 @@ def syncJobProfileChange(candidate_id, from_id, to_id):
 
 # recentProcessList = {}
 
-def process(findtype = "full", mongoid = ""):
+from apscheduler.schedulers.background import BackgroundScheduler
+
+redisKeyMap = {}
+logger.info("loading redis key map")
+for key in r.scan_iter():
+    if "job_" in key or "classify_" in key:
+        logger.info("loading key %s", key)
+        redisKeyMap[key] = json.loads(r.get(key))
+
+logger.info("loaded redis key map")
+
+import copy
+
+dirtyMap = {}
+def queue_process():
+    global dirtyMap
+
+    localMap = copy.deepcopy(dirtyMap)
+
+    dirtyMap = {}
+    logger.info("checking dirty data %s" , localMap)
+    for key in localMap:
+        logger.info("updating redis %s" , key)
+        r.set(key, json.dumps(redisKeyMap[key], default=str))
+        logger.info("updated redis %s" , key)
+        if "job_" in key:
+            addFilter({
+                    "id" : key.replace("job_",""),
+                    "fetch" : "job_profile",
+                    "action" : "index"
+                })
+        elif "classify_" in key:
+            addFilter({
+                    "id" : key.replace("classify_",""),
+                    "fetch" : "candidate",
+                    "action" : "index"
+                })
+
+        logger.info("job profile filter completed")
+        
+
+checkin_score_scheduler = BackgroundScheduler()
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=30) #*2.5
+
+checkin_score_scheduler.start()
+
+
+
+pastInfoMap = {}
+
+
+
+def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc = None):
+
+    global dirtyMap
+    global redisKeyMap
+    global pastInfoMap
+
     threads = []
+
+    if cur_time is None:
+        cur_time = time.time()
+
+
     # "job_profile_id": mongoid
 
     # global recentProcessList
@@ -67,17 +147,56 @@ def process(findtype = "full", mongoid = ""):
     # if findtype != "full":
     #     recentProcessList[mongoid+"-"+findtype] = time.time()
 
+
+    isFilterUpdateNeeded = False
+
+
     db = initDB()
     if findtype == "syncCandidate":
+        # allowedfields = ['unread', 'job_profile_id', 'tag_id', 'notes', 'candidate_star', 'callingStatus' ]
+
+
+        logger.info("field which got updated %s", field)
+        if field is not None:
+            if "tag_id" in field or 'job_profile_id' in field:
+                isFilterUpdateNeeded = True
+
+
         logger.info("syncCandidate")
-        ret = db.emailStored.find({ 
-            "_id" : ObjectId(mongoid),
-             } , 
-            {"body": 0}
-        )
+
+        if not isFilterUpdateNeeded:
+            logger.critical("filters not getting updated ")
+        else:
+            logger.critical("filters getting updated ")
+
+        
+        if doc is None:
+            ret = db.emailStored.find({ 
+                "_id" : ObjectId(mongoid),
+                } , 
+                {"body": 0}
+            )
+            # .sort([("sequence", -1),("updatedAt", -1)])
+            # sort gives ram error
+        else:
+            ret = [doc]
+
     elif findtype == "syncJobProfile":
         logger.info("syncJobProfile")
         job_profile_id = mongoid
+
+
+        logger.info("cur time %s", cur_time)
+        if "syncJobProfile" + job_profile_id in pastInfoMap:
+            t = pastInfoMap["syncJobProfile" + job_profile_id]
+
+            if t > cur_time:
+                logger.info("skpping the sync as we have already synced more recent data")
+                return ""
+
+        pastInfoMap["syncJobProfile" + job_profile_id] = time.time()
+
+        isFilterUpdateNeeded = True
         
         ret = db.emailStored.find({ 
             "job_profile_id" : mongoid,
@@ -85,18 +204,35 @@ def process(findtype = "full", mongoid = ""):
             } , 
            {"body": 0}
         )
+        # .sort([("sequence", -1),("updatedAt", -1)])
+        # .sort([("sequence", -1),("updatedAt", -1)])
+            # sort gives ram error
     else:
         logger.info("full")
+
+        if "full" in pastInfoMap:
+            t = pastInfoMap["full"]
+
+            if t > cur_time:
+                logger.info("skpping the sync as we have already synced more recent data")
+                return ""
+
+        pastInfoMap["full"] = time.time()
+
         # r.flushdb()
         # this is wrong. this remove much more data like resume parsed information etc
-        
+        redisKeyMap = {}
+        dirtyMap = {}
         for key in r.scan_iter():
-            if "candidate_" in key or "job_" in key:
+            if "classify_" in key or "job_" in key:
                 r.delete(key)
                 
         ret = db.emailStored.find({ } , 
             {"body": 0}
         )
+        # .sort([("sequence", -1),("updatedAt", -1)])
+        # .sort([("sequence", -1),("updatedAt", -1)])
+            # sort gives ram error
 
 
     job_profile_map = {}
@@ -105,6 +241,9 @@ def process(findtype = "full", mongoid = ""):
     full_map = {}
 
     for row in ret:
+        if isinstance(row, float):
+            continue
+
         row["_id"] = str(row["_id"])
         # logger.info(row["_id"])
         if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
@@ -162,15 +301,15 @@ def process(findtype = "full", mongoid = ""):
             ]    
         
         
-        if findtype == "syncCandidate":
+        if findtype == "syncCandidate" or findtype == "syncJobProfile":
             # if job_profile_id:
             #     job_profile_data_existing = r.get("job_" + job_profile_id)
             #     job_profile_data_now = json.dumps(row,default=json_util.default)
 
-            if len(finalLines) > 0:
-                logger.info("add to searhch")
-                t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}))
-                t.start()
+            # if len(finalLines) > 0:
+            #     logger.info("add to searhch")
+                # t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}))
+                # t.start()
                 # t.join() 
                 # this is getting slow...
 
@@ -182,60 +321,85 @@ def process(findtype = "full", mongoid = ""):
             # so they create multiple connections
             # threads.append(t)
 
-            if job_profile_id is not None:
-                job_profile_data = r.get("job_" + job_profile_id)
-                if job_profile_data:
-                    job_profile_data = json.loads(job_profile_data)
-                else:
-                    job_profile_data = {}
+            if isFilterUpdateNeeded:
+                if job_profile_id is not None:
+                    logger.info("job profile %s", job_profile_id)
+                    mapKey = "job_" + job_profile_id
+                    if mapKey not in redisKeyMap:
+                        job_profile_data = r.get(mapKey)
+                        if job_profile_data:
+                            job_profile_data = json.loads(job_profile_data)
+                        else:
+                            job_profile_data = {}
+                    else:
+                        job_profile_data = redisKeyMap[mapKey]
 
-                if row["_id"] in job_profile_data:
-                    job_profile_data[row["_id"]] = row
+                    if row["_id"] in job_profile_data:
+                        job_profile_data[row["_id"]] = row
 
-                addFilter({
-                    "id" : job_profile_id,
-                    "fetch" : "job_profile",
-                    "action" : "index"
-                })
-                
-            if candidate_label is not None:
-                logger.info(candidate_label)
-                candidate_data = r.get("classify_" + candidate_label)
-                if candidate_data:
-                    candidate_data = json.loads(candidate_data)
-                else:
-                    candidate_data = {}
+                    # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 
-                if row["_id"] in candidate_data:
-                    candidate_data[row["_id"]] = row
+                    redisKeyMap[mapKey] = job_profile_data
 
-                addFilter({
-                    "id" : candidate_label,
-                    "fetch" : "candidate",
-                    "action" : "index"
-                })
+                    dirtyMap[mapKey] = True
 
-                # there is one case here. if candidate changes job profile, we need to remove it from previous job as well
-                # this will be handled via a seperate api
+                    # addFilter({
+                    #     "id" : job_profile_id,  
+                    #     "fetch" : "job_profile",
+                    #     "action" : "index"
+                    # })
+                    
+                if candidate_label is not None:
+                    logger.info("candidate labels %s", candidate_label)
+                    mapKey = "classify_" + candidate_label
+                    if mapKey not in redisKeyMap:
+                        candidate_data = r.get(mapKey)
+                        if candidate_data:
+                            candidate_data = json.loads(candidate_data)
+                        else:
+                            candidate_data = {}
+                    else:
+                        candidate_data = redisKeyMap[mapKey]
+
+                    if row["_id"] in candidate_data:
+                        candidate_data[row["_id"]] = row
+
+                    redisKeyMap[mapKey] = candidate_data
+                    dirtyMap[mapKey] = True
+
+                    # r.set(mapKey, json.dumps(candidate_data))
+
+                    # addFilter({
+                    #     "id" : candidate_label,
+                    #     "fetch" : "candidate",
+                    #     "action" : "index"
+                    # })
+
+                    # there is one case here. if candidate changes job profile, we need to remove it from previous job as well
+                    # this will be handled via a seperate api
 
     
         
 
-    if findtype == "syncJobProfile":
-        if job_profile_id is not None:
-            for job_profile_id in job_profile_map:
-                logger.info("job profile key %s", "job_" + job_profile_id)
+    # if findtype == "syncJobProfile":
+    #     if job_profile_id is not None:
+    #         for job_profile_id in job_profile_map:
+    #             logger.info("job profile key %s", "job_" + job_profile_id)
 
-                ret = r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
-                logger.info(ret)
+    #             ret = r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
+    #             logger.info(ret)
 
-                logger.info("job profile filter")
-                addFilter({
-                    "id" : job_profile_id,
-                    "fetch" : "job_profile",
-                    "action" : "index"
-                })
-                logger.info("job profile filter completed")
+    #             redisKeyMap["job_" + job_profile_id] = job_profile_map[job_profile_id]
+    #             if "job_" + job_profile_id in dirtyMap:
+    #                 del dirtyMap["job_" + job_profile_id]
+
+    #             logger.info("job profile filter")
+    #             # addFilter({
+    #             #     "id" : job_profile_id,
+    #             #     "fetch" : "job_profile",
+    #             #     "action" : "index"
+    #             # })
+    #             # logger.info("job profile filter completed")
     
     if findtype == "full":
 
@@ -249,6 +413,7 @@ def process(findtype = "full", mongoid = ""):
                 "fetch" : "job_profile",
                 "action" : "index"
             })
+            redisKeyMap["job_" + job_profile_id] = job_profile_map[job_profile_id]
             logger.info("updating filter %s" , ret)
 
         for candidate_label in candidate_map:
@@ -259,6 +424,7 @@ def process(findtype = "full", mongoid = ""):
                 "fetch" : "candidate",
                 "action" : "index"
             })
+            redisKeyMap["classify_" + candidate_label] = candidate_map[candidate_label] 
             logger.info("updating filter %s" , ret)
 
         # logger.info("full data filter")
@@ -276,6 +442,8 @@ time_map = {}
 
 def addFilter(obj):
     ignore = False
+    logger.info(obj)
+
     if obj["action"] == "index":
         if obj["fetch"] not in time_map:
             time_map[obj["fetch"]] = {}
@@ -283,20 +451,24 @@ def addFilter(obj):
         id = obj["id"]
         if id not in time_map[obj["fetch"]]:
             time_map[obj["fetch"]][id] = time.time()
+            logger.info("added new fetch %s", id)
         else:
             ctime = time_map[obj["fetch"]][id]
             logger.info("time for %s for obj %s",  time.time() - ctime , obj )
-            if time.time() - ctime < 10 * 60:
+            if (time.time() - ctime) < 15 * 60:
                 ignore = True
                 logger.info("ignoreed %s" , obj)
             else:
                 time_map[obj["fetch"]][id] = time.time()
+    else:
+        logger.info("different action found %s", obj)
+
 
     if not ignore:
         try:
-            t = Thread(target=updateFilter, args=( obj , ))
-            t.start()
-            # updateFilter(obj)
+            # t = Thread(target=updateFilter, args=( obj , ))
+            # t.start()
+            updateFilter(obj)
         except Exception as e:
             logger.critical(str(e))
             traceback.print_exc(e)
