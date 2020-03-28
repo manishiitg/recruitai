@@ -156,7 +156,7 @@ services:
             REDIS_PORT : '6379'
             RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
             RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
-            RESUME_PARALLEL_PROCESS: 5
+            RESUME_PARALLEL_PROCESS: 1
         # mode: replicated
         # replicas: 2
         networks:

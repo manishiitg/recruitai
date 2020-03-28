@@ -16,6 +16,7 @@ from app.publisher.filter import sendBlockingMessage as sendFilterMessage
 
 bp = Blueprint('datasync', __name__, url_prefix='/datasync')
 
+import time
 
 @bp.route('/filter/get/candidate_score/<string:id>', methods=['GET'])
 def candidate_score(id):
@@ -70,33 +71,53 @@ def filter_index(id,fetch):
         logger.critical(e)
         return jsonify(str(e)), 500
 
-@bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
-def filter_fetch(id,fetch):
-    
+# @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
+@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
+@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET'])
+def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
+
+    if ai == "True" or ai == "1" or ai == "true":
+        ai = True
+    else:
+        ai = False
 
     try:
+        if len(tags.strip()) > 0:
+            tags = tags.split(",")
 
         ret = sendFilterMessage({
             "id" : id,
             "fetch" : fetch,
-            "action" : "fetch"
+            "page" : page,
+            "limit" : limit,
+            "tags" : tags,
+            "action" : "fetch",
+            "ai" : ai
         })
 
         return jsonify(ret), 200
     
-    except KeyError as e:
+    except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
 
 @bp.route('/candidate/<string:id>', methods=['GET'])
-def candidate(id):
+@bp.route('/candidate/<string:id>/<string:field>', methods=['POST'])
+def candidate(id, field = ""):
     logger.info("got candidate %s", id)
 
     try:
 
+        if request.method == 'POST':
+            doc = request.json['data']
+            logger.info("full doc %s", doc)
+
         sendMessage({
             "id" : id,
-            "action" : "syncCandidate"
+            "field" : field,
+            "doc" : doc,
+            "action" : "syncCandidate",
+            "cur_time" : time.time()
         })
 
         return jsonify([]), 200
@@ -116,16 +137,17 @@ def classifyMoved(candidate_id, from_id, to_id):
             "candidate_id" : candidate_id,
             "from_id" : from_id,
             "to_id" : to_id,
-            "action" : "classifyMoved"
+            "action" : "classifyMoved",
+            "cur_time" : time.time()
         })
 
         return jsonify([]), 200
     
-    except KeyError as e:
+    except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
 
-@bp.route('/job-profile-moved/<string:id>/<string:from_id>/<string:to_id>', methods=['GET'])
+@bp.route('/job-profile-moved/<string:candidate_id>/<string:from_id>/<string:to_id>', methods=['GET'])
 def jobprofileMoved(candidate_id, from_id, to_id):
     logger.info("got job profile from %s", from_id)
     logger.info("got job profile to %s", to_id)
@@ -136,12 +158,13 @@ def jobprofileMoved(candidate_id, from_id, to_id):
             "candidate_id" : candidate_id,
             "from_id" : from_id,
             "to_id" : to_id,
-            "action" : "syncJobProfileChange"
+            "action" : "syncJobProfileChange",
+            "cur_time" : time.time()
         })
 
         return jsonify([]), 200
     
-    except KeyError as e:
+    except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
 
@@ -154,7 +177,8 @@ def jobprofile(id):
 
         sendMessage({
             "id" : id,
-            "action" : "syncJobProfile"
+            "action" : "syncJobProfile",
+            "cur_time" : time.time()
         })
 
         return jsonify([]), 200
@@ -170,7 +194,8 @@ def full():
     try:
 
         sendMessage({
-            "action" : "full"
+            "action" : "full",
+            "cur_time" : time.time()
         })
 
         return jsonify([]), 200
