@@ -33,10 +33,28 @@ def thread_task( ch, method_frame, properties, body):
             fetch_type = body["fetch"]
             fetch_id = body["id"]
             action = body["action"]
+            if "tags" in body:
+                tags = body["tags"]
+            else:
+                tags = []
             
+            page = 0
+            if "page" in body:
+                page = body["page"]
+
+            limit = 50
+
+            if "limit" in body:
+                limit = body["limit"]
+
+
+            on_ai_data = False
+            if "ai" in body:
+                on_ai_data = body["ai"]
+
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
