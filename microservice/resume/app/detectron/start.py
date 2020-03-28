@@ -1,6 +1,8 @@
 from PIL import Image
 from pathlib import Path
 import shutil
+from threading import Thread
+
 import torch
 
 from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
@@ -143,7 +145,10 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     logger.info("final file name %s" , cv)
     output_dir = os.path.join(basePath,''.join(e for e in basecv if e.isalnum()))
     shutil.rmtree(output_dir,ignore_errors = True)
+    
+    start_time = time.time()
     covertPDFToImage(cv, output_dir, cvfilename , logger)
+    timeAnalysis[fileIdx]["image_to_pdf"] = time.time() - start_time
 
 
     outputFolder = ""
@@ -295,14 +300,19 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         "jsonOutput" : jsonOutput
       })
 
-    x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
-    logger.info(x)
+    start_time = time.time()
+    t = Thread(target=uploadToGcloud, args=(basePath, basecv) , daemon = True)
+    t.start()
     timeAnalysis[fileIdx]["gsutil" + str(cvpages)] = time.time() - start_time
     start_time = time.time()
     
 
   return combinedCompressedContent , timeAnalysis
 
+
+def uploadToGcloud(basePath,basecv):
+  x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+  logger.info(x)
 
 def cleanContent(content , cvpage , jsonOutput):
   
@@ -356,12 +366,16 @@ def loadTrainedModel():
   if predictor is  None:
     cfg = get_cfg()
     # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
-    cfg.merge_from_file(
-        baseDirectory + "/detectron2/configs/DLA_mask_rcnn_X_101_32x8d_FPN_3x.yaml")
+    # cfg.merge_from_file(
+    #     baseDirectory + "/detectron2/configs/DLA_mask_rcnn_X_101_32x8d_FPN_3x.yaml")
+    cfg.merge_from_file(baseDirectory + "/detectron2/configs/DLA_mask_rcnn_R_101_FPN_3x.yaml")
+
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set threshold for this model
     # Find a model from detectron2's model zoo. You can either use the https://dl.fbaipublicfiles.... url, or use the detectron2:// shorthand
     # cfg.MODEL.WEIGHTS = "resnext101_32x8d/model_final_trimmed.pth"
-    cfg.MODEL.WEIGHTS = os.path.join("pretrained/detectron3_5000/model_final.pth")
+    # cfg.MODEL.WEIGHTS = os.path.join("pretrained/detectron3_5000/model_final.pth")
+    cfg.MODEL.WEIGHTS = os.path.join("pretrained/detectron3_5000_fpn/model_final.pth")
+    
     cfg.MODEL.DEVICE = device
     predictor = DefaultPredictor(cfg)
 
