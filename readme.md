@@ -272,3 +272,18 @@ when we do full datasync it should delete all previous keys and create new.
 we can schedule this one or twice a day as well (completed)
 
 m) need to make this muti account with priority & setup priority tasks for latest cvs
+
+
+
+
+
+
+
+
+
+
+
+
+
+datasync neds to be faster. right now, there was bulk update of all tag_ids in a job profile.
+this takes very very long

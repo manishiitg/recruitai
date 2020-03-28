@@ -10,13 +10,12 @@ from app.publisher.connection import getConnection
 def handle(channel, method, properties, body):
     if body is None:
         return body
+        
     message = body.decode()
     logger.info("received: %s", message)
-    try:
-        return json.loads(message)
-    except Exception as e:
-        return message
-
+    
+    return json.loads(message)
+    
 
  # cb = functools.partial(self.acknowledge_message, delivery_tag)
 # self._connection.add_callback_threadsafe(cb)
