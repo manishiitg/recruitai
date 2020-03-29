@@ -29,6 +29,7 @@ import requests
 
 from app.publisher import sendMessage
 from app.publishpicture import sendMessage as sendPicture
+from app.publishsummary import sendMessage as sendSummary
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
@@ -354,7 +355,7 @@ class TaskQueue(object):
 
         timer = time.time()
 
-        if doProcess:
+        if doProcess or True:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
             if "error" in ret:
                 self.acknowledge_message(delivery_tag)
@@ -385,6 +386,10 @@ class TaskQueue(object):
 
             sendPicture({
                 "image" : ret["finalImages"][0],
+                "mongoid" : mongoid,
+                "filename" : message["filename"]
+            })
+            sendSummary({
                 "mongoid" : mongoid,
                 "filename" : message["filename"]
             })

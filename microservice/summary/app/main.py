@@ -2,29 +2,18 @@ import functools
 import time
 from app.logging import logger as LOGGER
 import pika
-from app.resumeutil import fullResumeParsing
+from app.bart.start import process
 import json
 import threading
-import redis
 import os 
 
 from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
 import traceback
 
 from app.publishdatasync import sendMessage as datasync
-
-import requests
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
@@ -40,8 +29,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'picture'
-    ROUTING_KEY = 'picture.parsing'
+    QUEUE = 'summary'
+    ROUTING_KEY = 'summary.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -59,7 +48,7 @@ class TaskQueue(object):
         self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
+        self._prefetch_count = 1
 
 
     def connect(self):
@@ -320,12 +309,13 @@ class TaskQueue(object):
             return
 
 
-        ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"])
-        
+        process(message["filename"] , message["mongoid"])
+
         datasync({
                 "id" : message["mongoid"],
                 "action" : "syncCandidate"
         })
+        
             
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
@@ -451,10 +441,10 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
-from app.picture.start import loadTrainedModel as loadPicModel
+from app.bart.start import loadModel
 
 def main():
-    loadPicModel()
+    loadModel()
     
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
