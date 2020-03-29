@@ -130,6 +130,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     finalImages, output_dir2 = processAPI(os.path.join(dest, filename))
     if "error" in finalImages:
         return finalImages
+    
 
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
@@ -148,6 +149,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     #     })
     #     timer = time.time()
     # this is already done in main.py so not sure why its needed here
+
         
     shutil.rmtree(os.path.join(dest, cvdir)) 
     if os.path.exists(os.path.join(dest, org_cv_filename)):
