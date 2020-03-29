@@ -8,9 +8,6 @@ import threading
 import redis
 import os 
 
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
-
-
 from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -23,15 +20,11 @@ def initDB():
         db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
     return db
-
 import traceback
+
 import requests
 
-from app.publisher import sendMessage
-from app.publishpicture import sendMessage as sendPicture
-
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
-
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -45,8 +38,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'image'
-    ROUTING_KEY = 'image.parsing'
+    QUEUE = 'picture'
+    ROUTING_KEY = 'picture.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -61,12 +54,11 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = []
+        self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1  
-        # libreoffice can only convert file one at a time. we cannot use threads for this
-        # it gets stuck foroever if we do multiple together
+        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
+
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -201,7 +193,7 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
+        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb)
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -315,91 +307,20 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        if "mongoid" not in message:
+            message["mongoid"] = ""
+            
         if message["mongoid"] is None:
             message["mongoid"] = ""
 
-        if "skills" in message:
-            skills = message["skills"]
-        else:
-            skills = None
+        if len(message["mongoid"]) == 0:
+            self.acknowledge_message(delivery_tag)
+            return
 
 
-
-        key = message["filename"]
-
-        key = ''.join(e for e in key if e.isalnum()) 
-        key = "picture_" + key
-
-        LOGGER.info("redis key %s", key)
-
-
-        if "priority" in message:
-            LOGGER.info("priority of message %s", message["priority"])
-        else:
-            LOGGER.info("priority not found at all")
-
-        doProcess = False
+        ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"])
         
-        if r.exists(key):
-            ret = r.get(key)
-            ret = json.loads(ret)
-            LOGGER.info("redis key exists")
-            LOGGER.info(ret)
-            if "error" in ret or isinstance(ret, list):
-                # new response type is dict not list
-                LOGGER.info("redis key exists but previously error status so reprocessing")
-                doProcess = True
-        else:
-            doProcess = True
-
-        timer = time.time()
-
-        if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"])
-            if "error" in ret:
-                self.acknowledge_message(delivery_tag)
-                return 
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
-        
-        
-        message["cvdir"] = ret["cvdir"]
-        message["output_dir2"] = ret["output_dir2"]
-        message["finalImages"] = ret["finalImages"]
-        message["filename"] = ret["filename"]
-
-        mongoid = message["mongoid"]
-        if mongoid and ObjectId.is_valid(mongoid):
-            db = initDB()
-            db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "cvimage": {
-                            "images": ret["finalImages"],
-                            "time_taken" : time.time() - timer
-                    }
-                }
-            })
-            timer = time.time()
-
-
-            sendPicture({
-                "image" : ret["finalImages"][0],
-                "mongoid" : mongoid,
-                "filename" : message["filename"]
-            })
-
-        try:
-            if "meta" in message:
-                meta = message["meta"]
-                if "callback_url" in meta:
-                    meta["message"] = json.loads(json.dumps(message))
-                    requests.post(meta["callback_url"], json=meta)
-        except Exception as e:
-                traceback.print_exc()
-                LOGGER.critical(e)
-
-        sendMessage(message)
+            
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
@@ -407,6 +328,7 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
+          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
@@ -523,7 +445,10 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
+from app.picture.start import loadTrainedModel as loadPicModel
+
 def main():
+    loadPicModel()
     
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
