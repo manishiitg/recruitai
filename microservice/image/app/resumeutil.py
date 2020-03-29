@@ -63,6 +63,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
 
     dest = BASE_PATH + "/../temp"
     deleteDirContents(dest)
+
     # deleteDirContents(BASE_PATH + "/../cvreconstruction")
     # this cannot be done because resumemq needs files from cvreconstruction
 
@@ -81,6 +82,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         logger.critical(str(e))
         traceback.print_exc(file=sys.stdout)
         return {"error" : str(e)}
+
 
     org_cv_filename = cvfilename
     filename = cvfilename
@@ -120,7 +122,6 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
                 "error" : "unable to convert file to pdf"
             }
 
-
     fullResponse = {}
 
     cvfilename = ''.join(
@@ -152,8 +153,10 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
 
         
     shutil.rmtree(os.path.join(dest, cvdir)) 
+
     if os.path.exists(os.path.join(dest, org_cv_filename)):
         os.remove(os.path.join(dest, org_cv_filename)) 
+
     if os.path.exists(os.path.join(dest, filename)):
         os.remove(os.path.join(dest, filename)) 
 
