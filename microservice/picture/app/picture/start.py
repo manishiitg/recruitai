@@ -1,5 +1,4 @@
 from app.logging import logger
-from pdf2image import convert_from_path
 from detectron2.structures import BoxMode, Boxes
 from detectron2.data import MetadataCatalog
 from detectron2.utils.visualizer import Visualizer, GenericMask
