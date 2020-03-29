@@ -572,13 +572,11 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 from app.detectron.start import loadTrainedModel 
-from app.picture.start import loadTrainedModel as loadPicModel
 from app.cvlinepredict.start import loadModel
 from app.ner.start import loadModel as loadModelTagger
 
 def main():
     loadTrainedModel()
-    loadPicModel()
     loadModel()
     loadModelTagger()
     
