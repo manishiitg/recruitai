@@ -53,79 +53,9 @@ def fullResumeParsing(filename, mongoid=None, message = None):
                 }
             })
 
-        # bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-        # blob = bucket.blob(filename)
-
-        # dest = BASE_PATH + "/../temp"
-        # Path(dest).mkdir(parents=True, exist_ok=True)
-        # filename, file_extension = os.path.splitext(filename)
-
-        # cvfilename = ''.join(
-        #     e for e in filename if e.isalnum()) + file_extension
-        # cvdir = ''.join(e for e in cvfilename if e.isalnum())
-        # blob.download_to_filename(os.path.join(dest, cvfilename))
-
-        # filename = cvfilename
-
-        # logger.info("final file name %s", filename)
-
-        # if ".pdf" not in filename:
-        #     inputFile = os.path.join(dest, filename)
-        #     if len(file_extension.strip()) > 0:
-        #         filename = filename.replace(file_extension, ".pdf")
-        #     else:
-        #         filename = filename + ".pdf"
-
-        #     # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
-        #     logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
-        #     x = subprocess.check_call(
-        #         ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True)
-        #     logger.info(x)
-
-        #     if os.path.exists(os.path.join(dest, filename)):
-        #         logger.info("file converted")
-        #     else:
-        #         logger.info("unable to convert file to pdf")
-        #         return {
-        #             "error" : "unable to convert file to pdf"
-        #         }
-
-
+       
         fullResponse = {}
         dest = BASE_PATH + "/../cvreconstruction"
-
-        #pic is not being shown anywhere on frontend and 90% cv's dont have it
-        # i think it should be trained with document layour analysic
-        # or i can use a smaller detectron2 model for this.
-        # for now just disableing it 
-        # response, basedir = extractPicture(os.path.join(dest, filename))
-        # , finalImages, output_dir2
-
-        # for img in finalImages:
-        #     img = img.replace(basedir + "/", GOOGLE_BUCKET_URL + cvdir + "/picture/")
-
-        # fullResponse["picture"] = response
-
-        # if response:
-        #     fullResponse["picture"] = fullResponse["picture"].replace(basedir + "/", GOOGLE_BUCKET_URL)
-
-        # if mongoid and ObjectId.is_valid(mongoid):
-        #     db = initDB()
-        #     ret = db.emailStored.update_one({
-        #         "_id" : ObjectId(mongoid)
-        #     }, {
-        #         "$push": {
-        #             "pipeline": {
-        #                 "stage" : 1,
-        #                 "name": "picture",
-        #                 "timeTaken": time.time() - timer,
-        #                 # "debug" : {
-        #                 #     "response": json.loads(json.dumps(response)), 
-        #                 #     "basedir" : basedir
-        #                 # }
-        #             }
-        #         }
-        #     })
             
         timer = time.time()
 
@@ -323,7 +253,6 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         ret = {
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
-            "picture": fullResponse["picture"],
             "timeTaken": time.time() - timer
         }
 
@@ -334,6 +263,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
             # "compressedStructuredContent": combinData["compressedStructuredContent"]
+            "nerExtracted" : nerExtracted
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = False) 
@@ -341,7 +271,7 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         os.remove(BASE_PATH + "/../cvreconstruction/" + filename) 
         return ret
 
-    except Exception as e:
+    except KeyError as e:
         logger.info("error %s", str(e))
         print(traceback.format_exc())
         return {
