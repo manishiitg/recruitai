@@ -95,31 +95,35 @@ sudo docker-compose logs -f
 tail -f /var/log/recruitai/flask_out.log
 tail -f /var/log/recruitai/flask_err.log
 
-Few things to install
-================================
 
-pip install torch torchvision
+COCO Annotator
+=================
+http://176.9.137.77:5000/#/datasets
+
+its not part of this docker compse, its using orgianl docker-compose file itself 
+https://github.com/jsbroks/coco-annotator/
+itself and running as a seperate service
 
 
-pip install --upgrade cython
+there is a dataset called resume/ which has all the images
 
-pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+there is a folder called trainig/coco which has all the trainig data.
 
-pip install numpy
+this needs to be updated manually from time to time
 
-pip install 'git+https://github.com/facebookresearch/detectron2.git'
+current process for this to work
 
-pip install transformers
-pip uninstall tokenizers
-pip install  tokenizers
+1. we open recruit system. go through the cv's there if we find issue we report it. the url gets saved in db
+2. user needs to manually go into db. find the url open it on browser. see manually if the parsed was bad.
+3. if parsing was bad, download the cv via browser and create a directly.
+4. delete the data from db manually
+5. upload it to server manually and do tagging there again
 
-pip install google-cloud-storage
-sudo apt-get install libreoffice
 
-sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
-sudo apt-get install python-poppler poppler-utils
 
-npm install -g pdf-text-extract
+== INFO
+
+
 
 export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.0.0 --port 8085
 
@@ -130,22 +134,6 @@ export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && 
  curl -XPUT -H "Content-Type: application/json" http://127.0.0.1:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 
 
-=== 
-cloud sdk
-
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-sudo apt-get install apt-transport-https ca-certificates gnupg
-
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-
-
-sudo apt-get install libreoffice
-
-sudo apt-get update && sudo apt-get install google-cloud-sdk
-
-apt-get install python-dev libxml2-dev libxslt1-dev antiword unrtf poppler-utils pstotext tesseract-ocr flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig
-pip install textract
 
 
 gcloud auth login
@@ -173,29 +161,9 @@ supervisorctl start recruitai
 supervisorctl restart recruitai
 
 
-###### Architecture ######
 
-Object is that it should be easily be deployed as cloud functions or docker image on server.
-
-Pipeline will contain different things
-
-a) CV Process
-   1. Extract picture
-   2. Extract resume data
-   3. NER
-   4. Classify Lines
-   5. Skill Extraction
-   6. Final Data for frontend
-
-
-   == Input will be a pdf file. This pdf file can come via a file upload, glcoud bucket,
-   == Once i have the pdf file, next steps will start like saving the pages to images
-   == extracting pic
-   == extraing text and detectron
-   == need to upload all this back to gcloud storage..... and also local folder
-   == should i just use gsutil in this case
-   == and database which db to use.mongo or some gcloud...
-   == when entire process finishes, how to send response bcak to requester
+=========
+TODO
 
 b) Classification of emails (done)
 c) Word2Vec skill api (done)
