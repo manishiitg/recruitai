@@ -61,9 +61,6 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
                 priority = 1
 
 
-    priority = 10 - priority
-
-
 
     sendMessage({
         "filename" : filename,
