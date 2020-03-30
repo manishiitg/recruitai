@@ -78,6 +78,7 @@ def process(filename, mongoid):
                 }
             }
         })
+        logger.info("time taken $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", time.time() - star_time)
 
 def extractSummary(text):
     article_input_ids = tokenizer.batch_encode_plus([text], return_tensors='pt', max_length=1024)['input_ids'].to(torch_device)
