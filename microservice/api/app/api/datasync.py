@@ -13,10 +13,27 @@ from flask_jwt_extended import (
 
 from app.publisher.datasync import sendMessage
 from app.publisher.filter import sendBlockingMessage as sendFilterMessage
+from app.publisher.stats import sendMessage as sendStatsMessage
+
 
 bp = Blueprint('datasync', __name__, url_prefix='/datasync')
 
 import time
+
+import random
+
+@bp.route("/stats" , methods=["GET"])
+def stats():
+    for i in range(10):
+        sendStatsMessage({
+            "action" : "ping",
+            "sleep" : 1,
+            "index" : i,
+            "priority" : random.randint(0, 10)
+        })
+
+    return jsonify({}) , 200
+
 
 @bp.route('/filter/get/candidate_score/<string:id>', methods=['GET'])
 def candidate_score(id):
