@@ -23,7 +23,7 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-sudo docker-compose up -d --scale=resumemq=6
+sudo docker-compose up -d --scale=resumemq=2
 
 # running this multiple either via scale or prefetch queue is taking more time than running one at time
 
