@@ -16,7 +16,6 @@ RUN apt-get install python-poppler poppler-utils -y \
     && apt-get -y autoclean
 
 RUN pip install pdfminer.six pdf2image
-# RUN pip install -r requirements.txt
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 

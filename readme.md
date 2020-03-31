@@ -11,6 +11,7 @@ gsutil ls
 mkdir pretrained
 gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
 mkdir batchprocessing
+mkdir cvreconstruction
 sudo mkdir /var/log/recruitai
 
 http://144.76.110.170:5001/#/datasets
