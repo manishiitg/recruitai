@@ -103,17 +103,18 @@ services:
         networks:
             - ai
     
-    rq-dashboard:
-        image: eoranged/rq-dashboard
-        environment: 
-            - RQ_DASHBOARD_REDIS_URL=redis://redis:6379
-        ports:
-            - 9181:9181
-        networks:
-            - ai   
+    # rq-dashboard:
+    #     image: eoranged/rq-dashboard
+    #     environment: 
+    #         - RQ_DASHBOARD_REDIS_URL=redis://redis:6379
+    #     ports:
+    #         - 9181:9181
+    #     networks:
+    #         - ai   
     
     label-studio-ner:
-        build: label-studio/ner
+        image: recruitai/ner:latest
+        build: ./label-studio/ner
         ports:
             - 8000:8200 
         volumes:
@@ -122,6 +123,7 @@ services:
             - ai   
 
     api:
+        image: recruitai/api:latest
         build: microservice/api
         ports:
             - "8086:5001"
@@ -142,6 +144,7 @@ services:
             - ai
 
     resumemq:
+        image: recruitai/resumemq:latest
         build: microservice/resume
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -157,12 +160,16 @@ services:
             RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
             RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
             RESUME_PARALLEL_PROCESS: 1
+        depends_on:
+            - elasticsearch
+            - redis
         # mode: replicated
         # replicas: 2
         networks:
             - ai
         
     classifymq:
+        image: recruitai/classifymq:latest
         build: microservice/classify
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -176,6 +183,7 @@ services:
             - ai
 
     skillmq:
+        image: recruitai/skillmq:latest
         build: microservice/skill
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -191,6 +199,7 @@ services:
             - ai
     
     searchmq:
+        image: recruitai/searchmq:latest
         build: microservice/search
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -206,6 +215,7 @@ services:
             - ai
 
     skillextractmq:
+        image: recruitai/skillextractmq:latest
         build: microservice/skillextract
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -223,6 +233,7 @@ services:
             - ai
     
     gendermq:
+        image: recruitai/gendermq:latest
         build: microservice/gender
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -238,6 +249,7 @@ services:
             - ai
 
     imagemq:
+        image: recruitai/imagemq:latest
         build: microservice/image
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -255,6 +267,7 @@ services:
             - ai
 
     datasyncmq:
+        image: recruitai/datasyncmq:latest
         build: microservice/datasync
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -273,6 +286,7 @@ services:
             - ai
 
     candidatemq:
+        image: recruitai/candidatemq:latest
         build: microservice/candidate
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -290,6 +304,7 @@ services:
             - ai
 
     filtermq:
+        image: recruitai/imagemq:latest
         build: microservice/filter
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -307,6 +322,7 @@ services:
             - ai
       
     statsmq:
+        image: recruitai/statsmq:latest
         build: microservice/stats
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -324,6 +340,7 @@ services:
             - ai
     
     picturemq:
+        image: recruitai/picturemq:latest
         build: microservice/picture
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -341,6 +358,7 @@ services:
             - ai
 
     summarymq:
+        image: recruitai/summarymq:latest
         build: microservice/summary
         volumes:
             - ./pretrained:/workspace/pretrained:ro
@@ -362,4 +380,3 @@ volumes:
 
 networks:
     ai:
-        driver: bridge
