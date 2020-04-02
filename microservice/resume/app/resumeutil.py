@@ -25,6 +25,11 @@ from bson.objectid import ObjectId
 
 import time
 
+from pdfminer.pdfpage import PDFTextExtractionNotAllowed
+
+from app.fast.start import process as processFast
+
+import sys
 
 db = None
 def initDB():
@@ -35,10 +40,28 @@ def initDB():
 
     return db
 
-def fullResumeParsing(filename, mongoid=None, message = None):
+def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
     try:
 
+
+        init_timer = time.time()
         timer = time.time()
+
+        dest = BASE_PATH + "/../cvreconstruction/"
+
+        bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+        blob = bucket.blob(filename)
+
+        Path(dest).mkdir(parents=True, exist_ok=True)
+
+        try:
+            blob.download_to_filename(os.path.join(dest, filename))
+            logger.info("file downloaded at %s", os.path.join(dest, filename))
+        except  Exception as e:
+            logger.critical(str(e))
+            traceback.print_exc(file=sys.stdout)
+            return {"error" : str(e)}
+
         db = initDB()
         if mongoid and ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
@@ -58,20 +81,25 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         dest = BASE_PATH + "/../cvreconstruction"
             
         timer = time.time()
+    
+        parsing_type = "full"
+        if priority > 5 :
+            response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename))
+
+            logger.info("========================================== time analysis ==========================================")
+            for fileIdx in timeAnalysis:
+                logger.info("file idx %s" , fileIdx)
+                for work in timeAnalysis[fileIdx]:
+                    logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
 
 
-        response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename))
+            logger.info("total time taken %s", (time.time() - timer))
 
-        logger.info("========================================== time analysis ==========================================")
-        for fileIdx in timeAnalysis:
-            logger.info("file idx %s" , fileIdx)
-            for work in timeAnalysis[fileIdx]:
-                logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
-
-
-        logger.info("total time taken %s", (time.time() - timer))
-
-        logger.info("========================================== time analysis ==========================================")
+            logger.info("========================================== time analysis ==========================================")
+        else:
+            parsing_type = "fast"
+            response = processFast(os.path.join(dest, filename))
+            timeAnalysis = {}
 
         if mongoid and ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
@@ -253,7 +281,8 @@ def fullResumeParsing(filename, mongoid=None, message = None):
         ret = {
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
-            "timeTaken": time.time() - timer
+            "timeTaken": time.time() - init_timer,
+            "parsing_type" : parsing_type
         }
 
         if mongoid:
@@ -266,12 +295,13 @@ def fullResumeParsing(filename, mongoid=None, message = None):
             "nerExtracted" : nerExtracted
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
-        shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = False) 
+        shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = True) 
         logger.info("processing completed, final filename %s", filename)
         os.remove(BASE_PATH + "/../cvreconstruction/" + filename) 
         return ret
 
-    except KeyError as e:
+    except PDFTextExtractionNotAllowed as e:
+    # except KeyError as e:
         logger.info("error %s", str(e))
         print(traceback.format_exc())
         return {
