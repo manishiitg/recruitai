@@ -44,8 +44,9 @@ def start(domain, mongoid, isGeneric = True):
             for pagerow in row["cvParsedInfo"]["newCompressedStructuredContent"][page]:
                 line = pagerow
                 if "classify" not in line:
-                    if line["matched"]:
-                        print("some problem!!!!!!!!!!!!!!!!!!!!!")
+                    # in fast we won't have matched
+                    # if line["matched"]:
+                    #     print("some problem!!!!!!!!!!!!!!!!!!!!!")
                     
                     line["classify"] = ""
 

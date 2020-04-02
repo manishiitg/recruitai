@@ -129,7 +129,6 @@ services:
             - "8086:5001"
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs 
             - ./microservice/api/app:/workspace/app
@@ -148,8 +147,6 @@ services:
         build: microservice/resume
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
-            - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
         environment:
@@ -173,7 +170,6 @@ services:
         build: microservice/classify
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
@@ -187,7 +183,6 @@ services:
         build: microservice/skill
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/skill/app:/workspace/app            
@@ -203,7 +198,6 @@ services:
         build: microservice/search
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
@@ -219,7 +213,6 @@ services:
         build: microservice/skillextract
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/skillextract/app:/workspace/app            
@@ -237,7 +230,6 @@ services:
         build: microservice/gender
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/gender/app:/workspace/app            
@@ -253,8 +245,6 @@ services:
         build: microservice/image
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
-            - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/image/app:/workspace/app            
         environment:
@@ -271,7 +261,6 @@ services:
         build: microservice/datasync
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/datasync/app:/workspace/app            
@@ -290,7 +279,6 @@ services:
         build: microservice/candidate
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/candidate/app:/workspace/app            
@@ -304,11 +292,10 @@ services:
             - ai
 
     filtermq:
-        image: recruitai/imagemq:latest
+        image: recruitai/filtermq:latest
         build: microservice/filter
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/filter/app:/workspace/app            
@@ -326,8 +313,6 @@ services:
         build: microservice/stats
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
-            - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/stats/app:/workspace/app            
         environment:
@@ -344,7 +329,6 @@ services:
         build: microservice/picture
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/picture/app:/workspace/app            
@@ -362,7 +346,6 @@ services:
         build: microservice/summary
         volumes:
             - ./pretrained:/workspace/pretrained:ro
-            - ./batchprocessing:/workspace/batchprocessing 
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/summary/app:/workspace/app            
