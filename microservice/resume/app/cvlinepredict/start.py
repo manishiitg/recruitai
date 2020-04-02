@@ -45,8 +45,8 @@ def predict(text):
         if len(text.split(" ")) < 10:
             return False
 
-        if len(text) >= 512:
-            text = text[:512]
+        if len(text) >= 511:
+            text = text[:511]
 
         encoded = sentPiecetokenizer.encode(text)
         text = " ".join(encoded.tokens)

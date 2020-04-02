@@ -250,7 +250,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                                 del doc["cvParsedInfo"]
                             
                             if "debug" in doc:
-                                delete doc["debug"]
+                                del doc["debug"]
 
                         else:
                         
