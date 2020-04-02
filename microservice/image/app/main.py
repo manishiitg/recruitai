@@ -333,9 +333,11 @@ class TaskQueue(object):
 
         LOGGER.info("redis key %s", key)
 
+        priority = 0
 
         if "priority" in message:
             LOGGER.info("priority of message %s", message["priority"])
+            priority = int(message["priority"])
         else:
             LOGGER.info("priority not found at all")
 
@@ -355,7 +357,7 @@ class TaskQueue(object):
 
         timer = time.time()
 
-        if doProcess or True:
+        if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"])
             if "error" in ret:
                 self.acknowledge_message(delivery_tag)
@@ -387,11 +389,13 @@ class TaskQueue(object):
             sendPicture({
                 "image" : ret["finalImages"][0],
                 "mongoid" : mongoid,
-                "filename" : message["filename"]
+                "filename" : message["filename"],
+                "priority" : priority
             })
             sendSummary({
                 "mongoid" : mongoid,
-                "filename" : message["filename"]
+                "filename" : message["filename"],
+                "priority" : priority
             })
 
         try:
