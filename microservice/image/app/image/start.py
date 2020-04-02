@@ -50,6 +50,10 @@ def savePDFAsImage(cv, output_dir):
         traceback.print_exc(file=sys.stdout)
         return {"error" : str(e)} , None
 
+
+    if len(pages) >= 10:
+        raise Exception('No of pages is too much ' + str(len(pages)))
+
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     cvdir = os.path.dirname(cv)
     cvfilename = cv.replace(cvdir, "")
@@ -85,6 +89,10 @@ def savePDFAsImage(cv, output_dir):
 
 
         finalPages.append(subpagecvfilename)
+
+        if i > 5:
+            break
+            # max5 pages per cv or it could some wrong document also. ie non cv
 
     x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
     logger.info(x)
