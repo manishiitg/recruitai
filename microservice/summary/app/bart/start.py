@@ -2,6 +2,8 @@ from transformers import BartTokenizer, BartForConditionalGeneration
 import torch
 from app.logging import logger
 
+from app.config import RESUME_UPLOAD_BUCKET
+
 torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 model = None
@@ -15,6 +17,7 @@ import os
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import time
+import traceback
 
 db = None
 def initDB():
@@ -25,8 +28,29 @@ def initDB():
 
     return db
 
+from pathlib import Path
+
+import sys
+from app.config import storage_client
+
 
 def process(filename, mongoid):
+
+    dest = BASE_PATH + "/../cvreconstruction/"
+
+    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(filename)
+
+    Path(dest).mkdir(parents=True, exist_ok=True)
+
+    try:
+        blob.download_to_filename(os.path.join(dest, filename))
+        logger.info("file downloaded at %s", os.path.join(dest, filename))
+    except  Exception as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return {"error" : str(e)}
+
 
     dest = BASE_PATH + "/../cvreconstruction/"
 
