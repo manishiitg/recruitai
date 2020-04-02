@@ -3,19 +3,16 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
 
-RUN pip install google-cloud-storage
-RUN pip install pika
+
 
 RUN apt-get update \
     && apt-get install -y curl software-properties-common gnupg
 
 RUN add-apt-repository ppa:libreoffice/ppa -y
 RUN apt-get update && apt-get -y autoclean
-RUN apt-get install libreoffice -y
-RUN apt-get install python-poppler poppler-utils -y \
+RUN apt-get install libreoffice python-poppler default-jdk  poppler-utils -y \
     && apt-get -y autoclean
 
-RUN pip install pdfminer.six pdf2image
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
@@ -26,14 +23,18 @@ RUN apt-get update && apt-get install google-cloud-sdk -y
 
 RUN pip install gunicorn
 
+RUN pip install pdfminer.six pdf2image
+RUN pip install google-cloud-storage
+RUN pip install pika
+
 RUN apt-get update && \
 	apt-get install supervisor -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/picture.conf /etc/supervisor/conf.d/picture.conf
+COPY ./supervisor/conf.d/image.conf /etc/supervisor/conf.d/image.conf
 
-RUN truncate -s 0 /workspace/logs/picture*.log
+RUN truncate -s 0 /workspace/logs/image*.log
 
 COPY ./app/RecruitAI.json /workspace
 
@@ -43,7 +44,7 @@ RUN gsutil ls
 
 RUN pip install redis pymongo
 
-RUN apt-get install default-jdk -y
+
 # ADD app /workspace/app, using volume instead
 
 RUN pip install psutil
