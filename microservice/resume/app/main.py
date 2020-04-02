@@ -327,8 +327,11 @@ class TaskQueue(object):
         else:
             skills = None
 
+        priority = 0
+
         if "priority" in message:
             LOGGER.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", message["priority"])
+            priority = int(message["priority"])
         else:
             LOGGER.info("priority not found")
 
@@ -343,6 +346,16 @@ class TaskQueue(object):
         LOGGER.info("redis key %s", key)
 
         doProcess = False
+
+        if "finalImages" in message:
+            if len(message["finalImages"]) >= 10:
+                ret = {
+                    "error" : "too many pages wont process it " + str(len(message["finalImages"]))
+                }
+                LOGGER.critical(ret)
+                self.updateInDB(ret , message["mongoid"], message)
+                self.acknowledge_message(delivery_tag)
+                return
         
         if r.exists(key):
             ret = r.get(key)
@@ -381,8 +394,10 @@ class TaskQueue(object):
             doProcess = True
                 
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message)
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority)
+            if "parsing_type" in ret and ret["parsing_type"] is not "fast":
+                r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+                
             if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
                 if len(skills) > 0:
                     skillExtracted =  extractSkillMessage({

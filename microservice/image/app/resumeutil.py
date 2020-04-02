@@ -103,6 +103,11 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             x = subprocess.check_call(
                 ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True, timeout=60)
             logger.info(x)
+
+            if os.path.exists(os.path.join(dest, filename)):
+                x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+                logger.info(x)
+
         except CalledProcessError as e:
             logger.critical(str(e))
             traceback.print_exc(file=sys.stdout)
