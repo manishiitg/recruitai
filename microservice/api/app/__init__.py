@@ -54,6 +54,7 @@ def create_app(test_config=None):
     from app.api import dataset
     from app.api import gender
     from app.api import candidate
+    from app.api import training
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
@@ -64,6 +65,7 @@ def create_app(test_config=None):
     app.register_blueprint(datasync.bp)
     app.register_blueprint(gender.bp)
     app.register_blueprint(candidate.bp)
+    app.register_blueprint(training.bp)
     
     
     # Scheduler which will run at interval of 60 seconds for user checkin score

@@ -93,6 +93,7 @@ def get_candidate_score(id, criteria = None):
         'cvParsedInfo': {"$exists": True},
         "_id" : ObjectId(id)
     })
+
     
     total_weight = 0
     for cri in criteria:
@@ -103,10 +104,11 @@ def get_candidate_score(id, criteria = None):
         weight = criteria[cri]["weight"]
         logger.info( "criterial %s weight %s" , cri,  weight/total_weight  * max_score)
 
-    candidate_score += getExpScore(criteria, row, total_weight, max_score)
-    candidate_score += getGenderScore(criteria, row, total_weight, max_score)
-    candidate_score += getSkillScore(criteria, row, total_weight, max_score)
-    candidate_score += getEducationScore(criteria, row, total_weight, max_score)
+    if row:
+        candidate_score += getExpScore(criteria, row, total_weight, max_score)
+        candidate_score += getGenderScore(criteria, row, total_weight, max_score)
+        candidate_score += getSkillScore(criteria, row, total_weight, max_score)
+        candidate_score += getEducationScore(criteria, row, total_weight, max_score)
 
     logger.info("final candidate score %s", candidate_score)
 
@@ -125,7 +127,7 @@ def get_candidate_score(id, criteria = None):
 def getExpScore(criteria, row, total_weight, max_score):
     candidate_score = 0
     if criteria["experiance"]["weight"] > 0:
-        if "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
+        if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             if "ExperianceYears" in row["cvParsedInfo"]["finalEntity"]:
                 ExperianceYears = row["cvParsedInfo"]["finalEntity"]["ExperianceYears"]
                 days, _, _ =  parse_experiance_years(ExperianceYears["obj"])
