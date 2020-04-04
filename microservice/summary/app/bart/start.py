@@ -32,6 +32,7 @@ from pathlib import Path
 
 import sys
 from app.config import storage_client
+import subprocess
 
 
 def process(filename, mongoid):
@@ -73,7 +74,7 @@ def process(filename, mongoid):
     except Exception as e:
         
         logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , finalPdf)
-        x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True)
+        x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True , timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
         logger.info(x)
@@ -114,11 +115,21 @@ def extractSummary(text):
     return " ".join([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids])
 
 
+from pathlib import Path
+
 def loadModel():
     global model
     global tokenizer
-    if model is None:
-        tokenizer = BartTokenizer.from_pretrained('bart-large-cnn')
-        model = BartForConditionalGeneration.from_pretrained('bart-large-cnn')
+    # if model is None:
+
+    #     if os.path.exists("/workspace/pretrained/bart/pytorch_model.bin"):
+    #         tokenizer = BartTokenizer.from_pretrained('/workspace/pretrained/bart/')
+    #         model = BartForConditionalGeneration.from_pretrained('/workspace/pretrained/bart/')
+    #     else:
+    tokenizer = BartTokenizer.from_pretrained('bart-large-cnn')
+    model = BartForConditionalGeneration.from_pretrained('bart-large-cnn')
+    # Path("/workspace/pretrained/bart").mkdir(parents=True, exist_ok=True)
+    # model.save_pretrained("/workspace/pretrained/bart")
+    # tokenizer.save_pretrained("/workspace/pretrained/bart")
 
     return model, tokenizer
