@@ -52,7 +52,7 @@ def savePDFAsImage(cv, output_dir):
 
 
     if len(pages) >= 10:
-        raise Exception('No of pages is too much ' + str(len(pages)))
+        return {"error" : 'No of pages is too much ' + str(len(pages)) } , None
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     cvdir = os.path.dirname(cv)

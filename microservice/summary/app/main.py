@@ -309,12 +309,17 @@ class TaskQueue(object):
             return
 
 
-        process(message["filename"] , message["mongoid"])
-
-        datasync({
+        try:
+            process(message["filename"] , message["mongoid"])
+            datasync({
                 "id" : message["mongoid"],
                 "action" : "syncCandidate"
-        })
+            })
+        except Exception as e:
+            LOGGER.critical(str(e))
+            traceback.print_stack()
+
+        
         
             
 

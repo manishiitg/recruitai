@@ -99,8 +99,27 @@ tail -f /var/log/recruitai/flask_out.log
 tail -f /var/log/recruitai/flask_err.log
 
 
+NER Data
+==========
+
+http://144.76.110.170:8086/training/ner/convert_to_label_studio
+
+this url will fetch data from ai errors collection and create version folder like v2, v3 etc.
+
+files need to copied from these version folder to the main and label-studio project should be restarted for labelling data
+
+e.g
+cp -rf label-studio/ner/project/backup/v2/* label-studio/ner/project/
+sudo docker-compose restart label-studio-ner
+
 COCO Annotator
 =================
+
+http://144.76.110.170:8086/training/viz/convert_for_annotation
+
+get cv's for annanotaion. manually download and copy the images
+
+
 http://176.9.137.77:5000/#/datasets
 
 its not part of this docker compse, its using orgianl docker-compose file itself 
