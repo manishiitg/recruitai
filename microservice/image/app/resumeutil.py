@@ -64,7 +64,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     dest = BASE_PATH + "/../temp"
     deleteDirContents(dest)
 
-    # deleteDirContents(BASE_PATH + "/../cvreconstruction")
+    deleteDirContents(BASE_PATH + "/../cvreconstruction")
     # this cannot be done because resumemq needs files from cvreconstruction
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
@@ -133,6 +133,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
         e for e in filename if e.isalnum())
     cvdir = ''.join(e for e in cvfilename if e.isalnum())
 
+    
     finalImages, output_dir2 = processAPI(os.path.join(dest, filename))
     if "error" in finalImages:
         return finalImages
