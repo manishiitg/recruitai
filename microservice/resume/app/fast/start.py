@@ -8,7 +8,7 @@ import os
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import time
-
+import subprocess
 
 def process(finalPdf):
     content = ""
@@ -24,7 +24,7 @@ def process(finalPdf):
     except Exception as e:
         
         logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , finalPdf)
-        x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True)
+        x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True, timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
         logger.info(x)
