@@ -243,7 +243,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       except Exception as e:
         
         logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , filestoparse[fileIdx]["id"])
-        x = subprocess.check_output(['pdf-text-extract ' + cv], shell=True)
+        x = subprocess.check_output(['pdf-text-extract ' + cv], shell=True, timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
         logger.info(x)
@@ -301,8 +301,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       })
 
     start_time = time.time()
-    t = Thread(target=uploadToGcloud, args=(basePath, basecv) , daemon = True)
-    t.start()
+    # t = Thread(target=uploadToGcloud, args=(basePath, basecv) , daemon = True)
+    # t.start()
+    uploadToGcloud(basePath, basecv)
     timeAnalysis[fileIdx]["gsutil" + str(cvpages)] = time.time() - start_time
     start_time = time.time()
     
