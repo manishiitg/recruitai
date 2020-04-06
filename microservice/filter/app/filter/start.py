@@ -9,16 +9,19 @@ import json
 
 from app.filter.util import getCourseDict
 
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+from app.account import connect_redis
 
-def indexAll():
+def indexAll(account_name, account_config):
+
+    r = connect_redis(account_name, account_config)
+
     data = r.get("full_data")
     if data:
         dataMap = json.loads(data)
         data = []
         for dkey in dataMap:
             data.append(dataMap[dkey])
-        generateFilterMap("full_data",data)
+        generateFilterMap("full_data",data, account_name, account_config)
 
     for key in r.scan_iter():
         key = key.decode("utf-8")
@@ -32,7 +35,7 @@ def indexAll():
             for dkey in dataMap:
                 data.append(dataMap[dkey])
             key = str(key)
-            generateFilterMap(key.replace("classify_",""),data)
+            generateFilterMap(key.replace("classify_",""),data, account_name, account_config)
 
         if "job_" in str(key):
             data = r.get(key)
@@ -41,11 +44,12 @@ def indexAll():
             for dkey in dataMap:
                 data.append(dataMap[dkey])
             key = str(key)
-            generateFilterMap(key.replace("job_",""),data)
+            generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, on_ai_data = False):
-    
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, on_ai_data = False, account_name = "", account_config = {}):
+
+    r = connect_redis(account_name, account_config)    
 
     if filter_type == "full_data":
         ret = r.get("full_data_filter")
@@ -271,8 +275,10 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             logger.info("response completed..")
             return json.dumps(paged_tag_map)
 
-def index(mongoid, filter_type="job_profile"):
+def index(mongoid, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
+
+    r = connect_redis(account_name, account_config)
 
     if filter_type == "full_data":
         data = r.get("full_data")
@@ -314,10 +320,12 @@ def index(mongoid, filter_type="job_profile"):
         key = mongoid
 
     logger.info("data len %s" , len(data))
-    return generateFilterMap(key, data)
+    return generateFilterMap(key, data, account_name, account_config)
 
     
-def generateFilterMap(key, data):
+def generateFilterMap(key, data, account_name, account_config):
+
+    r = connect_redis(account_name, account_config)
     key = str(key)
     wrkExpList = []
     gpeList = []

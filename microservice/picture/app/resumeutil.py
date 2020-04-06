@@ -1,5 +1,5 @@
 from app.picture.start import processAPI as extractPicture
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
+from app.config import BASE_PATH
 from app.logging import logger
 from app.config import storage_client
 from pathlib import Path
@@ -21,20 +21,14 @@ import urllib.request
 
 import sys
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
+from app.account import initDB, get_cloud_bucket, get_cloud_url
 
-    return db
-
-def fullResumeParsing(imageUrl, mongoid, filename):
+def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config):
     try:
 
+        GOOGLE_BUCKET_URL = get_cloud_url(accout_name, account_config)
         timer = time.time()
-        db = initDB()
+        db = initDB(account_name, account_config)
 
         fullResponse = {}
         
@@ -48,6 +42,8 @@ def fullResumeParsing(imageUrl, mongoid, filename):
         logger.info("downloading from url %s", imageUrl)
         finalPic = os.path.join(dest, filename + ".png")
         # urllib.request.urlretrieve(imageUrl, finalPic)
+
+        RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         imageUrl = imageUrl.replace(GOOGLE_BUCKET_URL,"")
@@ -68,7 +64,7 @@ def fullResumeParsing(imageUrl, mongoid, filename):
         # for now just disableing it 
         
 
-        response, basedir = extractPicture(dest ,cvdir)
+        response, basedir = extractPicture(dest ,cvdir, account_name, account_config)
         # , finalImages, output_dir2
         response = response.replace(basedir + "/", "")
         response = GOOGLE_BUCKET_URL + cvdir + "/picture/" + response

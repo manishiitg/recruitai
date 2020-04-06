@@ -28,21 +28,13 @@ BASE_MODEL_PATH = BASE_PATH + "/../pretrained/candidateclassify/distilbert"
 
 label_list = []
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
+from app.account import initDB
 
-    return db
-
-
-def process(candidate_id):
-    text = getCandidateLines(candidate_id)
+def process(candidate_id, account_name, account_config):
+    text = getCandidateLines(candidate_id, account_name, account_config)
     logger.info("candidate id :%s:", candidate_id)
     logger.info(text)
-    db = initDB()
+    db = initDB(account_name, account_config)
     if len(text) == 0:
         db.emailStored.update_one({
         "_id" : ObjectId(candidate_id),
@@ -70,8 +62,8 @@ def process(candidate_id):
     pass
 
 
-def getCandidateLines(candidate_id):
-    db = initDB()
+def getCandidateLines(candidate_id, account_name, account_config):
+    db = initDB(account_name, account_config)
     row = db.emailStored.find_one({
         "_id" : ObjectId(candidate_id),
         'cvParsedInfo.newCompressedStructuredContent': {"$exists": True}
