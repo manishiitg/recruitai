@@ -10,7 +10,7 @@ import shutil
 import torch
 
 from app.config import IN_COLAB
-from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
+from app.config import BASE_PATH
 
 # from app import mongo
 
@@ -47,6 +47,7 @@ if IN_COLAB:
 else:
     from tqdm import tqdm
 
+from app.account import get_cloud_bucket
 
 # import some common detectron2 utilities
 
@@ -57,7 +58,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 logger.debug(device)
 
 
-def processAPI(output_dir, namenonum):
+def processAPI(output_dir, namenonum, account_name, account_config):
     logger.info("start picture identify on %s", output_dir)
     
     logger.info("output dir %s", output_dir)
@@ -66,6 +67,7 @@ def processAPI(output_dir, namenonum):
     imageFile = process(output_dir, predictor, cfg)
     logger.info("pic found %s", imageFile)
     if imageFile:
+        RESUME_UPLOAD_BUCKET  = get_cloud_bucket(account_name, account_config)
         x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + namenonum + "/picture"], shell=True)
         logger.info(x)
 
