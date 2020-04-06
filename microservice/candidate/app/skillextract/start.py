@@ -21,17 +21,11 @@ from bson.objectid import ObjectId
 
 import random
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.environ.get("RECRUIT_BACKEND_DB"))
-        db = client[os.environ.get("RECRUIT_BACKEND_DATABASE")]
-    return db
+from app.account import initDB
 
-def start(domain, mongoid, isGeneric = True):
+def start(domain, mongoid, isGeneric = True, account_name = "", account_config = {}):
     
-    db = initDB()
+    db = initDB(account_name, account_config)
     row = db.emailStored.find_one({ "_id" : ObjectId(mongoid) })
     
     words = []
