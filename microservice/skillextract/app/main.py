@@ -36,6 +36,18 @@ import requests
 def thread_task( conn, ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
+
+    account_name = None
+    if "account_name" in body:
+        account_name = body["account_name"]
+    else:
+        LOGGER.critical("no account found. unable to proceed")
+        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+
+    
+    account_config = body["account_config"]
+
+
     if isinstance(body, dict):
         if "ping" in body:
             time.sleep(5)            
@@ -48,7 +60,7 @@ def thread_task( conn, ch, method_frame, properties, body):
                 mongoid = body["mongoid"]
                 findSkills = body["skills"]
                 try:
-                    ret = extractSkill(findSkills, mongoid)
+                    ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
                     ret = json.dumps(ret,default=str)
 
                     try:
