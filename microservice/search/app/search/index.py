@@ -9,22 +9,21 @@ import traceback
 import redis
 import os
 
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
-
 indexCreated = False
 
+from app.account import get_es_index, init_elastic_search
 
-def getIndex():
-    return RESUME_INDEX_NAME
+def getIndex(account_name, account_config):
+    return get_es_index(account_name, account_config)
 
-def createIndex():
+def createIndex(account_name, account_config):
     global indexCreated 
     if indexCreated:
         return 
     
     indexCreated = True
-    es = db.init_elastic_search()
-    indexName = getIndex()
+    es = init_elastic_search(account_name, account_config)
+    indexName = getIndex(account_name, account_config)
 
     ret = es.indices.create(index=indexName, ignore=400, body={
         "mappings": {
@@ -37,12 +36,12 @@ def createIndex():
     logger.info(ret)
 
 
-def addDoc(mongoid, lines, extra_data={}):
+def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}):
     
-    createIndex()
-    indexName = getIndex()
+    createIndex(account_name, account_config)
+    indexName = getIndex(account_name, account_config)
 
-    es = db.init_elastic_search()
+    es = init_elastic_search(account_name, account_config)
     ret = es.index(index=indexName, id=mongoid, body={
         "resume": " ".join(lines),
         # "extra_data": json.loads(json.dumps(extra_data, default=str)),
@@ -52,10 +51,9 @@ def addDoc(mongoid, lines, extra_data={}):
     logger.info(ret)
     return ret
 
-def addMeta(mongoid, meta):
-    indexName = getIndex()
-
-    es = db.init_elastic_search()
+def addMeta(mongoid, meta, account_name, account_config):
+    indexName = getIndex(account_name, account_config)
+    es = init_elastic_search(account_name, account_config)
     
     
     try:
@@ -75,24 +73,23 @@ def addMeta(mongoid, meta):
     return ret
 
 
-def getDoc(mongoid):
-    indexName = getIndex()
-
-    es = db.init_elastic_search()
+def getDoc(mongoid, account_name, account_config):
+    indexName = getIndex(account_name, account_config)
+    es = init_elastic_search(account_name, account_config)
     return es.get(index=indexName, id=mongoid)
 
 
-def deleteDoc(mongoid):
-    indexName = getIndex()
+def deleteDoc(mongoid, account_name, account_config):
+    indexName = getIndex(account_name, account_config)
 
-    es = db.init_elastic_search()
+    es = init_elastic_search(account_name, account_config)
     return es.delete(index=indexName, id=mongoid)
 
 
-def searchDoc(searchText):
-    indexName  = getIndex()
+def searchDoc(searchText, account_name, account_config):
+    indexName  = getIndex(account_name, account_config)
 
-    es = db.init_elastic_search()
+    es =  init_elastic_search(account_name, account_config)
     ret = es.search(
         index=indexName,
         body={
@@ -122,10 +119,10 @@ def searchDoc(searchText):
     return ret
 
 
-def deleteAll():
-    indexName  = getIndex()
+def deleteAll(account_name, account_config):
+    indexName  = getIndex(account_name, account_config)
 
-    es = db.init_elastic_search()
+    es = init_elastic_search(account_name, account_config)
     return es.delete_by_query(indexName, {
         "query": {
             "match_all": {}
