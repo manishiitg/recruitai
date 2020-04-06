@@ -8,7 +8,10 @@ import json
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
-def get_education_display(degree):
+
+from app.account import initDB, connect_redis
+
+def get_education_display(degree, account_name, account_config):
     course_dict = getCourseDict()
     if degree is None or len(degree) == 0:
         return list(course_dict.keys())
@@ -62,27 +65,14 @@ def getSampleCriteria():
     return criteria
 
 
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
-
-
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
-
-
-def get_candidate_score(id, criteria = None):
+def get_candidate_score(id, account_name, account_config, criteria = None):
     max_score = 10
 
     if criteria is None:
         criteria = getSampleCriteria()
 
     candidate_score = 0
-    db = initDB()
+    db = initDB(account_name, account_config)
     # row = r.get(id)
     # if row:
     #     row = json.loads(row)

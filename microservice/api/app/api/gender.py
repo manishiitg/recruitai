@@ -15,16 +15,20 @@ from app.publisher.gender import sendBlockingMessage
 bp = Blueprint('gender', __name__, url_prefix='/gender')
 
 from app.logging import logger
+from app.util import check_and_validate_account
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
 @bp.route('/<string:name>', methods=['GET'])
+@check_and_validate_account
 def classify(name = None):
     try:
         return jsonify(sendBlockingMessage(
             {
-                "name" : name.lower()
+                "name" : name.lower(),
+                "account_name": request.account_name,
+                "account_config" : request.account_config
             }
         )), 200
     except Exception as e:

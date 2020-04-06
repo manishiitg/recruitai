@@ -11,6 +11,7 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
+from app.util import check_and_validate_account
 from app.publisher.search import sendBlockingMessage
 
 bp = Blueprint('search', __name__, url_prefix='/search')
@@ -22,6 +23,7 @@ bp = Blueprint('search', __name__, url_prefix='/search')
 # @token.admin_required
 @bp.route('/addDoc/<string:id>', methods=['POST'])
 @bp.route('/addDoc/<string:id>/<string:line>', methods=['GET'])
+@check_and_validate_account
 def addDocument(id, line=None):
     try:
         if request.method == 'POST':
@@ -37,7 +39,9 @@ def addDocument(id, line=None):
                 "id": id,
                 "lines" : data,
                 "extra_data" : meta_data,
-                "action" : "addDoc"
+                "action" : "addDoc",
+                "account_name": request.account_name,
+                "account_config" : request.account_config
             })
             # ret = addDoc(id, data, {})
 
@@ -47,7 +51,9 @@ def addDocument(id, line=None):
                 "id": id,
                 "lines" : [line],
                 "extra_data" : {},
-                "action" : "addDoc"
+                "action" : "addDoc",
+                "account_name": request.account_name,
+                "account_config" : request.account_config
             })
             # ret = addDoc(id, [line], {})
 
@@ -59,6 +65,7 @@ def addDocument(id, line=None):
 
 
 @bp.route('/add-meta/<string:mongoid>', methods=['POST'])
+@check_and_validate_account
 def addMetaDoc(mongoid):
     try:
         # ret = sendBlockingMessage({
@@ -75,11 +82,14 @@ def addMetaDoc(mongoid):
 
 
 @bp.route('/deleteDoc/<string:mongoid>', methods=['GET'])
+@check_and_validate_account
 def deleteDocument(mongoid):
     try:
         ret = sendBlockingMessage({
             "id": mongoid,
-            "action" : "deleteDoc"
+            "action" : "deleteDoc",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(ret), 200
     except Exception as e:
@@ -88,11 +98,14 @@ def deleteDocument(mongoid):
 
 
 @bp.route('/getDoc/<string:mongoid>', methods=['GET'])
+@check_and_validate_account
 def getDocument(mongoid):
     try:
         ret = sendBlockingMessage({
             "id": mongoid,
-            "action" : "getDoc"
+            "action" : "getDoc",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(ret), 200
     except Exception as e:
@@ -101,11 +114,14 @@ def getDocument(mongoid):
 
 
 @bp.route('/search/<string:search>', methods=['GET'])
+@check_and_validate_account
 def search(search):
     try:
         ret = sendBlockingMessage({
             "search": search,
-            "action" : "searchDoc"
+            "action" : "searchDoc",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(ret), 200
     except Exception as e:
@@ -114,10 +130,13 @@ def search(search):
 
 
 @bp.route('/deleteAll', methods=['GET'])
+@check_and_validate_account
 def deleteAllDocument():
     try:
         ret = sendBlockingMessage({
-            "action" : "deleteAll"
+            "action" : "deleteAll",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(ret), 200
     except Exception as e:
