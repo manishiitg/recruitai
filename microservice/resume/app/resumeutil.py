@@ -2,7 +2,7 @@ from app.nerclassify.start import process as classifyNer
 from app.detectron.start import processAPI
 from app.ner.start import processAPI as extractNer
 # from app.picture.start import processAPI as extractPicture
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
+from app.config import  BASE_PATH
 from app.logging import logger
 from app.config import storage_client
 from pathlib import Path
@@ -31,16 +31,10 @@ from app.fast.start import process as processFast
 
 import sys
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
-    return db
+from app.account import initDB, get_cloud_bucket, get_cloud_url
 
-def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
+def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, account_name = "", account_config = {}):
     try:
 
 
@@ -48,6 +42,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
         timer = time.time()
 
         dest = BASE_PATH + "/../cvreconstruction/"
+        RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         blob = bucket.blob(filename)
@@ -62,7 +57,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
             traceback.print_exc(file=sys.stdout)
             return {"error" : str(e)}
 
-        db = initDB()
+        db = initDB(account_name, account_config)
         if mongoid and ObjectId.is_valid(mongoid):
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
@@ -128,7 +123,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
                 finalLines.append(pagerow["line"])
 
         if mongoid:
-            t = Thread(target=addToSearch, args=(mongoid,finalLines,{}))
+            t = Thread(target=addToSearch, args=(mongoid,finalLines,{}, account_name, account_config))
             t.start()
             # t.join()
 
@@ -196,7 +191,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
                 person = combinData["finalEntity"]["PERSON"]["obj"]
 
                 if len(person) > 0:
-                    gender  =  getGender(person)
+                    gender  =  getGender(person, account_name, account_config)
                     combinData["finalEntity"]["gender"] = gender
                 
 
@@ -217,6 +212,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
             timer = time.time()
 
         newCompressedStructuredContent = {}
+        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
 
         for pageno in combinData["compressedStructuredContent"].keys():
             pagerows = combinData["compressedStructuredContent"][pageno]
@@ -286,7 +282,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
         }
 
         if mongoid:
-            t = Thread(target=addToSearch, args=(mongoid,finalLines,ret))
+            t = Thread(target=addToSearch, args=(mongoid,finalLines,ret, account_name, account_config))
             t.start()
 
         ret["debug"] = {
@@ -309,15 +305,19 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0):
         }
 
 
-def addToSearch(mongoid, finalLines, ret):
+def addToSearch(mongoid, finalLines, ret, account_name, account_config):
     sendBlockingMessage({
         "id": mongoid,
         "lines" : finalLines,
         "extra_data" : ret,
-        "action" : "addDoc"
+        "action" : "addDoc",
+        "account_name" : account_name,
+        "account_config" : account_config
     })
 
-def getGender(name):
+def getGender(name, account_name, account_config):
     return getGenderMessage({
-        "name" : name
+        "name" : name,
+        "account_name" : account_name,
+        "account_config" : account_config
     })
