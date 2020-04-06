@@ -10,9 +10,14 @@ from bson import json_util
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+from app.util import check_and_validate_account
+
 @bp.route('/ping', methods=['GET'])
+@check_and_validate_account
 def ping():
-   return jsonify("pong")
+   return jsonify({
+      "pong" : request.account_config
+   })
 
 @bp.route('/register', methods=['POST'])
 def register():

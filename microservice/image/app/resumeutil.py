@@ -1,5 +1,5 @@
 from app.image.start import processAPI
-from app.config import RESUME_UPLOAD_BUCKET, BASE_PATH, GOOGLE_BUCKET_URL
+from app.config import BASE_PATH
 from app.logging import logger
 from app.config import storage_client
 from pathlib import Path
@@ -27,14 +27,7 @@ import psutil
 
 from google.api_core.exceptions import NotFound
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
+from app.account import initDB, get_cloud_url, get_cloud_bucket
 
 def deleteDirContents(folder):
     if not os.path.exists(folder):
@@ -56,7 +49,7 @@ def killlibreoffice():
         if "soffice" in proc.name():
             proc.kill()
 
-def fullResumeParsing(filename, mongoid=None, skills = None):
+def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", account_config = {}):
     
     killlibreoffice()
     timer = time.time()
@@ -66,6 +59,8 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
 
     deleteDirContents(BASE_PATH + "/../cvreconstruction")
     # this cannot be done because resumemq needs files from cvreconstruction
+
+    RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
@@ -105,7 +100,8 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
             logger.info(x)
 
             if os.path.exists(os.path.join(dest, filename)):
-                x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+                # -n to skip existing
+                x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
                 logger.info(x)
 
         except CalledProcessError as e:
@@ -134,29 +130,14 @@ def fullResumeParsing(filename, mongoid=None, skills = None):
     cvdir = ''.join(e for e in cvfilename if e.isalnum())
 
     
-    finalImages, output_dir2 = processAPI(os.path.join(dest, filename))
+    finalImages, output_dir2 = processAPI(os.path.join(dest, filename), account_name, account_config)
     if "error" in finalImages:
         return finalImages
     
+    GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
 
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
-
-    # if mongoid and ObjectId.is_valid(mongoid):
-    #     db = initDB()
-    #     ret = db.emailStored.update_one({
-    #         "_id" : ObjectId(mongoid)
-    #     }, {
-    #         "$set": {
-    #             "cvimage": {
-    #                     "images": finalImages,
-    #                     "time_taken" : time.time() - timer
-    #             }
-    #         }
-    #     })
-    #     timer = time.time()
-    # this is already done in main.py so not sure why its needed here
-
         
     shutil.rmtree(os.path.join(dest, cvdir)) 
 

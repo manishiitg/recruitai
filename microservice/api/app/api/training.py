@@ -13,8 +13,6 @@ from flask_jwt_extended import (
 
 bp = Blueprint('training', __name__, url_prefix='/training')
 
-from pymongo import MongoClient
-from bson.objectid import ObjectId
 from pathlib import Path
 
 from app.config import BASE_PATH
@@ -24,23 +22,29 @@ import uuid
 import os
 import json
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
+from app.util import check_and_validate_account
 
 import shutil
 
 from app.publisher.resume import sendMessage
 import time
 
+from app.account import initDB
+
 @bp.route("/resume/requeue/error", methods=["GET"])
-def requeue_error():
-    db = initDB()
+@bp.route("/resume/requeue/error/<int:onlycount>", methods=["GET"])
+@check_and_validate_account
+def requeue_error(only_count = 0):
+    db = initDB(request.account_name, request.account_config)
+
+    if only_count == 1:
+        count = db.emailStored.count({    
+            "cvParsedInfo.error" : { "$exists" : True  }  , 
+            "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+        )
+        return jsonify({
+            "count" : count
+        })
 
     count = 0
     rows = db.emailStored.find({    
@@ -55,7 +59,9 @@ def requeue_error():
             "mongoid" : str(row["_id"]),
             "skills" : {},
             "meta" : {},
-            "priority" : 1
+            "priority" : 1,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         }
         logger.info(obj)
         sendMessage(obj)
@@ -65,15 +71,58 @@ def requeue_error():
         "cvParsedInfo_error_false_attachment_public_path_exist_true" : count
     })
 
+import random
+
+@bp.route("/resume/requeue/random", methods=["GET"])
+@check_and_validate_account
+def requeue_random(only_count = 0):
+    db = initDB(request.account_name, request.account_config)
+    
+    count = db.emailStored.count({    
+        "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+    ) 
+    
+    rows = db.emailStored.find({    
+        "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+    ).limit(1).skip(random.randint(0, count))
+
+    row = rows[0]
+
+    obj = {
+        "filename" : row["attachment"][0]["attachment"]["publicFolder"],
+        "mongoid" : str(row["_id"]),
+        "skills" : {},
+        "meta" : {},
+        "priority" : 1,
+        "account_name": request.account_name,
+        "account_config" : request.account_config
+    }
+    logger.info(obj)
+    sendMessage(obj)
+    
+    return jsonify({
+        "cvParsedInfo_random_attachment_public_path_exist_true" : str(row["_id"])
+    })
+
 @bp.route("/resume/requeue/missed", methods=["GET"])
-def requeue():
-    db = initDB()
+@bp.route("/resume/requeue/missed/<int:only_count>", methods=["GET"])
+@check_and_validate_account
+def requeue(only_count = 0):
+    db = initDB(request.account_name, request.account_config)
+    if only_count == 1:
+        count = db.emailStored.count({    
+            "cvParsedInfo" : { "$exists" : False  }  , 
+            "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+        )
+        return jsonify({
+            "count" : count
+        })
 
     count = 0
     rows = db.emailStored.find({    
         "cvParsedInfo" : { "$exists" : False  }  , 
         "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ).limit(500)
+    ).limit(1)
 
     for row in rows:
         count += 1
@@ -82,7 +131,9 @@ def requeue():
             "mongoid" : str(row["_id"]),
             "skills" : {},
             "meta" : {},
-            "priority" : 1
+            "priority" : 1,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         }
         logger.info(obj)
         sendMessage(obj)
@@ -94,8 +145,9 @@ def requeue():
 
 
 @bp.route('/viz/convert_for_annotation', methods=['GET'])
+@check_and_validate_account
 def convert_for_annotation():
-    db = initDB()
+    db = initDB(request.account_name, request.account_config)
 
     rows = db.aierrors.find({
         "error" : "IMAGEVIZ",
@@ -120,9 +172,10 @@ def convert_for_annotation():
 
 
 @bp.route('/ner/convert_to_label_studio', methods=['GET'])
+@check_and_validate_account
 def ner_to_label_studio():
 
-    db = initDB()
+    db = initDB(request.account_name, request.account_config)
 
     rows = db.aierrors.find({
         "error" : "NER",

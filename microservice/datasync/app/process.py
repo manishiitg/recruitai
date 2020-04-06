@@ -15,20 +15,11 @@ from bson import json_util
 import traceback
 import time
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
-
-import redis
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+from app.account import initDB
+from app.account import connect_redis
 
 
-def moveKey(candidate_id, from_key, to_key):
+def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
     logger.info(" from key %s", from_key)
     logger.info(" to key %s", to_key)
@@ -52,7 +43,7 @@ def moveKey(candidate_id, from_key, to_key):
     if candidate_id in from_job_profile_data:
         del from_job_profile_data[candidate_id]
     
-    db = initDB()
+    db = initDB(account_name, account_config)
     row = db.emailStored.find_one({ 
             "_id" : ObjectId(candidate_id) } , 
             {"body": 0}
@@ -64,32 +55,27 @@ def moveKey(candidate_id, from_key, to_key):
         r.set(candidate_id  , json.dumps(row,default=json_util.default))
         to_job_profile_data[candidate_id] = row
 
+    r = connect_redis(account_name, account_config)
+
     r.set(from_key  , json.dumps(from_job_profile_data , default=json_util.default))
     r.set(to_key  , json.dumps(to_job_profile_data , default=json_util.default))
 
-def classifyMoved(candidate_id, from_id, to_id):
-    moveKey(candidate_id, "classify_" + from_id, "classify_" + to_id)
+def classifyMoved(candidate_id, from_id, to_id, account_name, account_config):
+    moveKey(candidate_id, "classify_" + from_id, "classify_" + to_id, account_name, account_config)
 
-def syncJobProfileChange(candidate_id, from_id, to_id):
-    moveKey(candidate_id, "job_" + from_id, "job_" + to_id)
+def syncJobProfileChange(candidate_id, from_id, to_id, account_name, account_config):
+    moveKey(candidate_id, "job_" + from_id, "job_" + to_id, account_name, account_config)
     
 
 # recentProcessList = {}
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-redisKeyMap = {}
-logger.info("loading redis key map")
-for key in r.scan_iter():
-    if "job_" in key or "classify_" in key:
-        logger.info("loading key %s", key)
-        redisKeyMap[key] = json.loads(r.get(key))
-
-logger.info("loaded redis key map")
-
 import copy
 
 dirtyMap = {}
+account_config_map = {}
+
 def queue_process():
     global dirtyMap
 
@@ -97,24 +83,29 @@ def queue_process():
 
     dirtyMap = {}
     logger.info("checking dirty data %s" , localMap)
-    for key in localMap:
-        logger.info("updating redis %s" , key)
-        r.set(key, json.dumps(redisKeyMap[key], default=str))
-        logger.info("updated redis %s" , key)
-        if "job_" in key:
-            addFilter({
-                    "id" : key.replace("job_",""),
-                    "fetch" : "job_profile",
-                    "action" : "index"
-                })
-        elif "classify_" in key:
-            addFilter({
-                    "id" : key.replace("classify_",""),
-                    "fetch" : "candidate",
-                    "action" : "index"
-                })
+    for account_name in localMap:
+        for key in localMap[account_name]:
+            logger.info("updating redis %s" , key)
+            r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
+            logger.info("updated redis %s" , key)
+            if "job_" in key:
+                addFilter({
+                        "id" : key.replace("job_",""),
+                        "fetch" : "job_profile",
+                        "action" : "index",
+                        "account_name" : account_name,
+                        "account_config" : account_config_map[account_name]
+                    })
+            elif "classify_" in key:
+                addFilter({
+                        "id" : key.replace("classify_",""),
+                        "fetch" : "candidate",
+                        "action" : "index",
+                        "account_name" : account_name,
+                        "account_config" : account_config_map[account_name]
+                    })
 
-        logger.info("job profile filter completed")
+            logger.info("job profile filter completed")
         
 
 checkin_score_scheduler = BackgroundScheduler()
@@ -125,14 +116,39 @@ checkin_score_scheduler.start()
 
 
 pastInfoMap = {}
+redisKeyMap = {}
 
 
-
-def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc = None):
+def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc = None, account_name = None, account_config = {}):
+    if account_name is None:
+        return 
 
     global dirtyMap
     global redisKeyMap
     global pastInfoMap
+    global account_config_map
+
+    r = connect_redis(account_name, account_config)
+
+    account_config_map[account_name] = account_config
+
+    if account_name not in dirtyMap:
+        dirtyMap[account_name] = {}
+
+    if account_name not in pastInfoMap:
+        pastInfoMap[account_name] = {}
+    
+    if account_name not in redisKeyMap:
+        redisKeyMap[account_name] = {}
+        logger.info("loading redis key map for account %s " % account_name)
+        for key in r.scan_iter():
+            if "job_" in key or "classify_" in key:
+                logger.info("loading key %s", key)
+                redisKeyMap[account_name][key] = json.loads(r.get(key))
+
+        logger.info("loaded redis key map")
+
+    
 
     threads = []
 
@@ -151,7 +167,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     isFilterUpdateNeeded = False
 
 
-    db = initDB()
+    db = initDB(account_name, account_config)
     if findtype == "syncCandidate":
         # allowedfields = ['unread', 'job_profile_id', 'tag_id', 'notes', 'candidate_star', 'callingStatus' ]
 
@@ -188,13 +204,13 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         logger.info("cur time %s", cur_time)
         if "syncJobProfile" + job_profile_id in pastInfoMap:
-            t = pastInfoMap["syncJobProfile" + job_profile_id]
+            t = pastInfoMap[account_name]["syncJobProfile" + job_profile_id]
 
             if t > cur_time:
                 logger.info("skpping the sync as we have already synced more recent data")
                 return ""
 
-        pastInfoMap["syncJobProfile" + job_profile_id] = time.time()
+        pastInfoMap[account_name]["syncJobProfile" + job_profile_id] = time.time()
 
         isFilterUpdateNeeded = True
         
@@ -210,19 +226,19 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     else:
         logger.info("full")
 
-        if "full" in pastInfoMap:
-            t = pastInfoMap["full"]
+        if "full" in pastInfoMap[account_name]:
+            t = pastInfoMap[account_name]["full"]
 
             if t > cur_time:
                 logger.info("skpping the sync as we have already synced more recent data")
                 return ""
 
-        pastInfoMap["full"] = time.time()
+        pastInfoMap[account_name]["full"] = time.time()
 
         # r.flushdb()
         # this is wrong. this remove much more data like resume parsed information etc
-        redisKeyMap = {}
-        dirtyMap = {}
+        redisKeyMap[account_name] = {}
+        dirtyMap[account_name] = {}
         for key in r.scan_iter():
             if "classify_" in key or "job_" in key:
                 r.delete(key)
@@ -325,23 +341,23 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if job_profile_id is not None:
                     logger.info("job profile %s", job_profile_id)
                     mapKey = "job_" + job_profile_id
-                    if mapKey not in redisKeyMap:
+                    if mapKey not in redisKeyMap[account_name]:
                         job_profile_data = r.get(mapKey)
                         if job_profile_data:
                             job_profile_data = json.loads(job_profile_data)
                         else:
                             job_profile_data = {}
                     else:
-                        job_profile_data = redisKeyMap[mapKey]
+                        job_profile_data = redisKeyMap[account_name][mapKey]
 
                     if row["_id"] in job_profile_data:
                         job_profile_data[row["_id"]] = row
 
                     # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 
-                    redisKeyMap[mapKey] = job_profile_data
+                    redisKeyMap[account_name][mapKey] = job_profile_data
 
-                    dirtyMap[mapKey] = True
+                    dirtyMap[account_name][mapKey] = True
 
                     # addFilter({
                     #     "id" : job_profile_id,  
@@ -352,20 +368,20 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if candidate_label is not None:
                     logger.info("candidate labels %s", candidate_label)
                     mapKey = "classify_" + candidate_label
-                    if mapKey not in redisKeyMap:
+                    if mapKey not in redisKeyMap[account_name]:
                         candidate_data = r.get(mapKey)
                         if candidate_data:
                             candidate_data = json.loads(candidate_data)
                         else:
                             candidate_data = {}
                     else:
-                        candidate_data = redisKeyMap[mapKey]
+                        candidate_data = redisKeyMap[account_name][mapKey]
 
                     if row["_id"] in candidate_data:
                         candidate_data[row["_id"]] = row
 
-                    redisKeyMap[mapKey] = candidate_data
-                    dirtyMap[mapKey] = True
+                    redisKeyMap[account_name][mapKey] = candidate_data
+                    dirtyMap[account_name][mapKey] = True
 
                     # r.set(mapKey, json.dumps(candidate_data))
 
@@ -411,9 +427,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             ret = updateFilter({
                 "id" : job_profile_id,
                 "fetch" : "job_profile",
-                "action" : "index"
+                "action" : "index",
+                "account_name" : account_name,
+                "account_config": account_config
             })
-            redisKeyMap["job_" + job_profile_id] = job_profile_map[job_profile_id]
+            redisKeyMap[account_name]["job_" + job_profile_id] = job_profile_map[job_profile_id]
             logger.info("updating filter %s" , ret)
 
         for candidate_label in candidate_map:
@@ -422,9 +440,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             ret = updateFilter({
                 "id" : candidate_label,
                 "fetch" : "candidate",
-                "action" : "index"
+                "action" : "index",
+                "account_name" : account_name,
+                "account_config": account_config
             })
-            redisKeyMap["classify_" + candidate_label] = candidate_map[candidate_label] 
+            redisKeyMap[account_name]["classify_" + candidate_label] = candidate_map[candidate_label] 
             logger.info("updating filter %s" , ret)
 
         # logger.info("full data filter")
@@ -474,13 +494,15 @@ def addFilter(obj):
             traceback.print_exc(e)
     
 
-def addToSearch(mongoid, finalLines, ret):
+def addToSearch(mongoid, finalLines, ret, account_name, account_config):
     try:
         sendBlockingMessage({
             "id": mongoid,
             "lines" : finalLines,
             "extra_data" : ret,
-            "action" : "addDoc"
+            "action" : "addDoc",
+            "account_name" : account_name,
+            "account_config" : account_config
         })
     except Exception as e:
         logger.critical(str(e))
