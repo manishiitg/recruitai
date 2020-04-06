@@ -301,6 +301,17 @@ class TaskQueue(object):
         body = json.loads(body)
         # LOGGER.info(body)
 
+        account_name = None
+        if "account_name" in body:
+            account_name = body["account_name"]
+        else:
+            LOGGER.critical("no account found. unable to proceed")
+            return self.acknowledge_message(delivery_tag)
+
+        
+        account_config = body["account_config"]
+
+
         if "cur_time" in body:
             cur_time = body["cur_time"]
         else:
@@ -324,13 +335,13 @@ class TaskQueue(object):
 
                 
 
-                process("syncCandidate", cur_time, body["id"], field, doc)
+                process("syncCandidate", cur_time, body["id"], field, doc, account_name=account_name, account_config=account_config)
             elif action == "syncJobProfileChange":
-                syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"])
+                syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
             elif action == "classifyMoved":
-                classifyMoved(body["candidate_id"], body["from_id"], body["to_id"])
+                classifyMoved(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
             else:
-                process("full" , cur_time)
+                process("full" , cur_time, account_name=account_name, account_config=account_config)
 
 
             
