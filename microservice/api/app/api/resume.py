@@ -15,6 +15,7 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.resume import sendMessage
+from app.util import check_and_validate_account
 
 import requests
 import time
@@ -25,6 +26,7 @@ bp = Blueprint('resume', __name__, url_prefix='/resume')
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>/<int:priority>', methods=['GET','POST'])
+@check_and_validate_account
 def fullparsing(filename, mongoid = None, skills = None, priority = 0):
 
     meta = {}
@@ -67,7 +69,9 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
         "mongoid" : mongoid,
         "skills" : skills,
         "meta" : meta,
-        "priority" : priority
+        "priority" : priority,
+        "account_name": request.account_name,
+        "account_config" : request.account_config
     })
 
     if "instant" in meta:
@@ -87,49 +91,3 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
         "server_current_time" : time.time(),
         "days" : days
     }), 200
-
-
-
-# @bp.route('', methods=['POST', 'GET'])
-# @jwt_required
-# @token.admin_required
-# @bp.route('/picture/<string:filename>', methods=['GET'])
-# def picture(filename):
-
-#     # try:
-
-#     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-#     blob = bucket.blob(filename)
-#     dest = BASE_PATH + "/../temp"
-#     Path(dest).mkdir(parents=True, exist_ok=True)
-#     blob.download_to_filename(os.path.join(dest, filename))
-
-#     response, basedir = extractPicture(os.path.join(dest, filename))
-
-#     return jsonify(response, basedir), 200
-#     # except Exception as e:
-#     #     return jsonify(str(e)) , 500
-
-
-# @bp.route('', methods=['POST', 'GET'])
-# @jwt_required
-# @token.admin_required
-# @bp.route('/parse/<string:filename>', methods=['GET'])
-# def parse(filename):
-
-#     try:
-
-#         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-#         blob = bucket.blob(filename)
-#         dest = BASE_PATH + "/../temp"
-#         Path(dest).mkdir(parents=True, exist_ok=True)
-#         blob.download_to_filename(os.path.join(dest, filename))
-
-#         response, basePath = processAPI(os.path.join(dest, filename))
-
-#         return jsonify({
-#             "basePath": basePath,
-#             "response": response
-#         }), 200
-#     except Exception as e:
-#         return jsonify(str(e)), 500
