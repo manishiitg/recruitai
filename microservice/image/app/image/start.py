@@ -6,7 +6,7 @@ from PIL import Image
 from pathlib import Path
 import shutil
 
-from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
+from app.config import BASE_PATH
 
 # from app import mongo
 
@@ -19,13 +19,15 @@ import subprocess
 import traceback
 import sys
 
+from app.account import get_cloud_bucket
+
 # You may need to restart your runtime prior to this, to let your installation take effect
 # Some basic setup
 # Setup detectron2 logger
 
 # import some common detectron2 utilities
 
-def processAPI(filename):
+def processAPI(filename, account_name, account_config):
     logger.info("start picture identify on %s", filename)
     f = {"file" : filename}
 
@@ -36,11 +38,12 @@ def processAPI(filename):
     output_dir = os.path.join(BASE_PATH + "/../temp", namenonum)
 
     logger.info("output dir %s", output_dir)
-    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir)    
+    finalImages, output_dir2 = savePDFAsImage(f["file"], output_dir, account_name, account_config)    
     return finalImages, output_dir2
 
 
-def savePDFAsImage(cv, output_dir):
+def savePDFAsImage(cv, output_dir , account_name, account_config):
+    RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
     shutil.rmtree(output_dir, ignore_errors=True)
     logger.info("reading pdf %s", cv)
     try:
@@ -51,7 +54,7 @@ def savePDFAsImage(cv, output_dir):
         return {"error" : str(e)} , None
 
 
-    if len(pages) >= 10:
+    if len(pages) >= 20:
         return {"error" : 'No of pages is too much ' + str(len(pages)) } , None
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -93,8 +96,8 @@ def savePDFAsImage(cv, output_dir):
         if i > 5:
             break
             # max5 pages per cv or it could some wrong document also. ie non cv
-
-    x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    # -n to skip existing
+    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
     logger.info(x)
 
     return finalPages, output_dir2

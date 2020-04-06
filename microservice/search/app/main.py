@@ -21,6 +21,8 @@ amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connectio
 
 from app.search.index import createIndex, addDoc, addMeta, deleteDoc, getDoc, searchDoc, deleteAll
 
+
+
 import time
 
 import threading
@@ -31,6 +33,17 @@ conn  = None
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
+
+    account_name = None
+    if "account_name" in body:
+        account_name = body["account_name"]
+    else:
+        LOGGER.critical("no account found. unable to proceed")
+        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+
+    
+    account_config = body["account_config"]
+
     if isinstance(body, dict):
         if "ping" in body:
             time.sleep(5)            
@@ -41,17 +54,17 @@ def thread_task( ch, method_frame, properties, body):
             action = body["action"]
             ret = {}
             if action == "addDoc":
-                ret = addDoc(body["id"] , body["lines"], body["extra_data"])
+                ret = addDoc(body["id"] , body["lines"], body["extra_data"], account_name, account_config)
             elif action == "addMeta":
-                ret = addMeta(body["id"] , body["meta"])
+                ret = addMeta(body["id"] , body["meta"], account_name, account_config)
             elif action == "deleteDoc":
-                ret = deleteDoc(body["id"])
+                ret = deleteDoc(body["id"], account_name, account_config)
             elif action == "getDoc":
-                ret = getDoc(body["id"])
+                ret = getDoc(body["id"], account_name, account_config)
             elif action == "searchDoc":
-                ret = searchDoc(body["search"])
+                ret = searchDoc(body["search"], account_name, account_config)
             elif action == "deleteAll":
-                ret = deleteAll()
+                ret = deleteAll(account_name, account_config)
 
             logger.info(ret)
             ret = json.dumps(ret)
