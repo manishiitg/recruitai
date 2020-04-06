@@ -51,7 +51,6 @@ def create_app(test_config=None):
     from app.api import search
     from app.api import skillextract
     from app.api import datasync
-    from app.api import dataset
     from app.api import gender
     from app.api import candidate
     from app.api import training
