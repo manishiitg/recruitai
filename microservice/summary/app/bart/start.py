@@ -2,8 +2,6 @@ from transformers import BartTokenizer, BartForConditionalGeneration
 import torch
 from app.logging import logger
 
-from app.config import RESUME_UPLOAD_BUCKET
-
 torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 model = None
@@ -19,14 +17,7 @@ from bson.objectid import ObjectId
 import time
 import traceback
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
+from app.account import initDB, get_cloud_bucket
 
 from pathlib import Path
 
@@ -35,9 +26,11 @@ from app.config import storage_client
 import subprocess
 
 
-def process(filename, mongoid):
+def process(filename, mongoid, account_name, account_config):
 
     dest = BASE_PATH + "/../cvreconstruction/"
+
+    RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
     blob = bucket.blob(filename)
@@ -92,7 +85,7 @@ def process(filename, mongoid):
         star_time = time.time()
         summary = extractSummary(content)
         logger.info(summary)
-        db = initDB()
+        db = initDB(account_name, account_config)
         ret = db.emailStored.update_one({
             "_id" : ObjectId(mongoid)
         }, {

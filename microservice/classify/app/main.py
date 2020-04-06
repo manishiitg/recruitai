@@ -31,6 +31,18 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
+
+    account_name = None
+    if "account_name" in body:
+        account_name = body["account_name"]
+    else:
+        LOGGER.critical("no account found. unable to proceed")
+        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+
+    
+    account_config = body["account_config"]
+
+
     logger.info(body)
     if isinstance(body, dict):
         if "ping" in body:
