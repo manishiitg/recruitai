@@ -28,6 +28,17 @@ conn  = None
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
+
+    account_name = None
+    if "account_name" in body:
+        account_name = body["account_name"]
+    else:
+        LOGGER.critical("no account found. unable to proceed")
+        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+
+    
+    account_config = body["account_config"]
+
     if isinstance(body, dict):
         if "fetch" in body:
             fetch_type = body["fetch"]
@@ -54,19 +65,19 @@ def thread_task( ch, method_frame, properties, body):
 
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
-                ret = index(fetch_id, fetch_type)
+                ret = index(fetch_id, fetch_type, account_name, account_config)
                 ret = json.dumps(ret)
                 add_threadsafe_callback(ch, method_frame,properties, ret)
         elif body["action"] == "candidate_score":
-            ret = get_candidate_score(body["id"])
+            ret = get_candidate_score(body["id"], account_name, account_config)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties,ret)
         elif body["action"] == "get_education_display":
-            ret = get_education_display(body["degree"])
+            ret = get_education_display(body["degree"], account_name, account_config)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties,ret)
 

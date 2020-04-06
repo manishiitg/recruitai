@@ -12,6 +12,7 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.skill import sendBlockingMessage
+from app.util import check_and_validate_account
 
 bp = Blueprint('skill', __name__, url_prefix='/skill')
 
@@ -19,12 +20,15 @@ bp = Blueprint('skill', __name__, url_prefix='/skill')
 # @jwt_required
 # @token.admin_required
 @bp.route('/<string:keyword>', methods=['GET'])
+@check_and_validate_account
 def similar(keyword):
     logger.info("got keyword %s", keyword)
     try:
 
         similar = sendBlockingMessage({
-            "keyword" : keyword
+            "keyword" : keyword,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(similar), 200
     except KeyError as e:
@@ -36,12 +40,15 @@ def similar(keyword):
 # @jwt_required
 # @token.admin_required
 @bp.route('/global/<string:keyword>', methods=['GET'])
+@check_and_validate_account
 def similarGlobal(keyword):
     logger.info("got keyword %s", keyword)
     try:
         similar = sendBlockingMessage({
             "keyword" : keyword, 
-            "isGlobal": True
+            "isGlobal": True,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
         return jsonify(similar), 200
     except KeyError as e:
