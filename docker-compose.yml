@@ -122,14 +122,13 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs 
+            - ./account.config.json:/workspace/app/account.config.json:ro
             - ./microservice/api/app:/workspace/app
             - ./label-studio/ner/project:/workspace/ner
         environment:
             - IS_DEV=False
             - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600
             - BATCH_PROCESSING_DELAY=60
-            - RECRUIT_BACKEND_DB=mongodb://176.9.137.77:27017/hr_recruit_dev
-            - RECRUIT_BACKEND_DATABASE=hr_recruit_dev
         depends_on:
             - elasticsearch
             - redis
@@ -145,11 +144,6 @@ services:
             - ./microservice/resume/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            CV_BUCKET_URL: 'staticrecruitai.excellencetechnologies.in'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
             RESUME_PARALLEL_PROCESS: 1
         depends_on:
             - elasticsearch
@@ -197,8 +191,6 @@ services:
             - ./microservice/search/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            ELASTIC_SEARCH_URL: 'elasticsearch:9200'
-            RESUME_INDEX_NAME: 'resume'
         networks:
             - ai
 
@@ -212,10 +204,6 @@ services:
             - ./microservice/skillextract/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
     
@@ -229,8 +217,6 @@ services:
             - ./microservice/gender/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
         networks:
             - ai
 
@@ -243,10 +229,6 @@ services:
             - ./microservice/image/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
 
@@ -260,11 +242,7 @@ services:
             - ./microservice/datasync/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
             CRON_SCHEDULE: '0 0 * * *'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
         networks:
             - ai
 
@@ -278,10 +256,6 @@ services:
             - ./microservice/candidate/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
         networks:
             - ai
 
@@ -295,10 +269,6 @@ services:
             - ./microservice/filter/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
       
@@ -311,10 +281,6 @@ services:
             - ./microservice/stats/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
     
@@ -328,10 +294,6 @@ services:
             - ./microservice/picture/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
 
@@ -345,10 +307,6 @@ services:
             - ./microservice/summary/app:/workspace/app            
         environment:
             RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-            REDIS_HOST: 'redis'
-            REDIS_PORT : '6379'
-            RECRUIT_BACKEND_DB: "mongodb://176.9.137.77:27017/hr_recruit_dev"
-            RECRUIT_BACKEND_DATABASE: "hr_recruit_dev"
         networks:
             - ai
 volumes: 
