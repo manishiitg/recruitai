@@ -15,12 +15,14 @@ from app.publisher.classify import sendBlockingMessage
 bp = Blueprint('emailclassify', __name__, url_prefix='/emailclassify')
 
 from app.logging import logger
+from app.util import check_and_validate_account
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
 @bp.route('/', methods=[ 'POST'])
 @bp.route('/<string:body>/<string:subject>', methods=['GET'])
+@check_and_validate_account
 def classify(body = None, subject = None):
     try:
         if request.method == 'POST':
@@ -29,6 +31,8 @@ def classify(body = None, subject = None):
                 {
                     "subject" : request.json.get('subject', ""),
                     "body" : request.json.get('body', ""),
+                    "account_name": request.account_name,
+                    "account_config" : request.account_config
                 }
             ])), 200
         else:
@@ -36,7 +40,9 @@ def classify(body = None, subject = None):
             return jsonify(sendBlockingMessage([
                 {
                     "subject" : subject,
-                    "body" : body
+                    "body" : body,
+                    "account_name": request.account_name,
+                    "account_config" : request.account_config
                 }
             ])), 200
         
