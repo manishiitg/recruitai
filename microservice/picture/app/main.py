@@ -12,14 +12,6 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
 import traceback
 
 from app.publishdatasync import sendMessage as datasync
@@ -309,6 +301,16 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        account_name = None
+        if "account_name" in message:
+            account_name = message["account_name"]
+        else:
+            LOGGER.critical("no account found. unable to proceed")
+            return self.acknowledge_message(delivery_tag)
+
+        
+        account_config = message["account_config"]
+
         if "mongoid" not in message:
             message["mongoid"] = ""
             
@@ -320,11 +322,13 @@ class TaskQueue(object):
             return
 
 
-        ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"])
+        ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"], account_name, account_config)
         
         datasync({
                 "id" : message["mongoid"],
-                "action" : "syncCandidate"
+                "action" : "syncCandidate",
+                "account_name" : account_name,
+                "account_config" : account_config
         })
             
 
