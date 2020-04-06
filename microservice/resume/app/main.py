@@ -8,21 +8,13 @@ import threading
 import redis
 import os 
 
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
-
-
 from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
 
-    return db
+from app.account import initDB, connect_redis
+
 import traceback
 
 import requests
@@ -316,6 +308,16 @@ class TaskQueue(object):
         message = json.loads(body)
         LOGGER.info(body)
 
+        account_name = None
+        if "account_name" in message:
+            account_name = message["account_name"]
+        else:
+            LOGGER.critical("no account found. unable to proceed")
+            return self.acknowledge_message(delivery_tag)
+
+        
+        account_config = message["account_config"]
+
         if "mongoid" not in message:
             message["mongoid"] = ""
             
@@ -347,13 +349,15 @@ class TaskQueue(object):
 
         doProcess = False
 
+        r = connect_redis(account_name, account_config)
+
         if "finalImages" in message:
             if len(message["finalImages"]) >= 10:
                 ret = {
                     "error" : "too many pages wont process it " + str(len(message["finalImages"]))
                 }
                 LOGGER.critical(ret)
-                self.updateInDB(ret , message["mongoid"], message)
+                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
                 self.acknowledge_message(delivery_tag)
                 return
         
@@ -375,17 +379,23 @@ class TaskQueue(object):
 
                         ret["skillExtracted"] = skillExtracted
 
-                self.updateInDB(ret , message["mongoid"], message)
+                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
                 extractCandidateClassifySkill({
-                    "mongoid" : message["mongoid"]
+                    "mongoid" : message["mongoid"],
+                    "account_name" : account_name,
+                    "account_config" : account_config
                 })
                 extractCandidateScore({
                     "action" : "candidate_score",
-                    "id" : message["mongoid"]
+                    "id" : message["mongoid"],
+                    "account_name" : account_name,
+                    "account_config" : account_config
                 })
                 datasync({
                     "id" : message["mongoid"],
-                    "action" : "syncCandidate"
+                    "action" : "syncCandidate",
+                    "account_name" : account_name,
+                    "account_config" : account_config
                 })
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
@@ -394,7 +404,7 @@ class TaskQueue(object):
             doProcess = True
                 
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority)
+            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config)
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
                 r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
                 
@@ -404,21 +414,29 @@ class TaskQueue(object):
                         "action" : "extractSkill",
                         "mongoid" : message["mongoid"],
                         "skills" : skills.split(","),
-                        "meta" : meta
+                        "meta" : meta,
+                        "account_name" : account_name,
+                        "account_config" : account_config
                     })
                     ret["skillExtracted"] = skillExtracted
 
-            self.updateInDB(ret, message["mongoid"], message)
+            self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
             extractCandidateClassifySkill({
-                "mongoid" : message["mongoid"]
+                "mongoid" : message["mongoid"],
+                "account_name" : account_name,
+                "account_config" : account_config
             })
             extractCandidateScore({
                 "action" : "candidate_score",
-                "id" : message["mongoid"]
+                "id" : message["mongoid"],
+                "account_name" : account_name,
+                "account_config" : account_config
             })
             datasync({
                     "id" : message["mongoid"],
-                    "action" : "syncCandidate"
+                    "action" : "syncCandidate",
+                    "account_name" : account_name,
+                    "account_config" : account_config
             })
 
             
@@ -429,14 +447,14 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid , message):
+    def updateInDB(self, ret, mongoid , message, account_name, account_config):
         isError = False
         if "error" in ret:
             isError = True
         ret = json.loads(json.dumps(ret))
         LOGGER.info("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
-            db = initDB()
+            db = initDB(account_name, account_config)
             ret = db.emailStored.update_one({
                 "_id" : ObjectId(mongoid)
             }, {
