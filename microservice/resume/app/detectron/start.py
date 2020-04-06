@@ -5,7 +5,7 @@ from threading import Thread
 
 import torch
 
-from app.config import BASE_PATH, RESUME_UPLOAD_BUCKET
+from app.config import BASE_PATH
 
 # from app import mongo
 
@@ -46,6 +46,7 @@ def cv2_imshow(im):
 from tqdm import tqdm
 
 import time
+from app.account import get_cloud_bucket, get_cloud_url
 
 # import some common detectron2 utilities
 
@@ -312,7 +313,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
 
 def uploadToGcloud(basePath,basecv):
-  x = subprocess.check_call(['gsutil -m cp -r -n ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+  RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
+  #  -n
+  x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
   logger.info(x)
 
 def cleanContent(content , cvpage , jsonOutput):
