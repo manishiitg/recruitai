@@ -40,8 +40,8 @@ space_name='cosinesimil'
 # Setting query-time parameters
 efS = 100
 
-def start(findSkills, mongoid, isGeneric = False):
-    docLines, total_documents, doc2Idx = getSampleData(mongoid)
+def start(findSkills, mongoid, isGeneric = False, account_name = "", account_config = {}):
+    docLines, total_documents, doc2Idx = getSampleData(mongoid, account_name, account_config)
 
     if total_documents == 0:
         logger.info("not docs found")
@@ -392,20 +392,12 @@ def queryMatrix(model, findSkills , isGeneric = False) :
     return query_matrix , skillVec, querySkill, notFound
 
 
-db = None
+from app.account import initDB, connect_redis
 
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
-
-def getSampleData(mongoid):
+def getSampleData(mongoid, account_name, account_config):
     docLines = {}
-    db = initDB()    
-    
+    db = initDB(account_name, account_config)    
+    r = connect_redis(account_name, account_config)
 
     logger.info("getting sample for %s", mongoid)
     data = None

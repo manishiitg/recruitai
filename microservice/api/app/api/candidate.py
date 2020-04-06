@@ -12,17 +12,21 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.candidate import sendMessage
+from app.util import check_and_validate_account
 
 bp = Blueprint('classify', __name__, url_prefix='/classify')
 
 @bp.route('/candidate/<string:id>', methods=['GET'])
+@check_and_validate_account
 def candidate(id):
     logger.info("got candidate %s", id)
 
     try:
 
         sendMessage({
-            "mongoid" : id
+            "mongoid" : id,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
         })
 
         return jsonify([]), 200

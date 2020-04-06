@@ -15,104 +15,104 @@ def process_resumes():
     return
 
 
-    batchDir = BASE_PATH + "/../batchresumeprocessing"
-    logger.info('running batch resume processing... %s', batchDir)
+    # batchDir = BASE_PATH + "/../batchresumeprocessing"
+    # logger.info('running batch resume processing... %s', batchDir)
 
-    # r = init_redis()
+    # # r = init_redis()
 
-    # try:
+    # # try:
 
-    # with r.lock("batchoperation", blocking_timeout=5, timeout=60*5):
-    Path(batchDir).mkdir(parents=True, exist_ok=True)
+    # # with r.lock("batchoperation", blocking_timeout=5, timeout=60*5):
+    # Path(batchDir).mkdir(parents=True, exist_ok=True)
 
-    jobprocess = mongo.db.cvparsingsample.find_one({
-        "isProcessing": True
-    })
-    if jobprocess:
-        jobid = jobprocess["jobid"]
-        job = q.fetch_job(jobid)
-        status = job.get_status()
-        # Possible values are queued, started, deferred, finished, and failed
-        ret = job.result
+    # jobprocess = mongo.db.cvparsingsample.find_one({
+    #     "isProcessing": True
+    # })
+    # if jobprocess:
+    #     jobid = jobprocess["jobid"]
+    #     job = q.fetch_job(jobid)
+    #     status = job.get_status()
+    #     # Possible values are queued, started, deferred, finished, and failed
+    #     ret = job.result
 
-        if status == "finished" or status == "failed":
+    #     if status == "finished" or status == "failed":
 
-            mongo.db.cvparsingsample.update_one({
-                "_id": jobprocess["_id"]
-            }, {"$set": {
-                "isProcessing": False,
-                "isCompleted": True,
-                "fullParse":  json.dumps(ret),
-                "status": status
-            }
-            })
-        else:
-            start_time = jobprocess["start_time"]
-            now_time = time.time()
+    #         mongo.db.cvparsingsample.update_one({
+    #             "_id": jobprocess["_id"]
+    #         }, {"$set": {
+    #             "isProcessing": False,
+    #             "isCompleted": True,
+    #             "fullParse":  json.dumps(ret),
+    #             "status": status
+    #         }
+    #         })
+    #     else:
+    #         start_time = jobprocess["start_time"]
+    #         now_time = time.time()
 
-            if (now_time - start_time) > 30 * 60:  # 30min
-                # some issue
-                mongo.db.cvparsingsample.update_one({
-                    "_id": jobprocess["_id"]
-                }, {"$set": {
-                    "isProcessing": False,
-                    "isCompleted": False,
-                    "fullParse":  json.dumps(ret),
-                    "status": status
-                }
-                })
+    #         if (now_time - start_time) > 30 * 60:  # 30min
+    #             # some issue
+    #             mongo.db.cvparsingsample.update_one({
+    #                 "_id": jobprocess["_id"]
+    #             }, {"$set": {
+    #                 "isProcessing": False,
+    #                 "isCompleted": False,
+    #                 "fullParse":  json.dumps(ret),
+    #                 "status": status
+    #             }
+    #             })
 
-            else:
-                logger.info(
-                    "waiting for existing batch job to finish... %s", jobid)
-                return
+    #         else:
+    #             logger.info(
+    #                 "waiting for existing batch job to finish... %s", jobid)
+    #             return
 
-    files = os.listdir(batchDir)
-    if len(files) > 0:
-        filename = files[0]
-        batchfile = os.path.join(batchDir, filename)
+    # files = os.listdir(batchDir)
+    # if len(files) > 0:
+    #     filename = files[0]
+    #     batchfile = os.path.join(batchDir, filename)
 
-        mongo.db.cvparsingsample.delete_many({
-            "file": filename
-        })
+    #     mongo.db.cvparsingsample.delete_many({
+    #         "file": filename
+    #     })
 
-        # count = mongo.db.cvparsingsample.count({
-        #     "file" : filename
-        # })
+    #     # count = mongo.db.cvparsingsample.count({
+    #     #     "file" : filename
+    #     # })
 
-        # if count > 0:
-        #     logger.info("file already exists")
-        #     os.remove(batchfile)
-        #     return
+    #     # if count > 0:
+    #     #     logger.info("file already exists")
+    #     #     os.remove(batchfile)
+    #     #     return
 
-        x = subprocess.check_call(
-            ['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
-        logger.info(x)
+    #     x = subprocess.check_call(
+    #         ['gsutil -m cp -n "' + batchfile + '" gs://' + RESUME_UPLOAD_BUCKET], shell=True)
+    #     logger.info(x)
 
-        os.remove(batchfile)
+    #     os.remove(batchfile)
 
-        start_time = time.time()
+    #     start_time = time.time()
 
-        # sendMessage({
-        #     "filename" : filename,
-        #     "mongoid" : mongoid
-        # })
+    #     # sendMessage({
+    #     #     "filename" : filename,
+    #     #     "mongoid" : mongoid
+    #     # })
 
-        # ret = fullResumeParsing(filename)
+    #     # ret = fullResumeParsing(filename)
 
-        # job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
+    #     # job = q.enqueue(fullResumeParsing, filename, result_ttl=86400)  # 1 day
 
-        # end_time = time.time()
+    #     # end_time = time.time()
 
-        mongo.db.cvparsingsample.insert_one({
-            "file": filename,
-            "isBatch": True,
-            "isProcessing": True,
-            "jobid": job.id,
-            "start_time": start_time
-        })
+    #     mongo.db.cvparsingsample.insert_one({
+    #         "file": filename,
+    #         "isBatch": True,
+    #         "isProcessing": True,
+    #         "jobid": job.id,
+    #         "start_time": start_time
+    #     })
 
-    else:
-        logger.info("no files in batch")
-    # except LockError as e:
-    #     logger.info("the lock wasn't acquired %s", str(e))
+    # else:
+    #     logger.info("no files in batch")
+    # # except LockError as e:
+    # #     logger.info("the lock wasn't acquired %s", str(e))
