@@ -79,7 +79,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
     
         parsing_type = "full"
         if priority > 5 :
-            response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename))
+            response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename), account_name, account_config)
 
             logger.info("========================================== time analysis ==========================================")
             for fileIdx in timeAnalysis:
