@@ -11,7 +11,7 @@ import os
 
 indexCreated = False
 
-from app.account import get_es_index, init_elastic_search
+from app.account import get_es_index, init_elastic_search, connect_redis
 
 def getIndex(account_name, account_config):
     return get_es_index(account_name, account_config)
@@ -88,6 +88,7 @@ def deleteDoc(mongoid, account_name, account_config):
 
 def searchDoc(searchText, account_name, account_config):
     indexName  = getIndex(account_name, account_config)
+    r = connect_redis(account_name, account_config)
 
     es =  init_elastic_search(account_name, account_config)
     ret = es.search(
