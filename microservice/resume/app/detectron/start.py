@@ -86,7 +86,7 @@ def test():
 
 
 
-def processAPI(file, maxPage = False):
+def processAPI(file, account_name, account_config, maxPage = False):
 
 
   filestoparse = [{
@@ -99,12 +99,12 @@ def processAPI(file, maxPage = False):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent , timeAnalysis = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage)
+  compressedStructuredContent , timeAnalysis = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
   assert len(compressedStructuredContent) == 1
 
   return compressedStructuredContent[0] , basePath , timeAnalysis
 
-def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False):
+def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}):
   timeAnalysis = {}
 
   combinedCompressedContent = {}
@@ -304,7 +304,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     start_time = time.time()
     # t = Thread(target=uploadToGcloud, args=(basePath, basecv) , daemon = True)
     # t.start()
-    uploadToGcloud(basePath, basecv)
+    uploadToGcloud(basePath, basecv, account_name, account_config)
     timeAnalysis[fileIdx]["gsutil" + str(cvpages)] = time.time() - start_time
     start_time = time.time()
     
@@ -312,7 +312,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
   return combinedCompressedContent , timeAnalysis
 
 
-def uploadToGcloud(basePath,basecv):
+def uploadToGcloud(basePath,basecv, account_name, account_config):
   RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
   #  -n
   x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
