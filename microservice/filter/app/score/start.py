@@ -72,6 +72,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None):
         criteria = getSampleCriteria()
 
     candidate_score = 0
+    full_debug = []
     db = initDB(account_name, account_config)
     # row = r.get(id)
     # if row:
@@ -95,10 +96,24 @@ def get_candidate_score(id, account_name, account_config, criteria = None):
         logger.info( "criterial %s weight %s" , cri,  weight/total_weight  * max_score)
 
     if row:
-        candidate_score += getExpScore(criteria, row, total_weight, max_score)
-        candidate_score += getGenderScore(criteria, row, total_weight, max_score)
-        candidate_score += getSkillScore(criteria, row, total_weight, max_score)
-        candidate_score += getEducationScore(criteria, row, total_weight, max_score)
+        
+        exp_score, debug = getExpScore(criteria, row, total_weight, max_score)
+        candidate_score += exp_score
+        full_debug.extend(debug)
+
+        gender_score, debug = getGenderScore(criteria, row, total_weight, max_score)
+        
+        candidate_score += gender_score
+        full_debug.extend(debug)
+
+
+        skill_score, debug = getSkillScore(criteria, row, total_weight, max_score)
+        candidate_score += skill_score
+        full_debug.extend(debug)
+
+        edu_score, debug = getEducationScore(criteria, row, total_weight, max_score)
+        candidate_score += edu_score
+        full_debug.extend(debug)
 
     logger.info("final candidate score %s", candidate_score)
 
@@ -106,7 +121,8 @@ def get_candidate_score(id, account_name, account_config, criteria = None):
         "_id" : ObjectId(id)
     }, {
         "$set" : {
-            "cvParsedInfo.candidate_score" : candidate_score
+            "cvParsedInfo.candidate_score" : candidate_score,
+            "cvParsedInfo.candidate_score_debug" : full_debug
         }
     })
 
@@ -116,7 +132,9 @@ def get_candidate_score(id, account_name, account_config, criteria = None):
 
 def getExpScore(criteria, row, total_weight, max_score):
     candidate_score = 0
+    debug = []
     if criteria["experiance"]["weight"] > 0:
+        debug.append("Work Exp Criteria %s", json.dumps(criteria["experiance"], indent=True))
         if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             if "ExperianceYears" in row["cvParsedInfo"]["finalEntity"]:
                 ExperianceYears = row["cvParsedInfo"]["finalEntity"]["ExperianceYears"]
@@ -126,15 +144,19 @@ def getExpScore(criteria, row, total_weight, max_score):
                 if days >= exp["min"] and days < exp["max"]:
                     candidate_score += exp["weight"]/total_weight  * max_score
                     logger.info("exp matched candidate score %s", candidate_score)
+                    debug.append("exp matched candidate score %s" % candidate_score)
                 else:
                     logger.info("exp not matched")
+                    debug.append("exp not matched")
 
-    return candidate_score
+    return candidate_score, debug
 
 
 def getGenderScore(criteria, row, total_weight, max_score):
     candidate_score = 0
+    debug = []
     if criteria["gender"]["weight"] > 0:
+        debug.append("Gender Score Criteria %s", json.dumps(criteria["gender"], indent=True))
         gender = ""
         if "cvData" in row:
             if len(row["cvData"]) > 0:
@@ -149,15 +171,19 @@ def getGenderScore(criteria, row, total_weight, max_score):
         if gender == criteria["gender"]["value"].lower():
             candidate_score += criteria["gender"]["weight"]/total_weight  * max_score
             logger.info("gender matched candidate score %s", candidate_score)
+            debug.append("gender matched candidate score %s" % candidate_score)
         else:
             logger.info("gender not matched %s", gender)
+            debug.append("gender not matched %s" % gender)
 
-    return candidate_score
+    return candidate_score, debug
 
 def getEducationScore(criteria, row, total_weight, max_score):
     candidate_score = 0
+    debug = []
     courses_dict = getCourseDict()
     if criteria["degree"]["weight"] > 0 or criteria["course"]["weight"] > 0:
+        debug.append("Education Score Criteria %s", json.dumps(criteria["degree"], indent=True))
         EducationDegree = []
         if "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             EducationDegree = []
@@ -197,8 +223,10 @@ def getEducationScore(criteria, row, total_weight, max_score):
                     if degreeMatch:
                         candidate_score += criteria["degree"]["weight"]/total_weight  * max_score
                         logger.info("matched degeree candidate sore %s", candidate_score)
+                        debug.append("matched degeree candidate sore %s" % candidate_score)
                     else:
                         logger.info("education degree not matching")
+                        debug.append("education degree not matching")
 
             if criteria["course"]["weight"] > 0:
                 if "full" in final_course:
@@ -214,13 +242,15 @@ def getEducationScore(criteria, row, total_weight, max_score):
                         if value == full.split(":")[-1].lower():
                             candidate_score += criteria["course"]["weight"]/total_weight  * max_score * (weight/total_value_weight)
                             logger.info("course matched %s candidate score %s", value, candidate_score)
+                            debug.append("course matched %s candidate score %s" % (value, candidate_score))
 
-    return candidate_score
+    return candidate_score, debug
 
 def getSkillScore(criteria, row, total_weight, max_score):
     candidate_score = 0
-
+    debug = []
     if criteria["skills"]["weight"] > 0:
+      debug.append("skill Score Criteria %s", json.dumps(criteria["skill"], indent=True))
       values = criteria["skills"]["values"]
       total_value_weight = 0
       for value in values:
@@ -257,11 +287,14 @@ def getSkillScore(criteria, row, total_weight, max_score):
                     if found:
                         skillCandidateScore += max_dist * weight / total_value_weight
                         logger.info("skill score %s %s %s" , skillCandidateScore , max_dist, value)
+                        debug.append("skill score %s %s %s" % (skillCandidateScore , max_dist, value))
                     else:
                         logger.info("strange skill not found %s", value)
+                        debug.append("strange skill not found %s" % value)
 
       if skillCandidateScore > 0:
           candidate_score += skillCandidateScore *  criteria["skills"]["weight"]/total_weight * max_score
           logger.info("candidate score updated %s", candidate_score)
+          debug.append("candidate score updated %s", candidate_score)
 
-    return candidate_score
+    return candidate_score, debug
