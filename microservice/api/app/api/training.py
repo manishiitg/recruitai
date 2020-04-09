@@ -74,8 +74,9 @@ def requeue_error(only_count = 0):
 import random
 
 @bp.route("/resume/requeue/random", methods=["GET"])
+@bp.route("/resume/requeue/random/<int:limit>", methods=["GET"])
 @check_and_validate_account
-def requeue_random(only_count = 0):
+def requeue_random(limit = 1):
     db = initDB(request.account_name, request.account_config)
     
     count = db.emailStored.count({    
@@ -84,24 +85,26 @@ def requeue_random(only_count = 0):
     
     rows = db.emailStored.find({    
         "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ).limit(1).skip(random.randint(0, count))
+    ).limit(limit).skip(random.randint(0, count))
 
-    row = rows[0]
-
-    obj = {
-        "filename" : row["attachment"][0]["attachment"]["publicFolder"],
-        "mongoid" : str(row["_id"]),
-        "skills" : {},
-        "meta" : {},
-        "priority" : 1,
-        "account_name": request.account_name,
-        "account_config" : request.account_config
-    }
-    logger.info(obj)
-    sendMessage(obj)
+    count = 0
+    for row in rows:
+        count += 1
+        obj = {
+            "filename" : row["attachment"][0]["attachment"]["publicFolder"],
+            "mongoid" : str(row["_id"]),
+            "skills" : {},
+            "meta" : {},
+            "priority" : 1,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        }
+        logger.info(obj)
+        sendMessage(obj)
+        time.sleep(.1)
     
     return jsonify({
-        "cvParsedInfo_random_attachment_public_path_exist_true" : str(row["_id"])
+        "cvParsedInfo_random_attachment_public_path_exist_true" : count
     })
 
 @bp.route("/resume/requeue/missed", methods=["GET"])
@@ -122,7 +125,7 @@ def requeue(only_count = 0):
     rows = db.emailStored.find({    
         "cvParsedInfo" : { "$exists" : False  }  , 
         "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ).limit(1)
+    ).limit(500)
 
     for row in rows:
         count += 1
