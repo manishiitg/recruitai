@@ -134,7 +134,7 @@ def getExpScore(criteria, row, total_weight, max_score):
     candidate_score = 0
     debug = []
     if criteria["experiance"]["weight"] > 0:
-        debug.append("Work Exp Criteria %s", json.dumps(criteria["experiance"], indent=True))
+        debug.append("Work Exp Criteria %s" % json.dumps(criteria["experiance"], indent=True))
         if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             if "ExperianceYears" in row["cvParsedInfo"]["finalEntity"]:
                 ExperianceYears = row["cvParsedInfo"]["finalEntity"]["ExperianceYears"]
@@ -156,7 +156,7 @@ def getGenderScore(criteria, row, total_weight, max_score):
     candidate_score = 0
     debug = []
     if criteria["gender"]["weight"] > 0:
-        debug.append("Gender Score Criteria %s", json.dumps(criteria["gender"], indent=True))
+        debug.append("Gender Score Criteria %s" % json.dumps(criteria["gender"], indent=True))
         gender = ""
         if "cvData" in row:
             if len(row["cvData"]) > 0:
@@ -183,7 +183,7 @@ def getEducationScore(criteria, row, total_weight, max_score):
     debug = []
     courses_dict = getCourseDict()
     if criteria["degree"]["weight"] > 0 or criteria["course"]["weight"] > 0:
-        debug.append("Education Score Criteria %s", json.dumps(criteria["degree"], indent=True))
+        debug.append("Education Score Criteria %s" % json.dumps(criteria["degree"], indent=True))
         EducationDegree = []
         if "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             EducationDegree = []
@@ -250,7 +250,7 @@ def getSkillScore(criteria, row, total_weight, max_score):
     candidate_score = 0
     debug = []
     if criteria["skills"]["weight"] > 0:
-      debug.append("skill Score Criteria %s", json.dumps(criteria["skill"], indent=True))
+      debug.append("skill Score Criteria %s"  %  json.dumps(criteria["skills"], indent=True))
       values = criteria["skills"]["values"]
       total_value_weight = 0
       for value in values:
