@@ -33,14 +33,14 @@ def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
 
     account_name = None
-    if "account_name" in body:
-        account_name = body["account_name"]
+    if "account_name" in body[0]:
+        account_name = body[0]["account_name"]
     else:
-        LOGGER.critical("no account found. unable to proceed")
+        LOGGER.critical("no account found. unable to proceed %s", body)
         return add_threadsafe_callback(ch, method_frame,properties,'no account found')
 
     
-    account_config = body["account_config"]
+    account_config = body[0]["account_config"]
 
 
     logger.info(body)
