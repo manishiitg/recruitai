@@ -268,12 +268,5 @@ m) need to make this muti account with priority & setup priority tasks for lates
 
 
 
-
-
-
-
-
-
-
 datasync neds to be faster. right now, there was bulk update of all tag_ids in a job profile.
 this takes very very long
