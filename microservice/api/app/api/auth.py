@@ -12,7 +12,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 from app.util import check_and_validate_account
 
-@bp.route('/ping', methods=['GET'])
+@bp.route('/ping', methods=['GET', 'POST'])
 @check_and_validate_account
 def ping():
    return jsonify({
