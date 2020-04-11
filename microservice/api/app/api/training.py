@@ -22,7 +22,7 @@ import uuid
 import os
 import json
 
-from app.util import check_and_validate_account
+from app.util import check_and_validate_account, get_resume_priority
 
 import shutil
 
@@ -54,12 +54,55 @@ def requeue_error(only_count = 0):
 
     for row in rows:
         count += 1
+        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
+        obj = {
+            "filename" : row["attachment"][0]["attachment"]["publicFolder"],
+            "mongoid" : str(row["_id"]),
+            "skills" : {},
+            "meta" : {},
+            "priority" : priority,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        }
+        logger.info(obj)
+        sendMessage(obj)
+        time.sleep(.1)
+
+    return jsonify({
+        "cvParsedInfo_error_false_attachment_public_path_exist_true" : count
+    })
+
+@bp.route("/resume/requeue/parsing_fast", methods=["GET"])
+@bp.route("/resume/requeue/parsing_fast/<int:only_count>", methods=["GET"])
+@check_and_validate_account
+def requeue_parsing_fast(only_count = 0):
+    db = initDB(request.account_name, request.account_config)
+
+    if only_count == 1:
+        count = db.emailStored.count({    
+            "cvParsedInfo.parsing_type" : "fast" , 
+            "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+        )
+        return jsonify({
+            "count" : count
+        })
+
+    count = 0
+    rows = db.emailStored.find({    
+        "cvParsedInfo.parsing_type" : "fast" , 
+        "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+    ).limit(1000)
+
+    for row in rows:
+        count += 1
+        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
             "mongoid" : str(row["_id"]),
             "skills" : {},
             "meta" : {},
             "priority" : 1,
+            "parsing_type" : "full",
             "account_name": request.account_name,
             "account_config" : request.account_config
         }
@@ -90,12 +133,13 @@ def requeue_random(limit = 1):
     count = 0
     for row in rows:
         count += 1
+        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
             "mongoid" : str(row["_id"]),
             "skills" : {},
             "meta" : {},
-            "priority" : 1,
+            "priority" : priority,
             "account_name": request.account_name,
             "account_config" : request.account_config
         }
@@ -106,6 +150,41 @@ def requeue_random(limit = 1):
     return jsonify({
         "cvParsedInfo_random_attachment_public_path_exist_true" : count
     })
+
+@bp.route("/resume/requeue/candidate/<string:candidate_id>", methods=["GET"])
+@check_and_validate_account
+def requeue_candidate(candidate_id):
+    db = initDB(request.account_name, request.account_config)
+    
+    
+    row = db.emailStored.find_one({    
+        "_id" : ObjectId(candidate_id)
+    })
+    logger.info(row)
+
+    count = 0
+    count += 1
+    priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
+    obj = {
+        "filename" : row["attachment"][0]["attachment"]["publicFolder"],
+        "mongoid" : str(row["_id"]),
+        "skills" : {},
+        "meta" : {},
+        "priority" : priority,
+        "account_name": request.account_name,
+        "account_config" : request.account_config,
+    }
+    logger.info(obj)
+    sendMessage(obj)
+    time.sleep(.1)
+    
+    return jsonify({
+        "priority" : priority,
+        "email_timestamp" : int(row["email_timestamp"]),
+        "days" : days,
+    })
+
+
 
 @bp.route("/resume/requeue/missed", methods=["GET"])
 @bp.route("/resume/requeue/missed/<int:only_count>", methods=["GET"])
@@ -129,12 +208,13 @@ def requeue(only_count = 0):
 
     for row in rows:
         count += 1
+        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
             "mongoid" : str(row["_id"]),
             "skills" : {},
             "meta" : {},
-            "priority" : 1,
+            "priority" : priority,
             "account_name": request.account_name,
             "account_config" : request.account_config
         }

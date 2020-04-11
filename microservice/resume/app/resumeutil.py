@@ -76,9 +76,16 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         dest = BASE_PATH + "/../cvreconstruction"
             
         timer = time.time()
-    
         parsing_type = "full"
         if priority > 5 :
+            parsing_type = "full"
+        else:
+            parsing_type = "fast"
+
+        if message and "parsing_type" in message:
+            parsing_type = message["parsing_type"]
+
+        if parsing_type == "full":
             response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename), account_name, account_config)
 
             logger.info("========================================== time analysis ==========================================")
@@ -92,7 +99,6 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
             logger.info("========================================== time analysis ==========================================")
         else:
-            parsing_type = "fast"
             response = processFast(os.path.join(dest, filename))
             timeAnalysis = {}
 
