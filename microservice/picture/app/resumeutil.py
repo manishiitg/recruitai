@@ -26,7 +26,7 @@ from app.account import initDB, get_cloud_bucket, get_cloud_url
 def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config):
     try:
 
-        GOOGLE_BUCKET_URL = get_cloud_url(accout_name, account_config)
+        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
         timer = time.time()
         db = initDB(account_name, account_config)
 
@@ -65,16 +65,16 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
         
 
         response, basedir = extractPicture(dest ,cvdir, account_name, account_config)
-        # , finalImages, output_dir2
-        response = response.replace(basedir + "/", "")
-        response = GOOGLE_BUCKET_URL + cvdir + "/picture/" + response
-        logger.info(response)
+        
 
 
         if response:
+            response = response.replace(basedir + "/", "")
+            response = GOOGLE_BUCKET_URL + cvdir + "/picture/" + response
+            logger.info(response)
 
             if mongoid and ObjectId.is_valid(mongoid):
-                db = initDB()
+                db = initDB(account_name, account_config)
                 ret = db.emailStored.update_one({
                     "_id" : ObjectId(mongoid)
                 }, {
