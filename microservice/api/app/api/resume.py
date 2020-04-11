@@ -15,7 +15,7 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.resume import sendMessage
-from app.util import check_and_validate_account
+from app.util import check_and_validate_account, get_resume_priority
 
 import requests
 import time
@@ -39,29 +39,7 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
     days = 0
     if "cv_timestamp_seconds" in meta:
         cv_date = meta["cv_timestamp_seconds"]
-        cur_time = time.time()
-
-        if cv_date == 0: 
-            # manual candidate
-            priority = 10
-        else:
-            days =  abs(cur_time - cv_date)  / (60 * 24 )
-
-            if days < 1:
-                priority = 9
-            elif days < 7:
-                priority = 8
-            elif days < 30:
-                priority = 7
-            elif days < 90:
-                priority = 6
-            elif days < 365:
-                priority = 5
-            elif days < 365 * 2:
-                priority = 4
-            else:
-                priority = 1
-
+        priority, days, cur_time = get_resume_priority(meta["cv_timestamp_seconds"])
 
 
     sendMessage({
