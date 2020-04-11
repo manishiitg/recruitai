@@ -6,8 +6,35 @@ from app.logging import logger
 
 import json
 import os
+import time
 
 account_json_path = os.path.join(BASE_PATH , "account.config.json")
+
+def get_resume_priority(timestamp_seconds):
+    cur_time = time.time()
+    days = 0
+    if timestamp_seconds == 0: 
+        # manual candidate
+        priority = 10
+    else:
+        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+        if days < 1:
+            priority = 9
+        elif days < 7:
+            priority = 8
+        elif days < 30:
+            priority = 7
+        elif days < 90:
+            priority = 6
+        elif days < 365:
+            priority = 5
+        elif days < 365 * 2:
+            priority = 4
+        else:
+            priority = 1
+    
+    return priority, days, cur_time
 
 def check_and_validate_account(f):
     @wraps(f)
