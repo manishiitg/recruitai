@@ -86,7 +86,12 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             parsing_type = message["parsing_type"]
 
         if parsing_type == "full":
-            response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename), account_name, account_config)
+            try:
+                response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename), account_name, account_config)
+            except Exception as e:
+                return {
+                    "error": str(e)
+                }
 
             logger.info("========================================== time analysis ==========================================")
             for fileIdx in timeAnalysis:
