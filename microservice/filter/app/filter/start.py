@@ -153,7 +153,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                             del doc["attachment"]
                         if "addSearch" in doc:
                             del doc["addSearch"]
-                        if "addSearch" in doc:
+                        if "answered" in doc:
                             del doc["answered"]
                         if "cvText" in doc:
                             del doc["cvText"]
@@ -246,13 +246,13 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                                 del doc["attachment"]
                             if "addSearch" in doc:
                                 del doc["addSearch"]
-                            if "addSearch" in doc:
+                            if "answered" in doc:
                                 del doc["answered"]
                             if "cvText" in doc:
                                 del doc["cvText"]
                             if "cvParsedInfo" in doc:
                                 del doc["cvParsedInfo"]
-                            
+
                             if "debug" in doc:
                                 del doc["debug"]
 
