@@ -21,27 +21,36 @@ from app.account import connect_redis
 
 def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
+    global redisKeyMap
+    global dirtyMap
+    global account_config_map
+
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+
+
     logger.info(" from key %s", from_key)
     logger.info(" to key %s", to_key)
 
+    r = connect_redis(account_name, account_config)
 
-    from_job_profile_data = r.get(from_key)
+    from_job_profile_data = redisKeyMap[account_name][from_key]
     if not from_job_profile_data:
         logger.info("from not found some issue")
         return
 
+    if to_key in redisKeyMap[account_name]:
+        to_job_profile_data = redisKeyMap[account_name][to_key]
+    else:
+        to_job_profile_data = {}
 
-    from_job_profile_data = json.loads(from_job_profile_data)
-
-    to_job_profile_data = r.get(to_key)
     if not to_job_profile_data:
-        logger.info("from not found some issue")
-        return
-
-    to_job_profile_data = json.loads(to_job_profile_data)
+        to_job_profile_data = {}
 
     if candidate_id in from_job_profile_data:
         del from_job_profile_data[candidate_id]
+        redisKeyMap[account_name][from_key] = from_job_profile_data
+
+    dirtyMap[account_name][from_key] = True
     
     db = initDB(account_name, account_config)
     row = db.emailStored.find_one({ 
@@ -52,13 +61,13 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
             # sort gives ram error
     if row:
         to_job_profile_data[candidate_id] = row
-        r.set(candidate_id  , json.dumps(row,default=json_util.default))
-        to_job_profile_data[candidate_id] = row
+        redisKeyMap[account_name][to_key] = to_job_profile_data
+        dirtyMap[account_name][to_key] = True
+        # r.set(candidate_id  , json.dumps(row,default=json_util.default))
 
-    r = connect_redis(account_name, account_config)
 
-    r.set(from_key  , json.dumps(from_job_profile_data , default=json_util.default))
-    r.set(to_key  , json.dumps(to_job_profile_data , default=json_util.default))
+    # r.set(from_key  , json.dumps(from_job_profile_data , default=json_util.default))
+    # r.set(to_key  , json.dumps(to_job_profile_data , default=json_util.default))
 
 def classifyMoved(candidate_id, from_id, to_id, account_name, account_config):
     moveKey(candidate_id, "classify_" + from_id, "classify_" + to_id, account_name, account_config)
@@ -81,11 +90,15 @@ def queue_process():
 
     localMap = copy.deepcopy(dirtyMap)
 
-    dirtyMap = {}
+    for account_name in dirtyMap:
+        dirtyMap[account_name] = {}
+
     logger.info("checking dirty data %s" , localMap)
     for account_name in localMap:
         for key in localMap[account_name]:
             logger.info("updating redis %s" , key)
+            logger.info("redis data len %s", len(redisKeyMap[account_name][key]))
+            r = connect_redis(account_name, account_config_map[account_name])
             r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
             logger.info("updated redis %s" , key)
             if "job_" in key:
@@ -95,7 +108,7 @@ def queue_process():
                         "action" : "index",
                         "account_name" : account_name,
                         "account_config" : account_config_map[account_name]
-                    })
+                    }, key, account_name, account_config_map[account_name])
             elif "classify_" in key:
                 addFilter({
                         "id" : key.replace("classify_",""),
@@ -103,13 +116,13 @@ def queue_process():
                         "action" : "index",
                         "account_name" : account_name,
                         "account_config" : account_config_map[account_name]
-                    })
+                    }, key, account_name, account_config_map[account_name])
 
             logger.info("job profile filter completed")
         
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=30) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=15) #*2.5
 
 checkin_score_scheduler.start()
 
@@ -117,6 +130,29 @@ checkin_score_scheduler.start()
 
 pastInfoMap = {}
 redisKeyMap = {}
+
+def init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config):
+    account_config_map[account_name] = account_config
+
+    r = connect_redis(account_name, account_config)
+
+    if account_name not in dirtyMap:
+        dirtyMap[account_name] = {}
+
+    if account_name not in pastInfoMap:
+        pastInfoMap[account_name] = {}
+
+    if account_name not in redisKeyMap:
+        redisKeyMap[account_name] = {}
+        logger.info("loading redis key map for account %s " % account_name)
+        for key in r.scan_iter():
+            if "job_" in key or "classify_" in key:
+                logger.info("loading key %s", key)
+                redisKeyMap[account_name][key] = json.loads(r.get(key))
+
+        logger.info("loaded redis key map")
+
+    return dirtyMap, redisKeyMap, account_config_map
 
 
 def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc = None, account_name = None, account_config = {}):
@@ -130,23 +166,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
     r = connect_redis(account_name, account_config)
 
-    account_config_map[account_name] = account_config
-
-    if account_name not in dirtyMap:
-        dirtyMap[account_name] = {}
-
-    if account_name not in pastInfoMap:
-        pastInfoMap[account_name] = {}
-    
-    if account_name not in redisKeyMap:
-        redisKeyMap[account_name] = {}
-        logger.info("loading redis key map for account %s " % account_name)
-        for key in r.scan_iter():
-            if "job_" in key or "classify_" in key:
-                logger.info("loading key %s", key)
-                redisKeyMap[account_name][key] = json.loads(r.get(key))
-
-        logger.info("loaded redis key map")
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
 
     
 
@@ -258,6 +278,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
     for row in ret:
         if isinstance(row, float):
+            logger.critical("again float")
             continue
 
         row["_id"] = str(row["_id"])
@@ -265,6 +286,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
             job_profile_id = row["job_profile_id"]
         else:
+            logger.info("job profile not found!!!")
             job_profile_id = None
         
 
@@ -337,7 +359,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # so they create multiple connections
             # threads.append(t)
 
-            if isFilterUpdateNeeded:
+            if isFilterUpdateNeeded or True: 
+            #always update filters for now.
+            # altready in file updated there is 15*60 gap
                 if job_profile_id is not None:
                     logger.info("job profile %s", job_profile_id)
                     mapKey = "job_" + job_profile_id
@@ -350,8 +374,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     else:
                         job_profile_data = redisKeyMap[account_name][mapKey]
 
-                    if row["_id"] in job_profile_data:
-                        job_profile_data[row["_id"]] = row
+                    # if row["_id"] in job_profile_data:
+                    job_profile_data[row["_id"]] = row
 
                     # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 
@@ -377,8 +401,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     else:
                         candidate_data = redisKeyMap[account_name][mapKey]
 
-                    if row["_id"] in candidate_data:
-                        candidate_data[row["_id"]] = row
+                    # if row["_id"] in candidate_data:
+                    candidate_data[row["_id"]] = row
 
                     redisKeyMap[account_name][mapKey] = candidate_data
                     dirtyMap[account_name][mapKey] = True
@@ -460,7 +484,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
 time_map = {}
 
-def addFilter(obj):
+def addFilter(obj, key, account_name, account_config):
+    global dirtyMap
     ignore = False
     logger.info(obj)
 
@@ -474,9 +499,11 @@ def addFilter(obj):
             logger.info("added new fetch %s", id)
         else:
             ctime = time_map[obj["fetch"]][id]
-            logger.info("time for %s for obj %s",  time.time() - ctime , obj )
-            if (time.time() - ctime) < 15 * 60:
+            logger.info("time for %s",  time.time() - ctime )
+            if (time.time() - ctime) < 1 * 60:
                 ignore = True
+                dirtyMap[account_name][key] = True
+                # see we are setting directy map. this means it will again trigger for sure
                 logger.info("ignoreed %s" , obj)
             else:
                 time_map[obj["fetch"]][id] = time.time()
@@ -485,14 +512,16 @@ def addFilter(obj):
 
 
     if not ignore:
-        try:
+        # try:
             # t = Thread(target=updateFilter, args=( obj , ))
             # t.start()
-            updateFilter(obj)
-        except Exception as e:
-            logger.critical(str(e))
-            traceback.print_exc(e)
-    
+        logger.info("sending to filter mq")
+        updateFilter(obj)
+        # except Exception as e:
+        #     logger.critical(str(e))
+        #     traceback.print_exc(e)
+    else:
+        logger.info("addfilter skipped")
 
 def addToSearch(mongoid, finalLines, ret, account_name, account_config):
     try:
