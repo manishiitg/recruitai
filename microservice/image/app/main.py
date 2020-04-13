@@ -409,13 +409,14 @@ class TaskQueue(object):
                 "account_name": account_name,
                 "account_config" : account_config
             })
-            sendSummary({
-                "mongoid" : mongoid,
-                "filename" : message["filename"],
-                "priority" : priority,
-                "account_name": account_name,
-                "account_config" : account_config
-            })
+            if priority > 5:
+                sendSummary({
+                    "mongoid" : mongoid,
+                    "filename" : message["filename"],
+                    "priority" : priority,
+                    "account_name": account_name,
+                    "account_config" : account_config
+                })
 
         try:
             if "meta" in message:
