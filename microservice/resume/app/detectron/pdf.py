@@ -7,7 +7,7 @@ import os
 def covertPDFToImage(cv, output_dir, cvfilename, logger):
     pages = convert_from_path(cv)
 
-    if len(pages) >= 10:
+    if len(pages) >= 20:
         raise Exception("too many pages not a cv " + str(len(pages)))
 
 
