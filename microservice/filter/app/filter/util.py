@@ -117,8 +117,8 @@ def parse_experiance_years(exp_str):
     # logger.info("%s ======================= %s days ", exp_str, final_days)
     return final_days, has_plus, has_dash   
 
-def getExperianceRange(exp_map):
-    ranges = {
+def get_exp_display_range():
+    return {
         "Less Than 1year" : {
             "min" : 0,
             "max" : 365,
@@ -182,6 +182,9 @@ def getExperianceRange(exp_map):
             "max" : 365 * 1000
         }
     }
+
+def getExperianceRange(exp_map):
+    ranges = get_exp_display_range()
 
     for key in exp_map:
         exp = exp_map[key]
