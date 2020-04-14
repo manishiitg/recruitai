@@ -1,5 +1,5 @@
 from app.logging import logger
-from app.filter.util import parse_experiance_years, getCourseDict, matchCourse, getCourseDict
+from app.filter.util import parse_experiance_years, getCourseDict, matchCourse, getCourseDict, get_exp_display_range
 import redis
 
 import os
@@ -10,6 +10,10 @@ from pymongo import MongoClient
 
 
 from app.account import initDB, connect_redis
+
+def get_exp_display(account_name, account_config):
+    return get_exp_display_range()
+
 
 def get_education_display(degree, account_name, account_config):
     course_dict = getCourseDict()
@@ -147,7 +151,9 @@ def getExpScore(criteria, row, total_weight, max_score):
                     debug.append("exp matched candidate score %s" % candidate_score)
                 else:
                     logger.info("exp not matched")
-                    debug.append("exp not matched")
+    
+    if candidate_score == 0:
+        debug.append("exp not matched")
 
     return candidate_score, debug
 
@@ -296,5 +302,7 @@ def getSkillScore(criteria, row, total_weight, max_score):
           candidate_score += skillCandidateScore *  criteria["skills"]["weight"]/total_weight * max_score
           logger.info("candidate score updated %s", candidate_score)
           debug.append("candidate score updated %s", candidate_score)
+      else:
+          debug.append("skill not matched")
 
     return candidate_score, debug

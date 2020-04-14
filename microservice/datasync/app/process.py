@@ -359,9 +359,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # so they create multiple connections
             # threads.append(t)
 
-            if isFilterUpdateNeeded or True: 
-            #always update filters for now.
-            # altready in file updated there is 15*60 gap
+            if isFilterUpdateNeeded: 
                 if job_profile_id is not None:
                     logger.info("job profile %s", job_profile_id)
                     mapKey = "job_" + job_profile_id
