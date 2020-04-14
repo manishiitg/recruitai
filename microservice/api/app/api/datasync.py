@@ -58,6 +58,25 @@ def candidate_score(id):
         return jsonify(str(e)), 500
 
 
+@bp.route('/filter/get/experiance/display', methods=['GET'])
+@check_and_validate_account
+def get_exp_display():
+    
+    try:
+
+        ret = sendFilterMessage({
+            "action" : "get_exp_display",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
 @bp.route('/filter/get/education/display', methods=['GET'])
 @bp.route('/filter/get/education/display/<string:degree>', methods=['GET'])
 @check_and_validate_account
@@ -102,7 +121,7 @@ def filter_index(id,fetch):
 
 # @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
-@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET'])
+@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET', 'POST'])
 @check_and_validate_account
 def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
 
@@ -115,6 +134,12 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
         if len(tags.strip()) > 0:
             tags = tags.split(",")
 
+        filter = {}
+
+        if request.method == 'POST':
+            filter = request.json['filter']
+            logger.info("filter %s", filter)
+
         ret = sendFilterMessage({
             "id" : id,
             "fetch" : fetch,
@@ -122,6 +147,7 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
             "limit" : limit,
             "tags" : tags,
             "action" : "fetch",
+            "filter" : filter,
             "ai" : ai,
             "account_name": request.account_name,
             "account_config" : request.account_config
