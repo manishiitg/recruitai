@@ -47,7 +47,7 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, on_ai_data = False, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
 
     r = connect_redis(account_name, account_config)    
 
@@ -70,6 +70,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
         logger.info("page %s", page)
         logger.info("limit %s", limit)
         logger.info("send ai info %s", on_ai_data)
+        logger.info("filter %s", filter)
 
         candidate_map = {}
 
@@ -111,6 +112,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             
             logger.info("sorted..")
 
+        tagged_job_profile_data = {}
         for id in job_profile_data:
             row = job_profile_data[id]
 
@@ -127,7 +129,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             tag_map[tag_id].append(row["_id"])
 
 
-            # if tag_id in tags:
+            if tag_id not in tags:
+                tagged_job_profile_data[id] = row
             
                 
             # if "cvParsedInfo" in row:
@@ -135,50 +138,41 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
 
 
             # candidate_map[row["_id"]] = row
-
+        job_profile_data = tagged_job_profile_data
         logger.info(tag_count_map)
         
         if len(tags) > 0:   
             
+            # {
+            #     "filter" : {
+            #         "edu_filter" : ["M.D"],
+            #         "work_filter" : ["other", "internship"]
+            #     }
+            # }
+
             paged_candidate_map = {}
             for idx, child_id in  enumerate(job_profile_data):
                 if idx >= page * limit and idx < limit * (page + 1):
                     doc = job_profile_data[child_id]
-                    if not on_ai_data:
-                        if "pipeline" in doc:
-                            del doc["pipeline"]
-                        if "candidateClassify" in doc:
-                            del doc["candidateClassify"]
-                        if "attachment" in doc:
-                            del doc["attachment"]
-                        if "addSearch" in doc:
-                            del doc["addSearch"]
-                        if "answered" in doc:
-                            del doc["answered"]
-                        if "cvText" in doc:
-                            del doc["cvText"]
-                        if "cvParsedInfo" in doc:
-                            del doc["cvParsedInfo"]
-
-                        
-                    else:
-                    
-                        if "cvParsedInfo" in doc:
-                            cvParsedInfo = doc["cvParsedInfo"]
-                        else:
-                            cvParsedInfo = {}
-
-                        doc = {
-                            "cvParsedInfo" : cvParsedInfo
-                        }
-                    
                     paged_candidate_map[child_id] = doc
 
-            actual_tag_children = []
+
+            filter_tag_children = {}
             ret = json.loads(ret)
             for key in ret:
+                if len(filter) > 0:
+                    if key not in filter:
+                        continue 
+
                 for rangekey in ret[key]:
+                    if len(filter) > 0:
+                        if rangekey not in filter[key]:
+                            continue
+
                     range = ret[key][rangekey]
+                    if "children" not in range:
+                        range["children"]  = []
+
                     children = range["children"]
                     newChildren = []
                     for child in children:
@@ -190,15 +184,54 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                         # logger.info(child_id)
                         if child_id in paged_candidate_map:
                             newChildren.append(child)
+                            filter_tag_children[child_id] = job_profile_data[child_id]
                         else:
                             # logger.info("doesnt exist")
                             pass
                     
-                    actual_tag_children.extend(newChildren)
+                    
                     ret[key][rangekey]["tag_count"] = len(newChildren)
                     ret[key][rangekey]["children"] = newChildren
                     if "merge" in ret[key][rangekey]:
                         del ret[key][rangekey]["merge"]
+            
+            if len(filter) > 0:
+                job_profile_data = filter_tag_children
+
+            paged_candidate_map = {}
+            for idx, child_id in  enumerate(job_profile_data):
+                if idx >= page * limit and idx < limit * (page + 1):
+                    doc = job_profile_data[child_id]
+                    if len(filter) == 0:
+                        if not on_ai_data:
+                            if "pipeline" in doc:
+                                del doc["pipeline"]
+                            if "candidateClassify" in doc:
+                                del doc["candidateClassify"]
+                            if "attachment" in doc:
+                                del doc["attachment"]
+                            if "addSearch" in doc:
+                                del doc["addSearch"]
+                            if "answered" in doc:
+                                del doc["answered"]
+                            if "cvText" in doc:
+                                del doc["cvText"]
+                            if "cvParsedInfo" in doc:
+                                del doc["cvParsedInfo"]
+
+                            
+                        else:
+                        
+                            if "cvParsedInfo" in doc:
+                                cvParsedInfo = doc["cvParsedInfo"]
+                            else:
+                                cvParsedInfo = {}
+
+                            doc = {
+                                "cvParsedInfo" : cvParsedInfo
+                            }
+                        
+                    paged_candidate_map[child_id] = doc
 
     
             

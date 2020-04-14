@@ -15,7 +15,7 @@ amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connectio
 
 from app.filter.start import fetch, indexAll, index
 
-from app.score.start import get_education_display, get_candidate_score
+from app.score.start import get_education_display, get_candidate_score, get_exp_display
 
 import time
 
@@ -63,9 +63,14 @@ def thread_task( ch, method_frame, properties, body):
             if "ai" in body:
                 on_ai_data = body["ai"]
 
+            filter = {}
+
+            if "filter" in body:
+                filter = body["filter"]
+
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, account_name, account_config)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
@@ -78,6 +83,11 @@ def thread_task( ch, method_frame, properties, body):
             add_threadsafe_callback(ch, method_frame,properties,ret)
         elif body["action"] == "get_education_display":
             ret = get_education_display(body["degree"], account_name, account_config)
+            ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties,ret)
+
+        elif body["action"] == "get_exp_display":
+            ret = get_exp_display(account_name, account_config)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties,ret)
 
