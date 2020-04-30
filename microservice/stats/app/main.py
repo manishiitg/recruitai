@@ -441,8 +441,14 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
+import docker
+
 def main():
     
+    print("docker env")
+    client = docker.from_env()
+    print(client.containers.list())
+
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 

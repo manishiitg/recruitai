@@ -411,8 +411,9 @@ def getEducationFilters(education_map):
                             "children" : []
                         }
 
-                    edu_filter[display]["count"] += 1
-                    edu_filter[display]["children"].append(key)
+                    if key not in edu_filter[display]["children"]:
+                        edu_filter[display]["count"] += 1
+                        edu_filter[display]["children"].append(key)
 
                 if "full" in final_course:
                     full = final_course["full"]
@@ -423,8 +424,9 @@ def getEducationFilters(education_map):
                             "children" : []
                         }
 
-                    edu_filter[display]["count"] += 1
-                    edu_filter[display]["children"].append(key)
+                    if key not in edu_filter[display]["children"]:
+                        edu_filter[display]["count"] += 1
+                        edu_filter[display]["children"].append(key)
         
         
     # logger.info(edu_filter)
