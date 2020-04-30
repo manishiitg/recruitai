@@ -123,7 +123,7 @@ def filter_index(id,fetch):
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET', 'POST'])
 @check_and_validate_account
-def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
+def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = ""):
 
     if ai == "True" or ai == "1" or ai == "true":
         ai = True
@@ -158,6 +158,63 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 50, ai = ""):
     except Exception as e:
         logger.critical(e)
         return jsonify(str(e)), 500
+
+@bp.route('/bulk/candidate', methods=['POST'])
+@check_and_validate_account
+def candidate_bulk():
+    logger.info("sync bulk candidates")
+    if request.method == 'POST':
+        data = request.json['data']
+        operation = data["operation"]
+
+        if operation == "DELETE":
+            candidate_ids = data["candidate_ids"]
+            job_profile_id = data["job_profile_id"]
+
+            sendMessage({
+                "candidate_ids" : candidate_ids,
+                "action" : "buld_delete",
+                "job_profile_id" : job_profile_id,
+                "cur_time" : time.time(),
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+
+            return jsonify(""), 200
+
+        elif operation == "ADD":
+            docs = data["candidates"]
+            job_profile_id = data["job_profile_id"]
+
+            sendMessage({
+                "docs" : docs,
+                "action" : "bulk_add",
+                "job_profile_id" : job_profile_id,
+                "cur_time" : time.time(),
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+            return jsonify(""), 200
+
+        elif operation == "UPDATE":
+            candidates = data["candidates"]
+            job_profile_id = data["job_profile_id"]
+
+            sendMessage({
+                "candidates" : candidates,
+                "action" : "bulk_update",
+                "job_profile_id" : job_profile_id,
+                "cur_time" : time.time(),
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+            return jsonify(""), 200
+
+        else:
+            return jsonify("invalid operation"), 500
+
+    else:
+        return jsonify("invalid operation"), 500
 
 @bp.route('/candidate/<string:id>', methods=['GET'])
 @bp.route('/candidate/<string:id>/<string:field>', methods=['POST'])
