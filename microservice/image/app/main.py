@@ -306,7 +306,7 @@ class TaskQueue(object):
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        # LOGGER.info(body)
+        LOGGER.info(body)
 
         account_name = None
         if "account_name" in message:
@@ -329,6 +329,11 @@ class TaskQueue(object):
 
 
         key = message["filename"]
+
+        if key is None or key == "undefined":
+            LOGGER.critical("undefined key %s", key)
+            return self.acknowledge_message(delivery_tag)
+
 
         key = ''.join(e for e in key if e.isalnum()) 
         key = "picture_" + key
@@ -365,17 +370,35 @@ class TaskQueue(object):
             ret = fullResumeParsing(message["filename"], message["mongoid"], account_name=account_name, account_config=account_config)
             if "error" in ret:
                 LOGGER.critical(ret)
+                
+
                 db = initDB(account_name, account_config)
-                ret = db.emailStored.update_one({
-                    "_id" : ObjectId(message["mongoid"])
-                }, {
-                    "$set": {
-                        "cvParsedInfo": ret,
-                        "cvParsedAI": True,
-                        "updatedTime" : datetime.now()
-                    }
-                })
-                return self.acknowledge_message(delivery_tag)
+                if ObjectId.is_valid(message["mongoid"]):
+                    ret = db.emailStored.update_one({
+                        "_id" : ObjectId(message["mongoid"])
+                    }, {
+                        "$set": {
+                            "cvParsedInfo": ret,
+                            "cvParsedAI": True,
+                            "updatedTime" : datetime.now()
+                        }
+                    })
+
+                try:
+                    if "meta" in message:
+                        meta = message["meta"]
+                        if "callback_url" in meta:
+                            message = ret
+                            meta["message"] = json.loads(json.dumps(message))
+                            x = requests.post(meta["callback_url"], json=meta)
+                            logger.info(x.text)
+                except Exception as e:
+                    LOGGER.critical("callback exception")
+                    LOGGER.critical(e)
+
+
+                self.acknowledge_message(delivery_tag)
+                return
 
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
         
@@ -409,7 +432,7 @@ class TaskQueue(object):
                 "account_name": account_name,
                 "account_config" : account_config
             })
-            if priority > 5:
+            if priority > 5 or True: # all cv for summary
                 sendSummary({
                     "mongoid" : mongoid,
                     "filename" : message["filename"],
