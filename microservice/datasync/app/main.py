@@ -19,7 +19,7 @@ from app.scheduler import startSchedule
 
 import time
 
-from app.process import process, syncJobProfileChange, classifyMoved
+from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -299,7 +299,7 @@ class TaskQueue(object):
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         body = json.loads(body)
-        LOGGER.info(body)
+        LOGGER.info(json.dumps(body, indent=2))
 
         account_name = None
         if "account_name" in body:
@@ -321,6 +321,26 @@ class TaskQueue(object):
             action = body["action"]
             if action == "syncJobProfile":
                 process("syncJobProfile", cur_time, body["id"])
+            elif action == "bulk_delete":
+                
+                candidate_ids = body["candidate_ids"]
+                job_profile_id = body["job_profile_id"]
+
+                bulkDelete(candidate_ids, job_profile_id, account_name, account_config)
+
+            elif action == "bulk_add":
+                docs = body["docs"]
+                job_profile_id = body["job_profile_id"]
+
+                bulkAdd(docs, job_profile_id, account_name, account_config)
+
+            elif action == "bulk_update":
+                candidates = body["candidates"]
+                job_profile_id = body["job_profile_id"]
+
+                bulkUpdate(candidates, job_profile_id, account_name, account_config)
+
+
             elif action == "syncCandidate":
 
                 if "field" in body:
