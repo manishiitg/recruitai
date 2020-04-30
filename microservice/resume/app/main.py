@@ -472,15 +472,18 @@ class TaskQueue(object):
         try:
             
             if "meta" in message:
+                LOGGER.info("sending resume data to nodejs")
                 meta = message["meta"]
                 if "callback_url" in meta:
+                    LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
                     message["parsed"] = {
                         "cvParsedInfo": ret,
                         "cvParsedAI": not isError,
                         "updatedTime" : datetime.now()
                     }
                     meta["message"] = json.loads(json.dumps(message, default=str))
-                    requests.post(meta["callback_url"], json=meta)
+                    x = requests.post(meta["callback_url"], json=meta)
+                    LOGGER.info(x.text)
 
         except Exception as e:
             traceback.print_exc()

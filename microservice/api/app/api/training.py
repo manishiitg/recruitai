@@ -226,6 +226,54 @@ def requeue(only_count = 0):
         "cvParsedInfo_exists_false_attachment_public_path_exist_true" : count
     })
 
+@bp.route('/viz/get_with_pic_for_annotation', methods=['GET'])
+@check_and_validate_account
+def get_with_pic_for_annotation():
+    db = initDB(request.account_name, request.account_config)
+
+    rows = db.emailStored.find({"cvimage.picture": {  "$exists" : True }  })
+
+    fileLinks = []
+    for row in rows:
+        # db.aierrors.update({
+        #     "_id" : row["_id"]
+        # }, {
+        #     "$set" : {
+        #         "is_processed" : True
+        #     }
+        # })
+
+        fileLinks.append(row["cvimage"]["images"][0])
+
+    return json.dumps(fileLinks, indent=True)
+
+
+# can we automatically find cv link
+# in which there is too much bouding box overlap
+# in which the is single big bbox which takes more than 50% of the page
+# in which ratio of actual text and ratio of text inside bbox is too much different 
+
+@bp.route('/viz/find_inncorrect_annotation', methods=['GET'])
+@check_and_validate_account
+def get_with_pic_for_annotation():
+    db = initDB(request.account_name, request.account_config)
+
+    rows = db.emailStored.find({"cvimage.picture": {  "$exists" : True }  })
+
+    fileLinks = []
+    for row in rows:
+        # db.aierrors.update({
+        #     "_id" : row["_id"]
+        # }, {
+        #     "$set" : {
+        #         "is_processed" : True
+        #     }
+        # })
+
+        fileLinks.append(row["cvimage"]["images"][0])
+
+    return json.dumps(fileLinks, indent=True)
+
 
 @bp.route('/viz/convert_for_annotation', methods=['GET'])
 @check_and_validate_account

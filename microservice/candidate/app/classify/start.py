@@ -31,6 +31,9 @@ label_list = []
 from app.account import initDB
 
 def process(candidate_id, account_name, account_config):
+    if not ObjectId.is_valid(candidate_id):
+        return 0, False
+        
     text = getCandidateLines(candidate_id, account_name, account_config)
     logger.info("candidate id :%s:", candidate_id)
     logger.info(text)
