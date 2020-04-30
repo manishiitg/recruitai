@@ -80,7 +80,7 @@ def test():
   Path(basePath).mkdir(parents=True, exist_ok=True)
 
 
-  compressedStructuredContent , timeAnalysis = startProcessing(files , inputDir, basePath, predictor, cfg)
+  compressedStructuredContent , timeAnalysis, predictions = startProcessing(files , inputDir, basePath, predictor, cfg)
   return compressedStructuredContent
 
 
@@ -99,10 +99,10 @@ def processAPI(file, account_name, account_config, maxPage = False):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent , timeAnalysis = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
+  compressedStructuredContent , timeAnalysis, predictions = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
   assert len(compressedStructuredContent) == 1
 
-  return compressedStructuredContent[0] , basePath , timeAnalysis
+  return compressedStructuredContent[0] , basePath , timeAnalysis, predictions
 
 def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}):
   timeAnalysis = {}
@@ -309,7 +309,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     start_time = time.time()
     
 
-  return combinedCompressedContent , timeAnalysis
+  return combinedCompressedContent , timeAnalysis, predictions
 
 
 def uploadToGcloud(basePath,basecv, account_name, account_config):

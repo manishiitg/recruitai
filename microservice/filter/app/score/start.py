@@ -70,6 +70,10 @@ def getSampleCriteria():
 
 
 def get_candidate_score(id, account_name, account_config, criteria = None):
+
+    if not ObjectId.is_valid(id):
+        return 0
+
     max_score = 10
 
     if criteria is None:

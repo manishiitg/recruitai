@@ -75,6 +75,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         fullResponse = {}
         dest = BASE_PATH + "/../cvreconstruction"
             
+        predictions = {}
+
         timer = time.time()
         parsing_type = "full"
         if priority > 5 :
@@ -87,7 +89,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         if parsing_type == "full":
             try:
-                response, basePath, timeAnalysis = processAPI(os.path.join(dest, filename), account_name, account_config)
+                response, basePath, timeAnalysis, predictions = processAPI(os.path.join(dest, filename), account_name, account_config)
             except Exception as e:
                 return {
                     "error": str(e)
@@ -299,7 +301,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
             # "compressedStructuredContent": combinData["compressedStructuredContent"]
-            "nerExtracted" : nerExtracted
+            "nerExtracted" : nerExtracted,
+            "predictions" : predictions
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = True) 
