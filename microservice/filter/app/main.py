@@ -53,7 +53,7 @@ def thread_task( ch, method_frame, properties, body):
             if "page" in body:
                 page = body["page"]
 
-            limit = 50
+            limit = 25
 
             if "limit" in body:
                 limit = body["limit"]

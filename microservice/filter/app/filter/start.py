@@ -47,7 +47,7 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
 
     r = connect_redis(account_name, account_config)    
 
@@ -94,13 +94,24 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             logger.info("sorting..")
 
             if filter_type == "job_profile":
+
+                tag_idx_sort_map = {}
                 def custom_sort(item):
                     
                     if "sequence" not in list(item[1].keys()):
                         logger.info("-1")
                         return -1
-            
-                    return item[1]["sequence"]
+                    
+                    if item[1]["tag_id"] not in tag_idx_sort_map:
+                        tag_idx_sort_map[item[1]["tag_id"]] = (len(tag_idx_sort_map) + 1) * 100000000
+                        # need to have sorting based on tags instead of global so need to bring numbers in a range per tag
+                    
+                    sequence = tag_idx_sort_map[item[1]["tag_id"]] + float(item[1]["sequence"])
+
+                    if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
+                        logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
+                    
+                    return sequence
 
 
                 job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
@@ -111,6 +122,21 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                 job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
             
             logger.info("sorted..")
+
+        else:
+            def custom_sort(item):
+                    
+                if "sequence" not in list(item[1].keys()):
+                    logger.info("-1")
+                    return -1
+                
+                logger.info(float(item[1]["sequence"]))
+
+                return float(item[1]["sequence"])
+
+
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+
 
         tagged_job_profile_data = {}
         for id in job_profile_data:
@@ -129,7 +155,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             tag_map[tag_id].append(row["_id"])
 
 
-            if tag_id not in tags:
+            if tag_id in tags:
                 tagged_job_profile_data[id] = row
             
                 
@@ -138,7 +164,10 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
 
 
             # candidate_map[row["_id"]] = row
-        job_profile_data = tagged_job_profile_data
+
+        if len(tags) > 0:
+            job_profile_data = tagged_job_profile_data
+
         logger.info(tag_count_map)
         
         if len(tags) > 0:   
@@ -169,6 +198,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                         if rangekey not in filter[key]:
                             continue
 
+                    logger.info("key %s" , key)
+                    logger.info("range key %s", rangekey)
+
                     range = ret[key][rangekey]
                     if "children" not in range:
                         range["children"]  = []
@@ -189,13 +221,14 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                             # logger.info("doesnt exist")
                             pass
                     
-                    
+                    logger.info("new children %s", newChildren)
                     ret[key][rangekey]["tag_count"] = len(newChildren)
                     ret[key][rangekey]["children"] = newChildren
                     if "merge" in ret[key][rangekey]:
                         del ret[key][rangekey]["merge"]
             
             if len(filter) > 0:
+                logger.info("filter data %s", len(filter_tag_children))
                 job_profile_data = filter_tag_children
 
             paged_candidate_map = {}
@@ -242,7 +275,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
             return json.dumps({
                 "filter" : ret,
                 "candidate_map" : paged_candidate_map,
-                "candidate_len" : len(paged_candidate_map)
+                "candidate_len" : len(paged_candidate_map),
+                "tag_count_map" : tag_count_map
             })
         else:
             paged_tag_map = {}
@@ -250,7 +284,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 50, 
                 if "sequence" not in item:
                     return -1 
 
-                return item["sequence"]
+                logger.info(float(item[1]["sequence"]))
+                return float(item["sequence"])
 
             logger.info("generating response..")
             for tag in tag_map:
@@ -358,6 +393,8 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
     
 def generateFilterMap(key, data, account_name, account_config):
 
+
+    logger.info("generating filter .......................")
     r = connect_redis(account_name, account_config)
     key = str(key)
     wrkExpList = []
@@ -369,7 +406,9 @@ def generateFilterMap(key, data, account_name, account_config):
     education_map = {}
     for row in data:
 
-        if "cvParsedInfo" in row and  "finalEntity" in row["cvParsedInfo"]:    
+
+        if "cvParsedInfo" in row and  "finalEntity" in row["cvParsedInfo"]:  
+
             if "ExperianceYears" in row["cvParsedInfo"]["finalEntity"]:
                 ExperianceYears = row["cvParsedInfo"]["finalEntity"]["ExperianceYears"]
                 # print(ExperianceYears["obj"])
@@ -377,20 +416,21 @@ def generateFilterMap(key, data, account_name, account_config):
                 days, _, _ =  parse_experiance_years(ExperianceYears["obj"])
                 exp_map[str(row["_id"])] = days
 
+            EducationDegree = []
             if "EducationDegree" in row["cvParsedInfo"]["finalEntity"]:
-                EducationDegree = []
+
                 if "EducationDegree" in row["cvParsedInfo"]["finalEntity"]:
                     EducationDegree.append(row["cvParsedInfo"]["finalEntity"]["EducationDegree"]["obj"])
                 
-                if "education"  in row["cvParsedInfo"]["finalEntity"]:
-                    education = row["cvParsedInfo"]["finalEntity"]["education"]
-                    for edu in education:
-                        for e in edu:
-                            if "EducationDegree" in e:
-                                EducationDegree.append(e["EducationDegree"])
+            if "education"  in row["cvParsedInfo"]["finalEntity"]:
+                education = row["cvParsedInfo"]["finalEntity"]["education"]
+                for edu in education:
+                    for e in edu:
+                        if "EducationDegree" in e:
+                            EducationDegree.append(e["EducationDegree"])
 
-                if len(EducationDegree) > 0:
-                    education_map[str(row["_id"])] = EducationDegree
+            if len(EducationDegree) > 0:
+                education_map[str(row["_id"])] = EducationDegree
 
             if "wrkExp" in row["cvParsedInfo"]["finalEntity"]:
                 wrkExp = row["cvParsedInfo"]["finalEntity"]["wrkExp"]
