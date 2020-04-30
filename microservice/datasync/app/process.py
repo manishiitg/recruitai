@@ -50,7 +50,10 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
         del from_job_profile_data[candidate_id]
         redisKeyMap[account_name][from_key] = from_job_profile_data
 
-    dirtyMap[account_name][from_key] = True
+    dirtyMap[account_name][from_key] = {
+        "filter_dirty" : True,
+        "redis_dirty" : True
+    }
     
     db = initDB(account_name, account_config)
     row = db.emailStored.find_one({ 
@@ -62,7 +65,10 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
     if row:
         to_job_profile_data[candidate_id] = row
         redisKeyMap[account_name][to_key] = to_job_profile_data
-        dirtyMap[account_name][to_key] = True
+        dirtyMap[account_name][to_key] = {
+            "filter_dirty" : True,
+            "redis_dirty" : True
+        }
         # r.set(candidate_id  , json.dumps(row,default=json_util.default))
 
 
@@ -74,7 +80,200 @@ def classifyMoved(candidate_id, from_id, to_id, account_name, account_config):
 
 def syncJobProfileChange(candidate_id, from_id, to_id, account_name, account_config):
     moveKey(candidate_id, "job_" + from_id, "job_" + to_id, account_name, account_config)
+
+def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
+
+    global dirtyMap
+    global redisKeyMap
+    global account_config_map
+
+    r = connect_redis(account_name, account_config)
+
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+
+    logger.info("job profile %s", job_profile_id)
+    mapKey = "job_" + job_profile_id
+    if mapKey not in redisKeyMap[account_name]:
+        job_profile_data = r.get(mapKey)
+        if job_profile_data:
+            job_profile_data = json.loads(job_profile_data)
+        else:
+            job_profile_data = {}
+    else:
+        job_profile_data = redisKeyMap[account_name][mapKey]
+
+    for candidate_id in candidate_ids:
+        del job_profile_data[candidate_id]
+
+    redisKeyMap[account_name][mapKey] = job_profile_data
+
+    dirtyMap[account_name][mapKey] = {
+        "filter_dirty" : True,
+        "redis_dirty" : True
+    }
+
+def bulkUpdate(candidates, job_profile_id, account_name, account_config):
+    global dirtyMap
+    global redisKeyMap
+    global account_config_map
+
+    r = connect_redis(account_name, account_config)
+
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+
+    logger.info("bulk field update profile %s", job_profile_id)
+
+    logger.info("bulk add job profile %s", job_profile_id)
+    mapKey = "job_" + job_profile_id
+    if mapKey not in redisKeyMap[account_name]:
+        job_profile_data = r.get(mapKey)
+        if job_profile_data:
+            job_profile_data = json.loads(job_profile_data)
+        else:
+            job_profile_data = {}
+    else:
+        job_profile_data = redisKeyMap[account_name][mapKey]
+
+    for row in candidates:
+        row["_id"] = str(row["_id"])
+        if not row["job_profile_id"]:
+            del job_profile_data[row["_id"]]
+        else:
+            job_profile_data[row["_id"]] = row
+        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+
+        candidate_label = None
+        if "candidateClassify" in row:
+            if "label" in row["candidateClassify"]:
+                candidate_label = row["candidateClassify"]["label"]
+                if str(candidate_label) == "False":
+                    candidate_label = None
+
+        if candidate_label is not None:
+            logger.info("candidate labels %s", candidate_label)
+            mapKey2 = "classify_" + candidate_label
+            if mapKey2 not in redisKeyMap[account_name]:
+                candidate_data = r.get(mapKey2)
+                if candidate_data:
+                    candidate_data = json.loads(candidate_data)
+                else:
+                    candidate_data = {}
+            else:
+                candidate_data = redisKeyMap[account_name][mapKey2]
+
+            # if row["_id"] in candidate_data:
+            candidate_data[row["_id"]] = row
+
+            redisKeyMap[account_name][mapKey2] = candidate_data
+            dirtyMap[account_name][mapKey2] = {
+                "filter_dirty" : True,
+                "redis_dirty" : True
+            }
+
+    redisKeyMap[account_name][mapKey] = job_profile_data
+    dirtyMap[account_name][mapKey] = {
+        "filter_dirty" : True,
+        "redis_dirty" : True
+    }
+
+
+
+def bulkAdd(docs, job_profile_id, account_name, account_config):
+
+    global dirtyMap
+    global redisKeyMap
+    global account_config_map
+
+    r = connect_redis(account_name, account_config)
+
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+
+    logger.info("bulk add job profile %s", job_profile_id)
+    mapKey = "job_" + job_profile_id
+    if mapKey not in redisKeyMap[account_name]:
+        job_profile_data = r.get(mapKey)
+        if job_profile_data:
+            job_profile_data = json.loads(job_profile_data)
+        else:
+            job_profile_data = {}
+    else:
+        job_profile_data = redisKeyMap[account_name][mapKey]
+
+    for row in docs:
+        row["_id"] = str(row["_id"])
+        job_profile_data[row["_id"]] = row
+        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+
+        candidate_label = None
+        if "candidateClassify" in row:
+            if "label" in row["candidateClassify"]:
+                candidate_label = row["candidateClassify"]["label"]
+                if str(candidate_label) == "False":
+                    candidate_label = None
+
+        if candidate_label is not None:
+            logger.info("candidate labels %s", candidate_label)
+            mapKey2 = "classify_" + candidate_label
+            if mapKey2 not in redisKeyMap[account_name]:
+                candidate_data = r.get(mapKey2)
+                if candidate_data:
+                    candidate_data = json.loads(candidate_data)
+                else:
+                    candidate_data = {}
+            else:
+                candidate_data = redisKeyMap[account_name][mapKey2]
+
+            # if row["_id"] in candidate_data:
+            candidate_data[row["_id"]] = row
+
+            redisKeyMap[account_name][mapKey2] = candidate_data
+            dirtyMap[account_name][mapKey2] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
+    redisKeyMap[account_name][mapKey] = job_profile_data
+    dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
+
     
+    
+
+
+def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
+
+    r = connect_redis(account_name, account_config)
+
+    global dirtyMap
+    global redisKeyMap
+    global account_config_map
+    
+    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+
+    logger.info("bulk delete job profile %s", job_profile_id)
+    mapKey = "job_" + job_profile_id
+    if mapKey not in redisKeyMap[account_name]:
+        job_profile_data = r.get(mapKey)
+        if job_profile_data:
+            job_profile_data = json.loads(job_profile_data)
+        else:
+            job_profile_data = {}
+    else:
+        job_profile_data = redisKeyMap[account_name][mapKey]
+
+    for candidate_id in candidate_ids:
+        del job_profile_data[candidate_id]
+
+    redisKeyMap[account_name][mapKey] = job_profile_data
+
+    dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
 
 # recentProcessList = {}
 
@@ -93,36 +292,41 @@ def queue_process():
     for account_name in dirtyMap:
         dirtyMap[account_name] = {}
 
-    logger.info("checking dirty data %s" , localMap)
+    # logger.info("checking dirty data %s" , localMap)
     for account_name in localMap:
         for key in localMap[account_name]:
+
+            operations = localMap[account_name][key]
             logger.info("updating redis %s" , key)
             logger.info("redis data len %s", len(redisKeyMap[account_name][key]))
             r = connect_redis(account_name, account_config_map[account_name])
-            r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
-            logger.info("updated redis %s" , key)
-            if "job_" in key:
-                addFilter({
-                        "id" : key.replace("job_",""),
-                        "fetch" : "job_profile",
-                        "action" : "index",
-                        "account_name" : account_name,
-                        "account_config" : account_config_map[account_name]
-                    }, key, account_name, account_config_map[account_name])
-            elif "classify_" in key:
-                addFilter({
-                        "id" : key.replace("classify_",""),
-                        "fetch" : "candidate",
-                        "action" : "index",
-                        "account_name" : account_name,
-                        "account_config" : account_config_map[account_name]
-                    }, key, account_name, account_config_map[account_name])
+            if operations["redis_dirty"]:
+                r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
+                logger.info("updated redis %s" , key)
 
-            logger.info("job profile filter completed")
-        
+            if operations["filter_dirty"]:
+                if "job_" in key:
+                    addFilter({
+                            "id" : key.replace("job_",""),
+                            "fetch" : "job_profile",
+                            "action" : "index",
+                            "account_name" : account_name,
+                            "account_config" : account_config_map[account_name]
+                        }, key, account_name, account_config_map[account_name])
+                elif "classify_" in key:
+                    addFilter({
+                            "id" : key.replace("classify_",""),
+                            "fetch" : "candidate",
+                            "action" : "index",
+                            "account_name" : account_name,
+                            "account_config" : account_config_map[account_name]
+                        }, key, account_name, account_config_map[account_name])
+
+                logger.info("job profile filter completed")
+            
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=15) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=5) #*2.5
 
 checkin_score_scheduler.start()
 
@@ -206,12 +410,16 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             logger.critical("filters getting updated ")
 
         
+
         if doc is None:
-            ret = db.emailStored.find({ 
-                "_id" : ObjectId(mongoid),
-                } , 
-                {"body": 0}
-            )
+            if ObjectId.is_valid(mongoid):
+                ret = db.emailStored.find({ 
+                    "_id" : ObjectId(mongoid),
+                    } , 
+                    {"body": 0}
+                )
+            else:
+                ret = []
             # .sort([("sequence", -1),("updatedAt", -1)])
             # sort gives ram error
         else:
@@ -286,7 +494,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
             job_profile_id = row["job_profile_id"]
         else:
-            logger.info("job profile not found!!!")
+            # logger.info("job profile not found!!!")
             job_profile_id = None
         
 
@@ -306,11 +514,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 candidate_label = row["candidateClassify"]["label"]
                 if str(candidate_label) == "False":
                     candidate_label = None
-                if candidate_label:
-                    if candidate_label not in candidate_map:
-                        candidate_map[candidate_label] = {}
+                # if candidate_label:
+                #     if candidate_label not in candidate_map:
+                #         candidate_map[candidate_label] = {}
 
-                    candidate_map[candidate_label][row["_id"]] = row
+                #     candidate_map[candidate_label][row["_id"]] = row
 
         
 
@@ -359,51 +567,74 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # so they create multiple connections
             # threads.append(t)
 
-            if isFilterUpdateNeeded: 
-                if job_profile_id is not None:
-                    logger.info("job profile %s", job_profile_id)
-                    mapKey = "job_" + job_profile_id
-                    if mapKey not in redisKeyMap[account_name]:
-                        job_profile_data = r.get(mapKey)
-                        if job_profile_data:
-                            job_profile_data = json.loads(job_profile_data)
-                        else:
-                            job_profile_data = {}
+            
+            if job_profile_id is not None:
+                logger.info("job profile %s", job_profile_id)
+                mapKey = "job_" + job_profile_id
+                if mapKey not in redisKeyMap[account_name]:
+                    job_profile_data = r.get(mapKey)
+                    if job_profile_data:
+                        job_profile_data = json.loads(job_profile_data)
                     else:
-                        job_profile_data = redisKeyMap[account_name][mapKey]
+                        job_profile_data = {}
+                else:
+                    job_profile_data = redisKeyMap[account_name][mapKey]
 
-                    # if row["_id"] in job_profile_data:
+                # if row["_id"] in job_profile_data:
+                if not row["job_profile_id"]:
+                    del job_profile_data[row["_id"]]
+                else:
                     job_profile_data[row["_id"]] = row
 
-                    # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
+                # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 
-                    redisKeyMap[account_name][mapKey] = job_profile_data
+                redisKeyMap[account_name][mapKey] = job_profile_data
 
-                    dirtyMap[account_name][mapKey] = True
+                if isFilterUpdateNeeded: 
+                    dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+                else:
+                    dirtyMap[account_name][mapKey] = {
+                        "redis_dirty" : True,
+                        "filter_dirty" : False
+                    }
 
-                    # addFilter({
-                    #     "id" : job_profile_id,  
-                    #     "fetch" : "job_profile",
-                    #     "action" : "index"
-                    # })
-                    
-                if candidate_label is not None:
-                    logger.info("candidate labels %s", candidate_label)
-                    mapKey = "classify_" + candidate_label
-                    if mapKey not in redisKeyMap[account_name]:
-                        candidate_data = r.get(mapKey)
-                        if candidate_data:
-                            candidate_data = json.loads(candidate_data)
-                        else:
-                            candidate_data = {}
+                # addFilter({
+                #     "id" : job_profile_id,  
+                #     "fetch" : "job_profile",
+                #     "action" : "index"
+                # })
+                
+            if candidate_label is not None:
+                logger.info("candidate labels %s", candidate_label)
+                mapKey = "classify_" + candidate_label
+                if mapKey not in redisKeyMap[account_name]:
+                    candidate_data = r.get(mapKey)
+                    if candidate_data:
+                        candidate_data = json.loads(candidate_data)
                     else:
-                        candidate_data = redisKeyMap[account_name][mapKey]
+                        candidate_data = {}
+                else:
+                    candidate_data = redisKeyMap[account_name][mapKey]
 
-                    # if row["_id"] in candidate_data:
-                    candidate_data[row["_id"]] = row
+                # if row["_id"] in candidate_data:
+                candidate_data[row["_id"]] = row
 
-                    redisKeyMap[account_name][mapKey] = candidate_data
-                    dirtyMap[account_name][mapKey] = True
+                redisKeyMap[account_name][mapKey] = candidate_data
+
+                if isFilterUpdateNeeded: 
+                    dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+                else:
+                    dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
 
                     # r.set(mapKey, json.dumps(candidate_data))
 
@@ -500,7 +731,10 @@ def addFilter(obj, key, account_name, account_config):
             logger.info("time for %s",  time.time() - ctime )
             if (time.time() - ctime) < 1 * 60:
                 ignore = True
-                dirtyMap[account_name][key] = True
+                dirtyMap[account_name][key] = {
+                    "filter_dirty" : True,
+                    "redis_dirty" : True
+                }
                 # see we are setting directy map. this means it will again trigger for sure
                 logger.info("ignoreed %s" , obj)
             else:
