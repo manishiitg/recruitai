@@ -1,7 +1,7 @@
 from app.logging import logger
 from app import token
 from flask import (
-    Blueprint, flash, jsonify, abort, request, render_template, Response
+    Blueprint, flash, jsonify, abort, request, render_template, Response, redirect, send_from_directory
 )
 
 from bson.objectid import ObjectId
@@ -15,11 +15,13 @@ bp = Blueprint('training', __name__, url_prefix='/training')
 
 from pathlib import Path
 
-from app.config import BASE_PATH
+from app.config import BASE_PATH, storage_client
 
 import uuid
 
 import os
+import traceback
+import sys
 import json
 
 from app.util import check_and_validate_account, get_resume_priority
@@ -29,7 +31,7 @@ import shutil
 from app.publisher.resume import sendMessage
 import time
 
-from app.account import initDB
+from app.account import initDB, get_cloud_bucket, get_cloud_url
 
 @bp.route("/resume/requeue/error", methods=["GET"])
 @bp.route("/resume/requeue/error/<int:onlycount>", methods=["GET"])
@@ -283,6 +285,55 @@ def get_with_pic_for_annotation():
 
     return json.dumps(fileLinks, indent=True)
 
+@bp.route("/viz/download/<string:candidate_id>/<int:page>", methods=["GET"])
+@check_and_validate_account
+def download_viz_file(candidate_id, page):
+    ## https://staticrecruitai.excellencetechnologies.in/1993d124dda9e43c6369830e865117fcpdf/page0png/page0.png_viz_.png
+
+
+    db = initDB(request.account_name, request.account_config)
+
+    row = db.emailStored.find_one({"_id": ObjectId(candidate_id)  })
+
+    db.emailStored.update_one({"_id": ObjectId(candidate_id)  } , {
+        '$push' : {
+            "cvParsedInfo.debug.training_download" : page
+        }
+    })
+
+    dest = "/workspace/temp_download"
+
+    filename = str(page) + "---" + row["attachment"][0]["attachment"]["publicFolder"]
+    filename = filename + ".png"
+
+    
+    
+
+    RESUME_UPLOAD_BUCKET = get_cloud_bucket(request.account_name, request.account_config)
+
+    cloud_url = get_cloud_url(request.account_name, request.account_config)
+
+    bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(row["cvimage"]["images"][page].replace(cloud_url,""))
+
+    Path(dest).mkdir(parents=True, exist_ok=True)
+
+    try:
+        blob.download_to_filename(os.path.join(dest, filename))
+        logger.info("file downloaded at %s", os.path.join(dest, filename))
+        return send_from_directory(directory=dest, filename=filename, mimetype='image/webp', as_attachment=True)
+    except  Exception as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return jsonify({
+            "error" : str(e),
+            "url" : row["cvimage"]["images"][page]
+        })
+        # return redirect(row["cvimage"]["images"][page], code=302)
+
+
+
+
 
 # can we automatically find cv link
 # in which there is too much bouding box overlap
@@ -308,6 +359,12 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
 
         # if len(intersections) > 5:
         #     continue
+        if "training_download" in row["cvParsedInfo"]["debug"]:
+            training_download = row["cvParsedInfo"]["debug"]["training_download"]
+            logger.info(training_download)
+        else:
+            training_download = []
+            
 
         if "bbox" in display_type:
 
@@ -325,6 +382,7 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                 intersections[str(row["_id"])][pred_idx]["filename"] = filename
                 intersections[str(row["_id"])][pred_idx]["aurl"] = ""
                 intersections[str(row["_id"])][pred_idx]["inter"] = []
+                intersections[str(row["_id"])][pred_idx]["training_download"] = 1 if pred_idx in training_download else 0
 
 
                 for inst in instances:
@@ -386,6 +444,7 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                                         "url" : filename2,
                                         "overlapArea" : overlapArea,
                                         "percentage_overlap" : percentage_overlap
+                                        
                                     })
 
 
@@ -450,7 +509,11 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                     "cv_image" : cvimage,
                     "len_words_page_text" : len_words_page_text,
                     "len_words_full_text" : len_words_full_text,
-                    "per" : len_words_full_text / len_words_page_text if len_words_page_text > 0 else 0
+                    "per" : len_words_full_text / len_words_page_text if len_words_page_text > 0 else 0,
+                    "candidate_id" : str(row["_id"]),
+                    "page" : idx,
+                    "account_name" : request.account_name,
+                    "training_download" : 1 if idx in training_download else 0
                 }
                 candidate_ret.append(obj)
                 if obj["per"] > 0:
@@ -477,7 +540,10 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                         "id" : mongoid + "-----" + str(page_idx),
                         "no_of_intersections" : len(intersections[mongoid][page_idx]["inter"]),
                         "cv_page_url" : intersections[mongoid][page_idx]["aurl"],
-                        # "zdetail" : intersections[mongoid][page_idx]
+                        "candidate_id" : mongoid,
+                        "page" : page_idx,
+                        "account_name" : request.account_name,
+                        "training_download" : intersections[mongoid][page_idx]["training_download"]
                     })
 
 
