@@ -80,7 +80,7 @@ def test():
   Path(basePath).mkdir(parents=True, exist_ok=True)
 
 
-  compressedStructuredContent , timeAnalysis, predictions = startProcessing(files , inputDir, basePath, predictor, cfg)
+  compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents = startProcessing(files , inputDir, basePath, predictor, cfg)
   return compressedStructuredContent
 
 
@@ -99,10 +99,10 @@ def processAPI(file, account_name, account_config, maxPage = False):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent , timeAnalysis, predictions = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
+  compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
   assert len(compressedStructuredContent) == 1
 
-  return compressedStructuredContent[0] , basePath , timeAnalysis, predictions
+  return compressedStructuredContent[0] , basePath , timeAnalysis, predictions, jsonOutputbbox, page_contents
 
 def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}):
   timeAnalysis = {}
@@ -191,6 +191,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       # doing only page 1 for now 
 
     logger.info("total pages in cv %s" , cvpages)
+
+    bboxocroutputs = []
+    page_contents = []
     for cvpage in range(1, cvpages + 1):
     
       logger.debug("page no %s" , cvpage)
@@ -198,7 +201,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       logger.debug("fetching contents from %s", output_dir)
       outputFolder = ""
 
-      jsonOutputbbox, jsonOutput = extractOcrTextFromSegments(cvpage, output_dir, outputFolder)  
+      jsonOutputbbox, jsonOutput = extractOcrTextFromSegments(cvpage, output_dir, outputFolder, increase_dpi_for_small_image = True)  
+      bboxocroutputs.append(jsonOutputbbox)
       timeAnalysis[fileIdx]["extractOcrTextFromSegments" + str(cvpages)] = time.time() - start_time
       start_time = time.time()
 
@@ -262,6 +266,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       logger.info(content)
 
+      page_contents.append(content)
+
       ################################
       
       cleanLineData = cleanContent(content , cvpage , jsonOutput)
@@ -309,7 +315,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     start_time = time.time()
     
 
-  return combinedCompressedContent , timeAnalysis, predictions
+  return combinedCompressedContent , timeAnalysis, predictions, bboxocroutputs, page_contents
 
 
 def uploadToGcloud(basePath,basecv, account_name, account_config):
