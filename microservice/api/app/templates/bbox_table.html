@@ -22,13 +22,15 @@
             <th>Link</th>
             <th>No</th>
             <th>ID</th>
+            <th>Download</th>
         </thead>
         <tbody>
         {% for element in foundinter %}
-        <tr>
-          <td>{{loop.index}} --- <a href={{element["cv_page_url"]}} target="_blank" >{{element["cv_page_url"]}}</a></td>
+        <tr {%  if element["training_download"] == 1 %} style="background-color: #aaa;" {% endif %} >
+          <td><a href={{element["cv_page_url"]}} target="_blank" >{{element["cv_page_url"]}}</a></td>
           <td> {{element["no_of_intersections"]}} </td>
           <td> {{element["id"]}} </td>
+          <td> <a href="{{ url_for('.download_viz_file'  , candidate_id=element.candidate_id, page=element.page ) }}?account-name={{element["account_name"]}}" target="_blank">{{loop.index}} --- Download</a> </td>
         </tr>
         {% endfor %}
         </tbody>
