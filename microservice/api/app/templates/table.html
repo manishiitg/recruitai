@@ -26,15 +26,17 @@ crossorigin="anonymous"></script>
         <th>Len Page Text</th>
         <th>Len VIZ Text</th>
         <th>ID</th>
+        <th>Download</th>
     </thead>
     <tbody>
     {% for element in full_list %}
-    <tr>
-      <td>{{loop.index}} --- <a href={{element["cv_image"]}} target="_blank" >{{element["cv_image"]}}</a></td>
+    <tr {%  if element["training_download"] == 1 %} style="background-color: #aaa;" {% endif %} >
+      <td><a href={{element["cv_image"]}} target="_blank" >{{element["cv_image"]}}</a></td>
       <td> {{element["per"]}} </td>
       <td> {{element["len_words_page_text"]}} </td>
       <td> {{element["len_words_full_text"]}} </td>
       <td class="open" > {{element["id"]}} </td>
+      <td> <a href="{{ url_for('.download_viz_file'  , candidate_id=element.candidate_id, page=element.page ) }}?account-name={{element["account_name"]}}" target="_blank">{{loop.index}} --- Download</a> </td>
     </tr>
     <tr style="display:none;vertical-align: top;">
         <td colspan="1">
@@ -44,7 +46,7 @@ crossorigin="anonymous"></script>
                 {{line}} <br/>
             {% endfor %}
         </td>
-        <td colspan="4">
+        <td colspan="5">
             <b>page text</b>
             <br/>
             {% for line in element["page_text"] %}
