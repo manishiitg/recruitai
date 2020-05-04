@@ -30,6 +30,10 @@ RUN truncate -s 0 /workspace/logs/flask*.log
 
 RUN pip install pika
 
+RUN pip install google-cloud-storage
+COPY ./RecruitAI.json /workspace
+
+
 CMD ["/usr/bin/supervisord"]
 
 EXPOSE 5000
