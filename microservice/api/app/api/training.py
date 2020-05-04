@@ -1,7 +1,7 @@
 from app.logging import logger
 from app import token
 from flask import (
-    Blueprint, flash, jsonify, abort, request
+    Blueprint, flash, jsonify, abort, request, render_template, Response
 )
 
 from bson.objectid import ObjectId
@@ -54,6 +54,13 @@ def requeue_error(only_count = 0):
 
     for row in rows:
         count += 1
+
+        if "email_timestamp" not in row:
+            row["email_timestamp"] = 0
+        
+        if row["email_timestamp"] == 'NaN':
+            row["email_timestamp"] = 0
+
         priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
@@ -95,6 +102,13 @@ def requeue_parsing_fast(only_count = 0):
 
     for row in rows:
         count += 1
+
+        if "email_timestamp" not in row:
+            row["email_timestamp"] = 0
+        
+        if row["email_timestamp"] == 'NaN':
+            row["email_timestamp"] = 0
+
         priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
@@ -118,26 +132,47 @@ import random
 
 @bp.route("/resume/requeue/random", methods=["GET"])
 @bp.route("/resume/requeue/random/<int:limit>", methods=["GET"])
+@bp.route("/resume/requeue/random/<int:limit>/<int:only_debug_missed>", methods=["GET"])
 @check_and_validate_account
-def requeue_random(limit = 1):
+def requeue_random(limit = 1, only_debug_missed = 0):
     db = initDB(request.account_name, request.account_config)
     
-    count = db.emailStored.count({    
-        "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ) 
-    
-    rows = db.emailStored.find({    
-        "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ).limit(limit).skip(random.randint(0, count))
+    if only_debug_missed:
+        count = db.emailStored.count({    
+            "cvParsedInfo.debug.jsonOutputbbox": { "$exists" : False},
+            "attachment.0.attachment.publicPath" : { "$exists" : True },
+        }) 
+        
+        rows = db.emailStored.find({    
+            "cvParsedInfo.debug.jsonOutputbbox": { "$exists" : False},
+            "attachment.0.attachment.publicPath" : { "$exists" : True }  
+        }).limit(limit).skip(random.randint(0, count))
+        
 
-    count = 0
+    else:
+        count = db.emailStored.count({    
+            "attachment.0.attachment.publicPath" : { "$exists" : True },  }
+        ) 
+        
+        rows = db.emailStored.find({    
+            "attachment.0.attachment.publicPath" : { "$exists" : True }  }
+        ).limit(limit).skip(random.randint(0, count))
+
+    xcount = 0
     for row in rows:
-        count += 1
+        xcount += 1
+        if "email_timestamp" not in row:
+            row["email_timestamp"] = 0
+        
+        if row["email_timestamp"] == 'NaN':
+            row["email_timestamp"] = 0
+
         priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
         obj = {
             "filename" : row["attachment"][0]["attachment"]["publicFolder"],
             "mongoid" : str(row["_id"]),
             "skills" : {},
+            "parsing_type" : "full",
             "meta" : {},
             "priority" : priority,
             "account_name": request.account_name,
@@ -145,10 +180,11 @@ def requeue_random(limit = 1):
         }
         logger.info(obj)
         sendMessage(obj)
-        time.sleep(.1)
-    
+        time.sleep(.05)
+
     return jsonify({
-        "cvParsedInfo_random_attachment_public_path_exist_true" : count
+        "cvParsedInfo_random_attachment_public_path_exist_true" : count,
+        "xcount" : xcount
     })
 
 @bp.route("/resume/requeue/candidate/<string:candidate_id>", methods=["GET"])
@@ -176,7 +212,7 @@ def requeue_candidate(candidate_id):
     }
     logger.info(obj)
     sendMessage(obj)
-    time.sleep(.1)
+    time.sleep(.05)
     
     return jsonify({
         "priority" : priority,
@@ -220,7 +256,7 @@ def requeue(only_count = 0):
         }
         logger.info(obj)
         sendMessage(obj)
-        time.sleep(.1)
+        time.sleep(.05)
 
     return jsonify({
         "cvParsedInfo_exists_false_attachment_public_path_exist_true" : count
@@ -253,26 +289,206 @@ def get_with_pic_for_annotation():
 # in which the is single big bbox which takes more than 50% of the page
 # in which ratio of actual text and ratio of text inside bbox is too much different 
 
-@bp.route('/viz/find_inncorrect_annotation', methods=['GET'])
+@bp.route('/viz/find_inncorrect_annotation/<string:display_type>', methods=['GET'])
 @check_and_validate_account
-def get_with_pic_for_annotation():
+def find_inncorrect_annotation(display_type = "bbox_json"):
+    # avaiable types 
+    # bbox_json, bbox_html, text_json, text_html
+
     db = initDB(request.account_name, request.account_config)
 
-    rows = db.emailStored.find({"cvimage.picture": {  "$exists" : True }  })
+    rows = db.emailStored.find({"cvParsedInfo.debug.jsonOutputbbox": { "$exists" : True}  })
 
-    fileLinks = []
+    intersections = {}
+
+    ret = {}
+    full_list = []
+
     for row in rows:
-        # db.aierrors.update({
-        #     "_id" : row["_id"]
-        # }, {
-        #     "$set" : {
-        #         "is_processed" : True
-        #     }
-        # })
 
-        fileLinks.append(row["cvimage"]["images"][0])
+        # if len(intersections) > 5:
+        #     continue
 
-    return json.dumps(fileLinks, indent=True)
+        if "bbox" in display_type:
+
+            predictions = row["cvParsedInfo"]["debug"]["predictions"]
+            
+            
+            intersections[str(row["_id"])] = {}
+
+            for pred_idx, pred_page in enumerate(predictions):
+                instances = pred_page["instances"]
+                filename = pred_page["filename"]
+                boxes = []
+        
+                intersections[str(row["_id"])][pred_idx] = {}
+                intersections[str(row["_id"])][pred_idx]["filename"] = filename
+                intersections[str(row["_id"])][pred_idx]["aurl"] = ""
+                intersections[str(row["_id"])][pred_idx]["inter"] = []
+
+
+                for inst in instances:
+                    bbox = inst["bbox"]
+                    bbox = bbox.replace("[","").replace("]","")
+                    bbox = bbox.split(" ")
+                    bbox = list(filter(None, bbox))
+                    inst["bbox"] = bbox
+                    boxes.append(inst)
+
+
+                for idx, inst in enumerate(boxes):
+                    bbox = inst["bbox"]
+                    x = float(bbox[0])
+                    y = float(bbox[1])
+                    width = float(bbox[2])
+                    height = float(bbox[3])
+
+                    intersections[str(row["_id"])][pred_idx]["aurl"] = inst["filename"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
+                    filename2 = inst["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
+
+                    obj = {
+                        "filename" : filename2,
+                        "bbox" : bbox,
+                        "inter" : []
+                    }
+                    for idx2, inst2 in enumerate(boxes):
+
+                        if idx2 != idx:
+                            bbox2 = inst2["bbox"]
+                            x2 = float(bbox2[0])
+                            y2 = float(bbox2[1])
+                            width2 = float(bbox2[2])
+                            height2 = float(bbox2[3])
+
+                            filename2 = inst2["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
+
+
+                            
+                            # this condition works but many times bbox are like intersecting on 80% of the area
+                            if x2 >= x and y2 >= y and x + width > x2 + width2 and y + height > y2 + height2:
+                                obj["inter"].append({
+                                    "bbox" : bbox2,
+                                    "calc" : [(x2,x), (y2, y), (x+width,x2+width2), (y + height,y2+height2) ],
+                                    "url" : filename2
+                                })
+                            
+                            if x2 >= x * .95 and y2 >= y * .95 and (x + width) * 1.05 > x2 + width2 and (y + height) * 1.05 > y2 + height2:
+                                x_overlap = max(0, min(x + width, x2 + width2) - max(x, x2))
+                                y_overlap = max(0, min(y + height, y2 + height2) - max(y, y2))
+                                overlapArea = x_overlap * y_overlap
+
+                                actual_area = width * height2
+                                percentage_overlap = overlapArea/actual_area
+                                if percentage_overlap > .1:
+                                    obj["inter"].append({
+                                        "bbox" : bbox2,
+                                        "calc" : [(x2,x), (y2, y), (x+width,x2+width2), (y + height,y2+height2) ],
+                                        "url" : filename2,
+                                        "overlapArea" : overlapArea,
+                                        "percentage_overlap" : percentage_overlap
+                                    })
+
+
+                    if len(obj["inter"]) > 0:
+                        intersections[str(row["_id"])][pred_idx]["inter"].append(obj)
+
+        if "text" in display_type:
+            jsonOutputbbox = row["cvParsedInfo"]["debug"]["jsonOutputbbox"]
+            candidate_ret = []
+            for idx, page in enumerate(jsonOutputbbox):
+                page_contents = row["cvParsedInfo"]["debug"]["page_contents"]
+                page_text = page_contents[idx]
+                fullText = []
+                for line in page:
+                    correctLine = line["correctLine"]
+                    fullText.append(correctLine)
+                
+                page_text_percentage = (len(fullText)) / len(page_text)
+                # candidate_ret.append(page_text_percentage)
+                page_text = page_text.splitlines()
+
+                nFullText = []
+                len_words_full_text = 0
+
+                for line in fullText:
+                    words = [w.strip() for w in line.split()]
+                    # words = list(set(words))
+                    # for w in words:
+                    len_words_full_text += len(words)
+                    if len(words) > 0:
+                        nFullText.append( " ".join(words))
+
+                npage_text = []
+                len_words_page_text = 0
+                for line in page_text:
+                    line = line.strip()
+                    is_single_char_line = True
+                    for word in line.split():
+                        if len(word.strip()) > 1:
+                            is_single_char_line = False
+                    
+                    if is_single_char_line:
+                        line = "".join(line.split())
+
+                    words = [w.strip() for w in line.split()]
+                    # words = list(set(words))
+                    # for w in words:
+                    
+
+                    len_words_page_text += len(words)
+                    if len(words) > 0:
+                        npage_text.append( " ".join(words))
+
+                cvimage = row["cvimage"]["images"][idx]
+                filename = cvimage.split("/")[-1]
+
+                cvimage = cvimage.replace(filename, "page" + str(idx) +"png/page" + str(idx) + ".png_viz_.png")
+                obj = {
+                    "fullText" : nFullText,
+                    "page_text" : npage_text,
+                    "id": str(row["_id"]),
+                    "cv_image" : cvimage,
+                    "len_words_page_text" : len_words_page_text,
+                    "len_words_full_text" : len_words_full_text,
+                    "per" : len_words_full_text / len_words_page_text if len_words_page_text > 0 else 0
+                }
+                candidate_ret.append(obj)
+                if obj["per"] > 0:
+                    full_list.append(obj)
+
+            ret[str(row["_id"])] = candidate_ret
+
+    
+    if display_type == "text_html":
+        full_list = sorted(full_list, key=lambda k: k['per'])
+        return render_template('table.html', full_list=full_list)
+    
+    if display_type == "text_json":
+        full_list = sorted(full_list, key=lambda k: k['per'])
+        return jsonify(full_list)
+    
+
+    if "bbox" in display_type:
+        foundinter = []
+        for mongoid in intersections:
+            for page_idx in intersections[mongoid]:
+                if len(intersections[mongoid][page_idx]["inter"]) > 0:
+                    foundinter.append({
+                        "id" : mongoid + "-----" + str(page_idx),
+                        "no_of_intersections" : len(intersections[mongoid][page_idx]["inter"]),
+                        "cv_page_url" : intersections[mongoid][page_idx]["aurl"],
+                        # "zdetail" : intersections[mongoid][page_idx]
+                    })
+
+
+        foundinter = sorted(foundinter, key=lambda k: -1 * k['no_of_intersections'])
+
+    if display_type == "bbox_json":
+        return jsonify(foundinter)
+
+    if display_type == "bbox_html":
+        return render_template('bbox_table.html', foundinter=foundinter)
+
 
 
 @bp.route('/viz/convert_for_annotation', methods=['GET'])
@@ -301,6 +517,33 @@ def convert_for_annotation():
 
     return json.dumps(fileLinks, indent=True)
 
+
+@bp.route('/get_cv_parts_classify/<int:download>', methods=['GET'])
+@check_and_validate_account
+def get_cv_parts_classify(download = 0):
+
+    db = initDB(request.account_name, request.account_config)
+
+    rows = db.aierrors.find({"userId":"5ea7a7041b52f0003bfc5554","error":"CVPARTSCLASSIFY"})
+
+    ret = []
+    for row in rows:
+        label = row["cvParseClassifyLabel"]
+        line = row["line"]
+
+        if len(line) > 0:
+            ret.append({
+                "text" : line,
+                "label" : label
+            })
+
+    if download == 1:
+        content = json.dumps(ret)
+        return Response(content, 
+                mimetype='application/json',
+                headers={'Content-Disposition':'attachment;filename=cvclassify.json'})
+    else:
+        return jsonify(ret)
 
 @bp.route('/ner/convert_to_label_studio', methods=['GET'])
 @check_and_validate_account
