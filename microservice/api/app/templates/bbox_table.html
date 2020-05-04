@@ -1,0 +1,35 @@
+<head>
+
+    <script
+    src="https://code.jquery.com/jquery-3.5.0.slim.min.js"
+    integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs="
+    crossorigin="anonymous"></script>
+    
+    </head>
+    
+    <script>
+        $(document).ready(function(){
+            
+        })
+    </script>
+    
+    <h4>BBox Incorrect Annotation</h4>
+    <p>
+        Calculation the amount bbox intersections
+    </p>
+    <table>
+        <thead>
+            <th>Link</th>
+            <th>No</th>
+            <th>ID</th>
+        </thead>
+        <tbody>
+        {% for element in foundinter %}
+        <tr>
+          <td>{{loop.index}} --- <a href={{element["cv_page_url"]}} target="_blank" >{{element["cv_page_url"]}}</a></td>
+          <td> {{element["no_of_intersections"]}} </td>
+          <td> {{element["id"]}} </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>

@@ -1,0 +1,58 @@
+<head>
+
+<script
+src="https://code.jquery.com/jquery-3.5.0.slim.min.js"
+integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs="
+crossorigin="anonymous"></script>
+
+</head>
+
+<script>
+    $(document).ready(function(){
+        $('.open').click( function(){
+            $(this).parent().next().toggle()
+        } )
+    })
+</script>
+
+<h4>Incorrect Annotation</h4>
+<p>
+    Calculation the amount of text extract via imageviz/ocr boxes vs the actual amount of text the cv
+</p>
+<table>
+    <thead>
+        <th>Link</th>
+        <th>Percentage</th>
+        <th>Len Page Text</th>
+        <th>Len VIZ Text</th>
+        <th>ID</th>
+    </thead>
+    <tbody>
+    {% for element in full_list %}
+    <tr>
+      <td>{{loop.index}} --- <a href={{element["cv_image"]}} target="_blank" >{{element["cv_image"]}}</a></td>
+      <td> {{element["per"]}} </td>
+      <td> {{element["len_words_page_text"]}} </td>
+      <td> {{element["len_words_full_text"]}} </td>
+      <td class="open" > {{element["id"]}} </td>
+    </tr>
+    <tr style="display:none;vertical-align: top;">
+        <td colspan="1">
+            <b>VIZ TEXT</b>
+            <br/>
+            {% for line in element["fullText"] %}
+                {{line}} <br/>
+            {% endfor %}
+        </td>
+        <td colspan="4">
+            <b>page text</b>
+            <br/>
+            {% for line in element["page_text"] %}
+                {{line}}
+                <br/>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
