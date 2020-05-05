@@ -15,6 +15,7 @@ from bson.objectid import ObjectId
 import traceback
 
 from app.publishdatasync import sendMessage as datasync
+from app.statspublisher import sendMessage as updateStats
 
 import requests
 
@@ -330,7 +331,37 @@ class TaskQueue(object):
                 "account_name" : account_name,
                 "account_config" : account_config
         })
-            
+
+        if isinstance(ret, dict) and "error" in ret:
+            updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : message["filename"],
+                    "meta" : {
+                        "error" : ret["error"],
+                        "mongoid" : message["mongoid"]
+                    },
+                    "stage" : {
+                        "pipeline" : "picture",
+                        "priority" : message["priority"] 
+                    },
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
+        else:
+            updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : message["filename"],
+                    "meta" : {
+                        "mongoid" : message["mongoid"]
+                    },
+                    "stage" : {
+                        "pipeline" : "picture",
+                        "priority" : message["priority"] 
+                    },
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
+
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
