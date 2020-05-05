@@ -21,6 +21,7 @@ import requests
 from app.publisher import sendMessage
 from app.publishpicture import sendMessage as sendPicture
 from app.publishsummary import sendMessage as sendSummary
+from app.statspublisher import sendMessage as updateStats
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
@@ -342,6 +343,23 @@ class TaskQueue(object):
 
         priority = 0
 
+        is_cache = False
+
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : message["filename"],
+            "meta" : {
+                "mongoid" : message["mongoid"]
+            },
+            "stage" : {
+                "pipeline" : "resume_started",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
+
+
         if "priority" in message:
             LOGGER.info("priority of message %s", message["priority"])
             priority = int(message["priority"])
@@ -361,6 +379,8 @@ class TaskQueue(object):
                 # new response type is dict not list
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
+            else:
+                is_cache = True
         else:
             doProcess = True
 
@@ -374,7 +394,7 @@ class TaskQueue(object):
 
                 db = initDB(account_name, account_config)
                 if ObjectId.is_valid(message["mongoid"]):
-                    ret = db.emailStored.update_one({
+                    db.emailStored.update_one({
                         "_id" : ObjectId(message["mongoid"])
                     }, {
                         "$set": {
@@ -396,12 +416,42 @@ class TaskQueue(object):
                     LOGGER.critical("callback exception")
                     LOGGER.critical(e)
 
+                updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : message["filename"],
+                    "meta" : {
+                        "error" : ret["error"],
+                        "mongoid" : message["mongoid"]
+                    },
+                    "stage" : {
+                        "pipeline" : "image",
+                        "priority" : message["priority"] 
+                    },
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
 
                 self.acknowledge_message(delivery_tag)
                 return
 
             r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
         
+
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : ret["filename"],
+            "meta" : {
+                "images" : len(ret["finalImages"]),
+                "mongoid" : message["mongoid"],
+                "is_cache" : is_cache
+            },
+            "stage" : {
+                "pipeline" : "image",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
         
         message["cvdir"] = ret["cvdir"]
         message["output_dir2"] = ret["output_dir2"]
