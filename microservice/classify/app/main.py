@@ -20,6 +20,7 @@ SERVER_QUEUE = "rpc.classify.queue"
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 from app.emailclassify.start import classifyData, loadModel, loadTokenizer, test
+from app.statspublisher import sendMessage as updateStats
 
 import time
 
