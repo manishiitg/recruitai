@@ -14,18 +14,11 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
-
-    return db
-
 import traceback
 import requests
 import time
+
+from app.stats.start import resume_pipeline_update
 
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
@@ -43,8 +36,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'testing'
-    ROUTING_KEY = 'testing.parsing'
+    QUEUE = 'stats'
+    ROUTING_KEY = 'stats.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -60,11 +53,8 @@ class TaskQueue(object):
         self._url = amqp_url
         self._consuming = False
         self.threads = []
-        # In production, experiment with higher prefetch values
-        # for higher consumer throughput
         self._prefetch_count = 1  
-        # libreoffice can only convert file one at a time. we cannot use threads for this
-        # it gets stuck foroever if we do multiple together
+        
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -297,10 +287,13 @@ class TaskQueue(object):
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
-        t.start()
-        LOGGER.info(t.is_alive())
-        self.threads.append(t)
+        # t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
+        # t.start()
+        # LOGGER.info(t.is_alive())
+
+        self.do_work(delivery_tag, body)
+        
+        # self.threads.append(t)
 
         # self.acknowledge_message(basic_deliver.delivery_tag)
 
@@ -313,12 +306,10 @@ class TaskQueue(object):
         body = json.loads(body)
         
         if "action" in body:
-            if body["action"] == "ping":
-                sleep = body["sleep"]
-                LOGGER.critical("sleeping for %s" , sleep)
-                time.sleep(sleep)
+            if body["action"] == "resume_pipeline_update":
+                resume_pipeline_update(body["resume_unique_key"], body["stage"], body["meta"], body["account_name"], body["account_config"])
 
-        
+
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
@@ -445,9 +436,9 @@ import docker
 
 def main():
     
-    print("docker env")
-    client = docker.from_env()
-    print(client.containers.list())
+    # print("docker env")
+    # client = docker.from_env()
+    # print(client.containers.list())
 
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
