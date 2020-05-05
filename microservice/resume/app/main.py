@@ -26,6 +26,7 @@ from app.publishfilter import sendBlockingMessage as extractCandidateScore
 
 from app.publishcandidate import sendMessage as extractCandidateClassifySkill
 from app.publishdatasync import sendMessage as datasync
+from app.statspublisher import sendMessage as updateStats
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -359,13 +360,32 @@ class TaskQueue(object):
                 LOGGER.critical(ret)
                 self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
                 self.acknowledge_message(delivery_tag)
+
+                updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : message["filename"],
+                    "meta" : {
+                        "error" : ret["error"],
+                        "mongoid" : message["mongoid"]
+                    },
+                    "stage" : {
+                        "pipeline" : "resume",
+                        "priority" : message["priority"] 
+                    },
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
+
                 return
         
+        is_cache = False
         if r.exists(key):
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
             if "error" not in ret:
+
+                is_cache = True
 
                 if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
                     if len(skills) > 0:
@@ -373,6 +393,7 @@ class TaskQueue(object):
                         skillExtracted =  extractSkillMessage({
                             "action" : "extractSkill",
                             "mongoid" : message["mongoid"],
+                            "filename" : message["filename"],
                             "skills" : skills.split(","),
                             "meta" : meta
                         })
@@ -380,22 +401,44 @@ class TaskQueue(object):
                         ret["skillExtracted"] = skillExtracted
 
                 self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
-                extractCandidateClassifySkill({
-                    "mongoid" : message["mongoid"],
+
+                updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : message["filename"],
+                    "meta" : {
+                        "mongoid" : message["mongoid"],
+                        "is_cache" : is_cache
+                    },
+                    "stage" : {
+                        "pipeline" : "resume",
+                        "priority" : message["priority"] 
+                    },
                     "account_name" : account_name,
                     "account_config" : account_config
+                })
+                
+                extractCandidateClassifySkill({
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
+                    "account_name" : account_name,
+                    "account_config" : account_config,
+                    "priority" : message["priority"] 
                 })
                 extractCandidateScore({
                     "action" : "candidate_score",
                     "id" : message["mongoid"],
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
                     "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_config" : account_config,
+                    "priority" : message["priority"] 
                 })
                 datasync({
                     "id" : message["mongoid"],
                     "action" : "syncCandidate",
                     "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_config" : account_config,
+                    "priority" : message["priority"] 
                 })
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
@@ -413,6 +456,7 @@ class TaskQueue(object):
                     skillExtracted =  extractSkillMessage({
                         "action" : "extractSkill",
                         "mongoid" : message["mongoid"],
+                        "filename" : message["filename"],
                         "skills" : skills.split(","),
                         "meta" : meta,
                         "account_name" : account_name,
@@ -421,22 +465,42 @@ class TaskQueue(object):
                     ret["skillExtracted"] = skillExtracted
 
             self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
-            extractCandidateClassifySkill({
-                "mongoid" : message["mongoid"],
+            updateStats({
+                "action" : "resume_pipeline_update",
+                "resume_unique_key" : message["filename"],
+                "meta" : {
+                    "mongoid" : message["mongoid"],
+                    "is_cache" : is_cache
+                },
+                "stage" : {
+                    "pipeline" : "resume",
+                    "priority" : message["priority"] 
+                },
                 "account_name" : account_name,
                 "account_config" : account_config
             })
+            extractCandidateClassifySkill({
+                "mongoid" : message["mongoid"],
+                "filename" : message["filename"],
+                "account_name" : account_name,
+                "account_config" : account_config,
+                "priority" : message["priority"] 
+            })
             extractCandidateScore({
                 "action" : "candidate_score",
+                "mongoid" : message["mongoid"],
+                "filename" : message["filename"],
                 "id" : message["mongoid"],
                 "account_name" : account_name,
-                "account_config" : account_config
+                "account_config" : account_config,
+                "priority" : message["priority"] 
             })
             datasync({
                     "id" : message["mongoid"],
                     "action" : "syncCandidate",
                     "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_config" : account_config,
+                    "priority" : message["priority"] 
             })
 
             
