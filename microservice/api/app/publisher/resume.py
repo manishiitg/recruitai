@@ -5,6 +5,8 @@ import functools
 import time
 import json
 
+
+from app.publisher.stats import sendMessage as updateStats
 # publisher
 
 amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
@@ -337,7 +339,20 @@ def sendMessage(obj):
     # obj is a json object to send message
     # very basic and simple right now 
 
+    updateStats({
+        "action" : "resume_pipeline_update",
+        "resume_unique_key" : obj["filename"],
+        "meta" : obj,
+        "stage" : {
+            "pipeline" : "queue",
+            "priority" : obj["priority"] 
+        },
+        "account_name" : obj["account_name"],
+        "account_config" : obj["account_config"]
+    })
+
     LOGGER.info("send resume 0arsuing to queue")
     mq = MQPublisher(amqp_url, obj)
     mq.run()
-    pass
+
+    
