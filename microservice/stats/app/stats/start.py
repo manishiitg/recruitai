@@ -7,49 +7,59 @@ import json
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
-db = None
-def initDB():
-    global db
-    if db is None:
-        client = MongoClient(os.getenv("RECRUIT_BACKEND_DB")) 
-        db = client[os.getenv("RECRUIT_BACKEND_DATABASE")]
+import datetime
 
-    return db
+from app.account import initDB
+
+import time
 
 
 
-def start():
+def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account_config):
+    db = initDB(account_name, account_config)
 
-    db = initDB()
+
+    resume_unique_key = resume_unique_key.split(".")[0]
+    # incase of file .docx gets converted .pdf which causes issues
+
+    stage["time"] = time.time()
+
+    if "account_name" in meta:
+        del meta["account_name"]
+
+    if "account_config" in meta:
+        del meta["account_config"]
 
 
-    candidates = db.emailStored.find({ "pipeline" : { "$exists" : True } } , { "body" : 0} )
+    stage["meta"] = meta
 
-    stagesTime = {}
-    for cand in candidates:
-        for pipe in cand["pipeline"]:
-            # if pipe["stage"] == 0:
-            #     start_time = pipe["start_time"]
+    row = db.ai_stats.find_one({"resume_unique_key" : resume_unique_key})
 
-            if "timeTaken" in pipe:
-                if pipe["stage"] not in stagesTime:
-                    stagesTime[pipe["stage"]] = []
+    if not row:
+        db.ai_stats.insert_one({
+            "resume_unique_key" : resume_unique_key,
+            "stage" : [stage],
+        })
+    else:
+        oldstage = row["stage"]
+        
 
-                stagesTime[pipe["stage"]].append(pipe["timeTaken"])
+        stage["time_spent"] = stage["time"] - oldstage[-1]["time"]
+        oldstage.append(stage)
 
-    ret = {}
-    for stage_no in stagesTime:
-        total = 0
-        for t in stagesTime[stage_no]:
-            total += t
+        resume_processing_time = -1
+        queue_waiting = -1
+        if len(oldstage) > 1:
+            queue_waiting = oldstage[1]["time"] - oldstage[0]["time"]
+            resume_processing_time = stage["time"] - oldstage[1]["time"]
 
-        ret[stage_no] = total/len(stagesTime[stage_no])
-
-    print(ret)
-    # no of pending cv's
-    # no of cv's complete
-    # ai version
-    # pipeline analysis i.e avg time taken for each pipeline
-    # search index stats
-    # redis index stats
-    pass
+        db.ai_stats.update_one({
+            "resume_unique_key" : resume_unique_key
+        }, {
+            "$set" : {
+                "stage" : oldstage,
+                "queue_waiting" : queue_waiting,
+                "resume_processing_time" : resume_processing_time,
+                "total_stages" : len(oldstage)
+            }
+        })
