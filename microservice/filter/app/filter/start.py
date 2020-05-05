@@ -87,6 +87,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
+
         else:
             job_profile_data = {}   
 

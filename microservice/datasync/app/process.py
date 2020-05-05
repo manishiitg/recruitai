@@ -398,7 +398,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         logger.info("field which got updated %s", field)
         if field is not None:
-            if "tag_id" in field or 'job_profile_id' in field:
+            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field:
                 isFilterUpdateNeeded = True
 
 
@@ -584,7 +584,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if not row["job_profile_id"]:
                     del job_profile_data[row["_id"]]
                 else:
-                    job_profile_data[row["_id"]] = row
+                    if "is_archieved" in row.keys():
+                        if row["is_archieved"] == "true" or row["is_archieved"] == True:
+                            if row["_id"] in job_profile_data:
+                                del job_profile_data[row["_id"]]
+                    else:
+                        job_profile_data[row["_id"]] = row
 
                 # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 

@@ -17,6 +17,9 @@ from app.publishdatasync import sendMessage as datasync
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
+from app.statspublisher import sendMessage as updateStats
+
+
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
@@ -327,9 +330,36 @@ class TaskQueue(object):
                 "account_name" : account_name,
                 "account_config" : account_config
             })
+            updateStats({
+                "action" : "resume_pipeline_update",
+                "resume_unique_key" : message["filename"],
+                "meta" : {
+                    "mongoid" : message["mongoid"]
+                },
+                "stage" : {
+                    "pipeline" : "summary",
+                    "priority" : message["priority"] 
+                },
+                "account_name" : account_name,
+                "account_config" : account_config
+            })
         except Exception as e:
             LOGGER.critical(str(e))
             traceback.print_stack()
+            updateStats({
+                "action" : "resume_pipeline_update",
+                "resume_unique_key" : message["filename"],
+                "meta" : {
+                    "error" : str(e),
+                    "mongoid" : message["mongoid"]
+                },
+                "stage" : {
+                    "pipeline" : "summary",
+                    "priority" : message["priority"] 
+                },
+                "account_name" : account_name,
+                "account_config" : account_config
+            })
 
         
         
