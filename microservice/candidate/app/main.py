@@ -17,6 +17,8 @@ from app.classify.start import process
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 from app.skillextract.start import start as extractSkill
+from app.statspublisher import sendMessage as updateStats
+
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -327,6 +329,24 @@ class TaskQueue(object):
             meta = message["meta"]
 
         prob, label =  process(message["mongoid"], account_name, account_config)
+
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : message["filename"],
+            "meta" : {
+                "ret" : {
+                    "prob" : str(prob),
+                    "label" : label
+                },
+                "mongoid" : message["mongoid"]
+            },
+            "stage" : {
+                "pipeline" : "candidate_classify",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
 
         if label:
             skills = extractSkill(label, message["mongoid"], account_name=account_name, account_config=account_config)
