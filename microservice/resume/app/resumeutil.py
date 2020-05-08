@@ -29,6 +29,8 @@ from pdfminer.pdfpage import PDFTextExtractionNotAllowed
 
 from app.fast.start import process as processFast
 
+from app.statspublisher import sendMessage as updateStats
+
 import sys
 
 
@@ -104,6 +106,13 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 for work in timeAnalysis[fileIdx]:
                     logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
 
+            updateStats({
+                "action" : "resume_time_analysis",
+                "resume_unique_key" : message["filename"],
+                "timeAnalysis" : timeAnalysis,
+                "account_name" : account_name,
+                "account_config" : account_config
+            })
 
             logger.info("total time taken %s", (time.time() - timer))
 
@@ -120,7 +129,6 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                     "pipeline": {
                         "stage" : 2,
                         "name": "resume_construction",
-                        "timeAnalysis" : json.loads(json.dumps(timeAnalysis)),
                         "timeTaken": time.time() - timer,
                         "start_time" : time.time(),
                         # "debug" : {

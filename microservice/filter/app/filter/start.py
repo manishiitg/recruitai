@@ -299,7 +299,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
                 for idx, child_id in enumerate(tag_map[tag]):
                     doc = job_profile_data[child_id]
-                    if doc["unread"]:
+                    if "unread" in doc and doc["unread"]:
                         paged_tag_map[tag]["unread"] += 1
                     else:
                         paged_tag_map[tag]["read"] += 1
