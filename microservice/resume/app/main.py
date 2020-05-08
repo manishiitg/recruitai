@@ -28,6 +28,7 @@ from app.publishcandidate import sendMessage as extractCandidateClassifySkill
 from app.publishdatasync import sendMessage as datasync
 from app.statspublisher import sendMessage as updateStats
 
+
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
@@ -352,6 +353,21 @@ class TaskQueue(object):
 
         r = connect_redis(account_name, account_config)
 
+
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : message["filename"],
+            "meta" : {
+                "mongoid" : message["mongoid"]
+            },
+            "stage" : {
+                "pipeline" : "resume_start",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
+
         if "finalImages" in message:
             if len(message["finalImages"]) >= 10:
                 ret = {
@@ -395,7 +411,9 @@ class TaskQueue(object):
                             "mongoid" : message["mongoid"],
                             "filename" : message["filename"],
                             "skills" : skills.split(","),
-                            "meta" : meta
+                            "meta" : meta,
+                            "account_name" : account_name,
+                            "account_config" : account_config
                         })
 
                         ret["skillExtracted"] = skillExtracted
