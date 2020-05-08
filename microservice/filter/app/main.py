@@ -81,6 +81,22 @@ def thread_task( ch, method_frame, properties, body):
         elif body["action"] == "candidate_score":
             ret = get_candidate_score(body["id"], account_name, account_config)
             ret = json.dumps(ret)
+
+            updateStats({
+                    "action" : "resume_pipeline_update",
+                    "resume_unique_key" : body["filename"],
+                    "meta" : {
+                        "ret" : ret,
+                        "mongoid" : body["mongoid"]
+                    },
+                    "stage" : {
+                        "pipeline" : "candidate_score_start",
+                        "priority" : body["priority"] 
+                    },
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
+
             add_threadsafe_callback(ch, method_frame,properties,ret)
 
             updateStats({
