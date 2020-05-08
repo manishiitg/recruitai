@@ -328,6 +328,20 @@ class TaskQueue(object):
         if "meta" in message:
             meta = message["meta"]
 
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : message["filename"],
+            "meta" : {
+                "mongoid" : message["mongoid"]
+            },
+            "stage" : {
+                "pipeline" : "candidate_classify_start",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
+
         prob, label =  process(message["mongoid"], account_name, account_config)
 
         updateStats({

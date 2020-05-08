@@ -323,6 +323,19 @@ class TaskQueue(object):
 
 
         try:
+            updateStats({
+                "action" : "resume_pipeline_update",
+                "resume_unique_key" : message["filename"],
+                "meta" : {
+                    "mongoid" : message["mongoid"]
+                },
+                "stage" : {
+                    "pipeline" : "summary_start",
+                    "priority" : message["priority"] 
+                },
+                "account_name" : account_name,
+                "account_config" : account_config
+            })
             process(message["filename"] , message["mongoid"], account_name, account_config)
             datasync({
                 "id" : message["mongoid"],
