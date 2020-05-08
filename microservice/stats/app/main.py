@@ -18,11 +18,12 @@ import traceback
 import requests
 import time
 
-from app.stats.start import resume_pipeline_update
+import requests
+
+from app.stats.start import resume_pipeline_update, update_resume_time_analysis
 
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
-
+amqp_url = os.getenv('RABBIT_DB')
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -309,6 +310,8 @@ class TaskQueue(object):
             if body["action"] == "resume_pipeline_update":
                 resume_pipeline_update(body["resume_unique_key"], body["stage"], body["meta"], body["account_name"], body["account_config"])
 
+            if body["action"] == "resume_time_analysis":
+                update_resume_time_analysis(body["resume_unique_key"], body["timeAnalysis"], body["account_name"], body["account_config"])
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
@@ -434,11 +437,17 @@ class ReconnectingTaskQueue(object):
 
 import docker
 
+
 def main():
     
     # print("docker env")
     # client = docker.from_env()
+    # client = docker.DockerClient(base_url="tcp://127.0.0.1:1234")
     # print(client.containers.list())
+
+    # container = client.containers.run('bfirsh/reticulate-splines',
+    #                                   detach=True)
+
 
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
