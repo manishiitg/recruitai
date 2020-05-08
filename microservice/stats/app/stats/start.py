@@ -12,12 +12,59 @@ import datetime
 from app.account import initDB
 
 import time
+import requests
+import datetime
+from requests.auth import HTTPBasicAuth
+RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
+amqp_url_base = os.getenv('RABBIT_API_URL')
+
+
+def update_resume_time_analysis(resume_unique_key, time_analysis, account_name, account_config):
+    
+    res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
+    queues = res.json()
+
+    running_process = 0
+    mq_status = {}
+    for queue in queues:
+        if queue["name"] == "resume" or queue["name"] == "image" or queue["name"] == "picture" or queue["name"] == "summary":
+            
+            print(queue)
+            if "consumers" in queue.keys():
+                mq_status[queue["name"]] = {
+                    "consumers" : queue["consumers"],
+                    "in_process" : queue["messages_unacknowledged_ram"]
+                }
+                running_process += int(queue["messages_unacknowledged_ram"])
+
+    db = initDB(account_name, account_config)
+
+    resume_unique_key = resume_unique_key.split(".")[0]
+    # incase of file .docx gets converted .pdf which causes issues
+
+    total_time = 0
+    total_page = 0
+    for fileIdx in time_analysis:
+        total_page += 1
+        for work in time_analysis[fileIdx]:
+            total_time += float(time_analysis[fileIdx][work])
+
+    db.ai_stats_resume_time_analysis.insert_one({
+        "resume_unique_key" : resume_unique_key,
+        "time_analysis" : time_analysis,
+        "insert_time" : datetime.datetime.now(),
+        "mq_status" : mq_status,
+        "running_process": running_process,
+        "total_time" : total_time,
+        "total_page" : total_page
+    })
+
+
 
 
 
 def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account_config):
     db = initDB(account_name, account_config)
-
 
     resume_unique_key = resume_unique_key.split(".")[0]
     # incase of file .docx gets converted .pdf which causes issues
@@ -36,22 +83,48 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
     row = db.ai_stats.find_one({"resume_unique_key" : resume_unique_key})
 
     if not row:
+        is_training = False
+        if "training" in stage["meta"]:
+            is_training = True
+
+        priority = -1
+
+        if "priority" in stage.keys():
+            priority = stage["priority"]
+
         db.ai_stats.insert_one({
             "resume_unique_key" : resume_unique_key,
-            "stage" : [stage],
+            "stage" : {
+                stage["pipeline"] : stage
+            },
+            "is_training" : is_training,
+            "priority" : priority,
+            "queue_time" : datetime.datetime.now()
         })
     else:
         oldstage = row["stage"]
         
+        name = stage["pipeline"]
+            
+        
 
-        stage["time_spent"] = stage["time"] - oldstage[-1]["time"]
-        oldstage.append(stage)
+        if "_start" not in name:
+            stage["time_spent"] = -1
+            for key in list(oldstage.keys()):
+                if key == name + "_start":
+                    stage["time_spent"] = stage["time"] - oldstage[key]["time"]
+                    break
+        else:
+            stage["time_spent"] = 0
+            
+        oldstage[stage["pipeline"]] = stage
 
-        resume_processing_time = -1
-        queue_waiting = -1
+        resume_processing_time = 0
+        queue_waiting = 0
         if len(oldstage) > 1:
-            queue_waiting = oldstage[1]["time"] - oldstage[0]["time"]
-            resume_processing_time = stage["time"] - oldstage[1]["time"]
+            if "image_start" in oldstage:
+                queue_waiting = oldstage["image_start"]["time"] - oldstage["queue"]["time"]
+                resume_processing_time = stage["time"] - oldstage["image_start"]["time"]
 
         db.ai_stats.update_one({
             "resume_unique_key" : resume_unique_key
