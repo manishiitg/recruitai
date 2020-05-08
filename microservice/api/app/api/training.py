@@ -71,7 +71,8 @@ def requeue_error(only_count = 0):
             "meta" : {},
             "priority" : priority,
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "training" : True
         }
         logger.info(obj)
         sendMessage(obj)
@@ -120,7 +121,8 @@ def requeue_parsing_fast(only_count = 0):
             "priority" : 1,
             "parsing_type" : "full",
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "training" : True
         }
         logger.info(obj)
         sendMessage(obj)
@@ -178,7 +180,8 @@ def requeue_random(limit = 1, only_debug_missed = 0):
             "meta" : {},
             "priority" : priority,
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "training" : True
         }
         logger.info(obj)
         sendMessage(obj)
@@ -211,6 +214,7 @@ def requeue_candidate(candidate_id):
         "priority" : priority,
         "account_name": request.account_name,
         "account_config" : request.account_config,
+        "training" : True
     }
     logger.info(obj)
     sendMessage(obj)
@@ -254,7 +258,8 @@ def requeue(only_count = 0):
             "meta" : {},
             "priority" : priority,
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "training" : True
         }
         logger.info(obj)
         sendMessage(obj)
