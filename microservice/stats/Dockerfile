@@ -17,5 +17,7 @@ RUN truncate -s 0 /workspace/logs/stats*.log
 RUN pip install pika
 RUN pip install pymongo
 RUN pip install redis
+RUN pip install docker
+RUN pip install psutil
 
 CMD ["/usr/bin/supervisord"]

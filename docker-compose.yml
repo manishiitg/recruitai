@@ -278,11 +278,13 @@ services:
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/stats/app:/workspace/app            
+            - ./microservice/stats/app:/workspace/app        
+            - /var/run/docker.sock:/var/run/docker.sock
         environment:
-            RABBIT_DB: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
-        networks:
-            - ai
+            RABBIT_DB: 'amqp://127.0.0.1:5672?connection_attempts=5&retry_delay=5'
+            RABBIT_API_URL: 'http://127.0.0.1:15672'
+            RABBIT_LOGIN: 'guest:guest'
+        network_mode: host
     
     picturemq:
         image: recruitai/picturemq:latest
