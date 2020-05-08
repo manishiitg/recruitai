@@ -588,6 +588,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         if row["is_archieved"] == "true" or row["is_archieved"] == True:
                             if row["_id"] in job_profile_data:
                                 del job_profile_data[row["_id"]]
+                        else:
+                            job_profile_data[row["_id"]] = row
                     else:
                         job_profile_data[row["_id"]] = row
 
