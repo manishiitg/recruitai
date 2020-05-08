@@ -352,7 +352,7 @@ class TaskQueue(object):
                 "mongoid" : message["mongoid"]
             },
             "stage" : {
-                "pipeline" : "resume_started",
+                "pipeline" : "image_start",
                 "priority" : message["priority"] 
             },
             "account_name" : account_name,
