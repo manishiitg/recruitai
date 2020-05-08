@@ -322,6 +322,19 @@ class TaskQueue(object):
             self.acknowledge_message(delivery_tag)
             return
 
+        updateStats({
+            "action" : "resume_pipeline_update",
+            "resume_unique_key" : message["filename"],
+            "meta" : {
+                "mongoid" : message["mongoid"]
+            },
+            "stage" : {
+                "pipeline" : "picture_start",
+                "priority" : message["priority"] 
+            },
+            "account_name" : account_name,
+            "account_config" : account_config
+        })
 
         ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"], account_name, account_config)
         
