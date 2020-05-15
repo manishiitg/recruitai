@@ -434,7 +434,7 @@ class TaskQueue(object):
                 self.acknowledge_message(delivery_tag)
                 return
 
-            r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+            r.set(key, json.dumps(ret))
         
 
         updateStats({
