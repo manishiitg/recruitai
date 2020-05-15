@@ -294,9 +294,9 @@ class TaskQueue(object):
 
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
-        # fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
+        fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
-        # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         body = json.loads(body)
         LOGGER.info(json.dumps(body, indent=2))
