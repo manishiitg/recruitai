@@ -395,7 +395,7 @@ class TaskQueue(object):
                 return
         
         is_cache = False
-        if r.exists(key):
+        if r.exists(key) and False: # turning of cache because testing with ai models
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
@@ -467,7 +467,7 @@ class TaskQueue(object):
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config)
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
-                r.set(key, json.dumps(ret), ex=60 * 60 * 30) # 1day or 30days in dev
+                r.set(key, json.dumps(ret)) # 1day or 30days in dev
                 
             if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
                 if len(skills) > 0:
@@ -534,6 +534,8 @@ class TaskQueue(object):
         if "error" in ret:
             isError = True
         ret = json.loads(json.dumps(ret))
+        ret["ai_version_processed"] = "detectron4_xlnetpartsclassify_0.1"
+        ret["ai_version"] = "0.1"
         LOGGER.info("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
