@@ -17,7 +17,12 @@ from transformers import (WEIGHTS_NAME,
                                   DistilBertForSequenceClassification,
                                   DistilBertTokenizer)
 
-BASE_MODEL_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/distil-v2"
+from transformers import (WEIGHTS_NAME,
+                                  XLNetConfig,
+                                  XLNetForSequenceClassification,
+                                  XLNetTokenizer)
+
+BASE_MODEL_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/xlnet"
 TOKENIZER_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/"
 
 logger.info("xlnet base model path %s", BASE_MODEL_PATH)
@@ -45,8 +50,8 @@ def predict(text):
         if len(text.split(" ")) < 10:
             return False
 
-        if len(text) >= 511:
-            text = text[:511]
+        if len(text) >= 200:
+            text = text[:200]
 
         encoded = sentPiecetokenizer.encode(text)
         text = " ".join(encoded.tokens)
@@ -98,19 +103,25 @@ def loadModel():
         # model_class = BertForSequenceClassification
         # tokenizer_class = BertTokenizer
 
-        model_class = DistilBertForSequenceClassification
-        tokenizer_class = DistilBertTokenizer
+        model_class = XLNetForSequenceClassification
+        tokenizer_class = XLNetTokenizer
 
         args = {}
-        args["model_type"] = "bert"
-        args["model_name_or_path"] = BASE_MODEL_PATH #"bert-base-cased"
-        args["lower_case"] = False
-        args["output_dir"] = BASE_MODEL_PATH
+        # args["model_type"] = "bert"
+        # args["model_name_or_path"] = BASE_MODEL_PATH #"bert-base-cased"
+        # args["lower_case"] = False
+        # args["output_dir"] = BASE_MODEL_PATH
 
-        args["model_type"] = "distilbert"
+        # args["model_type"] = "distilbert"
+        # args["model_name_or_path"] = BASE_MODEL_PATH # "distilbert-base-uncased"
+        # args["lower_case"] = False
+        # args["output_dir"] = BASE_MODEL_PATH
+
+        args["model_type"] = "xlnet"
         args["model_name_or_path"] = BASE_MODEL_PATH # "distilbert-base-uncased"
         args["lower_case"] = False
         args["output_dir"] = BASE_MODEL_PATH
+        args["max_seq_length"] = 200
 
         xlnetTokenizer = tokenizer_class.from_pretrained(args["output_dir"], do_lower_case=args["lower_case"])
         
