@@ -60,19 +60,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             return {"error" : str(e)}
 
         db = initDB(account_name, account_config)
-        if mongoid and ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "pipeline": [{
-                        "stage" : 0,
-                        "name": "started",
-                        "start_time" : time.time()
-                    }]
-                }
-            })
-
+        
        
         fullResponse = {}
         dest = BASE_PATH + "/../cvreconstruction"
@@ -88,6 +76,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             parsing_type = "full"
         else:
             parsing_type = "fast"
+
+        timeAnalysis = {}
 
         if message and "parsing_type" in message:
             parsing_type = message["parsing_type"]
@@ -106,39 +96,25 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 for work in timeAnalysis[fileIdx]:
                     logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
 
-            updateStats({
-                "action" : "resume_time_analysis",
-                "resume_unique_key" : message["filename"],
-                "timeAnalysis" : timeAnalysis,
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-
             logger.info("total time taken %s", (time.time() - timer))
 
             logger.info("========================================== time analysis ==========================================")
         else:
             response = processFast(os.path.join(dest, filename))
             timeAnalysis = {}
+        
 
-        if mongoid and ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$push": {
-                    "pipeline": {
-                        "stage" : 2,
-                        "name": "resume_construction",
-                        "timeTaken": time.time() - timer,
-                        "start_time" : time.time(),
-                        # "debug" : {
-                        #     "response": json.loads(json.dumps(response)), 
-                        #     "basePath" : basePath
-                        # }
-                    }
-                }
-            })
-            timer = time.time()
+        full_time_analysis = {
+            "resume_construction" : {
+                "time" : timeAnalysis,
+                "time_taken" : time.time() - timer,
+                "start_time" : time.time(),    
+            }
+        }
+
+        timer = time.time()
+
+        
 
         finalLines = []
         for page in response:
@@ -151,19 +127,12 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             t.start()
             # t.join()
 
-            if mongoid and ObjectId.is_valid(mongoid):
-                ret = db.emailStored.update_one({
-                    "_id" : ObjectId(mongoid)
-                }, {
-                    "$push": {
-                        "pipeline": {
-                            "stage" : 3,
-                            "name": "searchIdx",
-                            "start_time" : time.time(),
-                            "timeTaken": time.time() - timer
-                        }
-                    }
-                })
+            full_time_analysis["searchIdx"] = {
+                "time_taken" : time.time() - timer,
+                "start_time" : time.time()
+            }
+
+        
             timer = time.time()
 
             # doing this with datasync now 
@@ -181,21 +150,13 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         nerExtracted = extractNer(nertoparse)
 
-        if mongoid and ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$push": {
-                    "pipeline": {
-                        "stage" : 4,
-                        "name": "ner",
-                        "start_time" : time.time(),
-                        # "debug" : json.loads(json.dumps(nerExtracted)),
-                        "timeTaken": time.time() - timer
-                    }
-                }
-            })
-            timer = time.time()
+        full_time_analysis["ner"] = {
+                "time_taken" : time.time() - timer,
+                "start_time" : time.time()
+            }
+        
+        timer = time.time()
+            
 
         logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ner time taken %s ", time.time() - timer)
         # fullResponse["nerExtracted"] = nerExtracted
@@ -219,21 +180,11 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                     combinData["finalEntity"]["gender"] = gender
                 
 
-        if mongoid and ObjectId.is_valid(mongoid):
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$push": {
-                    "pipeline": {
-                        "stage" : 5,
-                        "name": "classify",
-                        "start_time" : time.time(),
-                        # "debug" : json.loads(json.dumps(combinData)),
-                        "timeTaken": time.time() - timer
-                    }
-                }
-            })
-            timer = time.time()
+        full_time_analysis["classify"] = {
+            "time_taken" : time.time() - timer,
+            "start_time" : time.time()
+        }
+        timer = time.time()
 
         newCompressedStructuredContent = {}
         GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
@@ -308,6 +259,16 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         if mongoid:
             t = Thread(target=addToSearch, args=(mongoid,finalLines,ret, account_name, account_config))
             t.start()
+
+        updateStats({
+            "action" : "resume_time_analysis",
+            "resume_unique_key" : message["filename"],
+            "mongoid" : message["mongoid"],
+            "timeAnalysis" : full_time_analysis,
+            "account_name" : account_name,
+            "account_config" : account_config,
+            "parsing_type" : parsing_type
+        }) 
 
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
