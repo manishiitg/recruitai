@@ -72,7 +72,7 @@ def thread_task( ch, method_frame, properties, body):
             # job_profile, candidate, full_map
             if action == 'fetch':
                 ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, account_name, account_config)
-                # logger.info(ret)
+                logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
                 ret = index(fetch_id, fetch_type, account_name, account_config)
