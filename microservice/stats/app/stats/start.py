@@ -19,7 +19,7 @@ RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
 amqp_url_base = os.getenv('RABBIT_API_URL')
 
 
-def update_resume_time_analysis(resume_unique_key, time_analysis, account_name, account_config):
+def update_resume_time_analysis(resume_unique_key, time_analysis, mongoid, parsing_type, account_name, account_config):
     
     res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
     queues = res.json()
@@ -43,20 +43,25 @@ def update_resume_time_analysis(resume_unique_key, time_analysis, account_name, 
     # incase of file .docx gets converted .pdf which causes issues
 
     total_time = 0
-    total_page = 0
-    for fileIdx in time_analysis:
-        total_page += 1
-        for work in time_analysis[fileIdx]:
-            total_time += float(time_analysis[fileIdx][work])
+    total_page =  0
+
+    if "time" in time_analysis["resume_construction"]:
+        total_page = len(time_analysis["resume_construction"]["time"])
+
+    
+    for key in time_analysis:
+        total_time += float(time_analysis[key]["time_taken"])
 
     db.ai_stats_resume_time_analysis.insert_one({
         "resume_unique_key" : resume_unique_key,
         "time_analysis" : time_analysis,
+        "mongoid" : mongoid,
         "insert_time" : datetime.datetime.now(),
         "mq_status" : mq_status,
         "running_process": running_process,
         "total_time" : total_time,
-        "total_page" : total_page
+        "total_page" : total_page,
+        "parsing_type" : parsing_type
     })
 
 
@@ -89,6 +94,10 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
 
         priority = -1
 
+        mongoid = ""
+        if "mongoid" in meta:
+            mongoid = meta["mongoid"]
+
         if "priority" in stage.keys():
             priority = stage["priority"]
 
@@ -99,7 +108,8 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
             },
             "is_training" : is_training,
             "priority" : priority,
-            "queue_time" : datetime.datetime.now()
+            "mongoid" : mongoid,
+             "queue_time" : datetime.datetime.now()
         })
     else:
         oldstage = row["stage"]
