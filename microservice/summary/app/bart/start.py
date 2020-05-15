@@ -28,6 +28,18 @@ import subprocess
 
 def process(filename, mongoid, account_name, account_config):
 
+    db = initDB(account_name, account_config)
+
+    count = db.emailStored.count({
+        "_id" : ObjectId(mongoid),
+        "aisummary.text"  : { "$exists" : True }
+    })
+
+    if count > 0:
+        logger.info("summary exists so skipping")
+        return "summary exists"
+
+
     dest = BASE_PATH + "/../cvreconstruction/"
 
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
