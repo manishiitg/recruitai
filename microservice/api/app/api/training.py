@@ -33,6 +33,73 @@ import time
 
 from app.account import initDB, get_cloud_bucket, get_cloud_url
 
+
+@bp.route("/resume/deploy/next_model/<string:version>", methods=["GET"])
+@bp.route("/resume/deploy/next_model/<string:version>/<int:only_count>", methods=["GET"])
+@check_and_validate_account
+def next_model(version = "0.0", only_count = 0):
+    db = initDB(request.account_name, request.account_config)
+
+    if only_count == 1:
+        count = db.emailStored.count({    
+            "cvParsedInfo" : { "$exists" : True  }  , 
+            "$or" : [
+                    { "cvParsedInfo.ai_version" : { "$exists" : False  } } ,
+                    { "cvParsedInfo.ai_version" :  {"$ne" : version } } 
+            ]
+            
+        })
+        return jsonify({
+            "count" : count
+        })
+
+    count = 0
+    rows = db.emailStored.find({    
+        "cvParsedInfo" : { "$exists" : True  }  , 
+        "$or" : [
+                { "cvParsedInfo.ai_version" : { "$exists" : False  } } ,
+                { "cvParsedInfo.ai_version" :  {"$ne" : version } } 
+        ]
+    })
+
+    for row in rows:
+        count += 1
+
+        if "email_timestamp" not in row:
+            row["email_timestamp"] = 0
+        
+        if row["email_timestamp"] == 'NaN':
+            row["email_timestamp"] = 0
+
+        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]) / 1000)
+        if len(row["attachment"]) > 0:
+            if "publicFolder" in row["attachment"][0]["attachment"]:
+                obj = {
+                    "filename" : row["attachment"][0]["attachment"]["publicFolder"],
+                    "mongoid" : str(row["_id"]),
+                    "skills" : {},
+                    "meta" : {},
+                    "priority" : 1,
+                    "account_name": request.account_name,
+                    "account_config" : request.account_config,
+                    "training" : True,
+                    "parsing_type" : "full"
+                }
+                logger.info(obj)
+                sendMessage(obj)
+                time.sleep(.1)
+                x = db.emailStored.update_one({
+                    "_id" : ObjectId(str(row["_id"]))
+                },{ "$set": {   
+                        "cvParsedInfo.ai_version" : version  
+                    }
+                })
+
+    return jsonify({
+        "resume_deploy_next_model" : count
+    })
+
+
 @bp.route("/resume/requeue/error", methods=["GET"])
 @bp.route("/resume/requeue/error/<int:onlycount>", methods=["GET"])
 @check_and_validate_account
@@ -72,7 +139,8 @@ def requeue_error(only_count = 0):
             "priority" : priority,
             "account_name": request.account_name,
             "account_config" : request.account_config,
-            "training" : True
+            "training" : True,
+            "parsing_type" : "full"
         }
         logger.info(obj)
         sendMessage(obj)
@@ -101,7 +169,7 @@ def requeue_parsing_fast(only_count = 0):
     rows = db.emailStored.find({    
         "cvParsedInfo.parsing_type" : "fast" , 
         "attachment.0.attachment.publicPath" : { "$exists" : True }  }
-    ).limit(1000)
+    ).limit(5000)
 
     for row in rows:
         count += 1
@@ -126,7 +194,7 @@ def requeue_parsing_fast(only_count = 0):
         }
         logger.info(obj)
         sendMessage(obj)
-        time.sleep(.1)
+        time.sleep(.01)
 
     return jsonify({
         "cvParsedInfo_error_false_attachment_public_path_exist_true" : count
@@ -214,7 +282,8 @@ def requeue_candidate(candidate_id):
         "priority" : priority,
         "account_name": request.account_name,
         "account_config" : request.account_config,
-        "training" : True
+        "training" : True,
+        "parsing_type" : "full"
     }
     logger.info(obj)
     sendMessage(obj)
