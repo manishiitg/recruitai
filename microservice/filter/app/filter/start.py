@@ -56,13 +56,16 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     else:
         logger.info("fetching for %s", mongoid)
         ret =  r.get(mongoid + "_filter")
+
+    logger.info("filter from redis %s", ret)
         
     if ret is None:
-        for key in r.scan_iter():
-            if "job_" in key or "classify_" in key:
-                logger.info("key found %s", key)
+        # for debugging
+        # for key in r.scan_iter():
+        #     if "job_" in key or "classify_" in key:
+        #         logger.info("key found %s", key)
 
-        return ""
+        return json.dumps({})
     else:
         page = int(page)
         limit = int(limit)

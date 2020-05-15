@@ -321,7 +321,6 @@ class TaskQueue(object):
             self.acknowledge_message(delivery_tag)
             return
 
-
         try:
             updateStats({
                 "action" : "resume_pipeline_update",
@@ -374,7 +373,7 @@ class TaskQueue(object):
                 "account_config" : account_config
             })
 
-        
+        self.acknowledge_message(delivery_tag)
         
             
 
@@ -382,7 +381,7 @@ class TaskQueue(object):
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        self.acknowledge_message(delivery_tag)
+        
 
           
     def acknowledge_message(self, delivery_tag):
