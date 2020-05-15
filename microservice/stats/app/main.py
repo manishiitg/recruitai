@@ -311,7 +311,7 @@ class TaskQueue(object):
                 resume_pipeline_update(body["resume_unique_key"], body["stage"], body["meta"], body["account_name"], body["account_config"])
 
             if body["action"] == "resume_time_analysis":
-                update_resume_time_analysis(body["resume_unique_key"], body["timeAnalysis"], body["account_name"], body["account_config"])
+                update_resume_time_analysis(body["resume_unique_key"], body["timeAnalysis"], body["mongoid"], body["parsing_type"], body["account_name"], body["account_config"])
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
