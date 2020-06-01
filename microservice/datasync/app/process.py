@@ -137,9 +137,11 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
     for row in candidates:
         row["_id"] = str(row["_id"])
         if not row["job_profile_id"]:
-            del job_profile_data[row["_id"]]
+            if row["_id"] in job_profile_data:
+                del job_profile_data[row["_id"]]
         else:
             job_profile_data[row["_id"]] = row
+            
         r.set(row["_id"]  , json.dumps(row,default=json_util.default))
 
         candidate_label = None
