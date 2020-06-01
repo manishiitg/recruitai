@@ -20,11 +20,14 @@ def get_education_display(degree, account_name, account_config):
     if degree is None or len(degree) == 0:
         return list(course_dict.keys())
     else:
+        if degree == "full":
+            return course_dict
+
         if degree in course_dict:
             courses = course_dict[degree]
             ret = []
             for course in courses:
-                ret.append(course.split(":")[-1])
+                ret.append(course.split(":"))
             
             return ret
         else:
