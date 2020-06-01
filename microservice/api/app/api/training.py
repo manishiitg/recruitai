@@ -677,6 +677,25 @@ def get_cv_parts_classify(download = 0):
                 "label" : label
             })
 
+            
+    rows = db.emailStored.find({    
+        "cvParsedInfo.parsing_type" : "full"    
+    })
+
+    for row in rows:
+        for page in row["cvParsedInfo"]["newCompressedStructuredContent"]:
+            for line in row["cvParsedInfo"]["newCompressedStructuredContent"][page]:
+                line["line"]
+                if "classifyNN" not in line:
+                    if "classify" in line:
+                        if len(line) > 0:
+                            ret.append({
+                                "text" : line["line"],
+                                "label" : line["classify"]
+                            })
+
+
+
     if download == 1:
         content = json.dumps(ret)
         return Response(content, 
