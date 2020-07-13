@@ -685,10 +685,9 @@ def get_cv_parts_classify(download = 0):
     for row in rows:
         for page in row["cvParsedInfo"]["newCompressedStructuredContent"]:
             for line in row["cvParsedInfo"]["newCompressedStructuredContent"][page]:
-                line["line"]
                 if "classifyNN" not in line:
                     if "classify" in line:
-                        if len(line) > 0:
+                        if len(line["line"]) > 0:
                             ret.append({
                                 "text" : line["line"],
                                 "label" : line["classify"]
