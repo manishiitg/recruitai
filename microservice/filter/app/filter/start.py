@@ -15,6 +15,7 @@ def indexAll(account_name, account_config):
 
     r = connect_redis(account_name, account_config)
 
+    logger.info("index all called")
     data = r.get("full_data")
     if data:
         dataMap = json.loads(data)
@@ -24,7 +25,14 @@ def indexAll(account_name, account_config):
         generateFilterMap("full_data",data, account_name, account_config)
 
     for key in r.scan_iter():
-        key = key.decode("utf-8")
+        # key = key.decode("utf-8")
+
+        
+        # basically delete the unique_cache_key below if job data changes
+        if "on_ai_data" in key:
+            logger.info("cleaching cache %s", key)
+            r.delete(key)
+                    
         if "_filter" in str(key):
             continue
 
@@ -44,6 +52,7 @@ def indexAll(account_name, account_config):
             for dkey in dataMap:
                 data.append(dataMap[dkey])
             key = str(key)
+            
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
@@ -57,7 +66,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         logger.info("fetching for %s", mongoid)
         ret =  r.get(mongoid + "_filter")
 
-    logger.info("filter from redis %s", ret)
+    # logger.info("filter from redis %s", ret)
         
     if ret is None:
         # for debugging
@@ -67,6 +76,31 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         return json.dumps({})
     else:
+
+
+        unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags)))
+
+        # to take this one level up. we will store all function params and call function again internally when cache is cleared
+
+        # r.set(unique_cache_key + "_func", json.dumps({
+        #     mongoid, 
+        #     filter_type , 
+        #     tags, 
+        #     page, 
+        #     limit, 
+        #     on_ai_data,
+        #     filter, 
+        #     account_name, 
+        #     account_config
+        # }))
+
+
+        cache_data = r.get(unique_cache_key)
+        if cache_data is not None:
+            logger.info("returning cached data")
+            return cache_data
+
+
         page = int(page)
         limit = int(limit)
 
@@ -112,8 +146,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     
                     sequence = tag_idx_sort_map[item[1]["tag_id"]] + float(item[1]["sequence"])
 
-                    if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
-                        logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
+                    # if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
+                    #     logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
                     
                     return sequence
 
@@ -134,7 +168,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     logger.info("-1")
                     return -1
                 
-                logger.info(float(item[1]["sequence"]))
+                # logger.info(float(item[1]["sequence"]))
 
                 return float(item[1]["sequence"])
 
@@ -202,8 +236,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                         if rangekey not in filter[key]:
                             continue
 
-                    logger.info("key %s" , key)
-                    logger.info("range key %s", rangekey)
+                    # logger.info("key %s" , key)
+                    # logger.info("range key %s", rangekey)
 
                     range = ret[key][rangekey]
                     if "children" not in range:
@@ -225,14 +259,14 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                             # logger.info("doesnt exist")
                             pass
                     
-                    logger.info("new children %s", newChildren)
+                    # logger.info("new children %s", newChildren)
                     ret[key][rangekey]["tag_count"] = len(newChildren)
                     ret[key][rangekey]["children"] = newChildren
                     if "merge" in ret[key][rangekey]:
                         del ret[key][rangekey]["merge"]
             
             if len(filter) > 0:
-                logger.info("filter data %s", len(filter_tag_children))
+                # logger.info("filter data %s", len(filter_tag_children))
                 job_profile_data = filter_tag_children
 
             paged_candidate_map = {}
@@ -261,6 +295,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                         
                             if "cvParsedInfo" in doc:
                                 cvParsedInfo = doc["cvParsedInfo"]
+                                if "debug" in cvParsedInfo:
+                                    del cvParsedInfo["debug"]
+
+                                if "newCompressedStructuredContent" in cvParsedInfo:
+                                    del cvParsedInfo["newCompressedStructuredContent"]
+                                
                             else:
                                 cvParsedInfo = {}
 
@@ -276,19 +316,24 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             
             
             logger.info("sending response..")
-            return json.dumps({
+            
+            response = json.dumps({
                 "filter" : ret,
                 "candidate_map" : paged_candidate_map,
                 "candidate_len" : len(paged_candidate_map),
                 "tag_count_map" : tag_count_map
             })
+            if len(filter) == 0:
+                r.set(unique_cache_key, response)
+
+            return response
         else:
             paged_tag_map = {}
             def custom_tag_sort(item):
                 if "sequence" not in item:
                     return -1 
 
-                logger.info(float(item[1]["sequence"]))
+                # logger.info(float(item[1]["sequence"]))
                 return float(item["sequence"])
 
             logger.info("generating response..")
@@ -345,11 +390,18 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
             logger.info("response completed..")
-            return json.dumps(paged_tag_map)
+            response =  json.dumps(paged_tag_map)
+
+            if len(filter) == 0:
+                r.set(unique_cache_key, response)
+
+            return response
+            
 
 def index(mongoid, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
 
+    logger.info("index called %s", mongoid)
     r = connect_redis(account_name, account_config)
 
     if filter_type == "full_data":
@@ -366,6 +418,31 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             
     elif filter_type == "job_profile":
         data = r.get("job_" + mongoid)
+
+        for rkey in r.scan_iter():
+            # basically delete the unique_cache_key below if job data changes
+            if "on_ai_data" in rkey and mongoid in rkey:
+                logger.info("cleaching cache %s", rkey)
+                r.delete(rkey)
+
+            # if "on_ai_data" in rkey and mongoid in rkey and "_func" not in key:
+            #     logger.info("cleaching cache %s", rkey)
+            #     r.delete(rkey)
+
+            #     func_data = r.get(rkey + "_func")
+            #     obj = json.loads(func_data)
+            #     mongoid = obj["mongoid"]
+            #     filter_type = obj["filter_type"]
+            #     tags = obj["tags"]
+            #     page = obj["page"]
+            #     limit = obj["limit"]
+            #     on_ai_data = obj["on_ai_data"]
+            #     filter = obj["filter"]
+            #     account_name = obj["account_name"]
+            #     account_config = obj["account_config"]
+
+            #     r.delete(rkey + "_func")
+ 
         if data:            
             dataMap = json.loads(data)
         else:
@@ -376,10 +453,20 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             data.append(dataMap[dkey])
 
         key = mongoid
+
+
+
         
 
     elif filter_type == "candidate":
         data = r.get("classify_" + mongoid)
+
+        for rkey in r.scan_iter():
+            # basically delete the unique_cache_key below if job data changes
+            if "on_ai_data" in rkey and mongoid in rkey:
+                logger.info("cleaching cache %s", rkey)
+                r.delete(rkey)
+
         if data:
             dataMap = json.loads(data)
         else:
@@ -390,6 +477,8 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             data.append(dataMap[dkey])
 
         key = mongoid
+
+        
 
     logger.info("data len %s" , len(data))
     return generateFilterMap(key, data, account_name, account_config)
