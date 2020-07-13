@@ -58,7 +58,7 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
     db = initDB(account_name, account_config)
     row = db.emailStored.find_one({ 
             "_id" : ObjectId(candidate_id) } , 
-            {"body": 0}
+            {"body": 0, "cvParsedInfo.debug": 0}
         )
         # .sort([("sequence", -1),("updatedAt", -1)])
             # sort gives ram error
@@ -328,7 +328,7 @@ def queue_process():
             
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=5) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=2.5) #*2.5
 
 checkin_score_scheduler.start()
 
@@ -400,7 +400,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         logger.info("field which got updated %s", field)
         if field is not None:
-            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field:
+            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field or "sequence" in field:
                 isFilterUpdateNeeded = True
 
 
@@ -418,7 +418,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 ret = db.emailStored.find({ 
                     "_id" : ObjectId(mongoid),
                     } , 
-                    {"body": 0}
+                    {"body": 0, "cvParsedInfo.debug": 0}
                 )
             else:
                 ret = []
@@ -448,7 +448,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             "job_profile_id" : mongoid,
             # "cvParsedInfo.debug" : {"$exists" : True} 
             } , 
-           {"body": 0}
+           {"body": 0, "cvParsedInfo.debug": 0}
         )
         # .sort([("sequence", -1),("updatedAt", -1)])
         # .sort([("sequence", -1),("updatedAt", -1)])
@@ -474,7 +474,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 r.delete(key)
                 
         ret = db.emailStored.find({ } , 
-            {"body": 0}
+            {"body": 0, "cvParsedInfo.debug": 0}
         )
         # .sort([("sequence", -1),("updatedAt", -1)])
         # .sort([("sequence", -1),("updatedAt", -1)])
@@ -492,6 +492,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             continue
 
         row["_id"] = str(row["_id"])
+
+        if "cvParsedInfo" in row:
+            cvParsedInfo = row["cvParsedInfo"]
+            if "debug" in cvParsedInfo:
+                del row["cvParsedInfo"]["debug"]
+
         # logger.info(row["_id"])
         if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
             job_profile_id = row["job_profile_id"]
@@ -738,7 +744,7 @@ def addFilter(obj, key, account_name, account_config):
         else:
             ctime = time_map[obj["fetch"]][id]
             logger.info("time for %s",  time.time() - ctime )
-            if (time.time() - ctime) < 1 * 60:
+            if (time.time() - ctime) < 1 * 30:
                 ignore = True
                 dirtyMap[account_name][key] = {
                     "filter_dirty" : True,
