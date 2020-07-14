@@ -14,6 +14,8 @@ gsutil -m cp -r gs://recruitaiwork/* pretrained/
 mkdir cvreconstruction
 sudo mkdir /var/log/recruitai
 
+python -m app.main
+
 http://144.76.110.170:5001/#/datasets
 
 Docker
@@ -146,6 +148,7 @@ current process for this to work
 
 
 export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && flask run --host 0.0.0.0 --port 8085
+
 
  ps -aux | grep 8085
 
