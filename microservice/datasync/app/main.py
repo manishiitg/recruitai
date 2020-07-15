@@ -299,7 +299,7 @@ class TaskQueue(object):
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         body = json.loads(body)
-        # LOGGER.info(json.dumps(body, indent=2))
+        LOGGER.info(json.dumps(body, indent=2))
 
         account_name = None
         if "account_name" in body:
