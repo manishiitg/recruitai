@@ -395,7 +395,7 @@ class TaskQueue(object):
                 return
         
         is_cache = False
-        if r.exists(key) and False: # turning of cache because testing with ai models
+        if r.exists(key): # turning of cache because testing with ai models
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
@@ -451,13 +451,19 @@ class TaskQueue(object):
                     "account_config" : account_config,
                     "priority" : message["priority"] 
                 })
+
+                LOGGER.info(" data sync calledddd 121221")
                 datasync({
                     "id" : message["mongoid"],
                     "action" : "syncCandidate",
                     "account_name" : account_name,
                     "account_config" : account_config,
-                    "priority" : message["priority"] 
+                    "priority" : message["priority"],
+                    "field" : "tag_id"
                 })
+
+                self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
+
             else:
                 LOGGER.info("redis key exists but previously error status so reprocessing")
                 doProcess = True
@@ -513,13 +519,20 @@ class TaskQueue(object):
                 "account_config" : account_config,
                 "priority" : message["priority"] 
             })
+
+            LOGGER.info(" data sync calledddd")
+
+
             datasync({
                     "id" : message["mongoid"],
                     "action" : "syncCandidate",
                     "account_name" : account_name,
                     "account_config" : account_config,
-                    "priority" : message["priority"] 
+                    "priority" : message["priority"],
+                    "field" : "tag_id"
             })
+
+            self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
 
             
 
@@ -553,8 +566,11 @@ class TaskQueue(object):
         else:
             LOGGER.info("invalid mongoid")
 
+    def notifyNodeSystem(self, ret, mongoid , message, account_name, account_config):
+        isError = False
+        if "error" in ret:
+            isError = True
         try:
-            
             if "meta" in message:
                 LOGGER.info("sending resume data to nodejs")
                 meta = message["meta"]
