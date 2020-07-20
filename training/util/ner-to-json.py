@@ -104,6 +104,9 @@ def convert_lines_to_qa(lines, filename):
 
     final_list = []
 
+    len_of_context = 0
+    total_no_context = 0
+
     to_file = {
         "version": "0.0.1",
         "data": [
@@ -125,6 +128,9 @@ def convert_lines_to_qa(lines, filename):
         qa["qas"] = []
 
         len_context = len(context)
+
+        len_of_context += len_context
+        total_no_context += 1
         
         
         for TAG in TAGS.keys():
@@ -169,6 +175,8 @@ def convert_lines_to_qa(lines, filename):
     with open(filename.replace(".txt", "_mrc.json"), 'w') as outfile:
         json.dump(to_file, outfile)
 
+
+    print("avg context length ", (len_of_context/total_no_context))
     return final_list
 
 
