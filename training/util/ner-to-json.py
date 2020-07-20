@@ -37,7 +37,6 @@ def convert_ner_to_json(filename):
                 isTagFound = False
                 tag_start_index = -1
 
-
             counter = 0
 
             lines.append({
@@ -56,13 +55,11 @@ def convert_ner_to_json(filename):
             # print("tag found ", " ".join(tagText), " ", tagName)
             # see if there is any substitute for it
             tags.append({
-                tagName:  " ".join(tagText), 
+                tagName:  " ".join(tagText),
                 "start_idx": tag_start_index,
-                "tag": tagName, 
+                "tag": tagName,
                 "text": " ".join(tagText)
             })
-
-            
 
             tag_start_index = -1
 
@@ -110,7 +107,7 @@ def convert_lines_to_qa(lines, filename):
     to_file = {
         "version": "0.0.1",
         "data": [
-            
+
         ]
     }
 
@@ -129,10 +126,12 @@ def convert_lines_to_qa(lines, filename):
 
         len_context = len(context)
 
+        if(len_context < 185):
+            continue
+
         len_of_context += len_context
         total_no_context += 1
-        
-        
+
         for TAG in TAGS.keys():
             question = TAGS[TAG]
             tag_found = False
@@ -155,7 +154,7 @@ def convert_lines_to_qa(lines, filename):
                         "is_impossible": False
                     })
                     tag_found = True
-                    if (len(text) + start_idx  > len_context ):
+                    if (len(text) + start_idx > len_context):
                         print("there is some issue")
                         print(line)
 
@@ -171,10 +170,10 @@ def convert_lines_to_qa(lines, filename):
         to_file['data'].append(format)
         # break
 
+    print("total contexts", total_no_context)
     # print(final_list)
     with open(filename.replace(".txt", "_mrc.json"), 'w') as outfile:
         json.dump(to_file, outfile)
-
 
     print("avg context length ", (len_of_context/total_no_context))
     return final_list
