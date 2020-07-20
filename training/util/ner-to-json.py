@@ -165,3 +165,7 @@ convert_lines_to_qa(lines, filename)
 filename = "ner-final-test.txt"
 lines = convert_ner_to_json(filename)
 convert_lines_to_qa(lines, filename)
+
+filename = "ner-final-dev.txt"
+lines = convert_ner_to_json(filename)
+convert_lines_to_qa(lines, filename)
