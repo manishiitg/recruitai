@@ -36,7 +36,9 @@ def convert_ner_to_json(filename):
                 tagText = []
                 isTagFound = False
                 tag_start_index = -1
-                counter = 0
+
+
+            counter = 0
 
             lines.append({
                 "line": " ".join(words),
@@ -53,8 +55,15 @@ def convert_ner_to_json(filename):
             # tag completed
             # print("tag found ", " ".join(tagText), " ", tagName)
             # see if there is any substitute for it
-            tags.append({tagName:  " ".join(tagText), "start_idx": tag_start_index,
-                         "tag": tagName, "text": " ".join(tagText)})
+            tags.append({
+                tagName:  " ".join(tagText), 
+                "start_idx": tag_start_index,
+                "tag": tagName, 
+                "text": " ".join(tagText)
+            })
+
+            
+
             tag_start_index = -1
 
             tagName = ""
@@ -115,6 +124,9 @@ def convert_lines_to_qa(lines, filename):
         qa["context"] = context
         qa["qas"] = []
 
+        len_context = len(context)
+        
+        
         for TAG in TAGS.keys():
             question = TAGS[TAG]
             tag_found = False
@@ -137,6 +149,9 @@ def convert_lines_to_qa(lines, filename):
                         "is_impossible": False
                     })
                     tag_found = True
+                    if (len(text) + start_idx  > len_context ):
+                        print("there is some issue")
+                        print(line)
 
             if(not tag_found):
                 qa["qas"].append({
