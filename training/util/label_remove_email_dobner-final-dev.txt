@@ -85,7 +85,7 @@ Square  O
 Bhopal  GPE
 462003  O
 +91-7440829416  Phone
-anilm6513@gmail.com  Email
+anilm6513@gmail.com  O
 
 Career  O
 Objective  O
@@ -232,9 +232,9 @@ Mother  O
 s  O
 name  O
 
-31  DOB
-july  DOB
-1995  DOB
+31  O
+july  O
+1995  O
 Unmarried  O
 shivmohan  O
 mishra  O
@@ -852,7 +852,7 @@ Aditya  PERSON
 Tiwari  PERSON
 E-mail  O
 :  O
-aditya.ace@hotmail.com  Email
+aditya.ace@hotmail.com  O
 Website:  O
 Phone  O
 :  O
@@ -2125,7 +2125,7 @@ HR  O
 PRAGATI  PERSON
 SRIVASTAVA  PERSON
 735-548-7314  Phone
-pragatisrivastava846@gmail.com  Email
+pragatisrivastava846@gmail.com  O
 OBJECTIVE  O
 To  O
 obtain  O
@@ -2306,14 +2306,14 @@ DETAILS  O
 Date  O
 of  O
 Birth:  O
-17th  DOB
-March  DOB
-1991.  DOB
+17th  O
+March  O
+1991.  O
 Languages  O
 Known:  O
-English  LANGUAGE
+English  O
 and  O
-Hindi  LANGUAGE
+Hindi  O
 
 Home  O
 Town  O
@@ -2349,7 +2349,7 @@ Php/Laravel  Designation
 Developer  Designation
 Email  O
 id:  O
-poojjapatil14@gmail.com  Email
+poojjapatil14@gmail.com  O
 |  O
 Phone  O
 (M):  O
@@ -2927,9 +2927,9 @@ Language  O
 Known  O
 :  O
 
-25  DOB
-April  DOB
-1996  DOB
+25  O
+April  O
+1996  O
 Prajkta  O
 apartment,  O
 Flat  O
@@ -2945,14 +2945,14 @@ Pune  GPE
 Indian  O
 Female  O
 Unmarried  O
-Hindi,  LANGUAGE
-Marathi,  LANGUAGE
-English  LANGUAGE
+Hindi,  O
+Marathi,  O
+English  O
 
 Alternate  O
 Email  O
 ID:  O
-patilpuja2514@gmail.com  Email
+patilpuja2514@gmail.com  O
 Place:  O
 Date:  O
 [  O
@@ -2976,7 +2976,7 @@ Mob:  O
 
 Personal  O
 E-Mail:  O
-shubhamnautiyal477@gmail.com  Email
+shubhamnautiyal477@gmail.com  O
 Career  O
 Objective  O
 To  O
@@ -3106,7 +3106,7 @@ Date  O
 of  O
 Birth  O
 
-:8/11/1994  DOB
+:8/11/1994  O
 Nationality  O
 :  O
 Indian  O
@@ -3340,7 +3340,7 @@ Mobile:  O
 +91  O
 7417148171  Phone
 Email:  O
-ayush8484agarwal@gmail.com  Email
+ayush8484agarwal@gmail.com  O
 OBJECTIVE  O
 Looking  O
 for  O
@@ -3529,7 +3529,7 @@ Date  O
 of  O
 Birth  O
 :  O
-15-April-1992  DOB
+15-April-1992  O
 Sex  O
 :  O
 Male  O
@@ -3547,7 +3547,7 @@ Agarwal  O
 Email  O
 ID  O
 :  O
-ayush8484agarwal@gmail.com  Email
+ayush8484agarwal@gmail.com  O
 
 Nationality  O
 :  O
@@ -3555,8 +3555,8 @@ Indian  O
 Languages  O
 Known  O
 :  O
-Hindi,  LANGUAGE
-English  LANGUAGE
+Hindi,  O
+English  O
 DECLARATION  O
 I,  O
 AYUSH  PERSON
@@ -3815,7 +3815,7 @@ Enclave  O
 New  GPE
 Delhi-110045,  GPE
 +917906438997  Phone
-ajput.tanu765@gmail.com  Email
+ajput.tanu765@gmail.com  O
 
 Objective:  O
 Looking  O
@@ -4107,8 +4107,8 @@ Female  O
 Languages  O
 Known  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 Nationality  O
 :  O
 Indian  O
@@ -4138,7 +4138,7 @@ FARAZ  PERSON
 Cell:  O
 +91-8130919959  Phone
 E-mail:  O
-aidifaraz55@gmail.com  Email
+aidifaraz55@gmail.com  O
 PROFESSIONAL  O
 SYNOPSIS  O
 An  O
@@ -4477,8 +4477,8 @@ Date  O
 of  O
 Birth  O
 :  O
-5th,september  DOB
-1994  DOB
+5th,september  O
+1994  O
 Marital  O
 status  O
 :  O
@@ -5341,7 +5341,7 @@ Vitae  O
 Amit  PERSON
 kumar  PERSON
 Email:  O
-mitchauhankiet@gmail.com  Email
+mitchauhankiet@gmail.com  O
 Contact  O
 No  O
 -  O
@@ -5763,7 +5763,7 @@ No.  O
 9012672837  Phone
 Email  O
 :  O
-shloksharma347@gmail.com  Email
+shloksharma347@gmail.com  O
 CAREER  O
 OBJECTIVE  O
 Seeking  O
@@ -6092,13 +6092,13 @@ Address  O
 Mr.  PERSON
 Vipin  PERSON
 Sharma  PERSON
-16th  DOB
-April,  DOB
-1996  DOB
+16th  O
+April,  O
+1996  O
 Male  O
 Indian  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 Chaiti  O
 Farm,  O
 Kashipur  GPE
@@ -6108,7 +6108,7 @@ Uttarakhand  O
 Tariq  PERSON
 Siddiqui  PERSON
 Email:  O
-tariq.siddiqui555@gmail.com  Email
+tariq.siddiqui555@gmail.com  O
 Mobile:  O
 +91  Phone
 9410104305  Phone
@@ -6410,7 +6410,7 @@ of  O
 birth  O
 
 :  O
-06-06-1994  DOB
+06-06-1994  O
 Nationality  O
 :  O
 Indian  O
@@ -6419,8 +6419,8 @@ Gender  O
 Male  O
 Languages  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 
 Current  O
 Address  O
@@ -6525,7 +6525,7 @@ Nagar,  GPE
 New  GPE
 Delhi-110059  GPE
 E-mail:  O
-avdheshmahto@yahoo.com  Email
+avdheshmahto@yahoo.com  O
 Career  O
 Objective:  O
 To  O
@@ -7161,9 +7161,9 @@ Date  O
 of  O
 Birth  O
 :  O
-14th  DOB
-March  DOB
-1994  DOB
+14th  O
+March  O
+1994  O
 
 Father  O
 s  O
@@ -7186,11 +7186,11 @@ Indian  O
 Languages  O
 Known  O
 :  O
-English,  LANGUAGE
-Hindi.  LANGUAGE
+English,  O
+Hindi.  O
 E-mail  O
 :  O
-avdheshmahto@yahoo.com  Email
+avdheshmahto@yahoo.com  O
 
 Mobile  O
 :  O
@@ -7401,7 +7401,7 @@ KUMAR  PERSON
 JAISWAL  PERSON
 E-mail  O
 :  O
-rishijaiswal6892@gmail.com  Email
+rishijaiswal6892@gmail.com  O
 Contact  O
 no  O
 :  O
@@ -7724,7 +7724,7 @@ Date  O
 of  O
 Birth  O
 :  O
-06/08/1992  DOB
+06/08/1992  O
 Gender  O
 :  O
 Male  O
@@ -7732,8 +7732,8 @@ Male  O
 Language  O
 Known  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 Marital  O
 Status  O
 :  O
@@ -7787,7 +7787,7 @@ Mob  O
 Email  O
 Id  O
 :  O
-jaybehera031995@gmail.com  Email
+jaybehera031995@gmail.com  O
 
 About  O
 Me:  O
@@ -7996,9 +7996,9 @@ Date  O
 of  O
 birth  O
 :  O
-3rd  DOB
-March,  DOB
-1995  DOB
+3rd  O
+March,  O
+1995  O
 
 Father  O
 s  O
@@ -8017,10 +8017,10 @@ Male  O
 Languages  O
 known  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
-and  LANGUAGE
-Oriya  LANGUAGE
+English,  O
+Hindi  O
+and  O
+Oriya  O
 Nationality  O
 :  O
 Indian  O
@@ -8054,7 +8054,7 @@ RESUME  O
 Karmveer  PERSON
 Singh  PERSON
 E-mail:  O
-pkarmveeryadav@gmail.com  Email
+pkarmveeryadav@gmail.com  O
 Phone:  O
 9015968931,8368998850  Phone
 SECTOR  O
@@ -8492,7 +8492,7 @@ Date  O
 Of  O
 Birth  O
 :  O
-18/07/1993  DOB
+18/07/1993  O
 Hobbies  O
 :  O
 Playing  O
@@ -8501,9 +8501,9 @@ Cricket.  O
 Languages  O
 Known  O
 :  O
-English  LANGUAGE
+English  O
 and  O
-Hindi  LANGUAGE
+Hindi  O
 
 Rajan  PERSON
 Singh  PERSON
@@ -8520,7 +8520,7 @@ no.  O
 
 Email  O
 ID:  O
-rajanthakur023@gmail.com  Email
+rajanthakur023@gmail.com  O
 CAREER  O
 OBJECTIVE  O
 To  O
@@ -8681,7 +8681,7 @@ Hukum  O
 Singh  O
 D.O.B  O
 :  O
-03-07-1992  DOB
+03-07-1992  O
 
 Marital  O
 Status  O
@@ -8758,13 +8758,13 @@ Date:  O
 Signature  O
 
 +91-990-363-7101  Phone
-parth.sarkar@yahoo.com  Email
+parth.sarkar@yahoo.com  O
 Noida  GPE
 201301,  O
 Uttar  GPE
 Pradesh.  GPE
 +91-990-363-7101  Phone
-parth.sarkar@yahoo.com  Email
+parth.sarkar@yahoo.com  O
 Noida  GPE
 201301,  O
 Uttar  GPE
@@ -9647,10 +9647,10 @@ New  GPE
 Delhi  GPE
 110018  O
 Male  O
-Hindi,  LANGUAGE
-English  LANGUAGE
-and  LANGUAGE
-Punjabi  LANGUAGE
+Hindi,  O
+English  O
+and  O
+Punjabi  O
 
 Himanshu  PERSON
 
@@ -9670,7 +9670,7 @@ New  GPE
 Delhi  GPE
 
 mail:  O
-sikarwarpooja2024@gmail.com  Email
+sikarwarpooja2024@gmail.com  O
 Mobile:  O
 (+91)9837549306  Phone
 OBJECTIVE  O
@@ -9942,8 +9942,8 @@ month  O
 course.  O
 
 LANGUAGE:  O
-HINDI  LANGUAGE
-ENGLISH  LANGUAGE
+HINDI  O
+ENGLISH  O
 DECLARATION:  O
 I,  O
 hereby  O
@@ -9965,7 +9965,7 @@ KUMAR  PERSON
 MISHRA  PERSON
 E-Mail:  O
 an  O
-itkumarmishra445@gmail.com  Email
+itkumarmishra445@gmail.com  O
 Contact:  O
 +91-7004192856  Phone
 (M)  O
@@ -10328,9 +10328,9 @@ Dossier  O
 Date  O
 of  O
 Birth:  O
-1th  DOB
-July,  DOB
-1995  DOB
+1th  O
+July,  O
+1995  O
 Current  O
 Address:  O
 Sector-3,  O
@@ -10343,8 +10343,8 @@ Darbhanga  GPE
 846003  O
 Linguistic  O
 Abilities:  O
-English  LANGUAGE
-and  LANGUAGE
+English  O
+and  O
 
 BUNTY  PERSON
 GOSWAMI  PERSON
@@ -10352,7 +10352,7 @@ Contact:  O
 +91  O
 9213120419,  Phone
 E-mail:  O
-goswamibunty268@gmail.com  Email
+goswamibunty268@gmail.com  O
 Address:  O
 A-1/91/77,  O
 East  O
@@ -10943,9 +10943,9 @@ Date  O
 of  O
 Birth  O
 :  O
-26th  DOB
-April  DOB
-1995  DOB
+26th  O
+April  O
+1995  O
 
 Father  O
 s  O
@@ -10973,8 +10973,8 @@ Language  O
 Known  O
 
 :  O
-Hindi,  LANGUAGE
-English  LANGUAGE
+Hindi,  O
+English  O
 Current  O
 CTC  O
 :  O
@@ -11159,7 +11159,7 @@ induction  O
 schedule  O
 of  O
 
-ramyaravi016@gmail.com  Email
+ramyaravi016@gmail.com  O
 RAMYA  PERSON
 R  PERSON
 Phone.no.  O
@@ -11478,7 +11478,7 @@ Contact  O
 no.:  O
 9410860499  Phone
 Email:  O
-ritureds@gmail.com  Email
+ritureds@gmail.com  O
 
 Career  O
 Objective:  O
@@ -11654,7 +11654,7 @@ Phase3  O
 &  O
 
 RESUME  O
-Email:pooja.bisht@live.com  Email
+Email:pooja.bisht@live.com  O
 Pooja  PERSON
 Bisht  PERSON
 Mob:  O
@@ -12058,7 +12058,7 @@ no:  O
 91  Phone
 8368584168,  Phone
 Email:  O
-rasmimishra786@gmail.com  Email
+rasmimishra786@gmail.com  O
 
 To  O
 obtain  O
@@ -12324,7 +12324,7 @@ Mobile:  O
 +91  O
 8860840454  Phone
 Email:  O
-mparmar4211@gmail.com  Email
+mparmar4211@gmail.com  O
 Current  O
 Address  O
 -:  O
@@ -12452,7 +12452,7 @@ Phone:  O
 +91  O
 9711720499  Phone
 Email:  O
-shilpisharma1987@yahoo.co.in  Email
+shilpisharma1987@yahoo.co.in  O
 
 Summary  O
 Certified  O
@@ -12733,7 +12733,7 @@ Hyderabad  GPE
 -  GPE
 500018  GPE
 Email:  O
-diska.sokali2@gmail.com,  Email
+diska.sokali2@gmail.com,  O
 Phone:  O
 +919686153058  Phone
 
@@ -12892,7 +12892,7 @@ Phone:  O
 +91  O
 9810097262  Phone
 Email:  O
-nazifra@gmail.com  Email
+nazifra@gmail.com  O
 
 OBJECTIVE  O
 To  O
@@ -13024,12 +13024,12 @@ given  O
 a  O
 chance.  O
 Date:  O
-24/04/2019  DOB
+24/04/2019  O
 Place:  O
 Noida  GPE
 
 Email:  O
-nazifra@gmail.com  Email
+nazifra@gmail.com  O
 (IFRA  O
 NAZ)  O
 
@@ -13041,7 +13041,7 @@ Mobile  O
 No.:  O
 +919811613799  Phone
 E-mail:  O
-shuklaankita13@gmail.com  Email
+shuklaankita13@gmail.com  O
 
 PROFILE  O
 AT  O
@@ -13361,7 +13361,7 @@ Contact  O
 E-Mail  O
 ID  O
 :  O
-modi.aish89@gmail.com  Email
+modi.aish89@gmail.com  O
 
 :  O
 +917210278065  Phone
@@ -13593,7 +13593,7 @@ Pathak  O
 M/Q763,  O
 Anuradha  PERSON
 Pathak  PERSON
-anuradhapathak88@gmail.com  Email
+anuradhapathak88@gmail.com  O
 sector-3,jayant  GPE
 project,distt.  GPE
 Singrauli  GPE
@@ -13774,7 +13774,7 @@ with  O
 proven  O
 
 E-Mail:  O
-pandeydeepshikha0@gmail.com  Email
+pandeydeepshikha0@gmail.com  O
 Address:  O
 Flat  O
 number-2,  O
@@ -14102,13 +14102,13 @@ UP-  GPE
 Date  O
 of  O
 Birth:  O
-27.08.1990  DOB
+27.08.1990  O
 Mobile:  O
 09555806349,  Phone
 9821883024  Phone
 
 Email:  O
-caesha2708@gmail.com  Email
+caesha2708@gmail.com  O
 Professional  O
 Qualification  O
 C.A.  EducationDegree
@@ -14326,7 +14326,7 @@ BUSINESS  ORG
 SCHOOL  ORG
 JIIT  ORG
 Noida  O
-namita.akansha07@gmail.com  Email
+namita.akansha07@gmail.com  O
 Bachelor  EducationDegree
 of  ORG
 Computer  ORG
@@ -14456,9 +14456,9 @@ LotusNotes  O
 
 HOBBIES  O
 LANGUAGE  O
-Hindi  LANGUAGE
+Hindi  O
 
-English  LANGUAGE
+English  O
 Punjabi  GPE
 PERSONALITY  O
 
@@ -14486,7 +14486,7 @@ SUDHA  PERSON
 RAMKUMAR  PERSON
 Email  O
 id:  O
-sudhaashmitha@gmail.com  Email
+sudhaashmitha@gmail.com  O
 
 OBJECTIVES:  O
 To  O
@@ -14775,7 +14775,7 @@ Dombivli(East)  GPE
 Mob:-  O
 (+91)  O
 9920679127  Phone
-shiwali.m.khatavkar@gmail.com  Email
+shiwali.m.khatavkar@gmail.com  O
 Email:  O
 -  O
 
@@ -15015,7 +15015,7 @@ Phone:  O
 +91  O
 8976405947  Phone
 Email:  O
-darshanaghorpade93@gmail.com  Email
+darshanaghorpade93@gmail.com  O
 
 CAREER  O
 SUMMARY:  O
@@ -15420,7 +15420,7 @@ Sapra  PERSON
 (Regd  O
 No:  O
 9966)  O
-shwetaasapra@gmail.com  Email
+shwetaasapra@gmail.com  O
 
 +919911574544  Phone
 Seeking  O
@@ -15783,7 +15783,7 @@ number:  O
 8930069621,  Phone
 9582981086  Phone
 E-mail:  O
-preetiafria@gmail.com  Email
+preetiafria@gmail.com  O
 Address:  O
 285/1  O
 Queens  O
@@ -15971,7 +15971,7 @@ PRIYANSHI  PERSON
 SARASWAT  PERSON
 Email  O
 Id-  O
-priyanshi.saraswat745@gmail.com  Email
+priyanshi.saraswat745@gmail.com  O
 FEMALE,  O
 28  O
 
@@ -16513,10 +16513,10 @@ Office  O
 |  O
 AUTOCAD  O
 |  O
-Urdu  LANGUAGE
-and  LANGUAGE
-French  LANGUAGE
-language  LANGUAGE
+Urdu  O
+and  O
+French  O
+language  O
 |  O
 C  O
 Programming  O
@@ -16557,7 +16557,7 @@ Faridabad  GPE
 004  GPE
 E-mail  O
 :  O
-lakhani.garima1997@gmail.com  Email
+lakhani.garima1997@gmail.com  O
 Mob  O
 No.  O
 9811297945,  Phone
@@ -16738,15 +16738,15 @@ Nishat  PERSON
 Date  O
 of  O
 Birth:  O
-4th  DOB
-July,  DOB
-1990  DOB
+4th  O
+July,  O
+1990  O
 Contact  O
 details:  O
 +91  O
 7042257378,  Phone
 
-nishat.akanksha@gmail.com  Email
+nishat.akanksha@gmail.com  O
 SUMMARY  O
 A  O
 Marketing  O
@@ -17063,7 +17063,7 @@ Expo  O
 
 ANAMIKA  PERSON
 SAINI  PERSON
-Email:anamikasaini100@gmail.com  Email
+Email:anamikasaini100@gmail.com  O
 Address:H.NO.  O
 471  O
 SEC-10,  O
