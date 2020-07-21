@@ -16,7 +16,7 @@ def get_labels(file):
 
 
 def get_file_after_remove_labels(file, labels_to_remove=[]):
-    newfile = "label_remove_" + file
+    newfile = "label_remove_email_dob" + file
     with open(newfile, "w") as myfile2:
         with open(file, "r") as myfile:
             nerTestLines = myfile.read()
@@ -41,7 +41,7 @@ def get_file_after_remove_labels(file, labels_to_remove=[]):
 labels = get_labels("ner-final-train.txt")
 print(labels)
 
-filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills"])
+filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills",'Email','DOB','LANGUAGE'])
 labels1 = get_labels(filename)
 print(labels1)
 
