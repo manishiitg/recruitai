@@ -45,6 +45,6 @@ filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills",'Email'
 labels1 = get_labels(filename)
 print(labels1)
 
-filename = get_file_after_remove_labels("ner-final-full.txt", ["Skills"])
-filename = get_file_after_remove_labels("ner-final-test.txt", ["Skills"])
-filename = get_file_after_remove_labels("ner-final-dev.txt", ["Skills"])
+filename = get_file_after_remove_labels("ner-final-full.txt", ["Skills",'Email','DOB','LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-test.txt", ["Skills",'Email','DOB','LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-dev.txt", ["Skills",'Email','DOB','LANGUAGE'])

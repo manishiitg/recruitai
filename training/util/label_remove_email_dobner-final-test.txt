@@ -2,7 +2,7 @@ DIVYA  PERSON
 SHARMA  PERSON
 |  O
 E-  O
-mail:divya.sharma8015@gmail.com  Email
+mail:divya.sharma8015@gmail.com  O
 |  O
 Contact:  O
 +91  O
@@ -195,7 +195,7 @@ Pin:  O
 
 Email  O
 ID:  O
-reddymouni99@gmail.com  Email
+reddymouni99@gmail.com  O
 Contact:  O
 +91  O
 8125335217  Phone
@@ -488,7 +488,7 @@ Juneja  PERSON
 Assistant  Designation
 Manager-Business  Designation
 Development  Designation
-nidhi.juneja0308@gmail.com  Email
+nidhi.juneja0308@gmail.com  O
 9873418430  Phone
 Faridabad  GPE
 in  O
@@ -619,8 +619,8 @@ in  O
 first  O
 year  O
 of  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 &  O
 Pu  O
 njabi  O
@@ -659,10 +659,10 @@ ON  O
 M9L  O
 3A4  O
 
-English,  LANGUAGE
-Hindi  LANGUAGE
-&  LANGUAGE
-Punjabi  LANGUAGE
+English,  O
+Hindi  O
+&  O
+Punjabi  O
 
 1)  O
 6479455374  Phone
@@ -898,7 +898,7 @@ Mumbai  GPE
 Phone  O
 9820970346  Phone
 Email  O
-diptiuk@yahoo.co.in  Email
+diptiuk@yahoo.co.in  O
 
 Professional  O
 Objective  O
@@ -1278,7 +1278,7 @@ DELHI  O
 |  O
 +919999186721  Phone
 |  O
-khosla.geet29@gmail.com  Email
+khosla.geet29@gmail.com  O
 www.linkedin.com/in/geetikakhosla100  O
 
 Summary  O
@@ -1374,14 +1374,14 @@ space.  O
 
 Personal  O
 Birthday-  O
-November,  DOB
-29th  DOB
-1992  DOB
+November,  O
+29th  O
+1992  O
 Nationality-  O
 Indian  O
 Languages-  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 Career  O
 Aspirations  O
 
@@ -1832,7 +1832,7 @@ Noida-201301  GPE
 Mob:  O
 +918755272434  Phone
 Email:  O
-prashantmalik201526@gmail.com  Email
+prashantmalik201526@gmail.com  O
 
 Career  O
 Objectives  O
@@ -2119,7 +2119,7 @@ A54741  O
 :  O
 +91-9650764737  Phone
 :  O
-bhawnatalreja91@gmail.com  Email
+bhawnatalreja91@gmail.com  O
 
 CAREER  O
 OBJECTIVE  O
@@ -2302,7 +2302,7 @@ Sewa  GPE
 Nagar,  GPE
 GZB  GPE
 Email-  O
-kriti.anita@gmail.com  Email
+kriti.anita@gmail.com  O
 Contact  O
 No.  O
 9716477107,  Phone
@@ -2566,7 +2566,7 @@ Delhi  GPE
 -  GPE
 110026  GPE
 Email:  O
-mehak.awatramani@gmail.com  Email
+mehak.awatramani@gmail.com  O
 
 Landline:  O
 011-45087090  Phone
@@ -2815,7 +2815,7 @@ MUMTAZ  PERSON
 BEGUM  PERSON
 
 Email  O
-bmumtaz1504@gmail.com  Email
+bmumtaz1504@gmail.com  O
 OBJECTIVE  O
 To  O
 obtain  O
@@ -3060,7 +3060,7 @@ Contact  O
 No.:  O
 0861-2337320  Phone
 e-mail:  O
-madhavik88@gmail.com  Email
+madhavik88@gmail.com  O
 Cell:  O
 9959279890,  Phone
 9550157675  Phone
@@ -3304,7 +3304,7 @@ Gurgaon  GPE
 
 RICHA  PERSON
 MATHUR  PERSON
-richashekhar@gmail.com  Email
+richashekhar@gmail.com  O
 
 Seeking  O
 assignments  O
@@ -3622,7 +3622,7 @@ NO:  O
 
 EMAIL  O
 ID:  O
-sritamasamanta1005@gmail.com  Email
+sritamasamanta1005@gmail.com  O
 CARRIER  O
 OBJECTIVE:  O
 To  O
@@ -3876,7 +3876,7 @@ functions  O
 and  O
 
 processes  O
-pragyasharma85@gmail.com  Email
+pragyasharma85@gmail.com  O
 Areas  O
 of  O
 Expertise  O
@@ -4120,7 +4120,7 @@ MBA  O
 POOJA  PERSON
 GIRI  PERSON
 Email:  O
-giri.pooja91@gmail.com  Email
+giri.pooja91@gmail.com  O
 Mobile:  O
 +91  Phone
 9911211698  Phone
@@ -4386,7 +4386,7 @@ RASHMI  PERSON
 JAIN  PERSON
 |  O
 E-mail:  O
-rashmijain2706@gmail.com  Email
+rashmijain2706@gmail.com  O
 |  O
 Contact:  O
 9711797989  Phone
@@ -4637,7 +4637,7 @@ Phone:  O
 7411273735  Phone
 
 Email:  O
-dash.pranatikumari@gmail.com  Email
+dash.pranatikumari@gmail.com  O
 OBJECTIVE  O
 
 Seeking  O
@@ -4786,7 +4786,7 @@ Mobile  O
 no:  O
 +91-9013067919  Phone
 E-mail:  O
-dv.kashyap@gmail.com  Email
+dv.kashyap@gmail.com  O
 Address:  O
 WZ-519  O
 D,  O
@@ -5030,7 +5030,7 @@ Delhi  GPE
 |  O
 989518202  Phone
 |  O
-Kanishka.bhardwaj70@gmail.com  Email
+Kanishka.bhardwaj70@gmail.com  O
 
 Objective  O
 Highly  O
@@ -5109,8 +5109,8 @@ Excel)  O
 Language  O
 skills  O
 -  O
-Hindi,  LANGUAGE
-English  LANGUAGE
+Hindi,  O
+English  O
 (speak,  O
 write)  O
 
@@ -5257,7 +5257,7 @@ M:  O
 8866108322  Phone
 |  O
 E:  O
-itssinha007@gmail.com  Email
+itssinha007@gmail.com  O
 SOMYA  PERSON
 SINHA  PERSON
 OBJECTIVE  O
@@ -5625,7 +5625,7 @@ Janmeda  PERSON
 Contact:  O
 +91-9873000868  Phone
 E-Mail:  O
-komaljanmeda1994@gmail.com  Email
+komaljanmeda1994@gmail.com  O
 Competent  O
 professional  O
 targeting  O
@@ -6011,7 +6011,7 @@ HIRAL  PERSON
 SONI  PERSON
 Email  O
 Id:  O
-hiral.und@gmail.com  Email
+hiral.und@gmail.com  O
 Contact  O
 no:  O
 (M)  O
@@ -6093,7 +6093,7 @@ stenography  O
 
 PRE-REQUISITES  O
 FULFILLED  O
-Gujarati  LANGUAGE
+Gujarati  O
 Languages.  O
 1  O
 Well  O
@@ -6101,8 +6101,8 @@ Conversant  O
 and  O
 Command  O
 over  O
-Hindi  LANGUAGE
-English  LANGUAGE
+Hindi  O
+English  O
 and  O
 Class  O
 First  O
@@ -6123,7 +6123,7 @@ in  O
 BABITA  PERSON
 E  PERSON
 mail-  O
-babita121986@gmail.com  Email
+babita121986@gmail.com  O
 Contact  O
 No-  O
 +9813095454  Phone
@@ -6600,7 +6600,7 @@ No.  O
 9988548930  Phone
 
 Email:  O
-geetika.chandra0287@gmail.com  Email
+geetika.chandra0287@gmail.com  O
 Profile  O
 Summary  O
 Around  O
@@ -7014,7 +7014,7 @@ experience  O
 91  Phone
 9899059897  Phone
 :  O
-latika.sh@rediffmail.com  Email
+latika.sh@rediffmail.com  O
 
 KEY  O
 SKILLS:  O
@@ -7407,9 +7407,9 @@ Indian  O
 Date  O
 of  O
 birth:  O
-31,  DOB
-JULY.  DOB
-1994  DOB
+31,  O
+JULY.  O
+1994  O
 .Address:  O
 Tanda  O
 ,Distt-  O
@@ -7421,7 +7421,7 @@ Pradesh  GPE
 Contact  O
 E-mail  O
 :  O
-palakchaurasiya@gmail.com  Email
+palakchaurasiya@gmail.com  O
 
 Offering  O
 over  O
@@ -7731,7 +7731,7 @@ Contact:  O
 +91  O
 7703905983  Phone
 Email:  O
-Bhawnamudgal77@gmail.com  Email
+Bhawnamudgal77@gmail.com  O
 
 IT  O
 EXPOSURE  O
@@ -7885,7 +7885,7 @@ Devi  PERSON
 Gautam  PERSON
 Email  O
 :  O
-kiran.kirangautam.gautam8@gmail.com  Email
+kiran.kirangautam.gautam8@gmail.com  O
 Mobile  O
 No.  O
 :  O
@@ -8224,7 +8224,7 @@ Date  O
 of  O
 birth  O
 :  O
-24-June-1992  DOB
+24-June-1992  O
 Mother  O
 s  O
 Name  O
@@ -8908,7 +8908,7 @@ bring  O
 Repeated  O
 Business  O
 
-himanshu112233@gmail.com  Email
+himanshu112233@gmail.com  O
 Responsibility  O
 of  O
 Handling  O
@@ -9348,7 +9348,7 @@ Contact  O
 No.:  O
 +91-9582926455  Phone
 Email-  O
-a.abhijeet184@gmail.com  Email
+a.abhijeet184@gmail.com  O
 Skype  O
 Id:  O
 ankit.abhijeet  O
@@ -9620,7 +9620,7 @@ Contact  O
 No.:  O
 +91-9582926455  Phone
 Email-  O
-a.abhijeet184@gmail.com  Email
+a.abhijeet184@gmail.com  O
 Skype  O
 Id:  O
 ankit.abhijeet  O
@@ -10188,7 +10188,7 @@ Krishna  O
 of  O
 Birth  O
 |  O
-8-April-1990  DOB
+8-April-1990  O
 |  O
 |Gender  O
 |Male  O
@@ -10207,13 +10207,13 @@ Ankit  PERSON
 Abhijeet  PERSON
 
 +91-990-363-7101  Phone
-parth.sarkar@yahoo.com  Email
+parth.sarkar@yahoo.com  O
 Noida,201301,  GPE
 Uttar  GPE
 Pradesh  GPE
 +91-  O
 90-363-7101  Phone
-parth.sarkar@yahoo.com  Email
+parth.sarkar@yahoo.com  O
 Noida,201301,  GPE
 Uttar  GPE
 Pradesh  GPE
@@ -10663,7 +10663,7 @@ Mobile:  O
 +91  O
 9795359140  Phone
 Email:  O
-mohdshoaib40@gmail.com  Email
+mohdshoaib40@gmail.com  O
 CAREER  O
 OBJECTIVE  O
 To  O
@@ -11142,7 +11142,7 @@ Ayyub  O
 Date  O
 of  O
 Birth:  O
-8-2-1988  DOB
+8-2-1988  O
 
 Marital  O
 Status  O
@@ -11171,7 +11171,7 @@ Mobile:  O
 Current  O
 Address:  O
 Email:  O
-sandeep.php3004@gmail.com  Email
+sandeep.php3004@gmail.com  O
 RZ  O
 26  O
 E  O
@@ -11338,7 +11338,7 @@ Date  O
 of  O
 Birth  O
 :  O
-15-01-1992  DOB
+15-01-1992  O
 Father  O
 s  O
 Name  O
@@ -11362,8 +11362,8 @@ Male  O
 Language  O
 Known  O
 :  O
-Hindi,  LANGUAGE
-English  LANGUAGE
+Hindi,  O
+English  O
 I  O
 hereby  O
 declare  O
@@ -11398,7 +11398,7 @@ Ghaziabad,(U.P.)  GPE
 
 E-Mail  O
 :  O
-simranpundeer25@gmail.com  Email
+simranpundeer25@gmail.com  O
 Phone  O
 :  O
 9654101688/8920552100  Phone
@@ -11771,8 +11771,8 @@ Pundeer  O
 Date  O
 of  O
 birth:  O
-25th  DOB
-Oct1999  DOB
+25th  O
+Oct1999  O
 Marital  O
 Status:  O
 Unmarried  O
@@ -11815,7 +11815,7 @@ Contact:  O
 8859665859  Phone
 Email  O
 id:  O
-thakur.himanshu007@gmail.com  Email
+thakur.himanshu007@gmail.com  O
 
 Career  O
 Objective:  O
@@ -12216,9 +12216,9 @@ Date  O
 of  O
 Birth  O
 :  O
-November  DOB
-20,  DOB
-1993  DOB
+November  O
+20,  O
+1993  O
 Marital  O
 Status  O
 :  O
@@ -12227,8 +12227,8 @@ Single  O
 Languages  O
 Known  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 Declaration:  O
 I  O
 hereby  O
@@ -12252,7 +12252,7 @@ Place:  O
 PRAGATI  PERSON
 SINGH  PERSON
 Email:  O
-singhpragati252@gmail.com  Email
+singhpragati252@gmail.com  O
 Phone  O
 9971323544  Phone
 CAREER  O
@@ -12547,11 +12547,11 @@ Singh  O
 
 DOB  O
 :  O
-first  DOB
-January  DOB
-nineteen  DOB
-ninety  DOB
-one  DOB
+first  O
+January  O
+nineteen  O
+ninety  O
+one  O
 Address  O
 :  O
 R  O
@@ -12618,7 +12618,7 @@ Sector  O
 Phone:  O
 +91-8218652175  Phone
 Email:  O
-sunaina.passi4@gmail.com  Email
+sunaina.passi4@gmail.com  O
 
 Front  Designation
 End  Designation
@@ -13477,7 +13477,7 @@ Roorkee.  ORG
 Date  O
 of  O
 Birth:  O
-23/12/1993  DOB
+23/12/1993  O
 Place:  O
 -  O
 Noida  O
@@ -13498,7 +13498,7 @@ District-  O
 Madhubani,Bihar(847218)  O
 
 +918305072813  Phone
-kumarrajeev.0987@gmail.com  Email
+kumarrajeev.0987@gmail.com  O
 Blossoming  O
 B.E.  EducationDegree
 graduate  O
@@ -13865,9 +13865,9 @@ of  O
 Birth  O
 Gender  O
 :  O
-24  DOB
-January  DOB
-1995  DOB
+24  O
+January  O
+1995  O
 :  O
 Male  O
 Nationality  O
@@ -13875,9 +13875,9 @@ Nationality  O
 Indian  O
 Language  O
 :  O
-English  LANGUAGE
+English  O
 and  O
-Hindi  LANGUAGE
+Hindi  O
 Hobbies  O
 :  O
 Playing  O
@@ -13922,7 +13922,7 @@ no:  O
 Email  O
 id:  O
 a  O
-anish.yadav13@gmail.com  Email
+anish.yadav13@gmail.com  O
 CAREER  O
 OBJECTIVE  O
 
@@ -15062,7 +15062,7 @@ E  O
 mail  O
 id  O
 :  O
-sohamray94@gmail.com  Email
+sohamray94@gmail.com  O
 Specialis  O
 ation:  O
 Journalism  O
@@ -15084,7 +15084,7 @@ mail  O
 id  O
 
 :  O
-sohamray94@gmail.com  Email
+sohamray94@gmail.com  O
 Specialis  O
 ation:  O
 Journalism  O
@@ -15970,20 +15970,20 @@ India  O
 Date  O
 of  O
 Birth:  O
-02/12/1994  DOB
+02/12/1994  O
 Marital  O
 Status:  O
 Unmarried  O
 Languages  O
 known:  O
-Bengali,  LANGUAGE
-Hindi,  LANGUAGE
+Bengali,  O
+Hindi,  O
 
 Mohd  PERSON
 Aliyan  PERSON
 +91  Phone
 8630649640  Phone
-mohd.aliyan.mca@gmail.com  Email
+mohd.aliyan.mca@gmail.com  O
 SUMMARY  O
 I  O
 am  O
@@ -16857,20 +16857,20 @@ Gender  O
 Language  O
 Known  O
 Nationality  O
-06-June-1993  DOB
+06-June-1993  O
 Male  O
-English,Hindi,Urdu  LANGUAGE
+English,Hindi,Urdu  O
 
 SHRESTHA  PERSON
 ROY  PERSON
 E-mail:  O
-srshrestharoy@gmail.com  Email
+srshrestharoy@gmail.com  O
 Mobile  O
 no  O
 :  O
 09706874016  Phone
 DOB:  O
-14-02-1994  DOB
+14-02-1994  O
 CAREER  O
 OBJECTIVE  O
 
@@ -17026,14 +17026,14 @@ Jorhat-  GPE
 LANGUAGES  O
 Languages  O
 Proficiency  O
-Bengali  LANGUAGE
+Bengali  O
 Mother  O
 Tongue  O
-English  LANGUAGE
+English  O
 Fluent  O
-Hindi  LANGUAGE
+Hindi  O
 Fluent  O
-Assamese  LANGUAGE
+Assamese  O
 
 Fluent  O
 DECLARATION  O
@@ -17069,7 +17069,7 @@ Haryana  GPE
 India  GPE
 E-mail:  O
 -  O
-anwarparveen134@gmail.com  Email
+anwarparveen134@gmail.com  O
 
 Mobile:  O
 -  O
@@ -17292,15 +17292,15 @@ Of  O
 Birth  O
 
 :  O
-16th  DOB
-July  DOB
-1988  DOB
+16th  O
+July  O
+1988  O
 Languages  O
 Known  O
 :  O
-English  LANGUAGE
+English  O
 and  O
-Hindi  LANGUAGE
+Hindi  O
 Permanent  O
 Address  O
 
@@ -17328,9 +17328,9 @@ Aman  PERSON
 Singh  PERSON
 DOB  O
 :  O
-21st  DOB
-July  DOB
-1995  DOB
+21st  O
+July  O
+1995  O
 Address  O
 :  O
 1660/3,Rajiv  O
@@ -17345,7 +17345,7 @@ Mob  O
 
 Email  O
 :  O
-er.amansingh7@gmail.com  Email
+er.amansingh7@gmail.com  O
 Career  O
 Summary  O
 3  ExperianceYears
@@ -17934,7 +17934,7 @@ Rawat  PERSON
 Email  O
 Id  O
 :  O
-dhirendra.rawat786@gmail.com  Email
+dhirendra.rawat786@gmail.com  O
 Contact  O
 No  O
 :  O
@@ -18636,7 +18636,7 @@ Date  O
 of  O
 Birth  O
 :  O
-15-02-1989  DOB
+15-02-1989  O
 Marital  O
 Status  O
 :  O
@@ -18656,11 +18656,11 @@ Phone-No.  O
 
 CURRICULUM  O
 VITAE  O
-ABHISHEK  Email
-SINGH  Email
+ABHISHEK  O
+SINGH  O
 E-mail  O
 Id:  O
-Aybee1995@gmail.com  Email
+Aybee1995@gmail.com  O
 Contact  O
 no.  O
 9999192735  Phone
@@ -18862,9 +18862,9 @@ Date  O
 of  O
 Birth  O
 :  O
-30th  DOB
-July  DOB
-1995  DOB
+30th  O
+July  O
+1995  O
 Marital  O
 Status  O
 :  O
@@ -18874,10 +18874,10 @@ Sex  O
 Male  O
 Languages  O
 :  O
-Hindi,  LANGUAGE
-English  LANGUAGE
-&  LANGUAGE
-Punjabi  LANGUAGE
+Hindi,  O
+English  O
+&  O
+Punjabi  O
 Present  O
 Address  O
 :  O
@@ -18898,7 +18898,7 @@ Kumar  PERSON
 Mobile:  O
 011146469  Phone
 E-mail:  O
-programmer.shailendra@gmail.com  Email
+programmer.shailendra@gmail.com  O
 JOB  O
 OBJECTIVE:  O
 Looking  O
@@ -19467,7 +19467,7 @@ Shyam  PERSON
 Saini  PERSON
 Email  O
 :  O
-shyam1995saini@gmail.com  Email
+shyam1995saini@gmail.com  O
 Contact  O
 no  O
 :  O
@@ -19721,7 +19721,7 @@ Phone  O
 :  O
 09473567892  Phone
 Emai:  O
-chitendra.raja@gmail.com  Email
+chitendra.raja@gmail.com  O
 Add  O
 :  O
 Rajput  O
@@ -20157,9 +20157,9 @@ Date  O
 of  O
 Birth  O
 :  O
-10  DOB
-JUL  DOB
-1995  DOB
+10  O
+JUL  O
+1995  O
 Marital  O
 Status  O
 :  O
@@ -20174,8 +20174,8 @@ Indian  O
 Languages  O
 Known  O
 :  O
-English,  LANGUAGE
-Hindi  LANGUAGE
+English,  O
+Hindi  O
 
 Permanent  O
 Address  O
@@ -20218,7 +20218,7 @@ Contact  O
 no.  O
 9161455154  Phone
 Email-id:  O
-shanezehra786@gmail.com  Email
+shanezehra786@gmail.com  O
 Address:391/150  O
 Buniyad  O
 Bagh  O
@@ -20573,11 +20573,11 @@ MothersName  O
 Dateof  O
 Birth  O
 :  O
-5-03-1992  DOB
+5-03-1992  O
 LanguageKnown  O
 :  O
-English,  LANGUAGE
-Hindi&Urdu  LANGUAGE
+English,  O
+Hindi&Urdu  O
 MaritalStatus  O
 :Single  O
 Nationality/Religion  O
@@ -20611,7 +20611,7 @@ RAJAN  PERSON
 SOOD  PERSON
 Email  O
 :-  O
-rajan.sood9@rediffmail.com  Email
+rajan.sood9@rediffmail.com  O
 M-  O
 910934125  Phone
 H.No-B6,  O
@@ -21228,9 +21228,9 @@ Date  O
 of  O
 Birth  O
 :  O
-01  DOB
-Jan  DOB
-1977  DOB
+01  O
+Jan  O
+1977  O
 
 Permanent  O
 Address  O
@@ -21262,10 +21262,10 @@ Hindu  O
 Languages  O
 Known  O
 :  O
-Hindi,  LANGUAGE
-English  LANGUAGE
-&  LANGUAGE
-Punjabi  LANGUAGE
+Hindi,  O
+English  O
+&  O
+Punjabi  O
 STRENGTH  O
 My  O
 strength  O
