@@ -630,6 +630,52 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
         return render_template('bbox_table.html', foundinter=foundinter)
 
 
+@bp.route('/cvclassify/get_classification_data', methods=['GET'])
+@check_and_validate_account
+def get_classification_data():
+    db = initDB(request.account_name, request.account_config)
+
+    cv_classify_dump = []
+
+    rows = db.aierrors.find({
+        "error" : "CANDIDATECLASSIFY",
+        "markAsCorrect" : {
+            "$exists" : True
+        } 
+    }).limit(10)
+
+    users = db.users.find({})
+
+    for row in rows:
+        userId = row['userId']
+        candidateId = row["candidateId"]
+        markAsCorrect = row["markAsCorrect"]
+
+        username = ""
+        for user in users:
+            if str(user["_id"]) == userId:
+                username = user["name"]
+                break
+
+        if markAsCorrect:
+            candidate = db.emailStored.find_one({
+                "_id": ObjectId(candidateId)
+            })
+            label = candidate["candidateClassify"]["label"]
+            probablity = candidate["candidateClassify"]["probability"]
+        else:
+            label = row["cvParseClassifyLabel"]
+            probablity = row["cvParseClassifyProbability"]
+        
+        cv_classify_dump.append({
+            "username" : username,
+            "label" : label,
+            "probablity" : probablity
+        })
+
+
+    return json.dumps(cv_classify_dump, indent=True)
+
 
 @bp.route('/viz/convert_for_annotation', methods=['GET'])
 @check_and_validate_account
