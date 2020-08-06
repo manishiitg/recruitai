@@ -631,8 +631,9 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
 
 
 @bp.route('/cvclassify/get_classification_data', methods=['GET'])
+@bp.route('/cvclassify/get_classification_data/<int:download>', methods=['GET'])
 @check_and_validate_account
-def get_classification_data():
+def get_classification_data(download=0):
     db = initDB(request.account_name, request.account_config)
 
     cv_classify_dump = []
@@ -642,7 +643,7 @@ def get_classification_data():
         "markAsCorrect" : {
             "$exists" : True
         } 
-    }).limit(10)
+    }).sort("updatedAt", -1)
 
     users = db.users.find({})
 
@@ -650,31 +651,64 @@ def get_classification_data():
         userId = row['userId']
         candidateId = row["candidateId"]
         markAsCorrect = row["markAsCorrect"]
+        cvText = ""
 
         username = ""
         for user in users:
+            # print(str(user["_id"]) + " ==  " + userId)
             if str(user["_id"]) == userId:
                 username = user["name"]
                 break
 
-        if markAsCorrect:
-            candidate = db.emailStored.find_one({
+        # if len(username) == 0:
+        #     continue
+
+        candidate = db.emailStored.find_one({
                 "_id": ObjectId(candidateId)
             })
-            label = candidate["candidateClassify"]["label"]
-            probablity = candidate["candidateClassify"]["probability"]
+        if not candidate:
+            continue
+            
+        if markAsCorrect:
+            
+            if candidate:
+                if "label" in candidate["candidateClassify"]:
+                    label = candidate["candidateClassify"]["label"]
+                    probablity = candidate["candidateClassify"]["probability"]
+                else:
+                    continue
+            else:
+                print("candidate not found")
+                continue
         else:
-            label = row["cvParseClassifyLabel"]
-            probablity = row["cvParseClassifyProbability"]
-        
-        cv_classify_dump.append({
-            "username" : username,
-            "label" : label,
-            "probablity" : probablity
-        })
+            if "cvParseClassifyLabel" in row:
+                label = row["cvParseClassifyLabel"]
+                probablity = row["cvParseClassifyProbability"]
+            else:
+                continue
 
+        if "cvText" in candidate:
+            if len(candidate["cvText"]) > 0:
+                cv_classify_dump.append({
+                    "username" : username,
+                    "label" : label,
+                    "org_label" : candidate["candidateClassify"]["label"],
+                    "probablity" : probablity,
+                    "markAsCorrect" : markAsCorrect,
+                    "text" : candidate["cvText"][0]["text"]
+                })
 
-    return json.dumps(cv_classify_dump, indent=True)
+    data = {
+        "dump" : cv_classify_dump,
+        "len" : len(cv_classify_dump)
+    }
+    if download == 1:
+        content = json.dumps(data)
+        return Response(content, 
+                mimetype='application/json',
+                headers={'Content-Disposition':'attachment;filename=resumeclassify.json'})
+    else:
+        return json.dumps(data, indent=True)
 
 
 @bp.route('/viz/convert_for_annotation', methods=['GET'])
