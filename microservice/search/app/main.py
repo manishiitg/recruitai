@@ -19,7 +19,7 @@ SERVER_QUEUE = "rpc.search.queue"
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.search.index import createIndex, addDoc, addMeta, deleteDoc, getDoc, searchDoc, deleteAll
+from app.search.index import createIndex, addDoc, addMeta, deleteDoc, getDoc, searchDoc, deleteAll, getStats
 
 
 
@@ -64,7 +64,9 @@ def thread_task( ch, method_frame, properties, body):
             elif action == "searchDoc":
                 ret = searchDoc(body["search"], account_name, account_config)
             elif action == "deleteAll":
-                ret = deleteAll(account_name, account_config)
+                ret = deleteAll(account_name, account_config)   
+            elif action == "stats":
+                ret = getStats(account_name, account_config)   
 
             logger.info(ret)
             ret = json.dumps(ret)
