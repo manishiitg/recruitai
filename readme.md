@@ -18,6 +18,13 @@ python -m app.main
 
 http://144.76.110.170:5001/#/datasets
 
+To debug flask app
+==================
+
+open terimnal of microservice api and 
+flask run -p 5001 -h 0.0.0.0
+
+
 Docker
 ===========
 
@@ -80,6 +87,9 @@ docker container rm -f recruitai
 
 # helper functions
 https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stopped-or-removed-permission-denied-error
+
+
+http://116.202.234.182:9200/_cluster/health?pretty=true
 
 curl localhost:9200/_cat/health
 
