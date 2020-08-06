@@ -80,6 +80,20 @@ def addMetaDoc(mongoid):
         logger.critical(e)
         return jsonify(str(e)), 500
 
+@bp.route('/get-stats', methods=['GET'])
+@check_and_validate_account
+def getStats():
+    try:
+        ret = sendBlockingMessage({
+            "action" : "stats",
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+        return jsonify(ret), 200
+    except Exception as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
 
 @bp.route('/deleteDoc/<string:mongoid>', methods=['GET'])
 @check_and_validate_account
