@@ -11,3 +11,8 @@ bootstrap.memory_lock: true
 xpack.license.self_generated.type: basic
 # xpack.security.enabled: true
 # xpack.monitoring.collection.enabled: true
+
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+
