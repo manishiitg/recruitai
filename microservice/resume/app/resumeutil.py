@@ -256,9 +256,11 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "parsing_type" : parsing_type
         }
 
-        if mongoid:
-            t = Thread(target=addToSearch, args=(mongoid,finalLines,ret, account_name, account_config))
-            t.start()
+        # if mongoid:
+        #     t = Thread(target=addToSearch, args=(mongoid,finalLines,ret, account_name, account_config))
+        #     t.start()
+        # this is not needed anymore. as we are caching ai data in redis. so no need to store that in search index
+
 
         updateStats({
             "action" : "resume_time_analysis",
