@@ -52,14 +52,13 @@ except Exception as e:
 
 
 es = {}
-def init_elastic_search(account_name, account_config):
+def init_elastic_search(username, password, account_name, account_config):
     if not has_es:
         return None
-
-
+        
     global es
     if account_name not in es:
-        es[account_name] = Elasticsearch(account_config["elasticsearch"]["host"])
+        es[account_name] = Elasticsearch(account_config["elasticsearch"]["host"], http_auth=(username, password))
 
     return es[account_name]
 
