@@ -22,7 +22,7 @@ def createIndex(account_name, account_config):
         return 
     
     indexCreated = True
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
     indexName = getIndex(account_name, account_config)
 
     ret = es.indices.create(index=indexName, ignore=400, body={
@@ -35,13 +35,19 @@ def createIndex(account_name, account_config):
     })
     logger.info(ret)
 
+def getStats(account_name, account_config):
+    createIndex(account_name, account_config)
+    indexName = getIndex(account_name, account_config)
+
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
+    return es.indices.stats(index=indexName)
 
 def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}):
     
     createIndex(account_name, account_config)
     indexName = getIndex(account_name, account_config)
 
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
     ret = es.index(index=indexName, id=mongoid, body={
         "resume": " ".join(lines),
         # "extra_data": json.loads(json.dumps(extra_data, default=str)),
@@ -53,7 +59,7 @@ def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}
 
 def addMeta(mongoid, meta, account_name, account_config):
     indexName = getIndex(account_name, account_config)
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
     
     
     try:
@@ -75,14 +81,14 @@ def addMeta(mongoid, meta, account_name, account_config):
 
 def getDoc(mongoid, account_name, account_config):
     indexName = getIndex(account_name, account_config)
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
     return es.get(index=indexName, id=mongoid)
 
 
 def deleteDoc(mongoid, account_name, account_config):
     indexName = getIndex(account_name, account_config)
 
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
     return es.delete(index=indexName, id=mongoid)
 
 
@@ -90,7 +96,7 @@ def searchDoc(searchText, account_name, account_config):
     indexName  = getIndex(account_name, account_config)
     r = connect_redis(account_name, account_config)
 
-    es =  init_elastic_search(account_name, account_config)
+    es =  init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
     ret = es.search(
         index=indexName,
         body={
@@ -123,7 +129,7 @@ def searchDoc(searchText, account_name, account_config):
 def deleteAll(account_name, account_config):
     indexName  = getIndex(account_name, account_config)
 
-    es = init_elastic_search(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
     return es.delete_by_query(indexName, {
         "query": {
             "match_all": {}
