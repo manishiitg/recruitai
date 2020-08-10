@@ -113,11 +113,22 @@ def searchDoc(searchText, account_name, account_config):
     for idx, hit in enumerate(hits["hits"]):
         id = hit["_id"]
         data = r.get(id)
+        
         if not data:
             data = {}
         else:
             data = json.loads(data)
 
+        if "cvParsedInfo" in data:
+            cvParsedInfo = data["cvParsedInfo"]
+            if "debug" in cvParsedInfo:
+                del cvParsedInfo["debug"]
+
+            data["cvParsedInfo"] = cvParsedInfo
+
+            if "newCompressedStructuredContent" in cvParsedInfo:
+                del cvParsedInfo["newCompressedStructuredContent"]
+            
         del ret["hits"]["hits"][idx]["_source"]["extra_data"]
 
         ret["hits"]["hits"][idx]["_source"]["redis-data"] = data
