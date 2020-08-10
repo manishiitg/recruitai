@@ -24,6 +24,12 @@ To debug flask app
 open terimnal of microservice api and 
 flask run -p 5001 -h 0.0.0.0
 
+kibana
+=======
+
+http://116.202.234.182:5601/app/kibana
+
+
 
 Docker
 ===========
