@@ -431,7 +431,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # need to update secondary caching still
             print("updating unique cache ")
             
-            ret = updateFilter({
+            updateFilter({
                 'tag_id' : doc["tag_id"],
                 "job_profile_id" : doc['job_profile_id'],
                 "action" : "update_unique_cache",
