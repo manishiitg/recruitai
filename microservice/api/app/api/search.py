@@ -29,16 +29,13 @@ def addDocument(id, line=None):
         if request.method == 'POST':
             data = request.json.get('lines', [])
             meta_data = request.json.get('meta_data', {})
-
-            data = {}
-            meta_data = {}
-
+            
             # we are not storing meta any more in elastic search. instead of using redis with datasync
 
             ret = sendBlockingMessage({
                 "id": id,
                 "lines" : data,
-                "extra_data" : meta_data,
+                "extra_data" : {},
                 "action" : "addDoc",
                 "account_name": request.account_name,
                 "account_config" : request.account_config
