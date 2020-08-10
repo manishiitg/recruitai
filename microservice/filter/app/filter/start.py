@@ -63,6 +63,7 @@ def indexAll(account_name, account_config):
 
 def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
     global unique_cache_key_list
+    
     r = connect_redis(account_name, account_config)    
 
     if filter_type == "full_data":
@@ -102,7 +103,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         cache_data = r.get(unique_cache_key)
         if cache_data is not None:
-            logger.info("returning cached data")
+            logger.info("returning cached data %s", unique_cache_key)
+            unique_cache_key_list.append(unique_cache_key)
             return cache_data
 
 
@@ -412,7 +414,7 @@ def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config
     new_unique_cache_key_list = []
     for rkey in unique_cache_key_list:
         # basically delete the unique_cache_key below if job data changes
-        if job_profile_id in rkey and tag_id in rkey:
+        if job_profile_id in rkey:
             logger.info("cleaching cache %s", rkey)
             r.delete(rkey)
         else:
