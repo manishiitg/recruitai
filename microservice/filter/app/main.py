@@ -13,7 +13,7 @@ SERVER_QUEUE = "rpc.filter.queue"
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.filter.start import fetch, indexAll, index
+from app.filter.start import fetch, indexAll, index, clear_unique_cache
 
 from app.score.start import get_education_display, get_candidate_score, get_exp_display
 from app.statspublisher import sendMessage as updateStats
@@ -28,7 +28,8 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
-    # logger.info(body)
+    logger.info("XXXXXXXXXXXXXXXXXXXX")
+    logger.info(body)
 
     account_name = None
     if "account_name" in body:
@@ -78,6 +79,9 @@ def thread_task( ch, method_frame, properties, body):
                 ret = index(fetch_id, fetch_type, account_name, account_config)
                 ret = json.dumps(ret)
                 add_threadsafe_callback(ch, method_frame,properties, ret)
+        elif body["action"] == "update_unique_cache":   
+            ret = clear_unique_cache(body["job_profile_id"], body["tag_id"], account_name, account_config)
+            ret = json.dumps(ret)
         elif body["action"] == "candidate_score":
             ret = get_candidate_score(body["id"], account_name, account_config)
             ret = json.dumps(ret)
