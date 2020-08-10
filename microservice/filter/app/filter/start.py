@@ -13,6 +13,8 @@ from app.account import connect_redis
 
 
 unique_cache_key_list = []
+use_unique_cache_feature = True
+use_unique_cache_only_for_ai_data = True
 
 def indexAll(account_name, account_config):
     global unique_cache_key_list
@@ -102,10 +104,19 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
         cache_data = r.get(unique_cache_key)
-        if cache_data is not None:
-            logger.info("returning cached data %s", unique_cache_key)
-            unique_cache_key_list.append(unique_cache_key)
-            return cache_data
+        if cache_data is not None and use_unique_cache_feature:
+            if use_unique_cache_only_for_ai_data:
+                if on_ai_data:
+                    logger.info("returning cached data %s", unique_cache_key)
+                    unique_cache_key_list.append(unique_cache_key)
+                    return cache_data    
+                else:
+                    pass
+
+            else:
+                logger.info("returning cached data %s", unique_cache_key)
+                unique_cache_key_list.append(unique_cache_key)
+                return cache_data
 
 
         page = int(page)
