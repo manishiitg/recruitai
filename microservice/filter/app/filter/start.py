@@ -11,8 +11,11 @@ from app.filter.util import getCourseDict
 
 from app.account import connect_redis
 
-def indexAll(account_name, account_config):
 
+unique_cache_key_list = []
+
+def indexAll(account_name, account_config):
+    global unique_cache_key_list
     r = connect_redis(account_name, account_config)
 
     logger.info("index all called")
@@ -24,6 +27,8 @@ def indexAll(account_name, account_config):
             data.append(dataMap[dkey])
         generateFilterMap("full_data",data, account_name, account_config)
 
+    
+    unique_cache_key_list = []
     for key in r.scan_iter():
         # key = key.decode("utf-8")
 
@@ -57,7 +62,7 @@ def indexAll(account_name, account_config):
 
 
 def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
-
+    global unique_cache_key_list
     r = connect_redis(account_name, account_config)    
 
     if filter_type == "full_data":
@@ -325,6 +330,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             })
             if len(filter) == 0:
                 r.set(unique_cache_key, response)
+                unique_cache_key_list.append(unique_cache_key)
 
             return response
         else:
@@ -394,12 +400,31 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
             if len(filter) == 0:
                 r.set(unique_cache_key, response)
+                unique_cache_key_list.append(unique_cache_key)
 
             return response
             
 
+def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config = {}):
+    r = connect_redis(account_name, account_config)
+    print("clearning unique cache for ", job_profile_id, " XXXXX ", tag_id)
+    global unique_cache_key_list
+    new_unique_cache_key_list = []
+    for rkey in unique_cache_key_list:
+        # basically delete the unique_cache_key below if job data changes
+        if job_profile_id in rkey and tag_id in rkey:
+            logger.info("cleaching cache %s", rkey)
+            r.delete(rkey)
+        else:
+            new_unique_cache_key_list.append(rkey)
+    
+    unique_cache_key_list = new_unique_cache_key_list
+    return unique_cache_key_list
+
+
 def index(mongoid, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
+    global unique_cache_key_list
 
     logger.info("index called %s", mongoid)
     r = connect_redis(account_name, account_config)
@@ -419,12 +444,17 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
     elif filter_type == "job_profile":
         data = r.get("job_" + mongoid)
 
-        for rkey in r.scan_iter():
+        new_unique_cache_key_list = []
+        for rkey in unique_cache_key_list:
             # basically delete the unique_cache_key below if job data changes
             if "on_ai_data" in rkey and mongoid in rkey:
                 logger.info("cleaching cache %s", rkey)
                 r.delete(rkey)
+            else:
+                new_unique_cache_key_list.append(rkey)
 
+        unique_cache_key_list = new_unique_cache_key_list
+        
             # if "on_ai_data" in rkey and mongoid in rkey and "_func" not in key:
             #     logger.info("cleaching cache %s", rkey)
             #     r.delete(rkey)
@@ -461,11 +491,17 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
     elif filter_type == "candidate":
         data = r.get("classify_" + mongoid)
 
-        for rkey in r.scan_iter():
+        new_unique_cache_key_list = []
+        for rkey in unique_cache_key_list:
             # basically delete the unique_cache_key below if job data changes
             if "on_ai_data" in rkey and mongoid in rkey:
                 logger.info("cleaching cache %s", rkey)
                 r.delete(rkey)
+            else:
+                new_unique_cache_key_list.append(rkey)
+
+        unique_cache_key_list = new_unique_cache_key_list 
+        
 
         if data:
             dataMap = json.loads(data)
