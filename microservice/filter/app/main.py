@@ -28,7 +28,6 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
-    logger.info("XXXXXXXXXXXXXXXXXXXX")
     logger.info(body)
 
     account_name = None
@@ -82,6 +81,7 @@ def thread_task( ch, method_frame, properties, body):
         elif body["action"] == "update_unique_cache":   
             ret = clear_unique_cache(body["job_profile_id"], body["tag_id"], account_name, account_config)
             ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties, ret)
         elif body["action"] == "candidate_score":
             ret = get_candidate_score(body["id"], account_name, account_config)
             ret = json.dumps(ret)
