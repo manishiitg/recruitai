@@ -63,7 +63,7 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, account_name = "", account_config = {}):
     global unique_cache_key_list
     
     r = connect_redis(account_name, account_config)    
@@ -86,7 +86,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     else:
 
 
-        unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags)))
+        unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
 
         # to take this one level up. we will store all function params and call function again internally when cache is cleared
 
@@ -126,25 +126,45 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         logger.info("limit %s", limit)
         logger.info("send ai info %s", on_ai_data)
         logger.info("filter %s", filter)
-
+        logger.info("starred %s", on_starred)
+        logger.info("tags %s",tags)
+        logger.info("len tags %s", len(tags))
+        logger.info("mongo id %s", mongoid)
+        logger.info("filter type %s", filter_type)
         candidate_map = {}
 
         candidate_filter_map = {}
 
-        logger.info("tags %s",tags)
+        
         tag_map = {}
         tag_count_map = {}
+        
 
         if filter_type == "job_profile":
             job_profile_data = r.get("job_" + mongoid)
         else:
             job_profile_data = r.get("classify_" + mongoid)
 
+        
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
 
         else:
             job_profile_data = {}   
+
+        logger.info("length of job profile data %s", len(job_profile_data))
+
+        if on_starred:
+            starred_job_profile_data = {}
+
+            for key in job_profile_data:
+                item = job_profile_data[key]
+                if "candidate_star" in item:
+                    if len(item["candidate_star"]) > 0:
+                        starred_job_profile_data[key] = item
+
+            job_profile_data = starred_job_profile_data
+        
 
         if len(tags) > 0:
             logger.info("sorting..")
