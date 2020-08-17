@@ -122,17 +122,27 @@ def filter_index(id,fetch):
 # @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET', 'POST'])
+@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>/<string:starred>', methods=['GET', 'POST'])
 @check_and_validate_account
-def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = ""):
+def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0"):
 
-    if ai == "True" or ai == "1" or ai == "true":
+    if ai == "1":
         ai = True
     else:
         ai = False
+        
+    if starred == '1':
+        starred = True
+    else:
+        starred = False
 
     try:
         if len(tags.strip()) > 0:
-            tags = tags.split(",")
+            if tags == "-1":
+                tags = ""
+            else:
+                tags = tags.split(",")
+
 
         filter = {}
 
@@ -149,6 +159,7 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = ""):
             "action" : "fetch",
             "filter" : filter,
             "ai" : ai,
+            "starred" : starred,
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
