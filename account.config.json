@@ -1,4 +1,25 @@
 {
+    "prodrecruit" : {
+        "mongodb" : {
+            "host" : "mongodb://recruit:recruitbackend@0.0.0.0:27070/recruit",
+            "db" : "recruit"
+        },
+        "google_cloud" : {
+            "bucket" : "prodrecruitai.excellencetechnologies.in",
+            "url" : "https://prodrecruitai.excellencetechnologies.in/"
+        },
+        "redis" : {
+            "host" : "redis",
+            "port" : "6379",
+            "db_index" : 1
+        },
+        "elasticsearch" : {
+            "host" : "elasticsearch:9200",
+            "index" : "prodrecruit"
+        },
+        "reduce_priority" : 0
+
+    },
    "devrecruit" : {
         "mongodb" : {
             "host" : "mongodb://nodeUser:java1234@176.9.137.77:27017/hr_recruit_dev",
@@ -17,7 +38,7 @@
             "host" : "elasticsearch:9200",
             "index" : "devrecruit"
         },
-        "reduce_priority" : 0
+        "reduce_priority" : 5
 
     },
     "stagingrecruit" : {
@@ -38,7 +59,7 @@
             "host" : "elasticsearch:9200",
             "index" : "stagingrecruit"
         },
-        "reduce_priority" : 0
+        "reduce_priority" : 5
 
     }
 }
