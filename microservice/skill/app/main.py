@@ -19,7 +19,7 @@ SERVER_QUEUE = "rpc.skill.queue"
 
 amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
-from app.skillsword2vec.start import loadModel, loadGlobalModel, get_similar, vec_exists
+from app.skillsword2vec.start import loadModel, loadGlobalModel, get_similar, vec_exists, get_start_match
 from app.statspublisher import sendMessage as updateStats
 
 import time
@@ -74,7 +74,17 @@ def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
     if isinstance(body, dict):
-        if "keyword" in body:
+        if "match" in body:
+            if "isGlobal" in body:
+                isGlobal = True
+            else:
+                isGlobal = False
+
+            ret = get_start_match(body["text"], isGlobal)
+            ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties,ret)
+
+        elif "keyword" in body:
             if "isGlobal" in body:
                 isGlobal = True
             else:
@@ -103,9 +113,11 @@ def thread_task( ch, method_frame, properties, body):
 
 
 def add_threadsafe_callback(ch,  method_frame,properties, msg):
-    conn.add_callback_threadsafe(
-        functools.partial(send_result, ch, method_frame,properties, msg)
-    )
+    # conn.add_callback_threadsafe(
+    #     functools.partial(send_result, ch, method_frame,properties, msg)
+    # )
+
+    send_result(ch,  method_frame,properties, msg)
 
 def send_result(ch, method_frame,properties, msg):
     ch.basic_publish(exchange=EXCHANGE, routing_key=properties.reply_to, body=msg)
@@ -113,7 +125,6 @@ def send_result(ch, method_frame,properties, msg):
         ch.basic_ack(method_frame.delivery_tag)
 
 def on_recv_req(ch, method, properties, body):
-    logger.info(body)
     # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     # t.start()
     # logger.info(t.is_alive())
@@ -129,7 +140,7 @@ def main():
     ch = conn.channel()
 
     # declare a queue
-    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=True) #exclusive=True,
+    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
     # ch
     # .basic_qos(prefetch_count=1)
     ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
