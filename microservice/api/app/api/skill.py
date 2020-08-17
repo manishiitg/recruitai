@@ -16,6 +16,24 @@ from app.util import check_and_validate_account
 
 bp = Blueprint('skill', __name__, url_prefix='/skill')
 
+@bp.route('/match/<string:keyword>', methods=['GET'])
+@check_and_validate_account
+def match_similar(keyword):
+    logger.info("got match %s", keyword)
+    try:
+
+        similar = sendBlockingMessage({
+            "text" : keyword,
+            "match" : True,
+            "isGlobal": False,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+        return jsonify(similar), 200
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+        
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
