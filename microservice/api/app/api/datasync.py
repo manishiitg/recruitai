@@ -37,18 +37,46 @@ def stats():
 
     return jsonify({}) , 200
 
+@bp.route('/filter/get/candidate_score_bulk/<string:id>', methods=['POST'])
+@check_and_validate_account
+def candidate_score_bulk(id):
+    
+    try:
 
-@bp.route('/filter/get/candidate_score/<string:id>', methods=['GET'])
+        data = request.json['data']
+        
+        ret = sendFilterMessage({
+            "id" : id,
+            "action" : "candidate_score_bulk",
+            "account_name": request.account_name,
+            "account_config" : request.account_config,
+            "criteria" : data
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/filter/get/candidate_score/<string:id>', methods=['GET', 'POST'])
 @check_and_validate_account
 def candidate_score(id):
     
     try:
 
+        if request.method == 'POST':
+            print(request.json)
+            data = request.json['data']
+        else:
+            data = {}
+
         ret = sendFilterMessage({
             "id" : id,
             "action" : "candidate_score",
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "criteria" : data
         })
 
         return jsonify(ret), 200
@@ -126,12 +154,12 @@ def filter_index(id,fetch):
 @check_and_validate_account
 def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0"):
 
-    if ai == "1":
+    if ai == "1" or ai == "True":
         ai = True
     else:
         ai = False
         
-    if starred == '1':
+    if starred == '1'  or ai == "True":
         starred = True
     else:
         starred = False

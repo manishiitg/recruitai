@@ -15,8 +15,9 @@ amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connectio
 
 from app.filter.start import fetch, indexAll, index, clear_unique_cache
 
-from app.score.start import get_education_display, get_candidate_score, get_exp_display
+from app.score.start import get_education_display, get_candidate_score, get_exp_display, get_candidate_score_bulk
 from app.statspublisher import sendMessage as updateStats
+
 
 import time
 
@@ -89,41 +90,52 @@ def thread_task( ch, method_frame, properties, body):
             ret = clear_unique_cache(body["job_profile_id"], body["tag_id"], account_name, account_config)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties, ret)
-        elif body["action"] == "candidate_score":
-            ret = get_candidate_score(body["id"], account_name, account_config)
+        elif body["action"] == "candidate_score_bulk":
+            ret = get_candidate_score_bulk(body["id"], account_name, account_config, body["criteria"])
             ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties, ret)
 
-            updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : body["filename"],
-                    "meta" : {
-                        "ret" : ret,
-                        "mongoid" : body["mongoid"]
-                    },
-                    "stage" : {
-                        "pipeline" : "candidate_score_start",
-                        "priority" : body["priority"] 
-                    },
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
+        elif body["action"] == "candidate_score":
+            
+            if "filename" in body:
+                updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : body["filename"],
+                        "meta" : {
+                            "ret" : ret,
+                            "mongoid" : body["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "candidate_score_start",
+                            "priority" : body["priority"] 
+                        },
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    })
+
+            if "criteria" not in body:
+                body["criteria"] = None
+
+            ret = get_candidate_score(body["id"], account_name, account_config, body["criteria"])
+            ret = json.dumps(ret)
 
             add_threadsafe_callback(ch, method_frame,properties,ret)
 
-            updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : body["filename"],
-                    "meta" : {
-                        "ret" : ret,
-                        "mongoid" : body["mongoid"]
-                    },
-                    "stage" : {
-                        "pipeline" : "candidate_score",
-                        "priority" : body["priority"] 
-                    },
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
+            if "filename" in body:
+                updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : body["filename"],
+                        "meta" : {
+                            "ret" : ret,
+                            "mongoid" : body["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "candidate_score",
+                            "priority" : body["priority"] 
+                        },
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    })
 
         elif body["action"] == "get_education_display":
             ret = get_education_display(body["degree"], account_name, account_config)
