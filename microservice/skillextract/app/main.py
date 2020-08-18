@@ -61,34 +61,36 @@ def thread_task( conn, ch, method_frame, properties, body):
                 mongoid = body["mongoid"]
                 findSkills = body["skills"]
                 try:
-                    updateStats({
-                        "action" : "resume_pipeline_update",
-                        "resume_unique_key" : body["filename"],
-                        "meta" : {
-                            "mongoid" : body["mongoid"]
-                        },
-                        "stage" : {
-                            "pipeline" : "skill_extract_start",
-                        },
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
+                    if "filename" in body:
+                        updateStats({
+                            "action" : "resume_pipeline_update",
+                            "resume_unique_key" : body["filename"],
+                            "meta" : {
+                                "mongoid" : body["mongoid"]
+                            },
+                            "stage" : {
+                                "pipeline" : "skill_extract_start",
+                            },
+                            "account_name" : account_name,
+                            "account_config" : account_config
+                        })
                     ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
                     ret = json.dumps(ret,default=str)
 
-                    updateStats({
-                        "action" : "resume_pipeline_update",
-                        "resume_unique_key" : body["filename"],
-                        "meta" : {
-                            "ret" : ret,
-                            "mongoid" : body["mongoid"]
-                        },
-                        "stage" : {
-                            "pipeline" : "skill_extract",
-                        },
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
+                    if "filename" in body:
+                        updateStats({
+                            "action" : "resume_pipeline_update",
+                            "resume_unique_key" : body["filename"],
+                            "meta" : {
+                                "ret" : ret,
+                                "mongoid" : body["mongoid"]
+                            },
+                            "stage" : {
+                                "pipeline" : "skill_extract",
+                            },
+                            "account_name" : account_name,
+                            "account_config" : account_config
+                        })
 
                     try:
                         if "meta" in body:
