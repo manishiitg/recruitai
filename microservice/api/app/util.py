@@ -61,6 +61,7 @@ def check_and_validate_account(f):
         with open(account_json_path) as ff:
             account_config = json.load(ff)
 
+        
         accounts = list(account_config.keys())
 
         if account_name not in accounts:
