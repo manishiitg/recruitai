@@ -1,7 +1,7 @@
 {
     "prodrecruit" : {
         "mongodb" : {
-            "host" : "mongodb://recruit:recruitbackend@0.0.0.0:27070/recruit",
+            "host" : "mongodb://recruit:recruitbackend@116.202.234.182:27070/recruit?authSource=recruit",
             "db" : "recruit"
         },
         "google_cloud" : {
