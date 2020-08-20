@@ -36,44 +36,45 @@ def get_education_display(degree, account_name, account_config):
 
 def getSampleCriteria():
     criteria = {
-        "experiance" : {
-            "weight" : 5,
-            "values" : [{
-                "min" : 6 * 31,
-                "max" :12 * 31,
-                "weight" : 5
-                }
-            ]
-        },
-        "gender" : {
-            "value": "male",
-            "weight" : 5
-        },
-        "skills" : {
-            "weight" : 5,
-            "values" : {
-                'php' : 9,
-                "mysql" : 5,
-                "css" : 2,
-                "upwork" : 10
-            }
-
-        },
-        "education": {
-            "weight": 5,
-            "values": [
-                {
-                    "value": "Bachelor of Engineering:Bachelor of Technology:B.E:B.Tech",
-                    "weight": "10",
-                    "type": "degree"
-                },
-                {
-                    "value": "bachelors",
-                    "weight": "10",
-                    "type": "course"
-                }
-            ]
-        }
+        # 
+        # "experiance": {
+        #     "weight": 5,
+        #     "values": [
+        #         {
+        #             "min": 0,
+        #             "max": 372,
+        #             "weight": 5
+        #         }
+        #     ]
+        # },
+        # "gender": {
+        #     "value": "male",
+        #     "weight": 5
+        # },
+        # "skills": {
+        #     "weight": 5,
+        #     "values": [
+        #         {"value": "angular_js", "weight": 9},
+        #         {"value": "mysql", "weight": 9},
+        #         {"value": "css", "weight": 9},
+        #         {"value": "upwork", "weight": 9}
+        #     ]
+        # },
+        # "education": {
+        #     "weight": 5,
+        #     "values": [
+        #         {
+        #             "value": "Bachelor of Engineering:Bachelor of Technology:B.E:B.Tech",
+        #             "weight": 10,
+        #             "type": "course"
+        #         },
+        #         {
+        #             "value": "masters",
+        #             "weight": 10,
+        #             "type": "degree"
+        #         }
+        #     ]
+        # 
 
     }
     return criteria
@@ -270,7 +271,8 @@ def getExpScore(criteria, row, total_weight, max_score):
                 # exp = criteria["experiance"]
                 total_exp_weight = 0
                 for exp in criteria["experiance"]["values"]:
-                    total_exp_weight += exp["weight"]
+                    if "weight" in exp:
+                        total_exp_weight += exp["weight"]
 
                 debug_str = "experiance weight {}".format(total_exp_weight)
                 logger.info(debug_str)
@@ -451,10 +453,11 @@ def getSkillScore(criteria, row, total_weight, max_score):
       values = criteria["skills"]["values"]
       total_value_weight = 0
       for obj in values:
-        total_value_weight += obj["weight"]
+        if "weight" in obj:
+            total_value_weight += obj["weight"]
 
       skillCandidateScore = 0
-      if "cvParsedInfo" in row:     
+      if "cvParsedInfo" in row and total_value_weight > 0:     
         if "skillExtracted" in row["cvParsedInfo"] and row["cvParsedInfo"]["skillExtracted"] is not None:
           skillExtracted = row["cvParsedInfo"]["skillExtracted"]
           print(skillExtracted)

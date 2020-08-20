@@ -360,6 +360,7 @@ def full():
 
     try:
 
+        print(request.account_config)
         sendMessage({
             "action" : "full",
             "cur_time" : time.time(),
