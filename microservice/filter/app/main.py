@@ -102,7 +102,6 @@ def thread_task( ch, method_frame, properties, body):
                         "action" : "resume_pipeline_update",
                         "resume_unique_key" : body["filename"],
                         "meta" : {
-                            "ret" : ret,
                             "mongoid" : body["mongoid"]
                         },
                         "stage" : {
@@ -130,7 +129,7 @@ def thread_task( ch, method_frame, properties, body):
                             "mongoid" : body["mongoid"]
                         },
                         "stage" : {
-                            "pipeline" : "candidate_score",
+                            "pipeline" : "candidate_score_end",
                             "priority" : body["priority"] 
                         },
                         "account_name" : account_name,
