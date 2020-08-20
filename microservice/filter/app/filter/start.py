@@ -68,42 +68,43 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     
     r = connect_redis(account_name, account_config)    
 
-    if filter_type == "full_data":
-        ret = r.get("full_data_filter")
-    else:
-        logger.info("fetching for %s", mongoid)
-        ret =  r.get(mongoid + "_filter")
+    # if filter_type == "full_data":
+    #     ret = r.get("full_data_filter")
+    # else:
+    #     logger.info("fetching for %s", mongoid)
+    #     ret =  r.get(mongoid + "_filter")
 
-    # logger.info("filter from redis %s", ret)
+    # # logger.info("filter from redis %s", ret)
         
-    if ret is None:
-        # for debugging
-        # for key in r.scan_iter():
-        #     if "job_" in key or "classify_" in key:
-        #         logger.info("key found %s", key)
+    # if ret is None:
+    #     # for debugging
+    #     # for key in r.scan_iter():
+    #     #     if "job_" in key or "classify_" in key:
+    #     #         logger.info("key found %s", key)
 
-        return json.dumps({})
-    else:
-
-
-        unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
-
-        # to take this one level up. we will store all function params and call function again internally when cache is cleared
-
-        # r.set(unique_cache_key + "_func", json.dumps({
-        #     mongoid, 
-        #     filter_type , 
-        #     tags, 
-        #     page, 
-        #     limit, 
-        #     on_ai_data,
-        #     filter, 
-        #     account_name, 
-        #     account_config
-        # }))
+    #     return json.dumps({})
+    # else:
 
 
-        cache_data = r.get(unique_cache_key)
+    unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
+
+    # to take this one level up. we will store all function params and call function again internally when cache is cleared
+
+    # r.set(unique_cache_key + "_func", json.dumps({
+    #     mongoid, 
+    #     filter_type , 
+    #     tags, 
+    #     page, 
+    #     limit, 
+    #     on_ai_data,
+    #     filter, 
+    #     account_name, 
+    #     account_config
+    # }))
+
+
+    cache_data = r.get(unique_cache_key)
+    if len(filter) == 0:
         if cache_data is not None and use_unique_cache_feature:
             if use_unique_cache_only_for_ai_data:
                 if on_ai_data:
@@ -119,160 +120,170 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 return cache_data
 
 
-        page = int(page)
-        limit = int(limit)
+    page = int(page)
+    limit = int(limit)
 
-        logger.info("page %s", page)
-        logger.info("limit %s", limit)
-        logger.info("send ai info %s", on_ai_data)
-        logger.info("filter %s", filter)
-        logger.info("starred %s", on_starred)
-        logger.info("tags %s",tags)
-        logger.info("len tags %s", len(tags))
-        logger.info("mongo id %s", mongoid)
-        logger.info("filter type %s", filter_type)
-        candidate_map = {}
+    logger.info("page %s", page)
+    logger.info("limit %s", limit)
+    logger.info("send ai info %s", on_ai_data)
+    logger.info("filter %s", filter)
+    logger.info("starred %s", on_starred)
+    logger.info("tags %s",tags)
+    logger.info("len tags %s", len(tags))
+    logger.info("mongo id %s", mongoid)
+    logger.info("filter type %s", filter_type)
+    candidate_map = {}
 
-        candidate_filter_map = {}
+    candidate_filter_map = {}
 
-        
-        tag_map = {}
-        tag_count_map = {}
-        
+    
+    tag_map = {}
+    tag_count_map = {}
+    
+
+    if filter_type == "job_profile":
+        job_profile_data = r.get("job_" + mongoid)
+    else:
+        job_profile_data = r.get("classify_" + mongoid)
+
+    
+    if job_profile_data:
+        job_profile_data = json.loads(job_profile_data)
+
+    else:
+        job_profile_data = {}   
+
+    logger.info("length of job profile data %s", len(job_profile_data))
+
+    if on_starred:
+        starred_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "candidate_star" in item:
+                if len(item["candidate_star"]) > 0:
+                    starred_job_profile_data[key] = item
+
+        job_profile_data = starred_job_profile_data
+    
+
+    if len(tags) > 0:
+        logger.info("sorting..")
 
         if filter_type == "job_profile":
-            job_profile_data = r.get("job_" + mongoid)
-        else:
-            job_profile_data = r.get("classify_" + mongoid)
 
-        
-        if job_profile_data:
-            job_profile_data = json.loads(job_profile_data)
-
-        else:
-            job_profile_data = {}   
-
-        logger.info("length of job profile data %s", len(job_profile_data))
-
-        if on_starred:
-            starred_job_profile_data = {}
-
-            for key in job_profile_data:
-                item = job_profile_data[key]
-                if "candidate_star" in item:
-                    if len(item["candidate_star"]) > 0:
-                        starred_job_profile_data[key] = item
-
-            job_profile_data = starred_job_profile_data
-        
-
-        if len(tags) > 0:
-            logger.info("sorting..")
-
-            if filter_type == "job_profile":
-
-                tag_idx_sort_map = {}
-                def custom_sort(item):
-                    
-                    if "sequence" not in list(item[1].keys()):
-                        logger.info("-1")
-                        return -1
-                    
-                    if item[1]["tag_id"] not in tag_idx_sort_map:
-                        tag_idx_sort_map[item[1]["tag_id"]] = (len(tag_idx_sort_map) + 1) * 100000000
-                        # need to have sorting based on tags instead of global so need to bring numbers in a range per tag
-                    
-                    sequence = tag_idx_sort_map[item[1]["tag_id"]] + float(item[1]["sequence"])
-
-                    # if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
-                    #     logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
-                    
-                    return sequence * -1
-
-
-                job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
-            else:
-                def custom_sort_date(item):
-                    return item[1]["date"]
-
-                job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
-            
-            logger.info("sorted..")
-
-        else:
+            tag_idx_sort_map = {}
             def custom_sort(item):
-                    
+                
                 if "sequence" not in list(item[1].keys()):
                     logger.info("-1")
                     return -1
                 
-                # logger.info(float(item[1]["sequence"]))
+                if item[1]["tag_id"] not in tag_idx_sort_map:
+                    tag_idx_sort_map[item[1]["tag_id"]] = (len(tag_idx_sort_map) + 1) * 100000000
+                    # need to have sorting based on tags instead of global so need to bring numbers in a range per tag
+                
+                sequence = tag_idx_sort_map[item[1]["tag_id"]] + float(item[1]["sequence"])
 
-                return float(item[1]["sequence"])  * -1
+                # if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
+                #     logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
+                
+                return sequence * -1
 
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+        else:
+            def custom_sort_date(item):
+                return item[1]["date"]
 
-
-        tagged_job_profile_data = {}
-        for id in job_profile_data:
-            row = job_profile_data[id]
-
-            tag_id = row["tag_id"]
-
-            if len(tag_id) == 0:
-                continue
-
-            if tag_id not in tag_map:
-                tag_map[tag_id] = []
-                tag_count_map[tag_id] = 0
-            
-            tag_count_map[tag_id] += 1
-            tag_map[tag_id].append(row["_id"])
-
-
-            if tag_id in tags:
-                tagged_job_profile_data[id] = row
-            
-                
-            # if "cvParsedInfo" in row:
-            #     del row["cvParsedInfo"]
-
-
-            # candidate_map[row["_id"]] = row
-
-        if len(tags) > 0:
-            job_profile_data = tagged_job_profile_data
-
-        logger.info(tag_count_map)
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
         
-        if len(tags) > 0:   
+        logger.info("sorted..")
+
+    else:
+        def custom_sort(item):
+                
+            if "sequence" not in list(item[1].keys()):
+                logger.info("-1")
+                return -1
             
-            # {
-            #     "filter" : {
-            #         "edu_filter" : ["M.D"],
-            #         "work_filter" : ["other", "internship"]
-            #     }
-            # }
+            # logger.info(float(item[1]["sequence"]))
 
-            paged_candidate_map = {}
-            for idx, child_id in  enumerate(job_profile_data):
-                if idx >= page * limit and idx < limit * (page + 1):
-                    doc = job_profile_data[child_id]
-                    paged_candidate_map[child_id] = doc
+            return float(item[1]["sequence"])  * -1
 
 
-            filter_tag_children = {}
-            ret = json.loads(ret)
+        job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+
+
+    tagged_job_profile_data = {}
+    for id in job_profile_data:
+        row = job_profile_data[id]
+
+        tag_id = row["tag_id"]
+
+        if len(tag_id) == 0:
+            continue
+
+        if tag_id not in tag_map:
+            tag_map[tag_id] = []
+            tag_count_map[tag_id] = 0
+        
+        tag_count_map[tag_id] += 1
+        tag_map[tag_id].append(row["_id"])
+
+
+        if tag_id in tags:
+            tagged_job_profile_data[id] = row
+        
+            
+        # if "cvParsedInfo" in row:
+        #     del row["cvParsedInfo"]
+
+
+        # candidate_map[row["_id"]] = row
+
+    if len(tags) > 0:
+        job_profile_data = tagged_job_profile_data
+
+    logger.info(tag_count_map)
+    
+    if len(tags) > 0:   
+        
+        # {
+        #     "filter" : {
+        #         "edu_filter" : ["M.D"],
+        #         "work_filter" : ["other", "internship"]
+        #     }
+        # }
+
+        paged_candidate_map = {}
+        for idx, child_id in  enumerate(job_profile_data):
+            if idx >= page * limit and idx < limit * (page + 1):
+                doc = job_profile_data[child_id]
+                paged_candidate_map[child_id] = doc
+
+
+        filter_tag_children = {}
+        
+        
+        if len(tags) == 1:
+            logger.info("tag id %s", tags[0])
+            ret =  r.get(tags[0] + "_filter")
+            if ret is not None:
+                ret = json.loads(ret)
+            else:
+                ret = {}
+        else:
+            ret = {}
+            
+        if len(filter) > 0:
             for key in ret:
-                if len(filter) > 0:
-                    if key not in filter:
-                        continue 
+                if key not in filter:
+                    continue 
 
                 for rangekey in ret[key]:
-                    if len(filter) > 0:
-                        if rangekey not in filter[key]:
-                            continue
+                    if rangekey not in filter[key]:
+                        continue
 
                     # logger.info("key %s" , key)
                     # logger.info("range key %s", rangekey)
@@ -303,139 +314,138 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     if "merge" in ret[key][rangekey]:
                         del ret[key][rangekey]["merge"]
             
-            if len(filter) > 0:
-                # logger.info("filter data %s", len(filter_tag_children))
-                job_profile_data = filter_tag_children
+            # logger.info("filter data %s", len(filter_tag_children))
+            job_profile_data = filter_tag_children
 
-            paged_candidate_map = {}
-            for idx, child_id in  enumerate(job_profile_data):
-                if idx >= page * limit and idx < limit * (page + 1):
-                    doc = job_profile_data[child_id]
-                    if len(filter) == 0:
-                        if not on_ai_data:
-                            if "pipeline" in doc:
-                                del doc["pipeline"]
-                            if "candidateClassify" in doc:
-                                del doc["candidateClassify"]
-                            if "attachment" in doc:
-                                del doc["attachment"]
-                            if "addSearch" in doc:
-                                del doc["addSearch"]
-                            if "answered" in doc:
-                                del doc["answered"]
-                            if "cvText" in doc:
-                                del doc["cvText"]
-                            if "cvParsedInfo" in doc:
-                                del doc["cvParsedInfo"]
+        paged_candidate_map = {}
+        for idx, child_id in  enumerate(job_profile_data):
+            if idx >= page * limit and idx < limit * (page + 1):
+                doc = job_profile_data[child_id]
+                if len(filter) == 0:
+                    if not on_ai_data:
+                        if "pipeline" in doc:
+                            del doc["pipeline"]
+                        if "candidateClassify" in doc:
+                            del doc["candidateClassify"]
+                        if "attachment" in doc:
+                            del doc["attachment"]
+                        if "addSearch" in doc:
+                            del doc["addSearch"]
+                        if "answered" in doc:
+                            del doc["answered"]
+                        if "cvText" in doc:
+                            del doc["cvText"]
+                        if "cvParsedInfo" in doc:
+                            del doc["cvParsedInfo"]
 
+                        
+                    else:
+                    
+                        if "cvParsedInfo" in doc:
+                            cvParsedInfo = doc["cvParsedInfo"]
+                            if "debug" in cvParsedInfo:
+                                del cvParsedInfo["debug"]
+
+                            if "newCompressedStructuredContent" in cvParsedInfo:
+                                del cvParsedInfo["newCompressedStructuredContent"]
                             
                         else:
-                        
-                            if "cvParsedInfo" in doc:
-                                cvParsedInfo = doc["cvParsedInfo"]
-                                if "debug" in cvParsedInfo:
-                                    del cvParsedInfo["debug"]
+                            cvParsedInfo = {}
 
-                                if "newCompressedStructuredContent" in cvParsedInfo:
-                                    del cvParsedInfo["newCompressedStructuredContent"]
-                                
-                            else:
-                                cvParsedInfo = {}
+                        doc = {
+                            "cvParsedInfo" : cvParsedInfo
+                        }
+                    
+                paged_candidate_map[child_id] = doc
 
-                            doc = {
-                                "cvParsedInfo" : cvParsedInfo
-                            }
-                        
-                    paged_candidate_map[child_id] = doc
 
-    
-            
-            
-            
-            
-            logger.info("sending response..")
-            
-            response = json.dumps({
-                "filter" : ret,
-                "candidate_map" : paged_candidate_map,
-                "candidate_len" : len(paged_candidate_map),
-                "tag_count_map" : tag_count_map
-            })
-            if len(filter) == 0:
-                r.set(unique_cache_key, response)
-                unique_cache_key_list.append(unique_cache_key)
+        
+        
+        
+        
+        logger.info("sending response..")
+        
+        response = json.dumps({
+            "filter" : ret,
+            "candidate_map" : paged_candidate_map,
+            "candidate_len" : len(paged_candidate_map),
+            "tag_count_map" : tag_count_map
+        })
+        if len(filter) == 0:
+            r.set(unique_cache_key, response)
+            unique_cache_key_list.append(unique_cache_key)
 
-            return response
-        else:
-            paged_tag_map = {}
-            def custom_tag_sort(item):
-                if "sequence" not in item:
-                    return -1 
+        return response
+    else:
+        paged_tag_map = {}
+        def custom_tag_sort(item):
+            if "sequence" not in item:
+                return -1 
 
-                # logger.info(float(item[1]["sequence"]))
-                return float(item["sequence"])  * -1
+            # logger.info(float(item[1]["sequence"]))
+            return float(item["sequence"])  * -1
 
-            logger.info("generating response..")
-            for tag in tag_map:
-                paged_tag_map[tag] = {
-                    "data" : [],
-                    'read' : 0,
-                    'unread' : 0
-                }
-                tag_map[tag]  = sorted(tag_map[tag] , key=custom_tag_sort, reverse=False)
+        logger.info("generating response..")
+        for tag in tag_map:
+            paged_tag_map[tag] = {
+                "data" : [],
+                'read' : 0,
+                'unread' : 0
+            }
+            tag_map[tag]  = sorted(tag_map[tag] , key=custom_tag_sort, reverse=False)
 
-                for idx, child_id in enumerate(tag_map[tag]):
-                    doc = job_profile_data[child_id]
-                    if "unread" in doc and doc["unread"]:
-                        paged_tag_map[tag]["unread"] += 1
+            for idx, child_id in enumerate(tag_map[tag]):
+                doc = job_profile_data[child_id]
+                if "unread" in doc and doc["unread"]:
+                    paged_tag_map[tag]["unread"] += 1
+                else:
+                    paged_tag_map[tag]["read"] += 1
+
+                if idx >= page * limit and idx < limit * (page + 1):
+                
+                    if not on_ai_data:
+                        if "pipeline" in doc:
+                            del doc["pipeline"]
+                        if "candidateClassify" in doc:
+                            del doc["candidateClassify"]
+                        if "attachment" in doc:
+                            del doc["attachment"]
+                        if "addSearch" in doc:
+                            del doc["addSearch"]
+                        if "answered" in doc:
+                            del doc["answered"]
+                        if "cvText" in doc:
+                            del doc["cvText"]
+                        if "cvParsedInfo" in doc:
+                            del doc["cvParsedInfo"]
+
+                        if "debug" in doc:
+                            del doc["debug"]
+
                     else:
-                        paged_tag_map[tag]["read"] += 1
-
-                    if idx >= page * limit and idx < limit * (page + 1):
                     
-                        if not on_ai_data:
-                            if "pipeline" in doc:
-                                del doc["pipeline"]
-                            if "candidateClassify" in doc:
-                                del doc["candidateClassify"]
-                            if "attachment" in doc:
-                                del doc["attachment"]
-                            if "addSearch" in doc:
-                                del doc["addSearch"]
-                            if "answered" in doc:
-                                del doc["answered"]
-                            if "cvText" in doc:
-                                del doc["cvText"]
-                            if "cvParsedInfo" in doc:
-                                del doc["cvParsedInfo"]
-
-                            if "debug" in doc:
-                                del doc["debug"]
-
+                        if "cvParsedInfo" in doc:
+                            cvParsedInfo = doc["cvParsedInfo"]
                         else:
-                        
-                            if "cvParsedInfo" in doc:
-                                cvParsedInfo = doc["cvParsedInfo"]
-                            else:
-                                cvParsedInfo = {}
+                            cvParsedInfo = {}
 
-                            doc = {
-                                "cvParsedInfo" : cvParsedInfo
-                            }
-                        
-                        paged_tag_map[tag]["data"].append(doc)
-
+                        doc = {
+                            "cvParsedInfo" : cvParsedInfo
+                        }
                     
+                    paged_tag_map[tag]["data"].append(doc)
+
+                
 
 
-            logger.info("response completed..")
-            response =  json.dumps(paged_tag_map)
+        logger.info("response completed..")
+        response =  json.dumps(paged_tag_map)
 
-            if len(filter) == 0:
-                r.set(unique_cache_key, response)
-                unique_cache_key_list.append(unique_cache_key)
+        if len(filter) == 0:
+            r.set(unique_cache_key, response)
+            unique_cache_key_list.append(unique_cache_key)
 
-            return response
+        return response
             
 
 def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config = {}):
@@ -473,6 +483,8 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             data = []
 
         key = "full_data"
+        logger.info("data len %s" , len(data))
+        return generateFilterMap(key, data, account_name, account_config)
             
     elif filter_type == "job_profile":
         data = r.get("job_" + mongoid)
@@ -512,10 +524,23 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             dataMap = []
 
         data = []
+        tag_data_map = {}
         for dkey in dataMap:
             data.append(dataMap[dkey])
+            if dataMap[dkey]["tag_id"] not in tag_data_map:
+                tag_data_map[dataMap[dkey]["tag_id"]] = []
+            
+            tag_data_map[dataMap[dkey]["tag_id"]].append(dataMap[dkey])
 
         key = mongoid
+
+        for tag_id in tag_data_map:
+            logger.info("data len %s for key %s" , len(data), tag_id)
+            generateFilterMap(tag_id, tag_data_map[tag_id], account_name, account_config)
+    
+
+        
+        return {}
 
 
 
@@ -549,8 +574,8 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
 
         
 
-    logger.info("data len %s" , len(data))
-    return generateFilterMap(key, data, account_name, account_config)
+        logger.info("data len %s" , len(data))
+        return generateFilterMap(key, data, account_name, account_config)
 
     
 def generateFilterMap(key, data, account_name, account_config):
