@@ -388,11 +388,14 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
     # if findtype != "full":
     #     recentProcessList[mongoid+"-"+findtype] = time.time()
-
+    
+    if account_name == "prodrecruit":
+        # account_config['mongodb']['host'] = 'mongodb://recruit:recruitbackend@116.202.234.182:27070/recruit?authSource=recruit'
+        # prod mongo is failing right now 
+        return {}
 
     isFilterUpdateNeeded = False
-
-
+    logger.info(account_config)
     db = initDB(account_name, account_config)
     if findtype == "syncCandidate":
         # allowedfields = ['unread', 'job_profile_id', 'tag_id', 'notes', 'candidate_star', 'callingStatus' ]
@@ -427,10 +430,13 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         else:
             ret = [doc]
 
-        if not isFilterUpdateNeeded:
+        if not isFilterUpdateNeeded and doc:
             # need to update secondary caching still
             print("updating unique cache ")
             
+            if "tag_id" not in doc:
+                doc["tag_id"] = ""
+
             updateFilter({
                 'tag_id' : doc["tag_id"],
                 "job_profile_id" : doc['job_profile_id'],
@@ -482,12 +488,14 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         redisKeyMap[account_name] = {}
         dirtyMap[account_name] = {}
         for key in r.scan_iter():
-            if "classify_" in key or "job_" in key:
+            if "classify_" in key or "job_" in key or "_filter" in key:
+                logger.info("delete from redis %s", key)
                 r.delete(key)
                 
         ret = db.emailStored.find({ } , 
             {"body": 0, "cvParsedInfo.debug": 0}
         )
+        logger.info("full completed db")
         # .sort([("sequence", -1),("updatedAt", -1)])
         # .sort([("sequence", -1),("updatedAt", -1)])
             # sort gives ram error
@@ -574,7 +582,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             # if len(finalLines) > 0:
             #     logger.info("add to searhch")
-                # t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}))
+                # t = Thread(target=addToSearch, ar
+                # gs=(row["_id"],finalLines,{}))
                 # t.start()
                 # t.join() 
                 # this is getting slow...
