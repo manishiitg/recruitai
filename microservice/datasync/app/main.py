@@ -362,6 +362,7 @@ class TaskQueue(object):
                 classifyMoved(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
             else:
                 process("full" , cur_time, account_name=account_name, account_config=account_config)
+                
 
 
             
