@@ -285,7 +285,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     if rangekey not in filter[key]:
                         continue
 
-                    # logger.info("key %s" , key)
                     # logger.info("range key %s", rangekey)
 
                     range = ret[key][rangekey]
@@ -535,7 +534,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         key = mongoid
 
         for tag_id in tag_data_map:
-            logger.info("data len %s for key %s" , len(data), tag_id)
+            logger.info("data len %s for key %s" , len(tag_data_map[tag_id]), tag_id)
             generateFilterMap(tag_id, tag_data_map[tag_id], account_name, account_config)
     
 
