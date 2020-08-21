@@ -390,7 +390,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     #     recentProcessList[mongoid+"-"+findtype] = time.time()
     
     if account_name == "prodrecruit":
-        # account_config['mongodb']['host'] = 'mongodb://recruit:recruitbackend@116.202.234.182:27070/recruit?authSource=recruit'
+        # account_config['mongodb']['host'] = 'mongodb://root:recruitai567@116.202.234.182:27070/?authSource=admin'
         # prod mongo is failing right now 
         return {}
 
@@ -706,6 +706,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     #             # })
     #             # logger.info("job profile filter completed")
     
+
+    logger.info("here")
     if findtype == "full":
 
         # r.set("full_data" , json.dumps(full_map , default=json_util.default))
