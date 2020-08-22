@@ -331,7 +331,8 @@ class TaskQueue(object):
 
         key = message["filename"]
 
-        if key is None or key == "undefined":
+        LOGGER.info("message filename %s", key)
+        if key is None or key == "undefined" or "filename" not in message:
             LOGGER.critical("undefined key %s", key)
             return self.acknowledge_message(delivery_tag)
 
@@ -408,10 +409,10 @@ class TaskQueue(object):
                     if "meta" in message:
                         meta = message["meta"]
                         if "callback_url" in meta:
-                            message = ret
-                            meta["message"] = json.loads(json.dumps(message))
+                            message2 = ret
+                            meta["message"] = json.loads(json.dumps(message2))
                             x = requests.post(meta["callback_url"], json=meta)
-                            logger.info(x.text)
+                            LOGGER.info(x.text)
                 except Exception as e:
                     LOGGER.critical("callback exception")
                     LOGGER.critical(e)
