@@ -6,6 +6,7 @@ import random
 from scipy.spatial.distance import cosine
 
 import numpy
+from bson import json_util
 
 import re
 import os
@@ -131,7 +132,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     end = time.time() 
     # print('kNN time total=%f (sec), per query=%f (sec), per query adjusted for thread number=%f (sec)' % 
     #     (end-start, float(end-start)/query_qty, num_threads*float(end-start)/query_qty))
-    
+
 
 
 
@@ -278,7 +279,9 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                         logger.info("%s via broad skill match", word)
                     else:
                         pass
-
+        else:
+            logger.info("dockdix not in max skill dist %s", docIdx)
+            
         logger.info("global skill maxdist %s after docidx %s", globalSkillDist, docIdx)
 
         if len(globalSkillDist) > 0:
@@ -402,6 +405,8 @@ def getSampleData(mongoid, account_name, account_config):
     logger.info("getting sample for %s", mongoid)
     data = None
     if "all" in mongoid:
+        limit = 50
+        # if more than 50. even faiss search also doesn't work properly
         mongoid = mongoid.replace("all:", "")
         if ":" in mongoid:
             skip = int(mongoid[mongoid.index(":")+1:])
@@ -418,6 +423,9 @@ def getSampleData(mongoid, account_name, account_config):
             data = []
             for key in dataMap:
                 data.append(dataMap[key])
+
+            
+            data = data[skip:limit]
                 
             logger.info("candidate full data found %s", len(data))
         else:
@@ -425,16 +433,51 @@ def getSampleData(mongoid, account_name, account_config):
 
             logger.info("final mongo id %s", mongoid)
             logger.info("skip %s", skip)
-            ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1})
-            jobMap = []
+            ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1}).limit(limit).skip(skip)
+            jobMap = {}
             
             for row in ret:
                 row["_id"] = str(row["_id"])
-                r.set(row["_id"], json.dumps(row, default=str))
-                jobMap.append(row)
 
-            data = jobMap
-            r.set("job_" + mongoid  , json.dumps(jobMap))
+                jobMap[row["_id"]] = row
+
+                if "cvParsedInfo" in row:
+                    if "newCompressedStructuredContent" in row["cvParsedInfo"]:
+                        cvParsedInfo = row["cvParsedInfo"]
+                        if "hasTokenized_newCompressedStructuredContent" not in cvParsedInfo:
+                            logger.info("tokenizing data for job")
+                            for page in cvParsedInfo["newCompressedStructuredContent"]:
+                                for line_idx, line in enumerate(cvParsedInfo["newCompressedStructuredContent"][page]):
+                                    doc = nlp(line["line"].lower())
+                                    token_line = [d.text for d in doc]
+                                    cvParsedInfo["newCompressedStructuredContent"][page][line_idx]["token_line"] = token_line
+
+                            cvParsedInfo["hasTokenized_newCompressedStructuredContent"] = True
+                            db.emailStored.update_one({ 
+                                "_id" : ObjectId(row["_id"])
+                            }, {
+                                "$set" : {
+                                    "cvParsedInfo" : cvParsedInfo
+                                }
+                            })
+                            row["cvParsedInfo"] = cvParsedInfo
+                            # r.set(mongoid, json.dumps(row, default=str))
+
+                r.set(row["_id"], json.dumps(row, default=str))
+                jobMap[row["_id"]] = row
+
+
+            data = []
+            for key in jobMap:
+                data.append(jobMap[key])
+
+            # if skip == 0:
+                # jobMap2 = {}
+                # for key2 in jobMap:
+                    # jobMap2[key2] = (key2, jobMap[key])
+                 ## i dont understand how this tuple comes but it in datasync
+                 ## so not setting this from here for now 
+                # r.set("job_" + mongoid  , json.dumps(jobMap2, default=json_util.default))
 
     elif "," in mongoid:
         mongoid = mongoid.split(",")
@@ -469,6 +512,33 @@ def getSampleData(mongoid, account_name, account_config):
                 row["_id"] = str(row["_id"])
                 data = [row]
                 r.set(mongoid, json.dumps(row, default=str))
+
+        # this is call mostly via resume processing microserver
+        # we need to check if newcomproseedcontent is already tokenized and if not tokenize it
+        # and save it to db and update redis cache if it already exists in redis else not
+        # this will slove the speed issue 
+        if "cvParsedInfo" in row:
+            if "newCompressedStructuredContent" in row["cvParsedInfo"]:
+                cvParsedInfo = row["cvParsedInfo"]    
+                if "hasTokenized_newCompressedStructuredContent" not in cvParsedInfo:
+                    for page in cvParsedInfo["newCompressedStructuredContent"]:
+                        for line_idx, line in enumerate(cvParsedInfo["newCompressedStructuredContent"][page]):
+                            doc = nlp(line["line"].lower())
+                            token_line = [d.text for d in doc]
+                            cvParsedInfo["newCompressedStructuredContent"][page][line_idx]["token_line"] = token_line
+
+                    cvParsedInfo["hasTokenized_newCompressedStructuredContent"] = True
+                    db.emailStored.update_one({ 
+                        "_id" : ObjectId(mongoid)
+                    }, {
+                        "$set" : {
+                            "cvParsedInfo" : cvParsedInfo
+                        }
+                    })
+                    row["cvParsedInfo"] = cvParsedInfo
+                    r.set(mongoid, json.dumps(row, default=str))
+                
+
 
     logger.info("processing data")    
 
@@ -513,14 +583,19 @@ def getSampleData(mongoid, account_name, account_config):
                 # logger.info(line["classify"])
                 # logger.info(line["line"])
 
-                if shouldTokenize:
-                    doc = nlp(line["line"].lower()) #this is making slower for large data
-                    line = [d.text for d in doc]
+                if "token_line" in line:
+                    line = line["token_line"] #pretokenize and save to db
                 else:
-                    line = line["line"].lower().split(" ")
+                    logger.info("token line found. this should not happen")
+                    if shouldTokenize:
+                        doc = nlp(line["line"].lower()) #this is making slower for large data
+                        line = [d.text for d in doc]
+                    else:
+                        line = line["line"].lower().split(" ")
                     
                 ngrams = generate_ngrams(" ".join(line), 3)
                 ngrams.extend(generate_ngrams(" ".join(line), 2))
+
                 line.extend(["_".join(n.split(" ")) for n in ngrams])
                 docLines[docIndex].append(line)
 
