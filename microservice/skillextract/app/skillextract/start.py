@@ -425,7 +425,7 @@ def getSampleData(mongoid, account_name, account_config):
                 data.append(dataMap[key])
 
             
-            data = data[skip:limit]
+            data = data[skip:skip+limit]
                 
             logger.info("candidate full data found %s", len(data))
         else:
@@ -434,50 +434,11 @@ def getSampleData(mongoid, account_name, account_config):
             logger.info("final mongo id %s", mongoid)
             logger.info("skip %s", skip)
             ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1}).limit(limit).skip(skip)
-            jobMap = {}
             
+            data = []
             for row in ret:
                 row["_id"] = str(row["_id"])
-
-                jobMap[row["_id"]] = row
-
-                if "cvParsedInfo" in row:
-                    if "newCompressedStructuredContent" in row["cvParsedInfo"]:
-                        cvParsedInfo = row["cvParsedInfo"]
-                        if "hasTokenized_newCompressedStructuredContent" not in cvParsedInfo:
-                            logger.info("tokenizing data for job")
-                            for page in cvParsedInfo["newCompressedStructuredContent"]:
-                                for line_idx, line in enumerate(cvParsedInfo["newCompressedStructuredContent"][page]):
-                                    doc = nlp(line["line"].lower())
-                                    token_line = [d.text for d in doc]
-                                    cvParsedInfo["newCompressedStructuredContent"][page][line_idx]["token_line"] = token_line
-
-                            cvParsedInfo["hasTokenized_newCompressedStructuredContent"] = True
-                            db.emailStored.update_one({ 
-                                "_id" : ObjectId(row["_id"])
-                            }, {
-                                "$set" : {
-                                    "cvParsedInfo" : cvParsedInfo
-                                }
-                            })
-                            row["cvParsedInfo"] = cvParsedInfo
-                            # r.set(mongoid, json.dumps(row, default=str))
-
-                r.set(row["_id"], json.dumps(row, default=str))
-                jobMap[row["_id"]] = row
-
-
-            data = []
-            for key in jobMap:
-                data.append(jobMap[key])
-
-            # if skip == 0:
-                # jobMap2 = {}
-                # for key2 in jobMap:
-                    # jobMap2[key2] = (key2, jobMap[key])
-                 ## i dont understand how this tuple comes but it in datasync
-                 ## so not setting this from here for now 
-                # r.set("job_" + mongoid  , json.dumps(jobMap2, default=json_util.default))
+                data.append(row)
 
     elif "," in mongoid:
         mongoid = mongoid.split(",")
