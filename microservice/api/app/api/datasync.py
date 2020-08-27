@@ -22,6 +22,11 @@ import time
 
 import random
 
+@bp.route("/config", methods=["GET"])
+@check_and_validate_account
+def config():
+    return jsonify(request.account_config) , 200
+
 @bp.route("/stats" , methods=["GET"])
 @check_and_validate_account
 def stats():
