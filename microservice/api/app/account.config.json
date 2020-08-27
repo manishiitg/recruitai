@@ -1,0 +1,65 @@
+{
+    "excellencerecruit" : {
+        "mongodb" : {
+            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/excellence_recruit?authSource=admin",
+            "db" : "excellence_recruit"
+        },
+        "google_cloud" : {
+            "bucket" : "excellencerecruitai.excellencetechnologies.in",
+            "url" : "https://excellencerecruitai.excellencetechnologies.in/"
+        },
+        "redis" : {
+            "host" : "redis",
+            "port" : "6379",
+            "db_index" : 2
+        },
+        "elasticsearch" : {
+            "host" : "elasticsearch:9200",
+            "index" : "excellencerecruit"
+        },
+        "reduce_priority" : 0
+
+    },
+   "devrecruit" : {
+        "mongodb" : {
+            "host" : "mongodb://nodeUser:java1234@176.9.137.77:27017/hr_recruit_dev",
+            "db" : "hr_recruit_dev"
+        },
+        "google_cloud" : {
+            "bucket" : "staticrecruitai.excellencetechnologies.in",
+            "url" : "https://staticrecruitai.excellencetechnologies.in/"
+        },
+        "redis" : {
+            "host" : "redis",
+            "port" : "6379",
+            "db_index" : 0
+        },
+        "elasticsearch" : {
+            "host" : "elasticsearch:9200",
+            "index" : "devrecruit"
+        },
+        "reduce_priority" : 5
+
+    },
+    "stagingrecruit" : {
+        "mongodb" : {
+            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/staging_recruit?authSource=admin",
+            "db" : "staging_recruit"
+        },
+        "google_cloud" : {
+            "bucket" : "staticrecruitai.excellencetechnologies.in",
+            "url" : "https://staticrecruitai.excellencetechnologies.in/"
+        },
+        "redis" : {
+            "host" : "redis",
+            "port" : "6379",
+            "db_index" : 1
+        },
+        "elasticsearch" : {
+            "host" : "elasticsearch:9200",
+            "index" : "stagingrecruit"
+        },
+        "reduce_priority" : 5
+
+    }
+}
