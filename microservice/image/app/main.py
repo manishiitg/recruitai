@@ -318,6 +318,10 @@ class TaskQueue(object):
 
         
         account_config = message["account_config"]
+        LOGGER.info("Account name %s", account_name)
+        if account_name == "prodrecruit":
+            return self.acknowledge_message(delivery_tag)
+
 
         if message["mongoid"] is None:
             message["mongoid"] = ""
