@@ -41,7 +41,10 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
         cv_date = meta["cv_timestamp_seconds"]
         priority, days, cur_time = get_resume_priority(meta["cv_timestamp_seconds"])
 
+    print(request.account_name)
+    print(request.account_config)
 
+    
     sendMessage({
         "filename" : filename,
         "mongoid" : mongoid,
