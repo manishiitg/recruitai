@@ -1,21 +1,21 @@
 {
-    "prodrecruit" : {
+    "excellencerecruit" : {
         "mongodb" : {
-            "host" : "mongodb://recruit:recruitbackend@116.202.234.182:27070/recruit?authSource=recruit",
-            "db" : "recruit"
+            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/excellence_recruit?authSource=admin",
+            "db" : "excellence_recruit"
         },
         "google_cloud" : {
-            "bucket" : "prodrecruitai.excellencetechnologies.in",
-            "url" : "https://prodrecruitai.excellencetechnologies.in/"
+            "bucket" : "excellencerecruitai.excellencetechnologies.in",
+            "url" : "https://excellencerecruitai.excellencetechnologies.in/"
         },
         "redis" : {
             "host" : "redis",
             "port" : "6379",
-            "db_index" : 1
+            "db_index" : 2
         },
         "elasticsearch" : {
             "host" : "elasticsearch:9200",
-            "index" : "prodrecruit"
+            "index" : "excellencerecruit"
         },
         "reduce_priority" : 0
 
@@ -43,7 +43,7 @@
     },
     "stagingrecruit" : {
         "mongodb" : {
-            "host" : "mongodb://176.9.137.77:27017/staging_recruit",
+            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/staging_recruit?authSource=admin",
             "db" : "staging_recruit"
         },
         "google_cloud" : {
