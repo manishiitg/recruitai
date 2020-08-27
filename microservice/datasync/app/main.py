@@ -12,7 +12,7 @@ import os
 
 import traceback
 
-amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.environ.get('RABBIT_DB')
 
 from app.publishsearch import sendBlockingMessage
 from app.scheduler import startSchedule
