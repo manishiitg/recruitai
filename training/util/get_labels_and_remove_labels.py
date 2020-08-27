@@ -41,10 +41,10 @@ def get_file_after_remove_labels(file, labels_to_remove=[]):
 labels = get_labels("ner-final-train.txt")
 print(labels)
 
-filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills",'Email','DOB','LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills",'LANGUAGE'])
 labels1 = get_labels(filename)
 print(labels1)
 
-filename = get_file_after_remove_labels("ner-final-full.txt", ["Skills",'Email','DOB','LANGUAGE'])
-filename = get_file_after_remove_labels("ner-final-test.txt", ["Skills",'Email','DOB','LANGUAGE'])
-filename = get_file_after_remove_labels("ner-final-dev.txt", ["Skills",'Email','DOB','LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-full.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-test.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-final-dev.txt", ["Skills",'LANGUAGE'])
