@@ -281,6 +281,11 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
+import logging
+log = logging.getLogger('apscheduler.executors.default')
+log.setLevel(logging.CRITICAL)  # DEBUG
+
+
 import copy
 
 dirtyMap = {}
@@ -340,6 +345,10 @@ redisKeyMap = {}
 def init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config):
     account_config_map[account_name] = account_config
 
+    if "mongodb:27017" in account_config["mongodb"]["host"]:
+        account_config["mongodb"]["host"] = account_config["mongodb"]["host"].replace("mongodb:27017","116.202.234.182:27070")
+
+
     r = connect_redis(account_name, account_config)
 
     if account_name not in dirtyMap:
@@ -370,6 +379,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     global pastInfoMap
     global account_config_map
 
+
+    # if account_name != "devrecruit":
+    #     # this is temporary need to fix mongo issues for live server
+    #     logger.info("skipping account %s", account_name)
+    #     return
+
     r = connect_redis(account_name, account_config)
 
     dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
@@ -388,11 +403,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
     # if findtype != "full":
     #     recentProcessList[mongoid+"-"+findtype] = time.time()
-    
-    if account_name == "prodrecruit":
-        # account_config['mongodb']['host'] = 'mongodb://root:recruitai567@116.202.234.182:27070/?authSource=admin'
-        # prod mongo is failing right now 
-        return {}
+
 
     isFilterUpdateNeeded = False
     logger.info(account_config)
