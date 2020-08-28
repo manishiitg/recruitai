@@ -32,6 +32,7 @@ from app.publisher.resume import sendMessage
 import time
 
 from app.account import initDB, get_cloud_bucket, get_cloud_url
+import jsonlines
 
 
 @bp.route("/resume/deploy/next_model/<string:version>", methods=["GET"])
@@ -782,6 +783,38 @@ def get_cv_parts_classify(download = 0):
                 headers={'Content-Disposition':'attachment;filename=cvclassify.json'})
     else:
         return jsonify(ret)
+
+
+@bp.route("/ner/get_json", methods=['GET'])
+@check_and_validate_account
+def get_json():
+    db = initDB(request.account_name, request.account_config)
+    rows = db.aierrors.find({
+        "error" : "NER"
+    })
+    json_ret = []
+    for row in rows:
+        line = row["line"]
+        entity = row["entity"]
+        json_ret.append({
+            "line" : line,
+            "tags" : entity,
+            "_id" : str(row["_id"]),
+            "markAsCorrect" : row["markAsCorrect"],
+            "userId" : str(row["userId"]),
+            "candidateId" : str(row["candidateId"])
+        })
+
+    content = json.dumps(json_ret)
+    with jsonlines.open('output.jsonl', mode='w') as writer:
+        writer.write_all(json_ret)
+
+    with open('output.jsonl', 'r') as file:
+        data = file.read()
+        return Response(data, 
+                mimetype='application/json',
+                headers={'Content-Disposition':'attachment;filename=ner.json'})
+    pass
 
 @bp.route('/ner/convert_to_label_studio', methods=['GET'])
 @check_and_validate_account

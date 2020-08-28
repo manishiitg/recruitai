@@ -4,21 +4,16 @@ from app.logging import logger as LOGGER
 import pika
 import json
 import threading
-
-
-from datetime import datetime
 import os 
 
+from datetime import datetime
 
 import traceback
 
-amqp_url = os.environ.get('RABBIT_DB')
+amqp_url = os.getenv('RABBIT_DB')
 
-from app.scheduler import startSchedule
+from app.search.index import createIndex, addDoc, addMeta, deleteDoc, deleteAll
 
-import time
-
-from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -32,8 +27,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'datasync'
-    ROUTING_KEY = 'datasync'
+    QUEUE = 'searchindex'
+    ROUTING_KEY = 'searchindex.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -48,10 +43,11 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = []
+        self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1
+        self._prefetch_count = 5
+
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -186,7 +182,7 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb)
+        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -280,108 +276,76 @@ class TaskQueue(object):
         :param pika.Spec.BasicProperties: properties
         :param bytes body: The message body
         """
-        LOGGER.info('Received message # %s from %s:',
-                    basic_deliver.delivery_tag, properties.app_id)
+        LOGGER.info('Received message # %s from %s: %s',
+                    basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
         t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
-        self.threads.append(t)
+        # self.threads.append(t)
 
         # self.acknowledge_message(basic_deliver.delivery_tag)
 
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        # print(fmt1.format(thread_id, delivery_tag, body))
-        # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        print(fmt1.format(thread_id, delivery_tag, body))
+        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
-        body = json.loads(body)
-        LOGGER.info(json.dumps(body, indent=2))
+        message = json.loads(body)
+        LOGGER.info(body)
 
         account_name = None
-        if "account_name" in body:
-            account_name = body["account_name"]
+        if "account_name" in message:
+            account_name = message["account_name"]
         else:
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
+        account_config = message["account_config"]
+
+        body = message
+        if isinstance(body, dict):
+            if "action" in body:
+                action = body["action"]
+                ret = {}
+                if action == "addDoc":
+                    ret = addDoc(body["id"] , body["lines"], body["extra_data"], account_name, account_config)
+                elif action == "addMeta":
+                    ret = addMeta(body["id"] , body["meta"], account_name, account_config)
+                elif action == "deleteDoc":
+                    ret = deleteDoc(body["id"], account_name, account_config)
+                elif action == "getDoc":
+                    ret = getDoc(body["id"], account_name, account_config)
+                elif action == "deleteAll":
+                    ret = deleteAll(account_name, account_config)  
+
+                # LOGGER.info(ret)
+                # ret = json.dumps(ret)
+
+
+        LOGGER.info("completed")
+        self.acknowledge_message(delivery_tag)
         
-        account_config = body["account_config"]
-
-
-        if "cur_time" in body:
-            cur_time = body["cur_time"]
-        else:
-            cur_time = time.time()
-
-        if "action" in body:
-            action = body["action"]
-            if action == "syncJobProfile":
-                process("syncJobProfile", cur_time, body["id"])
-            elif action == "bulk_delete":
-                
-                candidate_ids = body["candidate_ids"]
-                job_profile_id = body["job_profile_id"]
-
-                bulkDelete(candidate_ids, job_profile_id, account_name, account_config)
-
-            elif action == "bulk_add":
-                docs = body["docs"]
-                job_profile_id = body["job_profile_id"]
-
-                bulkAdd(docs, job_profile_id, account_name, account_config)
-
-            elif action == "bulk_update":
-                candidates = body["candidates"]
-                job_profile_id = body["job_profile_id"]
-
-                bulkUpdate(candidates, job_profile_id, account_name, account_config)
-
-
-            elif action == "syncCandidate":
-
-                if "field" in body:
-                    field = body["field"].split(",")
-                else:
-                    field = []
-                
-                if "doc" in body:
-                    doc = body["doc"]
-                else:
-                    doc = None
-
-                
-
-                process("syncCandidate", cur_time, body["id"], field, doc, account_name=account_name, account_config=account_config)
-            elif action == "syncJobProfileChange":
-                syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
-            elif action == "classifyMoved":
-                classifyMoved(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
-            else:
-                process("full" , cur_time, account_name=account_name, account_config=account_config)
-                
-
-
             
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        LOGGER.info("completed processing")
-        self.acknowledge_message(delivery_tag)
+        
 
-
+          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
         LOGGER.info('Acknowledging message %s', delivery_tag)
-        
-        self._channel.basic_ack(delivery_tag)
+
+        if self._channel:
+            self._channel.basic_ack(delivery_tag)
 
             
 
@@ -488,12 +452,11 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-def main():
-    
-    startSchedule()
+
+
+def main():    
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
-    
 
 if __name__ == '__main__':
     main()
