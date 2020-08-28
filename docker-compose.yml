@@ -104,20 +104,20 @@ services:
         networks:
             - ai
 
-    filebeat:
-        image: docker.elastic.co/beats/filebeat:7.9.0
-        user:
-            root
-        volumes:
-            - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-            - /var/lib/docker:/var/lib/docker:ro
-            - /var/run/docker.sock:/var/run/docker.sock
-            - /var/log/recruitai:/var/log/recruitai:ro
-        command: ["--strict.perms=false"]
-        depends_on:
-            - logstash
-        networks:
-            - ai
+    # filebeat:
+    #     image: docker.elastic.co/beats/filebeat:7.9.0
+    #     user:
+    #         root
+    #     volumes:
+    #         - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    #         - /var/lib/docker:/var/lib/docker:ro
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #         - /var/log/recruitai:/var/log/recruitai:ro
+    #     command: ["--strict.perms=false"]
+    #     depends_on:
+    #         - logstash
+    #     networks:
+    #         - ai
 
 
     redis:
@@ -154,7 +154,7 @@ services:
             - ./label-studio/ner/project:/workspace/ner
         environment:
             - IS_DEV=False
-            - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
             - BATCH_PROCESSING_DELAY=60
         depends_on:
             - elasticsearch
@@ -170,7 +170,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             RESUME_PARALLEL_PROCESS: 1
         depends_on:
             - elasticsearch
@@ -189,7 +189,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 
@@ -203,7 +203,7 @@ services:
             - ./microservice/skill/app:/workspace/app            
         # Environment variables:
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             
         networks:
             - ai
@@ -217,7 +217,22 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
         environment:
-            - RABBIT_DB=amqp://guest:guest@rabbitmq:5672/%2F
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            - ELASTIC_USERNAME=elastic
+            - ELASTIC_PASSWORD=DkIedPPSCb
+        networks:
+            - ai
+
+    searchindexmq:
+        image: recruitai/searchindex:latest
+        build: microservice/searchindex
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/searchindex/app:/workspace/app            
+        environment:
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
         networks:
@@ -232,7 +247,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/skillextract/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
     
@@ -245,7 +260,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/gender/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 
@@ -257,7 +272,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/image/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 
@@ -270,7 +285,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/datasync/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             CRON_SCHEDULE: '0 0 * * *'
         networks:
             - ai
@@ -284,7 +299,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/candidate/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 
@@ -297,7 +312,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/filter/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
       
@@ -324,7 +339,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/picture/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 
@@ -337,7 +352,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/summary/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://guest:guest@rabbitmq:5672/%2F
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
 volumes: 
