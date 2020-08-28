@@ -17,7 +17,7 @@ import os
 EXCHANGE = ""
 SERVER_QUEUE = "rpc.search.queue"
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv('RABBIT_DB')
 
 from app.search.index import createIndex, addDoc, addMeta, deleteDoc, getDoc, searchDoc, deleteAll, getStats
 
@@ -39,7 +39,8 @@ def thread_task( ch, method_frame, properties, body):
         account_name = body["account_name"]
     else:
         LOGGER.critical("no account found. unable to proceed")
-        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+        add_threadsafe_callback(ch, method_frame,properties,'no account found')
+        return
 
     
     account_config = body["account_config"]
@@ -53,6 +54,7 @@ def thread_task( ch, method_frame, properties, body):
         elif "action" in body:
             action = body["action"]
             ret = {}
+            # need to remove add, delete etc from here as using searchindex for that now 
             if action == "addDoc":
                 ret = addDoc(body["id"] , body["lines"], body["extra_data"], account_name, account_config)
             elif action == "addMeta":
@@ -95,8 +97,7 @@ def on_recv_req(ch, method, properties, body):
     # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     # t.start()
     # logger.info(t.is_alive())
-    # no need of thread for now as its very less time taking task
-    thread_task( ch, method, properties, body  )
+    thread_task(ch, method, properties, body)
 
 def main():
 
