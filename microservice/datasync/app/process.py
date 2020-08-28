@@ -1,7 +1,7 @@
 import os
 from threading import Thread
 
-from app.publishsearch import sendBlockingMessage
+from app.publishsearch import sendMessage
 from app.publishfilter import sendBlockingMessage as updateFilter
 
 from pymongo import MongoClient
@@ -585,19 +585,18 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 row["sender_mail"]
             ]    
         
+        if len(finalLines) > 0:
+            logger.info("add to search")
+            t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
+            t.start()
+            # this is getting slow...
         
         if findtype == "syncCandidate" or findtype == "syncJobProfile":
             # if job_profile_id:
             #     job_profile_data_existing = r.get("job_" + job_profile_id)
             #     job_profile_data_now = json.dumps(row,default=json_util.default)
 
-            # if len(finalLines) > 0:
-            #     logger.info("add to searhch")
-                # t = Thread(target=addToSearch, ar
-                # gs=(row["_id"],finalLines,{}))
-                # t.start()
-                # t.join() 
-                # this is getting slow...
+           
 
             # this is very very slow for full job profile 
             # need to add bulk to search or something
@@ -806,7 +805,7 @@ def addFilter(obj, key, account_name, account_config):
 
 def addToSearch(mongoid, finalLines, ret, account_name, account_config):
     try:
-        sendBlockingMessage({
+        sendMessage({
             "id": mongoid,
             "lines" : finalLines,
             "extra_data" : ret,
