@@ -13,14 +13,10 @@ from flask_jwt_extended import (
 
 from app.util import check_and_validate_account
 from app.publisher.search import sendBlockingMessage
+from app.publisher.searchindex import sendMessage
 
 bp = Blueprint('search', __name__, url_prefix='/search')
 
-
-
-# @bp.route('', methods=['POST', 'GET'])
-# @jwt_required
-# @token.admin_required
 @bp.route('/addDoc/<string:id>', methods=['POST'])
 @bp.route('/addDoc/<string:id>/<string:line>', methods=['GET'])
 @check_and_validate_account
@@ -32,7 +28,7 @@ def addDocument(id, line=None):
             
             # we are not storing meta any more in elastic search. instead of using redis with datasync
 
-            ret = sendBlockingMessage({
+            ret = sendMessage({
                 "id": id,
                 "lines" : data,
                 "extra_data" : {},
@@ -96,7 +92,7 @@ def getStats():
 @check_and_validate_account
 def deleteDocument(mongoid):
     try:
-        ret = sendBlockingMessage({
+        ret = sendMessage({
             "id": mongoid,
             "action" : "deleteDoc",
             "account_name": request.account_name,
@@ -144,7 +140,7 @@ def search(search):
 @check_and_validate_account
 def deleteAllDocument():
     try:
-        ret = sendBlockingMessage({
+        ret = sendMessage({
             "action" : "deleteAll",
             "account_name": request.account_name,
             "account_config" : request.account_config
