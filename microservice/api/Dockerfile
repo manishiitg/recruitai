@@ -33,6 +33,7 @@ RUN pip install pika
 RUN pip install google-cloud-storage
 COPY ./RecruitAI.json /workspace
 
+RUN pip install jsonlines
 
 CMD ["/usr/bin/supervisord"]
 
