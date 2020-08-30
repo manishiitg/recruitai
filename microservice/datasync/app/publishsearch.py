@@ -71,7 +71,7 @@ class MQPublisher(object):
         :param pika.SelectConnection _unused_connection: The connection
         :param Exception err: The error
         """
-        LOGGER.error('Connection open failed, reopening in 5 seconds: %s', err)
+        # LOGGER.error('Connection open failed, reopening in 5 seconds: %s', err)
         self._connection.ioloop.call_later(5, self._connection.ioloop.stop)
 
     def on_connection_closed(self, _unused_connection, reason):
@@ -86,8 +86,8 @@ class MQPublisher(object):
         if self._stopping:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning('Connection closed, reopening in 5 seconds: %s',
-                           reason)
+            # LOGGER.warning('Connection closed, reopening in 5 seconds: %s',
+            #                reason)
             self._connection.ioloop.call_later(5, self._connection.ioloop.stop)
 
     def open_channel(self):
@@ -126,7 +126,7 @@ class MQPublisher(object):
         :param pika.channel.Channel channel: The closed channel
         :param Exception reason: why the channel was closed
         """
-        LOGGER.warning('Channel %i was closed: %s', channel, reason)
+        # LOGGER.warning('Channel %i was closed: %s', channel, reason)
         self._channel = None
         if not self._stopping:
             self._connection.close()

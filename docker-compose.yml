@@ -154,7 +154,7 @@ services:
             - ./label-studio/ner/project:/workspace/ner
         environment:
             - IS_DEV=False
-            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - BATCH_PROCESSING_DELAY=60
         depends_on:
             - elasticsearch
@@ -170,7 +170,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             RESUME_PARALLEL_PROCESS: 1
         depends_on:
             - elasticsearch
@@ -189,7 +189,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
         environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
         networks:
             - ai
 
@@ -203,7 +203,7 @@ services:
             - ./microservice/skill/app:/workspace/app            
         # Environment variables:
         environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             
         networks:
             - ai
@@ -217,7 +217,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
         environment:
-            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
         networks:
@@ -232,7 +232,7 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/searchindex/app:/workspace/app            
         environment:
-            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
         networks:

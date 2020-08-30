@@ -507,6 +507,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             {"body": 0, "cvParsedInfo.debug": 0}
         )
         logger.info("full completed db")
+
+        isFilterUpdateNeeded = True
         # .sort([("sequence", -1),("updatedAt", -1)])
         # .sort([("sequence", -1),("updatedAt", -1)])
             # sort gives ram error
@@ -535,9 +537,10 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         else:
             # logger.info("job profile not found!!!")
             job_profile_id = None
+            
         
 
-        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+        
 
         finalLines = []
         if "cvParsedInfo" in row:
@@ -553,11 +556,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 candidate_label = row["candidateClassify"]["label"]
                 if str(candidate_label) == "False":
                     candidate_label = None
-                # if candidate_label:
-                #     if candidate_label not in candidate_map:
-                #         candidate_map[candidate_label] = {}
+                if candidate_label:
+                    if candidate_label not in candidate_map:
+                        candidate_map[candidate_label] = {}
 
-                #     candidate_map[candidate_label][row["_id"]] = row
+                    candidate_map[candidate_label][row["_id"]] = row
 
         
 
@@ -586,11 +589,15 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             ]    
         
         if len(finalLines) > 0:
-            logger.info("add to search")
-            t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
-            t.start()
-            # this is getting slow...
+            # logger.info("add to search")
+            if not r.exists(row['_id']):
+                # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
+                t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
+                t.start()
+                # this is getting slow...
         
+        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+
         if findtype == "syncCandidate" or findtype == "syncJobProfile":
             # if job_profile_id:
             #     job_profile_data_existing = r.get("job_" + job_profile_id)
@@ -652,7 +659,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 #     "fetch" : "job_profile",
                 #     "action" : "index"
                 # })
-                
+            
+            
+            
+
+
             if candidate_label is not None:
                 logger.info("candidate labels %s", candidate_label)
                 mapKey = "classify_" + candidate_label
