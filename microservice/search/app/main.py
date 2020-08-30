@@ -93,6 +93,7 @@ def send_result(ch, method_frame,properties, msg):
         ch.basic_ack(method_frame.delivery_tag)
 
 def on_recv_req(ch, method, properties, body):
+    
     logger.info(body)
     # t = threading.Thread(target = functools.partial(thread_task, ch, method, properties, body))
     # t.start()
