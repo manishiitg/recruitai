@@ -86,7 +86,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     # else:
 
 
-    unique_cache_key = "job_" + mongoid + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
+    unique_cache_key = "job_" + mongoid + "filter_type_" + filter_type + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
 
     # to take this one level up. we will store all function params and call function again internally when cache is cleared
 
@@ -218,6 +218,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     for id in job_profile_data:
         row = job_profile_data[id]
 
+        if "tag_id" not in row:
+            row["tag_id"] = ""
+            
         tag_id = row["tag_id"]
 
         if len(tag_id) == 0:
