@@ -11,9 +11,9 @@ import os
 EXCHANGE = ""
 SERVER_QUEUE = "rpc.filter.queue"
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv('RABBIT_DB')
 
-from app.filter.start import fetch, indexAll, index, clear_unique_cache
+from app.filter.start import fetch, indexAll, index, clear_unique_cache, get_candidate_tags
 
 from app.score.start import get_education_display, get_candidate_score, get_exp_display, get_candidate_score_bulk
 from app.statspublisher import sendMessage as updateStats
@@ -83,9 +83,14 @@ def thread_task( ch, method_frame, properties, body):
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
-                ret = index(fetch_id, fetch_type, account_name, account_config)
-                ret = json.dumps(ret)
-                add_threadsafe_callback(ch, method_frame,properties, ret)
+                add_threadsafe_callback(ch, method_frame,properties, json.dumps({}))
+                index(fetch_id, fetch_type, account_name, account_config)
+                # ret = json.dumps(ret)
+                
+        elif body["action"] == "get_candidate_tags":
+            ret = get_candidate_tags(account_name, account_config)
+            ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties, ret)
         elif body["action"] == "update_unique_cache":   
             ret = clear_unique_cache(body["job_profile_id"], body["tag_id"], account_name, account_config)
             ret = json.dumps(ret)
@@ -160,6 +165,7 @@ def thread_task( ch, method_frame, properties, body):
 
 
 def add_threadsafe_callback(ch,  method_frame,properties, msg):
+    print("api completed")
     conn.add_callback_threadsafe(
         functools.partial(send_result, ch, method_frame,properties, msg)
     )
@@ -185,7 +191,7 @@ def main():
 
     # declare a queue
     ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
-    # ch.basic_qos(prefetch_count=1)
+    ch.basic_qos(prefetch_count=10)
     ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
     ch.start_consuming()
 
