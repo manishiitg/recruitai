@@ -786,12 +786,19 @@ def get_cv_parts_classify(download = 0):
 
 
 @bp.route("/ner/get_json", methods=['GET'])
+@bp.route("/ner/get_json/<int:all>", methods=['GET'])
 @check_and_validate_account
-def get_json():
+def get_json(all = 1):
     db = initDB(request.account_name, request.account_config)
-    rows = db.aierrors.find({
-        "error" : "NER"
-    })
+    if all == 1:
+        rows = db.aierrors.find({
+            "error" : "NER"
+        })
+    else:
+        rows = db.aierrors.find({
+            "error" : "NER",
+            "markAsCorrect" : False
+        })
     json_ret = []
     for row in rows:
         line = row["line"]
