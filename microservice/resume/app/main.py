@@ -339,6 +339,7 @@ class TaskQueue(object):
         else:
             LOGGER.info("priority not found")
 
+
         meta = {}
         if "meta" in message:
             meta = message["meta"]
@@ -352,7 +353,6 @@ class TaskQueue(object):
         doProcess = False
 
         r = connect_redis(account_name, account_config)
-
 
         updateStats({
             "action" : "resume_pipeline_update",
@@ -403,20 +403,21 @@ class TaskQueue(object):
 
                 is_cache = True
 
-                if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                    if len(skills) > 0:
-                        
-                        skillExtracted =  extractSkillMessage({
-                            "action" : "extractSkill",
-                            "mongoid" : message["mongoid"],
-                            "filename" : message["filename"],
-                            "skills" : skills.split(","),
-                            "meta" : meta,
-                            "account_name" : account_name,
-                            "account_config" : account_config
-                        })
+                if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
+                    if skills is None:
+                        skills = ""
 
-                        ret["skillExtracted"] = skillExtracted
+                    skillExtracted =  extractSkillMessage({
+                        "action" : "extractSkill",
+                        "mongoid" : message["mongoid"],
+                        "filename" : message["filename"],
+                        "skills" : skills.split(","),
+                        "meta" : meta,
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    })
+
+                    ret["skillExtracted"] = skillExtracted
 
                 self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
 
@@ -475,18 +476,20 @@ class TaskQueue(object):
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
                 r.set(key, json.dumps(ret)) # 1day or 30days in dev
                 
-            if "error" not in ret and skills is not None and ObjectId.is_valid(message["mongoid"]):
-                if len(skills) > 0:
-                    skillExtracted =  extractSkillMessage({
-                        "action" : "extractSkill",
-                        "mongoid" : message["mongoid"],
-                        "filename" : message["filename"],
-                        "skills" : skills.split(","),
-                        "meta" : meta,
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
-                    ret["skillExtracted"] = skillExtracted
+            if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
+                if skills is None:
+                    skills = ""
+                    
+                skillExtracted =  extractSkillMessage({
+                    "action" : "extractSkill",
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
+                    "skills" : skills.split(","),
+                    "meta" : meta,
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
+                ret["skillExtracted"] = skillExtracted
 
             self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
             updateStats({
