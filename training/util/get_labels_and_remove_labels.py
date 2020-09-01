@@ -38,13 +38,13 @@ def get_file_after_remove_labels(file, labels_to_remove=[]):
     return newfile
 
 
-labels = get_labels("ner-final-train.txt")
+labels = get_labels("ner-train-v2.txt")
 print(labels)
 
-filename = get_file_after_remove_labels("ner-final-train.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-train-v2.txt", ["Skills",'LANGUAGE'])
 labels1 = get_labels(filename)
 print(labels1)
 
-filename = get_file_after_remove_labels("ner-final-full.txt", ["Skills",'LANGUAGE'])
-filename = get_file_after_remove_labels("ner-final-test.txt", ["Skills",'LANGUAGE'])
-filename = get_file_after_remove_labels("ner-final-dev.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-full-v2.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-test-v2.txt", ["Skills",'LANGUAGE'])
+filename = get_file_after_remove_labels("ner-dev-v2.txt", ["Skills",'LANGUAGE'])
