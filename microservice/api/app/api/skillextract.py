@@ -19,9 +19,11 @@ bp = Blueprint('skillextract', __name__, url_prefix='/skillextract')
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
+
+@bp.route('/<string:mongoid>', methods=['GET'])
 @bp.route('/<string:mongoid>/<string:skills>', methods=['GET'])
 @check_and_validate_account
-def skillextract(mongoid, skills):
+def skillextract(mongoid, skills = ""):
     logger.info("got mongo id %s and skills %s", mongoid, skills)
     try:
 
