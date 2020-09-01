@@ -51,7 +51,7 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1
+        self._prefetch_count = 10
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
