@@ -19,7 +19,7 @@ SERVER_QUEUE = "rpc.skillextract.queue"
 amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 
-from app.skillextract.start import start as extractSkill
+from app.skillextract.start import start as extractSkill, get_job_criteria
 from app.skillsword2vec.start import loadModel
 from app.statspublisher import sendMessage as updateStats
 
@@ -74,8 +74,51 @@ def thread_task( conn, ch, method_frame, properties, body):
                             "account_name" : account_name,
                             "account_config" : account_config
                         })
-                    ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
-                    ret = json.dumps(ret,default=str)
+
+                    
+
+                    if findSkills is None:
+                        findSkills = []
+
+                    findSkills = list(filter(len, findSkills))
+                    if len(findSkills) == 0:
+
+                        job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
+
+                        if job_profile_id and job_profile_id in job_criteria_map:
+                            criteria = job_criteria_map[job_profile_id]
+                            findSkills = []
+                            if "skills" in criteria:
+                                for value in criteria['skills']["values"]:
+                                    findSkills.append(value["value"])
+
+                            ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                            ret = json.dumps(ret,default=str)
+                        else:
+
+                            ret = {}
+                            for job_id in job_criteria_map:
+
+                                criteria = job_criteria_map[job_id]
+                                findSkills = []
+                                if "skills" in criteria:
+                                    for value in criteria['skills']["values"]:
+                                        findSkills.append(value["value"])
+
+                                retSkill = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                                avg_value = 0
+                                for key in retSkill[mongoid]["skill"]:
+                                    avg_value += retSkill[mongoid]["skill"][key]
+
+                                retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
+
+                                ret[job_id] = retSkill[mongoid]
+                            
+                            ret = json.dumps(ret,default=str)
+
+                    else:
+                        ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                        ret = json.dumps(ret,default=str)
 
                     if "filename" in body:
                         updateStats({
