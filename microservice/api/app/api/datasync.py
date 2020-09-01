@@ -152,6 +152,18 @@ def filter_index(id,fetch):
         logger.critical(e)
         return jsonify(str(e)), 500
 
+@bp.route('/filter/get_candidate_tags', methods=['GET'])
+@check_and_validate_account
+def get_candidate_tags():
+    ret = sendFilterMessage({
+        "action" : "get_candidate_tags",
+        "account_name": request.account_name,
+        "account_config" : request.account_config
+    })
+
+    return jsonify(ret), 200
+
+
 # @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET', 'POST'])
@@ -159,7 +171,7 @@ def filter_index(id,fetch):
 @check_and_validate_account
 def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0"):
 
-    if ai == "1" or ai == "True":
+    if ai == "1" or ai == "True":   
         ai = True
     else:
         ai = False
@@ -168,6 +180,10 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
         starred = True
     else:
         starred = False
+
+    if tags == "null":
+        tags = ""
+        
 
     try:
         if len(tags.strip()) > 0:
