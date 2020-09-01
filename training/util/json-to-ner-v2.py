@@ -14,6 +14,8 @@ def convert_file_to_conll(file):
     # try:
     training_data = []
     lines=[]
+
+    error_candidates_list = ["5ea07aeb873f1f2c0b3661a6"]  #this have some issue in db level
     with open(file, 'r') as f:
         lines = f.readlines()
     
@@ -21,8 +23,15 @@ def convert_file_to_conll(file):
     for line in lines:
         data = json.loads(line)
 
+        if data["candidateId"] in error_candidates_list:
+            continue
+
+        print("-----------------------")
         print(data)
         text = data['line']
+        if "  " in text:
+            # unable to handle double space in a line right now 
+            continue
         # text = text.replace(u'\xa0', u' ')
         text = text.encode('ascii', 'replace').decode().replace("?", " ")
         entities = []
@@ -47,11 +56,38 @@ def convert_file_to_conll(file):
         for annotation in data['tags']:
 
             start = annotation['start_pos']
+            if start == -1:
+                start = 0
             end = annotation['end_pos'] -1 #  -1 because usually len comes to a space and chartIdx2Wrd doesn't have space
             name = annotation['type']
+            tagtext = annotation['text']
 
-            wordIdxstart = charIdx2Wrd[start]
-            wordIdxend = charIdx2Wrd[end]
+            if len(tagtext) == 0:
+                continue
+
+            if start != 0:
+                print("tag text index start %s and end index %s", text.index(tagtext) , (text.index(tagtext) + len(tagtext)))
+
+            if start in charIdx2Wrd:
+                wordIdxstart = charIdx2Wrd[start]
+            else:
+                start_idx = text.index(tagtext)
+                if abs(start_idx - start) == 1: # for some reason. index just varies by one
+                    start = start_idx
+                
+                wordIdxstart = charIdx2Wrd[start]
+                
+                    
+
+            if end in charIdx2Wrd:
+                wordIdxend = charIdx2Wrd[end]
+            else:
+                end_idx = text.index(tagtext) + len(tagtext) -1 
+                print("trying end idx %s", end_idx)
+                if abs(end_idx - end) == 1:
+                    end = end_idx
+                
+                wordIdxend = charIdx2Wrd[end]
 
             entities[wordIdxstart] = {
                 "word" : entities[wordIdxstart]["word"],
@@ -65,15 +101,15 @@ def convert_file_to_conll(file):
 
 
 
-        training_data.append(entities)  
+        training_data.append(entities)
 
     return training_data
     
 
-training_data = convert_file_to_conll("v2.json1")
-print(training_data)
+corpus = convert_file_to_conll("v2.json1")
+# print(training_data)
 
-exit
+# exit
 
 
 import random
@@ -98,7 +134,7 @@ def write_lines_file(filename, entities):
     with open(filename, 'a') as the_file:
         for entity in entities:
             for ent in entity:
-                the_file.write(ent + "\n")
+                the_file.write(ent["word"] + "  " + ent["tag"] + "\n")
 
             the_file.write("\n")
 
