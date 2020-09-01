@@ -8,13 +8,72 @@ import redis
 import json
 
 from app.filter.util import getCourseDict
+from datetime import datetime
 
 from app.account import connect_redis
 
 
 unique_cache_key_list = []
-use_unique_cache_feature = True
-use_unique_cache_only_for_ai_data = True
+use_unique_cache_feature = False
+use_unique_cache_only_for_ai_data = False
+
+def get_candidate_tags(account_name, account_config):
+    # tags = ["TeachingEducation", "HRRecruitment", "accounts", "Sales", "legal", "softwaredevelopment", "marketing", "customerservice"]
+    r = connect_redis(account_name, account_config)
+
+    tag_map = {
+        "NOT_ASSIGNED" : "No Job Assigned",
+        "softwaredevelopment" : "Software Development",
+        "HRRecruitment" : "HR",
+        "accounts" : "Accounts",
+        "Sales" : "Sales",
+        "legal" : "Legal",
+        "marketing" : "Marketing",
+        "customerservice" : "Customer Service",
+        "TeachingEducation" : "Education",
+    }
+
+    response = []
+
+    classify_tags = []
+
+    # for key in r.scan_iter(): # taking just too long when indexing is going on as key gets added/removed
+    #     print(key)
+    #     if "classify_" in key and "_len" not in key:
+    #         classify_tags.append(key.replace("classify_",""))
+    
+
+    for tag in tag_map.keys():
+        
+        job_profile_data = r.get("classify_" + tag)      
+        if not job_profile_data:
+            job_profile_data_len = 0
+        else:
+            job_profile_data_len = r.get("classify_" + tag + "_len")
+            if job_profile_data_len is None:
+                job_profile_data_len = 0
+            else:
+                job_profile_data_len = int(job_profile_data_len)
+
+    
+        response.append({
+                "active_status": True,
+                "assign_to_all_emails": False,
+                "count": job_profile_data_len,
+                "default": True,
+                "id": len(response),
+                "parent_id": "0",
+                "read": -1,
+                "roundDetails": [],
+                "sequence": 0,
+                "title": tag_map[tag],
+                "unread": -1,
+                "_id": len(response),
+                "key" : tag
+                })
+
+    return sorted(response, key=lambda x: x['count'], reverse=True)
+
 
 def indexAll(account_name, account_config):
     global unique_cache_key_list
@@ -31,7 +90,7 @@ def indexAll(account_name, account_config):
 
     
     unique_cache_key_list = []
-    for key in r.scan_iter():
+    for key in r.scan_iter(match='*on_ai_data*',):
         # key = key.decode("utf-8")
 
         
@@ -193,25 +252,40 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
             def custom_sort_date(item):
-                return item[1]["date"]
+                if "updated_at" in item[1]:    
+                    # 2020-06-17 15:12:44.156000
+                    return datetime.strptime(item[1]["updated_at"], '%Y-%m-%d %H:%M:%S.%f')
+                else:
+                    return -1
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
         
         logger.info("sorted..")
 
     else:
-        def custom_sort(item):
+        if filter_type == "job_profile":    
+            def custom_sort(item):
+                    
+                if "sequence" not in list(item[1].keys()):
+                    logger.info("-1")
+                    return -1
                 
-            if "sequence" not in list(item[1].keys()):
-                logger.info("-1")
-                return -1
-            
-            # logger.info(float(item[1]["sequence"]))
+                # logger.info(float(item[1]["sequence"]))
 
-            return float(item[1]["sequence"])  * -1
+                return float(item[1]["sequence"])  * -1
 
 
-        job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+        else:
+            def custom_sort_date(item):
+                if "updated_at" in item[1]:    
+                    # 2020-06-17 15:12:44.156000
+                    return datetime.strptime(item[1]["updated_at"], '%Y-%m-%d %H:%M:%S.%f')
+                else:
+                    return -1
+
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
+
 
 
     tagged_job_profile_data = {}
@@ -220,8 +294,13 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         if "tag_id" not in row:
             row["tag_id"] = ""
-            
-        tag_id = row["tag_id"]
+
+        if filter_type == "job_profile":    
+            tag_id = row["tag_id"]
+        else:
+            tag_id = mongoid
+
+        
 
         if len(tag_id) == 0:
             continue
@@ -247,7 +326,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     if len(tags) > 0:
         job_profile_data = tagged_job_profile_data
 
-    logger.info(tag_count_map)
+        logger.info("tag count map")
+        logger.info(tag_count_map)
     
     if len(tags) > 0:   
         
@@ -442,6 +522,26 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         logger.info("response completed..")
         response =  json.dumps(paged_tag_map)
 
+        if filter_type != "job_profile":
+            final_data = []
+            final_read = 0
+            final_unread = 0
+            for tag_id in paged_tag_map:
+                data = paged_tag_map[tag_id]["data"]
+                read = paged_tag_map[tag_id]["read"]
+                unread = paged_tag_map[tag_id]["unread"]
+
+                final_data.extend(data)
+                final_read += read
+                final_unread += unread
+
+            response = {
+                "data": final_data,
+                "read" : final_read,
+                "unread" : final_unread
+            }
+            response =  json.dumps(response)
+
         if len(filter) == 0:
             r.set(unique_cache_key, response)
             unique_cache_key_list.append(unique_cache_key)
@@ -485,7 +585,9 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
 
         key = "full_data"
         logger.info("data len %s" , len(data))
-        return generateFilterMap(key, data, account_name, account_config)
+        generateFilterMap(key, data, account_name, account_config)
+        logger.info("idex completed full data")
+        return {}
             
     elif filter_type == "job_profile":
         data = r.get("job_" + mongoid)
@@ -540,7 +642,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             generateFilterMap(tag_id, tag_data_map[tag_id], account_name, account_config)
     
 
-        
+        logger.info("idex completed job profile data")
         return {}
 
 
@@ -567,16 +669,24 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         else:
             dataMap = []
 
+        
+        
+
         data = []
         for dkey in dataMap:
             data.append(dataMap[dkey])
 
         key = mongoid
 
+        r.set("classify_" + mongoid + "_len", len(data))
+        logger.info("adding to key %s", "classify_" + mongoid + "_len")
+
         
 
         logger.info("data len %s" , len(data))
-        return generateFilterMap(key, data, account_name, account_config)
+        generateFilterMap(key, data, account_name, account_config)
+        logger.info("idex completed candidate data")
+        return {}
 
     
 def generateFilterMap(key, data, account_name, account_config):
