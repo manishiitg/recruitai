@@ -299,16 +299,19 @@ def queue_process():
     for account_name in dirtyMap:
         dirtyMap[account_name] = {}
 
-    # logger.info("checking dirty data %s" , localMap)
+    logger.info("checking dirty data %s" , localMap)
     for account_name in localMap:
+        r = connect_redis(account_name, account_config_map[account_name])
+        print(localMap[account_name].keys())
         for key in localMap[account_name]:
 
+            logger.info("keyyyyyyyyyyyyyy %s", key)
             operations = localMap[account_name][key]
             logger.info("updating redis %s" , key)
             logger.info("redis data len %s", len(redisKeyMap[account_name][key]))
-            r = connect_redis(account_name, account_config_map[account_name])
             if operations["redis_dirty"]:
                 r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
+                r.set(key + "_len", len(redisKeyMap[account_name][key]))
                 logger.info("updated redis %s" , key)
 
             if operations["filter_dirty"]:
@@ -333,7 +336,7 @@ def queue_process():
             
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=2.5) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=5) #*2.5
 
 checkin_score_scheduler.start()
 
@@ -448,13 +451,16 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             if "tag_id" not in doc:
                 doc["tag_id"] = ""
 
-            updateFilter({
+            obj = {
                 'tag_id' : doc["tag_id"],
                 "job_profile_id" : doc['job_profile_id'],
                 "action" : "update_unique_cache",
                 "account_name" : account_name,
                 "account_config": account_config
-            })
+            }
+            # Thread(target=updateFilter, args=( obj , )).start()
+            # 
+            updateFilter(obj)
 
     elif findtype == "syncJobProfile":
         logger.info("syncJobProfile")
@@ -537,6 +543,23 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         else:
             # logger.info("job profile not found!!!")
             job_profile_id = None
+
+            mapKey = "classify_NOT_ASSIGNED"
+
+            if mapKey not in redisKeyMap[account_name]:
+                job_data = r.get(mapKey)
+                if job_data is None:
+                    job_data = {}
+            else:
+                job_data = redisKeyMap[account_name][mapKey]
+                
+            job_data[row["_id"]] = row
+            redisKeyMap[account_name][mapKey] = job_data
+
+            dirtyMap[account_name][mapKey] = {
+                "filter_dirty" : True,
+                "redis_dirty" : True
+            }
             
         
 
@@ -639,7 +662,6 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     else:
                         job_profile_data[row["_id"]] = row
 
-                # r.set("job_" + job_profile_id, json.dumps(job_profile_data))
 
                 redisKeyMap[account_name][mapKey] = job_profile_data
 
@@ -654,12 +676,6 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         "filter_dirty" : False
                     }
 
-                # addFilter({
-                #     "id" : job_profile_id,  
-                #     "fetch" : "job_profile",
-                #     "action" : "index"
-                # })
-            
             
             
 
@@ -693,39 +709,6 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     }
 
 
-                    # r.set(mapKey, json.dumps(candidate_data))
-
-                    # addFilter({
-                    #     "id" : candidate_label,
-                    #     "fetch" : "candidate",
-                    #     "action" : "index"
-                    # })
-
-                    # there is one case here. if candidate changes job profile, we need to remove it from previous job as well
-                    # this will be handled via a seperate api
-
-    
-        
-
-    # if findtype == "syncJobProfile":
-    #     if job_profile_id is not None:
-    #         for job_profile_id in job_profile_map:
-    #             logger.info("job profile key %s", "job_" + job_profile_id)
-
-    #             ret = r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
-    #             logger.info(ret)
-
-    #             redisKeyMap["job_" + job_profile_id] = job_profile_map[job_profile_id]
-    #             if "job_" + job_profile_id in dirtyMap:
-    #                 del dirtyMap["job_" + job_profile_id]
-
-    #             logger.info("job profile filter")
-    #             # addFilter({
-    #             #     "id" : job_profile_id,
-    #             #     "fetch" : "job_profile",
-    #             #     "action" : "index"
-    #             # })
-    #             # logger.info("job profile filter completed")
     
 
     logger.info("here")
@@ -736,28 +719,38 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         for job_profile_id in job_profile_map:
             logger.info("filter sync job %s ", job_profile_id)
             r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
-            ret = updateFilter({
-                "id" : job_profile_id,
-                "fetch" : "job_profile",
-                "action" : "index",
-                "account_name" : account_name,
-                "account_config": account_config
-            })
-            redisKeyMap[account_name]["job_" + job_profile_id] = job_profile_map[job_profile_id]
-            logger.info("updating filter %s" , ret)
+            # ret = updateFilter({
+            #     "id" : job_profile_id,
+            #     "fetch" : "job_profile",
+            #     "action" : "index",
+            #     "account_name" : account_name,
+            #     "account_config": account_config
+            # })
+            mapKey = "job_" + job_profile_id
+            dirtyMap[account_name][mapKey] = {
+                "filter_dirty" : True,
+                "redis_dirty" : True
+            }
+            redisKeyMap[account_name][mapKey] = job_profile_map[job_profile_id]
+            logger.info("updating filter %s" , mapKey)
 
         for candidate_label in candidate_map:
             logger.info("filter sync candidate_label %s ", candidate_label)
             r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
-            ret = updateFilter({
-                "id" : candidate_label,
-                "fetch" : "candidate",
-                "action" : "index",
-                "account_name" : account_name,
-                "account_config": account_config
-            })
-            redisKeyMap[account_name]["classify_" + candidate_label] = candidate_map[candidate_label] 
-            logger.info("updating filter %s" , ret)
+            # ret = updateFilter({
+            #     "id" : candidate_label,
+            #     "fetch" : "candidate",
+            #     "action" : "index",
+            #     "account_name" : account_name,
+            #     "account_config": account_config
+            # })
+            mapKey = "classify_" + candidate_label
+            redisKeyMap[account_name][mapKey] = candidate_map[candidate_label] 
+            dirtyMap[account_name][mapKey] = {
+                "filter_dirty" : True,
+                "redis_dirty" : True
+            }
+            logger.info("updating filter %s" , mapKey)
 
         # logger.info("full data filter")
         # addFilter({
@@ -765,7 +758,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         #     "fetch" : "full_data",
         #     "action" : "index"
         # })
-        logger.info("full data completed")
+        logger.info("full data completed %s", dirtyMap)
 
     # for t in threads:
     #     t.join()
@@ -774,8 +767,8 @@ time_map = {}
 
 def addFilter(obj, key, account_name, account_config):
     global dirtyMap
+    global time_map
     ignore = False
-    logger.info(obj)
 
     if obj["action"] == "index":
         if obj["fetch"] not in time_map:
@@ -804,10 +797,10 @@ def addFilter(obj, key, account_name, account_config):
 
     if not ignore:
         # try:
-            # t = Thread(target=updateFilter, args=( obj , ))
-            # t.start()
+        # Thread(target=updateFilter, args=( obj , )).start() giving errors. 
         logger.info("sending to filter mq")
-        updateFilter(obj)
+        ret = updateFilter(obj)
+        logger.info("receieved from filter %s" , ret)
         # except Exception as e:
         #     logger.critical(str(e))
         #     traceback.print_exc(e)
