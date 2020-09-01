@@ -37,6 +37,7 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
 
     
     days = 0
+    
     if "cv_timestamp_seconds" in meta:
         cv_date = meta["cv_timestamp_seconds"]
         priority, days, cur_time = get_resume_priority(meta["cv_timestamp_seconds"])
