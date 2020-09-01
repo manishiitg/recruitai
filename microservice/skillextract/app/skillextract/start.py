@@ -21,7 +21,7 @@ nlp = spacy.load('en')
 from bson.objectid import ObjectId
 
 import redis
-r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
+# r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
 
 
 
@@ -49,6 +49,19 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
         return ""
 
     logger.info("skills %s", findSkills)
+
+    # extra new code. i will expand skills mainly to compensate for space and _
+
+    newFindSkills = []
+    for skill in findSkills:
+        newFindSkills.append(skill)
+        
+        if "_" in skill:
+            newFindSkills.append(skill.replace("_",""))
+        if " " in skill:
+            newFindSkills.append(skill.replace(" ",""))
+    findSkills = newFindSkills
+
 
     model = loadModel()
     data_matrix, word2Vec, word2Idx, word2Line, word2Doc = getWordMatrix(docLines, model)
@@ -94,7 +107,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     closest_dist = 0
     max_closest_dist  = 0
 
-    logger.info(skillVec)
+    # logger.info(skillVec)
 
     if len(skillVec) == 0:
         return "empty skills"
@@ -162,12 +175,14 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
         for matchIdx, distance in  enumerate(nbrs[idx][1]):
             wordIdx = nbrs[idx][0][matchIdx]
             wordIdx2Dist[skill][wordIdx] = distance
+
+            logger.info(distance)
             orgLineIdx  = word2Line[wordIdx]
             orgDocIdx = word2Doc[wordIdx]
 
             if orgDocIdx not in documents:
                 documents[orgDocIdx] = {}
-
+    
             if orgLineIdx not in documents[orgDocIdx]:
                 documents[orgDocIdx][orgLineIdx] = {}
             
@@ -178,10 +193,12 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                 # words.append(word2Idx[wordIdx])
                 logger.info("skill: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])
                 documents[orgDocIdx][orgLineIdx][skill].append(wordIdx)
+            else:
+                logger.info("skill skipped: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])                
 
             if distance <= maxDistSkillThresh:
                 
-                logger.info("max dist thresh skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
+                logger.info("max skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
 
                 if orgDocIdx not in maxSkillDistCount:
                     maxSkillDistCount[orgDocIdx] = {}
@@ -195,10 +212,14 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                 maxSkillDistCount[orgDocIdx][orgLineIdx][skill].append( (wordIdx, distance) )
 
 
-    # print(documents)
-    # print(maxSkillDistCount)
+    print(documents)
+    print("maxskilldist count")
+    print(maxSkillDistCount)
 
     finalSkillList = {}
+
+    ### in this logical we are calculation just the global dist and count for query
+    ### this is only using documents which is based on avg count
 
     for docIdx in range(total_documents):
         finalSkillList[doc2Idx[docIdx]] = {}
@@ -235,6 +256,10 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
                         # print(word2Idx[idx])
         logger.info("global skill dist %s after docidx %s", globalSkillDist, docIdx)
+
+        ### 
+        ## this logic is based on max dist. in this we are seeing which keywords have come in max dist
+        ## nad if these keywords count is more than qty * .5 then we add it skills
         if docIdx in maxSkillDistCount:
             lines = maxSkillDistCount[docIdx]
             for orgLineIdx in lines:
@@ -296,8 +321,8 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                 sortDist[word] = avgDist
 
 
-            sortDist = {k: v for k, v in sorted(sortDist.items(), key=lambda item: item[1]) }
-            logger.info(sortDist)
+            # sortDist = {k: v for k, v in sorted(sortDist.items(), key=lambda item: item) }
+            # logger.info(sortDist) # not working for some reason
             finalSkillList[doc2Idx[docIdx]] = sortDist
 
 
@@ -310,7 +335,13 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     for id in finalSkillList:
         ret[id] = {
             "skill" : finalSkillList[id],
-            "score" : skillScore[id]
+            "score" : skillScore[id],
+            "debug" : {
+                "avg_closest_dist" : avg_closest_dist,
+                "max_closest_dist" : max_closest_dist,
+                "findSkills" : findSkills
+            }
+            
         }
 
     return ret
@@ -498,7 +529,8 @@ def getSampleData(mongoid, account_name, account_config):
                     })
                     row["cvParsedInfo"] = cvParsedInfo
                     r.set(mongoid, json.dumps(row, default=str))
-                
+
+        
 
 
     logger.info("processing data")    
@@ -565,3 +597,35 @@ def getSampleData(mongoid, account_name, account_config):
     return docLines , total_documents, doc2Idx
 
 
+def get_job_criteria(mongoid,account_name, account_config):
+    job_profile_id = None
+    job_criteria_map = {}
+
+    if ObjectId.is_valid(mongoid):
+        db = initDB(account_name, account_config)
+
+        job_profile_rows = db.jobprofiles.find({
+            "active_status": True
+        }) 
+        for job_profile_row in job_profile_rows:
+            critera = None
+            if "criteria" in job_profile_row:
+                critera = job_profile_row["criteria"]
+                if critera is None:
+                    continue
+                if "requiredFormat" in critera:
+                    continue
+
+            job_criteria_map[str(job_profile_row["_id"])] = critera
+
+        row = db.emailStored.find_one({
+            "_id" : ObjectId(mongoid)
+        })
+        if "job_profile_id" in row:
+            job_profile_id = row['job_profile_id']
+            if len(job_profile_id) == 0:
+                job_profile_id = None
+
+
+
+    return job_profile_id, job_criteria_map
