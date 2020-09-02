@@ -14,8 +14,13 @@ def convert_file_to_conll(file):
     # try:
     training_data = []
     lines=[]
+    skipped = 0
 
-    error_candidates_list = ["5ea07aeb873f1f2c0b3661a6"]  #this have some issue in db level
+    error_candidates_list = [
+        "5ea07aeb873f1f2c0b3661a6",
+        '5eae0f126294bf0085672b04',
+        '5ea079cb873f1f2c0b36616d',
+        "5e985c50f754e812f459ce87"]  #this have some issue in db level
     with open(file, 'r') as f:
         lines = f.readlines()
     
@@ -29,28 +34,54 @@ def convert_file_to_conll(file):
         print("-----------------------")
         print(data)
         text = data['line']
-        if "  " in text:
-            # unable to handle double space in a line right now 
-            continue
+        # if "  " in text:
+        #     # unable to handle double space in a line right now 
+        #     skipped += 1
+        #     continue
+
         # text = text.replace(u'\xa0', u' ')
         text = text.encode('ascii', 'replace').decode().replace("?", " ")
-        entities = []
+        entities = {}
         text_length = len(text)
 
         charIdx2Wrd = {} #this will have mapping of idx to a word. so if specific index = 5 and it will tell if it word 0 or 1 or etc
         charIdx = 0
         wordIdx = 0
-        for word in text.split(" "):
-            entities.append( {
-                "word" : word.strip(),
-                "tag" : "O"
-            })
-            for idx in range(len(word)):
-                charIdx2Wrd[charIdx] = wordIdx
-                charIdx+=1
+        wordmake = []
 
-            wordIdx += 1
-            charIdx+=1  # due to space
+        wordList = text.split(" ")
+
+        for char in text:
+            if char == text[len(text) - 1]:
+                charIdx2Wrd[charIdx] = wordIdx
+                wordmake.append(char)
+                if len(wordmake) > 0:
+                    word = "".join(wordmake)
+
+                    entities[wordIdx] = {
+                        "word" : word.strip(),
+                        "tag" : "O"
+                    }
+
+            if char == ' ':
+                if len(wordmake) > 0:
+                    word = "".join(wordmake)
+
+                    entities[wordIdx] = {
+                        "word" : word.strip(),
+                        "tag" : "O"
+                    }
+                    # for idx in range(len(word)):
+                    
+                        # charIdx+=1
+
+                wordIdx += 1
+                wordmake = []
+            else:
+                charIdx2Wrd[charIdx] = wordIdx
+                wordmake.append(char)
+
+            charIdx+=1
 
 
         for annotation in data['tags']:
@@ -103,6 +134,8 @@ def convert_file_to_conll(file):
 
         training_data.append(entities)
 
+
+    print("skipped skipped %s", skipped)
     return training_data
     
 
@@ -134,7 +167,7 @@ def write_lines_file(filename, entities):
     with open(filename, 'a') as the_file:
         for entity in entities:
             for ent in entity:
-                the_file.write(ent["word"] + "  " + ent["tag"] + "\n")
+                the_file.write(entity[ent]["word"] + "  " + entity[ent]["tag"] + "\n")
 
             the_file.write("\n")
 
