@@ -18,7 +18,6 @@ import time
 from app.account import initDB
 from app.account import connect_redis
 
-
 def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
     global redisKeyMap
@@ -80,6 +79,9 @@ def classifyMoved(candidate_id, from_id, to_id, account_name, account_config):
 
 def syncJobProfileChange(candidate_id, from_id, to_id, account_name, account_config):
     moveKey(candidate_id, "job_" + from_id, "job_" + to_id, account_name, account_config)
+
+def classifyJobMoved(candidate_id, from_classify_id, to_job_id, account_name, account_config):
+    moveKey(candidate_id, "classify_" + from_classify_id, "job_" + to_job_id, account_name, account_config)
 
 def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
 
@@ -314,6 +316,21 @@ def queue_process():
                 r.set(key + "_len", len(redisKeyMap[account_name][key]))
                 logger.info("updated redis %s" , key)
 
+                if "classify_" in key:
+                    if r.exists("classify_list"):
+                        classify_list = r.get("classify_list")
+                        classify_list = json.loads(classify_list)
+                    else:
+                        classify_list = []
+                    
+                    classify_list.append(key)
+                    classify_list = list(set(classify_list))
+
+                    # print("[pppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
+                    # print(key)
+                    # print(classify_list)
+                    r.set("classify_list", json.dumps(classify_list))
+
             if operations["filter_dirty"]:
                 if "job_" in key:
                     addFilter({
@@ -332,6 +349,9 @@ def queue_process():
                             "account_config" : account_config_map[account_name]
                         }, key, account_name, account_config_map[account_name])
 
+                    
+                    
+
                 logger.info("job profile filter completed")
             
 
@@ -348,8 +368,8 @@ redisKeyMap = {}
 def init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config):
     account_config_map[account_name] = account_config
 
-    if "mongodb:27017" in account_config["mongodb"]["host"]:
-        account_config["mongodb"]["host"] = account_config["mongodb"]["host"].replace("mongodb:27017","116.202.234.182:27070")
+    # if "mongodb:27017" in account_config["mongodb"]["host"]:
+        # account_config["mongodb"]["host"] = account_config["mongodb"]["host"].replace("mongodb:27017","116.202.234.182:27070")
 
 
     r = connect_redis(account_name, account_config)
@@ -417,7 +437,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         logger.info("field which got updated %s", field)
         if field is not None:
-            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field or "sequence" in field:
+            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field or "sequence" in field or "ex_job_profile":
                 isFilterUpdateNeeded = True
 
 
@@ -504,8 +524,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         # this is wrong. this remove much more data like resume parsed information etc
         redisKeyMap[account_name] = {}
         dirtyMap[account_name] = {}
-        for key in r.scan_iter():
-            if "classify_" in key or "job_" in key or "_filter" in key:
+        for key in r.scan_iter(): #this takes time
+            if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
                 logger.info("delete from redis %s", key)
                 r.delete(key)
                 
@@ -585,9 +605,13 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     candidate_map[candidate_label][row["_id"]] = row
 
-        
+        if "ex_job_profile" in row:
+            candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+            if candidate_label not in candidate_map:
+                candidate_map[candidate_label] = {}
+            candidate_map[candidate_label][row["_id"]] = row
 
-
+            
         full_map[row["_id"]] = row
         if job_profile_id is not None:
             if job_profile_id not in job_profile_map:
@@ -678,7 +702,25 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             
             
+            if "ex_job_profile" in row:
+                candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+                mapKey = "classify_" + candidate_label
+                if mapKey not in redisKeyMap[account_name]:
+                    candidate_data = r.get(mapKey)
+                    if candidate_data:
+                        candidate_data = json.loads(candidate_data)
+                    else:
+                        candidate_data = {}
+                else:
+                    candidate_data = redisKeyMap[account_name][mapKey]
 
+
+                candidate_data[row["_id"]] = row
+                redisKeyMap[account_name][mapKey] = candidate_data
+                dirtyMap[account_name][mapKey] = {
+                    "filter_dirty" : True,
+                    "redis_dirty" : True
+                }
 
             if candidate_label is not None:
                 logger.info("candidate labels %s", candidate_label)
