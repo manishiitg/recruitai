@@ -42,6 +42,28 @@ def stats():
 
     return jsonify({}) , 200
 
+@bp.route('/job-overview/tag/<string:tag_id>', methods=['POST'])
+@check_and_validate_account
+def job_overview(tag_id):
+    
+    try:
+        
+        ret = sendFilterMessage({
+            "action" : "job_overview",
+            "account_name": request.account_name,
+            "account_config" : request.account_config,
+            "tag_id" : tag_id,
+            "url" : request.json["url"],
+            "access_token" : request.json["access_token"]
+        })
+
+        return jsonify(ret), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+
 @bp.route('/filter/get/candidate_score_bulk/<string:id>', methods=['POST'])
 @check_and_validate_account
 def candidate_score_bulk(id):
@@ -317,6 +339,30 @@ def classifyMoved(candidate_id, from_id, to_id):
             "from_id" : from_id,
             "to_id" : to_id,
             "action" : "classifyMoved",
+            "cur_time" : time.time(),
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+
+        return jsonify([]), 200
+    
+    except Exception as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/classify-job-moved/<string:candidate_id>/<string:from_classify_id>/<string:to_job_id>', methods=['GET'])
+@check_and_validate_account
+def classifyJobMoved(candidate_id, from_classify_id, to_job_id):
+    logger.info("got job profile from %s", from_classify_id)
+    logger.info("got job profile to %s", to_job_id)
+
+    try:
+
+        sendMessage({
+            "candidate_id" : candidate_id,
+            "from_classify_id" : from_classify_id,
+            "to_job_id" : to_job_id,
+            "action" : "classifyJobMoved",
             "cur_time" : time.time(),
             "account_name": request.account_name,
             "account_config" : request.account_config
