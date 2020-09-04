@@ -18,7 +18,7 @@ from app.scheduler import startSchedule
 
 import time
 
-from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd
+from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd, classifyJobMoved
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -351,14 +351,13 @@ class TaskQueue(object):
                     doc = body["doc"]
                 else:
                     doc = None
-
-                
-
                 process("syncCandidate", cur_time, body["id"], field, doc, account_name=account_name, account_config=account_config)
             elif action == "syncJobProfileChange":
                 syncJobProfileChange(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
             elif action == "classifyMoved":
                 classifyMoved(body["candidate_id"], body["from_id"], body["to_id"], account_name, account_config)
+            elif action == "classifyJobMoved":
+                classifyJobMoved(body["candidate_id"], body["from_classify_id"], body["to_job_id"], account_name, account_config)
             else:
                 process("full" , cur_time, account_name=account_name, account_config=account_config)
                 
