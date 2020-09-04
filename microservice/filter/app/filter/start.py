@@ -7,10 +7,44 @@ import os
 import redis
 import json
 
+from threading import Thread
+
 from app.filter.util import getCourseDict
 from datetime import datetime
 
 from app.account import connect_redis
+
+import requests
+    
+def get_job_overview(url, tag_id, access_token, redisKey , r):
+    url = url + "tag/" + tag_id + "?accessToken=" + access_token
+    data = requests.get(url)
+    data = data.json()
+    data = json.dumps(data)
+    r.set(redisKey, data)
+    logger.info("updated job overview redis key %s", redisKey)
+
+    return data
+
+def syncTagData(tag_id, url, access_token, account_name, account_config):
+    r = connect_redis(account_name, account_config)
+
+    if url[-1] != "/":
+        url = url + "/"
+
+    redisKey = "jb_" + tag_id + ''.join(e for e in url if e.isalnum())
+
+    if r.exists(redisKey):
+        logger.info("job overview data returned from redis %s", redisKey)
+        t = Thread(target = get_job_overview, args=(url, tag_id, access_token, redisKey , r))
+        t.start()
+        return r.get(redisKey)
+    
+    data = get_job_overview(url, tag_id, access_token, redisKey , r)
+    return data
+
+
+    
 
 
 unique_cache_key_list = []
@@ -37,13 +71,16 @@ def get_candidate_tags(account_name, account_config):
 
     classify_tags = []
 
-    # for key in r.scan_iter(): # taking just too long when indexing is going on as key gets added/removed
-    #     print(key)
-    #     if "classify_" in key and "_len" not in key:
-    #         classify_tags.append(key.replace("classify_",""))
+    classify_list = []
+    if r.exists("classify_list"):
+        classify_list = r.get("classify_list")
+        classify_list = json.loads(classify_list)
     
 
-    for tag in tag_map.keys():
+    # for tag in tag_map.keys():
+    for tag in classify_list:
+
+        tag = tag.replace("classify_","")
         
         job_profile_data = r.get("classify_" + tag)      
         if not job_profile_data:
@@ -55,6 +92,11 @@ def get_candidate_tags(account_name, account_config):
             else:
                 job_profile_data_len = int(job_profile_data_len)
 
+        if tag not in tag_map:
+            if "Ex-" in tag:
+                tag_map[tag] = tag
+            else:
+                tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
     
         response.append({
                 "active_status": True,
@@ -251,14 +293,16 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
+            # if filter_type != 'full':
             def custom_sort_date(item):
-                if "updated_at" in item[1]:    
+                if "created_at" in item[1]:    
                     # 2020-06-17 15:12:44.156000
-                    return datetime.strptime(item[1]["updated_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
                 else:
                     return -1
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
+            
         
         logger.info("sorted..")
 
@@ -278,9 +322,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
             def custom_sort_date(item):
-                if "updated_at" in item[1]:    
+                if "created_at" in item[1]:    
                     # 2020-06-17 15:12:44.156000
-                    return datetime.strptime(item[1]["updated_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
                 else:
                     return -1
 
@@ -352,6 +396,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             logger.info("tag id %s", tags[0])
             ret =  r.get(tags[0] + "_filter")
             if ret is not None:
+                print("here loaded")
                 ret = json.loads(ret)
             else:
                 ret = {}
@@ -360,14 +405,16 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             
         if len(filter) > 0:
             for key in ret:
+                print(key)
                 if key not in filter:
                     continue 
-
+                
+                print("key found in filter" , key)
                 for rangekey in ret[key]:
                     if rangekey not in filter[key]:
                         continue
 
-                    # logger.info("range key %s", rangekey)
+                    logger.info("range key %s", rangekey)
 
                     range = ret[key][rangekey]
                     if "children" not in range:
@@ -381,12 +428,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                         else:
                             child_id = child
 
-                        # logger.info(child_id)
-                        if child_id in paged_candidate_map:
+                        logger.info(child_id)
+                        if child_id in job_profile_data:
                             newChildren.append(child)
                             filter_tag_children[child_id] = job_profile_data[child_id]
                         else:
-                            # logger.info("doesnt exist")
+                            logger.info("doesnt exist")
                             pass
                     
                     # logger.info("new children %s", newChildren)
