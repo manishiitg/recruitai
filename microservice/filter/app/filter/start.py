@@ -21,7 +21,7 @@ def get_job_overview(url, tag_id, access_token, redisKey , r):
     data = requests.get(url)
     data = data.json()
     data = json.dumps(data)
-    r.set(redisKey, data)
+    r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
     logger.info("updated job overview redis key %s", redisKey)
 
     return data
