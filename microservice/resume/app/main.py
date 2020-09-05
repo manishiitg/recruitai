@@ -443,15 +443,17 @@ class TaskQueue(object):
                     "account_config" : account_config,
                     "priority" : message["priority"] 
                 })
-                extractCandidateScore({
-                    "action" : "candidate_score",
-                    "id" : message["mongoid"],
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"] 
-                })
+                if "criteria" in meta:
+                    extractCandidateScore({
+                        "action" : "candidate_score",
+                        "id" : message["mongoid"],
+                        "mongoid" : message["mongoid"],
+                        "filename" : message["filename"],
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
+                        "criteria" : meta["criteria"]
+                    })
 
                 LOGGER.info(" data sync calledddd 121221")
                 datasync({
@@ -513,15 +515,17 @@ class TaskQueue(object):
                 "account_config" : account_config,
                 "priority" : message["priority"] 
             })
-            extractCandidateScore({
-                "action" : "candidate_score",
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "id" : message["mongoid"],
-                "account_name" : account_name,
-                "account_config" : account_config,
-                "priority" : message["priority"] 
-            })
+            if "criteria" in meta:
+                extractCandidateScore({
+                    "action" : "candidate_score",
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
+                    "id" : message["mongoid"],
+                    "account_name" : account_name,
+                    "account_config" : account_config,
+                    "priority" : message["priority"], 
+                    "criteria" : meta["criteria"]
+                })
 
             LOGGER.info(" data sync calledddd")
 
@@ -577,6 +581,10 @@ class TaskQueue(object):
             if "meta" in message:
                 LOGGER.info("sending resume data to nodejs")
                 meta = message["meta"]
+
+                if "criteria" in meta:
+                    del meta["criteria"]
+
                 if "callback_url" in meta:
                     LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
                     message["parsed"] = {
