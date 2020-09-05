@@ -172,12 +172,13 @@ def getSampleData(mongoid, account_name, account_config):
 def get_candidate_score(id, account_name, account_config, criteria = None, candidate_row = None, updated_db = True):
 
     if not ObjectId.is_valid(id):
-        return 0
+        return -1
 
     max_score = 10
 
     if criteria is None:
-        criteria = getSampleCriteria()
+        # criteria = getSampleCriteria()
+        return -1
 
     candidate_score = 0
     full_debug = []
