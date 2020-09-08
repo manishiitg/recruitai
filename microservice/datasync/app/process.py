@@ -3,6 +3,7 @@ from threading import Thread
 
 from app.publishsearch import sendMessage
 from app.publishfilter import sendBlockingMessage as updateFilter
+from app.publishresume import sendMessage as sendResumeMessage
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -357,12 +358,100 @@ def queue_process():
                     
 
                 logger.info("job profile filter completed")
+
+
+def check_ai_missing_data(account_name, account_config):
+    logger.info("checking ai missing data")
+    # some time randomly. few cv's are missing ai data. so checking them here and adding them ai data
+
+    logger.info("check missing ai data")
+
+    db = initDB(account_name, account_config)
+    ret = db.emailStored.find({ 
+            "cvParsedAI" : { "$exists" : False },
+            # "attachment" : {  }
+        },
+        {"body": 0, "cvParsedInfo.debug": 0}
+    )
+
+    job_profile_rows = db.jobprofiles.find({
+        "active_status": True
+    }) 
+
+    job_criteria_map = {}
+    for job_profile_row in job_profile_rows:
+        criteria = None
+        if "criteria" in job_profile_row:
+            criteria = job_profile_row["criteria"]
+            if criteria is None:
+                continue
+
+            if "requiredFormat" in criteria:
+                continue
             
+            findSkills = []
+
+            if "skills" in criteria:
+                for value in criteria['skills']["values"]:
+                    findSkills.append(value["value"])
+
+        job_criteria_map[str(job_profile_row["_id"])] = {
+            "criteria" : criteria,
+            "skills" : findSkills
+        }
+
+
+    for row in ret:
+        logger.info("found candidate %s", row["_id"])
+        if "attachment" in row:
+            if len(row["attachment"]) > 0:
+                if "attachment" in row["attachment"][0]:
+                    if "publicFolder" in row["attachment"][0]["attachment"]:
+                        mongoid = str(row["_id"])
+                        filename = row["attachment"][0]["attachment"]["publicFolder"]
+
+                        meta = {
+                            "filename": fileName,
+                            "mongoid": mongoid,
+                            cv_timestamp_seconds: row["email_timestamp"] / 1000
+                        }
+                        if "job_profile_id" in row:
+                            if len(row["job_profile_id"]) > 0:
+                                job_profile_id = row["job_profile_id"]
+                                skills = job_criteria_map[job_profile_id]["skills"]
+                                meta["criteria"] = job_criteria_map[job_profile_id]["criteria"]
+                            else:
+                                skills = []
+
+                        else:
+                            skills = []
+
+                        priority = 5
+                        logger.info("sending to ai parsing %s", row["_id"])
+                        sendResumeMessage({
+                            "filename" : filename,
+                            "mongoid" : mongoid,
+                            "skills" : skills,
+                            "meta" : meta,
+                            "priority" : priority,
+                            "account_name": account_name,
+                            "account_config" : account_config
+                        })
+                    else:
+                        logger.info("attachment not proper for id %s", row["_id"])
+                else:
+                    logger.info("attachment not proper for id %s", row["_id"])
+
+    pass
 
 checkin_score_scheduler = BackgroundScheduler()
 checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=5) #*2.5
+# checkin_score_scheduler.add_job(check_ai_missing_data, trigger='interval', seconds=60 * 60) 
+# this will be called from frontend as we don't have db information etc without frontend.
 
 checkin_score_scheduler.start()
+
+
 
 
 
