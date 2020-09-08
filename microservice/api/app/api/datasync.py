@@ -42,19 +42,22 @@ def stats():
 
     return jsonify({}) , 200
 
-@bp.route('/job-overview/tag/<string:tag_id>', methods=['POST'])
+
+@bp.route('/speedup', methods=['POST'])
 @check_and_validate_account
-def job_overview(tag_id):
+def speed_up():
     
     try:
+        if "payload" not in request.json:
+            request.json["payload"] = {}
         
         ret = sendFilterMessage({
-            "action" : "job_overview",
+            "action" : "speed_up",
             "account_name": request.account_name,
             "account_config" : request.account_config,
-            "tag_id" : tag_id,
             "url" : request.json["url"],
-            "access_token" : request.json["access_token"]
+            "access_token" : request.json["access_token"],
+            "payload" : request.json["payload"]
         })
 
         return jsonify(ret), 200
@@ -62,6 +65,28 @@ def job_overview(tag_id):
     except KeyError as e:
         logger.critical(e)
         return jsonify(str(e)), 500
+
+
+# @bp.route('/job-overview/tag/<string:tag_id>', methods=['POST'])
+# @check_and_validate_account
+# def job_overview(tag_id):
+    
+#     try:
+        
+#         ret = sendFilterMessage({
+#             "action" : "job_overview",
+#             "account_name": request.account_name,
+#             "account_config" : request.account_config,
+#             "tag_id" : tag_id,
+#             "url" : request.json["url"],
+#             "access_token" : request.json["access_token"]
+#         })
+
+#         return jsonify(ret), 200
+    
+#     except KeyError as e:
+#         logger.critical(e)
+#         return jsonify(str(e)), 500
 
 
 @bp.route('/filter/get/candidate_score_bulk/<string:id>', methods=['POST'])

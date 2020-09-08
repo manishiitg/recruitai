@@ -37,7 +37,7 @@ def sendBlockingMessage(obj):
         channel.basic_publish(
             exchange=EXCHANGE, routing_key=ROUTING_KEY, body=message.encode(),
             properties=pika.BasicProperties(reply_to="amq.rabbitmq.reply-to",expiration='300'))
-
+    
         logger.info("sent: %s", message)
 
         for (method, properties, body) in channel.consume(
