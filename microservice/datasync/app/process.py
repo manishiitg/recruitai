@@ -258,7 +258,11 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
     dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
 
     logger.info("bulk delete job profile %s", job_profile_id)
-    mapKey = "job_" + job_profile_id
+    if ObjectId.is_valid(job_profile_id):
+        mapKey = "job_" + job_profile_id
+    else:
+        mapKey = "classify_" + job_profile_id
+
     if mapKey not in redisKeyMap[account_name]:
         job_profile_data = r.get(mapKey)
         if job_profile_data:
