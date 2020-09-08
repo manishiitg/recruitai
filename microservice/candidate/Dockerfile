@@ -23,4 +23,12 @@ RUN pip install scipy
 RUN pip install spacy
 RUN python -m spacy download en
 
+ENV TZ=Asia/Kolkata
+RUN echo $TZ > /etc/timezone && \
+apt-get update && apt-get install -y tzdata && \
+rm /etc/localtime && \
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+dpkg-reconfigure -f noninteractive tzdata && \
+apt-get clean
+
 CMD ["/usr/bin/supervisord"]
