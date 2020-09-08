@@ -27,6 +27,20 @@ import random
 def config():
     return jsonify(request.account_config) , 200
 
+@bp.route("/check_missing_ai_data", methods=["GET"])
+@check_and_validate_account
+def check_missing_ai_data():
+    sendMessage({
+        "action" : "check_missing_ai_data",
+        "account_name": request.account_name,
+        "account_config" : request.account_config
+    })
+
+    return jsonify(""), 200
+
+    
+
+
 @bp.route("/stats" , methods=["GET"])
 @check_and_validate_account
 def stats():
