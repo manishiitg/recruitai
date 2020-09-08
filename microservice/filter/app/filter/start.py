@@ -15,40 +15,74 @@ from datetime import datetime
 from app.account import connect_redis
 
 import requests
-    
-def get_job_overview(url, tag_id, access_token, redisKey , r):
-    url = url + "tag/" + tag_id + "?accessToken=" + access_token
-    data = requests.get(url)
-    data = data.json()
-    data = json.dumps(data)
-    r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
-    logger.info("updated job overview redis key %s", redisKey)
+import hashlib   
 
+def get_speedup_api(redisKey, url, payload, access_token, account_name, account_config):
+
+    
+    r = connect_redis(account_name, account_config)
+    if len(payload) == 0:
+        logger.info("get request to %s", url)
+        data = requests.get(url + "?accessToken=" + access_token)
+        data = data.json()
+        data = json.dumps(data)
+    else:
+        logger.info("post request to %s with payload %s", url, payload)
+        data = requests.post(url + "?accessToken=" + access_token , data = payload)
+        data = data.json()
+        data = json.dumps(data)
+
+    logger.info("updating redis data for get speed up api")
+    r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
     return data
 
-def syncTagData(tag_id, url, access_token, account_name, account_config):
+def general_api_speed_up(url, payload, access_token, account_name, account_config):
+
+    redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8')  ).hexdigest()
     r = connect_redis(account_name, account_config)
-
-    if url[-1] != "/":
-        url = url + "/"
-
-    redisKey = "jb_" + tag_id + ''.join(e for e in url if e.isalnum())
-
     if r.exists(redisKey):
-        logger.info("job overview data returned from redis %s", redisKey)
-        t = Thread(target = get_job_overview, args=(url, tag_id, access_token, redisKey , r))
+        logger.info("speed up data returned from redis %s", redisKey)
+        t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
         t.start()
         return r.get(redisKey)
     
-    data = get_job_overview(url, tag_id, access_token, redisKey , r)
+    data = get_speedup_api(redisKey, url, payload, access_token, account_name, account_config)
     return data
+
+
+# def get_job_overview(url, tag_id, access_token, redisKey , r):
+#     url = url + "tag/" + tag_id + "?accessToken=" + access_token
+#     data = requests.get(url)
+#     data = data.json()
+#     data = json.dumps(data)
+#     r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
+#     logger.info("updated job overview redis key %s", redisKey)
+
+#     return data
+
+# def syncTagData(tag_id, url, access_token, account_name, account_config):
+#     r = connect_redis(account_name, account_config)
+
+#     if url[-1] != "/":
+#         url = url + "/"
+
+#     redisKey = "jb_" + tag_id + ''.join(e for e in url if e.isalnum())
+
+#     if r.exists(redisKey):
+#         logger.info("job overview data returned from redis %s", redisKey)
+#         t = Thread(target = get_job_overview, args=(url, tag_id, access_token, redisKey , r))
+#         t.start()
+#         return r.get(redisKey)
+    
+#     data = get_job_overview(url, tag_id, access_token, redisKey , r)
+#     return data
 
 
     
 
 
 unique_cache_key_list = []
-use_unique_cache_feature = False
+use_unique_cache_feature = True
 use_unique_cache_only_for_ai_data = False
 
 def get_candidate_tags(account_name, account_config):
