@@ -63,20 +63,31 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    blob = bucket.blob(filename)
 
-    Path(dest).mkdir(parents=True, exist_ok=True)
-    filename, file_extension = os.path.splitext(filename)
+    file_found = False
+    
+    blobs=list(bucket.list_blobs(prefix=account_name))
+    for blob in blobs:
+        if blob.name == account_name + "/" + filename:
+            # blob = bucket.blob(filename) # from nodejs we uploading inside a folder called account_name
+            file_found = True
+            Path(dest).mkdir(parents=True, exist_ok=True)
+            filename, file_extension = os.path.splitext(filename)
 
-    cvfilename = ''.join(
-        e for e in filename if e.isalnum()) + file_extension
-    cvdir = ''.join(e for e in cvfilename if e.isalnum())
-    try:
-        blob.download_to_filename(os.path.join(dest, cvfilename))
-    except  Exception as e:
-        logger.critical(str(e))
-        traceback.print_exc(file=sys.stdout)
-        return {"error" : str(e)}
+            cvfilename = ''.join(
+                e for e in filename if e.isalnum()) + file_extension
+            cvdir = ''.join(e for e in cvfilename if e.isalnum())
+            try:
+                blob.download_to_filename(os.path.join(dest, cvfilename))
+            except  Exception as e:
+                logger.critical(str(e))
+                traceback.print_exc(file=sys.stdout)
+                return {"error" : str(e)}
+
+            break
+
+    if not file_found:
+        return {"error" : "file not found"}
 
 
     org_cv_filename = cvfilename
@@ -101,7 +112,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
 
             if os.path.exists(os.path.join(dest, filename)):
                 # -n to skip existing
-                x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+                x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
                 logger.info(x)
 
         except CalledProcessError as e:
@@ -134,7 +145,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
     if "error" in finalImages:
         return finalImages
     
-    GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
+    GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name
 
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")
