@@ -71,6 +71,7 @@ def update_resume_time_analysis(resume_unique_key, time_analysis, mongoid, parsi
 def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account_config):
     db = initDB(account_name, account_config)
 
+
     resume_unique_key = resume_unique_key.split(".")[0]
     # incase of file .docx gets converted .pdf which causes issues
 
@@ -122,6 +123,9 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
             stage["time_spent"] = -1
             for key in list(oldstage.keys()):
                 if key == name + "_start":
+                    if "time" not in oldstage[key]:
+                        oldstage[key]["time"] = 0  # this should not happen at all. dont why its happening
+
                     stage["time_spent"] = stage["time"] - oldstage[key]["time"]
                     break
         else:
@@ -131,7 +135,7 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
 
         resume_processing_time = 0
         queue_waiting = 0
-        if len(oldstage) > 1:
+        if len(oldstage) > 1 and "queue" in oldstage:
             if "image_start" in oldstage:
                 queue_waiting = oldstage["image_start"]["time"] - oldstage["queue"]["time"]
                 resume_processing_time = stage["time"] - oldstage["image_start"]["time"]

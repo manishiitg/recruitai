@@ -18,7 +18,7 @@ from app.scheduler import startSchedule
 
 import time
 
-from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd, classifyJobMoved
+from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd, classifyJobMoved, check_ai_missing_data
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -318,7 +318,10 @@ class TaskQueue(object):
 
         if "action" in body:
             action = body["action"]
-            if action == "syncJobProfile":
+            LOGGER.info("action recieved %s", action)
+            if action == "check_missing_ai_data":
+                check_ai_missing_data(account_name, account_config)
+            elif action == "syncJobProfile":
                 process("syncJobProfile", cur_time, body["id"])
             elif action == "bulk_delete":
                 

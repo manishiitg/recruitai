@@ -97,7 +97,7 @@ def savePDFAsImage(cv, output_dir , account_name, account_config):
             break
             # max5 pages per cv or it could some wrong document also. ie non cv
     # -n to skip existing
-    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(output_dir2) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
     logger.info(x)
 
     return finalPages, output_dir2
