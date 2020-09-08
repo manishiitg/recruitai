@@ -107,12 +107,18 @@ def thread_task( conn, ch, method_frame, properties, body):
 
                                 retSkill = extractSkill(findSkills, mongoid, False, account_name, account_config)
                                 avg_value = 0
-                                for key in retSkill[mongoid]["skill"]:
-                                    avg_value += retSkill[mongoid]["skill"][key]
+                                if mongoid in retSkill:
+                                    for key in retSkill[mongoid]["skill"]:
+                                        avg_value += retSkill[mongoid]["skill"][key]
 
-                                retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
-
-                                ret[job_id] = retSkill[mongoid]
+                                    if len(retSkill[mongoid]["skill"]) > 0:
+                                        retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
+                                    else:
+                                        retSkill[mongoid]["avg"] = 0
+                                        
+                                    ret[job_id] = retSkill[mongoid]
+                                else:
+                                    ret[job_id] = {} 
                             
                             ret = json.dumps(ret,default=str)
 
