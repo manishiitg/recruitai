@@ -321,7 +321,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 def uploadToGcloud(basePath,basecv, account_name, account_config):
   RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
   #  -n
-  x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET], shell=True)
+  x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
   logger.info(x)
 
 def cleanContent(content , cvpage , jsonOutput):
