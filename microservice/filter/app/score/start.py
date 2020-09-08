@@ -447,6 +447,9 @@ def getSkillScore(criteria, row, total_weight, max_score):
     debug = []
     if "skills" not in criteria:
         return candidate_score, debug
+    
+    if "weight" not in criteria["skills"]:
+        criteria["skills"]['weight'] = 0
 
     if criteria["skills"]["weight"] > 0:
       logger.info("skill Score Criteria %s"  %  json.dumps(criteria["skills"], indent=True))
