@@ -608,7 +608,7 @@ def get_job_criteria(mongoid,account_name, account_config):
             "active_status": True
         }) 
         for job_profile_row in job_profile_rows:
-            critera = None
+            critera = {}
             if "criteria" in job_profile_row:
                 critera = job_profile_row["criteria"]
                 if critera is None:
