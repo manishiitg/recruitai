@@ -399,7 +399,7 @@ class ReconnectingTaskQueue(object):
     """
 
     def __init__(self, amqp_url):
-        self._reconnect_delay = 0
+        self._reconnect_delay = 100
         self._amqp_url = amqp_url
         self._consumer = TaskQueue(self._amqp_url)
 
