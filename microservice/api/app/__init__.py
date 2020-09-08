@@ -13,6 +13,8 @@ from app import token
 jwt = token.init_token()
 
 from app.scheduler import process_resumes
+import json
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -36,7 +38,7 @@ def create_app(test_config=None):
 
     @app.errorhandler(400)
     def not_found(error):
-        return make_response(jsonify(error='Not found'), 400)
+        return make_response(jsonify(json.dumps(error, default=str)), 400)
 
     @app.errorhandler(500)
     def error_500(error):
