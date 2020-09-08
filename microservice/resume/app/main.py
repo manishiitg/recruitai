@@ -407,11 +407,15 @@ class TaskQueue(object):
                     if skills is None:
                         skills = ""
 
+                    if not isinstance(skills, list):
+                        skills = skills.split(",")
+
+
                     skillExtracted =  extractSkillMessage({
                         "action" : "extractSkill",
                         "mongoid" : message["mongoid"],
                         "filename" : message["filename"],
-                        "skills" : skills.split(","),
+                        "skills" : skills,
                         "meta" : meta,
                         "account_name" : account_name,
                         "account_config" : account_config
@@ -481,12 +485,15 @@ class TaskQueue(object):
             if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
                 if skills is None:
                     skills = ""
+                if not isinstance(skills, list):
+                    skills = skills.split(",")
+
                     
                 skillExtracted =  extractSkillMessage({
                     "action" : "extractSkill",
                     "mongoid" : message["mongoid"],
                     "filename" : message["filename"],
-                    "skills" : skills.split(","),
+                    "skills" : skills,
                     "meta" : meta,
                     "account_name" : account_name,
                     "account_config" : account_config

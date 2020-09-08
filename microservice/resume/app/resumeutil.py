@@ -47,17 +47,30 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-        blob = bucket.blob(filename)
 
-        Path(dest).mkdir(parents=True, exist_ok=True)
+        file_found = False
+        blobs=list(bucket.list_blobs(prefix=account_name))
+        for blob in blobs:
+            if blob.name == account_name + "/" + filename:
+                # blob = bucket.blob(filename) # from nodejs we uploading inside a folder called account_name
+                file_found = True
+                Path(dest).mkdir(parents=True, exist_ok=True)
+                filename, file_extension = os.path.splitext(filename)
 
-        try:
-            blob.download_to_filename(os.path.join(dest, filename))
-            logger.info("file downloaded at %s", os.path.join(dest, filename))
-        except  Exception as e:
-            logger.critical(str(e))
-            traceback.print_exc(file=sys.stdout)
-            return {"error" : str(e)}
+                # blob = bucket.blob(filename)
+
+                Path(dest).mkdir(parents=True, exist_ok=True)
+
+                try:
+                    blob.download_to_filename(os.path.join(dest, filename))
+                    logger.info("file downloaded at %s", os.path.join(dest, filename))
+                except  Exception as e:
+                    logger.critical(str(e))
+                    traceback.print_exc(file=sys.stdout)
+                    return {"error" : str(e)}
+
+        if not file_found:
+            return {"error" : "file not found"}
 
         db = initDB(account_name, account_config)
         
@@ -187,7 +200,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         timer = time.time()
 
         newCompressedStructuredContent = {}
-        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
+        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name
 
         for pageno in combinData["compressedStructuredContent"].keys():
             pagerows = combinData["compressedStructuredContent"][pageno]
