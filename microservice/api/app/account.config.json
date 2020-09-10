@@ -5,8 +5,8 @@
             "db" : "excellence_recruit"
         },
         "google_cloud" : {
-            "bucket" : "excellencerecruitai.excellencetechnologies.in",
-            "url" : "https://excellencerecruitai.excellencetechnologies.in/"
+            "bucket" : "airecruitai.excellencetechnologies.in",
+            "url" : "https://airecruitai.excellencetechnologies.in/"
         },
         "redis" : {
             "host" : "redis",
@@ -26,8 +26,8 @@
             "db" : "hr_recruit_dev"
         },
         "google_cloud" : {
-            "bucket" : "staticrecruitai.excellencetechnologies.in",
-            "url" : "https://staticrecruitai.excellencetechnologies.in/"
+            "bucket" : "airecruitai.excellencetechnologies.in",
+            "url" : "https://airecruitai.excellencetechnologies.in/"
         },
         "redis" : {
             "host" : "redis",
@@ -47,8 +47,8 @@
             "db" : "staging_recruit"
         },
         "google_cloud" : {
-            "bucket" : "staticrecruitai.excellencetechnologies.in",
-            "url" : "https://staticrecruitai.excellencetechnologies.in/"
+            "bucket" : "airecruitai.excellencetechnologies.in",
+            "url" : "https://airecruitai.excellencetechnologies.in/"
         },
         "redis" : {
             "host" : "redis",
