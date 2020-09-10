@@ -47,30 +47,15 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-
-        file_found = False
-        blobs=list(bucket.list_blobs(prefix=account_name))
-        for blob in blobs:
-            if blob.name == account_name + "/" + filename:
-                # blob = bucket.blob(filename) # from nodejs we uploading inside a folder called account_name
-                file_found = True
-                Path(dest).mkdir(parents=True, exist_ok=True)
-                filename, file_extension = os.path.splitext(filename)
-
-                # blob = bucket.blob(filename)
-
-                Path(dest).mkdir(parents=True, exist_ok=True)
-
-                try:
-                    blob.download_to_filename(os.path.join(dest, filename))
-                    logger.info("file downloaded at %s", os.path.join(dest, filename))
-                except  Exception as e:
-                    logger.critical(str(e))
-                    traceback.print_exc(file=sys.stdout)
-                    return {"error" : str(e)}
-
-        if not file_found:
-            return {"error" : "file not found"}
+        blob = bucket.blob(account_name + "/" + filename)
+        Path(dest).mkdir(parents=True, exist_ok=True)
+        try:
+            blob.download_to_filename(os.path.join(dest, filename))
+            logger.info("file downloaded at %s", os.path.join(dest, filename))
+        except  Exception as e:
+            logger.critical(str(e))
+            traceback.print_exc(file=sys.stdout)
+            return {"error" : str(e)}
 
         db = initDB(account_name, account_config)
         
@@ -100,7 +85,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 response, basePath, timeAnalysis, predictions, jsonOutputbbox, page_contents = processAPI(os.path.join(dest, filename), account_name, account_config)
             except Exception as e:
                 return {
-                    "error": str(e)
+                    "error": "type2" + str(e) 
                 }
 
             logger.info("========================================== time analysis ==========================================")
@@ -200,7 +185,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         timer = time.time()
 
         newCompressedStructuredContent = {}
-        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name
+        GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name + "/"
 
         for pageno in combinData["compressedStructuredContent"].keys():
             pagerows = combinData["compressedStructuredContent"][pageno]
