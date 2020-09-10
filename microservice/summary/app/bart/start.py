@@ -45,7 +45,7 @@ def process(filename, mongoid, account_name, account_config):
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    blob = bucket.blob(filename)
+    blob = bucket.blob(account_name + "/" + filename)
 
     Path(dest).mkdir(parents=True, exist_ok=True)
 
