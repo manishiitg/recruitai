@@ -63,31 +63,45 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
+    blob = bucket.blob(account_name + "/" + filename)
 
-    file_found = False
+    Path(dest).mkdir(parents=True, exist_ok=True)
+    filename, file_extension = os.path.splitext(filename)
+
+    cvfilename = ''.join(
+        e for e in filename if e.isalnum()) + file_extension
+    cvdir = ''.join(e for e in cvfilename if e.isalnum())
+    try:
+        blob.download_to_filename(os.path.join(dest, cvfilename))
+    except  Exception as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return {"error" : str(e)}
+
+    # file_found = False
     
-    blobs=list(bucket.list_blobs(prefix=account_name))
-    for blob in blobs:
-        if blob.name == account_name + "/" + filename:
-            # blob = bucket.blob(filename) # from nodejs we uploading inside a folder called account_name
-            file_found = True
-            Path(dest).mkdir(parents=True, exist_ok=True)
-            filename, file_extension = os.path.splitext(filename)
+    # blobs=list(bucket.list_blobs(prefix=account_name))
+    # for blob in blobs:
+    #     if blob.name == account_name + "/" + filename:
+    #         # blob = bucket.blob(filename) # from nodejs we uploading inside a folder called account_name
+    #         file_found = True
+    #         Path(dest).mkdir(parents=True, exist_ok=True)
+    #         filename, file_extension = os.path.splitext(filename)
 
-            cvfilename = ''.join(
-                e for e in filename if e.isalnum()) + file_extension
-            cvdir = ''.join(e for e in cvfilename if e.isalnum())
-            try:
-                blob.download_to_filename(os.path.join(dest, cvfilename))
-            except  Exception as e:
-                logger.critical(str(e))
-                traceback.print_exc(file=sys.stdout)
-                return {"error" : str(e)}
+    #         cvfilename = ''.join(
+    #             e for e in filename if e.isalnum()) + file_extension
+    #         cvdir = ''.join(e for e in cvfilename if e.isalnum())
+    #         try:
+    #             blob.download_to_filename(os.path.join(dest, cvfilename))
+    #         except  Exception as e:
+    #             logger.critical(str(e))
+    #             traceback.print_exc(file=sys.stdout)
+    #             return {"error" : str(e)}
 
-            break
+    #         break
 
-    if not file_found:
-        return {"error" : "file not found"}
+    # if not file_found:
+    #     return {"error" : "file not found"}
 
 
     org_cv_filename = cvfilename
@@ -145,7 +159,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
     if "error" in finalImages:
         return finalImages
     
-    GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name
+    GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config) + account_name + "/"
 
     for idx, img in enumerate(finalImages):
         finalImages[idx] = img.replace(output_dir2 + "/", GOOGLE_BUCKET_URL + cvdir + "/")

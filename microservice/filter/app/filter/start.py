@@ -284,6 +284,10 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     
     if job_profile_data:
         job_profile_data = json.loads(job_profile_data)
+        if job_profile_data is None:
+            job_profile_data = {}
+        if isinstance(job_profile_data, list):
+            job_profile_data = {}
     else:
         job_profile_data = {}   
 
@@ -353,6 +357,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 return float(item[1]["sequence"])  * -1
 
 
+            print(job_profile_data)
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
             def custom_sort_date(item):
