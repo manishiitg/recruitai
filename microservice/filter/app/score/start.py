@@ -257,6 +257,9 @@ def getExpScore(criteria, row, total_weight, max_score):
         debug.append("experiance not found")
         return candidate_score, debug
 
+    if "weight" not in criteria["experiance"]:
+        criteria["experiance"]['weight'] = 0
+
     if criteria["experiance"]["weight"] > 0:
         logger.info("Work experiance critera %s", json.dumps(criteria["experiance"], indent=True))
         debug.append("Work Experiance Criteria %s" % json.dumps(criteria["experiance"], indent=True))
@@ -360,6 +363,9 @@ def getEducationScore(criteria, row, total_weight, max_score):
 
     if "education" not in criteria:
         return candidate_score, debug
+
+    if "weight" not in criteria["education"]:
+        criteria["education"]['weight'] = 0
 
     if criteria["education"]["weight"] > 0:
         debug_str = "Education Score Criteria {}".format(json.dumps(criteria["education"], indent=True))
