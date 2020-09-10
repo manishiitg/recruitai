@@ -68,7 +68,7 @@ def processAPI(output_dir, namenonum, account_name, account_config):
     logger.info("pic found %s", imageFile)
     if imageFile:
         RESUME_UPLOAD_BUCKET  = get_cloud_bucket(account_name, account_config)
-        x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + namenonum + "/picture"], shell=True)
+        x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name + "/" + namenonum + "/picture"], shell=True)
         logger.info(x)
 
     return imageFile , output_dir
