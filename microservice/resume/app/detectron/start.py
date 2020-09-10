@@ -89,6 +89,7 @@ def test():
 def processAPI(file, account_name, account_config, maxPage = False):
 
 
+  
   filestoparse = [{
         "file" : file,
         "id" : -1
@@ -145,10 +146,13 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
     logger.info("final file name %s" , cv)
     output_dir = os.path.join(basePath,''.join(e for e in basecv if e.isalnum()))
+    # os.remove()
     shutil.rmtree(output_dir,ignore_errors = True)
     
     start_time = time.time()
+    logger.debug("convert pdf to image starting")
     covertPDFToImage(cv, output_dir, cvfilename , logger)
+    print("convert pdf to image")
     timeAnalysis[fileIdx]["image_to_pdf"] = time.time() - start_time
 
 
