@@ -389,7 +389,7 @@ def download_viz_file(candidate_id, page):
     cloud_url = get_cloud_url(request.account_name, request.account_config)
 
     bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    blob = bucket.blob(row["cvimage"]["images"][page].replace(cloud_url,""))
+    blob = bucket.blob(account_name + "/" + row["cvimage"]["images"][page].replace(cloud_url,""))
 
     Path(dest).mkdir(parents=True, exist_ok=True)
 
