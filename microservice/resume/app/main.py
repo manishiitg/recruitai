@@ -395,7 +395,7 @@ class TaskQueue(object):
                 return
         
         is_cache = False
-        if r.exists(key): # turning of cache because testing with ai models
+        if r.exists(key) and False: # turning of cache because testing with ai models
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
@@ -594,12 +594,14 @@ class TaskQueue(object):
 
                 if "callback_url" in meta:
                     LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
+                    
                     message["parsed"] = {
                         "cvParsedInfo": ret,
                         "cvParsedAI": not isError,
                         "updatedTime" : datetime.now()
                     }
                     meta["message"] = json.loads(json.dumps(message, default=str))
+                    LOGGER.info(meta)
                     x = requests.post(meta["callback_url"], json=meta)
                     LOGGER.info(x.text)
 
