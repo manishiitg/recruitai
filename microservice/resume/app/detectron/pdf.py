@@ -10,9 +10,11 @@ def covertPDFToImage(cv, output_dir, cvfilename, logger):
     if len(pages) >= 20:
         raise Exception("too many pages not a cv " + str(len(pages)))
 
-
+    
+    logger.debug("creating output dir %s", output_dir)
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     # cvnonum = ''.join(e for e in cvfilename if e.isalnum())
+    logger.debug("len of pages %s", len(pages))
     for i, page in enumerate(pages):
         # logger.info(cv)
         subpagecvfilename = os.path.join(
