@@ -663,6 +663,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 job_data = r.get(mapKey)
                 if job_data is None:
                     job_data = {}
+                else:
+                    job_data = json.loads(job_data)
             else:
                 job_data = redisKeyMap[account_name][mapKey]
                 
@@ -759,8 +761,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 mapKey = "job_" + job_profile_id
                 if mapKey not in redisKeyMap[account_name]:
                     job_profile_data = r.get(mapKey)
+                    
+
                     if job_profile_data:
                         job_profile_data = json.loads(job_profile_data)
+                        if isinstance(job_profile_data, list):
+                            job_profile_data = {}
                     else:
                         job_profile_data = {}
                 else:
