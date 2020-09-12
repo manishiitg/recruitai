@@ -59,17 +59,17 @@ logger.debug(device)
 
 
 def processAPI(output_dir, namenonum, account_name, account_config):
-    logger.info("start picture identify on %s", output_dir)
+    logger.critical("start picture identify on %s", output_dir)
     
-    logger.info("output dir %s", output_dir)
+    logger.critical("output dir %s", output_dir)
     # finalImages, output_dir2 = 
     predictor, cfg = loadTrainedModel()
     imageFile = process(output_dir, predictor, cfg)
-    logger.info("pic found %s", imageFile)
+    logger.critical("pic found %s", imageFile)
     if imageFile:
         RESUME_UPLOAD_BUCKET  = get_cloud_bucket(account_name, account_config)
         x = subprocess.check_call(['gsutil -m cp -r ' + output_dir + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name + "/" + namenonum + "/picture"], shell=True)
-        logger.info(x)
+        logger.critical(x)
 
     return imageFile , output_dir
 
@@ -91,7 +91,7 @@ def loadTrainedModel():
 def process(output_dir, predictor, cfg):
     files = os.listdir(output_dir)
     file = os.path.join(output_dir, files[0])
-    logger.info("reading file %s", file)
+    logger.critical("reading file %s", file)
 
     filename = os.path.join(output_dir, file)
     im = cv2.imread(filename)
@@ -134,7 +134,7 @@ def process(output_dir, predictor, cfg):
     for idx, mask in enumerate(masks):
         classname = thing_classes[int(classes[idx].cpu())]
         score = scores[idx]
-        logger.info("class name found %s", classname)
+        logger.critical("class name found %s", classname)
 
         if classname == "person":
 
@@ -171,7 +171,7 @@ def process(output_dir, predictor, cfg):
             fullname, file_extension = os.path.splitext(file)
             finalfilename = os.path.join("", fullname + "_" + str(idx) +
                                          "_" + str(classname) + "_" + str(score.item()) + ".png")
-            logger.info("writing image %s", finalfilename)
+            logger.critical("writing image %s", finalfilename)
             cv2.imwrite(finalfilename, nimg)
             finalPicImage = finalfilename
 
