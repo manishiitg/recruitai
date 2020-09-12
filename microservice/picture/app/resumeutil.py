@@ -39,16 +39,19 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
         Path(dest).mkdir(parents=True, exist_ok=True)
         
 
-        logger.info("downloading from url %s", imageUrl)
+        logger.critical("downloading from url %s", imageUrl)
         finalPic = os.path.join(dest, filename + ".png")
         # urllib.request.urlretrieve(imageUrl, finalPic)
 
+        
         RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
 
         bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
         imageUrl = imageUrl.replace(GOOGLE_BUCKET_URL,"")
+        logger.critical("image replacement %s with bucket %s", imageUrl, GOOGLE_BUCKET_URL)
 
-        blob = bucket.blob(imageUrl.replace("https://" + GOOGLE_BUCKET_URL + "/",""))
+        logger.critical("download image %s", imageUrl)
+        blob = bucket.blob(imageUrl)
 
         try:
             blob.download_to_filename(finalPic)
@@ -70,8 +73,8 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
 
         if response:
             response = response.replace(basedir + "/", "")
-            response = GOOGLE_BUCKET_URL + cvdir + "/picture/" + response
-            logger.info(response)
+            response = GOOGLE_BUCKET_URL + "/" + account_name + cvdir + "/picture/" + response
+            logger.critical(response)
 
             if mongoid and ObjectId.is_valid(mongoid):
                 db = initDB(account_name, account_config)
@@ -90,7 +93,7 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
         return ret
 
     except Exception as e:
-        logger.info("error %s", str(e))
+        logger.critical("error %s", str(e))
         print(traceback.format_exc())
         return {
             "error": str(e)
