@@ -52,7 +52,7 @@ class TaskQueue(object):
         self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
+        self._prefetch_count = 1 #int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
 
 
     def connect(self):
@@ -61,7 +61,7 @@ class TaskQueue(object):
         will be invoked by pika.
         :rtype: pika.SelectConnection
         """
-        LOGGER.info('Connecting to %s', self._url)
+        # LOGGER.info('Connecting to %s', self._url)
         return pika.SelectConnection(
             parameters=pika.URLParameters(self._url),
             on_open_callback=self.on_connection_open,
@@ -71,9 +71,10 @@ class TaskQueue(object):
     def close_connection(self):
         self._consuming = False
         if self._connection.is_closing or self._connection.is_closed:
-            LOGGER.info('Connection is closing or already closed')
+            # LOGGER.info('Connection is closing or already closed')
+            pass
         else:
-            LOGGER.info('Closing connection')
+            # LOGGER.info('Closing connection')
             self._connection.close()
 
     def on_connection_open(self, _unused_connection):
@@ -82,7 +83,7 @@ class TaskQueue(object):
         case we need it, but in this case, we'll just mark it unused.
         :param pika.SelectConnection _unused_connection: The connection
         """
-        LOGGER.info('Connection opened')
+        # LOGGER.info('Connection opened')
         self.open_channel()
 
     def on_connection_open_error(self, _unused_connection, err):
@@ -91,7 +92,7 @@ class TaskQueue(object):
         :param pika.SelectConnection _unused_connection: The connection
         :param Exception err: The error
         """
-        LOGGER.error('Connection open failed: %s', err)
+        # LOGGER.error('Connection open failed: %s', err)
         self.reconnect()
 
     def on_connection_closed(self, _unused_connection, reason):
@@ -106,7 +107,7 @@ class TaskQueue(object):
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
+            # LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
             self.reconnect()
 
     def reconnect(self):
@@ -122,7 +123,7 @@ class TaskQueue(object):
         command. When RabbitMQ responds that the channel is open, the
         on_channel_open callback will be invoked by pika.
         """
-        LOGGER.info('Creating a new channel')
+        # LOGGER.info('Creating a new channel')
         self._connection.channel(on_open_callback=self.on_channel_open)
 
     def on_channel_open(self, channel):
@@ -131,7 +132,7 @@ class TaskQueue(object):
         Since the channel is now open, we'll declare the exchange to use.
         :param pika.channel.Channel channel: The channel object
         """
-        LOGGER.info('Channel opened')
+        # LOGGER.info('Channel opened')
         self._channel = channel
         self.add_on_channel_close_callback()
         self.setup_exchange(self.EXCHANGE)
@@ -140,7 +141,7 @@ class TaskQueue(object):
         """This method tells pika to call the on_channel_closed method if
         RabbitMQ unexpectedly closes the channel.
         """
-        LOGGER.info('Adding channel close callback')
+        # LOGGER.info('Adding channel close callback')
         self._channel.add_on_close_callback(self.on_channel_closed)
 
     def on_channel_closed(self, channel, reason):
@@ -152,7 +153,7 @@ class TaskQueue(object):
         :param pika.channel.Channel: The closed channel
         :param Exception reason: why the channel was closed
         """
-        LOGGER.warning('Channel %i was closed: %s', channel, reason)
+        # LOGGER.warning('Channel %i was closed: %s', channel, reason)
         self.close_connection()
 
     def setup_exchange(self, exchange_name):
@@ -161,7 +162,7 @@ class TaskQueue(object):
         be invoked by pika.
         :param str|unicode exchange_name: The name of the exchange to declare
         """
-        LOGGER.info('Declaring exchange: %s', exchange_name)
+        # LOGGER.info('Declaring exchange: %s', exchange_name)
         # Note: using functools.partial is not required, it is demonstrating
         # how arbitrary data can be passed to the callback when it is called
         cb = functools.partial(
@@ -177,7 +178,7 @@ class TaskQueue(object):
         :param pika.Frame.Method unused_frame: Exchange.DeclareOk response frame
         :param str|unicode userdata: Extra user data (exchange name)
         """
-        LOGGER.info('Exchange declared: %s', userdata)
+        # LOGGER.info('Exchange declared: %s', userdata)
         self.setup_queue(self.QUEUE)
 
     def setup_queue(self, queue_name):
@@ -186,7 +187,7 @@ class TaskQueue(object):
         be invoked by pika.
         :param str|unicode queue_name: The name of the queue to declare.
         """
-        LOGGER.info('Declaring queue %s', queue_name)
+        # LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
         self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
 
@@ -200,8 +201,8 @@ class TaskQueue(object):
         :param str|unicode userdata: Extra user data (queue name)
         """
         queue_name = userdata
-        LOGGER.info('Binding %s to %s with %s', self.EXCHANGE, queue_name,
-                    self.ROUTING_KEY)
+        # LOGGER.info('Binding %s to %s with %s', self.EXCHANGE, queue_name,
+        #             self.ROUTING_KEY)
         cb = functools.partial(self.on_bindok, userdata=queue_name)
         self._channel.queue_bind(
             queue_name,
@@ -215,7 +216,7 @@ class TaskQueue(object):
         :param pika.frame.Method _unused_frame: The Queue.BindOk response frame
         :param str|unicode userdata: Extra user data (queue name)
         """
-        LOGGER.info('Queue bound: %s', userdata)
+        # LOGGER.info('Queue bound: %s', userdata)
         self.set_qos()
 
     def set_qos(self):
@@ -233,7 +234,7 @@ class TaskQueue(object):
         which will invoke the needed RPC commands to start the process.
         :param pika.frame.Method _unused_frame: The Basic.QosOk response frame
         """
-        LOGGER.info('QOS set to: %d', self._prefetch_count)
+        # LOGGER.info('QOS set to: %d', self._prefetch_count)
         self.start_consuming()
 
     def start_consuming(self):
@@ -245,7 +246,7 @@ class TaskQueue(object):
         cancel consuming. The on_message method is passed in as a callback pika
         will invoke when a message is fully received.
         """
-        LOGGER.info('Issuing consumer related RPC commands')
+        # LOGGER.info('Issuing consumer related RPC commands')
         self.add_on_cancel_callback()
         self._consumer_tag = self._channel.basic_consume(
             self.QUEUE, self.on_message)
@@ -257,7 +258,7 @@ class TaskQueue(object):
         for some reason. If RabbitMQ does cancel the consumer,
         on_consumer_cancelled will be invoked by pika.
         """
-        LOGGER.info('Adding consumer cancellation callback')
+        # LOGGER.info('Adding consumer cancellation callback')
         self._channel.add_on_cancel_callback(self.on_consumer_cancelled)
 
     def on_consumer_cancelled(self, method_frame):
@@ -265,8 +266,8 @@ class TaskQueue(object):
         receiving messages.
         :param pika.frame.Method method_frame: The Basic.Cancel frame
         """
-        LOGGER.info('Consumer was cancelled remotely, shutting down: %r',
-                    method_frame)
+        # LOGGER.info('Consumer was cancelled remotely, shutting down: %r',
+        #             method_frame)
         if self._channel:
             self._channel.close()
 
@@ -282,13 +283,13 @@ class TaskQueue(object):
         :param pika.Spec.BasicProperties: properties
         :param bytes body: The message body
         """
-        LOGGER.info('Received message # %s from %s: %s',
-                    basic_deliver.delivery_tag, properties.app_id, body)
+        # LOGGER.info('Received message # %s from %s: %s',
+        #             basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
         t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
         t.start()
-        LOGGER.info(t.is_alive())
+        # LOGGER.info(t.is_alive())
         self.threads.append(t)
 
         # self.acknowledge_message(basic_deliver.delivery_tag)
@@ -296,11 +297,11 @@ class TaskQueue(object):
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        print(fmt1.format(thread_id, delivery_tag, body))
-        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        # print(fmt1.format(thread_id, delivery_tag, body))
+        LOGGER.critical(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        LOGGER.info(body)
+        LOGGER.critical(body)
 
         account_name = None
         if "account_name" in message:
@@ -388,7 +389,7 @@ class TaskQueue(object):
         Basic.Ack RPC method for the delivery tag.
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
-        LOGGER.info('Acknowledging message %s', delivery_tag)
+        # LOGGER.info('Acknowledging message %s', delivery_tag)
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
@@ -400,7 +401,7 @@ class TaskQueue(object):
         Basic.Cancel RPC command.
         """
         if self._channel:
-            LOGGER.info('Sending a Basic.Cancel RPC command to RabbitMQ')
+            # LOGGER.info('Sending a Basic.Cancel RPC command to RabbitMQ')
             cb = functools.partial(
                 self.on_cancelok, userdata=self._consumer_tag)
             self._channel.basic_cancel(self._consumer_tag, cb)
@@ -414,16 +415,16 @@ class TaskQueue(object):
         :param str|unicode userdata: Extra user data (consumer tag)
         """
         self._consuming = False
-        LOGGER.info(
-            'RabbitMQ acknowledged the cancellation of the consumer: %s',
-            userdata)
+        # LOGGER.info(
+        #     'RabbitMQ acknowledged the cancellation of the consumer: %s',
+        #     userdata)
         self.close_channel()
 
     def close_channel(self):
         """Call to close the channel with RabbitMQ cleanly by issuing the
         Channel.Close RPC command.
         """
-        LOGGER.info('Closing the channel')
+        # LOGGER.info('Closing the channel')
         self._channel.close()
 
     def run(self):
@@ -448,13 +449,13 @@ class TaskQueue(object):
 
         if not self._closing:
             self._closing = True
-            LOGGER.info('Stopping')
+            # LOGGER.info('Stopping')
             if self._consuming:
                 self.stop_consuming()
                 self._connection.ioloop.start()
             else:
                 self._connection.ioloop.stop()
-            LOGGER.info('Stopped')
+            # LOGGER.info('Stopped')
 
 
 class ReconnectingTaskQueue(object):
@@ -485,7 +486,7 @@ class ReconnectingTaskQueue(object):
         if self._consumer.should_reconnect:
             self._consumer.stop()
             reconnect_delay = self._get_reconnect_delay()
-            LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
+            # LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
             time.sleep(reconnect_delay)
             self._consumer = TaskQueue(self._amqp_url)
 
