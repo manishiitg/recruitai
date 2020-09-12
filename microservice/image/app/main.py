@@ -375,7 +375,7 @@ class TaskQueue(object):
 
         r = connect_redis(account_name, account_config)
         
-        if r.exists(key) and False:
+        if r.exists(key):
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.info("redis key exists")
