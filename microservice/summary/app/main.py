@@ -15,7 +15,7 @@ import traceback
 
 from app.publishdatasync import sendMessage as datasync
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv('RABBIT_DB')
 
 from app.statspublisher import sendMessage as updateStats
 
