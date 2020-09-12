@@ -473,43 +473,45 @@ def getSkillScore(criteria, row, total_weight, max_score):
           print(skillExtracted)
           print(row["_id"])
           if str(row["_id"]) in skillExtracted:
-            score = skillExtracted[str(row["_id"])]["score"]
-            skillCandidateScore = 0
-            print("skill scoreeeeeeee") 
-            print(score)
+            
+            if "score" in skillExtracted[str(row["_id"])]:
+                score = skillExtracted[str(row["_id"])]["score"]
+                skillCandidateScore = 0
+                print("skill scoreeeeeeee") 
+                print(score)
 
-            for obj in criteria["skills"]["values"]:
-                weight = obj["weight"]
-                skill_value = obj["value"]
-                found = False
-                for skill in score:
-                    logger.info("skill matching {} == {}".format(skill_value, skill))
-                    if skill == skill_value or skill_value.replace("_","") == skill.replace("_","") or skill_value.replace(" ","") == skill.replace(" ",""):
-                        found = True
-                        max_dist = 0   
-                        
-                        for key in score[skill]:  
-                            dist = score[skill][key]
-                            print(dist)
-                            if dist < .75:
-                                dist = 1 - dist
-
-                                # print(dist , " ===== " , skill  , " ======  ", key)
-                                if dist > max_dist:
-                                    max_dist = dist
-                                
+                for obj in criteria["skills"]["values"]:
+                    weight = obj["weight"]
+                    skill_value = obj["value"]
+                    found = False
+                    for skill in score:
+                        logger.info("skill matching {} == {}".format(skill_value, skill))
+                        if skill == skill_value or skill_value.replace("_","") == skill.replace("_","") or skill_value.replace(" ","") == skill.replace(" ",""):
+                            found = True
+                            max_dist = 0   
                             
-                            break
+                            for key in score[skill]:  
+                                dist = score[skill][key]
+                                print(dist)
+                                if dist < .75:
+                                    dist = 1 - dist
 
-                    if found:
-                        skillCandidateScore += max_dist * weight / total_value_weight
-                        debug_str = "skill score skillCandidateScore {} max_dist {} value {}".format(skillCandidateScore , max_dist, skill_value)
-                        logger.info(debug_str)
-                        debug.append(debug_str)
-                    else:
-                        debug_str = "strange skill not found {}".format(skill_value)
-                        logger.info(debug_str)
-                        debug.append(debug_str)
+                                    # print(dist , " ===== " , skill  , " ======  ", key)
+                                    if dist > max_dist:
+                                        max_dist = dist
+                                    
+                                
+                                break
+
+                        if found:
+                            skillCandidateScore += max_dist * weight / total_value_weight
+                            debug_str = "skill score skillCandidateScore {} max_dist {} value {}".format(skillCandidateScore , max_dist, skill_value)
+                            logger.info(debug_str)
+                            debug.append(debug_str)
+                        else:
+                            debug_str = "strange skill not found {}".format(skill_value)
+                            logger.info(debug_str)
+                            debug.append(debug_str)
 
       if skillCandidateScore > 0:
           candidate_score += skillCandidateScore *  criteria["skills"]["weight"]/total_weight * max_score
