@@ -306,7 +306,7 @@ def queue_process():
     for account_name in dirtyMap:
         dirtyMap[account_name] = {}
 
-    logger.info("checking dirty data %s" , localMap)
+    # logger.info("checking dirty data %s" , localMap)
     for account_name in localMap:
         r = connect_redis(account_name, account_config_map[account_name])
         print(localMap[account_name].keys())
@@ -369,6 +369,7 @@ def check_ai_missing_data(account_name, account_config):
     db = initDB(account_name, account_config)
     ret = db.emailStored.find({ 
             "cvParsedAI" : { "$exists" : False },
+            'check_ai_missing_data' : { "$exists" : False }
             # "attachment" : {  }
         },
         {"body": 0, "cvParsedInfo.debug": 0}
@@ -402,6 +403,14 @@ def check_ai_missing_data(account_name, account_config):
 
 
     for row in ret:
+
+        db.emailStored.update_one({
+            "_id" : row["_id"]
+        }, {
+            "$set" : {
+                "check_ai_missing_data" : True
+            }
+        })
         logger.info("found candidate %s", row["_id"])
         if "attachment" in row:
             if len(row["attachment"]) > 0:
@@ -411,9 +420,9 @@ def check_ai_missing_data(account_name, account_config):
                         filename = row["attachment"][0]["attachment"]["publicFolder"]
 
                         meta = {
-                            "filename": fileName,
+                            "filename": filename,
                             "mongoid": mongoid,
-                            cv_timestamp_seconds: row["email_timestamp"] / 1000
+                            "cv_timestamp_seconds": int(row["email_timestamp"]) / 1000
                         }
                         if "job_profile_id" in row:
                             if len(row["job_profile_id"]) > 0:
