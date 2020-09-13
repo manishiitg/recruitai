@@ -51,7 +51,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         Path(dest).mkdir(parents=True, exist_ok=True)
         try:
             blob.download_to_filename(os.path.join(dest, filename))
-            logger.info("file downloaded at %s", os.path.join(dest, filename))
+            logger.critical("file downloaded at %s", os.path.join(dest, filename))
         except  Exception as e:
             logger.critical(str(e))
             traceback.print_exc(file=sys.stdout)
@@ -88,15 +88,15 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                     "error": "type2" + str(e) 
                 }
 
-            logger.info("========================================== time analysis ==========================================")
+            logger.critical("========================================== time analysis ==========================================")
             for fileIdx in timeAnalysis:
-                logger.info("file idx %s" , fileIdx)
+                logger.critical("file idx %s" , fileIdx)
                 for work in timeAnalysis[fileIdx]:
-                    logger.info("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
+                    logger.critical("================   work %s time taken %s ", work, timeAnalysis[fileIdx][work])
 
-            logger.info("total time taken %s", (time.time() - timer))
+            logger.critical("total time taken %s", (time.time() - timer))
 
-            logger.info("========================================== time analysis ==========================================")
+            logger.critical("========================================== time analysis ==========================================")
         else:
             response = processFast(os.path.join(dest, filename))
             timeAnalysis = {}
@@ -117,7 +117,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         finalLines = []
         for page in response:
             for pagerow in page["compressedStructuredContent"]:
-                logger.info(pagerow)
+                logger.critical(pagerow)
                 finalLines.append(pagerow["line"])
 
         if mongoid:
@@ -156,7 +156,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         timer = time.time()
             
 
-        logger.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ner time taken %s ", time.time() - timer)
+        logger.critical("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ner time taken %s ", time.time() - timer)
         # fullResponse["nerExtracted"] = nerExtracted
 
         row = {}
@@ -246,7 +246,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
-        logger.info("full resume parsing completed %s", filename)
+        logger.critical("full resume parsing completed %s", filename)
         ret = {
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
@@ -280,13 +280,13 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = True) 
-        logger.info("processing completed, final filename %s", filename)
+        logger.critical("processing completed, final filename %s", filename)
         os.remove(BASE_PATH + "/../cvreconstruction/" + filename) 
         return ret
 
     except PDFTextExtractionNotAllowed as e:
     # except KeyError as e:
-        logger.info("error %s", str(e))
+        logger.critical("error %s", str(e))
         print(traceback.format_exc())
         return {
             "error": str(e)
