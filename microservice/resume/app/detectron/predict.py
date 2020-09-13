@@ -46,14 +46,14 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
     # im  = image # disabling intensity
 
     if im is None:
-        logger.info("unable to read image %s",
+        logger.critical("unable to read image %s",
                     os.path.join(inputFolder, filename))
         return None
 
     outputs = predictor(im)
 
     # look at the outputs. See https://detectron2.readthedocs.io/tutorials/models.html#model-output-format for specification
-    # logger.info(outputs["instances"])
+    # logger.critical(outputs["instances"])
 
     if len(thing_classes) == 0:
         thing_classes = MetadataCatalog.get(
@@ -62,7 +62,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
         MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).set(
             thing_classes=thing_classes)
 
-    # logger.info(outputs["instances"])
+    # logger.critical(outputs["instances"])
 
     boxes = outputs["instances"].pred_boxes.tensor.cpu().numpy()
     boxeswh = BoxMode.convert(boxes, BoxMode.XYXY_ABS, BoxMode.XYWH_ABS)
@@ -77,7 +77,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
                  for x in outputs["instances"].pred_masks.cpu().numpy()]
 
     if len(masks) == 0:
-        logger.info("unable to find anything from file %s", filename)
+        logger.critical("unable to find anything from file %s", filename)
 
     if save_viz:
       v = Visualizer(
@@ -121,7 +121,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
 
             # rois.append(polyrois)
 
-        # logger.info(rois)
+        # logger.critical(rois)
         bbox = boxeswh[idx]
         
         # apply the mask
@@ -146,7 +146,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
           
           finalfilename = os.path.join(outputFolder , filenameonlyalnum + "_" + str(idx) + \
               "_" + str(classname) + "_" + str(score.item()) + ".png")
-          logger.info("writing image %s", finalfilename)
+          logger.critical("writing image %s", finalfilename)
           cv2.imwrite(finalfilename, nimg)
 
         padding = 10

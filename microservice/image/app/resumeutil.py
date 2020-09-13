@@ -41,7 +41,7 @@ def deleteDirContents(folder):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
         except Exception as e:
-            logger.info('Failed to delete %s. Reason: %s' , file_path, e)
+            logger.critical('Failed to delete %s. Reason: %s' , file_path, e)
 
 def killlibreoffice():
     for proc in psutil.process_iter():
@@ -107,7 +107,7 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
     org_cv_filename = cvfilename
     filename = cvfilename
 
-    logger.info("final file name %s", filename)
+    logger.critical("final file name %s", filename)
 
     if ".pdf" not in filename:
         inputFile = os.path.join(dest, filename)
@@ -119,15 +119,15 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
         # libreoffice --headless --convert-to pdf /content/finalpdf/*.doc --outdir /content/finalpdf/
 
         try:
-            logger.info('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
+            logger.critical('libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest)
             x = subprocess.check_call(
                 ['libreoffice --headless --convert-to pdf ' + inputFile + " --outdir  " + dest], shell=True, timeout=60)
-            logger.info(x)
+            logger.critical(x)
 
             if os.path.exists(os.path.join(dest, filename)):
                 # -n to skip existing
                 x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(dest,filename) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
-                logger.info(x)
+                logger.critical(x)
 
         except CalledProcessError as e:
             logger.critical(str(e))
@@ -141,9 +141,9 @@ def fullResumeParsing(filename, mongoid=None, skills = None, account_name = "", 
             return {"error" : str(e)}
 
         if os.path.exists(os.path.join(dest, filename)):
-            logger.info("file converted")
+            logger.critical("file converted")
         else:
-            logger.info("unable to convert file to pdf")
+            logger.critical("unable to convert file to pdf")
             return {
                 "error" : "unable to convert file to pdf"
             }
