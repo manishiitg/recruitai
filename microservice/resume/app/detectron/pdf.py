@@ -16,7 +16,7 @@ def covertPDFToImage(cv, output_dir, cvfilename, logger):
     # cvnonum = ''.join(e for e in cvfilename if e.isalnum())
     logger.debug("len of pages %s", len(pages))
     for i, page in enumerate(pages):
-        # logger.info(cv)
+        # logger.critical(cv)
         subpagecvfilename = os.path.join(
             "", output_dir, "page" + str(i) + '.png')
         logger.debug("saving cv images to %s", subpagecvfilename)
