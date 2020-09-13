@@ -361,6 +361,8 @@ def queue_process():
 
 
 def check_ai_missing_data(account_name, account_config):
+
+    return {}
     logger.info("checking ai missing data")
     # some time randomly. few cv's are missing ai data. so checking them here and adding them ai data
 
