@@ -56,7 +56,7 @@ def thread_task( conn, ch, method_frame, properties, body):
             ret = json.dumps(ret)
             add_threadsafe_callback(conn, ch, method_frame,properties,ret)
         elif "action" in body:
-            logger.info("message recieved %s" , body)
+            logger.critical("message recieved %s" , body)
             if body["action"] == "extractSkill":
                 mongoid = body["mongoid"]
                 findSkills = body["skills"]
@@ -158,7 +158,7 @@ def thread_task( conn, ch, method_frame, properties, body):
                     ret = str(e)
                     traceback.print_exc()
                 
-                logger.info("completed")
+                logger.critical("completed")
                 add_threadsafe_callback(conn, ch, method_frame,properties,ret)
             else:
                 add_threadsafe_callback(conn, ch, method_frame,properties, 'Action not found')

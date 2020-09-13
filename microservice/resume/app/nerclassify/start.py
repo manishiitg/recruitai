@@ -28,7 +28,7 @@ def process(data, isPageWiseData=False):
         combinData[rowIdx] = []
 
         file = row["file"]
-        logger.info("cv name %s", file)
+        logger.critical("cv name %s", file)
         nerparsed = row["nerparsed"]
 
         if isPageWiseData:
@@ -133,12 +133,12 @@ def process(data, isPageWiseData=False):
 
                     if "ORG" in extractEntity[pageno][lineno]:
                         if "Designation" in extractEntity[pageno][lineno] and "EducationDegree" in extractEntity[pageno][lineno]:
-                            logger.info(
+                            logger.critical(
                                 "this has both designation and degree")
-                            logger.info(
+                            logger.critical(
                                 "need to review this as well why this happened? both designation and exp degree")
-                            logger.info(extractEntity[pageno][lineno])
-                            logger.info(line["line"])
+                            logger.critical(extractEntity[pageno][lineno])
+                            logger.critical(line["line"])
                             # we can look at heading also in such cases. if it matches
                             # we ca also if it matched a table it should education mostly
                             # this is happening in cases of accounts which i have seen. where Cost Accountant looks like a degree as well and a education qualification also
@@ -157,7 +157,7 @@ def process(data, isPageWiseData=False):
                                     pageno)][cIDx]["contentIdx"] = contentIdx
 
                         if "Designation" in extractEntity[pageno][lineno]:
-                            logger.info("this line looks like work exp")
+                            logger.critical("this line looks like work exp")
 
                             obj = []
 
@@ -194,7 +194,7 @@ def process(data, isPageWiseData=False):
                                     pageno)][cIDx]["contentIdx"] = contentIdx
 
                         elif "EducationDegree" in extractEntity[pageno][lineno]:
-                            logger.info("this line looks like education")
+                            logger.critical("this line looks like education")
 
                             obj = []
 
@@ -230,7 +230,7 @@ def process(data, isPageWiseData=False):
                                     pageno)][cIDx]["contentIdx"] = contentIdx
 
                         elif "ExperianceYears" in extractEntity[pageno][lineno]:
-                            logger.info(
+                            logger.critical(
                                 "this is work exp has there is exp years")
                             obj = []
 
@@ -268,14 +268,14 @@ def process(data, isPageWiseData=False):
                                     pageno)][cIDx]["contentIdx"] = contentIdx
 
                         else:
-                            logger.info(
+                            logger.critical(
                                 "need to review this as well why this happened")
-                            logger.info(
+                            logger.critical(
                                 "unable to find.... maybe check with Pvt University etc texts")
                             org = (
                                 " ".join(extractEntity[pageno][lineno]["ORG"][0])).lower()
                             if "pvt" in org or "ltd" in org or "limi" in org:
-                                logger.info("looks like a company")
+                                logger.critical("looks like a company")
                                 extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
@@ -285,7 +285,7 @@ def process(data, isPageWiseData=False):
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["contentIdx"] = contentIdx
                             elif "university" in org or "col" in org or "school" in org:
-                                logger.info("look like college")
+                                logger.critical("look like college")
                                 extractEntity[pageno][lineno]["classify"] = "WRK"
                                 for cIDx in contentIdx:
                                     row["compressedStructuredContent"][str(
@@ -295,9 +295,9 @@ def process(data, isPageWiseData=False):
                                     row["compressedStructuredContent"][str(
                                         pageno)][cIDx]["contentIdx"] = contentIdx
                             else:
-                                logger.info(
+                                logger.critical(
                                     "we will look at this in this? company or univ")
-                                logger.info(line["line"])
+                                logger.critical(line["line"])
                                 # we can look at heading also in such cases. if it matches
                                 # we ca also if it matched a table it should education mostly
                                 # . mostly it will be company only. if we find another line with edu means this a company == this is wrong because many due to education being a table it goes on multiple lines
@@ -315,7 +315,7 @@ def process(data, isPageWiseData=False):
                                         pageno)][cIDx]["contentIdx"] = contentIdx
 
                     elif "Designation" in extractEntity[pageno][lineno] and "ExperianceYears" in extractEntity[pageno][lineno]:
-                        logger.info(
+                        logger.critical(
                             "this looks like summary and current designation and exp")
                         extractEntity[pageno][lineno]["classify"] = "SUMMARY"
                         for cIDx in contentIdx:
@@ -325,13 +325,13 @@ def process(data, isPageWiseData=False):
                                 pageno)][cIDx]["classifyreason"] = "summary and current designation"
                             row["compressedStructuredContent"][str(
                                 pageno)][cIDx]["contentIdx"] = contentIdx
-                            logger.info(extractEntity[pageno][lineno])
+                            logger.critical(extractEntity[pageno][lineno])
                             finalEntity, foundEntity = updateSingleEntity(
                                 ["Designation", "ExperianceYears"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
                     elif "ExperianceYears" in extractEntity[pageno][lineno]:
-                        logger.info(
+                        logger.critical(
                             "need to review this why this happened? orpahn ExperianceYears")
-                        logger.info(extractEntity[pageno][lineno])
+                        logger.critical(extractEntity[pageno][lineno])
                         if lineno > 0 and extractEntity[pageno][lineno - 1] == "WRK":
                             if "ExperianceYears" in finalEntity["wrkExp"][-1]:
                                 finalEntity["wrkExp"].append({
@@ -356,9 +356,9 @@ def process(data, isPageWiseData=False):
                             finalEntity, foundEntity = updateSingleEntity(
                                 ["ExperianceYears"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
                     elif "Designation" in extractEntity[pageno][lineno]:
-                        logger.info(
+                        logger.critical(
                             "need to review this why this happened? orpahn Designation")
-                        logger.info(extractEntity[pageno][lineno])
+                        logger.critical(extractEntity[pageno][lineno])
                         if lineno > 0 and extractEntity[pageno][lineno - 1] == "WRK":
                             if "Designation" in finalEntity["wrkExp"][-1]:
                                 finalEntity["wrkExp"].append({
@@ -383,9 +383,9 @@ def process(data, isPageWiseData=False):
                                 ["Designation"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
                     elif "EducationDegree" in extractEntity[pageno][lineno]:
                         # if previous line is education, we can append it to that
-                        logger.info(
+                        logger.critical(
                             "need to review this why this happened? orphan EducationDegree")
-                        logger.info(extractEntity[pageno][lineno])
+                        logger.critical(extractEntity[pageno][lineno])
                         if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
                             if "EducationDegree" in finalEntity["education"][-1]:
                                 finalEntity["education"].append({
@@ -409,10 +409,10 @@ def process(data, isPageWiseData=False):
                             finalEntity, foundEntity = updateSingleEntity(
                                 ["EducationDegree"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
                     elif "DATE" in extractEntity[pageno][lineno]:
-                        logger.info(
+                        logger.critical(
                             "need to review this why this happened? orphan Date")
                         # if previous line is education, we can append it to that
-                        logger.info(extractEntity[pageno][lineno])
+                        logger.critical(extractEntity[pageno][lineno])
                         if lineno > 0 and extractEntity[pageno][lineno - 1] == "EDU":
                             if "DATE" in finalEntity["wrkExp"][-1]:
                                 finalEntity["wrkExp"].append({
@@ -438,10 +438,10 @@ def process(data, isPageWiseData=False):
                                 ["Date"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
                     else:
                         if not foundEntity:
-                            logger.info(
+                            logger.critical(
                                 "need to review this why this happened?")
-                            logger.info(extractEntity[pageno][lineno])
-                            logger.info("unknow ....")
+                            logger.critical(extractEntity[pageno][lineno])
+                            logger.critical("unknow ....")
                         pass
                 else:
                     if len(text.strip()) > 0: 
@@ -454,21 +454,21 @@ def process(data, isPageWiseData=False):
                             row["compressedStructuredContent"][str(
                                             pageno)][cIDx]["contentIdx"] = contentIdx
                     
-        logger.info("classification all lines of cv now")
+        logger.critical("classification all lines of cv now")
 
         for key in row["compressedStructuredContent"].keys():
             for didx, drow in enumerate(row["compressedStructuredContent"][key]):
                 if "classify" in drow:
-                    logger.info(drow["line"])
-                    logger.info(drow["classify"])
+                    logger.critical(drow["line"])
+                    logger.critical(drow["classify"])
                 else:
                     if "matchedRow" in drow:
                         logger.debug(drow["line"])
                         logger.debug("unclassify")
 
             # break # need only page 1
-        logger.info(json.dumps(finalEntity, indent=1, sort_keys=False))
-        logger.info(json.dumps(extractEntity,
+        logger.critical(json.dumps(finalEntity, indent=1, sort_keys=False))
+        logger.critical(json.dumps(extractEntity,
                                indent=1, sort_keys=False))
 
         combinData[rowIdx] = {
@@ -488,7 +488,7 @@ def process(data, isPageWiseData=False):
         #     }
         #     )
 
-        logger.info("total lines %s", len(nerparsed))
+        logger.critical("total lines %s", len(nerparsed))
 
     return combinData
 
