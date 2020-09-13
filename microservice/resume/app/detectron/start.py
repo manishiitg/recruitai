@@ -64,11 +64,11 @@ predictor = None
 cfg = None
 
 def test():
-  logger.info("loading model")
+  logger.critical("loading model")
   predictor , cfg = loadTrainedModel()
-  logger.info("model loaded")
+  logger.critical("model loaded")
   logger.setLevel(logging.INFO)
-  logger.info("device available %s", device)
+  logger.critical("device available %s", device)
   files = getFilesToParseForTesting()
   # else:
   #   logger.setLevel(logging.CRITICAL)
@@ -116,7 +116,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
     combinedCompressedContent[fileIdx] = []
 
-    logger.info(filestoparse[fileIdx])
+    logger.critical(filestoparse[fileIdx])
     # if filestoparse[fileIdx]["id"] != -1:
     #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, { "$set" : { "parsed" : True } })
     
@@ -124,12 +124,12 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     cv = shutil.copy(filestoparse[fileIdx]["file"],  inputDir)  
 
     cv = os.path.join(inputDir , os.path.basename(filestoparse[fileIdx]["file"]))
-    logger.info("file path after copy %s", cv)
+    logger.critical("file path after copy %s", cv)
     
     if not os.path.exists(cv):
       logger.critical("file doesn't exist %s" , cv)
 
-    logger.info("reading cv %s", cv)
+    logger.critical("reading cv %s", cv)
 
     basecv = os.path.basename(cv)
     filename, file_extension = os.path.splitext(basecv)
@@ -139,12 +139,12 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     cvfilename = ''.join(e for e in filename if e.isalnum())  + file_extension
     # try:
     # copy cv to output directory after renaming it
-    logger.info("final path %s" , os.path.join(basePath,cvfilename))
+    logger.critical("final path %s" , os.path.join(basePath,cvfilename))
     cv = shutil.copy(cv,  os.path.join(basePath,cvfilename))  
     # except:
     #   pass
 
-    logger.info("final file name %s" , cv)
+    logger.critical("final file name %s" , cv)
     output_dir = os.path.join(basePath,''.join(e for e in basecv if e.isalnum()))
     # os.remove()
     shutil.rmtree(output_dir,ignore_errors = True)
@@ -194,7 +194,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         break
       # doing only page 1 for now 
 
-    logger.info("total pages in cv %s" , cvpages)
+    logger.critical("total pages in cv %s" , cvpages)
 
     bboxocroutputs = []
     page_contents = []
@@ -255,20 +255,20 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         x = subprocess.check_output(['pdf-text-extract ' + cv], shell=True, timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
-        logger.info(x)
+        logger.critical(x)
         start = "[ '"
         end = "' ]"
 
         x = x.replace(start, "")
         x = x.replace(end, "")
         pages_data_extract = x.split("',")
-        logger.info(len(pages_data_extract))
-        logger.info(pages_data_extract)
-        logger.info(cvpage)
+        logger.critical(len(pages_data_extract))
+        logger.critical(pages_data_extract)
+        logger.critical(cvpage)
         content = pages_data_extract[cvpage-1]
         
 
-      logger.info(content)
+      logger.critical(content)
 
       page_contents.append(content)
 
@@ -294,7 +294,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       start_time = time.time()
 
       logger.debug(compressedStructuredContent)
-      logger.info("length of compressed content %s" , len(compressedStructuredContent))
+      logger.critical("length of compressed content %s" , len(compressedStructuredContent))
 
       # if filestoparse[fileIdx]["id"] != -1:
       #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
@@ -326,7 +326,7 @@ def uploadToGcloud(basePath,basecv, account_name, account_config):
   RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
   #  -n
   x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
-  logger.info(x)
+  logger.critical(x)
 
 def cleanContent(content , cvpage , jsonOutput):
   
@@ -352,7 +352,7 @@ def cleanContent(content , cvpage , jsonOutput):
         line = " ".join(newwords)
         cleanLineData.append(line)
 
-  logger.info("length of clean data %s", len(cleanLineData))
+  logger.critical("length of clean data %s", len(cleanLineData))
   
   if len(cleanLineData) < 3:
     if cvpage > 1:

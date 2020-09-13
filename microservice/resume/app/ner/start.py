@@ -16,7 +16,7 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
-logger.info(device)
+logger.critical(device)
 
 flair.device = device
 
@@ -27,7 +27,7 @@ def start(isTesting=False):
 
     if isTesting:
         logger.setLevel(logging.INFO)
-        logger.info("device available %s", device)
+        logger.critical("device available %s", device)
         sents = getFilesToParseForTesting()
 
         entities = []
@@ -37,10 +37,10 @@ def start(isTesting=False):
             # predict tags and print
             tagger.predict(sentence)
 
-            logger.info(sentence.to_tagged_string())
+            logger.critical(sentence.to_tagged_string())
 
             for entity in sentence.get_spans('ner'):
-                logger.info(entity)
+                logger.critical(entity)
                 entities.append(entity)
 
         return entities
@@ -61,10 +61,10 @@ def processAPI(nertoparse):
 def loadModel():
     global tagger
     if tagger is None:
-        logger.info("loading model")
+        logger.critical("loading model")
         tagger = SequenceTagger.load(
             BASE_PATH + "/../pretrained/recruit-ner-word2vec-flair/best-model.pt")
-        logger.info("model loaded")
+        logger.critical("model loaded")
     return tagger
 
 
@@ -158,7 +158,7 @@ def nerlines(compressedStructuredContent):
     nerlines = []
 
     for row in compressedStructuredContent:
-        # logger.info(row)
+        # logger.critical(row)
         row["line"] = row["line"].strip()
         nerlines.append(row)
 
@@ -212,6 +212,6 @@ def nerlines(compressedStructuredContent):
     for row in nerlines:
         logger.debug(row["line"])
 
-    logger.info(nerlines)
+    logger.critical(nerlines)
 
     return nerlines
