@@ -25,8 +25,8 @@ from transformers import (WEIGHTS_NAME,
 BASE_MODEL_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/xlnet"
 TOKENIZER_PATH = BASE_PATH + "/../pretrained/cvpartsclassification/"
 
-logger.info("xlnet base model path %s", BASE_MODEL_PATH)
-logger.info("tokenizer base model path %s", TOKENIZER_PATH)
+logger.critical("xlnet base model path %s", BASE_MODEL_PATH)
+logger.critical("tokenizer base model path %s", TOKENIZER_PATH)
 
 sentPiecetokenizer = None
 xlnetModel = None
@@ -79,18 +79,18 @@ def predict(text):
         # print(preds)
 
         
-        logger.info("===================")
-        logger.info(encoded.original_str)
+        logger.critical("===================")
+        logger.critical(encoded.original_str)
         
         prediction = [label_list[pred_index] , str(probablity[pred_index])]
 
         if len(final_preds) > 1:
             for (p, label) in final_preds:
-                logger.info("predicted %s with probablity %s", label , p)
+                logger.critical("predicted %s with probablity %s", label , p)
         else:
-            logger.info(" %s = = %s", label_list[pred_index] , probablity[pred_index])
+            logger.critical(" %s = = %s", label_list[pred_index] , probablity[pred_index])
         
-        logger.info("===================")
+        logger.critical("===================")
     
     return prediction
         
@@ -134,7 +134,7 @@ def loadModel():
 def loadTokenizer():
     global sentPiecetokenizer
     if not sentPiecetokenizer:
-        logger.info("loading tokernizer from path %s", TOKENIZER_PATH)
+        logger.critical("loading tokernizer from path %s", TOKENIZER_PATH)
         vocab = os.path.join(TOKENIZER_PATH, "tokenzier.txt-vocab.json")
         merges = os.path.join(TOKENIZER_PATH, "tokenzier.txt-merges.txt")
 
