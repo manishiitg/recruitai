@@ -90,7 +90,7 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
 
         
         shutil.rmtree(dest , ignore_errors = False) 
-        return ret
+        return {}
 
     except Exception as e:
         logger.critical("error %s", str(e))
