@@ -21,20 +21,27 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
 
     
     r = connect_redis(account_name, account_config)
-    if len(payload) == 0:
-        logger.info("get request to %s", url)
-        data = requests.get(url + "?accessToken=" + access_token)
-        data = data.json()
-        data = json.dumps(data)
-    else:
-        logger.info("post request to %s with payload %s", url, payload)
-        data = requests.post(url + "?accessToken=" + access_token , data = payload)
-        data = data.json()
-        data = json.dumps(data)
+    try:
+        if len(payload) == 0:
+            logger.info("get request to %s", url)
+            data = requests.get(url + "?accessToken=" + access_token)
+            data = data.json()
+            data = json.dumps(data)
+        else:
+            logger.info("post request to %s with payload %s", url, payload)
+            data = requests.post(url + "?accessToken=" + access_token , data = payload)
+            data = data.json()
+            data = json.dumps(data)
+        
+        logger.info("updating redis data for get speed up api")
+        r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
+        return data
+    except Exception as e:
+        logger.critical("error in api %s %s", url, str(e))
+        return json.dumps("error" + str(e))
+    
 
-    logger.info("updating redis data for get speed up api")
-    r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
-    return data
+    
 
 def general_api_speed_up(url, payload, access_token, account_name, account_config):
 
@@ -83,7 +90,8 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 unique_cache_key_list = []
 use_unique_cache_feature = False
-use_unique_cache_only_for_ai_data = False
+use_unique_cache_only_for_classify_data = True
+use_unique_cache_only_for_ai_data = True
 
 def get_candidate_tags(account_name, account_config):
     # tags = ["TeachingEducation", "HRRecruitment", "accounts", "Sales", "legal", "softwaredevelopment", "marketing", "customerservice"]
@@ -245,6 +253,16 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 if on_ai_data:
                     logger.info("returning cached data %s", unique_cache_key)
                     unique_cache_key_list.append(unique_cache_key)
+                    unique_cache_key_list = list(set(unique_cache_key_list))
+                    return cache_data    
+                else:
+                    pass
+            
+            elif use_unique_cache_only_for_classify_data:
+                if "classify_" in filter_type:
+                    logger.info("returning cached data %s", unique_cache_key)
+                    unique_cache_key_list.append(unique_cache_key)
+                    unique_cache_key_list = list(set(unique_cache_key_list))
                     return cache_data    
                 else:
                     pass
@@ -252,6 +270,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             else:
                 logger.info("returning cached data %s", unique_cache_key)
                 unique_cache_key_list.append(unique_cache_key)
+                unique_cache_key_list = list(set(unique_cache_key_list))
                 return cache_data
 
 

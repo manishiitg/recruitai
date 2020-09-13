@@ -41,7 +41,7 @@
         "reduce_priority" : 5
 
     },
-    "stagingrecruit" : {
+    "rocketrecruit" : {
         "mongodb" : {
             "host" : "mongodb://root:recruitai567@116.202.234.182:27070/staging_recruit?authSource=admin",
             "db" : "staging_recruit"
