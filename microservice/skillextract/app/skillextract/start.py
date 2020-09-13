@@ -45,10 +45,10 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     docLines, total_documents, doc2Idx = getSampleData(mongoid, account_name, account_config)
 
     if total_documents == 0:
-        logger.info("not docs found")
+        logger.critical("not docs found")
         return ""
 
-    logger.info("skills %s", findSkills)
+    logger.critical("skills %s", findSkills)
 
     # extra new code. i will expand skills mainly to compensate for space and _
 
@@ -68,7 +68,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     
     index_time_params = {'M': M, 'indexThreadQty': num_threads, 'efConstruction': efC, 'post' : 2}
-    # logger.info('Index-time parameters %s', index_time_params)
+    # logger.critical('Index-time parameters %s', index_time_params)
 
 
     # Intitialize the library, specify the space, the type of the vector and add data points 
@@ -79,8 +79,8 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     index_time_params = {'M': M, 'indexThreadQty': num_threads, 'efConstruction': efC}
     index.createIndex(index_time_params) 
     end = time.time() 
-    # logger.info('Index-time parameters %s', index_time_params)
-    # logger.info('Indexing time = %f' % (end-start))
+    # logger.critical('Index-time parameters %s', index_time_params)
+    # logger.critical('Indexing time = %f' % (end-start))
 
     # index.saveIndex('dense_index_optim.bin')
 
@@ -89,7 +89,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     
     query_time_params = {'efSearch': efS}
-    # logger.info('Setting query-time parameters %s', query_time_params)
+    # logger.critical('Setting query-time parameters %s', query_time_params)
     index.setQueryTimeParams(query_time_params)
 
 
@@ -99,7 +99,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     query_matrix, skillVec, querySkill, notFound = queryMatrix(model, findSkills)
 
     query_qty = query_matrix.shape[0]
-    logger.info("query qty: %s", query_qty)
+    logger.critical("query qty: %s", query_qty)
 
     avg_dist = 0
     avg_count = 0
@@ -107,7 +107,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     closest_dist = 0
     max_closest_dist  = 0
 
-    # logger.info(skillVec)
+    # logger.critical(skillVec)
 
     if len(skillVec) == 0:
         return "empty skills"
@@ -133,10 +133,10 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     avg_closest_dist = closest_dist/len(findSkills)
     if avg_count != 0:
-        logger.info("avg distance between query words %s", avg_dist/avg_count)
-    logger.info("max distance %s", max_dist)
-    logger.info("avg closest distance %s", avg_closest_dist)
-    logger.info("max closest distance %s", max_closest_dist)
+        logger.critical("avg distance between query words %s", avg_dist/avg_count)
+    logger.critical("max distance %s", max_dist)
+    logger.critical("avg closest distance %s", avg_closest_dist)
+    logger.critical("max closest distance %s", max_closest_dist)
     
     start = time.time() 
     # assume 20 skills per doc which is already a lot 
@@ -164,19 +164,19 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     maxSkillDistCount = {}
 
-    logger.info(" ===================================final algo ===================================")
+    logger.critical(" ===================================final algo ===================================")
 
     for idx, skill in enumerate(querySkill):
-        logger.info("skill : %s",skill)
-        logger.info("wordidx %s",  [word2Idx[w] for w in nbrs[idx][0]])
-        logger.info("distances %s", nbrs[idx][1])
+        logger.critical("skill : %s",skill)
+        logger.critical("wordidx %s",  [word2Idx[w] for w in nbrs[idx][0]])
+        logger.critical("distances %s", nbrs[idx][1])
         # words = [] 
         wordIdx2Dist[skill] = {}
         for matchIdx, distance in  enumerate(nbrs[idx][1]):
             wordIdx = nbrs[idx][0][matchIdx]
             wordIdx2Dist[skill][wordIdx] = distance
 
-            logger.info(distance)
+            logger.critical(distance)
             orgLineIdx  = word2Line[wordIdx]
             orgDocIdx = word2Doc[wordIdx]
 
@@ -191,14 +191,14 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
             if distance < distThresh:
                 # words.append(word2Idx[wordIdx])
-                logger.info("skill: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])
+                logger.critical("skill: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])
                 documents[orgDocIdx][orgLineIdx][skill].append(wordIdx)
             else:
-                logger.info("skill skipped: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])                
+                logger.critical("skill skipped: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])                
 
             if distance <= maxDistSkillThresh:
                 
-                logger.info("max skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
+                logger.critical("max skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
 
                 if orgDocIdx not in maxSkillDistCount:
                     maxSkillDistCount[orgDocIdx] = {}
@@ -232,16 +232,16 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                     for wordIdx in lines[orgLineIdx][skill]:
 
                         dist = wordIdx2Dist[skill][wordIdx]
-                        logger.info("word: %s dist: %s skill: %s line: %s", word2Idx[wordIdx] ,dist ,  skill , orgLineIdx )
+                        logger.critical("word: %s dist: %s skill: %s line: %s", word2Idx[wordIdx] ,dist ,  skill , orgLineIdx )
                         
                         if dist < .05 and not isGeneric:
                             maxSkillCount = 0
 
-                        logger.info(lines[orgLineIdx][skill])
+                        logger.critical(lines[orgLineIdx][skill])
                         count = len(lines[orgLineIdx][skill])
                         if  count > maxSkillCount or count > len(querySkill) * .5:
-                            logger.info("skill %s count %s maxcount count %s" ,skill, count, maxSkillCount)
-                            logger.info("line index %s", orgLineIdx)
+                            logger.critical("skill %s count %s maxcount count %s" ,skill, count, maxSkillCount)
+                            logger.critical("line index %s", orgLineIdx)
                             for idx in lines[orgLineIdx][skill]:
                                 if word2Idx[idx] not in globalSkillDist:
                                     globalSkillDist[word2Idx[idx]] = {
@@ -252,10 +252,10 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                                     globalSkillDist[word2Idx[idx]]["dist"] += wordIdx2Dist[skill][idx]
                                     globalSkillDist[word2Idx[idx]]["count"] += 1
                         else:
-                            logger.info("count failed count %s actual count %s len(querySkill) %s",count, maxSkillCount, len(querySkill))
+                            logger.critical("count failed count %s actual count %s len(querySkill) %s",count, maxSkillCount, len(querySkill))
 
                         # print(word2Idx[idx])
-        logger.info("global skill dist %s after docidx %s", globalSkillDist, docIdx)
+        logger.critical("global skill dist %s after docidx %s", globalSkillDist, docIdx)
 
         ### 
         ## this logic is based on max dist. in this we are seeing which keywords have come in max dist
@@ -301,16 +301,16 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                             globalSkillDist[word]["count"] += 1
 
 
-                        logger.info("%s via broad skill match", word)
+                        logger.critical("%s via broad skill match", word)
                     else:
                         pass
         else:
-            logger.info("dockdix not in max skill dist %s", docIdx)
+            logger.critical("dockdix not in max skill dist %s", docIdx)
             
-        logger.info("global skill maxdist %s after docidx %s", globalSkillDist, docIdx)
+        logger.critical("global skill maxdist %s after docidx %s", globalSkillDist, docIdx)
 
         if len(globalSkillDist) > 0:
-            logger.info("final skills found for document %s", docIdx)
+            logger.critical("final skills found for document %s", docIdx)
             sortDist = {}
             for word in globalSkillDist:
                 if len(word.strip()) == 1:
@@ -322,13 +322,13 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
 
             # sortDist = {k: v for k, v in sorted(sortDist.items(), key=lambda item: item) }
-            # logger.info(sortDist) # not working for some reason
+            # logger.critical(sortDist) # not working for some reason
             finalSkillList[doc2Idx[docIdx]] = sortDist
 
 
     skillScore = getSkillScore(model, docLines, doc2Idx, finalSkillList, querySkill, notFound)
 
-    logger.info("skill Score %s", skillScore)
+    logger.critical("skill Score %s", skillScore)
 
     ret = {}
 
@@ -397,7 +397,7 @@ def getWordMatrix(docLines, model):
                 except KeyError:
                     continue
 
-    logger.info("total lines %s", len(word2Vec))
+    logger.critical("total lines %s", len(word2Vec))
     data_matrix  = numpy.zeros( (len(word2Vec), 300), dtype='float32')
 
     for idx, key in enumerate(word2Vec):
@@ -433,7 +433,7 @@ def getSampleData(mongoid, account_name, account_config):
     db = initDB(account_name, account_config)    
     r = connect_redis(account_name, account_config)
 
-    logger.info("getting sample for %s", mongoid)
+    logger.critical("getting sample for %s", mongoid)
     data = None
     if "all" in mongoid:
         limit = 50
@@ -447,9 +447,9 @@ def getSampleData(mongoid, account_name, account_config):
 
         
         if r.exists("job_" + mongoid):
-            logger.info("data from redis")
+            logger.critical("data from redis")
             data = r.get("job_" + mongoid)
-            # logger.info("data from redis %s", data)
+            # logger.critical("data from redis %s", data)
             dataMap = json.loads(data)
             data = []
             for key in dataMap:
@@ -458,12 +458,12 @@ def getSampleData(mongoid, account_name, account_config):
             
             data = data[skip:skip+limit]
                 
-            logger.info("candidate full data found %s", len(data))
+            logger.critical("candidate full data found %s", len(data))
         else:
             
 
-            logger.info("final mongo id %s", mongoid)
-            logger.info("skip %s", skip)
+            logger.critical("final mongo id %s", mongoid)
+            logger.critical("skip %s", skip)
             ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1}).limit(limit).skip(skip)
             
             data = []
@@ -477,11 +477,11 @@ def getSampleData(mongoid, account_name, account_config):
         data = []
         for mid in mongoid:
             if r.exists(mid):
-                logger.info("data from redis")
+                logger.critical("data from redis")
                 row = r.get(mid)
                 data.append(json.loads(row))
             else:
-                logger.info("data from mongo")
+                logger.critical("data from mongo")
                 row = db.emailStored.find_one({ 
                     "_id" : ObjectId(mid)
                 })
@@ -492,11 +492,11 @@ def getSampleData(mongoid, account_name, account_config):
             
     else:
         if r.exists(mongoid):
-            logger.info("data from redis")
+            logger.critical("data from redis")
             row = json.loads(r.get(mongoid))
             data = [row]
         else:
-            logger.info("data from mongo")
+            logger.critical("data from mongo")
             row = db.emailStored.find_one({ 
                 "_id" : ObjectId(mongoid)
             })
@@ -533,7 +533,7 @@ def getSampleData(mongoid, account_name, account_config):
         
 
 
-    logger.info("processing data")    
+    logger.critical("processing data")    
 
     doc2Idx = {}
     total_documents = 0
@@ -549,11 +549,11 @@ def getSampleData(mongoid, account_name, account_config):
         docLines[docIndex] = []
         doc2Idx[docIndex] = row["_id"]
         if "cvParsedInfo" not in row:
-            logger.info("data not proper cvParsedInfo missing")
+            logger.critical("data not proper cvParsedInfo missing")
             continue
         
         if "newCompressedStructuredContent" not in row["cvParsedInfo"]:
-            logger.info("data not proper newCompressedStructuredContent cvParsedInfo missing")
+            logger.critical("data not proper newCompressedStructuredContent cvParsedInfo missing")
             continue
         
         
@@ -573,13 +573,13 @@ def getSampleData(mongoid, account_name, account_config):
                     # continue 
                     # pass
 
-                # logger.info(line["classify"])
-                # logger.info(line["line"])
+                # logger.critical(line["classify"])
+                # logger.critical(line["line"])
 
                 if "token_line" in line:
                     line = line["token_line"] #pretokenize and save to db
                 else:
-                    logger.info("token line found. this should not happen")
+                    logger.critical("token line found. this should not happen")
                     if shouldTokenize:
                         doc = nlp(line["line"].lower()) #this is making slower for large data
                         line = [d.text for d in doc]
@@ -592,8 +592,8 @@ def getSampleData(mongoid, account_name, account_config):
                 line.extend(["_".join(n.split(" ")) for n in ngrams])
                 docLines[docIndex].append(line)
 
-    logger.info("total documents %s", total_documents)
-    # logger.info(doc2Idx)
+    logger.critical("total documents %s", total_documents)
+    # logger.critical(doc2Idx)
     return docLines , total_documents, doc2Idx
 
 
@@ -621,10 +621,11 @@ def get_job_criteria(mongoid,account_name, account_config):
         row = db.emailStored.find_one({
             "_id" : ObjectId(mongoid)
         })
-        if "job_profile_id" in row:
-            job_profile_id = row['job_profile_id']
-            if len(job_profile_id) == 0:
-                job_profile_id = None
+        if row:
+            if "job_profile_id" in row:
+                job_profile_id = row['job_profile_id']
+                if len(job_profile_id) == 0:
+                    job_profile_id = None
 
 
 

@@ -19,6 +19,7 @@ amqp_url = os.getenv('RABBIT_DB')
 
 from app.statspublisher import sendMessage as updateStats
 
+from app.account import connect_redis
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -295,11 +296,11 @@ class TaskQueue(object):
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        print(fmt1.format(thread_id, delivery_tag, body))
-        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        # print(fmt1.format(thread_id, delivery_tag, body))
+        # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        LOGGER.info(body)
+        LOGGER.critical(body)
 
         account_name = None
         if "account_name" in message:
@@ -321,6 +322,23 @@ class TaskQueue(object):
             self.acknowledge_message(delivery_tag)
             return
 
+
+        r = connect_redis(account_name, account_config)
+
+        key = "summary_bart_cnn_large" + message["mongoid"]
+        duplicate_key_check = 1
+        if r.exists(key):
+
+            duplicate_key_check = int(r.get(key))
+            if duplicate_key_check > 5:
+                LOGGER.critical("redis key exists")
+                self.acknowledge_message(delivery_tag)
+                return
+            else:
+                duplicate_key_check += 1
+            
+
+
         try:
             updateStats({
                 "action" : "resume_pipeline_update",
@@ -336,6 +354,8 @@ class TaskQueue(object):
                 "account_config" : account_config
             })
             process(message["filename"] , message["mongoid"], account_name, account_config)
+
+            r.set(key, duplicate_key_check , ex=1 * 60 * 60 * 24)
             datasync({
                 "id" : message["mongoid"],
                 "action" : "syncCandidate",
