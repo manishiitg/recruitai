@@ -39,6 +39,7 @@ COPY ./app/RecruitAI.json /workspace
 RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705
 RUN gsutil ls
+RUN pip install redis
 
 
 CMD ["/usr/bin/supervisord"]

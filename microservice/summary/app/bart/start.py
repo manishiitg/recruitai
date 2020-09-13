@@ -17,7 +17,7 @@ from bson.objectid import ObjectId
 import time
 import traceback
 
-from app.account import initDB, get_cloud_bucket
+from app.account import initDB, get_cloud_bucket , connect_redis
 
 from pathlib import Path
 
@@ -36,7 +36,7 @@ def process(filename, mongoid, account_name, account_config):
     })
 
     if count > 0:
-        logger.info("summary exists so skipping")
+        logger.critical("summary exists so skipping")
         return "summary exists"
 
 
@@ -51,7 +51,7 @@ def process(filename, mongoid, account_name, account_config):
 
     try:
         blob.download_to_filename(os.path.join(dest, filename))
-        logger.info("file downloaded at %s", os.path.join(dest, filename))
+        logger.critical("file downloaded at %s", os.path.join(dest, filename))
     except  Exception as e:
         logger.critical(str(e))
         traceback.print_exc(file=sys.stdout)
@@ -61,7 +61,7 @@ def process(filename, mongoid, account_name, account_config):
     dest = BASE_PATH + "/../cvreconstruction/"
 
     if os.path.exists(os.path.join(dest, filename)):
-        logger.info("foudn the file")
+        logger.critical("foudn the file")
     else:
         return {"error" : "cv file not found"}
 
@@ -82,7 +82,7 @@ def process(filename, mongoid, account_name, account_config):
         x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True , timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
-        logger.info(x)
+        logger.critical(x)
         start = "[ '"
         end = "' ]"
 
@@ -91,12 +91,12 @@ def process(filename, mongoid, account_name, account_config):
         pages_data_extract = x.split("',")
         content = " ".join(pages_data_extract)
 
-    logger.info(content)
+    logger.critical(content)
 
     if len(content) > 0 and mongoid and ObjectId.is_valid(mongoid):
         star_time = time.time()
         summary = extractSummary(content)
-        logger.info(summary)
+        logger.critical(summary)
         db = initDB(account_name, account_config)
         ret = db.emailStored.update_one({
             "_id" : ObjectId(mongoid)
@@ -108,7 +108,7 @@ def process(filename, mongoid, account_name, account_config):
                 }
             }
         })
-        logger.info("time taken $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", time.time() - star_time)
+        logger.critical("time taken $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", time.time() - star_time)
 
 def extractSummary(text):
     article_input_ids = tokenizer.batch_encode_plus([text], return_tensors='pt', max_length=1024)['input_ids'].to(torch_device)
