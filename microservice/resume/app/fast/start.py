@@ -27,7 +27,7 @@ def process(finalPdf):
         x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True, timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
-        logger.info(x)
+        logger.critical(x)
         start = "[ '"
         end = "' ]"
 
@@ -36,11 +36,11 @@ def process(finalPdf):
         pages_data_extract = x.split("',")
         content = " ".join(pages_data_extract)
 
-    # logger.info(content)
+    # logger.critical(content)
 
     lines = convert_for_tagging(content)
 
-    logger.info(lines)
+    logger.critical(lines)
 
     ret = []
 

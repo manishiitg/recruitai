@@ -13,13 +13,12 @@ class ContextFilter(logging.Filter):
         return True
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
-handler = logging.StreamHandler(sys.stdout)
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(hostname)s - %(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-
-logger.addHandler(handler)
-logger.addFilter(ContextFilter())
+# handler = logging.StreamHandler(sys.stdout)
+# handler.setLevel(logging.INFO)
+# formatter = logging.Formatter('%(hostname)s - %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# handler.setFormatter(formatter)
+# logger.addHandler(handler)
+# logger.addFilter(ContextFilter())
