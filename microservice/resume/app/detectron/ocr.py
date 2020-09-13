@@ -42,7 +42,7 @@ def get_size_of_scaled_image(im):
 
 
 def process_image_for_ocr(file_path, withDPI=False):
-    logger.info('Processing image for text Extraction')
+    logger.critical('Processing image for text Extraction')
     if withDPI:
         file_path = set_image_dpi(file_path)
 
