@@ -303,11 +303,11 @@ class TaskQueue(object):
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        print(fmt1.format(thread_id, delivery_tag, body))
+        # print(fmt1.format(thread_id, delivery_tag, body))
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        LOGGER.info(body)
+        LOGGER.critical(body)
 
         account_name = None
         if "account_name" in message:
@@ -318,7 +318,7 @@ class TaskQueue(object):
 
         
         account_config = message["account_config"]
-        LOGGER.info("Account name %s", account_name)
+        LOGGER.critical("Account name %s", account_name)
         if account_name == "prodrecruit":
             return self.acknowledge_message(delivery_tag)
 
@@ -335,7 +335,7 @@ class TaskQueue(object):
 
         key = message["filename"]
 
-        LOGGER.info("message filename %s", key)
+        LOGGER.critical("message filename %s", key)
         if key is None or key == "undefined" or "filename" not in message:
             LOGGER.critical("undefined key %s", key)
             return self.acknowledge_message(delivery_tag)
@@ -344,7 +344,7 @@ class TaskQueue(object):
         key = ''.join(e for e in key if e.isalnum()) 
         key = "picture_" + key
 
-        LOGGER.info("redis key %s", key)
+        LOGGER.critical("redis key %s", key)
 
         priority = 0
 
@@ -366,23 +366,36 @@ class TaskQueue(object):
 
 
         if "priority" in message:
-            LOGGER.info("priority of message %s", message["priority"])
+            LOGGER.critical("priority of message %s", message["priority"])
             priority = int(message["priority"])
         else:
-            LOGGER.info("priority not found at all")
+            LOGGER.critical("priority not found at all")
 
         doProcess = False
 
         r = connect_redis(account_name, account_config)
+
+        duplicate_key_check = 1
+        key = "image_pdf_" + message["mongoid"]
+        if r.exists(key):
+
+            duplicate_key_check = int(r.get(key))
+            if duplicate_key_check > 5:
+                LOGGER.critical("redis key exists")
+                self.acknowledge_message(delivery_tag)
+                return
+            else:
+                duplicate_key_check += 1
+
         
         if r.exists(key):
             ret = r.get(key)
             ret = json.loads(ret)
-            LOGGER.info("redis key exists")
-            LOGGER.info(ret)
+            LOGGER.critical("redis key exists")
+            LOGGER.critical(ret)
             if "error" in ret or isinstance(ret, list):
                 # new response type is dict not list
-                LOGGER.info("redis key exists but previously error status so reprocessing")
+                LOGGER.critical("redis key exists but previously error status so reprocessing")
                 doProcess = True
             else:
                 is_cache = True
@@ -393,6 +406,7 @@ class TaskQueue(object):
 
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"], account_name=account_name, account_config=account_config)
+            r.set(key, duplicate_key_check , ex=1 * 60 * 60 * 24)
             if "error" in ret:
                 LOGGER.critical(ret)
                 
@@ -416,7 +430,7 @@ class TaskQueue(object):
                             message2 = ret
                             meta["message"] = json.loads(json.dumps(message2))
                             x = requests.post(meta["callback_url"], json=meta)
-                            LOGGER.info(x.text)
+                            LOGGER.critical(x.text)
                 except Exception as e:
                     LOGGER.critical("callback exception")
                     LOGGER.critical(e)
@@ -519,7 +533,7 @@ class TaskQueue(object):
         Basic.Ack RPC method for the delivery tag.
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
-        LOGGER.info('Acknowledging message %s', delivery_tag)
+        LOGGER.critical('Acknowledging message %s', delivery_tag)
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
