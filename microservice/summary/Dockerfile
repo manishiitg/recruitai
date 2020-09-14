@@ -6,7 +6,7 @@ WORKDIR /workspace
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
 RUN apt-get update && \
-	apt-get install supervisor -y && \
+	apt-get install supervisor curl -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
@@ -14,7 +14,7 @@ COPY ./supervisor/conf.d/summary.conf /etc/supervisor/conf.d/summary.conf
 
 RUN truncate -s 0 /workspace/logs/summary*.log
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
 RUN node --version
