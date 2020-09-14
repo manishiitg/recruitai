@@ -1,3 +1,6 @@
+from app.bart.start import loadModel
+from app.account import connect_redis
+from app.statspublisher import sendMessage as updateStats
 import functools
 import time
 from app.logging import logger as LOGGER
@@ -5,7 +8,7 @@ import pika
 from app.bart.start import process
 import json
 import threading
-import os 
+import os
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -17,9 +20,6 @@ from app.publishdatasync import sendMessage as datasync
 
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.statspublisher import sendMessage as updateStats
-
-from app.account import connect_redis
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -35,6 +35,7 @@ class TaskQueue(object):
     EXCHANGE_TYPE = 'topic'
     QUEUE = 'summary'
     ROUTING_KEY = 'summary.parsing'
+
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -49,11 +50,10 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = [    ]
+        self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = 1
-
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -106,7 +106,8 @@ class TaskQueue(object):
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
+            LOGGER.warning(
+                'Connection closed, reconnect necessary: %s', reason)
             self.reconnect()
 
     def reconnect(self):
@@ -188,7 +189,8 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
+        self._channel.queue_declare(
+            queue=queue_name, durable=True, callback=cb, arguments={'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -286,7 +288,8 @@ class TaskQueue(object):
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
+        t = threading.Thread(target=self.do_work, kwargs=dict(
+            delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
         self.threads.append(t)
@@ -298,7 +301,7 @@ class TaskQueue(object):
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
-        
+
         message = json.loads(body)
         LOGGER.critical(body)
 
@@ -309,12 +312,11 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
-        
         account_config = message["account_config"]
 
         if "mongoid" not in message:
             message["mongoid"] = ""
-            
+
         if message["mongoid"] is None:
             message["mongoid"] = ""
 
@@ -322,88 +324,85 @@ class TaskQueue(object):
             self.acknowledge_message(delivery_tag)
             return
 
-
         r = connect_redis(account_name, account_config)
 
-        key = "summary_bart_cnn_large" + message["mongoid"]
+        duplicate_key = "summary_bart_cnn_large" + message["mongoid"]
         duplicate_key_check = 1
-        if r.exists(key):
+        if r.exists(duplicate_key):
 
-            duplicate_key_check = int(r.get(key))
+            if r.get(duplicate_key) == "true":
+                r.set(duplicate_key, 0)
+
+            duplicate_key_check = int(r.get(duplicate_key))
+
             if duplicate_key_check > 5:
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
                 return
             else:
                 duplicate_key_check += 1
-            
 
+        # try:
+        updateStats({
+            "action": "resume_pipeline_update",
+            "resume_unique_key": message["filename"],
+            "meta": {
+                "mongoid": message["mongoid"]
+            },
+            "stage": {
+                "pipeline": "summary_start",
+                "priority": message["priority"]
+            },
+            "account_name": account_name,
+            "account_config": account_config
+        })
+        process(message["filename"], message["mongoid"],
+                account_name, account_config)
 
-        try:
-            updateStats({
-                "action" : "resume_pipeline_update",
-                "resume_unique_key" : message["filename"],
-                "meta" : {
-                    "mongoid" : message["mongoid"]
-                },
-                "stage" : {
-                    "pipeline" : "summary_start",
-                    "priority" : message["priority"] 
-                },
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-            process(message["filename"] , message["mongoid"], account_name, account_config)
-
-            r.set(key, duplicate_key_check , ex=1 * 60 * 60 * 24)
-            datasync({
-                "id" : message["mongoid"],
-                "action" : "syncCandidate",
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-            updateStats({
-                "action" : "resume_pipeline_update",
-                "resume_unique_key" : message["filename"],
-                "meta" : {
-                    "mongoid" : message["mongoid"]
-                },
-                "stage" : {
-                    "pipeline" : "summary",
-                    "priority" : message["priority"] 
-                },
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-        except Exception as e:
-            LOGGER.critical(str(e))
-            traceback.print_stack()
-            updateStats({
-                "action" : "resume_pipeline_update",
-                "resume_unique_key" : message["filename"],
-                "meta" : {
-                    "error" : str(e),
-                    "mongoid" : message["mongoid"]
-                },
-                "stage" : {
-                    "pipeline" : "summary",
-                    "priority" : message["priority"] 
-                },
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
+        r.set(duplicate_key, duplicate_key_check, ex=1 * 60 * 60 * 24)
+        datasync({
+            "id": message["mongoid"],
+            "action": "syncCandidate",
+            "account_name": account_name,
+            "account_config": account_config
+        })
+        updateStats({
+            "action": "resume_pipeline_update",
+            "resume_unique_key": message["filename"],
+            "meta": {
+                "mongoid": message["mongoid"]
+            },
+            "stage": {
+                "pipeline": "summary",
+                "priority": message["priority"]
+            },
+            "account_name": account_name,
+            "account_config": account_config
+        })
+        # except Exception as e:
+        #     LOGGER.critical(str(e))
+        #     traceback.print_stack()
+        #     updateStats({
+        #         "action" : "resume_pipeline_update",
+        #         "resume_unique_key" : message["filename"],
+        #         "meta" : {
+        #             "error" : str(e),
+        #             "mongoid" : message["mongoid"]
+        #         },
+        #         "stage" : {
+        #             "pipeline" : "summary",
+        #             "priority" : message["priority"]
+        #         },
+        #         "account_name" : account_name,
+        #         "account_config" : account_config
+        #     })
 
         self.acknowledge_message(delivery_tag)
-        
-            
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        
-
-          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
@@ -413,8 +412,6 @@ class TaskQueue(object):
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
-
-            
 
     def stop_consuming(self):
         """Tell RabbitMQ that you would like to stop consuming by sending the
@@ -494,12 +491,12 @@ class ReconnectingTaskQueue(object):
                 self._consumer.run()
                 # Wait for all to complete
             except KeyboardInterrupt:
-                self._consumer.stop() 
+                self._consumer.stop()
                 break
             # except Exception as e:
             #     print(traceback.format_exc())
             #     LOGGER.critical(str(e))
-                
+
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
@@ -519,12 +516,9 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-
-from app.bart.start import loadModel
-
 def main():
     loadModel()
-    
+
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
