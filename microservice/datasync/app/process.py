@@ -697,7 +697,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             if "newCompressedStructuredContent" in cvParsedInfo:
                 for page in cvParsedInfo["newCompressedStructuredContent"]:
                     for pagerow in cvParsedInfo["newCompressedStructuredContent"][page]:
-                        finalLines.append(pagerow["line"])
+                        if len(pagerow["line"]) > 0:
+                            finalLines.append(pagerow["line"])
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -725,29 +726,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             job_profile_map[job_profile_id][row["_id"]] = row
 
-        if len(finalLines) == 0:
-            if "subject" not in row:
-                row["subject"] = ""
-            
-            if "sender_mail" not in row:
-                row["sender_mail"] = ""
-
-            if "from" not in row:
-                row["from"] = ""
-
-            finalLines = [
-                row["subject"],
-                row["from"],
-                row["sender_mail"]
-            ]    
-        
-        if len(finalLines) > 0:
-            # logger.info("add to search")
-            if not r.exists(row['_id']):
-                # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
-                t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
-                t.start()
-                # this is getting slow...
+        sendToSearchIndex(row , r, "full")
         
         r.set(row["_id"]  , json.dumps(row,default=json_util.default))
 
@@ -765,7 +744,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # if we use threads then many threads start even before connection is created 
             # so they create multiple connections
             # threads.append(t)
-
+            sendToSearchIndex(row, r, findtype)
             
             if job_profile_id is not None:
                 logger.info("job profile %s", job_profile_id)
@@ -916,6 +895,42 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     #     t.join()
 
 time_map = {}
+
+def sendToSearchIndex(row, r, from_type):
+    # if from_type == "full":
+    # this gets slow with full when data is large
+    #     return
+
+    finalLines = []
+    if "cvParsedInfo" in row:
+        cvParsedInfo = row["cvParsedInfo"]
+        if "newCompressedStructuredContent" in cvParsedInfo:
+            for page in cvParsedInfo["newCompressedStructuredContent"]:
+                for pagerow in cvParsedInfo["newCompressedStructuredContent"][page]:
+                    if len(pagerow["line"]) > 0:
+                        finalLines.append(pagerow["line"])
+    
+    if "subject" not in row:
+        row["subject"] = ""
+    
+    if "sender_mail" not in row:
+        row["sender_mail"] = ""
+
+    if "from" not in row:
+        row["from"] = ""
+
+    
+    finalLines.append(row["subject"])
+    finalLines.append(row["from"])
+    finalLines.append(row["sender_mail"])
+    
+    if len(finalLines) > 0:
+        # logger.info("add to search")
+        if not r.exists(row['_id']):
+            # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
+            t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
+            t.start()
+            # this is getting slow...
 
 def addFilter(obj, key, account_name, account_config):
     global dirtyMap
