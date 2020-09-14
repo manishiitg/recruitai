@@ -396,7 +396,7 @@ class TaskQueue(object):
                 return
         
         is_cache = False
-        if r.exists(key): # turning of cache because testing with ai models
+        if r.exists(key) and False: # turning of cache because testing with ai models
             ret = r.get(key)
             ret = json.loads(ret)
             LOGGER.critical("redis key exists")
