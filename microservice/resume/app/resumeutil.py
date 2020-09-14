@@ -16,7 +16,7 @@ from threading import Thread
 
 import json
 
-from app.publishsearch import sendBlockingMessage
+from app.publishsearch import sendMessage
 from app.publishgender import sendBlockingMessage as getGenderMessage
 
 from datetime import datetime
@@ -121,10 +121,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 finalLines.append(pagerow["line"])
 
         if mongoid:
-            t = Thread(target=addToSearch, args=(mongoid,finalLines,{}, account_name, account_config))
-            t.start()
-            # t.join()
-
+            addToSearch(mongoid,finalLines,{}, account_name, account_config)
+            
             full_time_analysis["searchIdx"] = {
                 "time_taken" : time.time() - timer,
                 "start_time" : time.time()
@@ -294,7 +292,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
 
 def addToSearch(mongoid, finalLines, ret, account_name, account_config):
-    sendBlockingMessage({
+    sendMessage({
         "id": mongoid,
         "lines" : finalLines,
         "extra_data" : ret,
