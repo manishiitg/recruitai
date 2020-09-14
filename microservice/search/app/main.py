@@ -32,7 +32,7 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
-    logger.info(body)
+    logger.critical(body)
 
     account_name = None
     if "account_name" in body:
@@ -55,13 +55,16 @@ def thread_task( ch, method_frame, properties, body):
             action = body["action"]
             ret = {}
             # need to remove add, delete etc from here as using searchindex for that now 
-            if action == "addDoc":
-                ret = addDoc(body["id"] , body["lines"], body["extra_data"], account_name, account_config)
-            elif action == "addMeta":
-                ret = addMeta(body["id"] , body["meta"], account_name, account_config)
-            elif action == "deleteDoc":
-                ret = deleteDoc(body["id"], account_name, account_config)
-            elif action == "getDoc":
+            # if action == "addDoc":
+            #     ret = addDoc(body["id"] , body["lines"], body["extra_data"], account_name, account_config)
+            #     pass
+            # elif action == "addMeta":
+            #     ret = addMeta(body["id"] , body["meta"], account_name, account_config)
+            #     pass
+            # elif action == "deleteDoc":
+            #     ret = deleteDoc(body["id"], account_name, account_config)
+            # el
+            if action == "getDoc":
                 ret = getDoc(body["id"], account_name, account_config)
             elif action == "searchDoc":
                 ret = searchDoc(body["search"], account_name, account_config)

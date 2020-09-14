@@ -328,10 +328,10 @@ class TaskQueue(object):
 
 
         duplicate_key_check = 1
-        key = "picture_detectron_" + message["mongoid"]
-        if r.exists(key):
+        duplicate_key = "picture_detectron_" + message["mongoid"]
+        if r.exists(duplicate_key):
 
-            duplicate_key_check = int(r.get(key))
+            duplicate_key_check = int(r.get(duplicate_key))
             if duplicate_key_check > 5:
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
@@ -360,7 +360,7 @@ class TaskQueue(object):
 
         ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"], account_name, account_config)
         
-        r.set(key, duplicate_key_check , ex=1 * 60 * 60 * 24)
+        r.set(duplicate_key, duplicate_key_check , ex=1 * 60 * 60 * 24)
 
         datasync({
                 "id" : message["mongoid"],
