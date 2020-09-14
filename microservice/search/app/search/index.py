@@ -33,7 +33,7 @@ def createIndex(account_name, account_config):
             }
         }
     })
-    logger.info(ret)
+    logger.critical(ret)
 
 def getStats(account_name, account_config):
     createIndex(account_name, account_config)
@@ -54,7 +54,7 @@ def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}
         "extra_data": {},
         "refresh": True,
         "timestamp": datetime.now()})
-    logger.info(ret)
+    logger.critical(ret)
     return ret
 
 def addMeta(mongoid, meta, account_name, account_config):
@@ -71,7 +71,7 @@ def addMeta(mongoid, meta, account_name, account_config):
                 }
             }
         })
-        logger.info(ret)
+        logger.critical(ret)
     except Exception as e:
         logger.critical(e)
         traceback.print_exception(e)
