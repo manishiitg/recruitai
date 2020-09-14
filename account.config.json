@@ -43,8 +43,8 @@
     },
     "rocketrecruit" : {
         "mongodb" : {
-            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/staging_recruit?authSource=admin",
-            "db" : "staging_recruit"
+            "host" : "mongodb://root:recruitai567@116.202.234.182:27070/rocket_recruit?authSource=admin",
+            "db" : "rocket_recruit"
         },
         "google_cloud" : {
             "bucket" : "airecruitai.excellencetechnologies.in",
@@ -57,7 +57,7 @@
         },
         "elasticsearch" : {
             "host" : "elasticsearch:9200",
-            "index" : "stagingrecruit"
+            "index" : "rocket_recruit"
         },
         "reduce_priority" : 5
 
