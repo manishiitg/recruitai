@@ -1,3 +1,4 @@
+from app.account import initDB, get_cloud_bucket, connect_redis
 import functools
 import time
 from app.logging import logger as LOGGER
@@ -6,7 +7,7 @@ from app.resumeutil import fullResumeParsing
 import json
 import threading
 import redis
-import os 
+import os
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -23,7 +24,8 @@ from app.publishpicture import sendMessage as sendPicture
 from app.publishsummary import sendMessage as sendSummary
 from app.statspublisher import sendMessage as updateStats
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv(
+    'RABBIT_DB', "amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
 
 
 class TaskQueue(object):
@@ -40,6 +42,7 @@ class TaskQueue(object):
     EXCHANGE_TYPE = 'topic'
     QUEUE = 'image'
     ROUTING_KEY = 'image.parsing'
+
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -57,7 +60,7 @@ class TaskQueue(object):
         self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1  
+        self._prefetch_count = 1
         # libreoffice can only convert file one at a time. we cannot use threads for this
         # it gets stuck foroever if we do multiple together
 
@@ -195,7 +198,8 @@ class TaskQueue(object):
         """
         # LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
+        self._channel.queue_declare(
+            queue=queue_name, durable=True, callback=cb, arguments={'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -293,7 +297,8 @@ class TaskQueue(object):
         #             basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
+        t = threading.Thread(target=self.do_work, kwargs=dict(
+            delivery_tag=delivery_tag, body=body))
         t.start()
         # LOGGER.info(t.is_alive())
         self.threads.append(t)
@@ -305,7 +310,7 @@ class TaskQueue(object):
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
-        
+
         message = json.loads(body)
         LOGGER.critical(body)
 
@@ -316,12 +321,10 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
-        
         account_config = message["account_config"]
         LOGGER.critical("Account name %s", account_name)
         if account_name == "prodrecruit":
             return self.acknowledge_message(delivery_tag)
-
 
         if message["mongoid"] is None:
             message["mongoid"] = ""
@@ -331,8 +334,6 @@ class TaskQueue(object):
         else:
             skills = None
 
-
-
         key = message["filename"]
 
         LOGGER.critical("message filename %s", key)
@@ -340,8 +341,7 @@ class TaskQueue(object):
             LOGGER.critical("undefined key %s", key)
             return self.acknowledge_message(delivery_tag)
 
-
-        key = ''.join(e for e in key if e.isalnum()) 
+        key = ''.join(e for e in key if e.isalnum())
         key = "picture_" + key
 
         LOGGER.critical("redis key %s", key)
@@ -351,19 +351,18 @@ class TaskQueue(object):
         is_cache = False
 
         updateStats({
-            "action" : "resume_pipeline_update",
-            "resume_unique_key" : message["filename"],
-            "meta" : {
-                "mongoid" : message["mongoid"]
+            "action": "resume_pipeline_update",
+            "resume_unique_key": message["filename"],
+            "meta": {
+                "mongoid": message["mongoid"]
             },
-            "stage" : {
-                "pipeline" : "image_start",
-                "priority" : message["priority"] 
+            "stage": {
+                "pipeline": "image_start",
+                "priority": message["priority"]
             },
-            "account_name" : account_name,
-            "account_config" : account_config
+            "account_name": account_name,
+            "account_config": account_config
         })
-
 
         if "priority" in message:
             LOGGER.critical("priority of message %s", message["priority"])
@@ -376,10 +375,10 @@ class TaskQueue(object):
         r = connect_redis(account_name, account_config)
 
         duplicate_key_check = 1
-        key = "image_pdf_" + message["mongoid"]
-        if r.exists(key):
+        key_duplicate_check = "image_convert_" + message["mongoid"]
+        if r.exists(key_duplicate_check):
 
-            duplicate_key_check = int(r.get(key))
+            duplicate_key_check = int(r.get(key_duplicate_check))
             if duplicate_key_check > 5:
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
@@ -387,7 +386,6 @@ class TaskQueue(object):
             else:
                 duplicate_key_check += 1
 
-        
         if r.exists(key):
             ret = r.get(key)
             ret = json.loads(ret)
@@ -395,7 +393,8 @@ class TaskQueue(object):
             LOGGER.critical(ret)
             if "error" in ret or isinstance(ret, list):
                 # new response type is dict not list
-                LOGGER.critical("redis key exists but previously error status so reprocessing")
+                LOGGER.critical(
+                    "redis key exists but previously error status so reprocessing")
                 doProcess = True
             else:
                 is_cache = True
@@ -405,21 +404,21 @@ class TaskQueue(object):
         timer = time.time()
 
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], account_name=account_name, account_config=account_config)
-            r.set(key, duplicate_key_check , ex=1 * 60 * 60 * 24)
+            ret = fullResumeParsing(message["filename"], message["mongoid"],
+                                    account_name=account_name, account_config=account_config)
+            r.set(key_duplicate_check, duplicate_key_check, ex=1 * 60 * 60 * 24)
             if "error" in ret:
                 LOGGER.critical(ret)
-                
 
                 db = initDB(account_name, account_config)
                 if ObjectId.is_valid(message["mongoid"]):
                     db.emailStored.update_one({
-                        "_id" : ObjectId(message["mongoid"])
+                        "_id": ObjectId(message["mongoid"])
                     }, {
                         "$set": {
                             "cvParsedInfo": ret,
                             "cvParsedAI": True,
-                            "updatedTime" : datetime.now()
+                            "updatedTime": datetime.now()
                         }
                     })
 
@@ -436,42 +435,41 @@ class TaskQueue(object):
                     LOGGER.critical(e)
 
                 updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : message["filename"],
-                    "meta" : {
-                        "error" : ret["error"],
-                        "mongoid" : message["mongoid"]
+                    "action": "resume_pipeline_update",
+                    "resume_unique_key": message["filename"],
+                    "meta": {
+                        "error": ret["error"],
+                        "mongoid": message["mongoid"]
                     },
-                    "stage" : {
-                        "pipeline" : "image",
-                        "priority" : message["priority"] 
+                    "stage": {
+                        "pipeline": "image",
+                        "priority": message["priority"]
                     },
-                    "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_name": account_name,
+                    "account_config": account_config
                 })
 
                 self.acknowledge_message(delivery_tag)
                 return
 
             r.set(key, json.dumps(ret))
-        
 
         updateStats({
-            "action" : "resume_pipeline_update",
-            "resume_unique_key" : ret["filename"],
-            "meta" : {
-                "images" : len(ret["finalImages"]),
-                "mongoid" : message["mongoid"],
-                "is_cache" : is_cache
+            "action": "resume_pipeline_update",
+            "resume_unique_key": ret["filename"],
+            "meta": {
+                "images": len(ret["finalImages"]),
+                "mongoid": message["mongoid"],
+                "is_cache": is_cache
             },
-            "stage" : {
-                "pipeline" : "image",
-                "priority" : message["priority"] 
+            "stage": {
+                "pipeline": "image",
+                "priority": message["priority"]
             },
-            "account_name" : account_name,
-            "account_config" : account_config
+            "account_name": account_name,
+            "account_config": account_config
         })
-        
+
         message["cvdir"] = ret["cvdir"]
         message["output_dir2"] = ret["output_dir2"]
         message["finalImages"] = ret["finalImages"]
@@ -481,33 +479,32 @@ class TaskQueue(object):
         if mongoid and ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
             db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
+                "_id": ObjectId(mongoid)
             }, {
                 "$set": {
                     "cvimage": {
-                            "images": ret["finalImages"],
-                            "time_taken" : time.time() - timer
+                        "images": ret["finalImages"],
+                        "time_taken": time.time() - timer
                     }
                 }
             })
             timer = time.time()
 
-
             sendPicture({
-                "image" : ret["finalImages"][0],
-                "mongoid" : mongoid,
-                "filename" : message["filename"],
-                "priority" : priority,
+                "image": ret["finalImages"][0],
+                "mongoid": mongoid,
+                "filename": message["filename"],
+                "priority": priority,
                 "account_name": account_name,
-                "account_config" : account_config
+                "account_config": account_config
             })
-            if priority > 5 or True: # all cv for summary
+            if priority > 5 or True:  # all cv for summary
                 sendSummary({
-                    "mongoid" : mongoid,
-                    "filename" : message["filename"],
-                    "priority" : priority,
+                    "mongoid": mongoid,
+                    "filename": message["filename"],
+                    "priority": priority,
                     "account_name": account_name,
-                    "account_config" : account_config
+                    "account_config": account_config
                 })
 
         try:
@@ -517,8 +514,8 @@ class TaskQueue(object):
                     meta["message"] = json.loads(json.dumps(message))
                     requests.post(meta["callback_url"], json=meta)
         except Exception as e:
-                traceback.print_exc()
-                LOGGER.critical(e)
+            traceback.print_exc()
+            LOGGER.critical(e)
 
         sendMessage(message)
 
@@ -537,8 +534,6 @@ class TaskQueue(object):
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
-
-            
 
     def stop_consuming(self):
         """Tell RabbitMQ that you would like to stop consuming by sending the
@@ -618,12 +613,12 @@ class ReconnectingTaskQueue(object):
                 self._consumer.run()
                 # Wait for all to complete
             except KeyboardInterrupt:
-                self._consumer.stop() 
+                self._consumer.stop()
                 break
             # except Exception as e:
             #     print(traceback.format_exc())
             #     LOGGER.critical(str(e))
-                
+
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
@@ -645,9 +640,37 @@ class ReconnectingTaskQueue(object):
 
 
 def main():
-    
+    # account_name = 'devrecruit'
+    # account_config = {
+    #     "mongodb": {"host": "mongodb://nodeUser:java1234@176.9.137.77:27017/hr_recruit_dev", "db": "hr_recruit_dev"},
+    #     "google_cloud": {"bucket": "airecruitai.excellencetechnologies.in",
+    #                      "url": "https://airecruitai.excellencetechnologies.in/"},
+    #     "redis": {
+    #         "host": "redis",
+    #         "port": "6379",
+    #         "db_index": 1
+    #     }
+    # }
+
+    # db = initDB(account_name, account_config)
+
+    # ret = db.emailStored.find({
+    #     "cvParsedAI": {"$exists": True}
+    # })
+
+    # for row in ret:
+    #     sendSummary({
+    #         "mongoid": str(row["_id"]),
+    #         "filename": "",
+    #         "priority": 0,
+    #         "account_name": account_name,
+    #         "account_config": account_config
+    #     })
+    # just for testing something. code can be remove.d its of no use.
+
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
+
 
 if __name__ == '__main__':
     main()
