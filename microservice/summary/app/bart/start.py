@@ -117,6 +117,9 @@ def process(filename, mongoid, account_name, account_config):
 
         star_time = time.time()
         summary = extractSummary(content)
+        if isinstance(summary, list):
+            summary = summary[0]
+            
         logger.critical(summary)
         db = initDB(account_name, account_config)
         ret = db.emailStored.update_one({
