@@ -89,7 +89,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 unique_cache_key_list = []
-use_unique_cache_feature = False
+use_unique_cache_feature = True
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
@@ -229,7 +229,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     # else:
 
 
-    unique_cache_key = "job_" + mongoid + "filter_type_" + filter_type + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
+    unique_cache_key = account_name +"_job_" + mongoid + "filter_type_" + filter_type + "page_" + str(page) + "limit_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "tags_" + str(hash(str(tags))) + "on_starred_" + str(on_starred)
 
     # to take this one level up. we will store all function params and call function again internally when cache is cleared
 
@@ -345,7 +345,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 # if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
                 #     logger.info("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
                 
-                return sequence * 1
+                return sequence * -1
 
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
@@ -373,10 +373,11 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 
                 # logger.info(float(item[1]["sequence"]))
 
-                return float(item[1]["sequence"])  * 1
+                return float(item[1]["sequence"])  * -1
+                return (item[1]["email_timestamp"]) * -1
 
 
-            print(job_profile_data)
+            # print(job_profile_data)
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
             def custom_sort_date(item):
