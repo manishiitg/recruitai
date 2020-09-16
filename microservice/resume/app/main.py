@@ -25,6 +25,7 @@ from app.publishskill import sendBlockingMessage as extractSkillMessage
 from app.publishfilter import sendBlockingMessage as extractCandidateScore
 
 from app.publishcandidate import sendMessage as extractCandidateClassifySkill
+from app.publishsummary import sendMessage as sendSummary
 from app.publishdatasync import sendMessage as datasync
 from app.statspublisher import sendMessage as updateStats
 
@@ -460,6 +461,13 @@ class TaskQueue(object):
                         "criteria" : meta["criteria"]
                     })
 
+                sendSummary({
+                    "mongoid": message["mongoid"],
+                    "filename": message["filename"],
+                    "priority": message["priority"],
+                    "account_name": account_name,
+                    "account_config": account_config
+                })
                 LOGGER.critical(" data sync calledddd 121221")
                 datasync({
                     "id" : message["mongoid"],
@@ -535,6 +543,14 @@ class TaskQueue(object):
                     "criteria" : meta["criteria"]
                 })
 
+            sendSummary({
+                "mongoid": message["mongoid"],
+                "filename": message["filename"],
+                "priority": message["priority"],
+                "account_name": account_name,
+                "account_config": account_config
+            })
+
             LOGGER.critical(" data sync calledddd")
 
 
@@ -597,7 +613,7 @@ class TaskQueue(object):
                     LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
                     
                     message["parsed"] = {
-                        "cvParsedInfo": ret,
+                        # "cvParsedInfo": ret,
                         "cvParsedAI": not isError,
                         "updatedTime" : datetime.now()
                     }
@@ -607,6 +623,7 @@ class TaskQueue(object):
                     LOGGER.critical(x.text)
 
         except Exception as e:
+            LOGGER.critical(meta)
             traceback.print_exc()
             LOGGER.critical(e)
 
