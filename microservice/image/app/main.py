@@ -498,14 +498,15 @@ class TaskQueue(object):
                 "account_name": account_name,
                 "account_config": account_config
             })
-            if priority > 5 or True:  # all cv for summary
-                sendSummary({
-                    "mongoid": mongoid,
-                    "filename": message["filename"],
-                    "priority": priority,
-                    "account_name": account_name,
-                    "account_config": account_config
-                })
+            # if priority > 5 or True:  # all cv for summary
+            #     sendSummary({
+            #         "mongoid": mongoid,
+            #         "filename": message["filename"],
+            #         "priority": priority,
+            #         "account_name": account_name,
+            #         "account_config": account_config
+            #     })
+            # we are calling from resume api now because need ai data for summary
 
         try:
             if "meta" in message:
