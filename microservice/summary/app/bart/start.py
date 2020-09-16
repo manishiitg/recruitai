@@ -8,6 +8,8 @@ model = None
 tokenizer = None
 summarizer = None
 
+from app.publishdatasync import sendMessage as datasync
+
 from pdfminer.pdfpage import PDFTextExtractionNotAllowed
 
 from pdfminer.high_level import extract_text
@@ -131,7 +133,18 @@ def process(filename, mongoid, account_name, account_config):
                 }
             }
         })
+        datasync({
+            "id" : mongoid,
+            "action" : "syncCandidate",
+            "account_name" : account_name,
+            "account_config" : account_config,
+            "priority" : 10,
+            "field" : "aisummary"
+        })
+
         logger.critical("time taken $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", time.time() - star_time)
+    else:
+        logger.critical("no content found for summary")
             
 
 def extractSummary(text):
