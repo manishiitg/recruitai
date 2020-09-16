@@ -201,7 +201,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
     total_weight = 0
     for cri in criteria:
         if type(criteria[cri]) is dict and "weight" in criteria[cri]:
-            weight = criteria[cri]["weight"]
+            weight = int(criteria[cri]["weight"])
             total_weight += weight
 
     for cri in criteria:
@@ -331,6 +331,9 @@ def getGenderScore(criteria, row, total_weight, max_score):
         debug.append(debug_str)
         return candidate_score, debug
 
+    if "weight" not in criteria["gender"]:
+        criteria["gender"]["weight"] = 0
+        
     if criteria["gender"]["weight"] > 0:
         debug_str = "Gender Score Criteria {}".format(json.dumps(criteria["gender"], indent=True))
         logger.info(debug_str)
