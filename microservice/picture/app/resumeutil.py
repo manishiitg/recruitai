@@ -73,7 +73,7 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
 
         if response:
             response = response.replace(basedir + "/", "")
-            response = GOOGLE_BUCKET_URL + "/" + account_name + cvdir + "/picture/" + response
+            response = GOOGLE_BUCKET_URL + account_name + "/" + cvdir + "/picture/" + response
             logger.critical(response)
 
             if mongoid and ObjectId.is_valid(mongoid):
