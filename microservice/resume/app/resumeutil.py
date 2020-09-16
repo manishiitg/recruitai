@@ -269,14 +269,6 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "parsing_type" : parsing_type
         }) 
 
-        sendSummary({
-                    "mongoid": mongoid,
-                    "filename": message["filename"],
-                    "priority": priority,
-                    "account_name": account_name,
-                    "account_config": account_config
-                })
-
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
             # "compressedStructuredContent": combinData["compressedStructuredContent"]
