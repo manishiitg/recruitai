@@ -117,8 +117,6 @@ def process(filename, mongoid, account_name, account_config):
 
         star_time = time.time()
         summary = extractSummary(content)
-        if isinstance(summary, list):
-            summary = summary[0]
             
         logger.critical(summary)
         db = initDB(account_name, account_config)
@@ -127,7 +125,7 @@ def process(filename, mongoid, account_name, account_config):
         }, {
             "$set": {
                 "aisummary": {
-                    "text" : summary,
+                    "text" : summary[0]["summary_text"],
                     "time" : time.time() - star_time
                 }
             }
