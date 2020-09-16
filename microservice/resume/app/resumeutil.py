@@ -18,6 +18,7 @@ import json
 
 from app.publishsearch import sendMessage
 from app.publishgender import sendBlockingMessage as getGenderMessage
+from app.publishsummary import sendMessage as sendSummary
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -267,6 +268,14 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "account_config" : account_config,
             "parsing_type" : parsing_type
         }) 
+
+        sendSummary({
+                    "mongoid": mongoid,
+                    "filename": message["filename"],
+                    "priority": priority,
+                    "account_name": account_name,
+                    "account_config": account_config
+                })
 
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
