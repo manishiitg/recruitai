@@ -305,6 +305,11 @@ class TaskQueue(object):
 
         account_config = message["account_config"]
 
+        if "elasticsearch" not in account_config:
+            LOGGER.critical("invalid config")
+            return self.acknowledge_message(delivery_tag)
+
+
         body = message
         if isinstance(body, dict):
             if "action" in body:
