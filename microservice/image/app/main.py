@@ -640,16 +640,27 @@ class ReconnectingTaskQueue(object):
 
 
 def main():
-    # account_name = 'devrecruit'
+    # account_name = 'rocketrecruit'
     # account_config = {
-    #     "mongodb": {"host": "mongodb://nodeUser:java1234@176.9.137.77:27017/hr_recruit_dev", "db": "hr_recruit_dev"},
-    #     "google_cloud": {"bucket": "airecruitai.excellencetechnologies.in",
-    #                      "url": "https://airecruitai.excellencetechnologies.in/"},
-    #     "redis": {
-    #         "host": "redis",
-    #         "port": "6379",
-    #         "db_index": 1
-    #     }
+    #     "mongodb" : {
+    #         "host" : "mongodb://root:recruitai567@116.202.234.182:27070/rocket_recruit?authSource=admin",
+    #         "db" : "rocket_recruit"
+    #     },
+    #     "google_cloud" : {
+    #         "bucket" : "airecruitai.excellencetechnologies.in",
+    #         "url" : "https://airecruitai.excellencetechnologies.in/"
+    #     },
+    #     "redis" : {
+    #         "host" : "redis",
+    #         "port" : "6379",
+    #         "db_index" : 1
+    #     },
+    #     "elasticsearch" : {
+    #         "host" : "elasticsearch:9200",
+    #         "index" : "rocket_recruit"
+    #     },
+    #     "reduce_priority" : 5
+
     # }
 
     # db = initDB(account_name, account_config)
