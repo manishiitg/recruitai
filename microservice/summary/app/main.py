@@ -321,6 +321,7 @@ class TaskQueue(object):
             message["mongoid"] = ""
 
         if len(message["mongoid"]) == 0:
+            LOGGER.critical("empty mongo id")
             self.acknowledge_message(delivery_tag)
             return
 
@@ -329,9 +330,6 @@ class TaskQueue(object):
         duplicate_key = "summary_bart_cnn_large" + message["mongoid"]
         duplicate_key_check = 1
         if r.exists(duplicate_key):
-
-            if r.get(duplicate_key) == "true":
-                r.set(duplicate_key, 0)
 
             duplicate_key_check = int(r.get(duplicate_key))
 
@@ -360,6 +358,7 @@ class TaskQueue(object):
                 account_name, account_config)
 
         r.set(duplicate_key, duplicate_key_check, ex=1 * 60 * 60 * 24)
+
         datasync({
             "id": message["mongoid"],
             "action": "syncCandidate",
