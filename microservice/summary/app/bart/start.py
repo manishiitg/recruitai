@@ -29,7 +29,7 @@ import subprocess
 
 def process(filename, mongoid, account_name, account_config):
 
-    db = initDB(account_name, account_config)
+    # db = initDB(account_name, account_config)
 
     
 
@@ -98,6 +98,7 @@ def process(filename, mongoid, account_name, account_config):
         })
 
     if not row:
+        logger.critical("mongo id not found")
         return {"error" : "mongo id not found"}
 
     finalLines = []
@@ -131,6 +132,7 @@ def process(filename, mongoid, account_name, account_config):
             }
         })
         logger.critical("time taken $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", time.time() - star_time)
+            
 
 def extractSummary(text):
     # article_input_ids = tokenizer.batch_encode_plus([text], return_tensors='pt', max_length=1024)['input_ids'].to(torch_device)
