@@ -52,5 +52,5 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
 
-# CMD ["/usr/bin/supervisord"]
-CMD ["nvidia-smi"]
+CMD ["/usr/bin/supervisord"]
+# CMD ["nvidia-smi"]
