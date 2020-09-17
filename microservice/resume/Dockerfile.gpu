@@ -29,7 +29,7 @@ RUN npm --version
 RUN npm install -g pdf-text-extract
 
 
-RUN pip install numpy opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy[speedup] pytest flair
+RUN pip install numpy opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy[speedup] pytest flair==0.3.1
 # RUN pip install -r requirements.txt
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
