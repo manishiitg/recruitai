@@ -15,9 +15,9 @@ gcloud beta compute instances create torchvm3 \
 gcloud beta compute disks create torch --zone us-central1-a --type pd-ssd
 gcloud beta compute disks create torch --zone us-central1-a --type pd-ssd --source-snapshot=torchsnapshot
 
-gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --preemptible
+<!-- gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --preemptible -->
 
-gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --preemptible --metadata-from-file startup-script=gcloud_setup.sh --disk name=torch --scopes=[logging-write,monitoring]
+gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --metadata-from-file startup-script=gcloud_setup.sh --disk name=torch --scopes logging-write --preemptible
 
 
 #https://cloud.google.com/compute/docs/startupscript#gcloud
