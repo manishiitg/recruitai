@@ -4,6 +4,7 @@ services:
     resumemq:
         image: recruitai/resumemq:latest
         build: microservice/resume
+        
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -28,8 +29,9 @@ services:
             - ai
 
     summarymq:
-        image: recruitai/summarymq:latest
-        build: microservice/summary
+        build:
+            context: microservice/summary
+            dockerfile: Dockerfile.gpu
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
