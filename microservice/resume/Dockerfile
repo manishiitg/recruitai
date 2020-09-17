@@ -61,7 +61,7 @@ RUN pip install transformers beautifulsoup4 redis pymongo
 RUN apt-get install default-jdk -y
 # ADD app /workspace/app, using volume instead
 
-RUN apt install -y debconf-utils
+RUN apt-get install -y debconf-utils
 ENV TZ=Asia/Kolkata
 RUN echo $TZ > /etc/timezone
 RUN export DEBIAN_FRONTEND=noninteractive
