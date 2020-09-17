@@ -30,6 +30,9 @@ services:
             - ./microservice/picture/app:/workspace/app           
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
         
 
     summarymq:
@@ -47,4 +50,7 @@ services:
             - ./microservice/summary/app:/workspace/app            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
         
