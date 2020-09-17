@@ -17,7 +17,8 @@ gcloud beta compute disks create torch --zone us-central1-a --type pd-ssd --sour
 
 <!-- gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --preemptible -->
 
-gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --metadata-from-file startup-script=gcloud_setup.sh --disk name=torch --scopes logging-write --preemptible
+
+gcloud beta compute instances create torchvm3 --zone=us-central1-a --image-family=pytorch-latest-gpu --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator="type=nvidia-tesla-t4,count=1" --metadata="install-nvidia-driver=True" --machine-type="n1-standard-4" --scopes storage-rw --boot-disk-type=pd-ssd --metadata-from-file startup-script=gcloud_setup.sh --scopes logging-write,compute-rw,default --create-disk name=torchsummary,size=100GB,type=pd-ssd,auto-delete=yes --preemptible
 
 
 #https://cloud.google.com/compute/docs/startupscript#gcloud
@@ -43,3 +44,7 @@ sudo chmod a+w /home/jupyter/drive
 
 gcloud compute instances stop torchvm3 --zone=us-central1-a
 gcloud compute instances delete torchvm3 --zone=us-central1-a
+
+
+
+gcloud compute instances add-metadata torchvm3 --metadata-from-file startup-script=gcloud_setup.sh --zone=us-central1-a
