@@ -20,6 +20,9 @@ services:
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/picture
+        device_requests:
+            - capabilities:
+                - gpu
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
