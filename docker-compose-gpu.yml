@@ -33,8 +33,7 @@ services:
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/summary
-            args: 
-                - gpus=all
+        gpus: all
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
