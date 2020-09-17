@@ -1,6 +1,4 @@
 #!/bin/sh
-# <!-- nano id_rsa.pub -->
-# <!-- nano id_rsa -->
 
 sudo su
 sudo mkdir -p /home/jupyter/drive
