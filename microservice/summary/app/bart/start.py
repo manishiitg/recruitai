@@ -178,7 +178,11 @@ def loadModel():
     # model.save_pretrained("/workspace/pretrained/bart")
     # tokenizer.save_pretrained("/workspace/pretrained/bart")
 
-    summarizer = pipeline("summarization" , model="facebook/bart-large-cnn")
+    logger.critical("gpu %s", torch.cuda.is_available())
+    if torch.cuda.is_available():
+        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn")
+    else:
+        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn", device=1)
     # summarizer = pipeline("summarization" , model="sshleifer/distilbart-cnn-12-6")
     
     return model, tokenizer, summarizer
