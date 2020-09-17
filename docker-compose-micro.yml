@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+    redis:
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
+        volumes:
+            - redis-data:/data
+        expose:
+            - 6379
+        networks:
+            - ai
+     
+
     resumemq:
         image: recruitai/resumemq:latest
         build: microservice/resume
@@ -12,7 +23,6 @@ services:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             RESUME_PARALLEL_PROCESS: 1
         depends_on:
-            - elasticsearch
             - redis
         # mode: replicated
         # replicas: 2
