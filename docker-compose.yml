@@ -120,16 +120,6 @@ services:
     #         - ai
 
 
-    redis:
-        image: redis
-        command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
-        volumes:
-            - redis-data:/data
-        expose:
-            - 6379
-        networks:
-            - ai
-     
     label-studio-ner:
         image: recruitai/ner:latest
         build: ./label-studio/ner
