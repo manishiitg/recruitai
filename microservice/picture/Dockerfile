@@ -4,7 +4,7 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 WORKDIR /workspace
 
 RUN apt-get update \
-    && apt-get install -y curl software-properties-common gnupg
+    && apt-get install -y curl software-properties-common gnupg  git build-essential 
 
 RUN apt-get install -y libsm6 libxext6 libxrender-dev
 
