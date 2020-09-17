@@ -15,18 +15,17 @@ services:
     #     networks:
     #         - ai
     
-    # picturemq:
-    #     image: recruitai/picturemq:latest
-    #     build: microservice/picture
-    #     volumes:
-    #         - ./pretrained:/workspace/pretrained:ro
-    #         - ./cvreconstruction:/workspace/cvreconstruction 
-    #         - /var/log/recruitai:/workspace/logs  
-    #         - ./microservice/picture/app:/workspace/app            
-    #     environment:
-    #         RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
-    #     networks:
-    #         - ai
+    picturemq:
+        image: recruitai/picturemq:gpu
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/picturemq
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/picture/app:/workspace/app            
+        
 
     summarymq:
         image: recruitai/summary:gpu
@@ -43,12 +42,4 @@ services:
             - ./microservice/summary/app:/workspace/app            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
-        networks:
-            - ai
-volumes: 
-    elasticsearch:
-    redis-data:
-    certs:
-
-networks:
-    ai:
+        
