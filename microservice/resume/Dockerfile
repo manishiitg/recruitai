@@ -63,7 +63,8 @@ RUN apt-get install default-jdk -y
 
 ENV TZ=Asia/Kolkata
 RUN echo $TZ > /etc/timezone
-RUN DEBIAN_FRONTEND="noninteractive" && apt-get install -y tzdata
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get install -y tzdata
 RUN rm /etc/localtime
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 RUN dpkg-reconfigure --frontend noninteractive tzdata
