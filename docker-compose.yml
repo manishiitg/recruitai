@@ -192,6 +192,8 @@ services:
             - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
+        depends_on: 
+            - elasticsearch
         networks:
             - ai
 
@@ -207,6 +209,8 @@ services:
             - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
+        depends_on: 
+            - elasticsearch
         networks:
             - ai
 
