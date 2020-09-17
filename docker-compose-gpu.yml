@@ -27,7 +27,9 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/picture/app:/workspace/app            
+            - ./microservice/picture/app:/workspace/app           
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
         
 
     summarymq:
