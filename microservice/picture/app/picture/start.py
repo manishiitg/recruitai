@@ -55,7 +55,7 @@ predictor = None
 cfg = None
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-logger.debug(device)
+logger.critical("device found %s", device)
 
 
 def processAPI(output_dir, namenonum, account_name, account_config):
