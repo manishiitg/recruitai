@@ -4,7 +4,7 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 WORKDIR /workspace
 
 RUN apt-get update \
-    && apt-get install -y curl software-properties-common gnupg git
+    && apt-get install -y curl software-properties-common gnupg git build-essential
 
 RUN pip install --upgrade cython
 RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
