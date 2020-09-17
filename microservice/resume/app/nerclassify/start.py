@@ -63,6 +63,7 @@ def process(data, isPageWiseData=False):
                 prevPos = 0
                 if len(line["entity"]["entities"]) > 0:
                     for ent in line["entity"]["entities"]:
+                        print(ent)
                         start_pos = ent["start_pos"]
                         end_pos = ent["end_pos"]
                         enttype = ent["type"]
