@@ -6,7 +6,7 @@ WORKDIR /workspace
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
 RUN apt-get update && \
-	apt-get install supervisor curl -y && \
+	apt-get install supervisor curl  git build-essential -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
