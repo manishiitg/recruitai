@@ -1,6 +1,7 @@
 <!-- nano id_rsa.pub -->
 <!-- nano id_rsa -->
 
+sudo su
 cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
 sudo chmod 600 ~/.ssh/id_rsa
@@ -11,6 +12,7 @@ sudo apt-get update
 sudo apt-get install curl git
 git clone git@github.com:manishiitg/recruitai.git
 cd recruitai
+sudo chown -R manis:manis .git
 git pull
 
 gcloud auth activate-service-account --key-file=RecruitAI.json
@@ -44,3 +46,4 @@ echo "116.202.234.182:15672 rabbitmq" >> /etc/hosts
 
 sudo docker-compose -f docker-compose-micro.yml build
 sudo docker-compose -f docker-compose-micro.yml up -d
+
