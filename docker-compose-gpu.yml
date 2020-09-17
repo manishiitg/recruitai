@@ -31,8 +31,8 @@ services:
     summarymq:
         image: recruitai/summary:gpu
         build:
-            context: microservice/summary
             dockerfile: Dockerfile.gpu
+            context: microservice/summary
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
