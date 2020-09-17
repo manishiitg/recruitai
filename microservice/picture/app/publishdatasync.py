@@ -7,7 +7,7 @@ import json
 
 # publisher
 
-amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.environ.get('RABBIT_DB')
 
 
 class DataSyncPublisher(object):
