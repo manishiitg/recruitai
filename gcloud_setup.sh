@@ -53,5 +53,5 @@ echo "116.202.234.182 rabbitmq" >> /etc/hosts
 echo "116.202.234.182 redis" >> /etc/hosts
 
 sudo docker-compose -f docker-compose-gpu.yml build
-sudo docker-compose -f docker-compose-micro.yml up -d
+sudo docker-compose -f docker-compose-gpu.yml up -d summarymqgpu
 
