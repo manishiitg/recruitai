@@ -6,7 +6,7 @@ WORKDIR /workspace
 RUN apt-get update \
     && apt-get install -y curl software-properties-common gnupg  git build-essential 
 
-RUN apt-get install -y libsm6 libxext6 libxrender-dev
+RUN apt-get install -y libsm6 libxext6 libxrender-dev libgl1-mesa-glx
 
 RUN pip install --upgrade cython
 RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
