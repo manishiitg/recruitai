@@ -1,32 +1,32 @@
 version: '3.7'
 
 services:
-    resumemq:
-        image: recruitai/resumemq:latest
-        build: microservice/resume
+    # resumemq:
+    #     image: recruitai/resumemq:latest
+    #     build: microservice/resume
         
-        volumes:
-            - ./pretrained:/workspace/pretrained:ro
-            - /var/log/recruitai:/workspace/logs  
-            - ./microservice/resume/app:/workspace/app            
-        environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
-            RESUME_PARALLEL_PROCESS: 1
-        networks:
-            - ai
+    #     volumes:
+    #         - ./pretrained:/workspace/pretrained:ro
+    #         - /var/log/recruitai:/workspace/logs  
+    #         - ./microservice/resume/app:/workspace/app            
+    #     environment:
+    #         RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
+    #         RESUME_PARALLEL_PROCESS: 1
+    #     networks:
+    #         - ai
     
-    picturemq:
-        image: recruitai/picturemq:latest
-        build: microservice/picture
-        volumes:
-            - ./pretrained:/workspace/pretrained:ro
-            - ./cvreconstruction:/workspace/cvreconstruction 
-            - /var/log/recruitai:/workspace/logs  
-            - ./microservice/picture/app:/workspace/app            
-        environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
-        networks:
-            - ai
+    # picturemq:
+    #     image: recruitai/picturemq:latest
+    #     build: microservice/picture
+    #     volumes:
+    #         - ./pretrained:/workspace/pretrained:ro
+    #         - ./cvreconstruction:/workspace/cvreconstruction 
+    #         - /var/log/recruitai:/workspace/logs  
+    #         - ./microservice/picture/app:/workspace/app            
+    #     environment:
+    #         RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+    #     networks:
+    #         - ai
 
     summarymq:
         image: recruitai/summary:gpu
