@@ -180,7 +180,7 @@ def loadModel():
 
     logger.critical("gpu %s", torch.cuda.is_available())
     if torch.cuda.is_available():
-        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn", device=True)
+        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn", device=0)
     else:
         summarizer = pipeline("summarization" , model="facebook/bart-large-cnn")
         
