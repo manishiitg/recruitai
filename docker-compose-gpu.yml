@@ -1,20 +1,26 @@
 version: '3.8'
 
 services:
-    # resumemq:
-    #     image: recruitai/resumemq:latest
-    #     build: microservice/resume
-        
-    #     volumes:
-    #         - ./pretrained:/workspace/pretrained:ro
-    #         - /var/log/recruitai:/workspace/logs  
-    #         - ./microservice/resume/app:/workspace/app            
-    #     environment:
-    #         RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
-    #         RESUME_PARALLEL_PROCESS: 1
-    #     networks:
-    #         - ai
-    
+    resumemqgpu:
+        image: recruitai/resumemq:latest
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/resume
+        device_requests:
+            - capabilities:
+                - gpu
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/resume/app:/workspace/app       
+            - ./home/jupyter/.cache:/root/.cache      
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
+            RESUME_PARALLEL_PROCESS: 1
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
+
     picturemqgpu:
         image: recruitai/picture:gpu
         build:
