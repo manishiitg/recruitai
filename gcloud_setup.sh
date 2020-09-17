@@ -1,5 +1,6 @@
-<!-- nano id_rsa.pub -->
-<!-- nano id_rsa -->
+#!/bin/sh
+# <!-- nano id_rsa.pub -->
+# <!-- nano id_rsa -->
 
 sudo su
 cd /home/jupyter/drive
@@ -43,7 +44,8 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 
-echo "116.202.234.182:15672 rabbitmq" >> /etc/hosts
+echo "116.202.234.182 rabbitmq" >> /etc/hosts
+echo "116.202.234.182 redis" >> /etc/hosts
 
 sudo docker-compose -f docker-compose-micro.yml build
 sudo docker-compose -f docker-compose-micro.yml up -d
