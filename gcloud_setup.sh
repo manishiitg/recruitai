@@ -1,9 +1,18 @@
 #!/bin/sh
 
+sleep 60s
+
 sudo su
+
+sudo lsblk
+sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 sudo mkdir -p /home/jupyter/drive
 sudo mount -o discard,defaults /dev/sdb /home/jupyter/drive
 sudo chmod a+w /home/jupyter/drive
+
+cd /home/jupyter/drive
+
+# su jupyter
 
 echo "-----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
@@ -53,33 +62,29 @@ Wd2vg5laV64VtfHRadeMTbGY//Rwe7HAqT4siVG6LbjrzjyOVtV5dnybB4XDTc9muzE3xo
 RcOdIehOi5YyQmNaxk6ouiF6rkUXCwb/Hr/tNCEjn0LviuqSzbKm03Xvb8MYYoW5nGYI6w
 nKYGN1gE3sh/yulScEO4I4aNk0Gzgi6C6w5g6f2vuVSqH/yPugt0R4Ro3Nns5MAQpcrlG2
 eibLh2QEKEVjAAAAF21hbmlzaEByeXpuZS1zZXJ2ZXIuY29tAQID
------END OPENSSH PRIVATE KEY-----" >> id_rsa
+-----END OPENSSH PRIVATE KEY-----" >> /home/jupyter/drive/id_rsa
 
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/WNrLuL1D5x8ZcNtrmKVdAURY7S3paL6GIgRe3UKyYNWEW8EqsepRlbNlO6WOAvnHMu6OyydioPe5hzUdyVwB4hiywO2SClGlooIxauFNhcKUNUHR9PIgMxQi/YEbZtiaQFDxrI3ek6Pn/+QZxusDtcY87Wh+QRHwBA4yAqFHciRvNKoh91ehPdbyuxpIk03Z1f4NR3o9J+RFR/iLG4GSsoTJQaTFAS76UNPuDyi0DH/JGhvOD+L+uYgCE7ASI4qLvW3Gm+hyJ+Ea9NZoVdJzW+rogaEWEwEVw9QB7qYuNAvXhZbvd/zU1f0hW00tHSG6KUZRL1wa+HGBZA6Ou8XqyvxMYgFM4PX7wUWnVZo9ARh0OjedsAtVUx9RuTxX5s+lwyWBdwiyWBclpNVBYtd7A8G+aVDQD7Dtcf2f67FYUSXFN0f5wMRu+aFnpfsB6LWq53R4V719Vv5l9+d8vzxDgpZgrxAzwNMQE9w0JHJwwsRWepWmwCSQrm/2GrGItFnJ2ED13DJ0+WDVJ044EJ0lE/rE6K8Ty7m2Rc2oMxLSx6cepyzEWqOctjnYkwv9v8ZX1MhYxc5sQdK9PJwR2XFrkm9R3i3B1/liXY5IkPhni9yiyl/qSY0Z6+Atopc6x63p4YiDskTmxyo+2YdKlNBrgIhdL9R7WcpcabFY/AOVbQ== manish@ryzne-server.com" >> id_rsa.pub
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/WNrLuL1D5x8ZcNtrmKVdAURY7S3paL6GIgRe3UKyYNWEW8EqsepRlbNlO6WOAvnHMu6OyydioPe5hzUdyVwB4hiywO2SClGlooIxauFNhcKUNUHR9PIgMxQi/YEbZtiaQFDxrI3ek6Pn/+QZxusDtcY87Wh+QRHwBA4yAqFHciRvNKoh91ehPdbyuxpIk03Z1f4NR3o9J+RFR/iLG4GSsoTJQaTFAS76UNPuDyi0DH/JGhvOD+L+uYgCE7ASI4qLvW3Gm+hyJ+Ea9NZoVdJzW+rogaEWEwEVw9QB7qYuNAvXhZbvd/zU1f0hW00tHSG6KUZRL1wa+HGBZA6Ou8XqyvxMYgFM4PX7wUWnVZo9ARh0OjedsAtVUx9RuTxX5s+lwyWBdwiyWBclpNVBYtd7A8G+aVDQD7Dtcf2f67FYUSXFN0f5wMRu+aFnpfsB6LWq53R4V719Vv5l9+d8vzxDgpZgrxAzwNMQE9w0JHJwwsRWepWmwCSQrm/2GrGItFnJ2ED13DJ0+WDVJ044EJ0lE/rE6K8Ty7m2Rc2oMxLSx6cepyzEWqOctjnYkwv9v8ZX1MhYxc5sQdK9PJwR2XFrkm9R3i3B1/liXY5IkPhni9yiyl/qSY0Z6+Atopc6x63p4YiDskTmxyo+2YdKlNBrgIhdL9R7WcpcabFY/AOVbQ== manish@ryzne-server.com" >> /home/jupyter/drive/id_rsa.pub
 
-cd /home/jupyter/drive
-cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
-cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
-sudo chmod 600 ~/.ssh/id_rsa
-sudo chmod 600 ~/.ssh/id_rsa.pub
-ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-eval $(ssh-agent -s)
-ssh-add ~/.ssh/id_rsa
 sudo apt-get update
 sudo apt-get install curl git
-sudo echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-git clone git@github.com:manishiitg/recruitai.git
-cd recruitai
-sudo chown -R manis:manis .git
-git pull
 
-gcloud auth activate-service-account --key-file=RecruitAI.json
-gcloud config set project recruitai-266705
-gsutil ls
-mkdir -p pretrained
-gsutil -m cp -r -n gs://recruitaiwork/* pretrained/
-mkdir -p cvreconstruction
-sudo mkdir -p /var/log/recruitai
+# sudo cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
+# sudo cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
+# sudo chmod 600 ~/.ssh/id_rsa
+# sudo chmod 600 ~/.ssh/id_rsa.pub
+# sudo ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+# eval $(ssh-agent -s)
+# sudo ssh-add ~/.ssh/id_rsa
+# sudo echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+# sudo git clone git@github.com:manishiitg/recruitai.git
+# sudo cd recruitai
+# sudo chown -R manis:manis .git
+# sudo git pull
+
+echo cat /home/jupyter/drive/id_rsa
+
+GIT_SSH_COMMAND='ssh -i /home/jupyter/drive/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' git clone git@github.com:manishiitg/recruitai.git
 
 cd /home/jupyter/drive/
 
@@ -93,20 +98,36 @@ cd /home/jupyter/drive/recruitai
 
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo apt-key fingerprint 0EBFCD88
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 
-echo "116.202.234.182 rabbitmq" >> /etc/hosts
-echo "116.202.234.182 redis" >> /etc/hosts
+sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
+sudo echo "116.202.234.182 redis" >> /etc/hosts
 
+
+export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google')
+export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
 
 
 ########################
 
-sudo docker-compose -f docker-compose-gpu-summary.yml build
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=4
 
+gcloud auth activate-service-account --key-file=RecruitAI.json
+gcloud config set project recruitai-266705
+gsutil ls
+mkdir -p pretrained
+# gsutil -m cp -r -n gs://recruitaiwork/* pretrained/
+mkdir -p cvreconstruction
+sudo mkdir -p /var/log/recruitai
+
+==========================
+
+sudo docker-compose -f docker-compose-gpu-summary.yml build
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d
+
+sleep 300s
+gcloud --quiet compute instances delete $NAME --zone=$ZONE
