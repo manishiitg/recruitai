@@ -52,6 +52,7 @@ from app.account import get_cloud_bucket, get_cloud_url
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+logger.critical("device found %s", device)
 baseDirectory = BASE_PATH + "/detectron"
 
 from app.detectron.pdf import covertPDFToImage
