@@ -23,12 +23,15 @@ RUN pip install scipy
 RUN pip install spacy
 RUN python -m spacy download en
 
+RUN apt-get install -y debconf-utils
 ENV TZ=Asia/Kolkata
-RUN echo $TZ > /etc/timezone && \
-apt-get update && apt-get install -y tzdata && \
-rm /etc/localtime && \
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-dpkg-reconfigure -f noninteractive tzdata && \
-apt-get clean
+RUN echo $TZ > /etc/timezone
+# RUN rm /etc/localtime
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get install -y tzdata
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN apt-get clean
+
 
 CMD ["/usr/bin/supervisord"]
