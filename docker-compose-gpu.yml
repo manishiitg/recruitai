@@ -27,7 +27,8 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/picture/app:/workspace/app           
+            - ./microservice/picture/app:/workspace/app 
+            - ./home/jupyter/.cache:/root/.cache            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
         extra_hosts:
@@ -47,7 +48,8 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/summary/app:/workspace/app            
+            - ./microservice/summary/app:/workspace/app    
+            - ./home/jupyter/.cache:/root/.cache        
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         extra_hosts:
