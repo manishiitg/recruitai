@@ -16,10 +16,10 @@ services:
     #         - ai
     
     picturemq:
-        image: recruitai/picturemq:gpu
+        image: recruitai/picture:gpu
         build:
             dockerfile: Dockerfile.gpu
-            context: microservice/picturemq
+            context: microservice/picture
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
