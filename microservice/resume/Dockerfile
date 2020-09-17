@@ -62,11 +62,11 @@ RUN apt-get install default-jdk -y
 # ADD app /workspace/app, using volume instead
 
 ENV TZ=Asia/Kolkata
-RUN echo $TZ > /etc/timezone && \
-apt-get update && apt-get install -y tzdata && \
-rm /etc/localtime && \
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-dpkg-reconfigure --frontend noninteractive tzdata && \
-apt-get clean
+RUN echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install -y tzdata
+RUN rm /etc/localtime
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN apt-get clean
 
 CMD ["/usr/bin/supervisord"]
