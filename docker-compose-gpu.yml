@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
     # resumemq:
@@ -35,7 +35,7 @@ services:
             context: microservice/summary
         device_requests:
             - capabilities:
-                - "gpu"
+                - gpu
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
