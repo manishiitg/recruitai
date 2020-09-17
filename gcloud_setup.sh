@@ -3,6 +3,9 @@
 # <!-- nano id_rsa -->
 
 sudo su
+sudo mkdir -p /home/jupyter/drive
+sudo mount -o discard,defaults /dev/sdb /home/jupyter/drive
+sudo chmod a+w /home/jupyter/drive
 cd /home/jupyter/drive
 cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
@@ -12,6 +15,7 @@ eval $(ssh-agent -s)
 ssh-add ~/.ssh/id_rsa
 sudo apt-get update
 sudo apt-get install curl git
+echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 git clone git@github.com:manishiitg/recruitai.git
 cd recruitai
 sudo chown -R manis:manis .git
@@ -28,9 +32,10 @@ sudo mkdir -p /var/log/recruitai
 cd /home/jupyter/drive/
 
 sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+sudo pip3 install git+https://github.com/beehiveai/compose.git
 
 cd /home/jupyter/drive/recruitai
 
@@ -47,6 +52,6 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 echo "116.202.234.182 rabbitmq" >> /etc/hosts
 echo "116.202.234.182 redis" >> /etc/hosts
 
-sudo docker-compose -f docker-compose-micro.yml build
+sudo docker-compose -f docker-compose-gpu.yml build
 sudo docker-compose -f docker-compose-micro.yml up -d
 
