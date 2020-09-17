@@ -2,6 +2,7 @@
 <!-- nano id_rsa -->
 
 sudo su
+cd /home/jupyter/drive
 cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
 sudo chmod 600 ~/.ssh/id_rsa
@@ -18,10 +19,10 @@ git pull
 gcloud auth activate-service-account --key-file=RecruitAI.json
 gcloud config set project recruitai-266705
 gsutil ls
-mkdir pretrained
-gsutil -m cp -r gs://recruitaiwork/* pretrained/
-mkdir cvreconstruction
-sudo mkdir /var/log/recruitai
+mkdir -p pretrained
+gsutil -m cp -r -n gs://recruitaiwork/* pretrained/
+mkdir -p cvreconstruction
+sudo mkdir -p /var/log/recruitai
 
 cd /home/jupyter/drive/
 
