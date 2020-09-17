@@ -7,12 +7,19 @@ Initial Data Copy
 https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
 
 gcloud auth activate-service-account --key-file=RecruitAI.json
+
 gcloud config set project recruitai-266705
+
 gsutil ls
+
 mkdir pretrained
+
 gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
+
 mkdir cvreconstruction
+
 sudo mkdir /var/log/recruitai
+
 
 python -m app.main
 
