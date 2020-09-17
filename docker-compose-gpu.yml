@@ -29,6 +29,7 @@ services:
             - ai
 
     summarymq:
+        image: recruitai/summary:gpu
         build:
             context: microservice/summary
             dockerfile: Dockerfile.gpu
