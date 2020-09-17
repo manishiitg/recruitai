@@ -6,6 +6,7 @@ sudo su
 sudo mkdir -p /home/jupyter/drive
 sudo mount -o discard,defaults /dev/sdb /home/jupyter/drive
 sudo chmod a+w /home/jupyter/drive
+
 cd /home/jupyter/drive
 cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
