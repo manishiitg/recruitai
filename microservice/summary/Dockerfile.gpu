@@ -1,14 +1,17 @@
-FROM  pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+FROM  python
 LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
+
 RUN apt-get update && \
 	apt-get install supervisor curl  git build-essential -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
+
+RUN pip install torch torchvision
 
 COPY ./supervisor/conf.d/summary.conf /etc/supervisor/conf.d/summary.conf
 
@@ -52,4 +55,4 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/bin/bash"]
