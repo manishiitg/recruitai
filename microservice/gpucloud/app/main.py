@@ -453,7 +453,7 @@ def main():
     RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
     res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
     queues = res.json()
-    # print(json.dumps(queues, indent=True))
+    print(json.dumps(queues, indent=True))
 
     mq_status = {}
     running_process = 0
@@ -472,12 +472,23 @@ def main():
     print(running_process)
 
     import subprocess
+
+    LOGGER.critical("getting instance list")
     result = subprocess.run(['gcloud','compute','instances','list','--format="json"'], stdout=subprocess.PIPE)
     # print(result.stdout)
     vm_list = json.loads(result.stdout)
     # print(json.dumps(vm_list, indent=True))
+
+    LOGGER.critical("creating instance compute")
+    is_any_torch_running = False
     for vm in vm_list:
-        print(vm['name'], vm['status'])
+        LOGGER.critical("name %s, status %s",vm['name'], vm['status'])
+        if "torch" in vm['name']:
+            is_any_torch_running = True
+            
+            print(vm["networkInterfaces"])
+            ip = vm["networkInterfaces"][0]["networkIP"]
+            LOGGER.critical("vm ip %s", ip)
 
     result = subprocess.run(['gcloud','compute','zones','list','--format="json"'], stdout=subprocess.PIPE)
 
@@ -488,24 +499,51 @@ def main():
 
     instance_name = "torchvm"
     zone = "us-central1-a"
-    # result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
-    # # result = subprocess.run(["gcloud","beta","compute","instances","create",instance_name,"--zone="+zone,"--image-family=pytorch-latest-gpu","--image-project=deeplearning-platform-release","--maintenance-policy=TERMINATE","--accelerator","type=nvidia-tesla-t4,count=1","--metadata=install-nvidia-driver=True","--machine-type=n1-standard-4","--boot-disk-type=pd-ssd","--metadata-from-file","startup-script=gcloud_setup_summary.sh","--scopes=logging-write,compute-rw,default","--create-disk","name=torchsummary,size=100GB,type=pd-ssd,auto-delete=yes","--preemptible"], stdout=subprocess.PIPE, shell=True, check=True)
 
-    # print("stdout", result.stdout)
-    # # print(result.args)
-    # print("stderr", result.stderr)
+    if not is_any_torch_running and False:
+        try:
+            
+            
+            
+            vm_start = []
+            result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
+            LOGGER.critical("stdout", result.stdout)
+
+            if result.stderr and len(result.stderr) > 0:
+                if "already exists" in result.stderr:
+                    LOGGER.critical("container already exists")
+                else:
+                    LOGGER.critical("stderr", result.stderr)
+
+            if result.stdout and len(result.stdout) > 0:
+                vm_start = json.loads(result.stdout)
+                LOGGER.critical(json.dumps(vm_start, indent=True))
+
+                is_vm_started = False
+                if len(vm_start) > 0:
+                    if "name" in vm_start[0]:
+                        LOGGER.critical("vm started with name %s", vm_start[0]['name'])
+                        is_vm_started = True
+        
+        except Exception as e:
+            LOGGER.critical("XXX %s", e)
+
     
-    # vm_start = json.loads(result.stdout)
-    # print(json.dumps(vm_start, indent=True))
+    if is_any_torch_running and False:
+        try:
+            LOGGER.critical(" deleting instance")
+            result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--quiet','--format="json"'], stdout=subprocess.PIPE)
 
-    result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--format="json"'], stdout=subprocess.PIPE)
-    print("stdout", result.stdout)
+            if result.stderr and len(result.stderr) > 0:
+                LOGGER.critical("stderr %s", result.stderr)
 
-    # import googleapiclient.discovery
+            if result.stdout and len(result.stdout) > 0:
+                LOGGER.critical("stdout %s", result.stdout)
 
-    # compute = googleapiclient.discovery.build('compute', 'v1')
-    # result = compute.instances().list(project=project, zone=zone).execute()
-    # print(result)
+        except Exception as e:
+            LOGGER.critical("YYY %s", e)
+    
+   
     # consumer = ReconnectingTaskQueue(amqp_url)
     # consumer.run()
 
