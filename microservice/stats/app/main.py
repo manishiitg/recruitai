@@ -440,13 +440,7 @@ import docker
 
 def main():
     
-    # print("docker env")
-    # client = docker.from_env()
-    # client = docker.DockerClient(base_url="tcp://127.0.0.1:1234")
-    # print(client.containers.list())
-
-    # container = client.containers.run('bfirsh/reticulate-splines',
-    #                                   detach=True)
+    
 
 
     consumer = ReconnectingTaskQueue(amqp_url)
