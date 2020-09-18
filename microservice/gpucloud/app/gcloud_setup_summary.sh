@@ -71,8 +71,8 @@ sudo apt-get install curl git
 
 # sudo cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 # sudo cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
-sudo chmod 600 ~/.ssh/id_rsa
-sudo chmod 600 ~/.ssh/id_rsa.pub
+sudo chmod 600 /home/jupyter/drive/id_rsa
+sudo chmod 600 /home/jupyter/drive/id_rsa.pub
 # sudo ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 # eval $(ssh-agent -s)
 # sudo ssh-add ~/.ssh/id_rsa
