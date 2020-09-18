@@ -357,6 +357,20 @@ services:
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
         network_mode: host
+    
+    gpu:
+        build: microservice/gpucloud
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/gpucloud/app:/workspace/app        
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            RABBIT_DB: 'amqp://127.0.0.1:5672'
+            RABBIT_API_URL: 'http://127.0.0.1:15672'
+            RABBIT_LOGIN: 'guest:guest'
+        network_mode: host
+
 volumes: 
     elasticsearch:
     redis-data:
