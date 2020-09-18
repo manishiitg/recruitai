@@ -71,8 +71,8 @@ sudo apt-get install curl git
 
 # sudo cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 # sudo cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
-# sudo chmod 600 ~/.ssh/id_rsa
-# sudo chmod 600 ~/.ssh/id_rsa.pub
+sudo chmod 600 ~/.ssh/id_rsa
+sudo chmod 600 ~/.ssh/id_rsa.pub
 # sudo ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 # eval $(ssh-agent -s)
 # sudo ssh-add ~/.ssh/id_rsa
@@ -129,5 +129,5 @@ sudo mkdir -p /var/log/recruitai
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
 
-sleep 300s
+sleep 600s # not working due to perission issue right now 
 gcloud --quiet compute instances delete $NAME --zone=$ZONE
