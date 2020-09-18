@@ -20,7 +20,7 @@ import time
 
 import requests
 
-from app.stats.start import resume_pipeline_update, update_resume_time_analysis
+# from app.stats.start import resume_pipeline_update, update_resume_time_analysis
 
 
 amqp_url = os.getenv('RABBIT_DB')
@@ -435,7 +435,8 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
-import docker
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 def main():
@@ -448,9 +449,65 @@ def main():
     # container = client.containers.run('bfirsh/reticulate-splines',
     #                                   detach=True)
 
+    amqp_url_base = os.getenv('RABBIT_API_URL')
+    RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
+    res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
+    queues = res.json()
+    # print(json.dumps(queues, indent=True))
 
-    consumer = ReconnectingTaskQueue(amqp_url)
-    consumer.run()
+    mq_status = {}
+    running_process = 0
+    for queue in queues:
+        if queue["name"] == "resume" or queue["name"] == "picture" or queue["name"] == "summary":
+            
+            # print(queue)
+            if "consumers" in queue.keys():
+                mq_status[queue["name"]] = {
+                    "consumers" : queue["consumers"],
+                    "in_process" : queue["messages_unacknowledged_ram"] + queue["messages_ready"]
+                }
+                running_process += int(queue["messages_unacknowledged_ram"])
+
+    print(mq_status)
+    print(running_process)
+
+    import subprocess
+    result = subprocess.run(['gcloud','compute','instances','list','--format="json"'], stdout=subprocess.PIPE)
+    # print(result.stdout)
+    vm_list = json.loads(result.stdout)
+    # print(json.dumps(vm_list, indent=True))
+    for vm in vm_list:
+        print(vm['name'], vm['status'])
+
+    result = subprocess.run(['gcloud','compute','zones','list','--format="json"'], stdout=subprocess.PIPE)
+
+    zone_list = json.loads(result.stdout)
+    # print(json.dumps(vm_list, indent=True))
+    # for zone in zone_list:
+    #     print(zone['name'], zone['region'])
+
+    instance_name = "torchvm"
+    zone = "us-central1-a"
+    result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
+    
+    # result = subprocess.run(["gcloud","beta","compute","instances","create",instance_name,"--zone="+zone,"--image-family=pytorch-latest-gpu","--image-project=deeplearning-platform-release","--maintenance-policy=TERMINATE","--accelerator","type=nvidia-tesla-t4,count=1","--metadata=install-nvidia-driver=True","--machine-type=n1-standard-4","--boot-disk-type=pd-ssd","--metadata-from-file","startup-script=gcloud_setup_summary.sh","--scopes=logging-write,compute-rw,default","--create-disk","name=torchsummary,size=100GB,type=pd-ssd,auto-delete=yes","--preemptible"], stdout=subprocess.PIPE, shell=True, check=True)
+
+    print("stdout", result.stdout)
+    # print(result.args)
+    print("stderr", result.stderr)
+    
+    vm_start = json.dumps(json.loads(result.stdout), indent=True)
+
+    result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--format="json"'], stdout=subprocess.PIPE)
+    print("stdout", result.stdout)
+
+    # import googleapiclient.discovery
+
+    # compute = googleapiclient.discovery.build('compute', 'v1')
+    # result = compute.instances().list(project=project, zone=zone).execute()
+    # print(result)
+    # consumer = ReconnectingTaskQueue(amqp_url)
+    # consumer.run()
 
 if __name__ == '__main__':
     main()
