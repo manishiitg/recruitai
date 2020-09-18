@@ -488,15 +488,15 @@ def main():
 
     instance_name = "torchvm"
     zone = "us-central1-a"
-    result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
-    
-    # result = subprocess.run(["gcloud","beta","compute","instances","create",instance_name,"--zone="+zone,"--image-family=pytorch-latest-gpu","--image-project=deeplearning-platform-release","--maintenance-policy=TERMINATE","--accelerator","type=nvidia-tesla-t4,count=1","--metadata=install-nvidia-driver=True","--machine-type=n1-standard-4","--boot-disk-type=pd-ssd","--metadata-from-file","startup-script=gcloud_setup_summary.sh","--scopes=logging-write,compute-rw,default","--create-disk","name=torchsummary,size=100GB,type=pd-ssd,auto-delete=yes","--preemptible"], stdout=subprocess.PIPE, shell=True, check=True)
+    # result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
+    # # result = subprocess.run(["gcloud","beta","compute","instances","create",instance_name,"--zone="+zone,"--image-family=pytorch-latest-gpu","--image-project=deeplearning-platform-release","--maintenance-policy=TERMINATE","--accelerator","type=nvidia-tesla-t4,count=1","--metadata=install-nvidia-driver=True","--machine-type=n1-standard-4","--boot-disk-type=pd-ssd","--metadata-from-file","startup-script=gcloud_setup_summary.sh","--scopes=logging-write,compute-rw,default","--create-disk","name=torchsummary,size=100GB,type=pd-ssd,auto-delete=yes","--preemptible"], stdout=subprocess.PIPE, shell=True, check=True)
 
-    print("stdout", result.stdout)
-    # print(result.args)
-    print("stderr", result.stderr)
+    # print("stdout", result.stdout)
+    # # print(result.args)
+    # print("stderr", result.stderr)
     
-    vm_start = json.dumps(json.loads(result.stdout), indent=True)
+    # vm_start = json.loads(result.stdout)
+    # print(json.dumps(vm_start, indent=True))
 
     result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--format="json"'], stdout=subprocess.PIPE)
     print("stdout", result.stdout)
