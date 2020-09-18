@@ -471,6 +471,12 @@ def main():
     print(mq_status)
     print(running_process)
 
+    res = requests.get(amqp_url_base + "/api/connections", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
+    connections = res.json()
+
+    
+
+
     import subprocess
 
     LOGGER.critical("getting instance list")
@@ -486,8 +492,13 @@ def main():
         if "torch" in vm['name']:
             is_any_torch_running = True
             
-            print(vm["networkInterfaces"])
+            # print(vm["networkInterfaces"])
             ip = vm["networkInterfaces"][0]["networkIP"]
+            for connection in connections:
+                if connection["peer_host"] == ip:
+                    LOGGER.critical("host found so torch vm is working")
+                    break
+            
             LOGGER.critical("vm ip %s", ip)
 
     result = subprocess.run(['gcloud','compute','zones','list','--format="json"'], stdout=subprocess.PIPE)
@@ -500,7 +511,7 @@ def main():
     instance_name = "torchvm"
     zone = "us-central1-a"
 
-    if not is_any_torch_running and False:
+    if not is_any_torch_running:
         try:
             
             
@@ -529,7 +540,7 @@ def main():
             LOGGER.critical("XXX %s", e)
 
     
-    if is_any_torch_running and False:
+    if is_any_torch_running:
         try:
             LOGGER.critical(" deleting instance")
             result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--quiet','--format="json"'], stdout=subprocess.PIPE)
