@@ -1,8 +1,11 @@
 version: '3.8'
 
-services:       
+services:    
+    web:
+        image: nginx
+        ports:
+            - 80:80   
     summary:
-        # image: recruitai/summary:gpu
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/summary
