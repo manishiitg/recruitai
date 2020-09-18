@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sleep 60s
+# sleep 120s  # need to wait for nvidia drives to install else it fails
 
 sudo su
 
@@ -113,6 +113,9 @@ export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/ins
 export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
 
 
+sudo /opt/deeplearning/install-driver.sh
+
+
 ########################
 
 
@@ -125,6 +128,8 @@ mkdir -p cvreconstruction
 sudo mkdir -p /var/log/recruitai
 
 ==========================
+
+
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
