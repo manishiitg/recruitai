@@ -10,14 +10,13 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/stats.conf /etc/supervisor/conf.d/stats.conf
+COPY ./supervisor/conf.d/gpu.conf /etc/supervisor/conf.d/gpu.conf
 
-RUN truncate -s 0 /workspace/logs/stats*.log
+RUN truncate -s 0 /workspace/logs/gpu*.log
 
 RUN pip install pika
 RUN pip install pymongo
 RUN pip install redis
-RUN pip install docker
 RUN pip install psutil
 
 RUN apt-get install -y debconf-utils
@@ -30,5 +29,20 @@ RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
+RUN apt-get update \
+    && apt-get install -y curl software-properties-common gnupg git build-essential
 
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN apt-get install apt-transport-https ca-certificates -y
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+RUN apt-get update && apt-get install google-cloud-sdk -y
+
+COPY ./app/java-ref-7a9117277dda.json /workspace
+# COPY ./app/gcloud_setup_summary.sh /workspace
+# COPY ./app/start.sh /workspace
+# RUN chmod +x /workspace/start.sh
+
+RUN gcloud auth activate-service-account --key-file=/workspace/java-ref-7a9117277dda.json
+RUN gcloud config set project java-ref
+RUN  pip install --upgrade google-api-python-client
 CMD ["/usr/bin/supervisord"]
