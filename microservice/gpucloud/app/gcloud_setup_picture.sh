@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# sleep 120s  # need to wait for nvidia drives to install else it fails
+sleep 120s  # need to wait for nvidia drives to install else it fails
 
 sudo su
 
