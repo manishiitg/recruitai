@@ -132,8 +132,8 @@ sudo mkdir -p /var/log/recruitai
 
 
 sudo docker-compose -f docker-compose-gpu-picture.yml build
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d
-
+sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=3
+sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=3
+sudo docker-compose -f docker-compose-gpu-picture.yml scale picture=3
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
