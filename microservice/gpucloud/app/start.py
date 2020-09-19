@@ -62,6 +62,7 @@ def queue_process():
                                 if running_instance_name in running_instance_check:
                                     prev_check_time = running_instance_check[running_instance_name]
                                     time_passed = time.time() - prev_check_time
+                                    # it takes 5-10min for gpu to start its processing
                                     LOGGER.critical("time passed %s for instance %s", time_passed, running_instance_name)
                                     if time_passed > 60 * 10:
                                         LOGGER.critical("some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
@@ -266,7 +267,7 @@ def start_compute(instance_name, zone, queue_type):
         elif queue_type == "picture":
             result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family=common-cu101 --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
 
-        LOGGER.critical("stdout", result)
+        # LOGGER.critical("stdout", result)
 
         # if result.stderr and len(result.stderr) > 0:
         #     if "already exists" in result.stderr:
