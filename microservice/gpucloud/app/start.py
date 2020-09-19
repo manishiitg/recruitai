@@ -31,11 +31,11 @@ def queue_process():
         if queue_type in queues:
 
             type_instance_name = "torch" + queue_type
+            LOGGER.critical("checking for queue type %s", type_instance_name)
             if int(queues[queue_type]['in_process']) > min_process_to_start_gpu:
                 
 
                 instance_status = check_compute_running(type_instance_name)
-                
                 LOGGER.critical("number of running %s instances %s", queue_type,  len(instance_status))
                 if len(instance_status) > 0:
                     for instance in instance_status:
@@ -73,14 +73,18 @@ def queue_process():
                 instance_status = check_compute_running(type_instance_name)
                 LOGGER.critical("number of running instances %s", len(instance_status))
                 if len(instance_status) > 0:
-                    LOGGER.critical("killing running gpus as no need")
-                    for instance in instance_status:
-                        is_any_torch_running = instance["is_any_torch_running"]
-                        is_torch_responding = instance["is_torch_responding"]
-                        running_instance_name = instance["running_instance_name"]
-                        running_instance_zone = instance["zone"]
-                        LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", summary_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
-                        delete_instance(running_instance_name, running_instance_zone)
+                    if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
+                        LOGGER.critical("killing running gpus as no need")
+                        for instance in instance_status:
+                            is_any_torch_running = instance["is_any_torch_running"]
+                            is_torch_responding = instance["is_torch_responding"]
+                            running_instance_name = instance["running_instance_name"]
+                            running_instance_zone = instance["zone"]
+                            LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", summary_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
+                            delete_instance(running_instance_name, running_instance_zone)
+                    else:
+                        LOGGER.critical("not killing running gpu")
+
         else:
             LOGGER.critical("%s not found in queues", queue_type)
 
@@ -130,7 +134,7 @@ def get_compute_list():
 
 def check_compute_running(instance_name):
 
-    global running_computes
+    # global running_computes
     LOGGER.critical("check compute running")
 
     instance_status = []
@@ -143,15 +147,24 @@ def check_compute_running(instance_name):
     vm_list = get_compute_list()
     LOGGER.critical("number of compute running %s", len(vm_list))
     for vm in vm_list:
+        is_any_torch_running = False
+        is_torch_responding = False
+        running_instance_name = ""
         LOGGER.info("name %s, status %s", vm['name'], vm['status'])
         if instance_name in vm['name']:
             is_any_torch_running = True
 
             # print(json.dumps(vm, indent=True))
             running_instance_name = vm['name']
+            LOGGER.critical("running vm found %s", running_instance_name)
 
             # print(json.dumps(vm["networkInterfaces"][0], indent=True))
-            ip = vm["networkInterfaces"][0]['accessConfigs'][0]["natIP"]
+            ip = ""
+            if len(vm["networkInterfaces"]):
+                if "accessConfig" in vm["networkInterfaces"][0]:
+                    if len(vm["networkInterfaces"][0]['accessConfigs']):
+                        if "natIP" in vm["networkInterfaces"][0]['accessConfigs'][0]:
+                            ip = vm["networkInterfaces"][0]['accessConfigs'][0]["natIP"]
             # print()
             
             for connection in connections:
@@ -161,7 +174,7 @@ def check_compute_running(instance_name):
                     is_torch_responding = True
                     break
 
-            LOGGER.critical("vm ip %s", ip)
+            LOGGER.critical("vm ip %s is_any_torch_running %s is_torch_responding %s", ip, is_any_torch_running, is_torch_responding)
             compute = {
                 "is_any_torch_running" : is_any_torch_running,
                 "is_torch_responding" : is_torch_responding,
@@ -169,7 +182,7 @@ def check_compute_running(instance_name):
                 "zone" : vm["zone"]
             }
             instance_status.append(compute)
-            running_computes.append(compute)
+            # running_computes.append(compute)
 
     return instance_status  #is_any_torch_running, is_torch_responding, instance_name
 
