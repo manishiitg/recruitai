@@ -22,6 +22,7 @@ max_instances_to_run_together = 1
 
 
 is_process_running = False
+last_process_running_time = 0
 
 def queue_process():
 
@@ -31,9 +32,12 @@ def queue_process():
     global running_computes
 
     if is_process_running:
-        LOGGER.critical("already running process so returnning")
-        return
+        if (time.time() - last_process_running_time) < 1 * 60 * 60:
+            LOGGER.critical("already running process so returnning")
+            return
+
     is_process_running = True
+    last_process_running_time = time.time()
 
     min_process_to_start_gpu = 100
     max_process_to_kill_gpu = 1
@@ -106,7 +110,7 @@ def queue_process():
                             is_torch_responding = instance["is_torch_responding"]
                             running_instance_name = instance["running_instance_name"]
                             running_instance_zone = instance["zone"]
-                            LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", summary_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
+                            LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                             delete_instance(running_instance_name, running_instance_zone)
                             if running_instance_name in running_instance_check:
                                 del running_instance_check[running_instance_name]
