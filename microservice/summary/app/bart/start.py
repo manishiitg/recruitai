@@ -25,7 +25,7 @@ from app.account import initDB, get_cloud_bucket , connect_redis
 from pathlib import Path
 
 import sys
-from app.config import storage_client
+# from app.config import storage_client
 import subprocess
 
 
