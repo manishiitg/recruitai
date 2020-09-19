@@ -16,6 +16,8 @@ RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
 running_instance_check = {}
 running_computes = []
 
+max_instances_to_run_together = 1
+
 def queue_process():
 
     LOGGER.critical("processing queues")
@@ -52,7 +54,7 @@ def queue_process():
                                     prev_check_time = running_instance_check[running_instance_name]
                                     time_passed = time.time() - prev_check_time
                                     LOGGER.critical("time passed %s for instance %s", time_passed, running_instance_name)
-                                    if time_passed > 60 * 10:
+                                    if time_passed > 60 * 5:
                                         LOGGER.critical("some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(running_instance_name, running_instance_zone)
                                         del running_instance_check[running_instance_name]
@@ -205,8 +207,10 @@ def get_zone_list():
     return zone_list
 
 def start_compute_preementable(instance_name, queue_type):
+    global max_instances_to_run_together
     zones = get_zone_list()
     max_attemps = 10
+    started_instance = 0
     for idx, zone in enumerate(zones):
 
         name = instance_name+ str(idx)
@@ -216,7 +220,13 @@ def start_compute_preementable(instance_name, queue_type):
         instance_status = check_compute_running(name)
         if len(instance_status) > 0:
             LOGGER.critical("gpu started so breaking out")
-            break
+            started_instance += 1
+            if max_instances_to_run_together > max_instances_to_run_together:
+                LOGGER.critical("ran max instances to breaking out")
+                break
+            else:
+                LOGGER.critical("not breaking out")
+                break
         if idx > max_attemps:
             LOGGER.critical("max attempts reached to start so breaking out")
             break
