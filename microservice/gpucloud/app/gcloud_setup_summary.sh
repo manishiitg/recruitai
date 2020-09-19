@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# sleep 120s  # need to wait for nvidia drives to install else it fails
+sleep 120s  # need to wait for nvidia drives to install else it fails
 
 sudo su
 
@@ -114,7 +114,7 @@ export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/ins
 
 
 # sudo /opt/deeplearning/install-driver.sh
-
+# https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#ubuntu-driver-steps
 
 ########################
 
@@ -132,8 +132,8 @@ sudo mkdir -p /var/log/recruitai
 
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
 
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
