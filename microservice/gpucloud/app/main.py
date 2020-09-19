@@ -20,7 +20,7 @@ import time
 
 import requests
 
-# from app.stats.start import resume_pipeline_update, update_resume_time_analysis
+from app.start import queue_process
 
 
 amqp_url = os.getenv('RABBIT_DB')
@@ -435,128 +435,13 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
-import requests
-from requests.auth import HTTPBasicAuth
-
-
 def main():
     
-    # print("docker env")
-    # client = docker.from_env()
-    # client = docker.DockerClient(base_url="tcp://127.0.0.1:1234")
-    # print(client.containers.list())
-
-    # container = client.containers.run('bfirsh/reticulate-splines',
-    #                                   detach=True)
-
-    amqp_url_base = os.getenv('RABBIT_API_URL')
-    RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
-    res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
-    queues = res.json()
-    print(json.dumps(queues, indent=True))
-
-    mq_status = {}
-    running_process = 0
-    for queue in queues:
-        if queue["name"] == "resume" or queue["name"] == "picture" or queue["name"] == "summary":
-            
-            # print(queue)
-            if "consumers" in queue.keys():
-                mq_status[queue["name"]] = {
-                    "consumers" : queue["consumers"],
-                    "in_process" : queue["messages_unacknowledged_ram"] + queue["messages_ready"]
-                }
-                running_process += int(queue["messages_unacknowledged_ram"])
-
-    print(mq_status)
-    print(running_process)
-
-    res = requests.get(amqp_url_base + "/api/connections", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
-    connections = res.json()
-
     
-
-
-    import subprocess
-
-    LOGGER.critical("getting instance list")
-    result = subprocess.run(['gcloud','compute','instances','list','--format="json"'], stdout=subprocess.PIPE)
-    # print(result.stdout)
-    vm_list = json.loads(result.stdout)
-    # print(json.dumps(vm_list, indent=True))
-
-    LOGGER.critical("creating instance compute")
-    is_any_torch_running = False
-    for vm in vm_list:
-        LOGGER.critical("name %s, status %s",vm['name'], vm['status'])
-        if "torch" in vm['name']:
-            is_any_torch_running = True
-            
-            # print(vm["networkInterfaces"])
-            ip = vm["networkInterfaces"][0]["networkIP"]
-            for connection in connections:
-                if connection["peer_host"] == ip:
-                    LOGGER.critical("host found so torch vm is working")
-                    break
-            
-            LOGGER.critical("vm ip %s", ip)
-
-    result = subprocess.run(['gcloud','compute','zones','list','--format="json"'], stdout=subprocess.PIPE)
-
-    zone_list = json.loads(result.stdout)
-    # print(json.dumps(vm_list, indent=True))
-    # for zone in zone_list:
-    #     print(zone['name'], zone['region'])
-
-    instance_name = "torchvm"
-    zone = "us-central1-a"
-
-    if not is_any_torch_running:
-        try:
-            
-            
-            
-            vm_start = []
-            result = subprocess.run(["./start.sh " + instance_name + " " + zone], stdout=subprocess.PIPE, shell=True, check=True, cwd="/workspace/app")
-            LOGGER.critical("stdout", result.stdout)
-
-            if result.stderr and len(result.stderr) > 0:
-                if "already exists" in result.stderr:
-                    LOGGER.critical("container already exists")
-                else:
-                    LOGGER.critical("stderr", result.stderr)
-
-            if result.stdout and len(result.stdout) > 0:
-                vm_start = json.loads(result.stdout)
-                LOGGER.critical(json.dumps(vm_start, indent=True))
-
-                is_vm_started = False
-                if len(vm_start) > 0:
-                    if "name" in vm_start[0]:
-                        LOGGER.critical("vm started with name %s", vm_start[0]['name'])
-                        is_vm_started = True
-        
-        except Exception as e:
-            LOGGER.critical("XXX %s", e)
-
     
-    if is_any_torch_running:
-        try:
-            LOGGER.critical(" deleting instance")
-            result = subprocess.run(['gcloud','compute','instances','delete',instance_name,"--zone="+zone,'--quiet','--format="json"'], stdout=subprocess.PIPE)
-
-            if result.stderr and len(result.stderr) > 0:
-                LOGGER.critical("stderr %s", result.stderr)
-
-            if result.stdout and len(result.stdout) > 0:
-                LOGGER.critical("stdout %s", result.stdout)
-
-        except Exception as e:
-            LOGGER.critical("YYY %s", e)
+    queue_process()
+    consumer = ReconnectingTaskQueue(amqp_url)
+    consumer.run()
     
-   
-    # consumer = ReconnectingTaskQueue(amqp_url)
-    # consumer.run()
-
 if __name__ == '__main__':
     main()
