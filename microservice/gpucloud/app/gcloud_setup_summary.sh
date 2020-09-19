@@ -130,6 +130,7 @@ sudo mkdir -p /var/log/recruitai
 ==========================
 
 
+sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
