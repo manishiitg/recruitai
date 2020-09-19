@@ -86,6 +86,8 @@ def queue_process():
                 else:
                     LOGGER.critical("not gpu running need to start")
                     start_compute_preementable(type_instance_name, queue_type)
+                    if running_instance_name in running_instance_check:
+                                del running_instance_check[running_instance_name]
             else:
                 LOGGER.critical("%s has less than %s no need to start gpu %s", queue_type, min_process_to_start_gpu ,queues["summary"])
 
@@ -101,6 +103,8 @@ def queue_process():
                             running_instance_zone = instance["zone"]
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", summary_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                             delete_instance(running_instance_name, running_instance_zone)
+                            if running_instance_name in running_instance_check:
+                                del running_instance_check[running_instance_name]
                     else:
                         LOGGER.critical("not killing running gpu")
 
