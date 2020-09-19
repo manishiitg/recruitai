@@ -131,11 +131,7 @@ sudo mkdir -p /var/log/recruitai
 
 sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-sudo docker-compose -f docker-compose-gpu-picture.yml build
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=5
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=5
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=5
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=5
+sudo docker-compose -f docker-compose-gpu-all.yml build
+sudo docker-compose -f docker-compose-gpu-all.yml up -d
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
