@@ -113,7 +113,7 @@ export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/ins
 export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
 
 
-sudo /opt/deeplearning/install-driver.sh
+# sudo /opt/deeplearning/install-driver.sh
 
 
 ########################
