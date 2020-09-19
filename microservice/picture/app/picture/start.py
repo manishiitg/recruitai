@@ -105,7 +105,10 @@ def process(output_dir, predictor, cfg):
     thing_classes = MetadataCatalog.get(
         cfg.DATASETS.TRAIN[0]).get("thing_classes", None)
 
-    boxes = outputs["instances"].pred_boxes.tensor.numpy()
+    if device == "cuda":
+        boxes = outputs["instances"].pred_boxes.tensor.cpu().numpy()
+    else:
+        boxes = outputs["instances"].pred_boxes.tensor.numpy()
     boxeswh = BoxMode.convert(boxes, BoxMode.XYXY_ABS, BoxMode.XYWH_ABS)
 
     classes = outputs["instances"].pred_classes
