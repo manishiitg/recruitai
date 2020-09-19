@@ -7,6 +7,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import os
 import json
 import shlex
+from datetime import datetime, timezone, timedelta
+import random
 
 
 amqp_url_base = os.getenv('RABBIT_API_URL')
@@ -58,6 +60,11 @@ def queue_process():
                         LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ", type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                         if is_any_torch_running:    
                             if not is_torch_responding:
+                                if running_instance_name not in running_instance_check:
+                                    LOGGER.critical("picking starting %s", instance["created_at"])
+                                    running_instance_check[running_instance_name] = time.time() - instance["created_at"]
+
+
 
                                 if running_instance_name in running_instance_check:
                                     prev_check_time = running_instance_check[running_instance_name]
@@ -163,10 +170,26 @@ def check_compute_running(instance_name):
         is_torch_responding = False
         running_instance_name = ""
         LOGGER.info("name %s, status %s", vm['name'], vm['status'])
+
+        
         if instance_name in vm['name']:
             is_any_torch_running = True
 
             # print(json.dumps(vm, indent=True))
+
+            # "creationTimestamp": "2020-09-19T00:41:59.148-07:00
+
+            actual_time_stamp = vm["creationTimestamp"][:-6]
+            # print(actual_time_stamp)
+
+            created_at = datetime.strptime(vm["creationTimestamp"], '%Y-%m-%dT%H:%M:%S.%f%z')
+            print("created_at" , created_at)
+            now = datetime.now(timezone(timedelta(hours=5, minutes=30)))
+            difference = now - created_at
+            print("now" , now)
+            print("difference", difference.total_seconds())
+            # process.exit()
+
             running_instance_name = vm['name']
             LOGGER.critical("running vm found %s", running_instance_name)
 
@@ -200,7 +223,8 @@ def check_compute_running(instance_name):
                 "is_any_torch_running" : is_any_torch_running,
                 "is_torch_responding" : is_torch_responding,
                 "running_instance_name" : running_instance_name,
-                "zone" : vm["zone"]
+                "zone" : vm["zone"],
+                "created_at" : difference.total_seconds()
             }
             instance_status.append(compute)
             # running_computes.append(compute)
@@ -260,12 +284,19 @@ def start_compute(instance_name, zone, queue_type):
 
         vm_start = []
 
-        
+        # https://cloud.google.com/ai-platform/deep-learning-vm/docs/images
+
+        # pytorch-latest-gpu
+
+        image_family = ["pytorch-latest-gpu", "common-cu101", "common-cu100"]
+
+        image_family_name = random.choice(image_family)  # sometimes nvidia randomly fails
+
         # result = subprocess.call(shlex.split(f"./start.sh {instance_name} {zone}"), cwd="/workspace/app")
         if queue_type == "summary":
-            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family=common-cu101 --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_summary.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_summary.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         elif queue_type == "picture":
-            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family=common-cu101 --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
 
         # LOGGER.critical("stdout", result)
 
