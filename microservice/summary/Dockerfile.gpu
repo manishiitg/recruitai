@@ -3,10 +3,8 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
 
-VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
-
 RUN apt-get update && \
-	apt-get install supervisor curl  git build-essential -y && \
+	apt-get install supervisor curl git build-essential -y && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
@@ -14,31 +12,31 @@ COPY ./supervisor/conf.d/summary.conf /etc/supervisor/conf.d/summary.conf
 
 RUN truncate -s 0 /workspace/logs/summary*.log
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
-RUN apt-get -y install nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
+# RUN apt-get -y install nodejs
 
-RUN node --version
-RUN npm --version
+# RUN node --version
+# RUN npm --version
 
-RUN npm install -g pdf-text-extract
-RUN pip install pdfminer.six
+# RUN npm install -g pdf-text-extract
+# RUN pip install pdfminer.six
 
 RUN pip install transformers 
 RUN pip install pika
-RUN pip install beautifulsoup4
+# RUN pip install beautifulsoup4
 RUN pip install pymongo
 
-RUN pip install google-cloud-storage
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-RUN apt-get install apt-transport-https ca-certificates -y
-RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-RUN apt-get update && apt-get install google-cloud-sdk -y
+# RUN pip install google-cloud-storage
+# RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+# RUN apt-get install apt-transport-https ca-certificates -y
+# RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+# RUN apt-get update && apt-get install google-cloud-sdk -y
 
-COPY ./app/RecruitAI.json /workspace
+# COPY ./app/RecruitAI.json /workspace
 
-RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
-RUN gcloud config set project recruitai-266705
-RUN gsutil ls
+# RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
+# RUN gcloud config set project recruitai-266705
+# RUN gsutil ls
 RUN pip install redis
 
 RUN apt-get install -y debconf-utils
@@ -50,6 +48,8 @@ RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
+
+VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
 CMD ["/usr/bin/supervisord"]
 # CMD ["nvidia-smi"]
