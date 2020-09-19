@@ -45,4 +45,8 @@ COPY ./app/java-ref-7a9117277dda.json /workspace
 RUN gcloud auth activate-service-account --key-file=/workspace/java-ref-7a9117277dda.json
 RUN gcloud config set project java-ref
 RUN  pip install --upgrade google-api-python-client
+
+RUN pip install apscheduler
+
+
 CMD ["/usr/bin/supervisord"]
