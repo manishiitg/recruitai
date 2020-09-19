@@ -562,12 +562,16 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         
 
         if doc is None:
+            logger.critical("not doc found not good!")
+            start_time = time.time()
             if ObjectId.is_valid(mongoid):
                 ret = db.emailStored.find({ 
                     "_id" : ObjectId(mongoid),
                     } , 
                     {"body": 0, "cvParsedInfo.debug": 0}
                 )
+
+                logger.critical("time to fetch docs %s", time.time() - start_time)
             else:
                 ret = []
             # .sort([("sequence", -1),("updatedAt", -1)])
@@ -955,7 +959,7 @@ def addFilter(obj, key, account_name, account_config):
             logger.critical("added new fetch %s", id)
         else:
             ctime = time_map[obj["fetch"]][id]
-            logger.critical("time for %s",  time.time() - ctime )
+            logger.critical("time for add Filter %s",  time.time() - ctime )
             if (time.time() - ctime) < 1 * 30:
                 ignore = True
                 dirtyMap[account_name][key] = {
