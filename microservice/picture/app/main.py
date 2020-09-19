@@ -53,7 +53,7 @@ class TaskQueue(object):
         self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = 1 #int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
+        self._prefetch_count = int(os.getenv('PARALLEL_PROCESS',1))
 
 
     def connect(self):
