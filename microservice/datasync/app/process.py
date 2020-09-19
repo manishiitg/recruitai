@@ -127,6 +127,9 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
     logger.critical("bulk field update profile %s", job_profile_id)
 
     logger.critical("bulk add job profile %s", job_profile_id)
+    if isinstance(job_profile_id, list):
+        job_profile_id = job_profile_id[0]
+        
     mapKey = "job_" + job_profile_id
     if mapKey not in redisKeyMap[account_name]:
         job_profile_data = r.get(mapKey)
