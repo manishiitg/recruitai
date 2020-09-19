@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:    
+    
+    summary:
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/summary
+        device_requests:
+            - capabilities:
+                - gpu
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/summary/app:/workspace/app    
+            - ./home/jupyter/.cache:/root/.cache        
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            PARALLEL_PROCESS: 1
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
+        
+    picture:
+        # image: recruitai/picture:gpu
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/picture
+        device_requests:
+            - capabilities:
+                - gpu
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/picture/app:/workspace/app 
+            - ./home/jupyter/.cache:/root/.cache            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
+            PARALLEL_PROCESS: 1
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
