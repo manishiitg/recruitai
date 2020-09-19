@@ -30,6 +30,7 @@ def queue_process():
     global is_process_running
     global running_instance_check
     global running_computes
+    global last_process_running_time
 
     if is_process_running:
         if (time.time() - last_process_running_time) < 1 * 60 * 60:
@@ -95,8 +96,6 @@ def queue_process():
                 else:
                     LOGGER.critical("not gpu running need to start")
                     start_compute_preementable(type_instance_name, queue_type)
-                    if running_instance_name in running_instance_check:
-                                del running_instance_check[running_instance_name]
             else:
                 LOGGER.critical("%s has less than %s no need to start gpu %s", queue_type, min_process_to_start_gpu ,queues["summary"])
 
