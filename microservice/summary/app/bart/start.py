@@ -10,9 +10,9 @@ summarizer = None
 
 from app.publishdatasync import sendMessage as datasync
 
-from pdfminer.pdfpage import PDFTextExtractionNotAllowed
+# from pdfminer.pdfpage import PDFTextExtractionNotAllowed
+# from pdfminer.high_level import extract_text
 
-from pdfminer.high_level import extract_text
 from app.config import BASE_PATH
 import os
 from pymongo import MongoClient
