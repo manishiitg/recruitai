@@ -12,7 +12,7 @@ def handle(channel, method, properties, body):
     if body is None:
         return body
     message = body.decode()
-    logger.info("received: %s", message)
+    logger.critical("received: %s", message)
     return json.loads(message)
 
 
@@ -49,6 +49,7 @@ def sendBlockingMessage(obj):
         channel.basic_publish(
             exchange=EXCHANGE, routing_key=ROUTING_KEY, body=message.encode(),
             properties=pika.BasicProperties(reply_to="amq.rabbitmq.reply-to",expiration='300'))
+        logger.critical("send to filter")
         logger.info("sent to filter: %s", message)
 
         for (method, properties, body) in channel.consume(
