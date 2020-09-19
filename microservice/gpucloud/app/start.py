@@ -71,7 +71,12 @@ def queue_process():
                                     time_passed = time.time() - prev_check_time
                                     # it takes 5-10min for gpu to start its processing
                                     LOGGER.critical("time passed %s for instance %s", time_passed, running_instance_name)
-                                    if time_passed > 60 * 10:
+
+                                    max_time_passed = 60 * 10
+                                    if queue_type == "picture":
+                                        max_time_passed = 60 * 15
+
+                                    if time_passed > max_time_passed:
                                         LOGGER.critical("some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(running_instance_name, running_instance_zone)
                                         del running_instance_check[running_instance_name]
