@@ -18,13 +18,22 @@ running_computes = []
 
 max_instances_to_run_together = 1
 
+
+is_process_running = False
+
 def queue_process():
 
     LOGGER.critical("processing queues")
+    global is_process_running
     global running_instance_check
     global running_computes
 
-    min_process_to_start_gpu = 3400
+    if is_process_running:
+        LOGGER.critical("already running process so returnning")
+        return
+    is_process_running = True
+
+    min_process_to_start_gpu = 100
     max_process_to_kill_gpu = 1
 
     queues = get_queues()
@@ -54,7 +63,7 @@ def queue_process():
                                     prev_check_time = running_instance_check[running_instance_name]
                                     time_passed = time.time() - prev_check_time
                                     LOGGER.critical("time passed %s for instance %s", time_passed, running_instance_name)
-                                    if time_passed > 60 * 5:
+                                    if time_passed > 60 * 10:
                                         LOGGER.critical("some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(running_instance_name, running_instance_zone)
                                         del running_instance_check[running_instance_name]
@@ -90,7 +99,7 @@ def queue_process():
         else:
             LOGGER.critical("%s not found in queues", queue_type)
 
-
+    is_process_running = False
 
 def get_queues():
     res = requests.get(amqp_url_base + "/api/queues", verify=False,
@@ -160,13 +169,22 @@ def check_compute_running(instance_name):
             running_instance_name = vm['name']
             LOGGER.critical("running vm found %s", running_instance_name)
 
-            # print(json.dumps(vm["networkInterfaces"][0], indent=True))
+            # print(json.dumps(vm["networkInterfaces"], indent=True))
             ip = ""
-            if len(vm["networkInterfaces"]):
-                if "accessConfig" in vm["networkInterfaces"][0]:
-                    if len(vm["networkInterfaces"][0]['accessConfigs']):
-                        if "natIP" in vm["networkInterfaces"][0]['accessConfigs'][0]:
-                            ip = vm["networkInterfaces"][0]['accessConfigs'][0]["natIP"]
+            if isinstance(vm["networkInterfaces"], list):
+                vminstance = vm["networkInterfaces"][0]
+            else:
+                vminstance = vm["networkInterfaces"]
+
+            if "accessConfigs" in vminstance:
+                
+                if isinstance(vminstance['accessConfigs'], list):
+                    accessConfig  = vminstance['accessConfigs'][0]
+                else:
+                    accessConfig  = vminstance['accessConfigs']
+
+                if "natIP" in accessConfig:
+                    ip = accessConfig["natIP"]
             # print()
             
             for connection in connections:
@@ -221,7 +239,7 @@ def start_compute_preementable(instance_name, queue_type):
         if len(instance_status) > 0:
             LOGGER.critical("gpu started so breaking out")
             started_instance += 1
-            if max_instances_to_run_together > max_instances_to_run_together:
+            if started_instance >= max_instances_to_run_together:
                 LOGGER.critical("ran max instances to breaking out")
                 break
             else:
