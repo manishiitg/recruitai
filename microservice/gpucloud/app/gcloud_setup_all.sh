@@ -140,5 +140,10 @@ cat my_password.txt | docker login --username recruitai --pasword-stdin
 sudo docker-compose -f docker-compose-gpu-all.yml build --parallel 
 # sudo docker-compose -f docker-compose-gpu-all.yml push
 sudo docker-compose -f docker-compose-gpu-all.yml up -d
+
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
