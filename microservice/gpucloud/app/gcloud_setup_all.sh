@@ -134,11 +134,11 @@ sudo mkdir -p /var/log/recruitai
 
 cat my_password.txt | docker login --username recruitai --pasword-stdin
 
-sudo docker-compose -f docker-compose-gpu-all.yml pull
-sudo docker-compose -f docker-compose-gpu-all.yml up -d
-
-sudo docker-compose -f docker-compose-gpu-all.yml build
-sudo docker-compose -f docker-compose-gpu-all.yml push
+# sudo docker-compose -f docker-compose-gpu-all.yml pull # this is not working, this picks up cpu instead cpu
 # sudo docker-compose -f docker-compose-gpu-all.yml up -d
+
+sudo docker-compose -f docker-compose-gpu-all.yml build --parallel 
+# sudo docker-compose -f docker-compose-gpu-all.yml push
+sudo docker-compose -f docker-compose-gpu-all.yml up -d
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
