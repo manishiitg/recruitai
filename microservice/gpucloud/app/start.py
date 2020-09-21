@@ -23,6 +23,7 @@ max_instances_to_run_together = 1
 
 run_combined_gpu = True
 
+min_run_gpu = 50 #50min running
 
 is_process_running = False
 last_process_running_time = 0
@@ -132,12 +133,17 @@ def queue_process():
                             is_torch_responding = instance["is_torch_responding"]
                             running_instance_name = instance["running_instance_name"]
                             running_instance_zone = instance["zone"]
+                            created_at = instance["created_at"]
+
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
-                                            type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
-                            delete_instance(running_instance_name,
-                                            running_instance_zone, "work completed")
-                            if running_instance_name in running_instance_check:
-                                del running_instance_check[running_instance_name]
+                                                type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
+                            if created_at > min_run_gpu * 60:
+                                delete_instance(running_instance_name,
+                                                running_instance_zone, "work completed")
+                                if running_instance_name in running_instance_check:
+                                    del running_instance_check[running_instance_name]
+                            else:
+                                LOGGER.critical("not killing instance and running minimum of %s minutes", min_run_gpu)
                     else:
                         LOGGER.critical("not killing running gpu")
 
