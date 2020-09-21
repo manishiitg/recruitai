@@ -177,6 +177,20 @@ services:
             RESUME_PARALLEL_PROCESS: 1
         networks:
             - ai
+
+    resumemq2:
+        image: recruitai/resumemq2:latest
+        build: microservice/resume2
+        
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/resume/app:/workspace/app            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
+            RESUME_PARALLEL_PROCESS: 1
+        networks:
+            - ai
     
     picturemq:
         image: recruitai/picturemq:latest
@@ -369,6 +383,7 @@ services:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
+            SENDGRID_API_KEY: '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'
         network_mode: host
 
 volumes: 
