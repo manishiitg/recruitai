@@ -65,3 +65,6 @@ get_file_after_remove_labels(
     "ner-test-v2.txt", ["Skills", 'LANGUAGE'], "ner-final-test.txt")
 get_file_after_remove_labels(
     "ner-dev-v2.txt", ["Skills", 'LANGUAGE'], "ner-final-dev.txt")
+
+labels = get_labels("label_remove_email_dobner-train-v2.txt")
+print(labels)
