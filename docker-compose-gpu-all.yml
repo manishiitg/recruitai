@@ -3,6 +3,7 @@ version: '3.8'
 services:    
     
     summary:
+        image: recruitai/summarygpu
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/summary
@@ -23,7 +24,7 @@ services:
             - "redis:116.202.234.182"
         
     picture:
-        # image: recruitai/picture:gpu
+        image: recruitai/picturegpu
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/picture
