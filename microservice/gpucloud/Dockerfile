@@ -47,6 +47,7 @@ RUN gcloud config set project java-ref
 RUN  pip install --upgrade google-api-python-client
 
 RUN pip install apscheduler
+RUN pip install sendgrid
 
 
 CMD ["/usr/bin/supervisord"]
