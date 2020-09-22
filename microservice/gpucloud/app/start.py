@@ -101,7 +101,7 @@ def queue_process():
                                         LOGGER.critical(
                                             "some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(
-                                            running_instance_name, running_instance_zone, "vm not responding even after " + max_time_passed)
+                                            running_instance_name, running_instance_zone, "vm not responding even after " + str(max_time_passed))
                                         del running_instance_check[running_instance_name]
 
                                 else:
@@ -408,6 +408,8 @@ def delete_instance(instance_name, zone, reason):
         # if result.stderr and len(result.stderr) > 0:
         #     LOGGER.critical("stderr %s", result.stderr)
 
+        print(result)
+
         if result.stdout and len(result.stdout) > 0:
             LOGGER.critical("stdout %s", result.stdout)
             email_content = result.stdout
@@ -438,6 +440,6 @@ def sendEmail(subject, content):
     content = Content("text/plain", content)
     mail = Mail(from_email, to_email, subject, content)
     response = sg.client.mail.send.post(request_body=mail.get())
-    # print(response.status_code)
-    # print(response.body)
-    # print(response.headers)
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
