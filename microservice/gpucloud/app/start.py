@@ -30,7 +30,7 @@ last_process_running_time = 0
 
 
 def queue_process():
-
+    return 
     LOGGER.critical("processing queues")
     global is_process_running
     global running_instance_check
