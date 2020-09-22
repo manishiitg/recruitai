@@ -132,7 +132,7 @@ sudo mkdir -p /var/log/recruitai
 sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 
-cat my_password.txt | docker login --username recruitai --pasword-stdin
+cat my_password.txt | docker login --username recruitai --password-stdin
 
 sudo docker-compose -f docker-compose-cpu-all.yml pull # this is not working, this picks up cpu instead cpu
 sudo docker-compose -f docker-compose-cpu-all.yml up -d
