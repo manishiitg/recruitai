@@ -765,6 +765,11 @@ def main():
 
     print(result)
 
+    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
+                             'gs://recruitaiwork/detectron4_5000_fpn', '/workspace/detectron4_5000_fpn'], stdout=subprocess.PIPE)
+
+    print(result)
+
     loadTrainedModel()
     # loadModel()
     loadModelTagger()
