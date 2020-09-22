@@ -62,8 +62,7 @@ def loadModel():
     global tagger
     if tagger is None:
         logger.critical("loading model")
-        tagger = SequenceTagger.load(
-            BASE_PATH + "/../pretrained/recruit-ner-word2vec-flair/best-model.pt")
+        tagger = SequenceTagger.load("/workspace/recruit-tags-flair-fasttext/recruit-tags-flair-fasttext_latest/best-model.pt")
         logger.critical("model loaded")
     return tagger
 
