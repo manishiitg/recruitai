@@ -32,7 +32,7 @@ RUN npm install -g pdf-text-extract
 RUN pip install numpy opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy[speedup] pytest flair
 # RUN pip install -r requirements.txt
 
-VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
+VOLUME ["/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 RUN apt-get install apt-transport-https ca-certificates -y
@@ -72,4 +72,5 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
 RUN mkdir /workspace/recruit-tags-flair-fasttext
+RUN mkdir /workspace/detectron4_5000_fpn
 CMD ["/usr/bin/supervisord"]
