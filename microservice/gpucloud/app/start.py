@@ -110,8 +110,9 @@ def queue_process():
                                     running_instance_check[running_instance_name] = time.time(
                                     )
                             else:
-                                if running_instance_name in running_instance_check:
-                                    del running_instance_check[running_instance_name]
+                                # if running_instance_name in running_instance_check:
+                                # del running_instance_check[running_instance_name]
+                                running_instance_check[running_instance_name] = time.time() - 5 * 60  # if gpu doesn't respond for 1sec, something it justs deleted it
                                 LOGGER.critical(
                                     "already gpu %s running so nothing else to do", running_instance_name)
                 else:
