@@ -20,7 +20,7 @@ RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -
 RUN apt-get install python-poppler poppler-utils -y \
     && apt-get -y autoclean
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
 RUN node --version
@@ -71,4 +71,5 @@ RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
+RUN mkdir /workspace/recruit-tags-flair-fasttext
 CMD ["/usr/bin/supervisord"]
