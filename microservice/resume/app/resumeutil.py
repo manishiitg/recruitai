@@ -76,6 +76,9 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         else:
             parsing_type = "fast"
 
+
+        parsing_type = "full" # full always for now 
+
         timeAnalysis = {}
 
         if message and "parsing_type" in message:
