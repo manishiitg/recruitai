@@ -35,6 +35,9 @@ xlnetTokenizer = None
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def predict(text):
+    # disable for now until we get proper model
+    return ["", 0]
+    
     do_eval = True
     xlnetModel, xlnetTokenizer = loadModel()
     sentPiecetokenizer = loadTokenizer()
