@@ -253,7 +253,7 @@ def getExpScore(criteria, row, total_weight, max_score):
     debug = []
     
     if "experiance" not in criteria:
-        logger.info("experiance not found")
+        logger.info("experiance not found"
         debug.append("experiance not found")
         return candidate_score, debug
 
