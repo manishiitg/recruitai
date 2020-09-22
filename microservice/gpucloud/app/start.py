@@ -119,8 +119,6 @@ def queue_process():
                                     "already gpu %s running so nothing else to do", running_instance_name)
                 else:
                     LOGGER.critical("not gpu running need to start")
-                    if running_instance_name in running_instance_check:
-                        del running_instance_check[running_instance_name]
                     start_compute_preementable(type_instance_name, queue_type)
             else:
 
@@ -311,6 +309,7 @@ def get_zone_list():
 
 def start_compute_preementable(instance_name, queue_type):
     global max_instances_to_run_together
+    global running_instance_check
     zones = get_zone_list()
     max_attemps = 10
     started_instance = 0
@@ -327,6 +326,11 @@ def start_compute_preementable(instance_name, queue_type):
 
         instance_status = check_compute_running(name)
         if len(instance_status) > 0:
+
+            
+            if name in running_instance_check:
+                del running_instance_check[name]
+
             email_content += "gpu started so breaking out " + name + "\r\n"
             LOGGER.critical("gpu started so breaking out")
             slack_message("gpu started so breaking out %s", name)
