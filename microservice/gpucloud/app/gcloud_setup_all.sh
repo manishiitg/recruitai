@@ -134,12 +134,18 @@ sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 cat my_password.txt | docker login --username recruitai --pasword-stdin
 
-# sudo docker-compose -f docker-compose-gpu-all.yml pull # this is not working, this picks up cpu instead cpu
-# sudo docker-compose -f docker-compose-gpu-all.yml up -d
+sudo docker-compose -f docker-compose-cpu-all.yml pull # this is not working, this picks up cpu instead cpu
+sudo docker-compose -f docker-compose-cpu-all.yml up -d
 
-sudo docker-compose -f docker-compose-gpu-all.yml build --parallel 
+sudo docker-compose -f docker-compose-gpu-all.yml build --parallel --no-cache 
+
+sudo docker-compose -f docker-compose-cpu-all.yml stop
+sudo docker-compose -f docker-compose-cpu-all.yml kill
+
 # sudo docker-compose -f docker-compose-gpu-all.yml push
 sudo docker-compose -f docker-compose-gpu-all.yml up -d
+
+
 
 sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
 sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
