@@ -312,17 +312,17 @@ def start_compute_preementable(instance_name, queue_type):
 
         name = instance_name + str(idx)
         log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
-        email_content += log + "<br/>"
+        email_content += log + "\r\n"
         LOGGER.critical(log)
         start_compute(name, zone["name"], queue_type)
 
         instance_status = check_compute_running(name)
         if len(instance_status) > 0:
-            email_content += "gpu started so breaking out " + name + "<br/>"
+            email_content += "gpu started so breaking out " + name + "\r\n"
             LOGGER.critical("gpu started so breaking out")
             started_instance += 1
             if started_instance >= max_instances_to_run_together:
-                email_content += "ran max instances to breaking out" + "<br/>"
+                email_content += "ran max instances to breaking out" + "\r\n"
                 LOGGER.critical("ran max instances to breaking out")
                 break
             else:
@@ -414,14 +414,15 @@ def delete_instance(instance_name, zone, reason):
             LOGGER.critical("stdout %s", result.stdout)
             email_content = result.stdout
 
+        sendEmail(email_subject, email_content)
         return True
     except Exception as e:
         LOGGER.critical("YYY %s", e)
         email_content = str(e)
+        sendEmail(email_subject, email_content)
         return False
 
-    sendEmail(email_subject, email_content)
-
+    
 
 checkin_score_scheduler = BackgroundScheduler()
 checkin_score_scheduler.add_job(
