@@ -3,6 +3,8 @@ LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
 
+RUN pip install crcmod
+
 RUN apt-get update 
 RUN apt-get install software-properties-common curl gnupg -y
 RUN add-apt-repository ppa:libreoffice/ppa -y
