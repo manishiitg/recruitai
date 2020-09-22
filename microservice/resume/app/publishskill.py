@@ -12,7 +12,7 @@ def handle(channel, method, properties, body):
     if body is None:
         return body
     message = body.decode()
-    logger.info("received: %s", message)
+    logger.critical("received: %s", message)
     return json.loads(message)
 
 
