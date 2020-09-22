@@ -147,9 +147,9 @@ sudo docker-compose -f docker-compose-gpu-all.yml up -d
 
 
 
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summary=2 --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
