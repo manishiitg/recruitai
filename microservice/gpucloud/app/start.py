@@ -12,6 +12,7 @@ from datetime import datetime, timezone, timedelta
 import random
 import sendgrid
 
+
 amqp_url_base = os.getenv('RABBIT_API_URL')
 RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
 
@@ -94,10 +95,11 @@ def queue_process():
                                     max_time_passed = 60 * 10
                                     if queue_type == "picture":
                                         max_time_passed = 60 * 15
-                                    if queue_type == "all":
+                                    if queue_type == "all" or queue_type == "resume":
                                         max_time_passed = 60 * 20
 
                                     if time_passed > max_time_passed:
+                                        slack_message(f"some wrong majorly so deleting instance {running_instance_name} as time passed {time_passed}")
                                         LOGGER.critical(
                                             "some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(
@@ -112,13 +114,17 @@ def queue_process():
                             else:
                                 # if running_instance_name in running_instance_check:
                                 # del running_instance_check[running_instance_name]
-                                running_instance_check[running_instance_name] = time.time() - 5 * 60  # if gpu doesn't respond for 1sec, something it justs deleted it
+                                running_instance_check[running_instance_name] = time.time() - 10 * 60  # if gpu doesn't respond for 1sec, something it justs deleted it
                                 LOGGER.critical(
                                     "already gpu %s running so nothing else to do", running_instance_name)
                 else:
                     LOGGER.critical("not gpu running need to start")
+                    if running_instance_name in running_instance_check:
+                        del running_instance_check[running_instance_name]
                     start_compute_preementable(type_instance_name, queue_type)
             else:
+
+                # slack_message(f"{queue_type} has less than {min_process_to_start_gpu} no need to start gpu {queues["summary"]}")
                 LOGGER.critical("%s has less than %s no need to start gpu %s",
                                 queue_type, min_process_to_start_gpu, queues["summary"])
 
@@ -128,6 +134,7 @@ def queue_process():
                 if len(instance_status) > 0:
                     if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
                         LOGGER.critical("killing running gpus as no need")
+                        slack_message(f"killing running gpus as no need: {queues[queue_type]['in_process']}")
                         for instance in instance_status:
                             is_any_torch_running = instance["is_any_torch_running"]
                             is_torch_responding = instance["is_torch_responding"]
@@ -313,6 +320,7 @@ def start_compute_preementable(instance_name, queue_type):
 
         name = instance_name + str(idx)
         log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
+        slack_message(log)
         email_content += log + "\r\n"
         LOGGER.critical(log)
         start_compute(name, zone["name"], queue_type)
@@ -321,6 +329,7 @@ def start_compute_preementable(instance_name, queue_type):
         if len(instance_status) > 0:
             email_content += "gpu started so breaking out " + name + "\r\n"
             LOGGER.critical("gpu started so breaking out")
+            slack_message("gpu started so breaking out %s", name)
             started_instance += 1
             if started_instance >= max_instances_to_run_together:
                 email_content += "ran max instances to breaking out" + "\r\n"
@@ -330,6 +339,7 @@ def start_compute_preementable(instance_name, queue_type):
                 LOGGER.critical("not breaking out")
                 break
         if idx > max_attemps:
+            slack_message("max attempts reached to start so breaking out")
             LOGGER.critical("max attempts reached to start so breaking out")
             break
 
@@ -400,7 +410,7 @@ def delete_instance(instance_name, zone, reason):
 
     try:
         LOGGER.critical(" deleting instance")
-
+        slack_message("deleting instance")
         
 
         result = subprocess.call(shlex.split(
@@ -413,15 +423,18 @@ def delete_instance(instance_name, zone, reason):
 
         print(result)
 
+        
         if result.stdout and len(result.stdout) > 0:
             LOGGER.critical("stdout %s", result.stdout)
             email_content = result.stdout
 
         sendEmail(email_subject, email_content)
+        
         return True
     except Exception as e:
         LOGGER.critical("YYY %s", e)
         email_content = str(e)
+        slack_message(str(e))
         sendEmail(email_subject, email_content)
         return False
 
@@ -432,6 +445,15 @@ checkin_score_scheduler.add_job(
     queue_process, trigger='interval', seconds=1 * 60)
 checkin_score_scheduler.start()
 
+
+from slack import WebClient
+slack_web_client = WebClient(token='xoxb-98246795219-K2wljPXhhowEJoiT1Gua72C7')
+
+def slack_message(message):
+    slack_web_client.chat_postMessage(channel="product_recruit", 
+                text=message, username='GPUCloud',
+                icon_emoji=':robot_face:')
+    
 
 def sendEmail(subject, content):
     
