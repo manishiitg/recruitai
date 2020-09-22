@@ -96,10 +96,36 @@ def process(nertoparse, tagger):
                     for entity in sentence.get_spans('ner'):
                         logger.debug(entity)
 
+
+                    tag_dict = sentence.to_dict(tag_type='ner')
+                    new_tag_dict = {
+                        'text' : tag_dict["text"],
+                        'entities' : []
+                    }
+                    for entity in tag_dict["entities"]:
+                        new_labels = []
+                        if 'labels' in entity:
+                            labels = entity["labels"]
+                            for label in labels:
+                                tag = label.to_dict()["value"]
+                                confidence = label.to_dict()["confidence"]
+                            
+                                entity["type"] = tag
+                                entity["confidence"] = confidence
+                                break
+
+                            for label in labels:
+                                new_labels.append(label.to_dict())
+
+                            
+
+                        entity['labels'] = new_labels
+                        new_tag_dict["entities"].append(entity)
+                            
                     ner.append({
                         "line": line,
                         "nerline": str(sentence.to_tagged_string()),
-                        "entity": sentence.to_dict(tag_type='ner'),
+                        "entity": new_tag_dict,
                         "lineData": lineData,
                         "contentIdx": contentIdx
                     })
