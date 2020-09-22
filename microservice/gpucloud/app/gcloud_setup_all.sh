@@ -170,4 +170,3 @@ sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-pictu
 sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d --scale=resumegpu=2 --scale=picturegpu=1 --scale=summarygpu=2
 sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d --scale=resumegpu=2 --scale=picturegpu=1 --scale=summarygpu=2
 sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d --scale=resumegpu=2 --scale=picturegpu=1 --scale=summarygpu=2
-sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d --scale=resumegpu=2 --scale=picturegpu=1 --scale=summarygpu=2
