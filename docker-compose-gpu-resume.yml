@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     resumemqgpu:
-        image: recruitai/resumemq:latest
+        # image: recruitai/resumemq:latest
         build:
             dockerfile: Dockerfile.gpu
             context: microservice/resume
@@ -10,7 +10,7 @@ services:
             - capabilities:
                 - gpu
         volumes:
-            - ./pretrained:/workspace/pretrained:ro
+            # - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app       
             - ./home/jupyter/.cache:/root/.cache      
