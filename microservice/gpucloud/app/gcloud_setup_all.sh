@@ -133,24 +133,39 @@ sudo mkdir -p /var/log/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull # this is not working, this picks up cpu instead cpu
-sudo docker-compose -f docker-compose-cpu-all.yml up -d
+# sudo docker-compose -f docker-compose-cpu-all.yml pull # this is not working, this picks up cpu instead cpu
+# sudo docker-compose -f docker-compose-cpu-all.yml up -d
 
 sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-sudo docker-compose -f docker-compose-gpu-all.yml build --parallel --no-cache 
+# sudo docker-compose -f docker-compose-gpu-all.yml build --parallel --no-cache 
 
-sudo docker-compose -f docker-compose-cpu-all.yml stop
-sudo docker-compose -f docker-compose-cpu-all.yml kill
+# sudo docker-compose -f docker-compose-cpu-all.yml stop
+# sudo docker-compose -f docker-compose-cpu-all.yml kill
 
-# sudo docker-compose -f docker-compose-gpu-all.yml push
-sudo docker-compose -f docker-compose-gpu-all.yml up -d
+# # sudo docker-compose -f docker-compose-gpu-all.yml push
+# sudo docker-compose -f docker-compose-gpu-all.yml up -d
 
 
 
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
-sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
-# sleep 600s # not working due to perission issue right now 
-# gcloud --quiet compute instances delete $NAME --zone=$ZONE
+# sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+# sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+# sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+# sudo docker-compose -f docker-compose-gpu-all.yml up -d --scale=summarygpu=2 --scale=picturegpu=2
+
+
+sudo docker-compose -f docker-compose-gpu-summary.yml build
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=2
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=2
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=2
+
+sudo docker-compose -f docker-compose-gpu-picture.yml build
+sudo docker-compose -f docker-compose-gpu-picture.yml up -d
+sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picture=2
+
+sudo docker-compose -f docker-compose-gpu-resume.yml build
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d --scale=picture=2
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d --scale=picture=2
