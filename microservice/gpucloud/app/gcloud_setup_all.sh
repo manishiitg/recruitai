@@ -156,14 +156,14 @@ sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
+# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
+# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
+# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=2
 
 sudo docker-compose -f docker-compose-gpu-picture.yml build
 sudo docker-compose -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up up -d
-sudo docker-compose -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up up -d --scale=picturegpu=2 --scale=summarygpu=2
-sudo docker-compose -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up up -d --scale=picturegpu=2 --scale=summarygpu=2
+# sudo docker-compose -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up up -d --scale=picturegpu=2 --scale=summarygpu=2
+# sudo docker-compose -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up up -d --scale=picturegpu=2 --scale=summarygpu=2
 
 sudo docker-compose -f docker-compose-gpu-resume.yml build
 sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d
