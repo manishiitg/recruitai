@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sleep 120s  # need to wait for nvidia drives to install else it fails
+sleep 60s  # need to wait for nvidia drives to install else it fails
 
 sudo su
 
@@ -129,7 +129,7 @@ sudo mkdir -p /var/log/recruitai
 
 ==========================
 
-# sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 
 cat my_password.txt | docker login --username recruitai --pasword-stdin
