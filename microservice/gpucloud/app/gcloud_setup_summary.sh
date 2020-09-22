@@ -134,9 +134,9 @@ sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
-# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
-# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
-# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summary=3
 
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
