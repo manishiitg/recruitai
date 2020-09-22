@@ -169,7 +169,7 @@ services:
         build: microservice/resume
         
         volumes:
-            - ./pretrained:/workspace/pretrained:ro
+            # - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/resume/app:/workspace/app            
         environment:
