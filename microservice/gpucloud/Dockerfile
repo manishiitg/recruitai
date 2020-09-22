@@ -48,6 +48,6 @@ RUN  pip install --upgrade google-api-python-client
 
 RUN pip install apscheduler
 RUN pip install sendgrid
-
+RUN pip install slackclient
 
 CMD ["/usr/bin/supervisord"]
