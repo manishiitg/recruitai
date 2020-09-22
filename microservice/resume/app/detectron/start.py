@@ -389,7 +389,7 @@ def loadTrainedModel():
     # Find a model from detectron2's model zoo. You can either use the https://dl.fbaipublicfiles.... url, or use the detectron2:// shorthand
     # cfg.MODEL.WEIGHTS = "resnext101_32x8d/model_final_trimmed.pth"
     # cfg.MODEL.WEIGHTS = os.path.join("pretrained/detectron3_5000/model_final.pth")
-    cfg.MODEL.WEIGHTS = os.path.join("detectron4_5000_fpn/model_final.pth")
+    cfg.MODEL.WEIGHTS = os.path.join("/workspace/detectron4_5000_fpn/detectron4_5000_fpn/model_final.pth")
     
     cfg.MODEL.DEVICE = device
     predictor = DefaultPredictor(cfg)
