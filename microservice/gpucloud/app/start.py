@@ -333,7 +333,7 @@ def start_compute_preementable(instance_name, queue_type):
 
             email_content += "gpu started so breaking out " + name + "\r\n"
             LOGGER.critical("gpu started so breaking out")
-            slack_message("gpu started so breaking out %s", name)
+            slack_message(f"gpu started so breaking out {name}")
             started_instance += 1
             if started_instance >= max_instances_to_run_together:
                 email_content += "ran max instances to breaking out" + "\r\n"
@@ -470,6 +470,6 @@ def sendEmail(subject, content):
     content = Content("text/plain", content)
     mail = Mail(from_email, to_email, subject, content)
     response = sg.client.mail.send.post(request_body=mail.get())
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
+    # print(response.status_code)
+    # print(response.body)
+    # print(response.headers)
