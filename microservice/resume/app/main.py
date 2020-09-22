@@ -396,6 +396,15 @@ class TaskQueue(object):
 
                 return
         
+        db = initDB(account_name, account_config)
+        count = db.emailStored.count({
+            "_id" : ObjectId(message["mongoid"])
+        })
+
+        if count == 0:
+            LOGGER.critical("candidate not found in db %s", message["mongoid"])
+            return self.acknowledge_message(delivery_tag)
+            
         is_cache = False
         if r.exists(key) and False: # turning of cache because testing with ai models
             ret = r.get(key)
@@ -749,11 +758,16 @@ from app.detectron.start import loadTrainedModel
 from app.cvlinepredict.start import loadModel
 from app.ner.start import loadModel as loadModelTagger
 
+import subprocess
 def main():
+    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
+                             'gs://general_ai_works/recruit-tags-flair-fasttext_latest', '/workspace/recruit-tags-flair-fasttext'], stdout=subprocess.PIPE)
+
+    print(result)
+
     loadTrainedModel()
-    loadModel()
+    # loadModel()
     loadModelTagger()
-    
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
