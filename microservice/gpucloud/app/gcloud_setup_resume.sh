@@ -114,7 +114,7 @@ export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/ins
 
 
 # sudo /opt/deeplearning/install-driver.sh
-
+# https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#ubuntu-driver-steps
 
 ########################
 
@@ -129,13 +129,14 @@ sudo mkdir -p /var/log/recruitai
 
 ==========================
 
+
 sudo docker pull pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
 
-sudo docker-compose -f docker-compose-gpu-picture.yml build
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picturegpu=4
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picturegpu=4
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picturegpu=4
-sudo docker-compose -f docker-compose-gpu-picture.yml up -d --scale=picturegpu=4
+sudo docker-compose -f docker-compose-gpu-resume.yml build
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d --scale=resumegpu=3
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d --scale=resumegpu=3
+sudo docker-compose -f docker-compose-gpu-resume.yml up -d --scale=resumegpu=3
+
 # sleep 600s # not working due to perission issue right now 
 # gcloud --quiet compute instances delete $NAME --zone=$ZONE
