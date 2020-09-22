@@ -29,7 +29,7 @@ RUN npm --version
 RUN npm install -g pdf-text-extract
 
 
-RUN pip install numpy opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy[speedup] pytest flair==0.3.1
+RUN pip install numpy opencv-python pdfminer.six pdf2image tesserocr fuzzywuzzy[speedup] pytest flair
 # RUN pip install -r requirements.txt
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
@@ -56,7 +56,7 @@ RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
-RUN pip install transformers==2.5.0 beautifulsoup4 redis pymongo
+RUN pip install transformers beautifulsoup4 redis pymongo
 
 RUN apt-get install default-jdk -y
 # ADD app /workspace/app, using volume instead
