@@ -102,7 +102,7 @@ def queue_process():
                                             "some wrong majorly so deleting instance %s as time passed %s", running_instance_name, time_passed)
                                         delete_instance(
                                             running_instance_name, running_instance_zone, "vm not responding even after " + str(max_time_passed))
-                                        del running_instance_check[running_instance_name]
+                                        # del running_instance_check[running_instance_name]
 
                                 else:
                                     LOGGER.critical(
