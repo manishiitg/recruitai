@@ -439,8 +439,20 @@ def check_ai_missing_data(account_name, account_config):
                         if "job_profile_id" in row:
                             if len(row["job_profile_id"]) > 0:
                                 job_profile_id = row["job_profile_id"]
-                                skills = job_criteria_map[job_profile_id]["skills"]
-                                meta["criteria"] = job_criteria_map[job_profile_id]["criteria"]
+
+                                if job_profile_id in job_criteria_map:
+    
+                                    if "skills" in job_criteria_map[job_profile_id]:
+                                        skills = job_criteria_map[job_profile_id]["skills"]
+                                    else:
+                                        skills = []
+                                    
+                                    meta["criteria"] = job_criteria_map[job_profile_id]["criteria"]
+                                else:
+                                    skills = []
+                                    meta["criteria"] = {}
+
+                                
                             else:
                                 skills = []
 
