@@ -405,6 +405,8 @@ class TaskQueue(object):
             LOGGER.critical("candidate not found in db %s", message["mongoid"])
             return self.acknowledge_message(delivery_tag)
             
+        start_time = time.time()
+
         is_cache = False
         if r.exists(key) and False: # turning of cache because testing with ai models
             ret = r.get(key)
@@ -574,7 +576,7 @@ class TaskQueue(object):
 
             self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
 
-            
+        LOGGER.critical("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ total time taken %s", (time.time() - start_time))    
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
