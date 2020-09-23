@@ -117,7 +117,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
     combinedCompressedContent[fileIdx] = []
 
-    logger.critical(filestoparse[fileIdx])
+    logger.info(filestoparse[fileIdx])
     # if filestoparse[fileIdx]["id"] != -1:
     #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, { "$set" : { "parsed" : True } })
     
@@ -125,10 +125,10 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     cv = shutil.copy(filestoparse[fileIdx]["file"],  inputDir)  
 
     cv = os.path.join(inputDir , os.path.basename(filestoparse[fileIdx]["file"]))
-    logger.critical("file path after copy %s", cv)
+    logger.info("file path after copy %s", cv)
     
     if not os.path.exists(cv):
-      logger.critical("file doesn't exist %s" , cv)
+      logger.info("file doesn't exist %s" , cv)
 
     logger.critical("reading cv %s", cv)
 
@@ -140,12 +140,12 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     cvfilename = ''.join(e for e in filename if e.isalnum())  + file_extension
     # try:
     # copy cv to output directory after renaming it
-    logger.critical("final path %s" , os.path.join(basePath,cvfilename))
+    logger.info("final path %s" , os.path.join(basePath,cvfilename))
     cv = shutil.copy(cv,  os.path.join(basePath,cvfilename))  
     # except:
     #   pass
 
-    logger.critical("final file name %s" , cv)
+    logger.info("final file name %s" , cv)
     output_dir = os.path.join(basePath,''.join(e for e in basecv if e.isalnum()))
     # os.remove()
     shutil.rmtree(output_dir,ignore_errors = True)
@@ -179,7 +179,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       start_time = time.time()
       
       if p is None:
-        logger.critical("if not predictions found we are breaking out")
+        logger.info("if not predictions found we are breaking out")
         break
 
 
@@ -252,24 +252,24 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         continue
       except Exception as e:
         
-        logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , filestoparse[fileIdx]["id"])
+        logger.info("general exception in trying nodejs text cv extration %s %s " , str(e) , filestoparse[fileIdx]["id"])
         x = subprocess.check_output(['pdf-text-extract ' + cv], shell=True, timeout=60)
         x = x.decode("utf-8") 
         # x = re.sub(' +', ' ', x)
-        logger.critical(x)
+        logger.info(x)
         start = "[ '"
         end = "' ]"
 
         x = x.replace(start, "")
         x = x.replace(end, "")
         pages_data_extract = x.split("',")
-        logger.critical(len(pages_data_extract))
-        logger.critical(pages_data_extract)
-        logger.critical(cvpage)
+        logger.info(len(pages_data_extract))
+        logger.info(pages_data_extract)
+        logger.info(cvpage)
         content = pages_data_extract[cvpage-1]
         
 
-      logger.critical(content)
+      logger.info(content)
 
       page_contents.append(content)
 
@@ -295,7 +295,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       start_time = time.time()
 
       logger.debug(compressedStructuredContent)
-      logger.critical("length of compressed content %s" , len(compressedStructuredContent))
+      logger.info("length of compressed content %s" , len(compressedStructuredContent))
 
       # if filestoparse[fileIdx]["id"] != -1:
       #   mongo.db.cvparsingsample.update_one({"_id" : filestoparse[fileIdx]["id"]}, 
@@ -327,7 +327,7 @@ def uploadToGcloud(basePath,basecv, account_name, account_config):
   RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
   #  -n
   x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath,''.join(e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
-  logger.critical(x)
+  logger.info(x)
 
 def cleanContent(content , cvpage , jsonOutput):
   
@@ -353,14 +353,14 @@ def cleanContent(content , cvpage , jsonOutput):
         line = " ".join(newwords)
         cleanLineData.append(line)
 
-  logger.critical("length of clean data %s", len(cleanLineData))
+  logger.info("length of clean data %s", len(cleanLineData))
   
   if len(cleanLineData) < 3:
     if cvpage > 1:
-      logger.critical("this might be empty pages. we should stop here...")
+      logger.info("this might be empty pages. we should stop here...")
       # right now not doing this.... its risky and not neeed
     # else:
-    logger.critical("very very few lines??? %s", len(cleanLineData))
+    logger.info("very very few lines??? %s", len(cleanLineData))
     logger.debug("this means unable to read from cv properly do to rare issues. in that case need to take data from image itself.")
     cleanLineData = []
     for row in jsonOutput:

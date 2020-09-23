@@ -82,18 +82,18 @@ def predict(text):
         # print(preds)
 
         
-        logger.critical("===================")
-        logger.critical(encoded.original_str)
+        logger.info("===================")
+        logger.info(encoded.original_str)
         
         prediction = [label_list[pred_index] , str(probablity[pred_index])]
 
         if len(final_preds) > 1:
             for (p, label) in final_preds:
-                logger.critical("predicted %s with probablity %s", label , p)
+                logger.info("predicted %s with probablity %s", label , p)
         else:
-            logger.critical(" %s = = %s", label_list[pred_index] , probablity[pred_index])
+            logger.info(" %s = = %s", label_list[pred_index] , probablity[pred_index])
         
-        logger.critical("===================")
+        logger.info("===================")
     
     return prediction
         
@@ -137,7 +137,7 @@ def loadModel():
 def loadTokenizer():
     global sentPiecetokenizer
     if not sentPiecetokenizer:
-        logger.critical("loading tokernizer from path %s", TOKENIZER_PATH)
+        logger.info("loading tokernizer from path %s", TOKENIZER_PATH)
         vocab = os.path.join(TOKENIZER_PATH, "tokenzier.txt-vocab.json")
         merges = os.path.join(TOKENIZER_PATH, "tokenzier.txt-merges.txt")
 
