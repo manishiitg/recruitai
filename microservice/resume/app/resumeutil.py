@@ -121,7 +121,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         finalLines = []
         for page in response:
             for pagerow in page["compressedStructuredContent"]:
-                logger.critical(pagerow)
+                logger.info(pagerow)
                 finalLines.append(pagerow["line"])
 
         if mongoid:
@@ -248,7 +248,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         combinData["newCompressedStructuredContent"] = newCompressedStructuredContent
 
-        logger.critical("full resume parsing completed %s", filename)
+        logger.info("full resume parsing completed %s", filename)
         ret = {
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
