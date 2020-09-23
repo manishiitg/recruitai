@@ -143,6 +143,7 @@ def queue_process():
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
                                                 type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                             if created_at > min_run_gpu * 60:
+                                slack_message("deleting instance, work completed")
                                 delete_instance(running_instance_name,
                                                 running_instance_zone, "work completed")
                                 if running_instance_name in running_instance_check:
