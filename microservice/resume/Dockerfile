@@ -61,6 +61,6 @@ RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
-RUN mkdir /workspace/recruit-tags-flair-fasttext
+RUN mkdir /workspace/recruit-tags-flair-roberta-word2vec
 RUN mkdir /workspace/detectron4_5000_fpn
 CMD ["/usr/bin/supervisord"]
