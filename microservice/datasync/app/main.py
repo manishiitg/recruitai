@@ -49,9 +49,7 @@ class TaskQueue(object):
         self._url = amqp_url
         self._consuming = False
         self.threads = []
-        # In production, experiment with higher prefetch values
-        # for higher consumer throughput
-        self._prefetch_count = 10
+        self._prefetch_count = 1 # we have global variables. if we have multipel threads this can cause problems
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -373,7 +371,7 @@ class TaskQueue(object):
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        LOGGER.critical("completed processing")
+        LOGGER.critical("$$$$$$$$$$$$$$$$$$$$$$$$completed processing")
         self.acknowledge_message(delivery_tag)
 
 
