@@ -361,7 +361,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 # if item[1]["job_profile_id"] == "5ea68456a588f5003ac3db32":
                 #     logger.critical("seqqqqq %s tag id %s", sequence, item[1]["tag_id"])
                 
-                return sequence * 1
+                return sequence * -1
 
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
@@ -389,7 +389,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 
                 # logger.critical(float(item[1]["sequence"]))
 
-                return float(item[1]["sequence"])  * 1
+                return float(item[1]["sequence"])  * -1
                 # return (item[1]["email_timestamp"]) * -1
 
 
@@ -589,7 +589,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 return -1 
 
             # logger.critical(float(item[1]["sequence"]))
-            return float(item["sequence"])  * -1
+            return float(item["sequence"])  * 1
 
         logger.critical("generating response..")
         for tag in tag_map:
