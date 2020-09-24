@@ -2,7 +2,7 @@ version: '3.8'
 
 services:    
     
-    resumemqgpu:
+    resumegpu:
         # image: recruitai/resumemq:latest
         build:
             dockerfile: Dockerfile.gpu
