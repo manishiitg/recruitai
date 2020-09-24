@@ -94,7 +94,7 @@ def getSampleData(mongoid, account_name, account_config):
     db = initDB(account_name, account_config)    
     r = connect_redis(account_name, account_config)
 
-    logger.info("getting sample for %s", mongoid)
+    logger.critical("getting sample for %s", mongoid)
     data = None
     if "all" in mongoid:
         mongoid = mongoid.replace("all:", "")
@@ -106,20 +106,20 @@ def getSampleData(mongoid, account_name, account_config):
 
         
         if r.exists("job_" + mongoid):
-            logger.info("data from redis")
+            logger.critical("data from redis")
             data = r.get("job_" + mongoid)
-            # logger.info("data from redis %s", data)
+            # logger.critical("data from redis %s", data)
             dataMap = json.loads(data)
             data = []
             for key in dataMap:
                 data.append(dataMap[key])
                 
-            logger.info("candidate full data found %s", len(data))
+            logger.critical("candidate full data found %s", len(data))
         else:
             
 
-            logger.info("final mongo id %s", mongoid)
-            logger.info("skip %s", skip)
+            logger.critical("final mongo id %s", mongoid)
+            logger.critical("skip %s", skip)
             ret = db.emailStored.find({ "job_profile_id": mongoid, "cvParsedInfo.debug" : {"$exists" : True} } , {"cvParsedInfo":1, "_id" : 1})
             jobMap = []
             
@@ -137,11 +137,11 @@ def getSampleData(mongoid, account_name, account_config):
         data = []
         for mid in mongoid:
             if r.exists(mid):
-                logger.info("data from redis")
+                logger.critical("data from redis")
                 row = r.get(mid)
                 data.append(json.loads(row))
             else:
-                logger.info("data from mongo")
+                logger.critical("data from mongo")
                 row = db.emailStored.find_one({ 
                     "_id" : ObjectId(mid)
                 })
@@ -152,11 +152,11 @@ def getSampleData(mongoid, account_name, account_config):
             
     else:
         if r.exists(mongoid):
-            logger.info("data from redis")
+            logger.critical("data from redis")
             row = json.loads(r.get(mongoid))
             data = [row]
         else:
-            logger.info("data from mongo")
+            logger.critical("data from mongo")
             row = db.emailStored.find_one({ 
                 "_id" : ObjectId(mongoid)
             })
@@ -165,7 +165,7 @@ def getSampleData(mongoid, account_name, account_config):
                 data = [row]
                 r.set(mongoid, json.dumps(row, default=str))
 
-    logger.info("processing data line %s", len(data))
+    logger.critical("processing data line %s", len(data))
 
     return data
 
@@ -208,7 +208,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
         if type(criteria[cri]) is dict and "weight" in criteria[cri]:
             weight = criteria[cri]["weight"]
             debug_str = "criteria {} weight {}".format(cri,  weight/total_weight  * max_score)
-            logger.info(debug_str)
+            logger.critical(debug_str)
             full_debug.append(debug_str)
 
     if row:
@@ -229,7 +229,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
         candidate_score += edu_score
         full_debug.extend(debug)
 
-    logger.info("final candidate score %s", candidate_score)
+    logger.critical("final candidate score %s", candidate_score)
 
     if updated_db:
         db.emailStored.update_one({
@@ -253,7 +253,7 @@ def getExpScore(criteria, row, total_weight, max_score):
     debug = []
     
     if "experiance" not in criteria:
-        logger.info("experiance not found"
+        logger.critical("experiance not found")
         debug.append("experiance not found")
         return candidate_score, debug
 
@@ -261,7 +261,7 @@ def getExpScore(criteria, row, total_weight, max_score):
         criteria["experiance"]['weight'] = 0
 
     if criteria["experiance"]["weight"] > 0:
-        logger.info("Work experiance critera %s", json.dumps(criteria["experiance"], indent=True))
+        logger.critical("Work experiance critera %s", json.dumps(criteria["experiance"], indent=True))
         debug.append("Work Experiance Criteria %s" % json.dumps(criteria["experiance"], indent=True))
         if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             if "ExperianceYears" in row["cvParsedInfo"]["finalEntity"]:
@@ -269,7 +269,7 @@ def getExpScore(criteria, row, total_weight, max_score):
                 days, _, _ =  parse_experiance_years(ExperianceYears["obj"])
                                 
                 debug_str = "candidate experiance year {} and parsed experiance {}".format(ExperianceYears, days)
-                logger.info(debug_str)
+                logger.critical(debug_str)
                 debug.append(debug_str)
 
                 # exp = criteria["experiance"]
@@ -279,7 +279,7 @@ def getExpScore(criteria, row, total_weight, max_score):
                         total_exp_weight += exp["weight"]
 
                 debug_str = "experiance weight {}".format(total_exp_weight)
-                logger.info(debug_str)
+                logger.critical(debug_str)
                 debug.append(debug_str)
 
                 if total_exp_weight > 0:
@@ -287,36 +287,36 @@ def getExpScore(criteria, row, total_weight, max_score):
                         weight = exp["weight"]
                         if days >= exp["min"] and days < exp["max"]:
                             debug_str = "exp criteria match min days {} max days {} weight {}".format(exp["min"], exp["max"], exp["weight"]) 
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
 
                             exp_score = (exp["weight"] / total_exp_weight)  * max_score /total_weight
                             candidate_score += exp_score
 
                             debug_str = "exp matched score {}".format(exp_score)
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
 
                             debug_str = "exp matched total candidate score {}".format(candidate_score)
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
 
                         else:
                             debug_str = "exp not matched for min exp {} max exp {}".format(exp["min"], exp["max"]) 
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
             else:
                 debug_str = "candidate does not have any experiance" 
-                logger.info(debug_str)
+                logger.critical(debug_str)
                 debug.append(debug_str)        
         else:
             debug_str = "not ai data found" 
-            logger.info(debug_str)
+            logger.critical(debug_str)
             debug.append(debug_str)      
 
     else:
         debug_str = "experiance criteria not weight is 0" 
-        logger.info(debug_str)
+        logger.critical(debug_str)
         debug.append(debug_str)
 
     return candidate_score, debug
@@ -327,7 +327,7 @@ def getGenderScore(criteria, row, total_weight, max_score):
     debug = []
     if "gender" not in criteria:
         debug_str = "gender not found"
-        logger.info(debug_str)
+        logger.critical(debug_str)
         debug.append(debug_str)
         return candidate_score, debug
 
@@ -336,7 +336,7 @@ def getGenderScore(criteria, row, total_weight, max_score):
         
     if criteria["gender"]["weight"] > 0:
         debug_str = "Gender Score Criteria {}".format(json.dumps(criteria["gender"], indent=True))
-        logger.info(debug_str)
+        logger.critical(debug_str)
         debug.append(debug_str)
         gender = ""
         if "cvData" in row and row["cvData"]:
@@ -351,10 +351,10 @@ def getGenderScore(criteria, row, total_weight, max_score):
 
         if gender == criteria["gender"]["value"].lower():
             candidate_score += criteria["gender"]["weight"]/total_weight  * max_score
-            logger.info("gender matched candidate score %s", candidate_score)
+            logger.critical("gender matched candidate score %s", candidate_score)
             debug.append("gender matched candidate score %s" % candidate_score)
         else:
-            logger.info("gender not matched %s", gender)
+            logger.critical("gender not matched %s", gender)
             debug.append("gender not matched %s" % gender)
 
     return candidate_score, debug
@@ -372,7 +372,7 @@ def getEducationScore(criteria, row, total_weight, max_score):
 
     if criteria["education"]["weight"] > 0:
         debug_str = "Education Score Criteria {}".format(json.dumps(criteria["education"], indent=True))
-        logger.info(debug_str)
+        logger.critical(debug_str)
         debug.append(debug_str)
         EducationDegree = []
         if "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
@@ -390,7 +390,7 @@ def getEducationScore(criteria, row, total_weight, max_score):
         for edu in EducationDegree:
             final_course = matchCourse(edu)
             debug_str = "final course found {} for ner {} ".format(final_course, edu)
-            logger.info(debug_str)
+            logger.critical(debug_str)
             debug.append(debug_str)
 
             if len(final_course) > 0:
@@ -421,15 +421,15 @@ def getEducationScore(criteria, row, total_weight, max_score):
                                 degreeMatch = True
 
                         if not found:
-                            logger.info("degree not found issue dgree: {} level: {}".format(degree, level))
+                            logger.critical("degree not found issue dgree: {} level: {}".format(degree, level))
                             
 
                         if degreeMatch:
                             candidate_score += (edu_criteria["weight"] / (total_degree_weight + total_course_weight) )/total_weight  * max_score
-                            logger.info("matched degeree candidate sore %s", candidate_score)
+                            logger.critical("matched degeree candidate sore %s", candidate_score)
                             debug.append("matched degeree candidate sore %s" % candidate_score)
                         else:
-                            logger.info("education degree not matching")
+                            logger.critical("education degree not matching")
                             debug.append("education degree not matching")
 
             for edu_criteria in criteria["education"]["values"]:
@@ -446,7 +446,7 @@ def getEducationScore(criteria, row, total_weight, max_score):
                         # if edu_criteria["value"] == full.split(":")[-1].lower():
                         if edu_criteria["value"] == full:
                             candidate_score += edu_criteria["weight"]/(total_degree_weight + total_course_weight) /total_weight  * max_score
-                            logger.info("course matched %s candidate score %s", edu_criteria["value"], candidate_score)
+                            logger.critical("course matched %s candidate score %s", edu_criteria["value"], candidate_score)
                             debug.append("course matched %s candidate score %s" % (edu_criteria["value"], candidate_score))
 
     return candidate_score, debug
@@ -461,7 +461,7 @@ def getSkillScore(criteria, row, total_weight, max_score):
         criteria["skills"]['weight'] = 0
 
     if criteria["skills"]["weight"] > 0:
-      logger.info("skill Score Criteria %s"  %  json.dumps(criteria["skills"], indent=True))
+      logger.critical("skill Score Criteria %s"  %  json.dumps(criteria["skills"], indent=True))
       debug.append("skill Score Criteria %s"  %  json.dumps(criteria["skills"], indent=True))
       values = criteria["skills"]["values"]
       total_value_weight = 0
@@ -488,7 +488,7 @@ def getSkillScore(criteria, row, total_weight, max_score):
                     skill_value = obj["value"]
                     found = False
                     for skill in score:
-                        logger.info("skill matching {} == {}".format(skill_value, skill))
+                        logger.critical("skill matching {} == {}".format(skill_value, skill))
                         if skill == skill_value or skill_value.replace("_","") == skill.replace("_","") or skill_value.replace(" ","") == skill.replace(" ",""):
                             found = True
                             max_dist = 0   
@@ -509,20 +509,20 @@ def getSkillScore(criteria, row, total_weight, max_score):
                         if found:
                             skillCandidateScore += max_dist * weight / total_value_weight
                             debug_str = "skill score skillCandidateScore {} max_dist {} value {}".format(skillCandidateScore , max_dist, skill_value)
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
                         else:
                             debug_str = "strange skill not found {}".format(skill_value)
-                            logger.info(debug_str)
+                            logger.critical(debug_str)
                             debug.append(debug_str)
 
       if skillCandidateScore > 0:
           candidate_score += skillCandidateScore *  criteria["skills"]["weight"]/total_weight * max_score
           debug_str = "candidate score updated {}".format(candidate_score)
-          logger.info(debug_str)
+          logger.critical(debug_str)
           debug.append(debug_str)
       else:
           debug.append("skill not matched")
-          logger.info("skill not matched")
+          logger.critical("skill not matched")
 
     return candidate_score, debug
