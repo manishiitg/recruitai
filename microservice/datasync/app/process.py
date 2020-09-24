@@ -142,7 +142,9 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
 
     for row in candidates:
         row["_id"] = str(row["_id"])
-        if not row["job_profile_id"]:
+        
+
+        if "job_profile_id" not in row or not row["job_profile_id"]:
             if row["_id"] in job_profile_data:
                 del job_profile_data[row["_id"]]
         else:
@@ -301,18 +303,33 @@ import copy
 dirtyMap = {}
 account_config_map = {}
 
+is_queue_process_running = False
+queue_running_count = 0
+
 def queue_process():
     global dirtyMap
+    global is_queue_process_running
+    global queue_running_count
 
+    queue_running_count += 1
+    if queue_running_count < 20:
+        if is_queue_process_running:
+            logger.critical("queue is already running...")
+            return
+
+    is_queue_process_running = True
+    
     localMap = copy.deepcopy(dirtyMap)
 
     for account_name in dirtyMap:
         dirtyMap[account_name] = {}
+    # this is causing issues with long run process. like full sync. full is running but in between dirtyMap gets empty
+    # so data is inconsistant
 
-    # logger.critical("checking dirty data %s" , localMap)
+    logger.critical("checking dirty data %s" , localMap)
     for account_name in localMap:
         r = connect_redis(account_name, account_config_map[account_name])
-        print(localMap[account_name].keys())
+        # print(localMap[account_name].keys())
         for key in localMap[account_name]:
 
             logger.critical("keyyyyyyyyyyyyyy %s", key)
@@ -322,6 +339,7 @@ def queue_process():
             if operations["redis_dirty"]:
                 r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
                 r.set(key + "_len", len(redisKeyMap[account_name][key]))
+                r.set(key + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
                 logger.critical("updated redis %s" , key)
 
                 if "classify_" in key:
@@ -358,10 +376,13 @@ def queue_process():
                         }, key, account_name, account_config_map[account_name])
 
                     
-                    
+            # del dirtyMap[account_name][key]        
 
-                logger.critical("job profile filter completed")
+            logger.critical("job profile filter completed")
 
+    logger.critical("#########################process queue completed")
+    is_queue_process_running = False
+    queue_running_count = 0
 
 def check_ai_missing_data(account_name, account_config):
 
@@ -478,7 +499,7 @@ def check_ai_missing_data(account_name, account_config):
     pass
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=5) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=2.5) #*2.5
 # checkin_score_scheduler.add_job(check_ai_missing_data, trigger='interval', seconds=60 * 60) 
 # this will be called from frontend as we don't have db information etc without frontend.
 
@@ -532,8 +553,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     #     return
 
     r = connect_redis(account_name, account_config)
+    local_dirtyMap = {}
+    local_dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
 
-    dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
 
     
 
@@ -598,16 +620,19 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             if "tag_id" not in doc:
                 doc["tag_id"] = ""
 
-            obj = {
-                'tag_id' : doc["tag_id"],
-                "job_profile_id" : doc['job_profile_id'],
-                "action" : "update_unique_cache",
-                "account_name" : account_name,
-                "account_config": account_config
-            }
+
+            r.set(doc['job_profile_id'] + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
+
+            # obj = {
+            #     'tag_id' : doc["tag_id"],
+            #     "job_profile_id" : doc['job_profile_id'],
+            #     "action" : "update_unique_cache",
+            #     "account_name" : account_name,
+            #     "account_config": account_config
+            # }
             # Thread(target=updateFilter, args=( obj , )).start()
             # 
-            updateFilter(obj)
+            # updateFilter(obj)
 
     elif findtype == "syncJobProfile":
         logger.critical("syncJobProfile")
@@ -650,7 +675,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         # r.flushdb()
         # this is wrong. this remove much more data like resume parsed information etc
         redisKeyMap[account_name] = {}
-        dirtyMap[account_name] = {}
+        local_dirtyMap[account_name] = {}
         for key in r.scan_iter(): #this takes time
             if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
                 logger.critical("delete from redis %s", key)
@@ -659,7 +684,6 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         ret = db.emailStored.find({ } , 
             {"body": 0, "cvParsedInfo.debug": 0}
         )
-        logger.critical("full completed db")
 
         isFilterUpdateNeeded = True
         # .sort([("sequence", -1),("updatedAt", -1)])
@@ -705,7 +729,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             job_data[row["_id"]] = row
             redisKeyMap[account_name][mapKey] = job_data
 
-            dirtyMap[account_name][mapKey] = {
+            local_dirtyMap[account_name][mapKey] = {
                 "filter_dirty" : True,
                 "redis_dirty" : True
             }
@@ -787,7 +811,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     job_profile_data = {}
 
                 # if row["_id"] in job_profile_data:
-                if not row["job_profile_id"]:
+                if not row["job_profile_id"] or len(row["job_profile_id"]) == 0:
                     del job_profile_data[row["_id"]]
                 else:
                     if "is_archieved" in row.keys():
@@ -803,16 +827,35 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 redisKeyMap[account_name][mapKey] = job_profile_data
 
                 if isFilterUpdateNeeded: 
-                    dirtyMap[account_name][mapKey] = {
+                    local_dirtyMap[account_name][mapKey] = {
                         "filter_dirty" : True,
                         "redis_dirty" : True
                     }
                 else:
-                    dirtyMap[account_name][mapKey] = {
+                    local_dirtyMap[account_name][mapKey] = {
                         "redis_dirty" : True,
                         "filter_dirty" : False
                     }
+            else:
+                # when we remove candidate from job profile id, then job_profile_id is not there in json
+                job_map = redisKeyMap[account_name]
+                
+                
+                for key in job_map:
+                    if "job_" in key:
+                        if isinstance(job_map[key], dict):
+                            if row["_id"] in job_map[key]:
+                                job_profile_data = job_map[key]
+                                del job_profile_data[row["_id"]]
+                                redisKeyMap[account_name][key] = job_map
+                                local_dirtyMap[account_name][key] = {
+                                    "redis_dirty" : True,
+                                    "filter_dirty" : True
+                                }
+                                logger.critical("candidate removed from job deleted %s", row["_id"])
+                                break
 
+                
             
             
             if "ex_job_profile" in row:
@@ -830,7 +873,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 candidate_data[row["_id"]] = row
                 redisKeyMap[account_name][mapKey] = candidate_data
-                dirtyMap[account_name][mapKey] = {
+                local_dirtyMap[account_name][mapKey] = {
                     "filter_dirty" : True,
                     "redis_dirty" : True
                 }
@@ -853,12 +896,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 redisKeyMap[account_name][mapKey] = candidate_data
 
                 if isFilterUpdateNeeded: 
-                    dirtyMap[account_name][mapKey] = {
+                    local_dirtyMap[account_name][mapKey] = {
                         "filter_dirty" : True,
                         "redis_dirty" : True
                     }
                 else:
-                    dirtyMap[account_name][mapKey] = {
+                    local_dirtyMap[account_name][mapKey] = {
                         "filter_dirty" : True,
                         "redis_dirty" : True
                     }
@@ -866,8 +909,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
     
 
-    logger.critical("here")
     if findtype == "full":
+        logger.critical("starting full sync")
 
         # r.set("full_data" , json.dumps(full_map , default=json_util.default))
         
@@ -882,7 +925,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             #     "account_config": account_config
             # })
             mapKey = "job_" + job_profile_id
-            dirtyMap[account_name][mapKey] = {
+            local_dirtyMap[account_name][mapKey] = {
                 "filter_dirty" : True,
                 "redis_dirty" : True
             }
@@ -901,7 +944,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # })
             mapKey = "classify_" + candidate_label
             redisKeyMap[account_name][mapKey] = candidate_map[candidate_label] 
-            dirtyMap[account_name][mapKey] = {
+            local_dirtyMap[account_name][mapKey] = {
                 "filter_dirty" : True,
                 "redis_dirty" : True
             }
@@ -913,10 +956,17 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         #     "fetch" : "full_data",
         #     "action" : "index"
         # })
-        logger.critical("full data completed %s", dirtyMap)
+        logger.critical("full data completed %s", local_dirtyMap)
 
     # for t in threads:
     #     t.join()
+
+    for account_name in local_dirtyMap:
+        if account_name not in dirtyMap:
+            dirtyMap[account_name] = {}
+            
+        for key in local_dirtyMap[account_name]:
+            dirtyMap[account_name][key] = local_dirtyMap[account_name][key]
 
 time_map = {}
 
@@ -969,14 +1019,19 @@ def addFilter(obj, key, account_name, account_config):
         if id not in time_map[obj["fetch"]]:
             time_map[obj["fetch"]][id] = time.time()
             logger.critical("added new fetch %s", id)
+            ignore = True
+            dirtyMap[account_name][key] = {
+                "filter_dirty" : True,
+                "redis_dirty" : False # True it was true before
+            }
         else:
             ctime = time_map[obj["fetch"]][id]
             logger.critical("time for add Filter %s",  time.time() - ctime )
-            if (time.time() - ctime) < 1 * 30:
+            if (time.time() - ctime) < 1 * 60:
                 ignore = True
                 dirtyMap[account_name][key] = {
                     "filter_dirty" : True,
-                    "redis_dirty" : True
+                    "redis_dirty" : False # True it was true before
                 }
                 # see we are setting directy map. this means it will again trigger for sure
                 logger.critical("ignoreed %s" , obj)
