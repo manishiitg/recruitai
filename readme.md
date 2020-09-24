@@ -25,6 +25,10 @@ python -m app.main
 
 http://144.76.110.170:5001/#/datasets
 
+redis access
+==========
+http://116.202.234.182:8081/
+
 To debug flask app
 ==================
 
