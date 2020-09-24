@@ -29,7 +29,7 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
-    logger.info(body)
+    logger.critical(body)
 
     account_name = None
     if "account_name" in body:
