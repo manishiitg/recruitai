@@ -37,10 +37,10 @@ def start(isTesting=False):
             # predict tags and print
             tagger.predict(sentence)
 
-            logger.critical(sentence.to_tagged_string())
+            logger.info(sentence.to_tagged_string())
 
             for entity in sentence.get_spans('ner'):
-                logger.critical(entity)
+                logger.info(entity)
                 entities.append(entity)
 
         return entities
