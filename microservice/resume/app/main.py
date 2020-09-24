@@ -763,7 +763,7 @@ from app.ner.start import loadModel as loadModelTagger
 import subprocess
 def main():
     result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
-                             'gs://general_ai_works/recruit-tags-flair-fasttext_latest', '/workspace/recruit-tags-flair-fasttext'], stdout=subprocess.PIPE)
+                             'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
 
     print(result)
 
