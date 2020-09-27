@@ -88,7 +88,7 @@ def process(nertoparse, tagger):
                         lineData["contentIdx"] = []
 
                     contentIdx = lineData["contentIdx"]
-                    sentence = Sentence(line)
+                    sentence = Sentence(line, use_tokenizer= False)
                     # predict tags and print
                     tagger.predict(sentence)
                     logger.debug(sentence.to_tagged_string())
