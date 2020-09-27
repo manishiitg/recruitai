@@ -47,7 +47,16 @@ def queue_process():
     last_process_running_time = time.time()
 
     min_process_to_start_gpu = 100
-    max_process_to_kill_gpu = 1
+    max_process_to_kill_gpu = 10
+
+    now = datetime.now()
+
+    print(now.hour)
+
+    if now.hour > 21 or now.hour < 8:
+        LOGGER.critical("its non working hours so will start gpu only if more than 500 process pending")
+        min_process_to_start_gpu = 500
+
 
     queues = get_queues()
 
@@ -131,8 +140,6 @@ def queue_process():
                                 len(instance_status))
                 if len(instance_status) > 0:
                     if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
-                        LOGGER.critical("killing running gpus as no need")
-                        slack_message(f"killing running gpus as no need: {queues[queue_type]['in_process']}")
                         for instance in instance_status:
                             is_any_torch_running = instance["is_any_torch_running"]
                             is_torch_responding = instance["is_torch_responding"]
@@ -143,6 +150,8 @@ def queue_process():
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
                                                 type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                             if created_at > min_run_gpu * 60:
+                                LOGGER.critical("killing running gpus as no need")
+                                slack_message(f"killing running gpus as no need: {queues[queue_type]['in_process']}")
                                 slack_message("deleting instance, work completed")
                                 delete_instance(running_instance_name,
                                                 running_instance_zone, "work completed")
@@ -445,10 +454,10 @@ def delete_instance(instance_name, zone, reason):
 
     
 
-checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(
-    queue_process, trigger='interval', seconds=1 * 60)
-checkin_score_scheduler.start()
+# checkin_score_scheduler = BackgroundScheduler()
+# checkin_score_scheduler.add_job(
+#     queue_process, trigger='interval', seconds=1 * 60)
+# checkin_score_scheduler.start()
 
 
 from slack import WebClient
