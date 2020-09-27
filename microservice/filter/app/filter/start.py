@@ -36,7 +36,7 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
             data = json.dumps(data)
         
         logger.critical("updating redis data for get speed up api")
-        r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
+        r.set(redisKey, data) #  , ex=1 * 60 * 60expire in 1hr automatic
         return data
     except Exception as e:
         logger.critical("error in api %s %s", url, str(e))
@@ -47,7 +47,7 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
 
 def general_api_speed_up(url, payload, access_token, account_name, account_config):
 
-    redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8')  ).hexdigest()
+    redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8') + access_token.encode('utf-8')  ).hexdigest()
     r = connect_redis(account_name, account_config)
     print("checking for redis key")
     if r.exists(redisKey):
@@ -233,8 +233,16 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     expire_time = time.time()
     if filter_type == "job_profile":
         expire_time = r.get("job_" + mongoid + "_time")
+        if expire_time == None:
+            expire_time = time.time() # i dont why this is getting set as None i.e expire time
+            r.set("job_" + mongoid + "_time", expire_time)
     else:
         expire_time = r.get("classify_" + mongoid + "_time")
+        if expire_time == None:
+            expire_time = time.time() # i dont why this is getting set as None i.e expire time
+            r.set("classify_" + mongoid + "_time", expire_time)
+
+    
 
     unique_cache_key = str(expire_time) + account_name +"_job_" + mongoid + "ft_" + filter_type + "p_" + str(page) + "l_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "t_" + str(hash(str(tags))) + "s_" + str(on_starred)
 
