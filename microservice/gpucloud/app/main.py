@@ -434,12 +434,13 @@ amqp_url = os.getenv('RABBIT_DB')
 #             self._reconnect_delay = 30
 #         return self._reconnect_delay
 
-
+import time 
 def main():
     
     
-    
-    queue_process()
+    while True:
+        queue_process()
+        time.sleep(60)
     # consumer = ReconnectingTaskQueue(amqp_url)
     # consumer.run()
     
