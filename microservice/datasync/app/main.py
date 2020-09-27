@@ -17,6 +17,7 @@ amqp_url = os.environ.get('RABBIT_DB')
 from app.scheduler import startSchedule
 
 import time
+from copy import deepcopy
 
 from app.process import process, syncJobProfileChange, classifyMoved, bulkDelete, bulkUpdate, bulkAdd, classifyJobMoved, check_ai_missing_data
 
@@ -297,7 +298,17 @@ class TaskQueue(object):
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         body = json.loads(body)
-        LOGGER.critical(json.dumps(body, indent=2))
+        if "doc" in body:
+            if "cvParsedInfo" in body['doc']:
+                body2 = deepcopy(body)
+                body2["doc"]["attachment"] = "...."
+                body2["doc"]['cvParsedInfo'] = "...."
+                body2["doc"]["candidateClassify"] = "...."
+                LOGGER.critical(json.dumps(body2, indent=2))
+            else:
+                LOGGER.critical(json.dumps(body, indent=2))
+        else:    
+            LOGGER.critical(json.dumps(body, indent=2))
 
         account_name = None
         if "account_name" in body:
