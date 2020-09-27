@@ -17,7 +17,7 @@ import os
 EXCHANGE = ""
 SERVER_QUEUE = "rpc.skill.queue"
 
-amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv('RABBIT_DB')
 
 from app.skillsword2vec.start import loadModel, loadGlobalModel, get_similar, vec_exists, get_start_match
 from app.statspublisher import sendMessage as updateStats
