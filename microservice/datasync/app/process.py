@@ -402,9 +402,12 @@ def check_ai_missing_data(account_name, account_config):
     logger.critical("check missing ai data")
 
     db = initDB(account_name, account_config)
-    ret = db.emailStored.find({ 
-            "cvParsedAI" : { "$exists" : False },
-            'check_ai_missing_data' : { "$exists" : False }
+    ret = db.emailStored.find({
+            "$or" : [
+                {"cvParsedAI" : { "$exists" : False }},
+                {"cvParsedAI.error" : { "$exists" : False }},
+            ], 
+            'check_ai_missing_data' : { "$exists" : True }
             # "attachment" : {  }
         },
         {"body": 0, "cvParsedInfo.debug": 0}
@@ -440,6 +443,13 @@ def check_ai_missing_data(account_name, account_config):
     for row in ret:
         
 
+        
+        if "email_timestamp" not in row:
+            continue
+        
+        if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
+            continue
+
         db.emailStored.update_one({
             "_id" : row["_id"]
         }, {
@@ -447,11 +457,6 @@ def check_ai_missing_data(account_name, account_config):
                 "check_ai_missing_data" : True
             }
         })
-        if "email_timestamp" not in row:
-            continue
-        
-        if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
-            continue
 
         logger.critical("found candidate %s", row["_id"])
         if "attachment" in row:
