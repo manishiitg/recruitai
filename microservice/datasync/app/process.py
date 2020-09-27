@@ -74,6 +74,7 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
     # r.set(from_key  , json.dumps(from_job_profile_data , default=json_util.default))
     # r.set(to_key  , json.dumps(to_job_profile_data , default=json_util.default))
+    queue_process(True)
 
 def classifyMoved(candidate_id, from_id, to_id, account_name, account_config):
     moveKey(candidate_id, "classify_" + from_id, "classify_" + to_id, account_name, account_config)
@@ -114,6 +115,7 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
         "filter_dirty" : True,
         "redis_dirty" : True
     }
+    queue_process(True)
 
 def bulkUpdate(candidates, job_profile_id, account_name, account_config):
     global dirtyMap
@@ -185,6 +187,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         "filter_dirty" : True,
         "redis_dirty" : True
     }
+    queue_process(True)
 
 
 
@@ -247,7 +250,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
                         "filter_dirty" : True,
                         "redis_dirty" : True
                     }
-
+    queue_process(True)
 
     
     
@@ -287,6 +290,7 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
                         "filter_dirty" : True,
                         "redis_dirty" : True
                     }
+    queue_process(True)
 
 
 # recentProcessList = {}
@@ -306,7 +310,8 @@ account_config_map = {}
 is_queue_process_running = False
 queue_running_count = 0
 
-def queue_process():
+def queue_process(is_direct = False):
+
     global dirtyMap
     global is_queue_process_running
     global queue_running_count
@@ -318,11 +323,12 @@ def queue_process():
             return
 
     is_queue_process_running = True
-    
-    localMap = copy.deepcopy(dirtyMap)
 
-    for account_name in dirtyMap:
-        dirtyMap[account_name] = {}
+    localMap = dirtyMap
+    # localMap = copy.deepcopy(dirtyMap)
+
+    # for account_name in dirtyMap:
+    #     dirtyMap[account_name] = {}
     # this is causing issues with long run process. like full sync. full is running but in between dirtyMap gets empty
     # so data is inconsistant
 
@@ -332,11 +338,11 @@ def queue_process():
         # print(localMap[account_name].keys())
         for key in localMap[account_name]:
 
-            logger.critical("keyyyyyyyyyyyyyy %s", key)
             operations = localMap[account_name][key]
-            logger.critical("updating redis %s" , key)
-            logger.critical("redis data len %s", len(redisKeyMap[account_name][key]))
             if operations["redis_dirty"]:
+                logger.critical("keyyyyyyyyyyyyyy %s", key)
+                logger.critical("updating redis %s" , key)
+                logger.critical("redis data len %s", len(redisKeyMap[account_name][key]))
                 r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
                 r.set(key + "_len", len(redisKeyMap[account_name][key]))
                 r.set(key + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
@@ -357,7 +363,9 @@ def queue_process():
                     # print(classify_list)
                     r.set("classify_list", json.dumps(classify_list))
 
+                dirtyMap[account_name][key]["redis_dirty"] = False  
             if operations["filter_dirty"]:
+                dirtyMap[account_name][key]["filter_dirty"] = False  
                 if "job_" in key:
                     addFilter({
                             "id" : key.replace("job_",""),
@@ -365,7 +373,7 @@ def queue_process():
                             "action" : "index",
                             "account_name" : account_name,
                             "account_config" : account_config_map[account_name]
-                        }, key, account_name, account_config_map[account_name])
+                        }, key, account_name, account_config_map[account_name] , is_direct)
                 elif "classify_" in key:
                     addFilter({
                             "id" : key.replace("classify_",""),
@@ -373,7 +381,7 @@ def queue_process():
                             "action" : "index",
                             "account_name" : account_name,
                             "account_config" : account_config_map[account_name]
-                        }, key, account_name, account_config_map[account_name])
+                        }, key, account_name, account_config_map[account_name], is_direct)
 
                     
             # del dirtyMap[account_name][key]        
@@ -383,6 +391,7 @@ def queue_process():
     logger.critical("#########################process queue completed")
     is_queue_process_running = False
     queue_running_count = 0
+    
 
 def check_ai_missing_data(account_name, account_config):
 
@@ -499,9 +508,13 @@ def check_ai_missing_data(account_name, account_config):
     pass
 
 checkin_score_scheduler = BackgroundScheduler()
-checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=2.5) #*2.5
+checkin_score_scheduler.add_job(queue_process, trigger='interval', seconds=1*60 * 1) 
+# 1min because now we are only updating files with this 
+
+#*2.5
 # checkin_score_scheduler.add_job(check_ai_missing_data, trigger='interval', seconds=60 * 60) 
 # this will be called from frontend as we don't have db information etc without frontend.
+# now this will process only filter only not actual redis data
 
 checkin_score_scheduler.start()
 
@@ -545,6 +558,10 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     global redisKeyMap
     global pastInfoMap
     global account_config_map
+    global is_queue_process_running
+    global queue_running_count
+
+    is_queue_process_running = True
 
 
     # if account_name != "devrecruit":
@@ -847,7 +864,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                             if row["_id"] in job_map[key]:
                                 job_profile_data = job_map[key]
                                 del job_profile_data[row["_id"]]
-                                redisKeyMap[account_name][key] = job_map
+                                redisKeyMap[account_name][key] = job_profile_data
                                 local_dirtyMap[account_name][key] = {
                                     "redis_dirty" : True,
                                     "filter_dirty" : True
@@ -968,6 +985,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         for key in local_dirtyMap[account_name]:
             dirtyMap[account_name][key] = local_dirtyMap[account_name][key]
 
+    logger.critical("######### process completed")
+    is_queue_process_running =  False
+    queue_process(True)
+
+
 time_map = {}
 
 def sendToSearchIndex(row, r, from_type, account_name, account_config):
@@ -1006,7 +1028,7 @@ def sendToSearchIndex(row, r, from_type, account_name, account_config):
             t.start()
             # this is getting slow...
 
-def addFilter(obj, key, account_name, account_config):
+def addFilter(obj, key, account_name, account_config, is_direct):
     global dirtyMap
     global time_map
     ignore = False
@@ -1027,7 +1049,7 @@ def addFilter(obj, key, account_name, account_config):
         else:
             ctime = time_map[obj["fetch"]][id]
             logger.critical("time for add Filter %s",  time.time() - ctime )
-            if (time.time() - ctime) < 1 * 60:
+            if (time.time() - ctime) < 1 * 60 or is_direct:
                 ignore = True
                 dirtyMap[account_name][key] = {
                     "filter_dirty" : True,
