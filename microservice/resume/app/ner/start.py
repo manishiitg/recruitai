@@ -32,7 +32,7 @@ def start(isTesting=False):
 
         entities = []
         for sent in sents:
-            sentence = Sentence(sent)
+            sentence = Sentence(sent, use_tokenizer=False)
 
             # predict tags and print
             tagger.predict(sentence)
