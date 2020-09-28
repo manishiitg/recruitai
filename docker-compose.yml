@@ -12,6 +12,7 @@ services:
             - '15672:15672'
         networks:
             - ai
+        restart: unless-stopped
 
 
     create_certs:
@@ -173,6 +174,7 @@ services:
             - redis
         networks:
             - ai
+        restart: unless-stopped
         
     resumemq:
         image: recruitai/resumemq:latest
