@@ -328,6 +328,9 @@ services:
             CRON_SCHEDULE: '0 0 * * *'
         networks:
             - ai
+        depends_on: 
+            - rabbitmq
+            - redis
 
     candidatemq:
         image: recruitai/candidatemq:latest
@@ -382,6 +385,9 @@ services:
             RABBIT_LOGIN: 'guest:guest'
             SENDGRID_API_KEY: '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'
         network_mode: host
+        depends_on: 
+            - rabbitmq
+            - redis
 
 volumes: 
     elasticsearch:
