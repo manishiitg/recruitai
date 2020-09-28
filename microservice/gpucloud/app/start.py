@@ -46,7 +46,7 @@ def queue_process():
     is_process_running = True
     last_process_running_time = time.time()
 
-    min_process_to_start_gpu = 100
+    min_process_to_start_gpu = 500
     max_process_to_kill_gpu = 10
 
     now = datetime.now()
@@ -55,10 +55,15 @@ def queue_process():
 
     if now.hour > 21 or now.hour < 8:
         LOGGER.critical("its non working hours so will start gpu only if more than 500 process pending")
-        min_process_to_start_gpu = 500
+        min_process_to_start_gpu = 1000
 
 
-    queues = get_queues()
+    try:
+        queues = get_queues()
+        # sometimes i restart rabbitmq and this crashes
+    except Exception as e:
+        return
+    
 
     for queue_type in ["summary", "picture", "resume", 'all']:
         if run_combined_gpu:
@@ -372,9 +377,9 @@ def start_compute(instance_name, zone, queue_type):
 
         # https://cloud.google.com/ai-platform/deep-learning-vm/docs/images
 
-        # pytorch-latest-gpu
+        # pytorch-latest-gpu # this is giving more errors with cuda docker
 
-        image_family = ["pytorch-latest-gpu", "common-cu101", "common-cu100"]
+        image_family = ["common-cu101", "common-cu100"]
 
         # sometimes nvidia randomly fails
         image_family_name = random.choice(image_family)
