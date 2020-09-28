@@ -120,15 +120,15 @@ services:
     #         - ai
 
 
-    label-studio-ner:
-        image: recruitai/ner:latest
-        build: ./label-studio/ner
-        ports:
-            - 8000:8080
-        volumes:
-            - ./label-studio/ner/project:/label-studio/ner
-        networks:
-            - ai
+    # label-studio-ner:
+    #     image: recruitai/ner:latest
+    #     build: ./label-studio/ner
+    #     ports:
+    #         - 8000:8080
+    #     volumes:
+    #         - ./label-studio/ner/project:/label-studio/ner
+    #     networks:
+    #         - ai
 
 
     redis:
