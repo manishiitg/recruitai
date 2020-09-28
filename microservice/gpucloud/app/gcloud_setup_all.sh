@@ -172,8 +172,10 @@ sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-pictu
 sudo docker-compose -f docker-compose-gpu-resume.yml -f docker-compose-gpu-picture.yml -f docker-compose-gpu-summary.yml up -d --scale=picturegpu=1 --scale=summarygpu=1 --scale=resumegpu=2 
 
 
-for i in 1 2 3 4 5 6 7 8 9 10
+for i in {1..50}
 do
-  sudo docker-compose -f docker-compose-gpu-all.yml restart
   sleep 1h
+  echo "restarting docker $i"
+  sudo docker-compose -f docker-compose-gpu-all.yml restart
+  
 done
