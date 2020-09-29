@@ -525,7 +525,14 @@ class ReconnectingTaskQueue(object):
 
 from app.picture.start import loadTrainedModel as loadPicModel
 
+import torch
 def main():
+    is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
+    if is_gpu_mandatory == 1:
+        if not torch.cuda.is_available():
+            LOGGER.critical("gpu is not there cannot start without it as it is mandatory")
+            return
+
     loadPicModel()
     
     consumer = ReconnectingTaskQueue(amqp_url)
