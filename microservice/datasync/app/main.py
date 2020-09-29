@@ -500,8 +500,9 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
+import time
 def main():
-    
+    time.sleep(5) # wait for rabbitmq etc to start
     startSchedule()
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
