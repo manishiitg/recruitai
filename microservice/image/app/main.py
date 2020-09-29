@@ -639,7 +639,7 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-
+import time
 def main():
     # account_name = 'rocketrecruit'
     # account_config = {
@@ -679,7 +679,8 @@ def main():
     #         "account_config": account_config
     #     })
     # just for testing something. code can be remove.d its of no use.
-
+    LOGGER.critical("waiting 10s to start")
+    time.sleep(10) # wait for rabbitmq etc to start
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
