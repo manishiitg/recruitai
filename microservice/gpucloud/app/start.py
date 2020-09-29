@@ -82,6 +82,30 @@ def queue_process():
                 instance_status = check_compute_running(type_instance_name)
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
+
+                if int(queues[queue_type]['in_process']) > 5000:
+                    if len(instance_status) <= 1:
+                        LOGGER.critical("need to start another gpu as more than 5k jobs pending")
+                        slack_message("need to start another gpu as more than 5k jobs pending" + str(queues[queue_type]['in_process']))
+                        start_compute_preementable(type_instance_name, queue_type , len(instance_status) + 1)
+                        
+                if len(instance_status) >= 1:
+                    if int(queues[queue_type]['in_process']) < 2000:
+                        instance = instance_status[-1]
+                        is_any_torch_running = instance["is_any_torch_running"]
+                        is_torch_responding = instance["is_torch_responding"]
+                        running_instance_name = instance["running_instance_name"]
+                        running_instance_zone = instance["zone"]
+                        created_at = instance['created_at']
+                        if created_at > min_run_gpu * 60:
+                            LOGGER.critical("killing second running gpus as no need")
+                            slack_message(f"killing second running gpus as no need: {queues[queue_type]['in_process']}")
+                            delete_instance(running_instance_name,
+                                            running_instance_zone, "work completed")
+                            if running_instance_name in running_instance_check:
+                                del running_instance_check[running_instance_name]
+
+
                 if len(instance_status) > 0:
                     for instance in instance_status:
                         is_any_torch_running = instance["is_any_torch_running"]
@@ -157,7 +181,6 @@ def queue_process():
                             if created_at > min_run_gpu * 60:
                                 LOGGER.critical("killing running gpus as no need")
                                 slack_message(f"killing running gpus as no need: {queues[queue_type]['in_process']}")
-                                slack_message("deleting instance, work completed")
                                 delete_instance(running_instance_name,
                                                 running_instance_zone, "work completed")
                                 if running_instance_name in running_instance_check:
@@ -322,7 +345,9 @@ def get_zone_list():
     return zone_list
 
 
-def start_compute_preementable(instance_name, queue_type):
+def start_compute_preementable(instance_name, queue_type, start_idx = -1):
+    LOGGER.critical("again starting!!!")
+    return
     global max_instances_to_run_together
     global running_instance_check
     zones = get_zone_list()
@@ -331,6 +356,8 @@ def start_compute_preementable(instance_name, queue_type):
     email_subject = "start compute preementable " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     email_content = ""
     for idx, zone in enumerate(zones):
+        if idx <= start_idx:
+            continue
 
         name = instance_name + str(idx)
         log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
@@ -340,9 +367,9 @@ def start_compute_preementable(instance_name, queue_type):
         start_compute(name, zone["name"], queue_type)
 
         instance_status = check_compute_running(name)
+        
         if len(instance_status) > 0:
 
-            
             if name in running_instance_check:
                 del running_instance_check[name]
 
@@ -392,7 +419,7 @@ def start_compute(instance_name, zone, queue_type):
         elif queue_type == "resume":
             result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_resume.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         else:
-            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+            result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         # LOGGER.critical("stdout", result)
 
         # if result.stderr and len(result.stderr) > 0:
