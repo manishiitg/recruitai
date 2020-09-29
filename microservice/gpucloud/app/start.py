@@ -83,7 +83,7 @@ def queue_process():
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
 
-                if int(queues[queue_type]['in_process']) > 5000:
+                if int(queues[queue_type]['in_process']) > 5000 and False:
                     if len(instance_status) <= 1:
                         LOGGER.critical("need to start another gpu as more than 5k jobs pending")
                         slack_message("need to start another gpu as more than 5k jobs pending" + str(queues[queue_type]['in_process']))
