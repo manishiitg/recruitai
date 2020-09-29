@@ -723,10 +723,14 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # this is wrong. this remove much more data like resume parsed information etc
             redisKeyMap[account_name] = {}
             local_dirtyMap[account_name] = {}
-            for key in r.scan_iter(): #this takes time
-                if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
-                    logger.critical("delete from redis %s", key)
-                    r.delete(key)
+            
+            # for key in r.scan_iter(): #this takes time
+            #     if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
+            #         logger.critical("delete from redis %s", key)
+            #         r.delete(key)
+            # lets not delete previous keys for now 
+            # i am doing full sync every 3hr. so if i delete old data this causes problems
+            # experiment on 29th
                     
             ret = db.emailStored.find({ } , 
                 {"body": 0, "cvParsedInfo.debug": 0}
