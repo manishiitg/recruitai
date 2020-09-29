@@ -761,7 +761,17 @@ from app.cvlinepredict.start import loadModel
 from app.ner.start import loadModel as loadModelTagger
 
 import subprocess
+import torch
+
 def main():
+
+    is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
+    if is_gpu_mandatory == 1:
+        if not torch.cuda.is_available():
+            LOGGER.critical("gpu is not there cannot start without it as it is mandatory")
+            return
+
+
     result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
                              'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
 
