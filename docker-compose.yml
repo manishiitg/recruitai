@@ -12,7 +12,7 @@ services:
             - '15672:15672'
         networks:
             - ai
-        restart: unless-stopped
+        restart: "no"
 
 
     create_certs:
@@ -135,6 +135,9 @@ services:
     redis:
         image: redis
         command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
+        environment: 
+            - REDIS_APPENDONLY=yes
+            - REDIS_APPENDFSYNC=always
         volumes:
             - redis-data:/data
             - /var/log/redis:/var/log/redis
@@ -174,7 +177,7 @@ services:
             - redis
         networks:
             - ai
-        restart: unless-stopped
+        restart: "no"
         
     resumemq:
         image: recruitai/resumemq:latest
