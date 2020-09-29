@@ -309,17 +309,39 @@ account_config_map = {}
 
 is_queue_process_running = False
 queue_running_count = 0
+last_queue_process = time.time()
+skip_count = 0
 
-def queue_process(is_direct = False):
+def delay_queue_process(is_direct):
+    time.sleep(20)
+    queue_process(is_direct , False)
+
+def queue_process(is_direct = False, add_thread = True):
 
     global dirtyMap
     global is_queue_process_running
     global queue_running_count
+    global last_queue_process
+    global skip_count
+
+    if (time.time() - last_queue_process) < 15 and skip_count < 100:
+        last_queue_process = time.time()
+        skip_count += 1
+        logger.critical("skipping... %s time ..... %s", skip_count, (time.time() - last_queue_process))
+        # when we process lot of data. datasync is not able to work fast
+        # but this is not solving that in the end we need to process
+        if add_thread:
+            Thread(target=delay_queue_process, args=( is_direct,  )).start()
+        return
+
+    logger.critical("running not not skipping existing skip count %s and time count %s", skip_count, (time.time() - last_queue_process))
+    skip_count = 0
+    
 
     queue_running_count += 1
-    if queue_running_count < 20:
+    if queue_running_count < 10:
         if is_queue_process_running:
-            logger.critical("queue is already running...")
+            logger.critical("queue is already running... %s", queue_running_count)
             return
 
     is_queue_process_running = True
@@ -394,8 +416,8 @@ def queue_process(is_direct = False):
     
 
 def check_ai_missing_data(account_name, account_config):
-
-    # return {}
+    # need to check here if queue is empty first else this will cause problem
+    return {}
     logger.critical("checking ai missing data")
     # some time randomly. few cv's are missing ai data. so checking them here and adding them ai data
 
@@ -447,7 +469,7 @@ def check_ai_missing_data(account_name, account_config):
         if "email_timestamp" not in row:
             continue
         
-        if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
+        if (time.time() - int(row["email_timestamp"]) / 1000) < 24 * 60 * 60 * 1:
             continue
 
         db.emailStored.update_one({
@@ -566,433 +588,442 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     global is_queue_process_running
     global queue_running_count
 
-    is_queue_process_running = True
+    try:
+        
+        
+        is_queue_process_running = True
 
 
-    # if account_name != "devrecruit":
-    #     # this is temporary need to fix mongo issues for live server
-    #     logger.critical("skipping account %s", account_name)
-    #     return
+        # if account_name != "devrecruit":
+        #     # this is temporary need to fix mongo issues for live server
+        #     logger.critical("skipping account %s", account_name)
+        #     return
 
-    r = connect_redis(account_name, account_config)
-    local_dirtyMap = {}
-    local_dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
+        r = connect_redis(account_name, account_config)
+        local_dirtyMap = {}
+        local_dirtyMap, redisKeyMap, account_config_map = init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_config)
 
-
-    
-
-    threads = []
-
-    if cur_time is None:
-        cur_time = time.time()
-
-
-    # "job_profile_id": mongoid
-
-    # global recentProcessList
-
-    # if findtype != "full":
-    #     recentProcessList[mongoid+"-"+findtype] = time.time()
-
-
-    isFilterUpdateNeeded = False
-    logger.critical(account_config)
-    db = initDB(account_name, account_config)
-    if findtype == "syncCandidate":
-        # allowedfields = ['unread', 'job_profile_id', 'tag_id', 'notes', 'candidate_star', 'callingStatus' ]
-
-
-        logger.critical("field which got updated %s", field)
-        if field is not None:
-            if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field or "sequence" in field or "ex_job_profile":
-                isFilterUpdateNeeded = True
-
-
-        logger.critical("syncCandidate")
-
-        if not isFilterUpdateNeeded:
-            logger.critical("filters not getting updated ")
-        else:
-            logger.critical("filters getting updated ")
 
         
 
-        if doc is None:
-            logger.critical("not doc found not good!")
-            start_time = time.time()
-            if ObjectId.is_valid(mongoid):
-                ret = db.emailStored.find({ 
-                    "_id" : ObjectId(mongoid),
-                    } , 
-                    {"body": 0, "cvParsedInfo.debug": 0}
-                )
+        threads = []
 
-                logger.critical("time to fetch docs %s", time.time() - start_time)
+        if cur_time is None:
+            cur_time = time.time()
+
+
+        # "job_profile_id": mongoid
+
+        # global recentProcessList
+
+        # if findtype != "full":
+        #     recentProcessList[mongoid+"-"+findtype] = time.time()
+
+
+        isFilterUpdateNeeded = False
+        logger.critical(account_config)
+        db = initDB(account_name, account_config)
+        if findtype == "syncCandidate":
+            # allowedfields = ['unread', 'job_profile_id', 'tag_id', 'notes', 'candidate_star', 'callingStatus' ]
+
+
+            logger.critical("field which got updated %s", field)
+            if field is not None:
+                if "tag_id" in field or 'job_profile_id' in field or 'is_archieved' in field or "sequence" in field or "ex_job_profile":
+                    isFilterUpdateNeeded = True
+
+
+            logger.critical("syncCandidate")
+
+            if not isFilterUpdateNeeded:
+                logger.critical("filters not getting updated ")
             else:
-                ret = []
-            # .sort([("sequence", -1),("updatedAt", -1)])
-            # sort gives ram error
-        else:
-            ret = [doc]
+                logger.critical("filters getting updated ")
 
-        if not isFilterUpdateNeeded and doc:
-            # need to update secondary caching still
-            print("updating unique cache ")
             
-            if "tag_id" not in doc:
-                doc["tag_id"] = ""
 
+            if doc is None:
+                logger.critical("not doc found not good!")
+                start_time = time.time()
+                if ObjectId.is_valid(mongoid):
+                    ret = db.emailStored.find({ 
+                        "_id" : ObjectId(mongoid),
+                        } , 
+                        {"body": 0, "cvParsedInfo.debug": 0}
+                    )
 
-            r.set(doc['job_profile_id'] + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
+                    logger.critical("time to fetch docs %s", time.time() - start_time)
+                else:
+                    ret = []
+                # .sort([("sequence", -1),("updatedAt", -1)])
+                # sort gives ram error
+            else:
+                ret = [doc]
 
-            # obj = {
-            #     'tag_id' : doc["tag_id"],
-            #     "job_profile_id" : doc['job_profile_id'],
-            #     "action" : "update_unique_cache",
-            #     "account_name" : account_name,
-            #     "account_config": account_config
-            # }
-            # Thread(target=updateFilter, args=( obj , )).start()
-            # 
-            # updateFilter(obj)
-
-    elif findtype == "syncJobProfile":
-        logger.critical("syncJobProfile")
-        job_profile_id = mongoid
-
-
-        logger.critical("cur time %s", cur_time)
-        if "syncJobProfile" + job_profile_id in pastInfoMap:
-            t = pastInfoMap[account_name]["syncJobProfile" + job_profile_id]
-
-            if t > cur_time:
-                logger.critical("skpping the sync as we have already synced more recent data")
-                return ""
-
-        pastInfoMap[account_name]["syncJobProfile" + job_profile_id] = time.time()
-
-        isFilterUpdateNeeded = True
-        
-        ret = db.emailStored.find({ 
-            "job_profile_id" : mongoid,
-            # "cvParsedInfo.debug" : {"$exists" : True} 
-            } , 
-           {"body": 0, "cvParsedInfo.debug": 0}
-        )
-        # .sort([("sequence", -1),("updatedAt", -1)])
-        # .sort([("sequence", -1),("updatedAt", -1)])
-            # sort gives ram error
-    else:
-        logger.critical("full")
-
-        if "full" in pastInfoMap[account_name]:
-            t = pastInfoMap[account_name]["full"]
-
-            if t > cur_time:
-                logger.critical("skpping the sync as we have already synced more recent data")
-                return ""
-
-        pastInfoMap[account_name]["full"] = time.time()
-
-        # r.flushdb()
-        # this is wrong. this remove much more data like resume parsed information etc
-        redisKeyMap[account_name] = {}
-        local_dirtyMap[account_name] = {}
-        for key in r.scan_iter(): #this takes time
-            if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
-                logger.critical("delete from redis %s", key)
-                r.delete(key)
+            if not isFilterUpdateNeeded and doc:
+                # need to update secondary caching still
+                print("updating unique cache ")
                 
-        ret = db.emailStored.find({ } , 
+                if "tag_id" not in doc:
+                    doc["tag_id"] = ""
+
+
+                r.set(doc['job_profile_id'] + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
+
+                # obj = {
+                #     'tag_id' : doc["tag_id"],
+                #     "job_profile_id" : doc['job_profile_id'],
+                #     "action" : "update_unique_cache",
+                #     "account_name" : account_name,
+                #     "account_config": account_config
+                # }
+                # Thread(target=updateFilter, args=( obj , )).start()
+                # 
+                # updateFilter(obj)
+
+        elif findtype == "syncJobProfile":
+            logger.critical("syncJobProfile")
+            job_profile_id = mongoid
+
+
+            logger.critical("cur time %s", cur_time)
+            if "syncJobProfile" + job_profile_id in pastInfoMap:
+                t = pastInfoMap[account_name]["syncJobProfile" + job_profile_id]
+
+                if t > cur_time:
+                    logger.critical("skpping the sync as we have already synced more recent data")
+                    return ""
+
+            pastInfoMap[account_name]["syncJobProfile" + job_profile_id] = time.time()
+
+            isFilterUpdateNeeded = True
+            
+            ret = db.emailStored.find({ 
+                "job_profile_id" : mongoid,
+                # "cvParsedInfo.debug" : {"$exists" : True} 
+                } , 
             {"body": 0, "cvParsedInfo.debug": 0}
-        )
-
-        isFilterUpdateNeeded = True
-        # .sort([("sequence", -1),("updatedAt", -1)])
-        # .sort([("sequence", -1),("updatedAt", -1)])
-            # sort gives ram error
-
-
-    job_profile_map = {}
-    candidate_map = {}
-
-    full_map = {}
-
-    for row in ret:
-        if isinstance(row, float):
-            logger.critical("again float")
-            continue
-
-        row["_id"] = str(row["_id"])
-
-        if "cvParsedInfo" in row:
-            cvParsedInfo = row["cvParsedInfo"]
-            if "debug" in cvParsedInfo:
-                del row["cvParsedInfo"]["debug"]
-
-        # logger.critical(row["_id"])
-        if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
-            job_profile_id = row["job_profile_id"]
+            )
+            # .sort([("sequence", -1),("updatedAt", -1)])
+            # .sort([("sequence", -1),("updatedAt", -1)])
+                # sort gives ram error
         else:
-            # logger.critical("job profile not found!!!")
-            job_profile_id = None
+            logger.critical("full")
 
-            mapKey = "classify_NOT_ASSIGNED"
+            if "full" in pastInfoMap[account_name]:
+                t = pastInfoMap[account_name]["full"]
 
-            if mapKey not in redisKeyMap[account_name]:
-                job_data = r.get(mapKey)
-                if job_data is None:
-                    job_data = {}
-                else:
-                    job_data = json.loads(job_data)
-            else:
-                job_data = redisKeyMap[account_name][mapKey]
-                
-            job_data[row["_id"]] = row
-            redisKeyMap[account_name][mapKey] = job_data
+                if t > cur_time:
+                    logger.critical("skpping the sync as we have already synced more recent data")
+                    return ""
 
-            local_dirtyMap[account_name][mapKey] = {
-                "filter_dirty" : True,
-                "redis_dirty" : True
-            }
-            
-        
+            pastInfoMap[account_name]["full"] = time.time()
 
-        
-
-        finalLines = []
-        if "cvParsedInfo" in row:
-            cvParsedInfo = row["cvParsedInfo"]
-            if "newCompressedStructuredContent" in cvParsedInfo:
-                for page in cvParsedInfo["newCompressedStructuredContent"]:
-                    for pagerow in cvParsedInfo["newCompressedStructuredContent"][page]:
-                        if len(pagerow["line"]) > 0:
-                            finalLines.append(pagerow["line"])
-
-        candidate_label = None
-        if "candidateClassify" in row:
-            if "label" in row["candidateClassify"]:
-                candidate_label = row["candidateClassify"]["label"]
-                if str(candidate_label) == "False":
-                    candidate_label = None
-                if candidate_label:
-                    if candidate_label not in candidate_map:
-                        candidate_map[candidate_label] = {}
-
-                    candidate_map[candidate_label][row["_id"]] = row
-
-        if "ex_job_profile" in row:
-            candidate_label = "Ex-" + row["ex_job_profile"]["name"]
-            if candidate_label not in candidate_map:
-                candidate_map[candidate_label] = {}
-            candidate_map[candidate_label][row["_id"]] = row
-
-            
-        full_map[row["_id"]] = row
-        if job_profile_id is not None:
-            if job_profile_id not in job_profile_map:
-                job_profile_map[job_profile_id] = {}
-
-            job_profile_map[job_profile_id][row["_id"]] = row
-
-        sendToSearchIndex(row , r, "full", account_name, account_config)
-        
-        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
-
-        if findtype == "syncCandidate" or findtype == "syncJobProfile":
-            # if job_profile_id:
-            #     job_profile_data_existing = r.get("job_" + job_profile_id)
-            #     job_profile_data_now = json.dumps(row,default=json_util.default)
-
-           
-
-            # this is very very slow for full job profile 
-            # need to add bulk to search or something
-
-            # no need of tread or async way so that we can reuse connection for pika
-            # if we use threads then many threads start even before connection is created 
-            # so they create multiple connections
-            # threads.append(t)
-            sendToSearchIndex(row, r, findtype, account_name, account_config)
-            
-            if job_profile_id is not None:
-                logger.critical("job profile %s", job_profile_id)
-                mapKey = "job_" + job_profile_id
-                if mapKey not in redisKeyMap[account_name]:
-                    job_profile_data = r.get(mapKey)
+            # r.flushdb()
+            # this is wrong. this remove much more data like resume parsed information etc
+            redisKeyMap[account_name] = {}
+            local_dirtyMap[account_name] = {}
+            for key in r.scan_iter(): #this takes time
+                if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
+                    logger.critical("delete from redis %s", key)
+                    r.delete(key)
                     
+            ret = db.emailStored.find({ } , 
+                {"body": 0, "cvParsedInfo.debug": 0}
+            )
 
-                    if job_profile_data:
-                        job_profile_data = json.loads(job_profile_data)
-                    else:
-                        job_profile_data = {}
-                else:
-                    job_profile_data = redisKeyMap[account_name][mapKey]
-
-                if isinstance(job_profile_data, list):
-                    job_profile_data = {}
-
-                # if row["_id"] in job_profile_data:
-                if not row["job_profile_id"] or len(row["job_profile_id"]) == 0:
-                    del job_profile_data[row["_id"]]
-                else:
-                    if "is_archieved" in row.keys():
-                        if row["is_archieved"] == "true" or row["is_archieved"] == True:
-                            if row["_id"] in job_profile_data:
-                                del job_profile_data[row["_id"]]
-                        else:
-                            job_profile_data[row["_id"]] = row
-                    else:
-                        job_profile_data[row["_id"]] = row
+            isFilterUpdateNeeded = True
+            # .sort([("sequence", -1),("updatedAt", -1)])
+            # .sort([("sequence", -1),("updatedAt", -1)])
+                # sort gives ram error
 
 
-                redisKeyMap[account_name][mapKey] = job_profile_data
+        job_profile_map = {}
+        candidate_map = {}
 
-                if isFilterUpdateNeeded: 
-                    local_dirtyMap[account_name][mapKey] = {
-                        "filter_dirty" : True,
-                        "redis_dirty" : True
-                    }
-                else:
-                    local_dirtyMap[account_name][mapKey] = {
-                        "redis_dirty" : True,
-                        "filter_dirty" : False
-                    }
+        full_map = {}
+
+        for row in ret:
+            if isinstance(row, float):
+                logger.critical("again float")
+                continue
+
+            row["_id"] = str(row["_id"])
+
+            if "cvParsedInfo" in row:
+                cvParsedInfo = row["cvParsedInfo"]
+                if "debug" in cvParsedInfo:
+                    del row["cvParsedInfo"]["debug"]
+
+            # logger.critical(row["_id"])
+            if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
+                job_profile_id = row["job_profile_id"]
             else:
-                # when we remove candidate from job profile id, then job_profile_id is not there in json
-                job_map = redisKeyMap[account_name]
-                
-                
-                for key in job_map:
-                    if "job_" in key:
-                        if isinstance(job_map[key], dict):
-                            if row["_id"] in job_map[key]:
-                                job_profile_data = job_map[key]
-                                del job_profile_data[row["_id"]]
-                                redisKeyMap[account_name][key] = job_profile_data
-                                local_dirtyMap[account_name][key] = {
-                                    "redis_dirty" : True,
-                                    "filter_dirty" : True
-                                }
-                                logger.critical("candidate removed from job deleted %s", row["_id"])
-                                break
+                # logger.critical("job profile not found!!!")
+                job_profile_id = None
 
-                
-            
-            
-            if "ex_job_profile" in row:
-                candidate_label = "Ex-" + row["ex_job_profile"]["name"]
-                mapKey = "classify_" + candidate_label
+                mapKey = "classify_NOT_ASSIGNED"
+
                 if mapKey not in redisKeyMap[account_name]:
-                    candidate_data = r.get(mapKey)
-                    if candidate_data:
-                        candidate_data = json.loads(candidate_data)
+                    job_data = r.get(mapKey)
+                    if job_data is None:
+                        job_data = {}
                     else:
-                        candidate_data = {}
+                        job_data = json.loads(job_data)
                 else:
-                    candidate_data = redisKeyMap[account_name][mapKey]
+                    job_data = redisKeyMap[account_name][mapKey]
+                    
+                job_data[row["_id"]] = row
+                redisKeyMap[account_name][mapKey] = job_data
 
-
-                candidate_data[row["_id"]] = row
-                redisKeyMap[account_name][mapKey] = candidate_data
                 local_dirtyMap[account_name][mapKey] = {
                     "filter_dirty" : True,
                     "redis_dirty" : True
                 }
-
-            if candidate_label is not None:
-                logger.critical("candidate labels %s", candidate_label)
-                mapKey = "classify_" + candidate_label
-                if mapKey not in redisKeyMap[account_name]:
-                    candidate_data = r.get(mapKey)
-                    if candidate_data:
-                        candidate_data = json.loads(candidate_data)
-                    else:
-                        candidate_data = {}
-                else:
-                    candidate_data = redisKeyMap[account_name][mapKey]
-
-                # if row["_id"] in candidate_data:
-                candidate_data[row["_id"]] = row
-
-                redisKeyMap[account_name][mapKey] = candidate_data
-
-                if isFilterUpdateNeeded: 
-                    local_dirtyMap[account_name][mapKey] = {
-                        "filter_dirty" : True,
-                        "redis_dirty" : True
-                    }
-                else:
-                    local_dirtyMap[account_name][mapKey] = {
-                        "filter_dirty" : True,
-                        "redis_dirty" : True
-                    }
-
-
-    
-
-    if findtype == "full":
-        logger.critical("starting full sync")
-
-        # r.set("full_data" , json.dumps(full_map , default=json_util.default))
-        
-        for job_profile_id in job_profile_map:
-            logger.critical("filter sync job %s ", job_profile_id)
-            r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
-            # ret = updateFilter({
-            #     "id" : job_profile_id,
-            #     "fetch" : "job_profile",
-            #     "action" : "index",
-            #     "account_name" : account_name,
-            #     "account_config": account_config
-            # })
-            mapKey = "job_" + job_profile_id
-            local_dirtyMap[account_name][mapKey] = {
-                "filter_dirty" : True,
-                "redis_dirty" : True
-            }
-            redisKeyMap[account_name][mapKey] = job_profile_map[job_profile_id]
-            logger.critical("updating filter %s" , mapKey)
-
-        for candidate_label in candidate_map:
-            logger.critical("filter sync candidate_label %s ", candidate_label)
-            r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
-            # ret = updateFilter({
-            #     "id" : candidate_label,
-            #     "fetch" : "candidate",
-            #     "action" : "index",
-            #     "account_name" : account_name,
-            #     "account_config": account_config
-            # })
-            mapKey = "classify_" + candidate_label
-            redisKeyMap[account_name][mapKey] = candidate_map[candidate_label] 
-            local_dirtyMap[account_name][mapKey] = {
-                "filter_dirty" : True,
-                "redis_dirty" : True
-            }
-            logger.critical("updating filter %s" , mapKey)
-
-        # logger.critical("full data filter")
-        # addFilter({
-        #     "id" : 0,
-        #     "fetch" : "full_data",
-        #     "action" : "index"
-        # })
-        logger.critical("full data completed %s", local_dirtyMap)
-
-    # for t in threads:
-    #     t.join()
-
-    for account_name in local_dirtyMap:
-        if account_name not in dirtyMap:
-            dirtyMap[account_name] = {}
+                
             
-        for key in local_dirtyMap[account_name]:
-            dirtyMap[account_name][key] = local_dirtyMap[account_name][key]
 
-    logger.critical("######### process completed")
+            
+
+            finalLines = []
+            if "cvParsedInfo" in row:
+                cvParsedInfo = row["cvParsedInfo"]
+                if "newCompressedStructuredContent" in cvParsedInfo:
+                    for page in cvParsedInfo["newCompressedStructuredContent"]:
+                        for pagerow in cvParsedInfo["newCompressedStructuredContent"][page]:
+                            if len(pagerow["line"]) > 0:
+                                finalLines.append(pagerow["line"])
+
+            candidate_label = None
+            if "candidateClassify" in row:
+                if "label" in row["candidateClassify"]:
+                    candidate_label = row["candidateClassify"]["label"]
+                    if str(candidate_label) == "False":
+                        candidate_label = None
+                    if candidate_label:
+                        if candidate_label not in candidate_map:
+                            candidate_map[candidate_label] = {}
+
+                        candidate_map[candidate_label][row["_id"]] = row
+
+            if "ex_job_profile" in row:
+                candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+                if candidate_label not in candidate_map:
+                    candidate_map[candidate_label] = {}
+                candidate_map[candidate_label][row["_id"]] = row
+
+                
+            full_map[row["_id"]] = row
+            if job_profile_id is not None:
+                if job_profile_id not in job_profile_map:
+                    job_profile_map[job_profile_id] = {}
+
+                job_profile_map[job_profile_id][row["_id"]] = row
+
+            sendToSearchIndex(row , r, "full", account_name, account_config)
+            
+            r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+
+            if findtype == "syncCandidate" or findtype == "syncJobProfile":
+                # if job_profile_id:
+                #     job_profile_data_existing = r.get("job_" + job_profile_id)
+                #     job_profile_data_now = json.dumps(row,default=json_util.default)
+
+            
+
+                # this is very very slow for full job profile 
+                # need to add bulk to search or something
+
+                # no need of tread or async way so that we can reuse connection for pika
+                # if we use threads then many threads start even before connection is created 
+                # so they create multiple connections
+                # threads.append(t)
+                sendToSearchIndex(row, r, findtype, account_name, account_config)
+                
+                if job_profile_id is not None:
+                    logger.critical("job profile %s", job_profile_id)
+                    mapKey = "job_" + job_profile_id
+                    if mapKey not in redisKeyMap[account_name]:
+                        job_profile_data = r.get(mapKey)
+                        
+
+                        if job_profile_data:
+                            job_profile_data = json.loads(job_profile_data)
+                        else:
+                            job_profile_data = {}
+                    else:
+                        job_profile_data = redisKeyMap[account_name][mapKey]
+
+                    if isinstance(job_profile_data, list):
+                        job_profile_data = {}
+
+                    # if row["_id"] in job_profile_data:
+                    if not row["job_profile_id"] or len(row["job_profile_id"]) == 0:
+                        del job_profile_data[row["_id"]]
+                    else:
+                        if "is_archieved" in row.keys():
+                            if row["is_archieved"] == "true" or row["is_archieved"] == True:
+                                if row["_id"] in job_profile_data:
+                                    del job_profile_data[row["_id"]]
+                            else:
+                                job_profile_data[row["_id"]] = row
+                        else:
+                            job_profile_data[row["_id"]] = row
+
+
+                    redisKeyMap[account_name][mapKey] = job_profile_data
+
+                    if isFilterUpdateNeeded: 
+                        local_dirtyMap[account_name][mapKey] = {
+                            "filter_dirty" : True,
+                            "redis_dirty" : True
+                        }
+                    else:
+                        local_dirtyMap[account_name][mapKey] = {
+                            "redis_dirty" : True,
+                            "filter_dirty" : False
+                        }
+                else:
+                    # when we remove candidate from job profile id, then job_profile_id is not there in json
+                    job_map = redisKeyMap[account_name]
+                    
+                    
+                    for key in job_map:
+                        if "job_" in key:
+                            if isinstance(job_map[key], dict):
+                                if row["_id"] in job_map[key]:
+                                    job_profile_data = job_map[key]
+                                    del job_profile_data[row["_id"]]
+                                    redisKeyMap[account_name][key] = job_profile_data
+                                    local_dirtyMap[account_name][key] = {
+                                        "redis_dirty" : True,
+                                        "filter_dirty" : True
+                                    }
+                                    logger.critical("candidate removed from job deleted %s", row["_id"])
+                                    break
+
+                    
+                
+                
+                if "ex_job_profile" in row:
+                    candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+                    mapKey = "classify_" + candidate_label
+                    if mapKey not in redisKeyMap[account_name]:
+                        candidate_data = r.get(mapKey)
+                        if candidate_data:
+                            candidate_data = json.loads(candidate_data)
+                        else:
+                            candidate_data = {}
+                    else:
+                        candidate_data = redisKeyMap[account_name][mapKey]
+
+
+                    candidate_data[row["_id"]] = row
+                    redisKeyMap[account_name][mapKey] = candidate_data
+                    local_dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
+                if candidate_label is not None:
+                    logger.critical("candidate labels %s", candidate_label)
+                    mapKey = "classify_" + candidate_label
+                    if mapKey not in redisKeyMap[account_name]:
+                        candidate_data = r.get(mapKey)
+                        if candidate_data:
+                            candidate_data = json.loads(candidate_data)
+                        else:
+                            candidate_data = {}
+                    else:
+                        candidate_data = redisKeyMap[account_name][mapKey]
+
+                    # if row["_id"] in candidate_data:
+                    candidate_data[row["_id"]] = row
+
+                    redisKeyMap[account_name][mapKey] = candidate_data
+
+                    if isFilterUpdateNeeded: 
+                        local_dirtyMap[account_name][mapKey] = {
+                            "filter_dirty" : True,
+                            "redis_dirty" : True
+                        }
+                    else:
+                        local_dirtyMap[account_name][mapKey] = {
+                            "filter_dirty" : True,
+                            "redis_dirty" : True
+                        }
+
+
+        
+
+        if findtype == "full":
+            logger.critical("starting full sync")
+
+            # r.set("full_data" , json.dumps(full_map , default=json_util.default))
+            
+            for job_profile_id in job_profile_map:
+                logger.critical("filter sync job %s ", job_profile_id)
+                r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
+                # ret = updateFilter({
+                #     "id" : job_profile_id,
+                #     "fetch" : "job_profile",
+                #     "action" : "index",
+                #     "account_name" : account_name,
+                #     "account_config": account_config
+                # })
+                mapKey = "job_" + job_profile_id
+                local_dirtyMap[account_name][mapKey] = {
+                    "filter_dirty" : True,
+                    "redis_dirty" : True
+                }
+                redisKeyMap[account_name][mapKey] = job_profile_map[job_profile_id]
+                logger.critical("updating filter %s" , mapKey)
+
+            for candidate_label in candidate_map:
+                logger.critical("filter sync candidate_label %s ", candidate_label)
+                r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
+                # ret = updateFilter({
+                #     "id" : candidate_label,
+                #     "fetch" : "candidate",
+                #     "action" : "index",
+                #     "account_name" : account_name,
+                #     "account_config": account_config
+                # })
+                mapKey = "classify_" + candidate_label
+                redisKeyMap[account_name][mapKey] = candidate_map[candidate_label] 
+                local_dirtyMap[account_name][mapKey] = {
+                    "filter_dirty" : True,
+                    "redis_dirty" : True
+                }
+                logger.critical("updating filter %s" , mapKey)
+
+            # logger.critical("full data filter")
+            # addFilter({
+            #     "id" : 0,
+            #     "fetch" : "full_data",
+            #     "action" : "index"
+            # })
+            logger.critical("full data completed %s", local_dirtyMap)
+
+        # for t in threads:
+        #     t.join()
+
+        for account_name in local_dirtyMap:
+            if account_name not in dirtyMap:
+                dirtyMap[account_name] = {}
+                
+            for key in local_dirtyMap[account_name]:
+                dirtyMap[account_name][key] = local_dirtyMap[account_name][key]
+        
+        queue_process(True)
+        
+    except Exception as e:
+        # we are restarting redids every 1hr now and this fails when we restart
+        logger.critical("exception %s", e)
     is_queue_process_running =  False
-    queue_process(True)
+    logger.critical("######### process completed")
+        
+    
 
 
 time_map = {}
