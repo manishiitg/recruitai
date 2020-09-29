@@ -77,7 +77,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             parsing_type = "fast"
 
 
-        parsing_type = "full" # full always for now 
+        # parsing_type = "full" # full always for now 
+        # removing this now. old email need to be parsed fast else it takes lot of time 
 
         timeAnalysis = {}
 
