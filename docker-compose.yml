@@ -331,6 +331,8 @@ services:
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             CRON_SCHEDULE: '0 0 * * *'
+            RABBIT_API_URL: 'http://116.202.234.182:15672'
+            RABBIT_LOGIN: 'guest:guest'
         networks:
             - ai
         depends_on: 
