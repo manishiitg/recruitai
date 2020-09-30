@@ -15,9 +15,11 @@ from bson import json_util
 
 import traceback
 import time
+import datetime
 
 from app.account import initDB
 from app.account import connect_redis
+from app.account import get_queues, get_resume_priority
 
 def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
@@ -147,7 +149,9 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         
 
         if "job_profile_id" not in row or not row["job_profile_id"]:
+            print("herererer")
             if row["_id"] in job_profile_data:
+                print("herererer222")
                 del job_profile_data[row["_id"]]
         else:
             job_profile_data[row["_id"]] = row
@@ -309,11 +313,11 @@ account_config_map = {}
 
 is_queue_process_running = False
 queue_running_count = 0
-last_queue_process = time.time()
+last_queue_process = 0
 skip_count = 0
 
 def delay_queue_process(is_direct):
-    time.sleep(20)
+    time.sleep(10)
     queue_process(is_direct , False)
 
 def queue_process(is_direct = False, add_thread = True):
@@ -324,19 +328,21 @@ def queue_process(is_direct = False, add_thread = True):
     global last_queue_process
     global skip_count
 
-    if (time.time() - last_queue_process) < 15 and skip_count < 100:
-        last_queue_process = time.time()
+    if (time.time() - last_queue_process) < 15 and skip_count < 200:
+        if add_thread:
+            last_queue_process = time.time() 
+
         skip_count += 1
         logger.critical("skipping... %s time ..... %s", skip_count, (time.time() - last_queue_process))
         # when we process lot of data. datasync is not able to work fast
         # but this is not solving that in the end we need to process
-        if add_thread:
-            Thread(target=delay_queue_process, args=( is_direct,  )).start()
+        
+        Thread(target=delay_queue_process, args=( is_direct,  )).start()
         return
 
     logger.critical("running not not skipping existing skip count %s and time count %s", skip_count, (time.time() - last_queue_process))
     skip_count = 0
-    
+    last_queue_process = time.time()
 
     queue_running_count += 1
     if queue_running_count < 10:
@@ -417,7 +423,20 @@ def queue_process(is_direct = False, add_thread = True):
 
 def check_ai_missing_data(account_name, account_config):
     # need to check here if queue is empty first else this will cause problem
-    return {}
+    # return {}
+    try:
+        queues = get_queues()
+    except Exception as e:
+        logger.critical(e)
+        return
+    
+    in_process = queues["resume"]["in_process"]
+    logger.critical("resume in progress")
+
+    if in_process > 10:
+        logger.critical("skipping checking ai missing data as resume in progress")
+        return
+
     logger.critical("checking ai missing data")
     # some time randomly. few cv's are missing ai data. so checking them here and adding them ai data
 
@@ -469,16 +488,10 @@ def check_ai_missing_data(account_name, account_config):
         if "email_timestamp" not in row:
             continue
         
-        if (time.time() - int(row["email_timestamp"]) / 1000) < 24 * 60 * 60 * 1:
+        if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
             continue
 
-        db.emailStored.update_one({
-            "_id" : row["_id"]
-        }, {
-            "$set" : {
-                "check_ai_missing_data" : True
-            }
-        })
+        
 
         logger.critical("found candidate %s", row["_id"])
         if "attachment" in row:
@@ -516,8 +529,8 @@ def check_ai_missing_data(account_name, account_config):
                         else:
                             skills = []
 
-                        priority = 5
-                        logger.critical("sending to ai parsing %s", row["_id"])
+                        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]))
+                        logger.critical("sending to ai parsing %s with priority %s", row["_id"], priority)
                         sendResumeMessage({
                             "filename" : filename,
                             "mongoid" : mongoid,
@@ -531,6 +544,14 @@ def check_ai_missing_data(account_name, account_config):
                         logger.critical("attachment not proper for id %s", row["_id"])
                 else:
                     logger.critical("attachment not proper for id %s", row["_id"])
+
+        db.emailStored.update_one({
+            "_id" : row["_id"]
+        }, {
+            "$set" : {
+                "check_ai_missing_data" : True
+            }
+        })
 
     pass
 
@@ -724,13 +745,15 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             redisKeyMap[account_name] = {}
             local_dirtyMap[account_name] = {}
             
-            # for key in r.scan_iter(): #this takes time
-            #     if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
-            #         logger.critical("delete from redis %s", key)
-            #         r.delete(key)
+            for key in r.scan_iter(): #this takes time
+                if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
+                    logger.critical("delete from redis %s", key)
+                    r.delete(key)
             # lets not delete previous keys for now 
             # i am doing full sync every 3hr. so if i delete old data this causes problems
             # experiment on 29th
+            # cannot remove this because. like on dev they deleted database and the keys didn't get deleted at all.
+
                     
             ret = db.emailStored.find({ } , 
                 {"body": 0, "cvParsedInfo.debug": 0}
@@ -767,6 +790,26 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 job_profile_id = None
 
                 mapKey = "classify_NOT_ASSIGNED"
+                is_old = False
+                month_year = ""
+
+                if "email_timestamp" in row:
+                    timestamp_seconds = int(row["email_timestamp"])/1000
+                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                    cur_time = time.time()
+                    days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                    if days < 15:
+                        is_old = False
+                    else:
+                        is_old = True
+
+                else:
+                    is_old = False
+                
+                if is_old:
+                    mapKey = "classify_NOT_ASSIGNED" + month_year
 
                 if mapKey not in redisKeyMap[account_name]:
                     job_data = r.get(mapKey)
@@ -805,6 +848,16 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     if str(candidate_label) == "False":
                         candidate_label = None
                     if candidate_label:
+                        if "email_timestamp" in row:
+                            timestamp_seconds = int(row["email_timestamp"])/1000
+                            month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                            cur_time = time.time()
+                            days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                            if days > 15:
+                                candidate_label = candidate_label + month_year
+
                         if candidate_label not in candidate_map:
                             candidate_map[candidate_label] = {}
 
@@ -906,12 +959,65 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                                     logger.critical("candidate removed from job deleted %s", row["_id"])
                                     break
 
+                    job_profile_id = None
+
+                    mapKey = "classify_NOT_ASSIGNED"
+                    is_old = False
+                    month_year = ""
+
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                        if days < 15:
+                            is_old = False
+                        else:
+                            is_old = True
+
+                    else:
+                        is_old = False
+                    
+                    if is_old:
+                        mapKey = "classify_NOT_ASSIGNED" + month_year
+
+                    if mapKey not in redisKeyMap[account_name]:
+                        job_data = r.get(mapKey)
+                        if job_data is None:
+                            job_data = {}
+                        else:
+                            job_data = json.loads(job_data)
+                    else:
+                        job_data = redisKeyMap[account_name][mapKey]
+                        
+                    job_data[row["_id"]] = row
+                    redisKeyMap[account_name][mapKey] = job_data
+
+                    local_dirtyMap[account_name][mapKey] = {
+                        "filter_dirty" : True,
+                        "redis_dirty" : True
+                    }
+
                     
                 
                 
                 if "ex_job_profile" in row:
                     candidate_label = "Ex-" + row["ex_job_profile"]["name"]
                     mapKey = "classify_" + candidate_label
+
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                        if days > 15:
+                            mapKey = mapKey + month_year
+
+                    
                     if mapKey not in redisKeyMap[account_name]:
                         candidate_data = r.get(mapKey)
                         if candidate_data:
@@ -932,6 +1038,17 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if candidate_label is not None:
                     logger.critical("candidate labels %s", candidate_label)
                     mapKey = "classify_" + candidate_label
+
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+                        if days > 15:
+                            mapKey = mapKey + month_year
+
+                    
                     if mapKey not in redisKeyMap[account_name]:
                         candidate_data = r.get(mapKey)
                         if candidate_data:
@@ -1021,7 +1138,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         
         queue_process(True)
         
-    except Exception as e:
+    except ValueError as e:
         # we are restarting redids every 1hr now and this fails when we restart
         logger.critical("exception %s", e)
     is_queue_process_running =  False
