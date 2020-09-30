@@ -24,8 +24,7 @@ from app.publishpicture import sendMessage as sendPicture
 from app.publishsummary import sendMessage as sendSummary
 from app.statspublisher import sendMessage as updateStats
 
-amqp_url = os.getenv(
-    'RABBIT_DB', "amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.getenv('RABBIT_DB')
 
 
 class TaskQueue(object):
@@ -679,8 +678,8 @@ def main():
     #         "account_config": account_config
     #     })
     # just for testing something. code can be remove.d its of no use.
-    LOGGER.critical("waiting 10s to start")
-    time.sleep(10) # wait for rabbitmq etc to start
+    # LOGGER.critical("waiting 10s to start")
+    # time.sleep(10) # wait for rabbitmq etc to start
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
