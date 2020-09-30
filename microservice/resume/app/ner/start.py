@@ -90,13 +90,24 @@ def process(nertoparse, tagger):
                     contentIdx = lineData["contentIdx"]
                     sentence = Sentence(line, use_tokenizer= False)
                     # predict tags and print
-                    tagger.predict(sentence)
-                    logger.debug(sentence.to_tagged_string())
-                    for entity in sentence.get_spans('ner'):
-                        logger.debug(entity)
+                    try:
+                        tagger.predict(sentence)
+                        logger.debug(sentence.to_tagged_string())
+                        for entity in sentence.get_spans('ner'):
+                            logger.debug(entity)
+                        tag_dict = sentence.to_dict(tag_type='ner')
+
+                    except Exception as e:
+                        logger.critical("predict ner " +  str(e))
+                        tag_dict = {
+                            "text" : line,
+                            'entities' : []
+                        }
+                    
+                    
 
 
-                    tag_dict = sentence.to_dict(tag_type='ner')
+                    
                     new_tag_dict = {
                         'text' : tag_dict["text"],
                         'entities' : []
