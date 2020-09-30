@@ -93,7 +93,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 unique_cache_key_list = {}
-use_unique_cache_feature = True
+use_unique_cache_feature = False
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
@@ -141,9 +141,14 @@ def get_candidate_tags(account_name, account_config):
         if tag not in tag_map:
             if "Ex-" in tag:
                 tag_map[tag] = tag
+            elif "-" in tag:
+                tags = tag.split("-")
+                if tags[0] in tag_map:
+                    tag_map[tag] = tag.replace(tags[0],tag_map[tags[0]])
             else:
                 tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
-    
+
+        title = tag_map[tag]
         response.append({
                 "active_status": True,
                 "assign_to_all_emails": False,
@@ -154,7 +159,7 @@ def get_candidate_tags(account_name, account_config):
                 "read": -1,
                 "roundDetails": [],
                 "sequence": 0,
-                "title": tag_map[tag],
+                "title": title,
                 "unread": -1,
                 "_id": len(response),
                 "key" : tag
@@ -183,7 +188,7 @@ def indexAll(account_name, account_config):
         # basically delete the unique_cache_key below if job data changes
         if "on_ai_data" in key:
             logger.critical("cleaching cache %s", key)
-            r.delete(key)
+            # r.delete(key)
                     
         if "_filter" in str(key):
             continue
@@ -272,7 +277,10 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
                     unique_cache_key_list[account_name].append(unique_cache_key)
                     unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                    return cache_data    
+                    
+                    cache_obj = json.loads(cache_data)
+                    if int(cache_obj['candidate_len']) != 0:
+                        return cache_data    
                 else:
                     pass
             
@@ -284,7 +292,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
                     unique_cache_key_list[account_name].append(unique_cache_key)
                     unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                    return cache_data    
+                    cache_obj = json.loads(cache_data)
+                    if int(cache_obj['candidate_len']) != 0:
+                        return cache_data    
                 else:
                     pass
 
@@ -295,7 +305,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
                 unique_cache_key_list[account_name].append(unique_cache_key)
                 unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                return cache_data
+                cache_obj = json.loads(cache_data)
+                if int(cache_obj['candidate_len']) != 0:
+                    return cache_data
 
 
     page = int(page)
@@ -695,7 +707,7 @@ def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config
             # basically delete the unique_cache_key below if job data changes
             if job_profile_id in rkey:
                 logger.critical("cleaching cache %s", rkey)
-                r.delete(rkey)
+                # r.delete(rkey)
             else:
                 new_unique_cache_key_list[account_name].append(rkey)
     
@@ -736,7 +748,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
                 # basically delete the unique_cache_key below if job data changes
                 if "on_ai_data" in rkey and mongoid in rkey:
                     logger.critical("cleaching cache %s", rkey)
-                    r.delete(rkey)
+                    # r.delete(rkey)
                 else:
                     new_unique_cache_key_list[account_name].append(rkey)
 
@@ -798,7 +810,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
                 # basically delete the unique_cache_key below if job data changes
                 if "on_ai_data" in rkey and mongoid in rkey:
                     logger.critical("cleaching cache %s", rkey)
-                    r.delete(rkey)
+                    # r.delete(rkey)
                 else:
                     new_unique_cache_key_list[account_name].append(rkey)
 
