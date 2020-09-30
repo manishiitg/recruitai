@@ -72,3 +72,65 @@ def get_cloud_bucket(account_name, account_config):
 
 def get_cloud_url(account_name, account_config):
     return account_config["google_cloud"]["url"]
+
+import os
+import requests
+from requests.auth import HTTPBasicAuth
+
+def get_queues():
+    amqp_url_base = os.getenv('RABBIT_API_URL')
+    RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
+    res = requests.get(amqp_url_base + "/api/queues", verify=False,
+                       auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
+    queues = res.json()
+    # LOGGER(json.dumps(queues, indent=True))
+
+    mq_status = {}
+    running_process = 0
+    total = 0
+    for queue in queues:
+
+        if "consumers" in queue.keys():
+            mq_status[queue["name"]] = {
+                "consumers": queue["consumers"],
+                "in_process": queue["messages_unacknowledged_ram"] + queue["messages_ready"]
+            }
+            running_process += int(queue["messages_unacknowledged_ram"])
+            total += int(queue["messages_unacknowledged_ram"]) + int(queue["messages_ready"])
+        else:
+            mq_status[queue["name"]]["in_process"] = 0
+
+    mq_status["all"] = {
+        "consumers": 0,
+        "in_process": total
+    }
+
+    return mq_status
+
+
+import time
+def get_resume_priority(timestamp_seconds):
+    cur_time = time.time()
+    days = 0
+    if timestamp_seconds == 0: 
+        # manual candidate
+        priority = 10
+    else:
+        days =  abs(cur_time - timestamp_seconds/1000)  / (60 * 60 * 24 )
+
+        if days < 1:
+            priority = 9
+        elif days < 7:
+            priority = 8
+        elif days < 30:
+            priority = 7
+        elif days < 90:
+            priority = 6
+        elif days < 365:
+            priority = 5
+        elif days < 365 * 2:
+            priority = 4
+        else:
+            priority = 1
+    
+    return priority, days, cur_time
