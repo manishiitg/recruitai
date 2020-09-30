@@ -203,6 +203,9 @@ def on_recv_req(ch, method, properties, body, args):
     thrds.append(t)
 
 def main():
+
+    !gsutil -m cp -r work2vec*.bin gs://general_ai_works/word2vec/
+    
     loadModel()
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
