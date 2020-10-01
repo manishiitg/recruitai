@@ -131,7 +131,13 @@ def on_recv_req(ch, method, properties, body):
     # no need of thread for now as its very less time taking task
     thread_task( ch, method, properties, body )
 
+import subprocess
 def main():
+
+    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
+                             'gs://general_ai_works/word2vec/', '/workspace/word2vec'], stdout=subprocess.PIPE)
+
+    print(result)
 
     loadModel()
     # loadGlobalModel()
