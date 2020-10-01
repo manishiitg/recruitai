@@ -68,7 +68,9 @@ def queue_process():
     for queue_type in ["summary", "picture", "resume", 'all']:
         if run_combined_gpu:
             if queue_type != "all":
-                continue
+                
+                if int(queues[queue_type]['in_process']) < 3000:
+                    continue
         else:
             if queue_type == "all":
                 continue
@@ -83,14 +85,22 @@ def queue_process():
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
 
-                if int(queues[queue_type]['in_process']) > 5000 and False:
-                    if len(instance_status) <= 1:
-                        LOGGER.critical("need to start another gpu as more than 5k jobs pending")
-                        slack_message("need to start another gpu as more than 5k jobs pending" + str(queues[queue_type]['in_process']))
+                if int(queues[queue_type]['in_process']) > 3000 and queue_type != "all" and False:
+                    instance_count = 0
+                    for instance in instance_status:
+                        running_instance_name = instance["running_instance_name"]
+                        if queue_type in running_instance_name:
+                            instance_count += 1
+
+                    if instance_count == 0:
+                        LOGGER.critical("need to start another gpu as more than 3k jobs pending")
+                        slack_message("need to start another gpu as more than 3k jobs pending" + str(queues[queue_type]['in_process']) + "for queue type " + queue_type)
                         start_compute_preementable(type_instance_name, queue_type , len(instance_status) + 1)
+                        instance_status = check_compute_running(type_instance_name)
                         
+
                 if len(instance_status) >= 1:
-                    if int(queues[queue_type]['in_process']) < 2000:
+                    if int(queues[queue_type]['in_process']) < 1000:
                         instance = instance_status[-1]
                         is_any_torch_running = instance["is_any_torch_running"]
                         is_torch_responding = instance["is_torch_responding"]
@@ -451,6 +461,8 @@ def start_compute(instance_name, zone, queue_type):
 
 def delete_instance(instance_name, zone, reason):
     # if is_any_torch_running:
+    LOGGER.critical("delete instance")
+    return
     email_subject = "delete instance " + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " " + reason
     email_content = ""
 
@@ -470,11 +482,12 @@ def delete_instance(instance_name, zone, reason):
         print(result)
 
         
-        if result.stdout and len(result.stdout) > 0:
-            LOGGER.critical("stdout %s", result.stdout)
-            email_content = result.stdout
+        # if result.stdout and len(result.stdout) > 0:
+        #     LOGGER.critical("stdout %s", result.stdout)
+        #     email_content = result.stdout
 
         sendEmail(email_subject, email_content)
+        slack_message(email_content)
         
         return True
     except Exception as e:
