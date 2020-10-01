@@ -93,8 +93,8 @@ def vec_exists(word, isGlobal = False):
 def loadGlobalModel():
     global globalModel
     if globalModel is None:
-        logger.info("loading model... %s", BASE_PATH + "/../pretrained/word2vec/word2vecfull.bin")
-        globalModel = Word2Vec.load(BASE_PATH + "/../pretrained/word2vec/word2vecfull.bin")
+        logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
+        model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
     
     return globalModel
 
@@ -102,8 +102,8 @@ model = None
 def loadModel():
     global model
     if model is None:
-        logger.info("loading model... %s" , BASE_PATH + "/../pretrained/word2vec/word2vecrecruitskills.bin")
-        model = Word2Vec.load(BASE_PATH + "/../pretrained/word2vec/word2vecrecruitskills.bin")
+        logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
+        model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
 
     
 

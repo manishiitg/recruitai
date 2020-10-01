@@ -134,9 +134,16 @@ sudo mkdir -p /var/log/recruitai
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=3
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=3
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=3
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
 
-# sleep 600s # not working due to perission issue right now 
-# gcloud --quiet compute instances delete $NAME --zone=$ZONE
+for i in `seq 1 1000`;
+do
+  sleep 30m
+  echo "restarting docker $i"
+  sudo docker-compose -f docker-compose-gpu-summary.yml restart
+  
+done
