@@ -138,7 +138,7 @@ sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
+# sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
 
 for i in `seq 1 1000`;
 do
