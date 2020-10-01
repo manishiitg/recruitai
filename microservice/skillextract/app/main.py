@@ -202,10 +202,15 @@ def on_recv_req(ch, method, properties, body, args):
     # thread_task( ch, method, properties, body )
     thrds.append(t)
 
+import subprocess
 def main():
 
-    !gsutil -m cp -r work2vec*.bin gs://general_ai_works/word2vec/
-    
+    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
+                             'gs://general_ai_works/word2vec/', '/workspace/word2vec'], stdout=subprocess.PIPE)
+
+    print(result)
+
+
     loadModel()
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
