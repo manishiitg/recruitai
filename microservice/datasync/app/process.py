@@ -333,7 +333,7 @@ def queue_process(is_direct = False, add_thread = True):
             last_queue_process = time.time() 
 
         skip_count += 1
-        logger.critical("skipping... %s time ..... %s", skip_count, (time.time() - last_queue_process))
+        # logger.critical("skipping... %s time ..... %s", skip_count, (time.time() - last_queue_process))
         # when we process lot of data. datasync is not able to work fast
         # but this is not solving that in the end we need to process
         
@@ -368,7 +368,7 @@ def queue_process(is_direct = False, add_thread = True):
 
             operations = localMap[account_name][key]
             if operations["redis_dirty"]:
-                logger.critical("keyyyyyyyyyyyyyy %s", key)
+                logger.critical("key redis dirty %s", key)
                 logger.critical("updating redis %s" , key)
                 logger.critical("redis data len %s", len(redisKeyMap[account_name][key]))
                 r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
@@ -393,6 +393,7 @@ def queue_process(is_direct = False, add_thread = True):
 
                 dirtyMap[account_name][key]["redis_dirty"] = False  
             if operations["filter_dirty"]:
+                logger.critical("key filter dirty %s", key)
                 dirtyMap[account_name][key]["filter_dirty"] = False  
                 if "job_" in key:
                     addFilter({
