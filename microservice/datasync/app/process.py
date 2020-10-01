@@ -777,7 +777,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 continue
 
             row["_id"] = str(row["_id"])
-
+            r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+            
             if "cvParsedInfo" in row:
                 cvParsedInfo = row["cvParsedInfo"]
                 if "debug" in cvParsedInfo:
@@ -880,7 +881,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             sendToSearchIndex(row , r, "full", account_name, account_config)
             
-            r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+            
 
             if findtype == "syncCandidate" or findtype == "syncJobProfile":
                 # if job_profile_id:
