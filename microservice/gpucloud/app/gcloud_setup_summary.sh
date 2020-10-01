@@ -134,11 +134,11 @@ sudo mkdir -p /var/log/recruitai
 
 sudo docker-compose -f docker-compose-gpu-summary.yml build
 sudo docker-compose -f docker-compose-gpu-summary.yml up -d
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
-sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=5
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
+sudo docker-compose -f docker-compose-gpu-summary.yml up -d --scale=summarygpu=4
 
 for i in `seq 1 1000`;
 do
