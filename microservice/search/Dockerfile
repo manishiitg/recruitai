@@ -17,6 +17,7 @@ RUN truncate -s 0 /workspace/logs/search*.log
 RUN pip install pika
 RUN pip install elasticsearch
 RUN pip install redis
+RUN pip install pymongo
 
 RUN apt-get install -y debconf-utils
 ENV TZ=Asia/Kolkata
