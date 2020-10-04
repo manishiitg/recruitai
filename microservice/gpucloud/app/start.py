@@ -356,8 +356,8 @@ def get_zone_list():
 
 
 def start_compute_preementable(instance_name, queue_type, start_idx = -1):
-    # LOGGER.critical("again starting!!!")
-    # return
+    LOGGER.critical("again starting!!!")
+    return
     global max_instances_to_run_together
     global running_instance_check
     zones = get_zone_list()
@@ -461,8 +461,8 @@ def start_compute(instance_name, zone, queue_type):
 
 def delete_instance(instance_name, zone, reason):
     # if is_any_torch_running:
-    # LOGGER.critical("delete instance")
-    # return
+    LOGGER.critical("delete instance")
+    return
     email_subject = "delete instance " + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " " + reason
     email_content = ""
 
