@@ -58,6 +58,8 @@ def queue_process():
         LOGGER.critical("its non working hours so will start gpu only if more than 500 process pending")
         min_process_to_start_gpu = 1000
 
+    if not use_gpu:
+        min_process_to_start_gpu = 100
 
     try:
         queues = get_queues()
@@ -70,8 +72,8 @@ def queue_process():
         if run_combined_gpu:
             if queue_type != "all":
                 
-                # if int(queues[queue_type]['in_process']) < 3000:
-                continue
+                if int(queues[queue_type]['in_process']) < 3000:
+                    continue
         else:
             if queue_type == "all":
                 continue
@@ -300,7 +302,7 @@ def check_compute_running(instance_name):
             running_instance_name = vm['name']
             LOGGER.critical("running vm found %s", running_instance_name)
 
-            # print(json.dumps(vm["networkInterfaces"], indent=True))
+            print(json.dumps(vm["networkInterfaces"], indent=True))
             ip = ""
             if isinstance(vm["networkInterfaces"], list):
                 vminstance = vm["networkInterfaces"][0]
@@ -319,7 +321,7 @@ def check_compute_running(instance_name):
             # print()
 
             for connection in connections:
-                # LOGGER.critical("%s == %s", connection["peer_host"],ip)
+                LOGGER.critical("%s == %s", connection["peer_host"],ip)
                 if connection["peer_host"] == ip:
                     LOGGER.critical("host found so torch vm is working")
                     is_torch_responding = True
@@ -443,9 +445,9 @@ def start_compute(instance_name, zone, queue_type):
         else:
             image_family_name = "common-cpu"
             if queue_type == "picture":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --internal-ip --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --network-interface=no-address --preemptible --format=json"), stdout=subprocess.PIPE)
             else:
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --internal-ip --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --network-interface=no-address --preemptible --format=json"), stdout=subprocess.PIPE)
         # LOGGER.critical("stdout", result)
 
         # if result.stderr and len(result.stderr) > 0:
