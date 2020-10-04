@@ -131,13 +131,13 @@ cd /home/jupyter/drive/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet picturemq
-sudo docker-compose -f docker-compose-cpu-all.yml up -d picturemq --scale=picturemq=9
+sudo docker-compose -f docker-compose-cpu-picture.yml pull --quiet
+sudo docker-compose -f docker-compose-cpu-picture.yml up -d --scale=picturemq=9
 
 for i in `seq 1 1000`;
 do
   sleep 30m
   echo "restarting docker $i"
-  sudo docker-compose -f docker-compose-cpu-all.yml restart
+  sudo docker-compose -f docker-compose-cpu-picture.yml restart
   
 done
