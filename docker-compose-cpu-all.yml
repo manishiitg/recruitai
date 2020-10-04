@@ -15,7 +15,6 @@ services:
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             RESUME_PARALLEL_PROCESS: 3
-            GPU_MANDATORY: 1
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
@@ -34,7 +33,6 @@ services:
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             PARALLEL_PROCESS: 1
-            GPU_MANDATORY: 1
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
@@ -52,8 +50,7 @@ services:
             - ./home/jupyter/.cache:/root/.cache            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
-            PARALLEL_PROCESS: 1
-            GPU_MANDATORY: 1
+            PARALLEL_PROCESS: 1 
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
