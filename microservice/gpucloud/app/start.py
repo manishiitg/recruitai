@@ -66,12 +66,12 @@ def queue_process():
         return
     
 
-    for queue_type in ["summary", "picture", "resume", 'all']:
+    for queue_type in ["all", "summary", "picture", "resume"]:
         if run_combined_gpu:
             if queue_type != "all":
                 
-                if int(queues[queue_type]['in_process']) < 3000:
-                    continue
+                # if int(queues[queue_type]['in_process']) < 3000:
+                continue
         else:
             if queue_type == "all":
                 continue
