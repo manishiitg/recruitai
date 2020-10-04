@@ -325,6 +325,16 @@ class TaskQueue(object):
             self.acknowledge_message(delivery_tag)
             return
 
+        if "priority" in message:
+            priority = int(message["priority"])
+        else:
+            priority = 10
+
+        if "reduce_priority" in account_config:
+            priority = priority - int(account_config["reduce_priority"])
+
+        LOGGER.critical("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", priority)
+
         r = connect_redis(account_name, account_config)
 
         duplicate_key = "summary_bart_cnn_large" + message["mongoid"]
@@ -349,12 +359,12 @@ class TaskQueue(object):
             },
             "stage": {
                 "pipeline": "summary_start",
-                "priority": message["priority"]
+                "priority": priority
             },
             "account_name": account_name,
             "account_config": account_config
         })
-        process(message["filename"], message["mongoid"],
+        process(message["filename"], message["mongoid"], priority,
                 account_name, account_config)
 
         r.set(duplicate_key, duplicate_key_check, ex=1 * 60 * 60 * 24)
@@ -373,7 +383,7 @@ class TaskQueue(object):
             },
             "stage": {
                 "pipeline": "summary",
-                "priority": message["priority"]
+                "priority": priority
             },
             "account_name": account_name,
             "account_config": account_config
