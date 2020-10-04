@@ -366,14 +366,20 @@ def start_compute_preementable(instance_name, queue_type, start_idx = -1):
     zones = get_zone_list()
     max_attemps = 10
     started_instance = 0
-    email_subject = "start compute preementable " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if use_gpu:
+        email_subject = "gpu start compute preementable " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        email_subject = "cpu start compute preementable " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     email_content = ""
     for idx, zone in enumerate(zones):
         if idx <= start_idx:
             continue
 
         name = instance_name + str(idx)
-        log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
+        if use_gpu:
+            log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
+        else:
+            log = f"trying to start cpu for instance name {name} for zone regision {zone['name']}"
         slack_message(log)
         email_content += log + "\r\n"
         LOGGER.critical(log)
