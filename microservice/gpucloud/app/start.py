@@ -90,7 +90,7 @@ def queue_process():
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
 
-                if int(queues[queue_type]['in_process']) > 3000 and queue_type != "all" and False:
+                if int(queues[queue_type]['in_process']) > 3000 and queue_type != "all":
                     instance_count = 0
                     for instance in instance_status:
                         running_instance_name = instance["running_instance_name"]
