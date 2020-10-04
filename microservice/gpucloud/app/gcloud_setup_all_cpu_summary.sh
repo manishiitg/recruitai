@@ -4,10 +4,23 @@
 
 sudo su
 
-sudo lsblk
-sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+sudo apt-get update
+sudo apt-get install curl git
+
+
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+
+# sudo lsblk
+# sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 sudo mkdir -p /home/jupyter/drive
-sudo mount -o discard,defaults /dev/sdb /home/jupyter/drive
+# sudo mount -o discard,defaults /dev/sdb /home/jupyter/drive
 sudo chmod a+w /home/jupyter/drive
 
 cd /home/jupyter/drive
@@ -66,8 +79,6 @@ eibLh2QEKEVjAAAAF21hbmlzaEByeXpuZS1zZXJ2ZXIuY29tAQID
 
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/WNrLuL1D5x8ZcNtrmKVdAURY7S3paL6GIgRe3UKyYNWEW8EqsepRlbNlO6WOAvnHMu6OyydioPe5hzUdyVwB4hiywO2SClGlooIxauFNhcKUNUHR9PIgMxQi/YEbZtiaQFDxrI3ek6Pn/+QZxusDtcY87Wh+QRHwBA4yAqFHciRvNKoh91ehPdbyuxpIk03Z1f4NR3o9J+RFR/iLG4GSsoTJQaTFAS76UNPuDyi0DH/JGhvOD+L+uYgCE7ASI4qLvW3Gm+hyJ+Ea9NZoVdJzW+rogaEWEwEVw9QB7qYuNAvXhZbvd/zU1f0hW00tHSG6KUZRL1wa+HGBZA6Ou8XqyvxMYgFM4PX7wUWnVZo9ARh0OjedsAtVUx9RuTxX5s+lwyWBdwiyWBclpNVBYtd7A8G+aVDQD7Dtcf2f67FYUSXFN0f5wMRu+aFnpfsB6LWq53R4V719Vv5l9+d8vzxDgpZgrxAzwNMQE9w0JHJwwsRWepWmwCSQrm/2GrGItFnJ2ED13DJ0+WDVJ044EJ0lE/rE6K8Ty7m2Rc2oMxLSx6cepyzEWqOctjnYkwv9v8ZX1MhYxc5sQdK9PJwR2XFrkm9R3i3B1/liXY5IkPhni9yiyl/qSY0Z6+Atopc6x63p4YiDskTmxyo+2YdKlNBrgIhdL9R7WcpcabFY/AOVbQ== manish@ryzne-server.com" >> /home/jupyter/drive/id_rsa.pub
 
-sudo apt-get update
-sudo apt-get install curl git
 
 # sudo cp /home/jupyter/drive/id_rsa ~/.ssh/id_rsa
 # sudo cp /home/jupyter/drive/id_rsa.pub ~/.ssh/id_rsa.pub
@@ -96,24 +107,10 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # sudo pip3 install -U six
 cd /home/jupyter/drive/recruitai
 
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 
 sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
 sudo echo "116.202.234.182 redis" >> /etc/hosts
-
-
-export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google')
-export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
-
-
-# sudo /opt/deeplearning/install-driver.sh
 
 
 ########################
@@ -130,10 +127,12 @@ sudo mkdir -p /var/log/recruitai
 ==========================
 
 
+cd /home/jupyter/drive/recruitai
+
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull summarymq --quiet --ignore-pull-failures
+sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet summarymq
 sudo docker-compose -f docker-compose-cpu-all.yml up -d summarymq --scale=summarymq=3
 
 for i in `seq 1 1000`;
