@@ -79,6 +79,8 @@ def queue_process():
         if queue_type in queues:
 
             type_instance_name = "torch" + queue_type
+            if not use_gpu:
+                type_instance_name = "torch-cpu" + queue_type
             LOGGER.critical("checking for queue type %s", type_instance_name)
             if int(queues[queue_type]['in_process']) > min_process_to_start_gpu:
 
