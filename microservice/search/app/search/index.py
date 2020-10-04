@@ -4,6 +4,8 @@ from app.logging import logger
 from app import db
 import json
 from app.config import RESUME_INDEX_NAME
+from bson.objectid import ObjectId
+from bson import json_util
 
 import traceback
 import redis
@@ -11,7 +13,7 @@ import os
 
 indexCreated = False
 
-from app.account import get_es_index, init_elastic_search, connect_redis
+from app.account import get_es_index, init_elastic_search, connect_redis, initDB
 
 def getIndex(account_name, account_config):
     return get_es_index(account_name, account_config)
@@ -90,8 +92,7 @@ def deleteDoc(mongoid, account_name, account_config):
 
     es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
     return es.delete(index=indexName, id=mongoid)
-
-
+        
 def searchDoc(searchText, account_name, account_config):
     indexName  = getIndex(account_name, account_config)
     r = connect_redis(account_name, account_config)
@@ -116,7 +117,16 @@ def searchDoc(searchText, account_name, account_config):
         data = r.get(id)
         
         if not data:
-            data = {}
+            db = initDB(account_name, account_config)
+            data = db.emailStored.find_one({ 
+                "_id" : ObjectId(id),
+                } , 
+                {"body": 0, "cvParsedInfo.debug": 0}
+            )
+            
+            data["_id"] = str(data["_id"])
+            r.set(data["_id"]  , json.dumps(data,default=json_util.default))
+            data = json.loads(json.dumps(data,default=json_util.default))
         else:
             data = json.loads(data)
 
