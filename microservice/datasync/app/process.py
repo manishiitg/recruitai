@@ -156,7 +156,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         else:
             job_profile_data[row["_id"]] = row
             
-        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+        r.set(str(row["_id"])  , json.dumps(row,default=str))
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -219,7 +219,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
     for row in docs:
         row["_id"] = str(row["_id"])
         job_profile_data[row["_id"]] = row
-        r.set(row["_id"]  , json.dumps(row,default=json_util.default))
+        r.set(str(row["_id"])  , json.dumps(row,default=str))
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -729,7 +729,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # .sort([("sequence", -1),("updatedAt", -1)])
             # .sort([("sequence", -1),("updatedAt", -1)])
                 # sort gives ram error
-        else:
+        elif findtype == "full":
             logger.critical("full")
 
             if "full" in pastInfoMap[account_name]:
@@ -764,7 +764,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             # .sort([("sequence", -1),("updatedAt", -1)])
             # .sort([("sequence", -1),("updatedAt", -1)])
                 # sort gives ram error
-
+        else:
+            ret = []
+            logger.critical("should not be here88888888888888888888888888888888888888888888888")
 
         job_profile_map = {}
         candidate_map = {}
@@ -777,8 +779,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 continue
 
             row["_id"] = str(row["_id"])
-            r.set(row["_id"]  , json.dumps(row,default=json_util.default))
-            
+            if 'job_profile_id' in row:
+                r.set(str(row["_id"])  , json.dumps(row,default=str))
+
             if "cvParsedInfo" in row:
                 cvParsedInfo = row["cvParsedInfo"]
                 if "debug" in cvParsedInfo:
@@ -1140,9 +1143,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         
         queue_process(True)
         
-    except ValueError as e:
+    except Exception as e:
         # we are restarting redids every 1hr now and this fails when we restart
-        logger.critical("exception %s", e)
+        logger.critical("exception $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", e)
     is_queue_process_running =  False
     logger.critical("######### process completed")
         
