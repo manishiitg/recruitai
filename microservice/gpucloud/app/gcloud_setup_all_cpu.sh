@@ -88,9 +88,9 @@ GIT_SSH_COMMAND='ssh -i /home/jupyter/drive/id_rsa -o UserKnownHostsFile=/dev/nu
 
 cd /home/jupyter/drive/
 
-# sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-# sudo chmod +x /usr/local/bin/docker-compose
-# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # sudo pip3 install git+https://github.com/beehiveai/compose.git
 # sudo pip3 install -U six
