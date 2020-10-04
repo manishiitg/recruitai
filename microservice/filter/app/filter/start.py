@@ -12,10 +12,11 @@ from threading import Thread
 from app.filter.util import getCourseDict
 from datetime import datetime
 
-from app.account import connect_redis
+from app.account import connect_redis, initDB
 
 import requests
 import hashlib   
+from app.datasyncpublisher import sendMessage as datasync
 
 def get_speedup_api(redisKey, url, payload, access_token, account_name, account_config):
 
@@ -93,7 +94,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 unique_cache_key_list = {}
-use_unique_cache_feature = False
+use_unique_cache_feature = True
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
@@ -121,7 +122,14 @@ def get_candidate_tags(account_name, account_config):
     if r.exists("classify_list"):
         classify_list = r.get("classify_list")
         classify_list = json.loads(classify_list)
-    
+    else:
+        datasync({
+            "action" : "full",
+            "cur_time" : time.time(),
+            "account_name": account_name,
+            "account_config" : account_config
+        })
+        return [-1]
 
     # for tag in tag_map.keys():
     for tag in classify_list:
@@ -344,7 +352,27 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         if isinstance(job_profile_data, list):
             job_profile_data = {}
     else:
-        job_profile_data = {}   
+        logger.critical("keys not found some problem! fetch from db")
+        if filter_type == "job_profile":
+            job_profile_data = {}
+            db = initDB(account_name, account_config)
+            ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
+            for row in ret:
+                row["_id"] = str(row["_id"])
+                job_profile_data[row["_id"]] = row
+
+            datasync({
+                "id" : mongoid,
+                "action" : "syncJobProfile",
+                "cur_time" : time.time(),
+                "account_name": account_name,
+                "account_config" : account_config
+            })
+        
+
+        
+        
+
 
     logger.critical("length of job profile data %s", len(job_profile_data))
 
@@ -665,7 +693,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
         logger.critical("response completed..")
-        response =  json.dumps(paged_tag_map)
+        response =  json.dumps(paged_tag_map, default=str)
 
         if filter_type != "job_profile":
             final_data = []
