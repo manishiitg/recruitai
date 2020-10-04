@@ -276,10 +276,10 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         ret["debug"] = {
             # "extractEntity": combinData["extractEntity"],
             # "compressedStructuredContent": combinData["compressedStructuredContent"]
-            "nerExtracted" : nerExtracted,
-            "predictions" : json.loads(json.dumps(predictions, default=str)),
-            "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
-            "page_contents" : page_contents
+            # "nerExtracted" : nerExtracted,
+            # "predictions" : json.loads(json.dumps(predictions, default=str)),
+            # "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
+            # "page_contents" : page_contents
         }
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = True) 

@@ -42,9 +42,14 @@ def fullparsing(filename, mongoid = None, skills = None, priority = 0):
         cv_date = meta["cv_timestamp_seconds"]
         priority, days, cur_time = get_resume_priority(meta["cv_timestamp_seconds"])
 
-    print(request.account_name)
-    print(request.account_config)
+    # print(request.account_name)
+    # print(request.account_config)
 
+    if "reduce_priority" in request.account_config:
+        priority = priority - int(request.account_config["reduce_priority"])
+        if priority < 0:
+            priority = 0
+        request.account_config["reduce_priority"] = 0
     
     sendMessage({
         "filename" : filename,
