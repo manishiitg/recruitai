@@ -133,28 +133,50 @@ services:
 
 
     redis:
-        image: redis
-        command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
+        image: bitnami/redis:latest
+        # command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
         environment: 
-            - REDIS_APPENDONLY=yes
-            - REDIS_APPENDFSYNC=always
+            - ALLOW_EMPTY_PASSWORD=yes
+            - REDIS_REPLICATION_MODE=master
         volumes:
-            - redis-data:/data
+            - /home/manish/redis-data:/bitnami/redis/data
             - /var/log/redis:/var/log/redis
         ports:
             - 6379:6379
         networks:
             - ai
-                
-    redis-commander:
-        container_name: redis-commander
-        hostname: redis-commander
-        image: rediscommander/redis-commander:latest
-        restart: always
-        environment:
-        - REDIS_HOSTS=local:redis:6379
+            
+    redis-replica:
+        image: 'bitnami/redis:latest'
         ports:
-        - "8081:8081"
+            - '6379'
+        depends_on:
+            - redis
+        environment:
+            - REDIS_REPLICATION_MODE=slave
+            - REDIS_MASTER_HOST=redis
+            - REDIS_MASTER_PORT_NUMBER=6379
+            - ALLOW_EMPTY_PASSWORD=yes
+            # - REDIS_MASTER_PASSWORD=my_master_password
+            # - REDIS_PASSWORD=my_replica_password
+        networks:
+            - ai
+
+    redis-replica-2:
+        image: 'bitnami/redis:latest'
+        ports:
+            - '6379'
+        depends_on:
+            - redis
+        environment:
+            - REDIS_REPLICATION_MODE=slave
+            - REDIS_MASTER_HOST=redis
+            - REDIS_MASTER_PORT_NUMBER=6379
+            - ALLOW_EMPTY_PASSWORD=yes
+            # - REDIS_MASTER_PASSWORD=my_master_password
+            # - REDIS_PASSWORD=my_replica_password
+        networks:
+            - ai
 
     api:
         image: recruitai/api:latest
