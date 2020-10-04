@@ -133,8 +133,8 @@ sudo mkdir -p /var/log/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet --ignore-pull-failures
-sudo docker-compose -f docker-compose-cpu-all.yml up -d --scale=picturemq=3 --scale=resumemq=3
+sudo docker-compose -f docker-compose-cpu-all.yml pull picturemq --quiet --ignore-pull-failures
+sudo docker-compose -f docker-compose-cpu-all.yml up -d picturemq --scale=picturemq=9
 
 for i in `seq 1 1000`;
 do
