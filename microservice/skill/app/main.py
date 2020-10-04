@@ -134,7 +134,7 @@ def on_recv_req(ch, method, properties, body):
 import subprocess
 def main():
 
-    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
+    result = subprocess.run(['gsutil', '-m', 'cp', '-r',
                              'gs://general_ai_works/word2vec/', '/workspace/word2vec'], stdout=subprocess.PIPE)
 
     print(result)
