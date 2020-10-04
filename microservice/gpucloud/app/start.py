@@ -150,6 +150,9 @@ def queue_process():
                                         max_time_passed = 60 * 15
                                     if queue_type == "all" or queue_type == "resume":
                                         max_time_passed = 60 * 20
+                                    
+                                    if "cpu" in running_instance_name:
+                                        max_time_passed = 60 * 5
 
                                     if time_passed > max_time_passed:
                                         slack_message(f"some wrong majorly so deleting instance {running_instance_name} as time passed {time_passed}")
