@@ -133,7 +133,7 @@ sudo mkdir -p /var/log/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull # this is not working, this picks up cpu instead cpu
+sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet --ignore-pull-failures
 sudo docker-compose -f docker-compose-cpu-all.yml up -d
 
 for i in `seq 1 1000`;
