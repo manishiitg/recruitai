@@ -8,6 +8,15 @@ sudo apt-get update
 sudo apt-get install curl git
 
 
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+
 # sudo lsblk
 # sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 sudo mkdir -p /home/jupyter/drive
@@ -98,24 +107,10 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # sudo pip3 install -U six
 cd /home/jupyter/drive/recruitai
 
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 
 sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
 sudo echo "116.202.234.182 redis" >> /etc/hosts
-
-
-export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google')
-export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
-
-
-# sudo /opt/deeplearning/install-driver.sh
 
 
 ########################
@@ -132,11 +127,11 @@ sudo mkdir -p /var/log/recruitai
 ==========================
 
 
-cd /home/jupyter/recruitai
+cd /home/jupyter/drive/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull picturemq --quiet --ignore-pull-failures
+sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet picturemq
 sudo docker-compose -f docker-compose-cpu-all.yml up -d picturemq --scale=picturemq=9
 
 for i in `seq 1 1000`;
