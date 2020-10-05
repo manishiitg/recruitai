@@ -109,8 +109,8 @@ sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
 sudo echo "116.202.234.182 redis" >> /etc/hosts
 
 
-export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google')
-export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
+# export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google')
+# export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google')
 
 
 # sudo /opt/deeplearning/install-driver.sh
