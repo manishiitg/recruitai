@@ -33,7 +33,8 @@ def check_missing_ai_data():
     sendMessage({
         "action" : "check_missing_ai_data",
         "account_name": request.account_name,
-        "account_config" : request.account_config
+        "account_config" : request.account_config,
+        "priority" : 10
     })
 
     return jsonify(""), 200
@@ -298,7 +299,8 @@ def candidate_bulk():
                 "job_profile_id" : job_profile_id,
                 "cur_time" : time.time(),
                 "account_name": request.account_name,
-                "account_config" : request.account_config
+                "account_config" : request.account_config,
+                "priority" : 10
             })
 
             return jsonify(""), 200
@@ -313,7 +315,8 @@ def candidate_bulk():
                 "job_profile_id" : job_profile_id,
                 "cur_time" : time.time(),
                 "account_name": request.account_name,
-                "account_config" : request.account_config
+                "account_config" : request.account_config,
+                "priority" : 10
             })
             return jsonify(""), 200
 
@@ -327,7 +330,8 @@ def candidate_bulk():
                 "job_profile_id" : job_profile_id,
                 "cur_time" : time.time(),
                 "account_name": request.account_name,
-                "account_config" : request.account_config
+                "account_config" : request.account_config,
+                "priority" : 10
             })
             return jsonify(""), 200
 
@@ -356,7 +360,8 @@ def candidate(id, field = ""):
             "action" : "syncCandidate",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
@@ -380,7 +385,8 @@ def classifyMoved(candidate_id, from_id, to_id):
             "action" : "classifyMoved",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
@@ -404,7 +410,8 @@ def classifyJobMoved(candidate_id, from_classify_id, to_job_id):
             "action" : "classifyJobMoved",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
@@ -428,7 +435,8 @@ def jobprofileMoved(candidate_id, from_id, to_id):
             "action" : "syncJobProfileChange",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
@@ -450,7 +458,8 @@ def jobprofile(id):
             "action" : "syncJobProfile",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
@@ -471,7 +480,8 @@ def full():
             "action" : "full",
             "cur_time" : time.time(),
             "account_name": request.account_name,
-            "account_config" : request.account_config
+            "account_config" : request.account_config,
+            "priority" : 10
         })
 
         return jsonify([]), 200
