@@ -127,7 +127,8 @@ def get_candidate_tags(account_name, account_config):
             "action" : "full",
             "cur_time" : time.time(),
             "account_name": account_name,
-            "account_config" : account_config
+            "account_config" : account_config,
+            "priority" : 10
         })
         return [-1]
 
@@ -353,8 +354,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             job_profile_data = {}
     else:
         logger.critical("keys not found some problem! fetch from db")
+        job_profile_data = {}
         if filter_type == "job_profile":
-            job_profile_data = {}
+            
             db = initDB(account_name, account_config)
             ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
             for row in ret:
@@ -366,7 +368,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 "action" : "syncJobProfile",
                 "cur_time" : time.time(),
                 "account_name": account_name,
-                "account_config" : account_config
+                "account_config" : account_config,
+                "priority" : 10
             })
         
 
@@ -416,14 +419,15 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         else:
             # if filter_type != 'full':
             def custom_sort_date(item):
-                if "created_at" in item[1]:    
+                if "email_timestamp" in item[1]:    
                     # 2020-06-17 15:12:44.156000
-                    return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    # return datetime.utcfromtimestamp(email_timestamp)
+                    return item[1]["email_timestamp"]
                 else:
                     return -1
 
-            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
-            
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
         
         logger.critical("sorted..")
 
@@ -445,15 +449,14 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
         else:
             def custom_sort_date(item):
-                if "created_at" in item[1]:    
+                if "email_timestamp" in item[1]:    
                     # 2020-06-17 15:12:44.156000
-                    return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
+                    return item[1]["email_timestamp"]
                 else:
                     return -1
 
-            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date)}
-
-
+            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
 
     tagged_job_profile_data = {}
     for id in job_profile_data:
