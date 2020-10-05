@@ -360,7 +360,7 @@ def queue_process(is_direct = False, add_thread = True):
     # this is causing issues with long run process. like full sync. full is running but in between dirtyMap gets empty
     # so data is inconsistant
 
-    logger.critical("checking dirty data %s" , localMap)
+    # logger.critical("checking dirty data %s" , localMap)
     for account_name in localMap:
         r = connect_redis(account_name, account_config_map[account_name])
         # print(localMap[account_name].keys())
@@ -432,7 +432,7 @@ def check_ai_missing_data(account_name, account_config):
         return
     
     in_process = queues["resume"]["in_process"]
-    logger.critical("resume in progress")
+    logger.critical("resume in progress %s", in_process)
 
     if in_process > 10:
         logger.critical("skipping checking ai missing data as resume in progress")
@@ -440,8 +440,6 @@ def check_ai_missing_data(account_name, account_config):
 
     logger.critical("checking ai missing data")
     # some time randomly. few cv's are missing ai data. so checking them here and adding them ai data
-
-    logger.critical("check missing ai data")
 
     db = initDB(account_name, account_config)
     ret = db.emailStored.find({
@@ -484,12 +482,14 @@ def check_ai_missing_data(account_name, account_config):
 
     for row in ret:
         
-
+        logger.critical("checking %s", str(row["_id"]))
         
         if "email_timestamp" not in row:
+            logger.critical("no timestamp found skipping %s", str(row["_id"]))
             continue
         
         if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
+            logger.critical("time stamp to early skipping %s", str(row["_id"]))
             continue
 
         
@@ -779,8 +779,17 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 continue
 
             row["_id"] = str(row["_id"])
+
+            
+
+            # if 'job_profile_id' in row:
+            # this is because all logic below assumes job_profile_id is not there if no job
             if 'job_profile_id' in row:
-                r.set(str(row["_id"])  , json.dumps(row,default=str))
+                if len(row['job_profile_id'].strip()) == 0:
+                    del row['job_profile_id']
+
+            r.set(str(row["_id"])  , json.dumps(row,default=str))
+
 
             if "cvParsedInfo" in row:
                 cvParsedInfo = row["cvParsedInfo"]
@@ -794,7 +803,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 # logger.critical("job profile not found!!!")
                 job_profile_id = None
 
-                mapKey = "classify_NOT_ASSIGNED"
+                mapKey = "NOT_ASSIGNED"
                 is_old = False
                 month_year = ""
 
@@ -814,26 +823,43 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     is_old = False
                 
                 if is_old:
-                    mapKey = "classify_NOT_ASSIGNED" + month_year
+                    mapKey = "NOT_ASSIGNED" + month_year
 
-                if mapKey not in redisKeyMap[account_name]:
-                    job_data = r.get(mapKey)
-                    if job_data is None:
-                        job_data = {}
-                    else:
-                        job_data = json.loads(job_data)
-                else:
-                    job_data = redisKeyMap[account_name][mapKey]
+                candidate_label = mapKey
+
+                # if row["sender_mail"] == "ramyajarugu114@gmail.com":
+                #     print(mapKey)
+
+                if candidate_label not in candidate_map:
+                    candidate_map[candidate_label] = {}
+
+                candidate_map[candidate_label][row["_id"]] = row
+
+                if "ex_job_profile" in row:
+                    candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+                    mapKey = candidate_label
+
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                        if days > 15:
+                            mapKey = mapKey + month_year
+
                     
-                job_data[row["_id"]] = row
-                redisKeyMap[account_name][mapKey] = job_data
+                    candidate_label = mapKey
 
-                local_dirtyMap[account_name][mapKey] = {
-                    "filter_dirty" : True,
-                    "redis_dirty" : True
-                }
-                
+                    if candidate_label not in candidate_map:
+                        candidate_map[candidate_label] = {}
+
+                    candidate_map[candidate_label][row["_id"]] = row
             
+            # if "sender_mail" in row:
+            #     if row["sender_mail"] == "ramyajarugu114@gmail.com":
+            #         process.exit(0)
 
             
 
@@ -868,11 +894,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                         candidate_map[candidate_label][row["_id"]] = row
 
-            if "ex_job_profile" in row:
-                candidate_label = "Ex-" + row["ex_job_profile"]["name"]
-                if candidate_label not in candidate_map:
-                    candidate_map[candidate_label] = {}
-                candidate_map[candidate_label][row["_id"]] = row
+            # if "ex_job_profile" in row:
+            #     candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+            #     if candidate_label not in candidate_map:
+            #         candidate_map[candidate_label] = {}
+            #     candidate_map[candidate_label][row["_id"]] = row
 
                 
             full_map[row["_id"]] = row
@@ -901,7 +927,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 # so they create multiple connections
                 # threads.append(t)
                 sendToSearchIndex(row, r, findtype, account_name, account_config)
-                
+
                 if job_profile_id is not None:
                     logger.critical("job profile %s", job_profile_id)
                     mapKey = "job_" + job_profile_id
