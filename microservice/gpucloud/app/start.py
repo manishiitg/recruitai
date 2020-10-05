@@ -67,12 +67,15 @@ def queue_process():
     except Exception as e:
         return
     
+    indv_queue_count_thresh = 3000
+    if not use_gpu:
+        indv_queue_count_thresh = 500
 
     for queue_type in ["all", "summary", "picture", "resume"]:
         if run_combined_gpu:
             if queue_type != "all":
                 
-                if int(queues[queue_type]['in_process']) < 3000:
+                if int(queues[queue_type]['in_process']) < indv_queue_count_thresh:
                     continue
         else:
             if queue_type == "all":
@@ -90,14 +93,21 @@ def queue_process():
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
 
-                if int(queues[queue_type]['in_process']) > 3000 and queue_type != "all":
+                if int(queues[queue_type]['in_process']) > indv_queue_count_thresh and queue_type != "all":
                     instance_count = 0
+                    max_instance_count_to_start = 1
+                    if not use_gpu:
+                        max_instance_count_to_start = int(queues[queue_type]['in_process']) % indv_queue_count_thresh
+
+                    if max_instance_count_to_start > 5:
+                        max_instance_count_to_start = 5
+
                     for instance in instance_status:
                         running_instance_name = instance["running_instance_name"]
                         if queue_type in running_instance_name:
                             instance_count += 1
 
-                    if instance_count == 0:
+                    if instance_count < max_instance_count_to_start:
                         LOGGER.critical("need to start another gpu as more than 3k jobs pending")
                         slack_message("need to start another gpu as more than 3k jobs pending" + str(queues[queue_type]['in_process']) + "for queue type " + queue_type)
                         start_compute_preementable(type_instance_name, queue_type , len(instance_status) + 1)
@@ -105,14 +115,14 @@ def queue_process():
                         
 
                 if len(instance_status) >= 1:
-                    if int(queues[queue_type]['in_process']) < 1000:
+                    if int(queues[queue_type]['in_process']) < 1000 and use_gpu:
                         instance = instance_status[-1]
                         is_any_torch_running = instance["is_any_torch_running"]
                         is_torch_responding = instance["is_torch_responding"]
                         running_instance_name = instance["running_instance_name"]
                         running_instance_zone = instance["zone"]
                         created_at = instance['created_at']
-                        if created_at > min_run_gpu * 60:
+                        if created_at > min_run_gpu * 60 or not use_gpu:
                             LOGGER.critical("killing second running gpus as no need")
                             slack_message(f"killing second running gpus as no need: {queues[queue_type]['in_process']}")
                             delete_instance(running_instance_name,
@@ -182,7 +192,7 @@ def queue_process():
                 LOGGER.critical("%s has less than %s no need to start gpu %s",
                                 queue_type, min_process_to_start_gpu, queues["summary"])
 
-                instance_status = check_compute_running(type_instance_name)
+                instance_status = check_compute_running("torch") # need to check for torch only else it causes problem with different queue tpyes
                 LOGGER.critical("number of running instances %s",
                                 len(instance_status))
                 if len(instance_status) > 0:
@@ -196,9 +206,9 @@ def queue_process():
 
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
                                                 type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
-                            if created_at > min_run_gpu * 60:
+                            if created_at > min_run_gpu * 60  or not use_gpu:
                                 LOGGER.critical("killing running gpus as no need")
-                                slack_message(f"killing running gpus as no need: {queues[queue_type]['in_process']}")
+                                slack_message(f"killing running gpus {running_instance_name} as no need: {queues[queue_type]['in_process']}")
                                 delete_instance(running_instance_name,
                                                 running_instance_zone, "work completed")
                                 if running_instance_name in running_instance_check:
@@ -487,8 +497,8 @@ def start_compute(instance_name, zone, queue_type):
 
 def delete_instance(instance_name, zone, reason):
     # if is_any_torch_running:
-    LOGGER.critical("delete instance")
-    return
+    # LOGGER.critical("delete instance")
+    # return
     email_subject = "delete instance " + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " " + reason
     email_content = ""
 
