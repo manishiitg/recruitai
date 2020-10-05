@@ -339,6 +339,15 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     tag_map = {}
     tag_count_map = {}
     
+    datasync({
+                # "id" : mongoid,
+                "action" : "full",
+                "cur_time" : time.time(),
+                "account_name": account_name,
+                "account_config" : account_config,
+                "priority" : 10
+            })
+
 
     if filter_type == "job_profile":
         job_profile_data = r.get("job_" + mongoid)
@@ -363,15 +372,28 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 row["_id"] = str(row["_id"])
                 job_profile_data[row["_id"]] = row
 
-            datasync({
-                "id" : mongoid,
-                "action" : "syncJobProfile",
+            
+        else:
+            if mongoid == "NOT_ASSIGNED":
+                db = initDB(account_name, account_config)
+                ret = db.emailStored.find(
+                    {"$or" : [
+                        {"job_profile_id" : {"$exists":False}},
+                        {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
+                    ]}, 
+                    {"body": 0, "cvParsedInfo.debug": 0})
+                for row in ret:
+                    row["_id"] = str(row["_id"])
+                    job_profile_data[row["_id"]] = row
+        
+        datasync({
+                # "id" : mongoid,
+                "action" : "full",
                 "cur_time" : time.time(),
                 "account_name": account_name,
                 "account_config" : account_config,
                 "priority" : 10
             })
-        
 
         
         
@@ -716,7 +738,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 "read" : final_read,
                 "unread" : final_unread
             }
-            response =  json.dumps(response)
+            response =  json.dumps(response, default=str)
 
         if len(filter) == 0:
             r.set(unique_cache_key, response)

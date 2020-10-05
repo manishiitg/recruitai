@@ -7,7 +7,7 @@ import json
 
 # publisher
 
-amqp_url = os.environ.get('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connection_attempts=3&heartbeat=3600")
+amqp_url = os.environ.get('RABBIT_DB')
 
 
 class DataSyncPublisher(object):
@@ -165,7 +165,8 @@ class DataSyncPublisher(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         self._channel.queue_declare(
-            queue=queue_name, durable=True, callback=self.on_queue_declareok)
+            queue=queue_name, durable=True, callback=self.on_queue_declareok, arguments = {'x-max-priority': 10})
+            
 
     def on_queue_declareok(self, _unused_frame):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -263,10 +264,14 @@ class DataSyncPublisher(object):
         if self._channel is None or not self._channel.is_open:
             return
 
+        if "priority" not in self.message:
+            self.message["priority"] = 1
+
         properties = pika.BasicProperties(
             app_id='aiapi-publisher',
             content_type='application/json',
-            delivery_mode = 2)
+            delivery_mode = 2,
+            priority=self.message["priority"])
 
         message = self.message
 
