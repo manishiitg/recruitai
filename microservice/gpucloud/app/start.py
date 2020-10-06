@@ -207,8 +207,8 @@ def queue_process():
                             LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
                                                 type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
                             if created_at > min_run_gpu * 60  or not use_gpu:
-                                LOGGER.critical("killing running gpus as no need")
-                                slack_message(f"killing running gpus {running_instance_name} as no need: {queues[queue_type]['in_process']}")
+                                LOGGER.critical("killing running gpus as work completed")
+                                slack_message(f"killing running gpus {running_instance_name} as work completed: {queues[queue_type]['in_process']}")
                                 delete_instance(running_instance_name,
                                                 running_instance_zone, "work completed")
                                 if running_instance_name in running_instance_check:
