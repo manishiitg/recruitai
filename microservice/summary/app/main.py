@@ -364,8 +364,11 @@ class TaskQueue(object):
             "account_name": account_name,
             "account_config": account_config
         })
-        process(message["filename"], message["mongoid"], priority,
-                account_name, account_config)
+        if priority > 2:
+            process(message["filename"], message["mongoid"], priority,
+                    account_name, account_config)
+        else:
+            LOGGER.critical("skipping summary for priority less than 2")
 
         r.set(duplicate_key, duplicate_key_check, ex=1 * 60 * 60 * 24)
 
