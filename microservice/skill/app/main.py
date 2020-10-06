@@ -19,7 +19,7 @@ SERVER_QUEUE = "rpc.skill.queue"
 
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.skillsword2vec.start import loadModel, loadGlobalModel, get_similar, vec_exists, get_start_match
+from app.skillsword2vec.start import loadModel, loadDomainModel, get_similar, vec_exists, get_start_match, get_domain_list
 from app.statspublisher import sendMessage as updateStats
 
 import time
@@ -74,28 +74,36 @@ def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
     logger.info(body)
     if isinstance(body, dict):
-        if "match" in body:
-            if "isGlobal" in body:
-                isGlobal = True
-            else:
-                isGlobal = False
+        if 'domain_list' in body:
+            ret = get_domain_list()
+            ret = json.dumps(ret)
+            add_threadsafe_callback(ch, method_frame,properties,ret)
 
-            ret = get_start_match(body["text"], isGlobal)
+        elif "match" in body:
+            domain = None
+            if "domain" in body:
+                domain = body["domain"]
+
+            ret = get_start_match(body["text"], domain)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties,ret)
 
         elif "keyword" in body:
-            if "isGlobal" in body:
-                isGlobal = True
-            else:
-                isGlobal = False
+            domain = None
+            if "domain" in body:
+                domain = body["domain"]
 
             serializedPositiveSkill,  serializedNegativeSkill = processWord2VecInput(body["keyword"])
             
-            similar = get_similar(serializedPositiveSkill, serializedNegativeSkill, isGlobal)
+            try:
+                similar = get_similar(serializedPositiveSkill, serializedNegativeSkill, domain)
+                logger.info("similar response %s", similar)
+                ret = json.dumps(similar)
+            except Exception as e:
+                ret = str(e)
+            
 
-            logger.info("similar response %s", similar)
-            ret = json.dumps(similar)
+            
             add_threadsafe_callback(ch, method_frame,properties,ret)
             
 
@@ -134,13 +142,13 @@ def on_recv_req(ch, method, properties, body):
 import subprocess
 def main():
 
-    result = subprocess.run(['gsutil', '-m', 'cp', '-r',
+    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
                              'gs://general_ai_works/word2vec/', '/workspace/word2vec'], stdout=subprocess.PIPE)
 
     print(result)
 
     loadModel()
-    # loadGlobalModel()
+    loadDomainModel()
     global conn
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
