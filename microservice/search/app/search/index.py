@@ -123,10 +123,12 @@ def searchDoc(searchText, account_name, account_config):
                 } , 
                 {"body": 0, "cvParsedInfo.debug": 0}
             )
-            
-            data["_id"] = str(data["_id"])
-            r.set(data["_id"]  , json.dumps(data,default=json_util.default))
-            data = json.loads(json.dumps(data,default=json_util.default))
+            if data is None:
+                data = {}
+            else:
+                data["_id"] = str(data["_id"])
+                r.set(data["_id"]  , json.dumps(data,default=json_util.default))
+                data = json.loads(json.dumps(data,default=json_util.default))
         else:
             data = json.loads(data)
 

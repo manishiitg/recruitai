@@ -17,18 +17,27 @@ from app.util import check_and_validate_account
 bp = Blueprint('skill', __name__, url_prefix='/skill')
 
 @bp.route('/match/<string:keyword>', methods=['GET'])
+@bp.route('/match/<string:keyword>/<string:domain>', methods=['GET'])
 @check_and_validate_account
-def match_similar(keyword):
+def match_similar(keyword, domain = None):
     logger.info("got match %s", keyword)
     try:
 
-        similar = sendBlockingMessage({
-            "text" : keyword,
-            "match" : True,
-            "isGlobal": False,
-            "account_name": request.account_name,
-            "account_config" : request.account_config
-        })
+        if domain:
+            similar = sendBlockingMessage({
+                "text" : keyword,
+                "match" : True,
+                "domain" : domain,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+        else:
+            similar = sendBlockingMessage({
+                "text" : keyword,
+                "match" : True,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
         return jsonify(similar), 200
     except KeyError as e:
         logger.critical(e)
@@ -38,13 +47,38 @@ def match_similar(keyword):
 # @jwt_required
 # @token.admin_required
 @bp.route('/<string:keyword>', methods=['GET'])
+@bp.route('/<string:keyword>/<string:domain>', methods=['GET'])
 @check_and_validate_account
-def similar(keyword):
+def similar(keyword, domain = None):
     logger.info("got keyword %s", keyword)
     try:
 
+        if domain:
+            similar = sendBlockingMessage({
+                "keyword" : keyword,
+                "domain" : domain,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+        else:
+            similar = sendBlockingMessage({
+                "keyword" : keyword,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+        return jsonify(similar), 200
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/domain_list', methods=['GET'])
+@check_and_validate_account
+def domain_list():
+    logger.info("domain_list")
+    try:
+
         similar = sendBlockingMessage({
-            "keyword" : keyword,
+            "domain_list" : True,
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
@@ -52,7 +86,6 @@ def similar(keyword):
     except KeyError as e:
         logger.critical(e)
         return jsonify(str(e)), 500
-
 
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
