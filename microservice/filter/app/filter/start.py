@@ -98,8 +98,7 @@ use_unique_cache_feature = True
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
-def get_candidate_tags(account_name, account_config):
-    # tags = ["TeachingEducation", "HRRecruitment", "accounts", "Sales", "legal", "softwaredevelopment", "marketing", "customerservice"]
+def get_candidate_tags_v2(account_name, account_config):
     r = connect_redis(account_name, account_config)
 
     tag_map = {
@@ -132,6 +131,7 @@ def get_candidate_tags(account_name, account_config):
         })
         return [-1]
 
+
     # for tag in tag_map.keys():
     for tag in classify_list:
 
@@ -158,23 +158,131 @@ def get_candidate_tags(account_name, account_config):
                 tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
 
         title = tag_map[tag]
-        response.append({
-                "active_status": True,
-                "assign_to_all_emails": False,
-                "count": job_profile_data_len,
-                "default": True,
-                "id": len(response),
-                "parent_id": "0",
-                "read": -1,
-                "roundDetails": [],
-                "sequence": 0,
-                "title": title,
-                "unread": -1,
-                "_id": len(response),
-                "key" : tag
-                })
 
-    return sorted(response, key=lambda x: x['count'], reverse=True)
+        if "-" in title:
+            nest = title.split("-")
+            parent = nest[0]
+            for idx, resp in enumerate(response):
+                if resp["title"] == parent:
+                    children = resp["children"]
+                    child_title = " ".join(nest[1:])
+                    response[idx]["children"].append({
+                        "active_status": True,
+                        "assign_to_all_emails": False,
+                        "count": job_profile_data_len,
+                        "default": True,
+                        "id": str(len(response)) + "-" + str(len(resp["children"])),
+                        "parent_id": "0",
+                        "read": -1,
+                        "roundDetails": [],
+                        "sequence": 0,
+                        "title": child_title,
+                        "unread": -1,
+                        "_id": str(len(response)) + "-" + str(len(resp["children"])),
+                        "key" : tag
+                    })
+
+
+        else:
+            response.append({
+                    "active_status": True,
+                    "assign_to_all_emails": False,
+                    "count": job_profile_data_len,
+                    "default": True,
+                    "id": len(response),
+                    "parent_id": "0",
+                    "read": -1,
+                    "roundDetails": [],
+                    "sequence": 0,
+                    "title": title,
+                    "unread": -1,
+                    "_id": len(response),
+                    "key" : tag,
+                    "children" : []
+                    })
+
+    # return sorted(response, key=lambda x: x['count'], reverse=True)
+    return response
+
+def get_candidate_tags(account_name, account_config):
+    # if account_name == "rocketrecruit":
+    return get_candidate_tags_v2(account_name, account_config)
+    # tags = ["TeachingEducation", "HRRecruitment", "accounts", "Sales", "legal", "softwaredevelopment", "marketing", "customerservice"]
+    # r = connect_redis(account_name, account_config)
+
+    # tag_map = {
+    #     "NOT_ASSIGNED" : "No Job Assigned",
+    #     "softwaredevelopment" : "Software Development",
+    #     "HRRecruitment" : "HR",
+    #     "accounts" : "Accounts",
+    #     "Sales" : "Sales",
+    #     "legal" : "Legal",
+    #     "marketing" : "Marketing",
+    #     "customerservice" : "Customer Service",
+    #     "TeachingEducation" : "Education",
+    # }
+
+    # response = []
+
+    # classify_tags = []
+
+    # classify_list = []
+    # if r.exists("classify_list"):
+    #     classify_list = r.get("classify_list")
+    #     classify_list = json.loads(classify_list)
+    # else:
+    #     datasync({
+    #         "action" : "full",
+    #         "cur_time" : time.time(),
+    #         "account_name": account_name,
+    #         "account_config" : account_config,
+    #         "priority" : 10
+    #     })
+    #     return [-1]
+
+    # # for tag in tag_map.keys():
+    # for tag in classify_list:
+
+    #     tag = tag.replace("classify_","")
+        
+    #     job_profile_data = r.get("classify_" + tag)      
+    #     if not job_profile_data:
+    #         job_profile_data_len = 0
+    #     else:
+    #         job_profile_data_len = r.get("classify_" + tag + "_len")
+    #         if job_profile_data_len is None:
+    #             job_profile_data_len = 0
+    #         else:
+    #             job_profile_data_len = int(job_profile_data_len)
+
+    #     if tag not in tag_map:
+    #         if "Ex-" in tag:
+    #             tag_map[tag] = tag
+    #         elif "-" in tag:
+    #             tags = tag.split("-")
+    #             if tags[0] in tag_map:
+    #                 tag_map[tag] = tag.replace(tags[0],tag_map[tags[0]])
+    #         else:
+    #             tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
+
+    #     title = tag_map[tag]
+    #     response.append({
+    #             "active_status": True,
+    #             "assign_to_all_emails": False,
+    #             "count": job_profile_data_len,
+    #             "default": True,
+    #             "id": len(response),
+    #             "parent_id": "0",
+    #             "read": -1,
+    #             "roundDetails": [],
+    #             "sequence": 0,
+    #             "title": title,
+    #             "unread": -1,
+    #             "_id": len(response),
+    #             "key" : tag
+    #             })
+
+    # return sorted(response, key=lambda x: x['count'], reverse=True)
 
 
 def indexAll(account_name, account_config):
@@ -338,15 +446,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     
     tag_map = {}
     tag_count_map = {}
-    
-    datasync({
-                # "id" : mongoid,
-                "action" : "full",
-                "cur_time" : time.time(),
-                "account_name": account_name,
-                "account_config" : account_config,
-                "priority" : 10
-            })
 
 
     if filter_type == "job_profile":
@@ -622,8 +721,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                             if "debug" in cvParsedInfo:
                                 del cvParsedInfo["debug"]
 
-                            if "newCompressedStructuredContent" in cvParsedInfo:
-                                del cvParsedInfo["newCompressedStructuredContent"]
+                            # if "newCompressedStructuredContent" in cvParsedInfo:
+                            #     del cvParsedInfo["newCompressedStructuredContent"]
                             
                         else:
                             cvParsedInfo = {}
