@@ -714,6 +714,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 if t > cur_time:
                     logger.critical("skpping the sync as we have already synced more recent data")
+                    is_queue_process_running =  False
                     return ""
 
             pastInfoMap[account_name]["syncJobProfile" + job_profile_id] = time.time()
@@ -737,6 +738,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 if t > cur_time:
                     logger.critical("skpping the sync as we have already synced more recent data")
+                    is_queue_process_running =  False
                     return ""
 
             pastInfoMap[account_name]["full"] = time.time()
@@ -809,7 +811,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 if "email_timestamp" in row:
                     timestamp_seconds = int(row["email_timestamp"])/1000
-                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                     cur_time = time.time()
                     days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
@@ -841,7 +843,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                         cur_time = time.time()
                         days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
@@ -881,7 +883,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     if candidate_label:
                         if "email_timestamp" in row:
                             timestamp_seconds = int(row["email_timestamp"])/1000
-                            month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                            month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                             cur_time = time.time()
                             days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
@@ -998,7 +1000,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                         cur_time = time.time()
                         days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
@@ -1040,7 +1042,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                         cur_time = time.time()
                         days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
@@ -1072,7 +1074,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%b-%Y')
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
                         cur_time = time.time()
                         days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
