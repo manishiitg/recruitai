@@ -275,7 +275,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         ret["debug"] = {
             "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": combinData["compressedStructuredContent"]
+            "compressedStructuredContent": combinData["compressedStructuredContent"],
             "nerExtracted" : nerExtracted,
             "predictions" : json.loads(json.dumps(predictions, default=str)),
             "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
