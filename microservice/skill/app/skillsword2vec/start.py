@@ -10,7 +10,7 @@ def test():
 
 model_words = []
 global_model_words = []
-def get_start_match(text, isGlobal = False):
+def get_start_match(text, isGlobal = False, domain = None):
     if len(text) <= 2:
         # need atleast 2 letters for this to work
         return []
@@ -22,8 +22,8 @@ def get_start_match(text, isGlobal = False):
     
     model_words_to_use = []
 
-    if isGlobal and False:
-        model = loadGlobalModel()
+    if isGlobal:
+        model = loadDomainModel(domain)
         if len(global_model_words) == 0:    
             for word in model.wv.vocab:
                 global_model_words.append(word + "")
@@ -60,9 +60,9 @@ def get_start_match(text, isGlobal = False):
     
     
 
-def get_similar(positive, negative, isGlobal = False):
-    if isGlobal:
-        model = loadGlobalModel()
+def get_similar(positive, negative, domain = None):
+    if domain:
+        model = loadDomainModel(domain)
     else:
         model = loadModel()
 
@@ -77,26 +77,70 @@ def get_similar(positive, negative, isGlobal = False):
     return model.wv.most_similar(positive=positive,negative=negative)
     
 
-globalModel = None
-
-def vec_exists(word, isGlobal = False):
-    if isGlobal:
-        model = loadGlobalModel()
+def vec_exists(word, isGlobal = False, domain = None):
+    if domain:
+        model = loadDomainModel(domain)
     else:
         model = loadModel()
+        
     try:
       model.wv.get_vector(word)
       return True
     except KeyError:
       return False
 
-def loadGlobalModel():
-    global globalModel
-    if globalModel is None:
-        logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
-        model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
+globalModel = {}
+domainList = []
+
+from os import walk
+import glob
+
+def get_domain_list():
+    global domainList
+
     
-    return globalModel
+    name_map = {
+        "Teaching Education.bin" : "Education",
+        "Sales.bin" : "Sales",
+        "software development.bin": 'Software Development',
+        "marketing.bin" : "Marketing",
+        "legal.bin" :"Legal",
+        "customer service.bin":"Customer Service",
+        "HR Recruitment.bin": "HR Recruitment",
+        "accounts.bin": "Accounts",
+        "others" : "Others"
+    }
+    
+    return name_map
+
+def loadDomainModel(domain = None):
+    global globalModel
+    global domainList
+    if not domain:
+        models = glob.glob("/workspace/word2vec/word2vec/*.bin")
+        logger.critical(models)
+        for model in models:
+            if "-" not in model:
+                continue
+            else:
+                domain = model.split("-")[1]
+                domainList.append(domain)
+                globalModel[domain] = Word2Vec.load(model)
+        return globalModel
+    else:
+        if domain == "others":
+            return loadModel()
+        
+        # if globalModel is None:
+        #     logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
+        #     model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
+        if domain in globalModel:
+            return globalModel[domain]
+        else:
+            return None
+    
+    
+
 
 model = None
 def loadModel():
@@ -104,7 +148,4 @@ def loadModel():
     if model is None:
         logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
         model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
-
-    
-
     return model
