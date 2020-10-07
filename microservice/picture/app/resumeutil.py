@@ -60,11 +60,6 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
             traceback.print_exc(file=sys.stdout)
             return {"error" : str(e)}
 
-
-        # pic is not being shown anywhere on frontend and 90% cv's dont have it
-        # i think it should be trained with document layour analysic
-        # or i can use a smaller detectron2 model for this.
-        # for now just disableing it 
         
 
         response, basedir = extractPicture(dest ,cvdir, account_name, account_config)
