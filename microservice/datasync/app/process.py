@@ -422,6 +422,98 @@ def queue_process(is_direct = False, add_thread = True):
     queue_running_count = 0
     
 
+def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config, is_fast_ai = False):
+    count = 0
+    for row in ret:
+        
+        logger.critical("checking %s", str(row["_id"]))
+        
+        if "email_timestamp" not in row:
+            logger.critical("no timestamp found skipping %s", str(row["_id"]))
+            continue
+        
+        if not is_fast_ai:
+            if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
+                logger.critical("time stamp to early skipping %s", str(row["_id"]))
+                continue
+
+        
+
+        logger.critical("found candidate %s", row["_id"])
+        if "attachment" in row:
+            if len(row["attachment"]) > 0:
+                if "attachment" in row["attachment"][0]:
+                    if "publicFolder" in row["attachment"][0]["attachment"]:
+                        mongoid = str(row["_id"])
+                        filename = row["attachment"][0]["attachment"]["publicFolder"]
+
+                        meta = {
+                            "filename": filename,
+                            "mongoid": mongoid,
+                            "cv_timestamp_seconds": int(row["email_timestamp"]) / 1000
+                        }
+                        if "job_profile_id" in row:
+                            if len(row["job_profile_id"]) > 0:
+                                job_profile_id = row["job_profile_id"]
+
+                                if job_profile_id in job_criteria_map:
+
+                                    if "skills" in job_criteria_map[job_profile_id]:
+                                        skills = job_criteria_map[job_profile_id]["skills"]
+                                    else:
+                                        skills = []
+                                    
+                                    meta["criteria"] = job_criteria_map[job_profile_id]["criteria"]
+                                else:
+                                    skills = []
+                                    meta["criteria"] = {}
+
+                                
+                            else:
+                                skills = []
+
+                        else:
+                            skills = []
+
+                        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]))
+                        if is_fast_ai:
+                            priority = 8
+
+                        logger.critical("sending to ai parsing %s with priority %s", row["_id"], priority)
+                        sendResumeMessage({
+                            "filename" : filename,
+                            "mongoid" : mongoid,
+                            "skills" : skills,
+                            "meta" : meta,
+                            "priority" : priority,
+                            "account_name": account_name,
+                            "account_config" : account_config
+                        })
+                        count += 1
+                    else:
+                        logger.critical("attachment not proper for id %s", row["_id"])
+                else:
+                    logger.critical("attachment not proper for id %s", row["_id"])
+
+        if not is_fast_ai:
+            db.emailStored.update_one({
+                "_id" : row["_id"]
+            }, {
+                "$set" : {
+                    "check_ai_missing_data" : True
+                }
+            })
+        else:
+            db.emailStored.update_one({
+                "_id" : row["_id"]
+            }, {
+                "$set" : {
+                    "check_ai_fast_ai" : True
+                }
+            })
+
+    return count
+
 def check_ai_missing_data(account_name, account_config):
     # need to check here if queue is empty first else this will cause problem
     # return {}
@@ -479,81 +571,19 @@ def check_ai_missing_data(account_name, account_config):
             "skills" : findSkills
         }
 
-
-    for row in ret:
-        
-        logger.critical("checking %s", str(row["_id"]))
-        
-        if "email_timestamp" not in row:
-            logger.critical("no timestamp found skipping %s", str(row["_id"]))
-            continue
-        
-        if (time.time() - int(row["email_timestamp"]) / 1000) < 60 * 60 * 1:
-            logger.critical("time stamp to early skipping %s", str(row["_id"]))
-            continue
-
-        
-
-        logger.critical("found candidate %s", row["_id"])
-        if "attachment" in row:
-            if len(row["attachment"]) > 0:
-                if "attachment" in row["attachment"][0]:
-                    if "publicFolder" in row["attachment"][0]["attachment"]:
-                        mongoid = str(row["_id"])
-                        filename = row["attachment"][0]["attachment"]["publicFolder"]
-
-                        meta = {
-                            "filename": filename,
-                            "mongoid": mongoid,
-                            "cv_timestamp_seconds": int(row["email_timestamp"]) / 1000
-                        }
-                        if "job_profile_id" in row:
-                            if len(row["job_profile_id"]) > 0:
-                                job_profile_id = row["job_profile_id"]
-
-                                if job_profile_id in job_criteria_map:
     
-                                    if "skills" in job_criteria_map[job_profile_id]:
-                                        skills = job_criteria_map[job_profile_id]["skills"]
-                                    else:
-                                        skills = []
-                                    
-                                    meta["criteria"] = job_criteria_map[job_profile_id]["criteria"]
-                                else:
-                                    skills = []
-                                    meta["criteria"] = {}
-
-                                
-                            else:
-                                skills = []
-
-                        else:
-                            skills = []
-
-                        priority, days, cur_time = get_resume_priority(int(row["email_timestamp"]))
-                        logger.critical("sending to ai parsing %s with priority %s", row["_id"], priority)
-                        sendResumeMessage({
-                            "filename" : filename,
-                            "mongoid" : mongoid,
-                            "skills" : skills,
-                            "meta" : meta,
-                            "priority" : priority,
-                            "account_name": account_name,
-                            "account_config" : account_config
-                        })
-                    else:
-                        logger.critical("attachment not proper for id %s", row["_id"])
-                else:
-                    logger.critical("attachment not proper for id %s", row["_id"])
-
-        db.emailStored.update_one({
-            "_id" : row["_id"]
-        }, {
-            "$set" : {
-                "check_ai_missing_data" : True
-            }
-        })
-
+    count = check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config)
+    logger.critical("process missing ai %s", count)
+    if count == 0:
+        logger.critical("checking for slow parsing, as cpu is empty can utilize it more")
+        ret = db.emailStored.find({
+                "cvParsedInfo.parsing_type" : "fast" ,
+                'check_ai_fast_ai' : { "$exists" : False }
+                # "attachment" : {  }
+            },
+            {"body": 0, "cvParsedInfo.debug": 0}
+        ).sort("email_timestamp", 1).limit(30)
+        check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config, True)
     pass
 
 checkin_score_scheduler = BackgroundScheduler()
