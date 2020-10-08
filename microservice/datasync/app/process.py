@@ -352,8 +352,8 @@ def queue_process(is_direct = False, add_thread = True):
 
     is_queue_process_running = True
 
-    localMap = dirtyMap
-    # localMap = copy.deepcopy(dirtyMap)
+    # localMap = dirtyMap
+    localMap = copy.deepcopy(dirtyMap)
 
     # for account_name in dirtyMap:
     #     dirtyMap[account_name] = {}
