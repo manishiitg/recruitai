@@ -11,6 +11,8 @@ import shlex
 from datetime import datetime, timezone, timedelta
 import random
 import sendgrid
+import math
+
 
 
 amqp_url_base = os.getenv('RABBIT_API_URL')
@@ -76,7 +78,8 @@ def queue_process():
             if queue_type != "all":
                 
                 if int(queues[queue_type]['in_process']) < indv_queue_count_thresh:
-                    continue
+                    # continue
+                    pass
         else:
             if queue_type == "all":
                 continue
@@ -97,7 +100,8 @@ def queue_process():
                     instance_count = 0
                     max_instance_count_to_start = 1
                     if not use_gpu:
-                        max_instance_count_to_start = int(queues[queue_type]['in_process']) % indv_queue_count_thresh
+                        max_instance_count_to_start = int(queues[queue_type]['in_process']) / indv_queue_count_thresh
+                        max_instance_count_to_start = math.floor(max_instance_count_to_start)
 
                     if max_instance_count_to_start > 5:
                         max_instance_count_to_start = 5
@@ -108,12 +112,14 @@ def queue_process():
                             instance_count += 1
 
                     if instance_count < max_instance_count_to_start:
-                        LOGGER.critical("need to start another gpu as more than 3k jobs pending")
-                        slack_message("need to start another gpu as more than 3k jobs pending" + str(queues[queue_type]['in_process']) + "for queue type " + queue_type)
+                        LOGGER.critical(f"need to start another gpu as more than {indv_queue_count_thresh} jobs pending")
+                        slack_message(f"need to start another gpu as more than {indv_queue_count_thresh} jobs pending" + str(queues[queue_type]['in_process']) + "for queue type " + queue_type)
                         start_compute_preementable(type_instance_name, queue_type , len(instance_status) + 1)
                         instance_status = check_compute_running(type_instance_name)
-                        
+                            
+                    
 
+                    
                 if len(instance_status) >= 1:
                     if int(queues[queue_type]['in_process']) < 1000 and use_gpu:
                         instance = instance_status[-1]
@@ -195,7 +201,7 @@ def queue_process():
                 instance_status = check_compute_running("torch") # need to check for torch only else it causes problem with different queue tpyes
                 LOGGER.critical("number of running instances %s",
                                 len(instance_status))
-                if len(instance_status) > 0:
+                if len(instance_status) > 0 and queue_type == "all":
                     if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
                         for instance in instance_status:
                             is_any_torch_running = instance["is_any_torch_running"]
@@ -217,6 +223,38 @@ def queue_process():
                                 LOGGER.critical("not killing instance and running minimum of %s minutes", min_run_gpu)
                     else:
                         LOGGER.critical("not killing running gpu")
+                else:
+
+                    
+                    
+                    if queue_type != "all":
+                        max_instance_count_to_start = 0
+
+                        if not use_gpu:
+                            max_instance_count_to_start = int(queues[queue_type]['in_process']) / indv_queue_count_thresh
+                            max_instance_count_to_start = math.floor(max_instance_count_to_start)
+
+                        queue_type_instance = []
+                        for instance in instance_status:
+                            running_instance_name = instance["running_instance_name"]
+                            if queue_type in running_instance_name:
+                                queue_type_instance.append(instance)
+
+                        if len(queue_type_instance) > 0:
+                            if len(queue_type_instance) > max_instance_count_to_start:
+                                running_instance_name = queue_type_instance[-1]["running_instance_name"]
+                                running_instance_zone = queue_type_instance[-1]["zone"]
+
+                                LOGGER.critical(f"killing second running gpus as no need: {queues[queue_type]['in_process']} max instances to start {max_instance_count_to_start} and len queue type {len(queue_type_instance)} ")
+                                slack_message(f"killing second running gpus as no need: {queues[queue_type]['in_process']} max instances to start {max_instance_count_to_start} and len queue type {len(queue_type_instance)} ")
+                                delete_instance(running_instance_name,
+                                                running_instance_zone, "work completed")
+                                if running_instance_name in running_instance_check:
+                                    del running_instance_check[running_instance_name]
+                            else:
+                                LOGGER.critical(f"all good not kill queue type {queue_type}")
+
+                    
 
         else:
             LOGGER.critical("%s not found in queues", queue_type)
@@ -545,7 +583,7 @@ from slack import WebClient
 slack_web_client = WebClient(token='xoxb-98246795219-K2wljPXhhowEJoiT1Gua72C7')
 
 def slack_message(message):
-    slack_web_client.chat_postMessage(channel="product_recruit", 
+    slack_web_client.chat_postMessage(channel="gpu", 
                 text=message, username='GPUCloud',
                 icon_emoji=':robot_face:')
     
