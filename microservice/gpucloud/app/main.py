@@ -436,7 +436,7 @@ amqp_url = os.getenv('RABBIT_DB')
 
 import time 
 def main():
-    time.sleep(10) #wait for rabbitmq and redis to start
+    # time.sleep(10) #wait for rabbitmq and redis to start
     
     while True:
         queue_process()
