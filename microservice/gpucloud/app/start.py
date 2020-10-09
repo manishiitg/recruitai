@@ -590,7 +590,7 @@ def slack_message(message):
 
 def sendEmail(subject, content):
     
-
+    return # pausing mail for now 
 
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
     from_email = Email("manish@excellencetechnologies.in")
