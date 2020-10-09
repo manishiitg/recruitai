@@ -131,7 +131,7 @@ def thread_task( conn, ch, method_frame, properties, body):
                             "action" : "resume_pipeline_update",
                             "resume_unique_key" : body["filename"],
                             "meta" : {
-                                "ret" : ret,
+                                # "ret" : ret,
                                 "mongoid" : body["mongoid"]
                             },
                             "stage" : {

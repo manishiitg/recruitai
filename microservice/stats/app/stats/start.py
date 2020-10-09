@@ -19,6 +19,15 @@ RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
 amqp_url_base = os.getenv('RABBIT_API_URL')
 
 
+def ai_queue_count():
+    db = initDB(account_name, account_config)
+    total = db.ai_stats.count({})
+    total_queue = queued = db.ai_stats.count({"current_stage": "queue"})
+    return {
+        "total" : total,
+        "total_queue" : total_queue
+    }
+
 def update_resume_time_analysis(resume_unique_key, time_analysis, mongoid, parsing_type, account_name, account_config):
     
     res = requests.get(amqp_url_base + "/api/queues", verify=False, auth=HTTPBasicAuth(RabbitMQLOGIN.split(":")[0], RabbitMQLOGIN.split(":")[1]))
@@ -110,7 +119,8 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
             "is_training" : is_training,
             "priority" : priority,
             "mongoid" : mongoid,
-             "queue_time" : datetime.datetime.now()
+            "queue_time" : datetime.datetime.now(),
+            "current_stage" : stage["pipeline"]
         })
     else:
         oldstage = row["stage"]
@@ -147,6 +157,7 @@ def resume_pipeline_update(resume_unique_key, stage, meta, account_name, account
                 "stage" : oldstage,
                 "queue_waiting" : queue_waiting,
                 "resume_processing_time" : resume_processing_time,
-                "total_stages" : len(oldstage)
+                "total_stages" : len(oldstage),
+                "current_stage" : stage["pipeline"]
             }
         })
