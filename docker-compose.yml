@@ -400,6 +400,17 @@ services:
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
         network_mode: host
+
+    statsdatamq:
+        image: recruitai/statsdatamq:latest
+        build: microservice/statsdata
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/statsdata/app:/workspace/app        
+        environment:
+            RABBIT_DB: 'amqp://127.0.0.1:5672'
+        network_mode: host
     
     gpu:
         build: microservice/gpucloud
