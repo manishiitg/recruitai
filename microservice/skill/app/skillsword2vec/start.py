@@ -1,7 +1,7 @@
 from app.config import BASE_PATH
 from gensim.models import Word2Vec
 from app.logging import logger
-
+from collections import OrderedDict
 
 def test():
     model = loadModel()
@@ -99,19 +99,18 @@ def get_domain_list():
     global domainList
 
     
-    name_map = {
-        "Teaching Education.bin" : "Education",
-        "Sales.bin" : "Sales",
+    return OrderedDict({
         "software development.bin": 'Software Development',
+        "Sales.bin" : "Sales",
         "marketing.bin" : "Marketing",
-        "legal.bin" :"Legal",
-        "customer service.bin":"Customer Service",
         "HR Recruitment.bin": "HR Recruitment",
         "accounts.bin": "Accounts",
+        "Teaching Education.bin" : "Education",
+        "legal.bin" :"Legal",
+        "customer service.bin":"Customer Service",
         "others" : "Others"
-    }
+    })
     
-    return name_map
 
 def loadDomainModel(domain = None):
     global globalModel
