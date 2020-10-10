@@ -398,6 +398,8 @@ def ai_queue_count(account_name, account_config):
     
     in_progress, in_error, progress_status = get_progress_stats(db)
 
+    full_parsing_count = db.emailStored.count({"cvParsedInfo.parsing_type" : "full"})
+    fast_parsing_count = db.emailStored.count({"cvParsedInfo.parsing_type" : "fast"})
         
         # print(row)
         # break
@@ -411,7 +413,9 @@ def ai_queue_count(account_name, account_config):
         "total_in_error": len(in_error),
         "in_progress" : in_progress,
         "in_error": in_error,
-        "progress_status" : progress_status
+        "progress_status" : progress_status,
+        "full_parsing_count" : full_parsing_count,
+        "fast_parsing_count" : fast_parsing_count
     }
 
 
