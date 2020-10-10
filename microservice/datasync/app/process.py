@@ -361,7 +361,7 @@ def queue_process(is_direct = False, add_thread = True):
     # so data is inconsistant
 
     # logger.critical("checking dirty data %s" , localMap)
-    for account_name in localMap:
+    for idx, account_name in enumerate(localMap):
         r = connect_redis(account_name, account_config_map[account_name])
         # print(localMap[account_name].keys())
         for key in localMap[account_name]:
@@ -416,6 +416,8 @@ def queue_process(is_direct = False, add_thread = True):
             # del dirtyMap[account_name][key]        
 
             logger.critical("job profile filter completed")
+
+        logger.critical("process %s total %s", idx, len(localMap))
 
     logger.critical("#########################process queue completed")
     is_queue_process_running = False
