@@ -149,14 +149,12 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         
 
         if "job_profile_id" not in row or not row["job_profile_id"]:
-            print("herererer")
             if row["_id"] in job_profile_data:
-                print("herererer222")
                 del job_profile_data[row["_id"]]
         else:
             job_profile_data[row["_id"]] = row
             
-        r.set(str(row["_id"])  , json.dumps(row,default=str))
+        r.set(str(row["_id"])  , json.dumps(row,default=str)) # just like that oct
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -219,7 +217,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
     for row in docs:
         row["_id"] = str(row["_id"])
         job_profile_data[row["_id"]] = row
-        r.set(str(row["_id"])  , json.dumps(row,default=str))
+        r.set(str(row["_id"])  , json.dumps(row,default=str)) # just like that remove it 
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -361,11 +359,12 @@ def queue_process(is_direct = False, add_thread = True):
     # so data is inconsistant
 
     # logger.critical("checking dirty data %s" , localMap)
-    for idx, account_name in enumerate(localMap):
+    for account_name in localMap:
         r = connect_redis(account_name, account_config_map[account_name])
         # print(localMap[account_name].keys())
-        for key in localMap[account_name]:
+        for idx, key in enumerate(localMap[account_name]):
 
+            logger.critical("process %s total %s", idx, len(localMap[account_name]))
             operations = localMap[account_name][key]
             if operations["redis_dirty"]:
                 logger.critical("key redis dirty %s", key)
@@ -417,7 +416,7 @@ def queue_process(is_direct = False, add_thread = True):
 
             logger.critical("job profile filter completed")
 
-        logger.critical("process %s total %s", idx, len(localMap))
+            
 
     logger.critical("#########################process queue completed")
     is_queue_process_running = False
@@ -745,7 +744,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 t = pastInfoMap[account_name]["syncJobProfile" + job_profile_id]
 
                 if t > cur_time:
-                    logger.critical("skpping the sync as we have already synced more recent data")
+                    logger.critical("skipping the sync as we have already synced more recent data")
                     is_queue_process_running =  False
                     return ""
 
@@ -769,21 +768,28 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 t = pastInfoMap[account_name]["full"]
 
                 if t > cur_time:
-                    logger.critical("skpping the sync as we have already synced more recent data")
+                    logger.critical("skipping the sync as we have already synced more recent data")
+                    is_queue_process_running =  False
+                    return ""
+
+                logger.critical("full sync past time %s and current time %s difference %s", t, cur_time, (cur_time - t))
+                if abs(time.time() - t) < 60 * 5:
+                    logger.critical("skipping the sync as we have already synced more recent data")
                     is_queue_process_running =  False
                     return ""
 
             pastInfoMap[account_name]["full"] = time.time()
 
-            # r.flushdb()
+            r.flushdb()
+            # on oct 2020 i am trying again just to flush the full db
             # this is wrong. this remove much more data like resume parsed information etc
             redisKeyMap[account_name] = {}
             local_dirtyMap[account_name] = {}
             
-            for key in r.scan_iter(): #this takes time
-                if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
-                    logger.critical("delete from redis %s", key)
-                    r.delete(key)
+            # for key in r.scan_iter(): #this takes time
+            #     if "classify_" in key or "job_" in key or "_filter" in key or "jb_" in key:
+            #         logger.critical("delete from redis %s", key)
+            #         r.delete(key)
             # lets not delete previous keys for now 
             # i am doing full sync every 3hr. so if i delete old data this causes problems
             # experiment on 29th
@@ -822,7 +828,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if len(row['job_profile_id'].strip()) == 0:
                     del row['job_profile_id']
 
-            r.set(str(row["_id"])  , json.dumps(row,default=str))
+                r.set(str(row["_id"])  , json.dumps(row,default=str))
 
 
             if "cvParsedInfo" in row:
@@ -838,8 +844,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 job_profile_id = None
 
                 mapKey = "NOT_ASSIGNED"
+                if mapKey not in candidate_map:
+                    candidate_map[mapKey] = {}
                 is_old = False
                 month_year = ""
+                is_year_old = False
+                days = 0
 
                 if "email_timestamp" in row:
                     timestamp_seconds = int(row["email_timestamp"])/1000
@@ -852,6 +862,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         is_old = False
                     else:
                         is_old = True
+                        if days > 365:
+                            is_year_old = True
+                            month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+
+                    
 
                 else:
                     is_old = False
@@ -864,31 +879,45 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 # if row["sender_mail"] == "ramyajarugu114@gmail.com":
                 #     print(mapKey)
 
+                if days < 90:
+                    # skipping unassigned for more than 30months data no use 
+                    if candidate_label not in candidate_map:
+                        candidate_map[candidate_label] = {}
+                    
+                    candidate_map[candidate_label][row["_id"]] = row
+
+                
+            is_year_old = False
+            if "ex_job_profile" in row:
+                candidate_label = "Ex:" + row["ex_job_profile"]["name"]
+                mapKey = candidate_label
+                days = 0
                 if candidate_label not in candidate_map:
                     candidate_map[candidate_label] = {}
 
-                candidate_map[candidate_label][row["_id"]] = row
+                if "email_timestamp" in row:
+                    timestamp_seconds = int(row["email_timestamp"])/1000
+                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y') # remove moth for ex. only year based
 
-                if "ex_job_profile" in row:
-                    candidate_label = "Ex-" + row["ex_job_profile"]["name"]
-                    mapKey = candidate_label
-
-                    if "email_timestamp" in row:
-                        timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
-
-                        cur_time = time.time()
-                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
-
-                        if days > 15:
-                            mapKey = mapKey + month_year
+                    cur_time = time.time()
+                    days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
 
                     
-                    candidate_label = mapKey
+                    if days > 365:
+                        is_year_old = True
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                    
+                    mapKey = mapKey + month_year
+                
+                
 
-                    if candidate_label not in candidate_map:
-                        candidate_map[candidate_label] = {}
+                candidate_label = mapKey
 
+                if candidate_label not in candidate_map:
+                    candidate_map[candidate_label] = {}
+
+                if days < 30:
+                    # candidate more than year old mananaged only via mongodb.... to reduce load on redis
                     candidate_map[candidate_label][row["_id"]] = row
             
             # if "sender_mail" in row:
@@ -910,9 +939,15 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             if "candidateClassify" in row:
                 if "label" in row["candidateClassify"]:
                     candidate_label = row["candidateClassify"]["label"]
+                    if candidate_label not in candidate_map:
+                        candidate_map[candidate_label] = {}
+
                     if str(candidate_label) == "False":
                         candidate_label = None
                     if candidate_label:
+                        month_year = ""
+                        is_year_old = False
+                        days = 0
                         if "email_timestamp" in row:
                             timestamp_seconds = int(row["email_timestamp"])/1000
                             month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
@@ -921,15 +956,21 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                             days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
 
                             if days > 15:
-                                candidate_label = candidate_label + month_year
+                                if days > 365:
+                                    is_year_old = True
+                                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                        
+                        candidate_label = candidate_label + month_year
+
 
                         if candidate_label not in candidate_map:
                             candidate_map[candidate_label] = {}
 
-                        candidate_map[candidate_label][row["_id"]] = row
+                        if days < 30:
+                            candidate_map[candidate_label][row["_id"]] = row
 
             # if "ex_job_profile" in row:
-            #     candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+            #     candidate_label = "Ex:" + row["ex_job_profile"]["name"]
             #     if candidate_label not in candidate_map:
             #         candidate_map[candidate_label] = {}
             #     candidate_map[candidate_label][row["_id"]] = row
@@ -1069,7 +1110,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 
                 
                 if "ex_job_profile" in row:
-                    candidate_label = "Ex-" + row["ex_job_profile"]["name"]
+                    candidate_label = "Ex:" + row["ex_job_profile"]["name"]
                     mapKey = "classify_" + candidate_label
 
                     if "email_timestamp" in row:
@@ -1103,6 +1144,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if candidate_label is not None:
                     logger.critical("candidate labels %s", candidate_label)
                     mapKey = "classify_" + candidate_label
+                    if candidate_label not in candidate_map:
+                        candidate_map[candidate_label] = {}
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
@@ -1166,6 +1209,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 logger.critical("updating filter %s" , mapKey)
 
             for candidate_label in candidate_map:
+                if not candidate_label:
+                    continue
+
                 logger.critical("filter sync candidate_label %s ", candidate_label)
                 r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
                 # ret = updateFilter({
@@ -1203,7 +1249,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         
         queue_process(True)
         
-    except Exception as e:
+    except ValueError as e: # Value Error
         # we are restarting redids every 1hr now and this fails when we restart
         logger.critical("exception $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ %s", e)
     is_queue_process_running =  False
