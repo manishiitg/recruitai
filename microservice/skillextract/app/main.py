@@ -20,7 +20,7 @@ amqp_url = os.environ.get('RABBIT_DB')
 
 
 from app.skillextract.start import start as extractSkill, get_job_criteria
-from app.skillsword2vec.start import loadModel
+from app.skillsword2vec.start import loadModel, loadDomainModel
 from app.statspublisher import sendMessage as updateStats
 
 import time
@@ -81,6 +81,9 @@ def thread_task( conn, ch, method_frame, properties, body):
                         findSkills = []
 
                     findSkills = list(filter(len, findSkills))
+
+                    logger.critical("find skills %s", findSkills)
+
                     if len(findSkills) == 0:
 
                         job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
@@ -124,6 +127,7 @@ def thread_task( conn, ch, method_frame, properties, body):
 
                     else:
                         ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                        logger.critical("find skill found %s", ret)
                         ret = json.dumps(ret,default=str)
 
                     if "filename" in body:
@@ -212,6 +216,7 @@ def main():
 
 
     loadModel()
+    loadDomainModel()
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
 
