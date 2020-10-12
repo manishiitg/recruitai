@@ -520,14 +520,15 @@ def getSampleData(mongoid, account_name, account_config):
         if len(data) > 0:
             row = data[0]
             if "job_profile_id" in row:
-                job_row = db.jobprofiles.find_one({
-                    "_id": ObjectId(row["job_profile_id"])
-                })         
+                if len(row["job_profile_id"]) > 0:
+                    job_row = db.jobprofiles.find_one({
+                        "_id": ObjectId(row["job_profile_id"])
+                    })         
 
-                if job_row:
-                    logger.critical(job_row)
-                    if "domain" in job_row:
-                        domain = job_row["domain"]
+                    if job_row:
+                        logger.critical(job_row)
+                        if "domain" in job_row:
+                            domain = job_row["domain"]
             # this is call mostly via resume processing microserver
             # we need to check if newcomproseedcontent is already tokenized and if not tokenize it
             # and save it to db and update redis cache if it already exists in redis else not
