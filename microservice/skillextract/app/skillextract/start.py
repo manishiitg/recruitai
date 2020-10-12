@@ -13,7 +13,7 @@ import os
 
 from app.util import generate_ngrams
 
-from app.skillsword2vec.start import loadModel
+from app.skillsword2vec.start import loadModel, getDomainModel
 
 import spacy
 nlp = spacy.load('en')
@@ -21,7 +21,6 @@ nlp = spacy.load('en')
 from bson.objectid import ObjectId
 
 import redis
-# r = redis.StrictRedis(host=os.environ.get("REDIS_HOST","redis"), port=os.environ.get("REDIS_PORT",6379), db=0, decode_responses=True)
 
 
 
@@ -42,7 +41,7 @@ space_name='cosinesimil'
 efS = 100
 
 def start(findSkills, mongoid, isGeneric = False, account_name = "", account_config = {}):
-    docLines, total_documents, doc2Idx = getSampleData(mongoid, account_name, account_config)
+    docLines, total_documents, doc2Idx, domain = getSampleData(mongoid, account_name, account_config)
 
     if total_documents == 0:
         logger.critical("not docs found")
@@ -62,8 +61,8 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
             newFindSkills.append(skill.replace(" ",""))
     findSkills = newFindSkills
 
-
-    model = loadModel()
+    logger.critical("domain %s", domain)
+    model = getDomainModel(domain)
     data_matrix, word2Vec, word2Idx, word2Line, word2Doc = getWordMatrix(docLines, model)
 
     
@@ -433,6 +432,7 @@ def getSampleData(mongoid, account_name, account_config):
     db = initDB(account_name, account_config)    
     r = connect_redis(account_name, account_config)
 
+    domain = None
     logger.critical("getting sample for %s", mongoid)
     data = None
     if "all" in mongoid:
@@ -445,7 +445,16 @@ def getSampleData(mongoid, account_name, account_config):
         else:
             skip = 0
 
-        
+        fetch_mongo = True
+
+        job_row = db.jobprofiles.find_one({
+            "_id": ObjectId(mongoid)
+        })         
+
+        if job_row:
+            if "domain" in job_row:
+                domain = job_row["domain"]
+
         if r.exists("job_" + mongoid):
             logger.critical("data from redis")
             data = r.get("job_" + mongoid)
@@ -456,10 +465,13 @@ def getSampleData(mongoid, account_name, account_config):
                 data.append(dataMap[key])
 
             
+            if len(data) != 0:
+                fetch_mongo = False
+
             data = data[skip:skip+limit]
                 
             logger.critical("candidate full data found %s", len(data))
-        else:
+        if fetch_mongo:
             
 
             logger.critical("final mongo id %s", mongoid)
@@ -504,31 +516,42 @@ def getSampleData(mongoid, account_name, account_config):
                 row["_id"] = str(row["_id"])
                 data = [row]
                 r.set(mongoid, json.dumps(row, default=str))
+        
+        if len(data) > 0:
+            row = data[0]
+            if "job_profile_id" in row:
+                job_row = db.jobprofiles.find_one({
+                    "_id": ObjectId(row["job_profile_id"])
+                })         
 
-        # this is call mostly via resume processing microserver
-        # we need to check if newcomproseedcontent is already tokenized and if not tokenize it
-        # and save it to db and update redis cache if it already exists in redis else not
-        # this will slove the speed issue 
-        if "cvParsedInfo" in row:
-            if "newCompressedStructuredContent" in row["cvParsedInfo"]:
-                cvParsedInfo = row["cvParsedInfo"]    
-                if "hasTokenized_newCompressedStructuredContent" not in cvParsedInfo:
-                    for page in cvParsedInfo["newCompressedStructuredContent"]:
-                        for line_idx, line in enumerate(cvParsedInfo["newCompressedStructuredContent"][page]):
-                            doc = nlp(line["line"].lower())
-                            token_line = [d.text for d in doc]
-                            cvParsedInfo["newCompressedStructuredContent"][page][line_idx]["token_line"] = token_line
+                if job_row:
+                    logger.critical(job_row)
+                    if "domain" in job_row:
+                        domain = job_row["domain"]
+            # this is call mostly via resume processing microserver
+            # we need to check if newcomproseedcontent is already tokenized and if not tokenize it
+            # and save it to db and update redis cache if it already exists in redis else not
+            # this will slove the speed issue 
+            if "cvParsedInfo" in row:
+                if "newCompressedStructuredContent" in row["cvParsedInfo"]:
+                    cvParsedInfo = row["cvParsedInfo"]    
+                    if "hasTokenized_newCompressedStructuredContent" not in cvParsedInfo:
+                        for page in cvParsedInfo["newCompressedStructuredContent"]:
+                            for line_idx, line in enumerate(cvParsedInfo["newCompressedStructuredContent"][page]):
+                                doc = nlp(line["line"].lower())
+                                token_line = [d.text for d in doc]
+                                cvParsedInfo["newCompressedStructuredContent"][page][line_idx]["token_line"] = token_line
 
-                    cvParsedInfo["hasTokenized_newCompressedStructuredContent"] = True
-                    db.emailStored.update_one({ 
-                        "_id" : ObjectId(mongoid)
-                    }, {
-                        "$set" : {
-                            "cvParsedInfo" : cvParsedInfo
-                        }
-                    })
-                    row["cvParsedInfo"] = cvParsedInfo
-                    r.set(mongoid, json.dumps(row, default=str))
+                        cvParsedInfo["hasTokenized_newCompressedStructuredContent"] = True
+                        db.emailStored.update_one({ 
+                            "_id" : ObjectId(mongoid)
+                        }, {
+                            "$set" : {
+                                "cvParsedInfo" : cvParsedInfo
+                            }
+                        })
+                        row["cvParsedInfo"] = cvParsedInfo
+                        r.set(mongoid, json.dumps(row, default=str))
 
         
 
@@ -594,7 +617,7 @@ def getSampleData(mongoid, account_name, account_config):
 
     logger.critical("total documents %s", total_documents)
     # logger.critical(doc2Idx)
-    return docLines , total_documents, doc2Idx
+    return docLines , total_documents, doc2Idx, domain
 
 
 def get_job_criteria(mongoid,account_name, account_config):
