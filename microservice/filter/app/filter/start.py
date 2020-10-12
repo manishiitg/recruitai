@@ -51,12 +51,12 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
     redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8') + access_token.encode('utf-8')  ).hexdigest()
     r = connect_redis(account_name, account_config)
-    print("checking for redis key")
-    if r.exists(redisKey):
-        logger.critical("speed up data returned from redis %s", redisKey)
-        t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
-        t.start()
-        return r.get(redisKey)
+    # print("checking for redis key")
+    # if r.exists(redisKey):
+    #     logger.critical("speed up data returned from redis %s", redisKey)
+    #     t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
+    #     t.start()
+    #     return r.get(redisKey)
     
     logger.critical("no redis data calling api directly")
     data = get_speedup_api(redisKey, url, payload, access_token, account_name, account_config)
@@ -500,8 +500,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = r.get("job_" + mongoid)
     else:
         job_profile_data = r.get("classify_" + mongoid)
-        logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
-        job_profile_data = False
+        # logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
+        # job_profile_data = False
 
     
     if job_profile_data and False:
