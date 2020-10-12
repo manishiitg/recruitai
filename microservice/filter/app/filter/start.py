@@ -10,7 +10,8 @@ import time
 from threading import Thread
 
 from app.filter.util import getCourseDict
-from datetime import datetime
+from datetime import datetime, timedelta
+from calendar import monthrange
 
 from app.account import connect_redis, initDB
 
@@ -94,7 +95,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 unique_cache_key_list = {}
-use_unique_cache_feature = True
+use_unique_cache_feature = False
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
@@ -121,6 +122,7 @@ def get_candidate_tags_v2(account_name, account_config):
     if r.exists("classify_list"):
         classify_list = r.get("classify_list")
         classify_list = json.loads(classify_list)
+        
     else:
         datasync({
             "action" : "full",
@@ -132,10 +134,46 @@ def get_candidate_tags_v2(account_name, account_config):
         return [-1]
 
 
-    # for tag in tag_map.keys():
-    for tag in classify_list:
+    def score_tag_idx(x):
+        x = x.replace("classify_","")
+        if "-" in x:
+            actual_tag = x.split("-")[0]
+            tag_idx = 1
+            for idx, tag in enumerate(tag_map):
+                if tag == actual_tag:
+                    tag_idx = (50 - idx + 1)
 
-        tag = tag.replace("classify_","")
+            tag_idx = tag_idx * 100000
+
+            if len(x.split("-")) == 3:
+                year = x.split("-")[1]
+                month_name = x.split("-")[2]
+                tag_idx = tag_idx +  datetime.strptime(month_name, '%b').month + int(year) * 100
+            else:
+                year = x.split("-")[1]
+                tag_idx = tag_idx + int(year) * 100 + 0
+
+            # logger.critical("priority %s tag_idx %s", x, tag_idx)
+            return tag_idx
+        else:
+            tag_idx = 1
+            for idx, tag in enumerate(tag_map):
+                if tag == x:
+                    tag_idx = (50 - idx + 1)
+
+            tag_idx = tag_idx * 100000
+
+            # logger.critical("priority %s tag_idx %s", x, tag_idx)
+            return tag_idx
+
+    classify_list.sort(key=score_tag_idx, reverse=True)
+    # for classify in classify_list:
+    #     logger.critical("priority %s tag_idx %s", classify, score_tag_idx(classify))
+        
+    # logger.critical("classify list %s", classify_list)
+    
+    def getTitle(tag):
+        
         
         job_profile_data = r.get("classify_" + tag)      
         if not job_profile_data:
@@ -148,17 +186,43 @@ def get_candidate_tags_v2(account_name, account_config):
                 job_profile_data_len = int(job_profile_data_len)
 
         if tag not in tag_map:
-            if "Ex-" in tag:
+            if "Ex:" in tag:
                 tag_map[tag] = tag
             elif "-" in tag:
                 tags = tag.split("-")
                 if tags[0] in tag_map:
                     tag_map[tag] = tag.replace(tags[0],tag_map[tags[0]])
             else:
-                tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
+                tag_map[tag] = tag.replace("Ex:", "Ex Job: ")
 
         title = tag_map[tag]
+        return title, job_profile_data_len
+    # for tag in tag_map.keys():
 
+    for tag in classify_list:
+        tag = tag.replace("classify_","")
+        title, job_profile_data_len = getTitle(tag)
+        if "-" not in title:
+            response.append({
+                    "active_status": True,
+                    "assign_to_all_emails": False,
+                    "count": job_profile_data_len,
+                    "default": True,
+                    "id": len(response),
+                    "parent_id": "0",
+                    "read": -1,
+                    "roundDetails": [],
+                    "sequence": 0,
+                    "title": title,
+                    "unread": -1,
+                    "_id": len(response),
+                    "key" : tag,
+                    "children" : []
+                    })
+
+    for tag in classify_list:
+        tag = tag.replace("classify_","")
+        title, job_profile_data_len = getTitle(tag)
         if "-" in title:
             nest = title.split("-")
             parent = nest[0]
@@ -166,6 +230,7 @@ def get_candidate_tags_v2(account_name, account_config):
                 if resp["title"] == parent:
                     children = resp["children"]
                     child_title = " ".join(nest[1:])
+                    response[idx]["count"] = response[idx]["count"] + int(job_profile_data_len)
                     response[idx]["children"].append({
                         "active_status": True,
                         "assign_to_all_emails": False,
@@ -183,23 +248,6 @@ def get_candidate_tags_v2(account_name, account_config):
                     })
 
 
-        else:
-            response.append({
-                    "active_status": True,
-                    "assign_to_all_emails": False,
-                    "count": job_profile_data_len,
-                    "default": True,
-                    "id": len(response),
-                    "parent_id": "0",
-                    "read": -1,
-                    "roundDetails": [],
-                    "sequence": 0,
-                    "title": title,
-                    "unread": -1,
-                    "_id": len(response),
-                    "key" : tag,
-                    "children" : []
-                    })
 
     # return sorted(response, key=lambda x: x['count'], reverse=True)
     return response
@@ -452,9 +500,11 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = r.get("job_" + mongoid)
     else:
         job_profile_data = r.get("classify_" + mongoid)
+        logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
+        job_profile_data = False
 
     
-    if job_profile_data:
+    if job_profile_data and False:
         job_profile_data = json.loads(job_profile_data)
         if job_profile_data is None:
             job_profile_data = {}
@@ -476,29 +526,107 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             if mongoid == "NOT_ASSIGNED":
                 db = initDB(account_name, account_config)
                 ret = db.emailStored.find(
-                    {"$or" : [
-                        {"job_profile_id" : {"$exists":False}},
-                        {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
-                    ]}, 
+                    {
+                        "$or" : [
+                            {"job_profile_id" : {"$exists":False}},
+                            {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
+                        ],
+                        "date" : {
+                            "$gt" : datetime.now() - timedelta(days=15)
+                        }
+                    }, 
                     {"body": 0, "cvParsedInfo.debug": 0})
                 for row in ret:
                     row["_id"] = str(row["_id"])
                     job_profile_data[row["_id"]] = row
-        
-        datasync({
-                # "id" : mongoid,
-                "action" : "full",
-                "cur_time" : time.time(),
-                "account_name": account_name,
-                "account_config" : account_config,
-                "priority" : 10
-            })
+            else:
+                if "-" in mongoid:
+                    if len(mongoid.split("-")) == 3:
+                        label = mongoid.split("-")[0]
+                        year = int(mongoid.split("-")[1])
+                        month_name = mongoid.split("-")[2]
+                        month = datetime.strptime(month_name, '%b').month
+                        start_date = datetime(year, month, 1, 0,0,0)
+                        end_date = datetime(year, month, monthrange(year, month)[1], 0,0,0)
+                    else:
+                        label = mongoid.split("-")[0]
+                        year = int(mongoid.split("-")[1])
+                        start_date = datetime(year, 1, 1, 0,0,0)
+                        end_date = datetime(year, 12, 31, 0,0,0)
+                
+
+
+                    db = initDB(account_name, account_config)
+                    if "Ex:" in label:
+                        
+                        ret = db.emailStored.find(
+                            {
+                                
+                                "ex_job_profile.name" : label.replace("Ex:",""),
+                                "date" : {
+                                    "$gte" : start_date,
+                                    "$lte" : end_date,
+                                }
+                            }, 
+                            {"body": 0, "cvParsedInfo.debug": 0})
+                        for row in ret:
+                            row["_id"] = str(row["_id"])
+                            job_profile_data[row["_id"]] = row
+                    else:
+                        ret = db.emailStored.find(
+                            {
+                                
+                                "candidateClassify.label" : label,
+                                "date" : {
+                                    "$gte" : start_date,
+                                    "$lte" : end_date,
+                                }
+                            }, 
+                            {"body": 0, "cvParsedInfo.debug": 0})
+                        for row in ret:
+                            row["_id"] = str(row["_id"])
+                            job_profile_data[row["_id"]] = row
+                else:
+                    label = mongoid
+                    db = initDB(account_name, account_config)
+                    if "Ex:" in label:
+                        
+                        ret = db.emailStored.find(
+                            {
+                                
+                                "ex_job_profile.name" : label.replace("Ex:",""),
+                            }, 
+                            {"body": 0, "cvParsedInfo.debug": 0})
+                        for row in ret:
+                            row["_id"] = str(row["_id"])
+                            job_profile_data[row["_id"]] = row
+                    else:
+                        ret = db.emailStored.find(
+                            {
+                                
+                                "candidateClassify.label" : label,
+                            }, 
+                            {"body": 0, "cvParsedInfo.debug": 0})
+                        for row in ret:
+                            row["_id"] = str(row["_id"])
+                            job_profile_data[row["_id"]] = row
+
+                # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
+
+        # datasync({
+        #     # "id" : mongoid,
+        #     "action" : "full",
+        #     "cur_time" : time.time(),
+        #     "account_name": account_name,
+        #     "account_config" : account_config,
+        #     "priority" : 10
+        # })
 
         
         
 
 
-    logger.critical("length of job profile data %s", len(job_profile_data))
+    # logger.critical("length of job profile data %s", len(job_profile_data))
 
     if on_starred:
         starred_job_profile_data = {}
