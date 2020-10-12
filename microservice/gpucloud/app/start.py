@@ -90,9 +90,10 @@ def queue_process():
             if not use_gpu:
                 type_instance_name = "torch-cpu" + queue_type
             LOGGER.critical("checking for queue type %s", type_instance_name)
-            if int(queues[queue_type]['in_process']) > min_process_to_start_gpu:
+            instance_status = check_compute_running(type_instance_name)
+            if int(queues[queue_type]['in_process']) > min_process_to_start_gpu or len(instance_status) > 0:
 
-                instance_status = check_compute_running(type_instance_name)
+                
                 LOGGER.critical("number of running %s instances %s",
                                 queue_type,  len(instance_status))
 
@@ -196,7 +197,7 @@ def queue_process():
 
                 # slack_message(f"{queue_type} has less than {min_process_to_start_gpu} no need to start gpu {queues["summary"]}")
                 LOGGER.critical("%s has less than %s no need to start gpu %s",
-                                queue_type, min_process_to_start_gpu, queues["summary"])
+                                queue_type, min_process_to_start_gpu, queues[queue_type])
 
                 instance_status = check_compute_running("torch") # need to check for torch only else it causes problem with different queue tpyes
                 LOGGER.critical("number of running instances %s",
