@@ -23,7 +23,7 @@ def get_start_match(text, isGlobal = False, domain = None):
     model_words_to_use = []
 
     if isGlobal:
-        model = loadDomainModel(domain)
+        model = getDomainModel(domain)
         if len(global_model_words) == 0:    
             for word in model.wv.vocab:
                 global_model_words.append(word + "")
@@ -62,7 +62,7 @@ def get_start_match(text, isGlobal = False, domain = None):
 
 def get_similar(positive, negative, domain = None):
     if domain:
-        model = loadDomainModel(domain)
+        model = getDomainModel(domain)
     else:
         model = loadModel()
 
@@ -79,7 +79,7 @@ def get_similar(positive, negative, domain = None):
 
 def vec_exists(word, isGlobal = False, domain = None):
     if domain:
-        model = loadDomainModel(domain)
+        model = getDomainModel(domain)
     else:
         model = loadModel()
         
@@ -112,32 +112,37 @@ def get_domain_list():
     })
     
 
+def getDomainModel(domain = None):
+    global globalModel
+    global domainList
+    logger.critical("domain: %s", domain)
+    if not domain:
+        return loadModel()
+    if domain == "others":
+        globalModel[domain] = loadModel()
+    
+    # if globalModel is None:
+    #     logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
+    #     model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
+    if domain in globalModel:
+        return globalModel[domain]
+    else:
+        return loadModel()
+
 def loadDomainModel(domain = None):
     global globalModel
     global domainList
-    if not domain:
-        models = glob.glob("/workspace/word2vec/word2vec/*.bin")
-        logger.critical(models)
-        for model in models:
-            if "-" not in model:
-                continue
-            else:
-                domain = model.split("-")[1]
-                domainList.append(domain)
-                globalModel[domain] = Word2Vec.load(model)
-        return globalModel
-    else:
-        if domain == "others":
-            return loadModel()
-        
-        # if globalModel is None:
-        #     logger.info("loading model... %s" , "/workspace/word2vec/word2vec/work2vecskillfull.bin")
-        #     model = Word2Vec.load("/workspace/word2vec/word2vec/work2vecskillfull.bin")
-        if domain in globalModel:
-            return globalModel[domain]
-        else:
-            return None
     
+    models = glob.glob("/workspace/word2vec/word2vec/*.bin")
+    logger.critical(models)
+    for model in models:
+        if "-" not in model:
+            continue
+        else:
+            domain = model.split("-")[1]
+            domainList.append(domain)
+            globalModel[domain] = Word2Vec.load(model)
+    return globalModel
     
 
 
