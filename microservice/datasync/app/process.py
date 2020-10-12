@@ -1,5 +1,5 @@
 import os
-from threading import Thread
+from threading import Thread, Lock
 
 from app.publishsearch import sendMessage
 from app.publishfilter import sendBlockingMessage as updateFilter
@@ -12,6 +12,7 @@ from app.logging import logger
 import json
 import os
 from bson import json_util
+
 
 import traceback
 import time
@@ -318,6 +319,8 @@ def delay_queue_process(is_direct):
     time.sleep(10)
     queue_process(is_direct , False)
 
+lock = Lock()
+
 def queue_process(is_direct = False, add_thread = True):
 
     global dirtyMap
@@ -325,8 +328,11 @@ def queue_process(is_direct = False, add_thread = True):
     global queue_running_count
     global last_queue_process
     global skip_count
+    global lock
 
-    if (time.time() - last_queue_process) < 15 and skip_count < 200:
+    
+
+    if ((time.time() - last_queue_process) < 15 and skip_count < 200):
         if add_thread:
             last_queue_process = time.time() 
 
@@ -338,15 +344,19 @@ def queue_process(is_direct = False, add_thread = True):
         Thread(target=delay_queue_process, args=( is_direct,  )).start()
         return
 
+    
+
     logger.critical("running not not skipping existing skip count %s and time count %s", skip_count, (time.time() - last_queue_process))
     skip_count = 0
     last_queue_process = time.time()
 
     queue_running_count += 1
     if queue_running_count < 10:
-        if is_queue_process_running:
+        if is_queue_process_running or lock.locked():
             logger.critical("queue is already running... %s", queue_running_count)
             return
+
+    lock.acquire(False)
 
     is_queue_process_running = True
 
@@ -364,7 +374,7 @@ def queue_process(is_direct = False, add_thread = True):
         # print(localMap[account_name].keys())
         for idx, key in enumerate(localMap[account_name]):
 
-            logger.critical("process %s total %s", idx, len(localMap[account_name]))
+            logger.critical("queue process %s total %s", idx, len(localMap[account_name]))
             operations = localMap[account_name][key]
             if operations["redis_dirty"]:
                 logger.critical("key redis dirty %s", key)
@@ -421,6 +431,7 @@ def queue_process(is_direct = False, add_thread = True):
     logger.critical("#########################process queue completed")
     is_queue_process_running = False
     queue_running_count = 0
+    lock.release()
     
 
 def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config, is_fast_ai = False):
