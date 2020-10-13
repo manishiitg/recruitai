@@ -89,6 +89,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             try:
                 response, basePath, timeAnalysis, predictions, jsonOutputbbox, page_contents = processAPI(os.path.join(dest, filename), account_name, account_config)
             except Exception as e:
+                logger.critical("error %s", e)
                 return {
                     "error": "type2" + str(e) + json.dumps(timeAnalysis, default=str)
                 }
