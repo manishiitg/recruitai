@@ -133,9 +133,9 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
     avg_closest_dist = closest_dist/len(findSkills)
     if avg_count != 0:
         logger.critical("avg distance between query words %s", avg_dist/avg_count)
-    logger.critical("max distance %s", max_dist)
-    logger.critical("avg closest distance %s", avg_closest_dist)
-    logger.critical("max closest distance %s", max_closest_dist)
+    logger.info("max distance %s", max_dist)
+    logger.info("avg closest distance %s", avg_closest_dist)
+    logger.info("max closest distance %s", max_closest_dist)
     
     start = time.time() 
     # assume 20 skills per doc which is already a lot 
@@ -163,19 +163,19 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     maxSkillDistCount = {}
 
-    logger.critical(" ===================================final algo ===================================")
+    logger.info(" ===================================final algo ===================================")
 
     for idx, skill in enumerate(querySkill):
-        logger.critical("skill : %s",skill)
-        logger.critical("wordidx %s",  [word2Idx[w] for w in nbrs[idx][0]])
-        logger.critical("distances %s", nbrs[idx][1])
+        logger.info("skill : %s",skill)
+        logger.info("wordidx %s",  [word2Idx[w] for w in nbrs[idx][0]])
+        logger.info("distances %s", nbrs[idx][1])
         # words = [] 
         wordIdx2Dist[skill] = {}
         for matchIdx, distance in  enumerate(nbrs[idx][1]):
             wordIdx = nbrs[idx][0][matchIdx]
             wordIdx2Dist[skill][wordIdx] = distance
 
-            logger.critical(distance)
+            logger.info("distance %s", distance)
             orgLineIdx  = word2Line[wordIdx]
             orgDocIdx = word2Doc[wordIdx]
 
@@ -190,14 +190,14 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
             if distance < distThresh:
                 # words.append(word2Idx[wordIdx])
-                logger.critical("skill: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])
+                logger.info("skill: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])
                 documents[orgDocIdx][orgLineIdx][skill].append(wordIdx)
             else:
-                logger.critical("skill skipped: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])                
+                logger.info("skill skipped: %s dist: %s word: %s", skill, distance, word2Idx[wordIdx])                
 
             if distance <= maxDistSkillThresh:
                 
-                logger.critical("max skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
+                logger.info("max skill: %s dist: %s word: %s", skill, maxDistSkillThresh, word2Idx[wordIdx])
 
                 if orgDocIdx not in maxSkillDistCount:
                     maxSkillDistCount[orgDocIdx] = {}
@@ -211,9 +211,9 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                 maxSkillDistCount[orgDocIdx][orgLineIdx][skill].append( (wordIdx, distance) )
 
 
-    print(documents)
-    print("maxskilldist count")
-    print(maxSkillDistCount)
+    logger.info(documents)
+    logger.info("maxskilldist count")
+    logger.info(maxSkillDistCount)
 
     finalSkillList = {}
 
@@ -231,16 +231,16 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                     for wordIdx in lines[orgLineIdx][skill]:
 
                         dist = wordIdx2Dist[skill][wordIdx]
-                        logger.critical("word: %s dist: %s skill: %s line: %s", word2Idx[wordIdx] ,dist ,  skill , orgLineIdx )
+                        logger.info("word: %s dist: %s skill: %s line: %s", word2Idx[wordIdx] ,dist ,  skill , orgLineIdx )
                         
                         if dist < .05 and not isGeneric:
                             maxSkillCount = 0
 
-                        logger.critical(lines[orgLineIdx][skill])
+                        logger.info(lines[orgLineIdx][skill])
                         count = len(lines[orgLineIdx][skill])
                         if  count > maxSkillCount or count > len(querySkill) * .5:
-                            logger.critical("skill %s count %s maxcount count %s" ,skill, count, maxSkillCount)
-                            logger.critical("line index %s", orgLineIdx)
+                            logger.info("skill %s count %s maxcount count %s" ,skill, count, maxSkillCount)
+                            logger.info("line index %s", orgLineIdx)
                             for idx in lines[orgLineIdx][skill]:
                                 if word2Idx[idx] not in globalSkillDist:
                                     globalSkillDist[word2Idx[idx]] = {
@@ -251,10 +251,10 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                                     globalSkillDist[word2Idx[idx]]["dist"] += wordIdx2Dist[skill][idx]
                                     globalSkillDist[word2Idx[idx]]["count"] += 1
                         else:
-                            logger.critical("count failed count %s actual count %s len(querySkill) %s",count, maxSkillCount, len(querySkill))
+                            logger.info("count failed count %s actual count %s len(querySkill) %s",count, maxSkillCount, len(querySkill))
 
                         # print(word2Idx[idx])
-        logger.critical("global skill dist %s after docidx %s", globalSkillDist, docIdx)
+        logger.info("global skill dist %s after docidx %s", globalSkillDist, docIdx)
 
         ### 
         ## this logic is based on max dist. in this we are seeing which keywords have come in max dist
@@ -300,16 +300,16 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
                             globalSkillDist[word]["count"] += 1
 
 
-                        logger.critical("%s via broad skill match", word)
+                        logger.info("%s via broad skill match", word)
                     else:
                         pass
         else:
-            logger.critical("dockdix not in max skill dist %s", docIdx)
+            logger.info("dockdix not in max skill dist %s", docIdx)
             
-        logger.critical("global skill maxdist %s after docidx %s", globalSkillDist, docIdx)
+        logger.info("global skill maxdist %s after docidx %s", globalSkillDist, docIdx)
 
         if len(globalSkillDist) > 0:
-            logger.critical("final skills found for document %s", docIdx)
+            logger.info("final skills found for document %s", docIdx)
             sortDist = {}
             for word in globalSkillDist:
                 if len(word.strip()) == 1:
@@ -327,7 +327,7 @@ def start(findSkills, mongoid, isGeneric = False, account_name = "", account_con
 
     skillScore = getSkillScore(model, docLines, doc2Idx, finalSkillList, querySkill, notFound)
 
-    logger.critical("skill Score %s", skillScore)
+    logger.info("skill Score %s", skillScore)
 
     ret = {}
 
@@ -396,7 +396,7 @@ def getWordMatrix(docLines, model):
                 except KeyError:
                     continue
 
-    logger.critical("total lines %s", len(word2Vec))
+    logger.info("total lines %s", len(word2Vec))
     data_matrix  = numpy.zeros( (len(word2Vec), 300), dtype='float32')
 
     for idx, key in enumerate(word2Vec):
@@ -416,8 +416,13 @@ def queryMatrix(model, findSkills , isGeneric = False) :
             querySkill[skill] = model.wv.get_vector(skill)
             skillVec.append(model.wv.get_vector(skill))
         except KeyError:
-            notFound.append(skill.lower())
-            continue
+            try:
+                skill = skill.lower()
+                querySkill[skill] = model.wv.get_vector(skill)
+                skillVec.append(model.wv.get_vector(skill))
+            except KeyError:
+                notFound.append(skill.lower())
+                continue
 
     query_matrix = numpy.zeros( (len(querySkill), 300), dtype='float32')
     for idx, key in enumerate(querySkill):
@@ -455,7 +460,7 @@ def getSampleData(mongoid, account_name, account_config):
             if "domain" in job_row:
                 domain = job_row["domain"]
 
-        if r.exists("job_" + mongoid):
+        if r.exists("job_" + mongoid) and False:
             logger.critical("data from redis")
             data = r.get("job_" + mongoid)
             # logger.critical("data from redis %s", data)
@@ -488,7 +493,7 @@ def getSampleData(mongoid, account_name, account_config):
 
         data = []
         for mid in mongoid:
-            if r.exists(mid):
+            if r.exists(mid) and False:
                 logger.critical("data from redis")
                 row = r.get(mid)
                 data.append(json.loads(row))
@@ -503,7 +508,7 @@ def getSampleData(mongoid, account_name, account_config):
 
             
     else:
-        if r.exists(mongoid):
+        if r.exists(mongoid) and False:
             logger.critical("data from redis")
             row = json.loads(r.get(mongoid))
             data = [row]
