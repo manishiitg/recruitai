@@ -23,6 +23,7 @@ amqp_url = os.getenv('RABBIT_DB',"amqp://guest:guest@rabbitmq:5672/%2F?connectio
 
 from app.publishskill import sendBlockingMessage as extractSkillMessage
 from app.publishfilter import sendBlockingMessage as extractCandidateScore
+from app.pushlishskillindex import sendMessage as indexcandidateskill
 
 from app.publishcandidate import sendMessage as extractCandidateClassifySkill
 from app.publishsummary import sendMessage as sendSummary
@@ -423,18 +424,27 @@ class TaskQueue(object):
                     if not isinstance(skills, list):
                         skills = skills.split(",")
 
-
-                    skillExtracted =  extractSkillMessage({
+                    indexcandidateskill({
                         "action" : "extractSkill",
                         "mongoid" : message["mongoid"],
                         "filename" : message["filename"],
                         "skills" : skills,
-                        "meta" : meta,
+                        # "meta" : meta,
                         "account_name" : account_name,
                         "account_config" : account_config
                     })
 
-                    ret["skillExtracted"] = skillExtracted
+                    # skillExtracted =  extractSkillMessage({
+                    #     "action" : "extractSkill",
+                    #     "mongoid" : message["mongoid"],
+                    #     "filename" : message["filename"],
+                    #     "skills" : skills,
+                    #     "meta" : meta,
+                    #     "account_name" : account_name,
+                    #     "account_config" : account_config
+                    # })
+
+                    # ret["skillExtracted"] = skillExtracted
 
                 self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
 
@@ -460,17 +470,17 @@ class TaskQueue(object):
                     "account_config" : account_config,
                     "priority" : message["priority"] 
                 })
-                if "criteria" in meta:
-                    extractCandidateScore({
-                        "action" : "candidate_score",
-                        "id" : message["mongoid"],
-                        "mongoid" : message["mongoid"],
-                        "filename" : message["filename"],
-                        "account_name" : account_name,
-                        "account_config" : account_config,
-                        "priority" : message["priority"],
-                        "criteria" : meta["criteria"]
-                    })
+                # if "criteria" in meta:
+                #     extractCandidateScore({
+                #         "action" : "candidate_score",
+                #         "id" : message["mongoid"],
+                #         "mongoid" : message["mongoid"],
+                #         "filename" : message["filename"],
+                #         "account_name" : account_name,
+                #         "account_config" : account_config,
+                #         "priority" : message["priority"],
+                #         "criteria" : meta["criteria"]
+                #     })
 
                 sendSummary({
                     "mongoid": message["mongoid"],
@@ -508,17 +518,27 @@ class TaskQueue(object):
                 if not isinstance(skills, list):
                     skills = skills.split(",")
 
-                    
-                skillExtracted =  extractSkillMessage({
+                
+                indexcandidateskill({
                     "action" : "extractSkill",
                     "mongoid" : message["mongoid"],
                     "filename" : message["filename"],
                     "skills" : skills,
-                    "meta" : meta,
+                    # "meta" : meta,
                     "account_name" : account_name,
                     "account_config" : account_config
                 })
-                ret["skillExtracted"] = skillExtracted
+
+                # skillExtracted =  extractSkillMessage({
+                #     "action" : "extractSkill",
+                #     "mongoid" : message["mongoid"],
+                #     "filename" : message["filename"],
+                #     "skills" : skills,
+                #     "meta" : meta,
+                #     "account_name" : account_name,
+                #     "account_config" : account_config
+                # })
+                # ret["skillExtracted"] = skillExtracted
 
             self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
             updateStats({
@@ -542,17 +562,17 @@ class TaskQueue(object):
                 "account_config" : account_config,
                 "priority" : message["priority"] 
             })
-            if "criteria" in meta:
-                extractCandidateScore({
-                    "action" : "candidate_score",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "id" : message["mongoid"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"], 
-                    "criteria" : meta["criteria"]
-                })
+            # if "criteria" in meta:
+            #     extractCandidateScore({
+            #         "action" : "candidate_score",
+            #         "mongoid" : message["mongoid"],
+            #         "filename" : message["filename"],
+            #         "id" : message["mongoid"],
+            #         "account_name" : account_name,
+            #         "account_config" : account_config,
+            #         "priority" : message["priority"], 
+            #         "criteria" : meta["criteria"]
+            #     })
 
             sendSummary({
                 "mongoid": message["mongoid"],
