@@ -13,6 +13,7 @@ from flask_jwt_extended import (
 
 from app.publisher.skillextract import sendBlockingMessage
 from app.util import check_and_validate_account
+from app.publisher.skillindex import sendMessage
 
 bp = Blueprint('skillextract', __name__, url_prefix='/skillextract')
 
@@ -35,6 +36,25 @@ def skillextract(mongoid, skills = ""):
             "account_config" : request.account_config
         })
         return jsonify(similar), 200
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('index/<string:mongoid>', methods=['GET'])
+@bp.route('index/<string:mongoid>/<string:skills>', methods=['GET'])
+@check_and_validate_account
+def skillextractindex(mongoid, skills = ""):
+    logger.info("got mongo id %s and skills %s", mongoid, skills)
+    try:
+
+        similar = sendMessage({
+            "action" : "extractSkill",
+            "mongoid" : mongoid,
+            "skills" : skills.split(","),
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+        return jsonify({}), 200
     except KeyError as e:
         logger.critical(e)
         return jsonify(str(e)), 500
