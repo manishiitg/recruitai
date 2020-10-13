@@ -179,7 +179,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       start_time = time.time()
       
       if p is None:
-        logger.info("if not predictions found we are breaking out")
+        logger.critical("if not predictions found we are breaking out")
         break
 
 
@@ -201,9 +201,9 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     page_contents = []
     for cvpage in range(1, cvpages + 1):
     
-      logger.debug("page no %s" , cvpage)
+      logger.info("page no %s" , cvpage)
 
-      logger.debug("fetching contents from %s", output_dir)
+      logger.info("fetching contents from %s", output_dir)
       outputFolder = ""
 
       jsonOutputbbox, jsonOutput = extractOcrTextFromSegments(cvpage, output_dir, outputFolder, increase_dpi_for_small_image = True)  
@@ -213,8 +213,8 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       ##################################
 
-      logger.debug(" normal image len %s", len(jsonOutput))
-      logger.debug(" bbox image len %s",len(jsonOutputbbox))
+      logger.info(" normal image len %s", len(jsonOutput))
+      logger.info(" bbox image len %s",len(jsonOutputbbox))
 
       jsonOutput, tableRow = chooseBBoxVsSegment(jsonOutput, jsonOutputbbox)
       timeAnalysis[fileIdx]["chooseBBoxVsSegment" + str(cvpages)] = time.time() - start_time
@@ -227,7 +227,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       # with open(cv + ".txt", encoding="ascii" , errors = "ignore") as f:
       #   content = f.read()
 
-      logger.debug("reading cv %s page no: %s" , cv, cvpage)
+      logger.info("reading cv %s page no: %s" , cv, cvpage)
 
       
       # logger.debug(content)
@@ -269,7 +269,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         content = pages_data_extract[cvpage-1]
         
 
-      logger.info(content)
+      # logger.info("contenttt %s", content)
 
       page_contents.append(content)
 
@@ -331,7 +331,7 @@ def uploadToGcloud(basePath,basecv, account_name, account_config):
 
 def cleanContent(content , cvpage , jsonOutput):
   
-
+  logger.critical("content %s", content)
   lineData = content.splitlines()
 
   # (cid:72)
@@ -357,15 +357,36 @@ def cleanContent(content , cvpage , jsonOutput):
   
   if len(cleanLineData) < 3:
     if cvpage > 1:
-      logger.info("this might be empty pages. we should stop here...")
+      logger.critical("this might be empty pages. we should stop here...")
       # right now not doing this.... its risky and not neeed
     # else:
-    logger.info("very very few lines??? %s", len(cleanLineData))
-    logger.debug("this means unable to read from cv properly do to rare issues. in that case need to take data from image itself.")
+    logger.critical("very very few lines??? %s", len(cleanLineData))
+    logger.critical("this means unable to read from cv properly do to rare issues. in that case need to take data from image itself.")
     cleanLineData = []
     for row in jsonOutput:
       cleanLineData.append(row["correctLine"])
       logger.debug(row["correctLine"])
+  else:
+    line_without_space = 0
+    for line in cleanLineData:
+      if " " not in line.strip() and len(line) > 10: # if more than 10 its not a single word
+          line_without_space += 1
+      else:
+        words = line.split(" ")
+        if len(words) == 2:
+          line_without_space += 1
+
+
+    logger.critical("line without space %s", line_without_space)
+    logger.critical("total lines %s", len(cleanLineData))
+    if (line_without_space > len(cleanLineData) / 2) and len(cleanLineData) > 10:
+      logger.critical("this means unable to read from cv properly do to rare issues. in that case need to take data from image itself.")
+      cleanLineData = []
+      for row in jsonOutput:
+        cleanLineData.append(row["correctLine"])
+        logger.debug(row["correctLine"])
+
+    # Tomakeacareerinrepudiatedfieldandwishtojoinanorganizationthatoffersmea
   
     
 
