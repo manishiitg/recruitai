@@ -11,6 +11,7 @@ RUN apt-get update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./supervisor/conf.d/skillextract.conf /etc/supervisor/conf.d/skillextract.conf
+COPY ./supervisor/conf.d/index.conf /etc/supervisor/conf.d/index.conf
 
 RUN truncate -s 0 /workspace/logs/skillextract*.log
 
