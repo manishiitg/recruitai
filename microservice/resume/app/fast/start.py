@@ -36,11 +36,14 @@ def process(finalPdf):
         pages_data_extract = x.split("',")
         content = " ".join(pages_data_extract)
 
-    # logger.critical(content)
+    logger.critical("content %s", content)  
+    # sometimes this gives content like this 
+    # Tomakeacareerinrepudiatedfieldandwishtojoinanorganizationthatoffersmea
+    # how to handle it??
 
     lines = convert_for_tagging(content)
 
-    logger.critical(lines)
+    logger.critical("lines %s", lines)
 
     ret = []
 
