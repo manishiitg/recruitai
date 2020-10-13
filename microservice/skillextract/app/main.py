@@ -88,6 +88,8 @@ def thread_task( conn, ch, method_frame, properties, body):
 
                         job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
 
+                        logger.critical("found job profile id %s", job_profile_id)
+
                         if job_profile_id and job_profile_id in job_criteria_map:
                             criteria = job_criteria_map[job_profile_id]
                             findSkills = []
@@ -95,6 +97,7 @@ def thread_task( conn, ch, method_frame, properties, body):
                                 for value in criteria['skills']["values"]:
                                     findSkills.append(value["value"])
 
+                            logger.critical("find skills for job %s", findSkills)
                             ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
                             ret = json.dumps(ret,default=str)
                         else:
@@ -214,9 +217,10 @@ def main():
 
     print(result)
 
-
+    
     loadModel()
     loadDomainModel()
+    
     conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
     ch = conn.channel()
 

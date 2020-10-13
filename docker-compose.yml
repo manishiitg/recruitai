@@ -135,6 +135,7 @@ services:
     redis:
         image: bitnami/redis:latest
         # command: ["redis-server", "--appendonly", "yes"] # https://redis.io/topics/persistence
+        command: /opt/bitnami/scripts/redis/run.sh --appendonly no
         environment: 
             - ALLOW_EMPTY_PASSWORD=yes
             - REDIS_REPLICATION_MODE=master
