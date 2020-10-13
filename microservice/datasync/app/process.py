@@ -352,11 +352,16 @@ def queue_process(is_direct = False, add_thread = True):
 
     queue_running_count += 1
     if queue_running_count < 10:
-        if is_queue_process_running or lock.locked():
+        if is_queue_process_running:
             logger.critical("queue is already running... %s", queue_running_count)
             return
 
-    lock.acquire(False)
+    if not lock.acquire(False):
+        logger.critical("unable to acquire lock!!!!!")
+        if queue_running_count < 100:
+            return 
+        else:
+            logger.critical("lock stuck breaking out")
 
     is_queue_process_running = True
 
@@ -381,7 +386,7 @@ def queue_process(is_direct = False, add_thread = True):
                 logger.critical("updating redis %s" , key)
                 logger.critical("redis data len %s", len(redisKeyMap[account_name][key]))
                 r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
-                r.set(key + "_len", len(redisKeyMap[account_name][key]))
+                # r.set(key + "_len", len(redisKeyMap[account_name][key]))  doing it using candidate_len_map now 
                 r.set(key + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
                 logger.critical("updated redis %s" , key)
 
@@ -821,6 +826,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         job_profile_map = {}
         candidate_map = {}
+        candidate_len_map = {}
 
         full_map = {}
 
@@ -857,6 +863,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 mapKey = "NOT_ASSIGNED"
                 if mapKey not in candidate_map:
                     candidate_map[mapKey] = {}
+                    candidate_len_map[mapKey] = 0
+                    
                 is_old = False
                 month_year = ""
                 is_year_old = False
@@ -890,10 +898,15 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 # if row["sender_mail"] == "ramyajarugu114@gmail.com":
                 #     print(mapKey)
 
-                if days < 90:
+                if days < 90: # as using mongo directly and keeping redis light
                     # skipping unassigned for more than 30months data no use 
                     if candidate_label not in candidate_map:
                         candidate_map[candidate_label] = {}
+                    
+                    if candidate_label not in candidate_len_map:
+                        candidate_len_map[candidate_label] = 0
+                    
+                    candidate_len_map[candidate_label] += 1
                     
                     candidate_map[candidate_label][row["_id"]] = row
 
@@ -905,6 +918,11 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 days = 0
                 if candidate_label not in candidate_map:
                     candidate_map[candidate_label] = {}
+                
+                if candidate_label not in candidate_len_map:
+                    candidate_len_map[candidate_label] = 0
+                    
+                    
 
                 if "email_timestamp" in row:
                     timestamp_seconds = int(row["email_timestamp"])/1000
@@ -927,8 +945,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if candidate_label not in candidate_map:
                     candidate_map[candidate_label] = {}
 
-                if days < 30:
-                    # candidate more than year old mananaged only via mongodb.... to reduce load on redis
+                if candidate_label not in candidate_len_map:
+                    candidate_len_map[candidate_label] = 0
+                    
+                candidate_len_map[candidate_label] += 1
+
+                if days < 30: # as using mongo directly and keeping redis light
                     candidate_map[candidate_label][row["_id"]] = row
             
             # if "sender_mail" in row:
@@ -952,6 +974,10 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     candidate_label = row["candidateClassify"]["label"]
                     if candidate_label not in candidate_map:
                         candidate_map[candidate_label] = {}
+
+                    if candidate_label not in candidate_len_map:
+                        candidate_len_map[candidate_label] = 0
+                    
 
                     if str(candidate_label) == "False":
                         candidate_label = None
@@ -977,7 +1003,12 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         if candidate_label not in candidate_map:
                             candidate_map[candidate_label] = {}
 
-                        if days < 30:
+                        if candidate_label not in candidate_len_map:
+                            candidate_len_map[candidate_label] = 0
+                        
+                        candidate_len_map[candidate_label] += 1
+                        
+                        if days < 30: # as using mongo directly and keeping redis light
                             candidate_map[candidate_label][row["_id"]] = row
 
             # if "ex_job_profile" in row:
@@ -1081,6 +1112,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     mapKey = "classify_NOT_ASSIGNED"
                     is_old = False
                     month_year = ""
+                    days = 0
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
@@ -1100,22 +1132,23 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     if is_old:
                         mapKey = "classify_NOT_ASSIGNED" + month_year
 
-                    if mapKey not in redisKeyMap[account_name]:
-                        job_data = r.get(mapKey)
-                        if job_data is None:
-                            job_data = {}
+                    if days < 90: # as using mongo directly and keeping redis light
+                        if mapKey not in redisKeyMap[account_name]:
+                            job_data = r.get(mapKey)
+                            if job_data is None:
+                                job_data = {}
+                            else:
+                                job_data = json.loads(job_data)
                         else:
-                            job_data = json.loads(job_data)
-                    else:
-                        job_data = redisKeyMap[account_name][mapKey]
-                        
-                    job_data[row["_id"]] = row
-                    redisKeyMap[account_name][mapKey] = job_data
+                            job_data = redisKeyMap[account_name][mapKey]
+                            
+                        job_data[row["_id"]] = row
+                        redisKeyMap[account_name][mapKey] = job_data
 
-                    local_dirtyMap[account_name][mapKey] = {
-                        "filter_dirty" : True,
-                        "redis_dirty" : True
-                    }
+                        local_dirtyMap[account_name][mapKey] = {
+                            "filter_dirty" : True,
+                            "redis_dirty" : True
+                        }
 
                     
                 
@@ -1123,7 +1156,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if "ex_job_profile" in row:
                     candidate_label = "Ex:" + row["ex_job_profile"]["name"]
                     mapKey = "classify_" + candidate_label
-
+                    days = 0
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
                         month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
@@ -1134,29 +1167,28 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         if days > 15:
                             mapKey = mapKey + month_year
 
-                    
-                    if mapKey not in redisKeyMap[account_name]:
-                        candidate_data = r.get(mapKey)
-                        if candidate_data:
-                            candidate_data = json.loads(candidate_data)
+                    if days < 30: # as using mongo directly and keeping redis light
+                        if mapKey not in redisKeyMap[account_name]:
+                            candidate_data = r.get(mapKey)
+                            if candidate_data:
+                                candidate_data = json.loads(candidate_data)
+                            else:
+                                candidate_data = {}
                         else:
-                            candidate_data = {}
-                    else:
-                        candidate_data = redisKeyMap[account_name][mapKey]
+                            candidate_data = redisKeyMap[account_name][mapKey]
 
 
-                    candidate_data[row["_id"]] = row
-                    redisKeyMap[account_name][mapKey] = candidate_data
-                    local_dirtyMap[account_name][mapKey] = {
-                        "filter_dirty" : True,
-                        "redis_dirty" : True
-                    }
+                        candidate_data[row["_id"]] = row
+                        redisKeyMap[account_name][mapKey] = candidate_data
+                        local_dirtyMap[account_name][mapKey] = {
+                            "filter_dirty" : True,
+                            "redis_dirty" : True
+                        }
 
                 if candidate_label is not None:
                     logger.critical("candidate labels %s", candidate_label)
                     mapKey = "classify_" + candidate_label
-                    if candidate_label not in candidate_map:
-                        candidate_map[candidate_label] = {}
+                    days = 0
 
                     if "email_timestamp" in row:
                         timestamp_seconds = int(row["email_timestamp"])/1000
@@ -1167,31 +1199,31 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         if days > 15:
                             mapKey = mapKey + month_year
 
-                    
-                    if mapKey not in redisKeyMap[account_name]:
-                        candidate_data = r.get(mapKey)
-                        if candidate_data:
-                            candidate_data = json.loads(candidate_data)
+                    if days < 30: # as using mongo directly and keeping redis light
+                        if mapKey not in redisKeyMap[account_name]:
+                            candidate_data = r.get(mapKey)
+                            if candidate_data:
+                                candidate_data = json.loads(candidate_data)
+                            else:
+                                candidate_data = {}
                         else:
-                            candidate_data = {}
-                    else:
-                        candidate_data = redisKeyMap[account_name][mapKey]
+                            candidate_data = redisKeyMap[account_name][mapKey]
 
-                    # if row["_id"] in candidate_data:
-                    candidate_data[row["_id"]] = row
+                        # if row["_id"] in candidate_data:
+                        candidate_data[row["_id"]] = row
 
-                    redisKeyMap[account_name][mapKey] = candidate_data
+                        redisKeyMap[account_name][mapKey] = candidate_data
 
-                    if isFilterUpdateNeeded: 
-                        local_dirtyMap[account_name][mapKey] = {
-                            "filter_dirty" : True,
-                            "redis_dirty" : True
-                        }
-                    else:
-                        local_dirtyMap[account_name][mapKey] = {
-                            "filter_dirty" : True,
-                            "redis_dirty" : True
-                        }
+                        if isFilterUpdateNeeded: 
+                            local_dirtyMap[account_name][mapKey] = {
+                                "filter_dirty" : True,
+                                "redis_dirty" : True
+                            }
+                        else:
+                            local_dirtyMap[account_name][mapKey] = {
+                                "filter_dirty" : True,
+                                "redis_dirty" : True
+                            }
 
 
         
@@ -1213,7 +1245,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 # })
                 mapKey = "job_" + job_profile_id
                 local_dirtyMap[account_name][mapKey] = {
-                    "filter_dirty" : True,
+                    "filter_dirty" : len(job_profile_map[job_profile_id]),
                     "redis_dirty" : True
                 }
                 redisKeyMap[account_name][mapKey] = job_profile_map[job_profile_id]
@@ -1225,6 +1257,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 logger.critical("filter sync candidate_label %s ", candidate_label)
                 r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
+                r.set("classify_" + candidate_label + "_len", candidate_len_map[candidate_label])
                 # ret = updateFilter({
                 #     "id" : candidate_label,
                 #     "fetch" : "candidate",
@@ -1235,7 +1268,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 mapKey = "classify_" + candidate_label
                 redisKeyMap[account_name][mapKey] = candidate_map[candidate_label] 
                 local_dirtyMap[account_name][mapKey] = {
-                    "filter_dirty" : True,
+                    "filter_dirty" : len(candidate_map[candidate_label]) > 0,
                     "redis_dirty" : True
                 }
                 logger.critical("updating filter %s" , mapKey)
