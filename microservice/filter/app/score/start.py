@@ -105,7 +105,7 @@ def getSampleData(mongoid, account_name, account_config):
             skip = 0
 
         
-        if r.exists("job_" + mongoid):
+        if r.exists("job_" + mongoid) and False:
             logger.critical("data from redis")
             data = r.get("job_" + mongoid)
             # logger.critical("data from redis %s", data)
@@ -129,14 +129,14 @@ def getSampleData(mongoid, account_name, account_config):
                 jobMap.append(row)
 
             data = jobMap
-            r.set("job_" + mongoid  , json.dumps(jobMap))
+            # r.set("job_" + mongoid  , json.dumps(jobMap))
 
     elif "," in mongoid:
         mongoid = mongoid.split(",")
 
         data = []
         for mid in mongoid:
-            if r.exists(mid):
+            if r.exists(mid) and False:
                 logger.critical("data from redis")
                 row = r.get(mid)
                 data.append(json.loads(row))
@@ -151,7 +151,7 @@ def getSampleData(mongoid, account_name, account_config):
 
             
     else:
-        if r.exists(mongoid):
+        if r.exists(mongoid) and False:
             logger.critical("data from redis")
             row = json.loads(r.get(mongoid))
             data = [row]
@@ -178,6 +178,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
 
     if criteria is None:
         # criteria = getSampleCriteria()
+        logger.critical("no critia round!!")
         return -1
 
     candidate_score = 0
@@ -232,6 +233,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
     logger.critical("final candidate score %s", candidate_score)
 
     if updated_db:
+
         db.emailStored.update_one({
             "_id" : ObjectId(id)
         }, {
@@ -490,7 +492,7 @@ def getSkillScore(criteria, row, total_weight, max_score):
                         found = False
                         for skill in score:
                             logger.critical("skill matching {} == {}".format(skill_value, skill))
-                            if skill == skill_value or skill_value.replace("_","") == skill.replace("_","") or skill_value.replace(" ","") == skill.replace(" ",""):
+                            if skill == skill_value or skill.lower() == skill_value.lower() or skill_value.replace("_","") == skill.replace("_","") or skill_value.replace(" ","") == skill.replace(" ",""):
                                 found = True
                                 max_dist = 0   
                                 
