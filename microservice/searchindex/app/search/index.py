@@ -35,13 +35,13 @@ def createIndex(account_name, account_config):
     logger.info(ret)
 
 def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}):
-    
+
     createIndex(account_name, account_config)
     indexName = getIndex(account_name, account_config)
 
     es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
     ret = es.index(index=indexName, id=mongoid, body={
-        "resume": " ".join(lines),
+        "resume": " ".join(filter(None, lines)),
         # "extra_data": json.loads(json.dumps(extra_data, default=str)),
         "extra_data": {},
         "refresh": True,
