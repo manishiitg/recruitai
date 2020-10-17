@@ -50,7 +50,7 @@ class TaskQueue(object):
         self._url = amqp_url
         self._consuming = False
         self.threads = []
-        self._prefetch_count = 1 # we have global variables. if we have multipel threads this can cause problems
+        self._prefetch_count = 10 # we have global variables. if we have multipel threads this can cause problems
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
