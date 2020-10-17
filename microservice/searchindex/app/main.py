@@ -462,7 +462,7 @@ class ReconnectingTaskQueue(object):
 import time
 def main():    
 
-    time.sleep(60) # wait 100 sec for elastic search to start.
+    time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
