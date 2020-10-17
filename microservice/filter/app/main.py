@@ -13,7 +13,7 @@ SERVER_QUEUE = "rpc.filter.queue"
 
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.filter.start import fetch, indexAll, index, clear_unique_cache, get_candidate_tags, general_api_speed_up
+from app.filter.start import fetch, indexAll, index, clear_unique_cache, get_candidate_tags, general_api_speed_up, get_index
 
 from app.score.start import get_education_display, get_candidate_score, get_exp_display, get_candidate_score_bulk
 from app.statspublisher import sendMessage as updateStats
@@ -86,6 +86,12 @@ def thread_task( ch, method_frame, properties, body):
                 add_threadsafe_callback(ch, method_frame,properties, json.dumps({}))
                 index(fetch_id, fetch_type, account_name, account_config)
                 # ret = json.dumps(ret)
+        elif body["action"] == "filter_index_get":
+
+            ret = get_index(body["tag_id"], account_name, account_config)
+            print(ret)
+            add_threadsafe_callback(ch, method_frame,properties, ret)
+
         elif body["action"] == "speed_up":
             ret = general_api_speed_up(body["url"], body["payload"] , body["access_token"], account_name, account_config)
             add_threadsafe_callback(ch, method_frame,properties, ret)
