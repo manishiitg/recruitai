@@ -335,7 +335,7 @@ def get_resume_parsed_per_day(account_name, account_config):
 
 def current_candidate_status(mongoid, account_name, account_config):
     db = initDB(account_name, account_config)
-    row = db.ai_stats.find_one({"_id" : ObjectId(mongoid)})
+    row = db.ai_stats.find_one({"mongoid" : mongoid})
     if not row:
         return {
             "error" : f"{mongoid} not found "
