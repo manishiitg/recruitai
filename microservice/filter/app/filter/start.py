@@ -51,12 +51,18 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
     redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8') + access_token.encode('utf-8')  ).hexdigest()
     r = connect_redis(account_name, account_config)
-    # print("checking for redis key")
-    # if r.exists(redisKey):
-    #     logger.critical("speed up data returned from redis %s", redisKey)
-    #     t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
-    #     t.start()
-    #     return r.get(redisKey)
+    print("checking for redis key")
+    try:
+        
+        if r.exists(redisKey):
+            logger.critical("speed up data returned from redis %s", redisKey)
+            t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
+            t.start()
+            return r.get(redisKey)
+
+    except Exception as e:
+        logger.critical("critical error %s", e)
+        pass
     
     logger.critical("no redis data calling api directly")
     data = get_speedup_api(redisKey, url, payload, access_token, account_name, account_config)
@@ -94,11 +100,148 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
     
 
 
-unique_cache_key_list = {}
+
 use_unique_cache_feature = False
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
+
+def generateClassifyList(account_name, account_config):
+    db = initDB(account_name, account_config)
+
+    ret = db.emailStored.find({ } , {"body": 0, "cvParsedInfo.debug": 0})
+    # if 'job_profile_id' in row:
+    # this is because all logic below assumes job_profile_id is not there if no job
+
+    candidate_map = {}
+    candidate_len_map = {}
+    for row in ret:
+        if 'job_profile_id' in row:
+            if len(row['job_profile_id'].strip()) == 0:
+                del row['job_profile_id']
+
+        if "cvParsedInfo" in row:
+            cvParsedInfo = row["cvParsedInfo"]
+            if "debug" in cvParsedInfo:
+                del row["cvParsedInfo"]["debug"]
+
+        if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
+            job_profile_id = row["job_profile_id"]
+        else:
+            # logger.critical("job profile not found!!!")
+            job_profile_id = None
+
+            mapKey = "NOT_ASSIGNED"
+            if mapKey not in candidate_len_map:
+                candidate_len_map[mapKey] = 0
+                
+            is_old = False
+            month_year = ""
+            is_year_old = False
+            days = 0
+
+            if "email_timestamp" in row:
+                timestamp_seconds = int(row["email_timestamp"])/1000
+                month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
+                days =  abs(time.time() - timestamp_seconds)  / (60 * 60 * 24 )
+
+                if days < 15:
+                    is_old = False
+                else:
+                    is_old = True
+                    if days > 365:
+                        is_year_old = True
+                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+
+                
+
+            else:
+                is_old = False
+            
+            if is_old:
+                mapKey = "NOT_ASSIGNED" + month_year
+
+            candidate_label = mapKey
+            
+            if candidate_label not in candidate_len_map:
+                candidate_len_map[candidate_label] = 0
+            
+            candidate_len_map[candidate_label] += 1
+            
+            
+        is_year_old = False
+        if "ex_job_profile" in row:
+            if row["ex_job_profile"] and "name" in row["ex_job_profile"]:
+                candidate_label = "Ex:" + row["ex_job_profile"]["name"]
+                mapKey = candidate_label
+                days = 0
+                
+                if candidate_label not in candidate_len_map:
+                    candidate_len_map[candidate_label] = 0
+                    
+                    
+
+                if "email_timestamp" in row:
+                    timestamp_seconds = int(row["email_timestamp"])/1000
+                    month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y') # remove moth for ex. only year based
+
+                    cur_time = time.time()
+                    days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                    
+                    if days > 365:
+                        is_year_old = True
+                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                    
+                    mapKey = mapKey + month_year
+                
+                
+
+                candidate_label = mapKey
+
+                if candidate_label not in candidate_len_map:
+                    candidate_len_map[candidate_label] = 0
+                    
+                candidate_len_map[candidate_label] += 1
+
+        candidate_label = None
+        if "candidateClassify" in row:
+            if "label" in row["candidateClassify"]:
+                candidate_label = row["candidateClassify"]["label"]
+                
+
+                if str(candidate_label) == "False":
+                    candidate_label = None
+                else:
+                    if candidate_label not in candidate_len_map:
+                        candidate_len_map[candidate_label] = 0
+
+                if candidate_label:
+                    month_year = ""
+                    is_year_old = False
+                    days = 0
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                        if days > 15:
+                            if days > 365:
+                                is_year_old = True
+                                month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                    
+                    candidate_label = candidate_label + month_year
+
+                    
+                    if candidate_label not in candidate_len_map:
+                        candidate_len_map[candidate_label] = 0
+                    
+                    candidate_len_map[candidate_label] += 1
+                    
+    return candidate_len_map
+            
 def get_candidate_tags_v2(account_name, account_config):
     r = connect_redis(account_name, account_config)
 
@@ -119,19 +262,17 @@ def get_candidate_tags_v2(account_name, account_config):
     classify_tags = []
 
     classify_list = []
-    if r.exists("classify_list"):
+    if r.exists("classify_list"): 
         classify_list = r.get("classify_list")
         classify_list = json.loads(classify_list)
-        
     else:
-        datasync({
-            "action" : "full",
-            "cur_time" : time.time(),
-            "account_name": account_name,
-            "account_config" : account_config,
-            "priority" : 10
-        })
-        return [-1]
+        candidate_len_map = generateClassifyList(account_name, account_config)
+        classify_list = list(set(list(candidate_len_map.keys())))
+        r.set('classify_list', json.dumps(classify_list))
+
+        for tag in candidate_len_map:
+            r.set("classify_" + tag + "_len" , candidate_len_map[tag])
+
 
 
     def score_tag_idx(x):
@@ -175,15 +316,12 @@ def get_candidate_tags_v2(account_name, account_config):
     def getTitle(tag):
         
         
-        job_profile_data = r.get("classify_" + tag)      
-        if not job_profile_data:
+       
+        job_profile_data_len = r.get("classify_" + tag + "_len")
+        if job_profile_data_len is None:
             job_profile_data_len = 0
         else:
-            job_profile_data_len = r.get("classify_" + tag + "_len")
-            if job_profile_data_len is None:
-                job_profile_data_len = 0
-            else:
-                job_profile_data_len = int(job_profile_data_len)
+            job_profile_data_len = int(job_profile_data_len)
 
         if tag not in tag_map:
             if "Ex:" in tag:
@@ -255,85 +393,10 @@ def get_candidate_tags_v2(account_name, account_config):
 def get_candidate_tags(account_name, account_config):
     # if account_name == "rocketrecruit":
     return get_candidate_tags_v2(account_name, account_config)
-    # tags = ["TeachingEducation", "HRRecruitment", "accounts", "Sales", "legal", "softwaredevelopment", "marketing", "customerservice"]
-    # r = connect_redis(account_name, account_config)
-
-    # tag_map = {
-    #     "NOT_ASSIGNED" : "No Job Assigned",
-    #     "softwaredevelopment" : "Software Development",
-    #     "HRRecruitment" : "HR",
-    #     "accounts" : "Accounts",
-    #     "Sales" : "Sales",
-    #     "legal" : "Legal",
-    #     "marketing" : "Marketing",
-    #     "customerservice" : "Customer Service",
-    #     "TeachingEducation" : "Education",
-    # }
-
-    # response = []
-
-    # classify_tags = []
-
-    # classify_list = []
-    # if r.exists("classify_list"):
-    #     classify_list = r.get("classify_list")
-    #     classify_list = json.loads(classify_list)
-    # else:
-    #     datasync({
-    #         "action" : "full",
-    #         "cur_time" : time.time(),
-    #         "account_name": account_name,
-    #         "account_config" : account_config,
-    #         "priority" : 10
-    #     })
-    #     return [-1]
-
-    # # for tag in tag_map.keys():
-    # for tag in classify_list:
-
-    #     tag = tag.replace("classify_","")
-        
-    #     job_profile_data = r.get("classify_" + tag)      
-    #     if not job_profile_data:
-    #         job_profile_data_len = 0
-    #     else:
-    #         job_profile_data_len = r.get("classify_" + tag + "_len")
-    #         if job_profile_data_len is None:
-    #             job_profile_data_len = 0
-    #         else:
-    #             job_profile_data_len = int(job_profile_data_len)
-
-    #     if tag not in tag_map:
-    #         if "Ex-" in tag:
-    #             tag_map[tag] = tag
-    #         elif "-" in tag:
-    #             tags = tag.split("-")
-    #             if tags[0] in tag_map:
-    #                 tag_map[tag] = tag.replace(tags[0],tag_map[tags[0]])
-    #         else:
-    #             tag_map[tag] = tag.replace("Ex-", "Ex Job: ")
-
-    #     title = tag_map[tag]
-    #     response.append({
-    #             "active_status": True,
-    #             "assign_to_all_emails": False,
-    #             "count": job_profile_data_len,
-    #             "default": True,
-    #             "id": len(response),
-    #             "parent_id": "0",
-    #             "read": -1,
-    #             "roundDetails": [],
-    #             "sequence": 0,
-    #             "title": title,
-    #             "unread": -1,
-    #             "_id": len(response),
-    #             "key" : tag
-    #             })
-
-    # return sorted(response, key=lambda x: x['count'], reverse=True)
-
+    
 
 def indexAll(account_name, account_config):
+    return ""
     r = connect_redis(account_name, account_config)
 
     logger.critical("index all called")
@@ -378,102 +441,149 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, account_name = "", account_config = {}):
-    global unique_cache_key_list
-    
-    r = connect_redis(account_name, account_config)    
+def get_job_profile_data(mongoid, account_name, account_config):
+    db = initDB(account_name, account_config)
+    r = connect_redis(account_name, account_config) 
+    ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
+    job_profile_data = {}
+    for row in ret:
+        row["_id"] = str(row["_id"])
+        job_profile_data[row["_id"]] = row
 
-    # if filter_type == "full_data":
-    #     ret = r.get("full_data_filter")
-    # else:
-    #     logger.critical("fetching for %s", mongoid)
-    #     ret =  r.get(mongoid + "_filter")
+    r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
+    return job_profile_data
 
-    # # logger.critical("filter from redis %s", ret)
+def get_classify_data(mongoid, account_name, account_config):
+    r = connect_redis(account_name, account_config) 
+    db = initDB(account_name, account_config)
+    if "NOT_ASSIGNED" in mongoid:
         
-    # if ret is None:
-    #     # for debugging
-    #     # for key in r.scan_iter():
-    #     #     if "job_" in key or "classify_" in key:
-    #     #         logger.critical("key found %s", key)
+        if len(mongoid.split("-")) == 3:
+                label = mongoid.split("-")[0]
+                year = int(mongoid.split("-")[1])
+                month_name = mongoid.split("-")[2]
+                month = datetime.strptime(month_name, '%b').month
+                start_date = datetime(year, month, 1, 0,0,0)
+                end_date = datetime(year, month, monthrange(year, month)[1], 0,0,0)
+                datecondition = {
+                    "$gte" : start_date,
+                    "$lte" : end_date,
+                }
+        elif len(mongoid.split("-")) == 2:
+            label = mongoid.split("-")[0]
+            year = int(mongoid.split("-")[1])
+            start_date = datetime(year, 1, 1, 0,0,0)
+            end_date = datetime(year, 12, 31, 0,0,0)
+            datecondition = {
+                "$gte" : start_date,
+                "$lte" : end_date,
+            }
+        else:
+            datecondition = {
+                    "$gt" : datetime.now() - timedelta(days=15)
+            }
 
-    #     return json.dumps({})
-    # else:
+        ret = db.emailStored.find(
+            {
+                "$or" : [
+                    {"job_profile_id" : {"$exists":False}},
+                    {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
+                ],
+                "date" : datecondition
+            }, 
+            {"body": 0, "cvParsedInfo.debug": 0})
+        
+        job_profile_data = {}
+        for row in ret:
+            row["_id"] = str(row["_id"])
+            job_profile_data[row["_id"]] = row
 
-    expire_time = time.time()
-    if filter_type == "job_profile":
-        expire_time = r.get("job_" + mongoid + "_time")
-        if expire_time == None:
-            expire_time = time.time() # i dont why this is getting set as None i.e expire time
-            r.set("job_" + mongoid + "_time", expire_time)
+        r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
     else:
-        expire_time = r.get("classify_" + mongoid + "_time")
-        if expire_time == None:
-            expire_time = time.time() # i dont why this is getting set as None i.e expire time
-            r.set("classify_" + mongoid + "_time", expire_time)
-
-    
-
-    unique_cache_key = str(expire_time) + account_name +"_job_" + mongoid + "ft_" + filter_type + "p_" + str(page) + "l_" + str(limit) + "on_ai_data_" + str(on_ai_data) + "t_" + str(hash(str(tags))) + "s_" + str(on_starred)
-
-    # to take this one level up. we will store all function params and call function again internally when cache is cleared
-
-    # r.set(unique_cache_key + "_func", json.dumps({
-    #     mongoid, 
-    #     filter_type , 
-    #     tags, 
-    #     page, 
-    #     limit, 
-    #     on_ai_data,
-    #     filter, 
-    #     account_name, 
-    #     account_config
-    # }))
-
-
-    cache_data = r.get(unique_cache_key)
-    if len(filter) == 0:
-        if cache_data is not None and use_unique_cache_feature:
-            if use_unique_cache_only_for_ai_data:
-                if on_ai_data:
-                    logger.critical("returning cached data %s", unique_cache_key)
-                    if account_name not in unique_cache_key_list:
-                        unique_cache_key_list[account_name] = []
-
-                    unique_cache_key_list[account_name].append(unique_cache_key)
-                    unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                    
-                    cache_obj = json.loads(cache_data)
-                    if int(cache_obj['candidate_len']) != 0:
-                        return cache_data    
-                else:
-                    pass
-            
-            elif use_unique_cache_only_for_classify_data:
-                if "classify_" in filter_type:
-                    logger.critical("returning cached data %s", unique_cache_key)
-                    if account_name not in unique_cache_key_list:
-                        unique_cache_key_list[account_name] = []
-
-                    unique_cache_key_list[account_name].append(unique_cache_key)
-                    unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                    cache_obj = json.loads(cache_data)
-                    if int(cache_obj['candidate_len']) != 0:
-                        return cache_data    
-                else:
-                    pass
-
+        if "-" in mongoid:
+            if len(mongoid.split("-")) == 3:
+                label = mongoid.split("-")[0]
+                year = int(mongoid.split("-")[1])
+                month_name = mongoid.split("-")[2]
+                month = datetime.strptime(month_name, '%b').month
+                start_date = datetime(year, month, 1, 0,0,0)
+                end_date = datetime(year, month, monthrange(year, month)[1], 0,0,0)
             else:
-                logger.critical("returning cached data %s", unique_cache_key)
-                if account_name not in unique_cache_key_list:
-                    unique_cache_key_list[account_name] = []
+                label = mongoid.split("-")[0]
+                year = int(mongoid.split("-")[1])
+                start_date = datetime(year, 1, 1, 0,0,0)
+                end_date = datetime(year, 12, 31, 0,0,0)
+        
 
-                unique_cache_key_list[account_name].append(unique_cache_key)
-                unique_cache_key_list[account_name] = list(set(unique_cache_key_list))
-                cache_obj = json.loads(cache_data)
-                if int(cache_obj['candidate_len']) != 0:
-                    return cache_data
 
+            db = initDB(account_name, account_config)
+            job_profile_data = {}
+            if "Ex:" in label:
+                ret = db.emailStored.find(
+                    {
+                        
+                        "ex_job_profile.name" : label.replace("Ex:",""),
+                        "date" : {
+                            "$gte" : start_date,
+                            "$lte" : end_date,
+                        }
+                    }, 
+                    {"body": 0, "cvParsedInfo.debug": 0})
+                for row in ret:
+                    row["_id"] = str(row["_id"])
+                    job_profile_data[row["_id"]] = row
+            else:
+                ret = db.emailStored.find(
+                    {
+                        
+                        "candidateClassify.label" : label,
+                        "date" : {
+                            "$gte" : start_date,
+                            "$lte" : end_date,
+                        }
+                    }, 
+                    {"body": 0, "cvParsedInfo.debug": 0})
+                for row in ret:
+                    row["_id"] = str(row["_id"])
+                    job_profile_data[row["_id"]] = row
+
+            
+        else:
+            label = mongoid
+            job_profile_data = {}
+            db = initDB(account_name, account_config)
+            if "Ex:" in label:
+                
+                ret = db.emailStored.find(
+                    {
+                        
+                        "ex_job_profile.name" : label.replace("Ex:",""),
+                    }, 
+                    {"body": 0, "cvParsedInfo.debug": 0})
+                for row in ret:
+                    row["_id"] = str(row["_id"])
+                    job_profile_data[row["_id"]] = row
+            else:
+                ret = db.emailStored.find(
+                    {
+                        
+                        "candidateClassify.label" : label,
+                    }, 
+                    {"body": 0, "cvParsedInfo.debug": 0})
+                for row in ret:
+                    row["_id"] = str(row["_id"])
+                    job_profile_data[row["_id"]] = row
+
+        if job_profile_data:
+            r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
+        else:
+            job_profile_data = {}
+
+    return job_profile_data
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, account_name = "", account_config = {}):
+    
+    r = connect_redis(account_name, account_config) 
+    
 
     page = int(page)
     limit = int(limit)
@@ -497,130 +607,30 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
     if filter_type == "job_profile":
-        job_profile_data = r.get("job_" + mongoid)
+        job_profile_data = r.get("job_fx_" + mongoid)
     else:
-        job_profile_data = r.get("classify_" + mongoid)
+        job_profile_data = r.get("classify_fx_" + mongoid)
         # logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
         # job_profile_data = False
 
     
-    if job_profile_data and False:
+    if job_profile_data and json.loads(job_profile_data) and use_unique_cache_feature:
         job_profile_data = json.loads(job_profile_data)
         if job_profile_data is None:
             job_profile_data = {}
-        if isinstance(job_profile_data, list):
+        elif isinstance(job_profile_data, list):
             job_profile_data = {}
-    else:
-        logger.critical("keys not found some problem! fetch from db")
-        job_profile_data = {}
-        if filter_type == "job_profile":
-            
-            db = initDB(account_name, account_config)
-            ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
-            for row in ret:
-                row["_id"] = str(row["_id"])
-                job_profile_data[row["_id"]] = row
-
-            
         else:
-            if mongoid == "NOT_ASSIGNED":
-                db = initDB(account_name, account_config)
-                ret = db.emailStored.find(
-                    {
-                        "$or" : [
-                            {"job_profile_id" : {"$exists":False}},
-                            {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
-                        ],
-                        "date" : {
-                            "$gt" : datetime.now() - timedelta(days=15)
-                        }
-                    }, 
-                    {"body": 0, "cvParsedInfo.debug": 0})
-                for row in ret:
-                    row["_id"] = str(row["_id"])
-                    job_profile_data[row["_id"]] = row
-            else:
-                if "-" in mongoid:
-                    if len(mongoid.split("-")) == 3:
-                        label = mongoid.split("-")[0]
-                        year = int(mongoid.split("-")[1])
-                        month_name = mongoid.split("-")[2]
-                        month = datetime.strptime(month_name, '%b').month
-                        start_date = datetime(year, month, 1, 0,0,0)
-                        end_date = datetime(year, month, monthrange(year, month)[1], 0,0,0)
-                    else:
-                        label = mongoid.split("-")[0]
-                        year = int(mongoid.split("-")[1])
-                        start_date = datetime(year, 1, 1, 0,0,0)
-                        end_date = datetime(year, 12, 31, 0,0,0)
-                
+            logger.critical("using cached data")
+    else:
+        # logger.critical("keys not found some problem! fetch from db")
+        job_profile_data = None
+        if filter_type == "job_profile":
+            job_profile_data = get_job_profile_data(mongoid, account_name, account_config)
+        else:
+            job_profile_data = get_classify_data(mongoid, account_name, account_config)
 
-
-                    db = initDB(account_name, account_config)
-                    if "Ex:" in label:
-                        
-                        ret = db.emailStored.find(
-                            {
-                                
-                                "ex_job_profile.name" : label.replace("Ex:",""),
-                                "date" : {
-                                    "$gte" : start_date,
-                                    "$lte" : end_date,
-                                }
-                            }, 
-                            {"body": 0, "cvParsedInfo.debug": 0})
-                        for row in ret:
-                            row["_id"] = str(row["_id"])
-                            job_profile_data[row["_id"]] = row
-                    else:
-                        ret = db.emailStored.find(
-                            {
-                                
-                                "candidateClassify.label" : label,
-                                "date" : {
-                                    "$gte" : start_date,
-                                    "$lte" : end_date,
-                                }
-                            }, 
-                            {"body": 0, "cvParsedInfo.debug": 0})
-                        for row in ret:
-                            row["_id"] = str(row["_id"])
-                            job_profile_data[row["_id"]] = row
-                else:
-                    label = mongoid
-                    db = initDB(account_name, account_config)
-                    if "Ex:" in label:
-                        
-                        ret = db.emailStored.find(
-                            {
-                                
-                                "ex_job_profile.name" : label.replace("Ex:",""),
-                            }, 
-                            {"body": 0, "cvParsedInfo.debug": 0})
-                        for row in ret:
-                            row["_id"] = str(row["_id"])
-                            job_profile_data[row["_id"]] = row
-                    else:
-                        ret = db.emailStored.find(
-                            {
-                                
-                                "candidateClassify.label" : label,
-                            }, 
-                            {"body": 0, "cvParsedInfo.debug": 0})
-                        for row in ret:
-                            row["_id"] = str(row["_id"])
-                            job_profile_data[row["_id"]] = row
-
-                # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
-
-        # datasync({
-        #     # "id" : mongoid,
-        #     "action" : "full",
-        #     "cur_time" : time.time(),
-        #     "account_name": account_name,
-        #     "account_config" : account_config,
-        #     "priority" : 10
-        # })
+        # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
 
         
         
@@ -771,7 +781,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             logger.critical("tag id %s", tags[0])
             ret =  r.get(tags[0] + "_filter")
             if ret is not None:
-                print("here loaded")
                 ret = json.loads(ret)
             else:
                 ret = {}
@@ -874,12 +883,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             "candidate_len" : len(paged_candidate_map),
             "tag_count_map" : tag_count_map
         })
-        if len(filter) == 0:
-            r.set(unique_cache_key, response)
-            if account_name not in unique_cache_key_list:
-                unique_cache_key_list[account_name] = []
-
-            unique_cache_key_list[account_name].append(unique_cache_key)
 
         return response
     else:
@@ -967,99 +970,46 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             }
             response =  json.dumps(response, default=str)
 
-        if len(filter) == 0:
-            r.set(unique_cache_key, response)
-            if account_name not in unique_cache_key_list:
-                unique_cache_key_list[account_name] = []
-            unique_cache_key_list[account_name].append(unique_cache_key)
-
         return response
             
 
 def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config = {}):
-    r = connect_redis(account_name, account_config)
-    print("clearning unique cache for ", job_profile_id, " XXXXX ", tag_id)
-    global unique_cache_key_list
-    new_unique_cache_key_list = {}
-    for account_name in unique_cache_key_list:
-        new_unique_cache_key_list[account_name] = []
-        for rkey in unique_cache_key_list[account_name]:
-            # basically delete the unique_cache_key below if job data changes
-            if job_profile_id in rkey:
-                logger.critical("cleaching cache %s", rkey)
-                # r.delete(rkey)
-            else:
-                new_unique_cache_key_list[account_name].append(rkey)
+    pass
     
-    unique_cache_key_list = new_unique_cache_key_list
-    return unique_cache_key_list
+def get_index(tag_id, account_name, account_config):
+    r = connect_redis(account_name, account_config)
+    logger.critical("checking index %s", tag_id)
+    if r.exists(tag_id + "_filter"):
+        ret =  r.get(tag_id + "_filter")
+    else:
+        ret = "-1"
 
+    return ret
 
 def index(mongoid, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
-    global unique_cache_key_list
 
     logger.critical("index called %s", mongoid)
     r = connect_redis(account_name, account_config)
 
     if filter_type == "full_data":
-        data = r.get("full_data")
-        if data:
-            dataMap = json.loads(data)
-            data = []
-            for dkey in dataMap:
-                data.append(dataMap[dkey])
-        else:
-            data = []
-
-        key = "full_data"
-        logger.critical("data len %s" , len(data))
-        generateFilterMap(key, data, account_name, account_config)
-        logger.critical("idex completed full data")
+        logger.critical("full data is not implemented anymore")
         return {}
             
     elif filter_type == "job_profile":
-        data = r.get("job_" + mongoid)
-
-        new_unique_cache_key_list = {}
-        for account_name in unique_cache_key_list:
-            new_unique_cache_key_list[account_name] = []
-            for rkey in unique_cache_key_list[account_name]:
-                # basically delete the unique_cache_key below if job data changes
-                if "on_ai_data" in rkey and mongoid in rkey:
-                    logger.critical("cleaching cache %s", rkey)
-                    # r.delete(rkey)
-                else:
-                    new_unique_cache_key_list[account_name].append(rkey)
-
-        unique_cache_key_list = new_unique_cache_key_list
+        data = r.get("job_fx_" + mongoid)
         
-            # if "on_ai_data" in rkey and mongoid in rkey and "_func" not in key:
-            #     logger.critical("cleaching cache %s", rkey)
-            #     r.delete(rkey)
-
-            #     func_data = r.get(rkey + "_func")
-            #     obj = json.loads(func_data)
-            #     mongoid = obj["mongoid"]
-            #     filter_type = obj["filter_type"]
-            #     tags = obj["tags"]
-            #     page = obj["page"]
-            #     limit = obj["limit"]
-            #     on_ai_data = obj["on_ai_data"]
-            #     filter = obj["filter"]
-            #     account_name = obj["account_name"]
-            #     account_config = obj["account_config"]
-
-            #     r.delete(rkey + "_func")
  
-        if data:            
+        if data and json.loads(data) and use_unique_cache_feature:         
             dataMap = json.loads(data)
         else:
-            dataMap = []
+            dataMap = get_job_profile_data(mongoid, account_name, account_config)
 
+        logger.critical("data map %s", len(dataMap))
         data = []
         tag_data_map = {}
         for dkey in dataMap:
+            logger.critical(dkey)
             data.append(dataMap[dkey])
             if dataMap[dkey]["tag_id"] not in tag_data_map:
                 tag_data_map[dataMap[dkey]["tag_id"]] = []
@@ -1081,26 +1031,11 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         
 
     elif filter_type == "candidate":
-        data = r.get("classify_" + mongoid)
-
-        new_unique_cache_key_list = {}
-        for account_name in unique_cache_key_list:
-            new_unique_cache_key_list[account_name] = []
-            for rkey in unique_cache_key_list:
-                # basically delete the unique_cache_key below if job data changes
-                if "on_ai_data" in rkey and mongoid in rkey:
-                    logger.critical("cleaching cache %s", rkey)
-                    # r.delete(rkey)
-                else:
-                    new_unique_cache_key_list[account_name].append(rkey)
-
-        unique_cache_key_list = new_unique_cache_key_list 
-        
-
-        if data:
+        data = r.get("classify_fx_" + mongoid)
+        if data and json.loads(data) and use_unique_cache_feature:
             dataMap = json.loads(data)
         else:
-            dataMap = []
+            dataMap = get_classify_data(mongoid, account_name, account_config)
 
         
         
@@ -1110,9 +1045,6 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
             data.append(dataMap[dkey])
 
         key = mongoid
-
-        r.set("classify_" + mongoid + "_len", len(data))
-        logger.critical("adding to key %s", "classify_" + mongoid + "_len")
 
         
 
@@ -1183,6 +1115,7 @@ def generateFilterMap(key, data, account_name, account_config):
     work_filter = designation(wrkExpList, wrkExpIdxMap)
     gpe_filter = location(gpeList,gpeIdxMap)
 
+    logger.critical("generating filter completed %s", key)
     r.set(key + "_filter" , json.dumps({
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
