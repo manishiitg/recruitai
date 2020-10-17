@@ -225,6 +225,30 @@ def get_candidate_tags():
 
     return jsonify(ret), 200
 
+@bp.route('/filter/index/<string:id>/<string:type>', methods=['GET'])
+@check_and_validate_account
+def filter_index_new(id, type):
+    ret = sendFilterMessage({
+        "id" : id,
+        "fetch" : "type",
+        "action" : "index",
+        "account_name": request.account_name,
+        "account_config" : request.account_config
+    })
+
+    return jsonify(ret), 200
+
+@bp.route('/filter/get/<string:tag_id>', methods=['GET'])
+@check_and_validate_account
+def filter_index_get(tag_id):
+    ret = sendFilterMessage({
+        "tag_id" : tag_id,
+        "action" : "filter_index_get",
+        "account_name": request.account_name,
+        "account_config" : request.account_config
+    })
+
+    return jsonify(ret), 200
 
 # @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
