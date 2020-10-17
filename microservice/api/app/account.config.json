@@ -38,7 +38,7 @@
             "host" : "elasticsearch:9200",
             "index" : "devrecruit"
         },
-        "reduce_priority" : 5
+        "reduce_priority" : 7
 
     },
     "rocketrecruit" : {
