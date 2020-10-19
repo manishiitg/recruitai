@@ -66,11 +66,27 @@ def thread_task( ch, method_frame, properties, body):
                 on_ai_data = body["ai"]
 
             on_starred = False
-
             if 'starred' in body:
-                on_starred = body["starred"]
+                if body["starred"]:
+                    on_starred = True
 
+            on_conversion = False
+            if 'converstion' in body:
+                if body["converstion"]: 
+                    on_conversion = True
+
+            on_un_parsed = False
+            if 'unparsed' in body:
+                if body['unparsed']:
+                    on_un_parsed = True
+
+            on_highscore = False
+            if 'highscore' in body:
+                if body['highscore']:
+                    on_highscore = True
+ 
             print("on starred", on_starred)
+            print("on on_conversion", on_conversion)
 
             filter = {}
 
@@ -79,7 +95,7 @@ def thread_task( ch, method_frame, properties, body):
 
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, account_name, account_config)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversion, on_highscore, on_un_parsed , account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
