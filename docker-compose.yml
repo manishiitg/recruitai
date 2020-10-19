@@ -130,7 +130,43 @@ services:
     #         - ./label-studio/ner/project:/label-studio/ner
     #     networks:
     #         - ai
+    
 
+    deepset-haystack:
+        image: deepset/haystack-annotation:latest
+        container_name: haystack-annotation
+        environment:
+            DEFAULT_ADMIN_EMAIL: "manish@excellencetechnologies.in"
+            DEFAULT_ADMIN_PASSWORD: "baracuda@123"
+            NODE_ENV: "production"
+            PROD_DB_HOSTNAME: "db"
+            PROD_DB_NAME: "qa123"
+            PROD_DB_USERNAME: "qa"
+            PROD_DB_PASSWORD: "qa"
+        ports:
+            - "7001:7001"
+        # links:
+        #     - "db:database"
+        depends_on:
+            - db
+        networks:
+            - ai
+        restart: unless-stopped
+
+    db:
+        image: "postgres:12"
+        container_name: "postgres"
+        environment:
+            POSTGRES_USER: "qa"
+            POSTGRES_PASSWORD: "qa123"
+            POSTGRES_DB: "qa"
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgres-data2:/var/lib/psql/data
+        networks:
+            - ai
+        restart: unless-stopped
 
     redis:
         image: bitnami/redis:latest
