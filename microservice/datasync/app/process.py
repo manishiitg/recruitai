@@ -528,11 +528,14 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 r.set("job_fx_"  + job_profile_id, json.dumps(False))
 
                 if isFilterUpdateNeeded:
-                    updateFilter({
+                    addFilter({
                         "id" : job_profile_id,
                         "fetch" : "job_profile",
-                        "action" : "index"
-                    })
+                        "action" : "index",
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    }, job_profile_id, account_name, account_config , True)
+
 
                 if job_profile_id not in redisKeyMap[account_name]:
                     redisKeyMap[account_name][job_profile_id] = {}
@@ -548,6 +551,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 
                 
                 for key in job_map:
+                    if not key:
+                        continue
+                    
                     if "job_" in key:
                         if isinstance(job_map[key], dict):
                             if row["_id"] in job_map[key]:
@@ -696,18 +702,20 @@ def sendToSearchIndex(row, r, from_type, account_name, account_config):
     
     if len(finalLines) > 0:
         # logger.critical("add to search")
-        if not r.exists("search_ " + row['_id']):
+        # if not r.exists("search_ " + row['_id']):
             # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
-            t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
-            t.start()
-            r.set("search_" + row["_id"], "1")
+        t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
+        t.start()
+            # r.set("search_" + row["_id"], "1")
             # this is getting slow...
 
 def addFilter(obj, key, account_name, account_config, is_direct):
     global dirtyMap
     global time_map
     ignore = False
-
+    # this will be done on frontend now.
+    # this is a time taking operation and used very very less. 
+    return 
     # if obj["action"] == "index":
     #     if obj["fetch"] not in time_map:
     #         time_map[obj["fetch"]] = {}
@@ -741,7 +749,7 @@ def addFilter(obj, key, account_name, account_config, is_direct):
     # if not ignore:
     try:
         # Thread(target=updateFilter, args=( obj , )).start() giving errors. 
-        logger.critical("sending to filter mq")
+        logger.critical("sending to filter mq %s" , obj)
         ret = updateFilter(obj)
         logger.critical("receieved from filter %s" , ret)
     except Exception as e:
