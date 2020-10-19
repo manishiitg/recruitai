@@ -165,7 +165,9 @@ def extractSummary(text, priority):
     # something this is kind of things are coming and this fails 
 
     try:
-        if priority < 5:
+        if priority < 4:
+            return None
+        if priority < 6:
             return summarizer_fast(text)
         else:
             return summarizer(text, min_length=5, max_length=150, num_beams=4, early_stopping=True)    
