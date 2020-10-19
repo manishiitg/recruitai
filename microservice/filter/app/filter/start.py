@@ -580,8 +580,10 @@ def get_classify_data(mongoid, account_name, account_config):
             job_profile_data = {}
 
     return job_profile_data
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversion = False, on_highscore = False, on_un_parsed = False, account_name = "", account_config = {}):
     
+    on_highscore = False
+
     r = connect_redis(account_name, account_config) 
     
 
@@ -593,6 +595,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     logger.critical("send ai info %s", on_ai_data)
     logger.critical("filter %s", filter)
     logger.critical("starred %s", on_starred)
+    logger.critical("conversion %s", on_conversion)
     logger.critical("tags %s",tags)
     logger.critical("len tags %s", len(tags))
     logger.critical("mongo id %s", mongoid)
@@ -614,6 +617,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         # job_profile_data = False
 
     
+
     if job_profile_data and json.loads(job_profile_data) and use_unique_cache_feature:
         job_profile_data = json.loads(job_profile_data)
         if job_profile_data is None:
@@ -633,7 +637,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
 
         
-        
+    
 
 
     # logger.critical("length of job profile data %s", len(job_profile_data))
@@ -649,6 +653,51 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         job_profile_data = starred_job_profile_data
     
+    if on_conversion:
+        conversion_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "conversation" in item:
+                if item["conversation"]:
+                    if "unreadConversations" in item:
+                        if item["unreadConversations"] > 0:
+                            conversion_job_profile_data[key] = item
+
+        job_profile_data = conversion_job_profile_data
+
+    if on_highscore:
+        highscore_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "conversation" in item:
+                if item["conversation"]:
+                    highscore_job_profile_data[key] = item
+
+        job_profile_data = highscore_job_profile_data
+
+    if on_highscore:
+        conversion_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "cvParsedInfo" in item:
+                if "candidate_score" in item["cvParsedInfo"]:
+                    if item["cvParsedInfo"]["candidate_score"] > 6:
+                        conversion_job_profile_data[key] = item
+
+        job_profile_data = conversion_job_profile_data
+
+    if on_un_parsed:
+        unparsed_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "cvParsedAI" not in item:
+                unparsed_job_profile_data[key] = item
+
+        job_profile_data = unparsed_job_profile_data
 
     if len(tags) > 0:
         logger.critical("sorting..")
