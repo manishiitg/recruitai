@@ -254,18 +254,27 @@ def filter_index_get(tag_id):
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>', methods=['GET'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>', methods=['GET', 'POST'])
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>/<string:starred>', methods=['GET', 'POST'])
+@bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>/<string:starred>/<string:converstion>', methods=['GET', 'POST'])
+
 @check_and_validate_account
-def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0"):
+def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0", converstion = "0"):
 
     if ai == "1" or ai == "True":   
         ai = True
     else:
         ai = False
         
-    if starred == '1'  or ai == "True":
+    if starred == '1':
         starred = True
     else:
         starred = False
+
+
+    if converstion == '1':
+        converstion = True
+    else:
+        converstion = False
+
 
     if tags == "null":
         tags = ""
@@ -280,11 +289,30 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
 
 
         filter = {}
+        options = {}
+
+        highscore = False
+        unparsed = False
 
         if request.method == 'POST':
             filter = request.json['filter']
             logger.info("filter %s", filter)
 
+            if "options" in request.json:
+                options = request.json["options"]
+
+                if "starred" in options:
+                    starred = True
+                
+                if "conversion" in options:
+                    converstion = True
+                
+                if "highscore" in options:
+                    highscore = True
+
+                if "unparsed" in options:
+                    unparsed = True
+ 
         ret = sendFilterMessage({
             "id" : id,
             "fetch" : fetch,
@@ -295,6 +323,9 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
             "filter" : filter,
             "ai" : ai,
             "starred" : starred,
+            "converstion" : converstion,
+            "highscore" : highscore,
+            "unparsed" : unparsed,
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
