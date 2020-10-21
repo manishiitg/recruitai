@@ -51,7 +51,6 @@ def thread_task( conn, ch, method_frame, properties, body):
 
     if isinstance(body, dict):
         if "ping" in body:
-            time.sleep(5)            
             ret = dict(pong=body["ping"])
             ret = json.dumps(ret)
             add_threadsafe_callback(conn, ch, method_frame,properties,ret)
