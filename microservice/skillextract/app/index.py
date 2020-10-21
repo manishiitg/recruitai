@@ -20,6 +20,7 @@ from app.statspublisher import sendMessage as updateStats
 from app.account import initDB
 from bson.objectid import ObjectId
 from app.publishfilter import sendBlockingMessage as extractCandidateScore
+from app.publishdatasync import sendMessage as datasync
 
 
 class TaskQueue(object):
@@ -405,7 +406,15 @@ class TaskQueue(object):
                             "priority" :  priority, 
                             "criteria" : candidate_criteria
                         })      
-                    
+
+                    datasync({
+                        "action" : "syncCandidate",
+                        "mongoid" : mongoid,
+                        "id" : mongoid,
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" :  priority
+                    })
 
                     try:
                         if "meta" in body:
