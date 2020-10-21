@@ -7,6 +7,27 @@ from pathlib import Path
 import json
 import random
 
+from app.publisher.filter import sendBlockingMessage as pingfiltermessage
+from app.publisher.statsdata import sendBlockingMessage as pingstatsdata
+from app.publisher.gender import sendBlockingMessage as pinggender
+from app.publisher.classify import sendBlockingMessage as pingclassify
+from app.publisher.skillextract import sendBlockingMessage as pingskillextract
+def ping():
+    pingstatsdata({
+        "action" : "ping"
+    })
+    pingfiltermessage({
+        "action" : "ping"
+    })
+    pinggender({
+        "action" : "ping"
+    })
+    pingclassify({
+        "action" : "ping"
+    })
+    pingskillextract({
+        "action" : "ping"
+    })
 
 def process_resumes():
    
