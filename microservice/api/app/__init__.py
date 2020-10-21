@@ -12,7 +12,7 @@ from app import token
 
 jwt = token.init_token()
 
-from app.scheduler import process_resumes
+from app.scheduler import ping
 import json
 
 
@@ -72,10 +72,10 @@ def create_app(test_config=None):
     
     
     # Scheduler which will run at interval of 60 seconds for user checkin score
-    # checkin_score_scheduler = BackgroundScheduler()
-    # checkin_score_scheduler.add_job(process_resumes, trigger='interval', seconds=BATCH_PROCESSING_DELAY) #*2.5
-    # checkin_score_scheduler.start()
-    # process_resumes() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
+    checkin_score_scheduler = BackgroundScheduler()
+    checkin_score_scheduler.add_job(ping, trigger='interval', minutes=5) #*2.5
+    checkin_score_scheduler.start()
+    ping() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
 
     try:
         print("create app..")
