@@ -36,7 +36,7 @@ def thread_task( ch, method_frame, properties, body):
         account_name = body["account_name"]
     else:
         logger.critical("no account found. unable to proceed")
-        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+        return add_threadsafe_callback(ch, method_frame,properties,json.dumps("no account found"))
 
     
     account_config = body["account_config"]
@@ -70,10 +70,10 @@ def thread_task( ch, method_frame, properties, body):
                 if body["starred"]:
                     on_starred = True
 
-            on_conversion = False
-            if 'converstion' in body:
-                if body["converstion"]: 
-                    on_conversion = True
+            on_conversation = False
+            if 'conversation' in body:
+                if body["conversation"]: 
+                    on_conversation = True
 
             on_un_parsed = False
             if 'unparsed' in body:
@@ -86,7 +86,7 @@ def thread_task( ch, method_frame, properties, body):
                     on_highscore = True
  
             print("on starred", on_starred)
-            print("on on_conversion", on_conversion)
+            print("on_conversation", on_conversation)
 
             filter = {}
 
@@ -95,7 +95,7 @@ def thread_task( ch, method_frame, properties, body):
 
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversion, on_highscore, on_un_parsed , account_name, account_config)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversation, on_highscore, on_un_parsed , account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
@@ -181,7 +181,6 @@ def thread_task( ch, method_frame, properties, body):
             add_threadsafe_callback(ch, method_frame,properties,ret)
 
         elif "ping" in body:
-            time.sleep(5)            
             ret = dict(pong=body["ping"])
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties,ret)
