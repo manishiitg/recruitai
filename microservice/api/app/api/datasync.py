@@ -257,7 +257,7 @@ def filter_index_get(tag_id):
 @bp.route('/filter/fetch/<string:id>/<string:fetch>/<string:page>/<string:tags>/<string:ai>/<string:starred>/<string:converstion>', methods=['GET', 'POST'])
 
 @check_and_validate_account
-def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0", converstion = "0"):
+def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "0", conversation = "0"):
 
     if ai == "1" or ai == "True":   
         ai = True
@@ -270,10 +270,10 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
         starred = False
 
 
-    if converstion == '1':
-        converstion = True
+    if conversation == '1':
+        conversation = True
     else:
-        converstion = False
+        conversation = False
 
 
     if tags == "null":
@@ -295,8 +295,9 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
         unparsed = False
 
         if request.method == 'POST':
-            filter = request.json['filter']
-            logger.info("filter %s", filter)
+            if "filter" in request.json:
+                filter = request.json['filter']
+                logger.info("filter %s", filter)
 
             if "options" in request.json:
                 options = request.json["options"]
@@ -304,8 +305,8 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
                 if "starred" in options:
                     starred = True
                 
-                if "conversion" in options:
-                    converstion = True
+                if "conversation" in options:
+                    conversation = True
                 
                 if "highscore" in options:
                     highscore = True
@@ -323,7 +324,7 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
             "filter" : filter,
             "ai" : ai,
             "starred" : starred,
-            "converstion" : converstion,
+            "conversation" : conversation,
             "highscore" : highscore,
             "unparsed" : unparsed,
             "account_name": request.account_name,
