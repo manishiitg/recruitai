@@ -4,6 +4,9 @@ pretrained
 cvreconstruction
 finalpdf
 
+postgres-data/*
+postgres-data2/*
+
 *__pycache__*
 
 app/temp
