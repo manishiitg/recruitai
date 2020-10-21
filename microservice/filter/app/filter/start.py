@@ -580,10 +580,8 @@ def get_classify_data(mongoid, account_name, account_config):
             job_profile_data = {}
 
     return job_profile_data
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversion = False, on_highscore = False, on_un_parsed = False, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversation = False, on_highscore = False, on_un_parsed = False, account_name = "", account_config = {}):
     
-    on_highscore = False
-
     r = connect_redis(account_name, account_config) 
     
 
@@ -595,7 +593,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     logger.critical("send ai info %s", on_ai_data)
     logger.critical("filter %s", filter)
     logger.critical("starred %s", on_starred)
-    logger.critical("conversion %s", on_conversion)
+    logger.critical("conversation %s", on_conversation)
+    logger.critical("high score %s", on_highscore)
+    logger.critical("unparsed %s", on_un_parsed)
     logger.critical("tags %s",tags)
     logger.critical("len tags %s", len(tags))
     logger.critical("mongo id %s", mongoid)
@@ -653,7 +653,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         job_profile_data = starred_job_profile_data
     
-    if on_conversion:
+    if on_conversation:
         conversion_job_profile_data = {}
 
         for key in job_profile_data:
@@ -665,17 +665,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                             conversion_job_profile_data[key] = item
 
         job_profile_data = conversion_job_profile_data
-
-    if on_highscore:
-        highscore_job_profile_data = {}
-
-        for key in job_profile_data:
-            item = job_profile_data[key]
-            if "conversation" in item:
-                if item["conversation"]:
-                    highscore_job_profile_data[key] = item
-
-        job_profile_data = highscore_job_profile_data
 
     if on_highscore:
         conversion_job_profile_data = {}
@@ -931,7 +920,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             "candidate_map" : paged_candidate_map,
             "candidate_len" : len(paged_candidate_map),
             "tag_count_map" : tag_count_map
-        })
+        }, default=str)
 
         return response
     else:
