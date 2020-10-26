@@ -128,45 +128,46 @@ def generateClassifyList(account_name, account_config):
         if "job_profile_id" in row and len(row["job_profile_id"]) > 0:
             job_profile_id = row["job_profile_id"]
         else:
-            # logger.critical("job profile not found!!!")
-            job_profile_id = None
+            if "ex_job_profile" not in row:
+                # logger.critical("job profile not found!!!")
+                job_profile_id = None
 
-            mapKey = "NOT_ASSIGNED"
-            if mapKey not in candidate_len_map:
-                candidate_len_map[mapKey] = 0
-                
-            is_old = False
-            month_year = ""
-            is_year_old = False
-            days = 0
-
-            if "email_timestamp" in row:
-                timestamp_seconds = int(row["email_timestamp"])/1000
-                month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
-                days =  abs(time.time() - timestamp_seconds)  / (60 * 60 * 24 )
-
-                if days < 15:
-                    is_old = False
-                else:
-                    is_old = True
-                    if days > 365:
-                        is_year_old = True
-                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
-
-                
-
-            else:
+                mapKey = "NOT_ASSIGNED"
+                if mapKey not in candidate_len_map:
+                    candidate_len_map[mapKey] = 0
+                    
                 is_old = False
-            
-            if is_old:
-                mapKey = "NOT_ASSIGNED" + month_year
+                month_year = ""
+                is_year_old = False
+                days = 0
 
-            candidate_label = mapKey
-            
-            if candidate_label not in candidate_len_map:
-                candidate_len_map[candidate_label] = 0
-            
-            candidate_len_map[candidate_label] += 1
+                if "email_timestamp" in row:
+                    timestamp_seconds = int(row["email_timestamp"])/1000
+                    month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
+                    days =  abs(time.time() - timestamp_seconds)  / (60 * 60 * 24 )
+
+                    if days < 15:
+                        is_old = False
+                    else:
+                        is_old = True
+                        if days > 365:
+                            is_year_old = True
+                            month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+
+                    
+
+                else:
+                    is_old = False
+                
+                if is_old:
+                    mapKey = "NOT_ASSIGNED" + month_year
+
+                candidate_label = mapKey
+                
+                if candidate_label not in candidate_len_map:
+                    candidate_len_map[candidate_label] = 0
+                
+                candidate_len_map[candidate_label] += 1
             
             
         is_year_old = False
@@ -489,7 +490,8 @@ def get_classify_data(mongoid, account_name, account_config):
                     {"job_profile_id" : {"$exists":False}},
                     {"$expr": { "$eq": [ { "$strLenCP": "$job_profile_id" }, 0 ] } }
                 ],
-                "date" : datecondition
+                "date" : datecondition,
+                "ex_job_profile" : {"$exists":False}
             }, 
             {"body": 0, "cvParsedInfo.debug": 0})
         
@@ -580,7 +582,7 @@ def get_classify_data(mongoid, account_name, account_config):
             job_profile_data = {}
 
     return job_profile_data
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversation = False, on_highscore = False, on_un_parsed = False, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversation = False, on_highscore = False, on_un_parsed = False, sortby = None, sortorder = None, account_name = "", account_config = {}):
     
     r = connect_redis(account_name, account_config) 
     
@@ -600,6 +602,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     logger.critical("len tags %s", len(tags))
     logger.critical("mongo id %s", mongoid)
     logger.critical("filter type %s", filter_type)
+    logger.critical("sort by %s", sortby)
+    logger.critical("sort order %s", sortorder)
     candidate_map = {}
 
     candidate_filter_map = {}
@@ -684,7 +688,11 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         for key in job_profile_data:
             item = job_profile_data[key]
             if "cvParsedAI" not in item:
-                unparsed_job_profile_data[key] = item
+                if "attachment" in item:
+                    if len(item["attachment"]) > 0:
+                        unparsed_job_profile_data[key] = item
+
+            
 
         job_profile_data = unparsed_job_profile_data
 
@@ -729,30 +737,56 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         logger.critical("sorted..")
 
     else:
-        if filter_type == "job_profile":    
-            def custom_sort(item):
-                    
-                if "sequence" not in list(item[1].keys()):
-                    logger.critical("-1")
-                    return -1
-                
-                # logger.critical(float(item[1]["sequence"]))
+        def custom_sort_date(item):
+            if "email_timestamp" in item[1]:    
+                # 2020-06-17 15:12:44.156000
+                # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
+                return item[1]["email_timestamp"]
+            else:
+                return -1
 
-                return float(item[1]["sequence"])  * -1
-                # return (item[1]["email_timestamp"]) * -1
+        def custom_sort(item):
+                    
+            if "sequence" not in list(item[1].keys()):
+                logger.critical("-1")
+                return -1
+            
+            return float(item[1]["sequence"])  * -1
+        
+        def sort_score(item):
+                    
+            if "cvParsedInfo" not in list(item[1].keys()):
+                logger.critical("-1")
+                return -1
+            
+            if "candidateScore" not in item[1]["cvParsedInfo"]:
+                logger.critical("-1")
+                return -1
+            
+            return float(item[1]["cvParsedInfo"])  * -1
+
+        if filter_type == "job_profile":    
+            
 
 
             # print(job_profile_data)
-            job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
-        else:
-            def custom_sort_date(item):
-                if "email_timestamp" in item[1]:    
-                    # 2020-06-17 15:12:44.156000
-                    # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
-                    return item[1]["email_timestamp"]
+            if sortby == None:
+                job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+            elif sortby == "date":
+                if sortorder == 1:
+                    job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
                 else:
-                    return -1
-
+                    job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=False)}
+            elif sortby == "score":
+                if sortorder == 1:
+                    job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=sort_score,reverse=True)}
+                else:
+                    job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=sort_score,reverse=False)}
+            
+            else:
+                job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort)}
+            
+        else:
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
 
     tagged_job_profile_data = {}
