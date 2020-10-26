@@ -127,7 +127,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 finalLines.append(pagerow["line"])
 
         if mongoid:
-            addToSearch(mongoid,finalLines,{}, account_name, account_config)
+            # addToSearch(mongoid,finalLines,{}, account_name, account_config)
             
             full_time_analysis["searchIdx"] = {
                 "time_taken" : time.time() - timer,
