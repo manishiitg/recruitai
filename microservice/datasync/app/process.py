@@ -575,38 +575,39 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 job_profile_id = None
 
-                mapKey = "classify_NOT_ASSIGNED"
-                is_old = False
-                month_year = ""
-                days = 0
-
-                if "email_timestamp" in row:
-                    timestamp_seconds = int(row["email_timestamp"])/1000
-                    month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
-
-                    cur_time = time.time()
-                    days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
-
-                    if days < 15:
-                        is_old = False
-                    else:
-                        is_old = True
-
-                else:
+                if "ex_job_profile" not in row:
+                    mapKey = "classify_NOT_ASSIGNED"
                     is_old = False
-                
-                if is_old:
-                    mapKey = "classify_NOT_ASSIGNED" + month_year
+                    month_year = ""
+                    days = 0
 
-                r.set("classify_fx_"  + mapKey, json.dumps(False))
-                if isFilterUpdateNeeded:
-                    addFilter({
-                        "id" : mapKey.replace("classify_",""),
-                        "fetch" : "candidate",
-                        "action" : "index",
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    }, mapKey.replace("classify_",""), account_name, account_config , True)
+                    if "email_timestamp" in row:
+                        timestamp_seconds = int(row["email_timestamp"])/1000
+                        month_year = "-" +  datetime.datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
+
+                        cur_time = time.time()
+                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+
+                        if days < 15:
+                            is_old = False
+                        else:
+                            is_old = True
+
+                    else:
+                        is_old = False
+                    
+                    if is_old:
+                        mapKey = "classify_NOT_ASSIGNED" + month_year
+
+                    r.set("classify_fx_"  + mapKey, json.dumps(False))
+                    if isFilterUpdateNeeded:
+                        addFilter({
+                            "id" : mapKey.replace("classify_",""),
+                            "fetch" : "candidate",
+                            "action" : "index",
+                            "account_name" : account_name,
+                            "account_config" : account_config
+                        }, mapKey.replace("classify_",""), account_name, account_config , True)
 
                 
             
