@@ -93,9 +93,18 @@ def thread_task( ch, method_frame, properties, body):
             if "filter" in body:
                 filter = body["filter"]
 
+            sortby = None
+            sortorder = None
+
+            if "sortby" in body:
+                sortby = body["sortby"] 
+            
+            if "sortorder" in body:
+                sortorder = body["sortorder"] 
+
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversation, on_highscore, on_un_parsed , account_name, account_config)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversation, on_highscore, on_un_parsed , sortby, sortorder, account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
