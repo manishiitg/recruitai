@@ -46,13 +46,20 @@ def savePDFAsImage(cv, output_dir , account_name, account_config):
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
     shutil.rmtree(output_dir, ignore_errors=True)
     logger.info("reading pdf %s", cv)
+    # get_image_from_magick(cv)
+    # process.exit(0)
     try:
         pages = convert_from_path(cv)
     except PDFPageCountError as e:
         logger.critical(str(e))
         traceback.print_exc(file=sys.stdout)
         return {"error" : str(e)} , None
+    except ValueError as e:
+        logger.critical(str(e))
+        traceback.print_exc(file=sys.stdout)
+        return {"error" : str(e)} , None
 
+    
 
     if len(pages) >= 20:
         return {"error" : 'No of pages is too much ' + str(len(pages)) } , None
@@ -101,3 +108,24 @@ def savePDFAsImage(cv, output_dir , account_name, account_config):
     logger.info(x)
 
     return finalPages, output_dir2
+
+from wand.image import Image as wi
+def get_image_from_magick(cv):
+    logger.critical("Cv %s", cv)
+
+           
+
+    # result = subprocess.run(['convert', cv, 'page-%03d.png'], stdout=subprocess.PIPE)
+
+    # print(result)
+    # return
+    
+    pdf = wi(filename=cv, resolution=300)
+    pdfimage = pdf.convert("png")
+    i=1
+    logger.critical(pdfimage)
+    for img in pdfimage.sequence:
+        page = wi(image=img)
+        logger.critical("sss %s", (str(i)+".png"))
+        page.save(filename=str(i)+".png")
+        i +=1

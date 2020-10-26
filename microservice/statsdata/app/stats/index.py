@@ -163,6 +163,20 @@ def resume_only_parsing_speed(account_name, account_config):
 
             resume_full_analysis[key]["time_taken"] += time_analysis[key]["time_taken"]
             resume_full_analysis[key]["count"] += 1
+            if "time" in time_analysis[key]:
+                time = time_analysis[key]["time"]
+                for page in time:                    
+                    for sub_key in time[page]:
+                        key2 = key + "_" + sub_key
+                        if key2 not in resume_full_analysis:
+                            resume_full_analysis[key2] = {
+                                "time_taken" : 0,
+                                "count" : 0
+                            }
+
+                        resume_full_analysis[key2]["time_taken"] += time[page][sub_key]
+                        resume_full_analysis[key2]["count"] += 1 
+
 
     for key in resume_full_analysis:
         if resume_full_analysis[key]["count"] > 0:
@@ -191,6 +205,19 @@ def resume_only_parsing_speed(account_name, account_config):
 
             resume_fast_analysis[key]["time_taken"] += time_analysis[key]["time_taken"]
             resume_fast_analysis[key]["count"] += 1
+            if "time" in time_analysis[key]:
+                time = time_analysis[key]["time"]
+                for page in time:
+                    for sub_key in time[page]:
+                        key2 = key + "_" + sub_key
+                        if key2 not in resume_full_analysis:
+                            resume_full_analysis[key2] = {
+                                "time_taken" : 0,
+                                "count" : 0
+                            }
+
+                        resume_full_analysis[key2]["time_taken"] += time[page][sub_key]
+                        resume_full_analysis[key2]["count"] += 1 
 
     for key in resume_fast_analysis:
         if resume_fast_analysis[key]["count"] > 0:
