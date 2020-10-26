@@ -43,7 +43,7 @@ def thread_task( conn, ch, method_frame, properties, body):
         account_name = body["account_name"]
     else:
         LOGGER.critical("no account found. unable to proceed")
-        return add_threadsafe_callback(ch, method_frame,properties,'no account found')
+        return add_threadsafe_callback(conn, ch, method_frame,properties,'no account found')
 
     
     account_config = body["account_config"]
