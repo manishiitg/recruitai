@@ -294,10 +294,24 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
         highscore = False
         unparsed = False
 
+        sortby = None
+        sortorder = None
+
         if request.method == 'POST':
             if "filter" in request.json:
                 filter = request.json['filter']
                 logger.info("filter %s", filter)
+
+            if "sort" in request.json:
+                sort = request.json["sort"]
+                
+                if "sortby" in sort and "sortorder" in sort:
+                    sortby = sort["sortby"]
+                    sortorder = sort["sortorder"]
+
+                else:
+                        return jsonify({"sortby and order are missing"}), 200
+
 
             if "options" in request.json:
                 options = request.json["options"]
@@ -323,6 +337,8 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
             "action" : "fetch",
             "filter" : filter,
             "ai" : ai,
+            "sortby" : sortby,
+            "sortorder" : sortorder,
             "starred" : starred,
             "conversation" : conversation,
             "highscore" : highscore,
