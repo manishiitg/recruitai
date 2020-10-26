@@ -378,7 +378,7 @@ class TaskQueue(object):
         if r.exists(key_duplicate_check):
 
             duplicate_key_check = int(r.get(key_duplicate_check))
-            if duplicate_key_check > 5:
+            if duplicate_key_check > 5 and False: #temporary false
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
                 return

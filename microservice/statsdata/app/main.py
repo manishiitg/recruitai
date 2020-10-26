@@ -71,7 +71,7 @@ def thread_task( ch, method_frame, properties, body):
             elif action == "resume_only_parsing_speed":
                 ret = resume_only_parsing_speed(account_name, account_config)
 
-            logger.critical(ret)
+            # logger.critical(ret)
             ret = json.dumps(ret, default=str)
 
             add_threadsafe_callback(ch, method_frame,properties, ret)
