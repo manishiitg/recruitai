@@ -70,12 +70,7 @@ def create_app(test_config=None):
     app.register_blueprint(training.bp)
     app.register_blueprint(stats.bp)
     
-    
-    # Scheduler which will run at interval of 60 seconds for user checkin score
-    checkin_score_scheduler = BackgroundScheduler()
-    checkin_score_scheduler.add_job(ping, trigger='interval', minutes=5) #*2.5
-    checkin_score_scheduler.start()
-    ping() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
+
 
     try:
         print("create app..")
@@ -83,4 +78,10 @@ def create_app(test_config=None):
     except Exception as e:
         print(e)
         # checkin_score_scheduler.shutdown()
-        
+
+
+# Scheduler which will run at interval of 60 seconds for user checkin scoresadf;ojawpof8qp134i
+# checkin_score_scheduler = BackgroundScheduler()
+# checkin_score_scheduler.add_job(ping, trigger='interval', seconds=5) #*2.5
+# checkin_score_scheduler.start()
+# ping() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
