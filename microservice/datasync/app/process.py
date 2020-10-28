@@ -513,6 +513,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             job_profile_id  = None
 
+            print(row.keys())
             if "job_profile_id" in row:
                 if len(row["job_profile_id"]) > 0:
                     job_profile_id = row["job_profile_id"]
@@ -521,10 +522,10 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                 
             sendToSearchIndex(row, r, findtype, account_name, account_config)
-
+            logger.critical("job profile %s", job_profile_id)
             if job_profile_id is not None:
-                logger.critical("job profile %s", job_profile_id)
-
+                
+                
                 r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
 
                 if isFilterUpdateNeeded:
