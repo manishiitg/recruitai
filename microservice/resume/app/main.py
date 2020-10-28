@@ -13,7 +13,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 
-from app.account import initDB, connect_redis
+from app.account import initDB, connect_redis, r_exists, r_get, r_set
 
 import traceback
 
@@ -409,8 +409,8 @@ class TaskQueue(object):
         start_time = time.time()
 
         is_cache = False
-        if r.exists(key) and False: # turning of cache because testing with ai models
-            ret = r.get(key)
+        if r_exists(key, account_name, account_config) and False: # turning of cache because testing with ai models
+            ret = r_get(key, account_name, account_config)
             ret = json.loads(ret)
             LOGGER.critical("redis key exists")
             if "error" not in ret:
@@ -510,7 +510,7 @@ class TaskQueue(object):
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config)
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
-                r.set(key, json.dumps(ret)) # 1day or 30days in dev
+                r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
                 
             if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
                 if skills is None:
