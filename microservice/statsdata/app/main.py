@@ -103,17 +103,26 @@ def on_recv_req(ch, method, properties, body):
 
 def main():
 
-    
-    global conn
-    conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
-    ch = conn.channel()
+    try:
+        global conn
+        conn = pika.BlockingConnection(pika.URLParameters(amqp_url))
+        ch = conn.channel()
 
-    # declare a queue
-    ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
-    # ch
-    # .basic_qos(prefetch_count=1)
-    ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
-    ch.start_consuming()
+        # declare a queue
+        ch.queue_declare(queue=SERVER_QUEUE, auto_delete=False, durable=True) #exclusive=True,
+        # ch
+        # .basic_qos(prefetch_count=1)
+        ch.basic_consume(queue=SERVER_QUEUE,on_message_callback=on_recv_req)
+        ch.start_consuming()
+    except Exception as e:
+        logger.critical("error")
+        logger.critical(e)
+        # after some time pika.exceptions.IncompatibleProtocolError: StreamLostError: ("Stream connection lost: ConnectionResetError(104, 'Connection reset by peer')",)
+        # this error comes
+        time.sleep(60)
+        main()
+
+    
 
 
 
