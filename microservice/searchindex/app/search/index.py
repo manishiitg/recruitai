@@ -34,12 +34,21 @@ def createIndex(account_name, account_config):
     })
     logger.info(ret)
 
+def getDoc(mongoid, account_name, account_config):
+    indexName = getIndex(account_name, account_config)
+    es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'),account_name, account_config)
+    return es.get(index=indexName, id=mongoid)
+
 def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}):
 
     createIndex(account_name, account_config)
     indexName = getIndex(account_name, account_config)
 
     es = init_elastic_search(os.getenv('ELASTIC_USERNAME', 'elastic'), os.getenv('ELASTIC_PASSWORD', 'DkIedPPSCb'), account_name, account_config)
+    
+    # doc = getDoc(mongoid, account_name, account_config)
+    # print(doc)
+    # if not doc:
     ret = es.index(index=indexName, id=mongoid, body={
         "resume": " ".join(filter(None, lines)),
         # "extra_data": json.loads(json.dumps(extra_data, default=str)),
@@ -47,6 +56,9 @@ def addDoc(mongoid, lines, extra_data={}, account_name = "", account_config = {}
         "refresh": True,
         "timestamp": datetime.now()})
     # logger.info(ret)
+    # else:
+    #     ret = 1
+
     return ret
 
 def addMeta(mongoid, meta, account_name, account_config):
