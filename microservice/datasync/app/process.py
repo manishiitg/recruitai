@@ -25,7 +25,7 @@ import time
 import datetime
 
 from app.account import initDB
-from app.account import connect_redis
+from app.account import connect_redis, r_set, r_exists, r_get, r_scan_iter, r_flushdb
 from app.account import get_queues, get_resume_priority
 
 def moveKey(candidate_id, from_key, to_key, account_name, account_config):
@@ -39,8 +39,8 @@ def moveKey(candidate_id, from_key, to_key, account_name, account_config):
 
     r = connect_redis(account_name, account_config)
 
-    r.set("job_fx_"  + from_key, json.dumps(False))
-    r.set("job_fx_"  + to_key, json.dumps(False))
+    r_set("job_fx_"  + from_key, json.dumps(False), account_name, account_config)
+    r_set("job_fx_"  + to_key, json.dumps(False), account_name, account_config)
     addFilter({
         "id" : from_key,
         "fetch" : "job_profile",
@@ -69,7 +69,7 @@ def classifyJobMoved(candidate_id, from_classify_id, to_job_id, account_name, ac
 
 def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
     r = connect_redis(account_name, account_config)
-    r.set("job_fx_"  + job_profile_id, json.dumps(False))
+    r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
     addFilter({
         "id" : job_profile_id,
         "fetch" : "job_profile",
@@ -81,7 +81,7 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
 
 def bulkUpdate(candidates, job_profile_id, account_name, account_config):
     r = connect_redis(account_name, account_config)
-    r.set("job_fx_"  + job_profile_id, json.dumps(False))
+    r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
     addFilter({
         "id" : job_profile_id,
         "fetch" : "job_profile",
@@ -95,7 +95,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
 def bulkAdd(docs, job_profile_id, account_name, account_config):
 
     r = connect_redis(account_name, account_config)
-    r.set("job_fx_"  + job_profile_id, json.dumps(False))
+    r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
     addFilter({
         "id" : job_profile_id,
         "fetch" : "job_profile",
@@ -332,10 +332,10 @@ def init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_c
     if account_name not in redisKeyMap:
         redisKeyMap[account_name] = {}
         logger.critical("loading redis key map for account %s " % account_name)
-        for key in r.scan_iter():
+        for key in r_scan_iter(account_name, account_config):
             if "job_" in key or "classify_" in key:
                 logger.critical("loading key %s", key)
-                redisKeyMap[account_name][key] = json.loads(r.get(key))
+                redisKeyMap[account_name][key] = json.loads(r_get(key, account_name, account_config))
 
         logger.critical("loaded redis key map")
 
@@ -442,7 +442,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         # .sort([("sequence", -1),("updatedAt", -1)])
             # sort gives ram error
 
-        r.set("job_fx_"  + job_profile_id, json.dumps(False))
+        r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
         addFilter({
             "id" : job_profile_id,
             "fetch" : "job_profile",
@@ -470,7 +470,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
         pastInfoMap[account_name]["full"] = time.time()
 
-        r.flushdb()
+        r_flushdb(account_name, account_config)
         redisKeyMap[account_name] = {}
         local_dirtyMap[account_name] = {}
         
@@ -525,7 +525,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             if job_profile_id is not None:
                 logger.critical("job profile %s", job_profile_id)
 
-                r.set("job_fx_"  + job_profile_id, json.dumps(False))
+                r_set("job_fx_"  + job_profile_id, json.dumps(False), account_name, account_config)
 
                 if isFilterUpdateNeeded:
                     addFilter({
@@ -560,7 +560,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                                 job_profile_data = job_map[key]
                                 del job_profile_data[row["_id"]]
                                 redisKeyMap[account_name][key] = job_profile_data
-                                r.set("job_fx_"  + key, json.dumps(False))
+                                r_set("job_fx_"  + key, json.dumps(False), account_name, account_config)
                                 if isFilterUpdateNeeded:
                                     addFilter({
                                         "id" : key,
@@ -599,7 +599,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     if is_old:
                         mapKey = "classify_NOT_ASSIGNED" + month_year
 
-                    r.set("classify_fx_"  + mapKey, json.dumps(False))
+                    r_set("classify_fx_"  + mapKey, json.dumps(False), account_name, account_config)
                     if isFilterUpdateNeeded:
                         addFilter({
                             "id" : mapKey.replace("classify_",""),
@@ -627,7 +627,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                         if days > 15:
                             mapKey = mapKey + month_year
 
-                    r.set("classify_fx_"  + mapKey, json.dumps(False))
+                    r_set("classify_fx_"  + mapKey, json.dumps(False), account_name, account_config)
                     if isFilterUpdateNeeded:
                         addFilter({
                             "id" : mapKey.replace("classify_",""),
@@ -651,7 +651,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                             if days > 15:
                                 mapKey = mapKey + month_year
 
-                        r.set("classify_fx_"  + mapKey, json.dumps(False))
+                        r_set("classify_fx_"  + mapKey, json.dumps(False), account_name, account_config)
                         if isFilterUpdateNeeded:
                             addFilter({
                                 "id" : mapKey.replace("classify_",""),
@@ -703,12 +703,13 @@ def sendToSearchIndex(row, r, from_type, account_name, account_config):
     
     if len(finalLines) > 0:
         # logger.critical("add to search")
-        # if not r.exists("search_ " + row['_id']):
+        if not r_exists("search_ " + row['_id'], account_name, account_config):
             # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
-        t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
-        t.start()
-            # r.set("search_" + row["_id"], "1")
-            # this is getting slow...
+            # this is causing on redis level also, but if don't add this. elastic seach also get loaded a lot which is a problem. 
+            # so need to add this and fix redis issue
+            t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
+            t.start()
+            r_set("search_" + row["_id"], "1", account_name, account_config, ex= 1 * 60 * 60)
 
 def addFilter(obj, key, account_name, account_config, is_direct):
     global dirtyMap
