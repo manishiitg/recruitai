@@ -29,5 +29,6 @@ RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
+RUN pip install pymemcache redis
 
 CMD ["/usr/bin/supervisord"]
