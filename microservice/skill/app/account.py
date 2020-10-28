@@ -19,6 +19,32 @@ def initDB(account_name, account_config):
 
     return db_hosts[account_name]
 
+from app.logging import logger
+def r_exists(key, account_name, account_config):
+    r = connect_redis(account_name, account_config)
+    return r.exists(account_name + "_" + key)
+
+def r_get(key, account_name, account_config):
+    r = connect_redis(account_name, account_config)
+    return r.get(account_name + "_" + key)
+
+def r_set(key, value, account_name, account_config, ex = None):
+    r = connect_redis(account_name, account_config)
+    try:
+        if ex:
+            r.set(account_name + "_" + key , value, ex=ex)
+        else:
+            r.set(account_name + "_" + key , value)
+    except Exception as e:
+        logger.critical("redis exception")
+        logger.critical(e)
+
+def r_scan_iter(account_name, account_config, match=None):
+    r = connect_redis(account_name, account_config)
+    if match:
+        return r.scan_iter(match=match)
+    else:
+        return r.scan_iter()
 
 has_redis = False
 try:
