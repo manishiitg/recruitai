@@ -26,6 +26,7 @@ import redis
 from pymemcache.client.base import PooledClient
 
 redis_hosts = {}
+memcached_hosts = {}
 
 def connect_redis(account_name, account_config):
     if "use_cache" not in account_config:
@@ -40,13 +41,12 @@ def connect_redis(account_name, account_config):
         return redis_hosts[account_name]
     
     elif account_config["use_cache"] == "memcached":
-        if account_name not in redis_hosts:
-            redis_hosts[account_name] = PooledClient(account_config["memcached"]["host"], max_pool_size=4)
-        return redis_hosts[account_name]
+        if account_name not in memcached_hosts:
+            memcached_hosts[account_name] = PooledClient(account_config["memcached"]["host"], max_pool_size=4)
+        return memcached_hosts[account_name]
 
 from app.logging import logger
 def r_exists(key, account_name, account_config):
-    account_config["use_cache"] = "memcached"
     key = account_name + "_" + key
     key = key.replace(" ", "")
     r = connect_redis(account_name, account_config)
@@ -60,7 +60,6 @@ def r_exists(key, account_name, account_config):
 
 import json
 def r_get(key, account_name, account_config):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     key = account_name + "_" + key
     key = key.replace(" ", "")
@@ -71,7 +70,6 @@ def r_get(key, account_name, account_config):
 
 
 def r_set(key, value, account_name, account_config, ex = None):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     key = account_name + "_" + key 
     key = key.replace(" ", "")
@@ -88,7 +86,6 @@ def r_set(key, value, account_name, account_config, ex = None):
         logger.critical(e)
 
 def r_scan_iter(account_name, account_config, match=None):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     if account_config["use_cache"] == "redis":
         if match:
@@ -96,7 +93,8 @@ def r_scan_iter(account_name, account_config, match=None):
         else:
             ret = r.scan_iter()
     elif account_config["use_cache"] == "memcached":
-        ret = r.stats()
+        # ret = r.stats("items")
+        ret = []
     
     scan = []
     for key in ret:
@@ -106,11 +104,11 @@ def r_scan_iter(account_name, account_config, match=None):
     return scan
 
 def r_flushdb(account_name, account_config):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     # r.flushdb()
-    for key in r_scan_iter(account_name, account_config):
-        r.delete(key)
+    if account_config["use_cache"] == "redis":
+        for key in r_scan_iter(account_name, account_config):
+            r.delete(key)
 
 has_es = False
 
