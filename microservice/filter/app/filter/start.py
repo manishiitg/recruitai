@@ -13,7 +13,7 @@ from app.filter.util import getCourseDict
 from datetime import datetime, timedelta
 from calendar import monthrange
 
-from app.account import connect_redis, initDB
+from app.account import connect_redis, initDB, r_set, r_get, r_exists, r_scan_iter
 
 import requests
 import hashlib   
@@ -38,7 +38,7 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
             data = json.dumps(data)
         
         logger.critical("updating redis data for get speed up api")
-        r.set(redisKey, data) #  , ex=1 * 60 * 60expire in 1hr automatic
+        r_set(redisKey, data, account_name, account_config) #  , ex=1 * 60 * 60expire in 1hr automatic
         return data
     except Exception as e:
         logger.critical("error in api %s %s", url, str(e))
@@ -54,11 +54,11 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
     print("checking for redis key")
     try:
         
-        if r.exists(redisKey):
+        if r_exists(redisKey, account_name, account_config):
             logger.critical("speed up data returned from redis %s", redisKey)
             t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
             t.start()
-            return r.get(redisKey)
+            return r_get(redisKey, account_name, account_config)
 
     except Exception as e:
         logger.critical("critical error %s", e)
@@ -74,7 +74,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 #     data = requests.get(url)
 #     data = data.json()
 #     data = json.dumps(data)
-#     r.set(redisKey, data , ex=1 * 60 * 60) #expire in 1hr automatic
+#     r_set(redisKey, data , account_name, account_config, ex=1 * 60 * 60) #expire in 1hr automatic
 #     logger.critical("updated job overview redis key %s", redisKey)
 
 #     return data
@@ -87,11 +87,11 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 #     redisKey = "jb_" + tag_id + ''.join(e for e in url if e.isalnum())
 
-#     if r.exists(redisKey):
+#     if r_exists(redisKey, account_name, account_config):
 #         logger.critical("job overview data returned from redis %s", redisKey)
 #         t = Thread(target = get_job_overview, args=(url, tag_id, access_token, redisKey , r))
 #         t.start()
-#         return r.get(redisKey)
+#         return r_get(redisKey, account_name, account_config)
     
 #     data = get_job_overview(url, tag_id, access_token, redisKey , r)
 #     return data
@@ -263,16 +263,16 @@ def get_candidate_tags_v2(account_name, account_config):
     classify_tags = []
 
     classify_list = []
-    if r.exists("classify_list"): 
-        classify_list = r.get("classify_list")
+    if r_exists("classify_list", account_name, account_config): 
+        classify_list = r_get("classify_list", account_name, account_config)
         classify_list = json.loads(classify_list)
     else:
         candidate_len_map = generateClassifyList(account_name, account_config)
         classify_list = list(set(list(candidate_len_map.keys())))
-        r.set('classify_list', json.dumps(classify_list))
+        r_set('classify_list', json.dumps(classify_list), account_name, account_config)
 
         for tag in candidate_len_map:
-            r.set("classify_" + tag + "_len" , candidate_len_map[tag])
+            r_set("classify_" + tag + "_len" , candidate_len_map[tag], account_name, account_config)
 
 
 
@@ -318,7 +318,7 @@ def get_candidate_tags_v2(account_name, account_config):
         
         
        
-        job_profile_data_len = r.get("classify_" + tag + "_len")
+        job_profile_data_len = r_get("classify_" + tag + "_len", account_name, account_config)
         if job_profile_data_len is None:
             job_profile_data_len = 0
         else:
@@ -401,7 +401,7 @@ def indexAll(account_name, account_config):
     r = connect_redis(account_name, account_config)
 
     logger.critical("index all called")
-    data = r.get("full_data")
+    data = r_get("full_data", account_name, account_config)
     if data:
         dataMap = json.loads(data)
         data = []
@@ -410,7 +410,7 @@ def indexAll(account_name, account_config):
         generateFilterMap("full_data",data, account_name, account_config)
 
     
-    for key in r.scan_iter(match='*on_ai_data*',):
+    for key in r_scan_iter(account_name, account_config, match='*on_ai_data*',):
         # key = key.decode("utf-8")
 
         
@@ -423,7 +423,7 @@ def indexAll(account_name, account_config):
             continue
 
         if "classify_" in str(key):
-            data = r.get(key)
+            data = r_get(key, account_name, account_config)
             dataMap = json.loads(data)
             data = []
             for dkey in dataMap:
@@ -432,7 +432,7 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("classify_",""),data, account_name, account_config)
 
         if "job_" in str(key):
-            data = r.get(key)
+            data = r_get(key, account_name, account_config)
             dataMap = json.loads(data)
             data = []
             for dkey in dataMap:
@@ -451,7 +451,7 @@ def get_job_profile_data(mongoid, account_name, account_config):
         row["_id"] = str(row["_id"])
         job_profile_data[row["_id"]] = row
 
-    r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
+    r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
     return job_profile_data
 
 def get_classify_data(mongoid, account_name, account_config):
@@ -500,7 +500,7 @@ def get_classify_data(mongoid, account_name, account_config):
             row["_id"] = str(row["_id"])
             job_profile_data[row["_id"]] = row
 
-        r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
+        r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
     else:
         if "-" in mongoid:
             if len(mongoid.split("-")) == 3:
@@ -577,7 +577,7 @@ def get_classify_data(mongoid, account_name, account_config):
                     job_profile_data[row["_id"]] = row
 
         if job_profile_data:
-            r.set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str))
+            r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
         else:
             job_profile_data = {}
 
@@ -614,9 +614,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
     if filter_type == "job_profile":
-        job_profile_data = r.get("job_fx_" + mongoid)
+        job_profile_data = r_get("job_fx_" + mongoid, account_name, account_config)
     else:
-        job_profile_data = r.get("classify_fx_" + mongoid)
+        job_profile_data = r_get("classify_fx_" + mongoid, account_name, account_config)
         # logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
         # job_profile_data = False
 
@@ -851,7 +851,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         
         if len(tags) == 1:
             logger.critical("tag id %s", tags[0])
-            ret =  r.get(tags[0] + "_filter")
+            ret =  r_get(tags[0] + "_filter", account_name, account_config)
             if ret is not None:
                 ret = json.loads(ret)
             else:
@@ -1051,8 +1051,8 @@ def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config
 def get_index(tag_id, account_name, account_config):
     r = connect_redis(account_name, account_config)
     logger.critical("checking index %s", tag_id)
-    if r.exists(tag_id + "_filter"):
-        ret =  r.get(tag_id + "_filter")
+    if r_exists(tag_id + "_filter", account_name, account_config):
+        ret =  r_get(tag_id + "_filter", account_name, account_config)
     else:
         ret = "-1"
 
@@ -1069,7 +1069,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         return {}
             
     elif filter_type == "job_profile":
-        data = r.get("job_fx_" + mongoid)
+        data = r_get("job_fx_" + mongoid, account_name, account_config)
         
  
         if data and json.loads(data) and use_unique_cache_feature:         
@@ -1103,7 +1103,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         
 
     elif filter_type == "candidate":
-        data = r.get("classify_fx_" + mongoid)
+        data = r_get("classify_fx_" + mongoid, account_name, account_config)
         if data and json.loads(data) and use_unique_cache_feature:
             dataMap = json.loads(data)
         else:
@@ -1188,12 +1188,12 @@ def generateFilterMap(key, data, account_name, account_config):
     gpe_filter = location(gpeList,gpeIdxMap)
 
     logger.critical("generating filter completed %s", key)
-    r.set(key + "_filter" , json.dumps({
+    r_set(key + "_filter" , json.dumps({
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
         "gpe_filter" : gpe_filter
-    }))
+    }), account_name, account_config)
 
     logger.critical("completed for key %s", key)
 
