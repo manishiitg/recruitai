@@ -11,4 +11,5 @@ sudo docker-compose restart summarymq >> /home/manish/cron.log 2>&1
 #sudo docker-compose restart searchindexmq
 echo "Time: $(date). Some error info." >> /home/manish/cron.log
 #sudo docker-compose restart
-#sudo docker-compose restart searchindexmq
+sudo docker-compose restart searchindexmq
+sudo docker-compose restart statsdatamq
