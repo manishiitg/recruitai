@@ -183,35 +183,44 @@ services:
         networks:
             - ai
             
-    redis-replica:
-        image: 'bitnami/redis:latest'
-        ports:
-            - '6379'
-        depends_on:
-            - redis
-        environment:
-            - REDIS_REPLICATION_MODE=slave
-            - REDIS_MASTER_HOST=redis
-            - REDIS_MASTER_PORT_NUMBER=6379
-            - ALLOW_EMPTY_PASSWORD=yes
-            # - REDIS_MASTER_PASSWORD=my_master_password
-            # - REDIS_PASSWORD=my_replica_password
-        networks:
-            - ai
+    # redis-replica:
+    #     image: 'bitnami/redis:latest'
+    #     ports:
+    #         - '6379'
+    #     depends_on:
+    #         - redis
+    #     environment:
+    #         - REDIS_REPLICATION_MODE=slave
+    #         - REDIS_MASTER_HOST=redis
+    #         - REDIS_MASTER_PORT_NUMBER=6379
+    #         - ALLOW_EMPTY_PASSWORD=yes
+    #         # - REDIS_MASTER_PASSWORD=my_master_password
+    #         # - REDIS_PASSWORD=my_replica_password
+    #     networks:
+    #         - ai
 
-    redis-replica-2:
-        image: 'bitnami/redis:latest'
-        ports:
-            - '6379'
-        depends_on:
-            - redis
+    # redis-replica-2:
+    #     image: 'bitnami/redis:latest'
+    #     ports:
+    #         - '6379'
+    #     depends_on:
+    #         - redis
+    #     environment:
+    #         - REDIS_REPLICATION_MODE=slave
+    #         - REDIS_MASTER_HOST=redis
+    #         - REDIS_MASTER_PORT_NUMBER=6379
+    #         - ALLOW_EMPTY_PASSWORD=yes
+    #         # - REDIS_MASTER_PASSWORD=my_master_password
+    #         # - REDIS_PASSWORD=my_replica_password
+    #     networks:
+    #         - ai
+
+    memcached:
+        image: 'bitnami/memcached:latest'
         environment:
-            - REDIS_REPLICATION_MODE=slave
-            - REDIS_MASTER_HOST=redis
-            - REDIS_MASTER_PORT_NUMBER=6379
-            - ALLOW_EMPTY_PASSWORD=yes
-            # - REDIS_MASTER_PASSWORD=my_master_password
-            # - REDIS_PASSWORD=my_replica_password
+            - MEMCACHED_CACHE_SIZE=1024
+            - MEMCACHED_THREADS=8
+
         networks:
             - ai
 
@@ -234,6 +243,7 @@ services:
         depends_on:
             - elasticsearch
             - redis
+            - memcached
         networks:
             - ai
         restart: "no"
@@ -319,7 +329,9 @@ services:
             - ELASTIC_USERNAME=elastic
             - ELASTIC_PASSWORD=DkIedPPSCb
         depends_on: 
-            - elasticsearch
+            - rabbitmq
+            - redis
+            - memcached
         networks:
             - ai
 
@@ -338,6 +350,7 @@ services:
         depends_on: 
             - elasticsearch
             - redis
+            - memcached
         networks:
             - ai
 
@@ -353,6 +366,10 @@ services:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
     
     gendermq:
         image: recruitai/gendermq:latest
@@ -378,6 +395,7 @@ services:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
+        
 
     datasyncmq:
         image: recruitai/datasyncmq:latest
@@ -397,6 +415,7 @@ services:
         depends_on: 
             - rabbitmq
             - redis
+            - memcached
 
     candidatemq:
         image: recruitai/candidatemq:latest
@@ -410,6 +429,10 @@ services:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
 
     filtermq:
         image: recruitai/filtermq:latest
@@ -423,6 +446,10 @@ services:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
             - ai
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
         
     statsmq:
         image: recruitai/statsmq:latest
@@ -437,6 +464,10 @@ services:
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
         network_mode: host
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
 
     statsdatamq:
         image: recruitai/statsdatamq:latest
@@ -448,6 +479,10 @@ services:
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
         network_mode: host
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
     
     gpu:
         build: microservice/gpucloud
@@ -465,6 +500,7 @@ services:
         depends_on: 
             - rabbitmq
             - redis
+            - memcached
 
 volumes: 
     elasticsearch:
