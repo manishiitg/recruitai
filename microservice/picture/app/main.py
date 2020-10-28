@@ -14,7 +14,7 @@ from bson.objectid import ObjectId
 
 import traceback
 
-from app.account import connect_redis
+from app.account import connect_redis, r_set, r_exists, r_get
 from app.publishdatasync import sendMessage as datasync
 from app.statspublisher import sendMessage as updateStats
 
@@ -329,9 +329,9 @@ class TaskQueue(object):
 
         duplicate_key_check = 1
         duplicate_key = "picture_detectron_" + message["mongoid"]
-        if r.exists(duplicate_key):
+        if r_exists(duplicate_key, account_name, account_config):
 
-            duplicate_key_check = int(r.get(duplicate_key))
+            duplicate_key_check = int(r_get(duplicate_key, account_name, account_config))
             if duplicate_key_check > 5:
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
@@ -360,7 +360,7 @@ class TaskQueue(object):
 
         ret = fullResumeParsing(message["image"], message["mongoid"], message["filename"], account_name, account_config)
         
-        r.set(duplicate_key, duplicate_key_check , ex=1 * 60 * 60 * 24)
+        r_set(duplicate_key, duplicate_key_check , account_name, account_config, ex=1 * 60 * 60 * 24)
 
         datasync({
                 "id" : message["mongoid"],
