@@ -77,4 +77,6 @@ RUN mkdir /workspace/recruit-tags-flair-roberta-word2vec
 RUN mkdir /workspace/detectron4_5000_fpn
 RUN mkdir /workspace/cvreconstruction
 
+RUN pip install pymemcache redis
+
 CMD ["/usr/bin/supervisord"]
