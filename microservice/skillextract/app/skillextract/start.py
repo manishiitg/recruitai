@@ -430,7 +430,7 @@ def queryMatrix(model, findSkills , isGeneric = False) :
     return query_matrix , skillVec, querySkill, notFound
 
 
-from app.account import initDB, connect_redis
+from app.account import initDB, connect_redis, r_set, r_get, r_exists
 
 def getSampleData(mongoid, account_name, account_config):
     docLines = {}
@@ -460,9 +460,9 @@ def getSampleData(mongoid, account_name, account_config):
             if "domain" in job_row:
                 domain = job_row["domain"]
 
-        if r.exists("job_" + mongoid) and False:
+        if r_exists("job_" + mongoid, account_name, account_config) and False:
             logger.critical("data from redis")
-            data = r.get("job_" + mongoid)
+            data = r_get("job_" + mongoid, account_name, account_config)
             # logger.critical("data from redis %s", data)
             dataMap = json.loads(data)
             data = []
@@ -493,9 +493,9 @@ def getSampleData(mongoid, account_name, account_config):
 
         data = []
         for mid in mongoid:
-            if r.exists(mid) and False:
+            if r_exists(mid, account_name, account_config) and False:
                 logger.critical("data from redis")
-                row = r.get(mid)
+                row = r_get(mid, account_name, account_config)
                 data.append(json.loads(row))
             else:
                 logger.critical("data from mongo")
@@ -503,14 +503,14 @@ def getSampleData(mongoid, account_name, account_config):
                     "_id" : ObjectId(mid)
                 })
                 row["_id"] = str(row["_id"])
-                r.set(mid, json.dumps(row, default=str))
+                r_set(mid, json.dumps(row, default=str), account_name, account_config)
                 data.append(row)
 
             
     else:
-        if r.exists(mongoid) and False:
+        if r_exists(mongoid, account_name, account_config) and False:
             logger.critical("data from redis")
-            row = json.loads(r.get(mongoid))
+            row = json.loads(r_get(mongoid, account_name, account_config))
             data = [row]
         else:
             logger.critical("data from mongo")
@@ -520,7 +520,7 @@ def getSampleData(mongoid, account_name, account_config):
             if row:
                 row["_id"] = str(row["_id"])
                 data = [row]
-                r.set(mongoid, json.dumps(row, default=str))
+                r_set(mongoid, json.dumps(row, default=str), account_name, account_config)
         
         if len(data) > 0:
             row = data[0]
@@ -557,7 +557,7 @@ def getSampleData(mongoid, account_name, account_config):
                             }
                         })
                         row["cvParsedInfo"] = cvParsedInfo
-                        r.set(mongoid, json.dumps(row, default=str))
+                        r_set(mongoid, json.dumps(row, default=str), account_name, account_config)
 
         
 
