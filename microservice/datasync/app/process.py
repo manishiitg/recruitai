@@ -673,9 +673,9 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 time_map = {}
 
 def sendToSearchIndex(row, r, from_type, account_name, account_config):
-    # if from_type == "full":
+    if from_type == "full":
     # this gets slow with full when data is large
-    #     return
+        return
 
     row["_id"] = str(row["_id"])
     finalLines = []
@@ -702,14 +702,17 @@ def sendToSearchIndex(row, r, from_type, account_name, account_config):
     finalLines.append(row["sender_mail"])
     
     if len(finalLines) > 0:
-        # logger.critical("add to search")
+        
         if not r_exists("search_ " + row['_id'], account_name, account_config):
+            logger.critical("add to search %s", account_name)
             # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
             # this is causing on redis level also, but if don't add this. elastic seach also get loaded a lot which is a problem. 
             # so need to add this and fix redis issue
             t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
             t.start()
             r_set("search_" + row["_id"], "1", account_name, account_config, ex= 1 * 60 * 60)
+        else:
+            logger.critical("skipped add to search")
 
 def addFilter(obj, key, account_name, account_config, is_direct):
     global dirtyMap

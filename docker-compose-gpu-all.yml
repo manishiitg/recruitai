@@ -22,6 +22,7 @@ services:
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
 
     summarygpu:
         # image: recruitai/summarygpu
@@ -44,6 +45,7 @@ services:
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
     
     picturegpu:
         # image: recruitai/picturegpu
@@ -66,3 +68,4 @@ services:
         extra_hosts:
             - "rabbitmq:116.202.234.182"
             - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
