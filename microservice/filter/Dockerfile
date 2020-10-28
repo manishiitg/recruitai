@@ -1,4 +1,4 @@
-FROM  pytorch/pytorch
+FROM  python:3
 LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
@@ -14,11 +14,11 @@ COPY ./supervisor/conf.d/filter.conf /etc/supervisor/conf.d/filter.conf
 
 RUN truncate -s 0 /workspace/logs/filter*.log
 
+RUN pip install fuzzywuzzy[speedup]
 RUN pip install pika
 RUN pip install redis
 RUN pip install apscheduler
 RUN pip install pymongo
-RUN pip install fuzzywuzzy[speedup]
 
 RUN apt-get install -y debconf-utils
 ENV TZ=Asia/Kolkata
@@ -30,5 +30,6 @@ RUN apt-get install -y tzdata
 RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
+RUN pip install pymemcache redis requests
 
 CMD ["/usr/bin/supervisord"]
