@@ -636,217 +636,6 @@
               "id": 96,
               "answers": [
                 {
-                  "answer_id": 715,
-                  "document_id": 310,
-                  "question_id": 96,
-                  "text": "ProductManagement",
-                  "answer_start": 92,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What skillset or technologies you have used in your most recent projects?",
-              "id": 98,
-              "answers": [
-                {
-                  "answer_id": 724,
-                  "document_id": 310,
-                  "question_id": 98,
-                  "text": "Java,LAMP(Linux,Apache,MySQL,PHP),.Net&Android",
-                  "answer_start": 417,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was the name of your company before the recent one?",
-              "id": 100,
-              "answers": [
-                {
-                  "answer_id": 728,
-                  "document_id": 310,
-                  "question_id": 100,
-                  "text": "6\n\nQ u a n t um L i n k C omm u n i c a t i o n s P v t L t d ( M u m b a ",
-                  "answer_start": 5450,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your most major job responsibility in your current organization?",
-              "id": 102,
-              "answers": [
-                {
-                  "answer_id": 732,
-                  "document_id": 310,
-                  "question_id": 102,
-                  "text": "TechnicalDirector;solutionarchitectforBigData,analytics&datamodeling.\n\n DataAnalyst;analysisondatasetsalongwithdatamininganddataauditingskills.",
-                  "answer_start": 2977,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "which college did you complete your graduation from?",
-              "id": 104,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your highest qualification?",
-              "id": 97,
-              "answers": [
-                {
-                  "answer_id": 723,
-                  "document_id": 310,
-                  "question_id": 97,
-                  "text": "DiplomaInFinancialManagement",
-                  "answer_start": 2327,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was the duration of your employment in your recent company?",
-              "id": 99,
-              "answers": [
-                {
-                  "answer_id": 726,
-                  "document_id": 310,
-                  "question_id": 99,
-                  "text": "Jun-2014+",
-                  "answer_start": 1890,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your designation in your older company?",
-              "id": 101,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which city or state do you live in?",
-              "id": 103,
-              "answers": [
-                {
-                  "answer_id": 736,
-                  "document_id": 310,
-                  "question_id": 103,
-                  "text": "t, Mumb",
-                  "answer_start": 13509,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "which college did you complete your post graduation from?",
-              "id": 105,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "are you married?",
-              "id": 76,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "Have you done any valid Certification courses?",
-              "id": 90,
-              "answers": [
-                {
-                  "answer_id": 709,
-                  "document_id": 310,
-                  "question_id": 90,
-                  "text": "’s“MachineLearningFoundations:ACase\n\nLearning SampleDashbo",
-                  "answer_start": 12809,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "how long did you work for in your old company?",
-              "id": 91,
-              "answers": [
-                {
-                  "answer_id": 710,
-                  "document_id": 310,
-                  "question_id": 91,
-                  "text": "May-2013–May-2014",
-                  "answer_start": 1926,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "how much is your total working experience?",
-              "id": 92,
-              "answers": [
-                {
-                  "answer_id": 718,
-                  "document_id": 310,
-                  "question_id": 92,
-                  "text": "TwentyEightplusyearsindustryexperience",
-                  "answer_start": 198,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
-              "answers": [
-                {
-                  "answer_id": 720,
-                  "document_id": 310,
-                  "question_id": 94,
-                  "text": "Data\n\n experience /DeliveryManagement,Software",
-                  "answer_start": 266,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your Date of birth?",
-              "id": 95,
-              "answers": [],
-              "is_impossible": true
-            }
-          ],
-          "context": "Mobile +91-98200-94236 Email – cyrus@lentins.co.in Cyrus Lentin - Resume \n\nEXECUTIVEPROFILE ProductManagement~Release/DeliveryManagement\n\n SolutionArchitect~QualityManagement~Training&Development\n\n TwentyEightplusyearsindustryexperiencewithextensivedomainexpertiseinData\n\n experience /DeliveryManagement,Software ProductManagement\n\n Development,ManagementInformationSystems.Trackrecordofsuccessinplatforms\n\n coveringJava,LAMP(Linux,Apache,MySQL,PHP),.Net&Android;creatingrobust\n\n architectures&infrastructureandproblemsolvingwithabilitytouseITtoaddress\n\n businessissuesprovidingeffectiveyetsimpletousesolutions.Havebeenacertified\n\n leadauditorforISO-9001andISO-27001,haveplayedpivotalroleinimplementationof\n\n forCertifiedEthicalHacker,BlackblotProduct\n\n ISO-9001.Completed\n\n Management,MobileApplicationDevelopment,BigDataAnalyst(coveringHadoop,Java\n\n MapReduce,Pig,Hive,Impala,Hbase&Sqoop),DataScientistSpecialization(covering\n\n ExploringData,DataVisualization,StatisticalInference,RegressionAnalysis,Machine\n\n Learning&ShinyAppsusingR-Programming).ACTOwithgreattrackrecordin:\n\n training\n\n Release/DeliveryManagement\n\n Training&TrainingNeedsAnalysis\n\n Softskillscover:\n\n TeamManagement\n\n AbilityToAdhereToSchedules\n\n InfrastructureManagement SecurityArchitect\n\n InternalCRM&MIS\n\n IntegrityOfTheHighestOrder\n\n Yetaboveallthis,theattitudetogetthingsdoneormakethemhappen;innutshell-a\n\n changeagent!!!FirmlyagreewithZigZigglerwhenhesaid“Itisnotyouraptitudebut\n\n yourattitudewhichdeterminestheultimatealtitude”.\n\n CareergoalistoworkwithanorganizationwhereIgetachancetomentortheyouth,\n\n channeltheirenergytouserightvalues&bestpracticesintheindustryandprovide\n\n strategic/tacticalleadershiptoorganization.\n\nProfessionalExperienceSummary Company MaexaData LastDesignation Tenure CEO VicePresident ExecutiveDirector GeneralManager DarshanComputers GeneralManager MaegabyteComputerAcademy\n\nJun-2014+ MindCraftSoftwarePvtLtd\n\n May-2013–May-2014\n\n QuantumLinkCommunicationsPvtLtd\n\n Aug-2000–May-2013\n\n Camox/PraxisSoftwareInc\n\n Jun-1995–Jul-2000\n\n Jun-1992–Jun-1995\n\n ManagerMIS/Training\n\n Nov-1988–Jun-1992\n\n EducationalQualifications 1988-89 DiplomaInComputerProgramming BombayUniversity Year 1987-88 1988-89 1991-92\n\n Degree/Diploma\n\n BachelorOfArts-EconomicsMajor\n\n NationalComputingCenter(UK)\n\n AppleLeasing&IndustriesLtd\n\n DiplomaInFinancialManagement\n\nPage: 1/5 Date: Apr-2016 Address: D/50 Anu Apts, Milan Subway Road, Santacruz West, Mumbai 400054 Res Tel: +91-22-2612-3126 / +91-22-2619-4058\n\nEmail – cyrus@lentins.co.in Cyrus Lentin - Resume \n\nMobile +91-98200-94236 ProfessionalExperienceDetailed\n\n CEO\n\n Jun-2014+\n\n MaexaData(pronouncedmek-za-data)isatechnologycompanybasedinMumbai,India.\n\n MaexaDatadesignsanddevelopsapplicationsorientedtowardsgettingthemaximum\n\n productivityandutilityfromBigData.AtMaaexadata,wemakesenseofthemega-\n\n exabytes-of-datausingHadoop®toprocessthisomni-generatingdataandprovideyou\n\n withinformationleadingtoinsightsandthenontowisdom.\n\n TechnicalDirector;solutionarchitectforBigData,analytics&datamodeling.\n\n DataAnalyst;analysisondatasetsalongwithdatamininganddataauditingskills.\n\n ProficiencyinHadoopeco-systemcomponentslikePig,Hive,Impala,HBase&Sqoop.\n\n ProficiencyinR-Programmingusedstand-aloneorinconjunctionwithHadoop.\n\n StrategicConsulting;includingbusinessplan&salesstrategydevelopment.\n\n SocialMediaAnalytics;includingClickThrough,Source,Volume,SentimentAnalysis\n\n BusinessAnalytics;includingDescriptive,Predictive&PrescriptiveAnalysis\n\n SalientAchievements\n\n AutomationofETL&DataAggregationtasksforPrivateBank.\n\n DataModelingassignmentsforInsuranceActuary.\n\n LogAnalysis,Management&IntelligenceforWindPowerMaintenancecompany.\n\n MindCraftSoftwarePvtLtd(Mumbai)\n\n VicePresident\n\n May-2013–May-2014\n\n MindCraftisapremierindustryverticalspecificcompanyprovidingbusinessedgeto\n\n clients(typicallyinBanking&Pharma)throughworldclasstechnologyproductsand\n\n services.TheprimarytechnologiesthatMindCraftspecializesinare[a]Development&\n\n Integration[b]BusinessIntelligence[c]SoftwareInfrastructureServices:Operating\n\n Environment,MiddlewarePlatforms&Database\n\n PracticeHeadforSoftwareInfrastructureServiceswithateamcountofaprrox70.\n\n FourProjectManagers/LeadersdirectlyreportingwitheachManager/Leader\n\n havingateamof15to20consultants.\n\n InchargeofPre-SalesactivitieslikePresentations,POC,Demosetcforallprojects\n\n OperatingEnvironmentcoverageincludesAIX,Linux,Windows,Citrix,VMWare.\n\n MiddlewareplatformscoversIBM-WAS&MQ,Oracle-WebLogic,Apache.\n\n DatabasecoversprimarilyOracle,MS-SQLServerandMySQL.\n\n ResponsibilitiesincludeddeploymentsinHAenvironments&regularmaintenance\n\n withclosetozerodowntime.\n\n SalientAchievements\n\n FortheperiodJul-2013toMar-2014,increasedtherevenuesoftheBusinessUnitby\n\n 25%wherethecorrespondingemployeecostincreasebyonly10%.Duringthesame\n\n periodemployeecountincreasedby15%.\n\n FortheperiodJul-2013toMar-2014,theEscalationCountPerMonthwasreduced\n\n from10permonthtolessthan3permonth.\n\n FortheperiodJul-2013toMar-2014,theteamgotapprox10recommendation/\n\n appreciationmailsfromtheclients;anaverageofonepermonth.\n\n ClientshandledincludeBNPParibas,HDFCBank,ICICIBank,YesBank&IndusInd.\n\nAddress: D/50 Anu Apts, Milan Subway Road, Santacruz West, Mumbai 400054 Res Tel: +91-22-2612-3126 / +91-22-2619-4058 Page: 2/5 Date: Apr-2016\n\nEmail – cyrus@lentins.co.in Cyrus Lentin - Resume P r o f e s s i o n a l E x p e r i e n c e D e t a i l e d ( c o n t ) Mobile +91-98200-94236\n\nQ u a n t um L i n k C omm u n i c a t i o n s P v t L t d ( M u m b a i )\n\nAug-2000–May-2013 QuantumLinkCommunicationsisoneofIndia'soldestInternettechnologiesfirms.\n\n focusesonopen-source\n\n technologies,hasmessaging(both\n\n productsandservices)asitsmainlineofbusiness\n\n Leadingateamof25programmersworkinginJava,PHP&.Net.Leadingateamof\n\n ProductManager&SolutionArchitectforQLC’sProductoffering-PostMaster-\n\n integratedMailing(withAntiVirus&AntiSpam),Proxy,Calendaring,MailingList,\n\n Archiving,MIS,Workflowandmore.\n\n ProductManager&SolutionArchitectforBackTrack–IncrementalBackupSolution.\n\n UsescoreJavaandisplatformindependent.\n\n ProductManager&SolutionArchitectforQLC’sServiceofferingMailServe-\n\n ProductManager&SolutionArchitectforMailDirect–emailmarketingsolution.\n\n UsesLAMP(LinuxApacheMySQLPHP)technologywithopensourcemailingandftp\n\n solutions.\n\n ProductManager&SolutionArchitectforiMonit–InternetServiceMonitor;QLC\n\n forayintoMobileApplicationDevelopment.DevelopedinAndroid&iOSanddeployed\n\n successfullyinternally&forselectclients.\n\n ProjectManagerforOnBoard–QLC’sSocialNetworkToolforBusiness.UsesLAMP\n\n (LinuxApacheMySQLPHP)technologywithopensourcestorageandftpsolutions.\n\n SolutionArchitectforQLC’sinternalERP–SalesTrackusingVB/VB.Net;covering\n\n clients,partners,leads&funnel,activities,workorder,invoicing,collectionsand\n\n Thefinalescalationpointforalldevelopment/supportrelatedissuesforQLC\n\n credit/debitnotes,etc\n\n Products&Servicesofferings.\n\n InchargeofHRactivitiescoveringrecruitment,careerplanning,performance\n\n appraisals,compensation&benefits/incentivesandtrainingneedsanalysis.\n\n InchargeofconductingInductionPrograms,TechnicalTrainingProgramsand\n\n Establishedcontrolsandreportingmechanismtomonitorperformanceofthe\n\n ProductDevelopmentandHelpdeskSupportteams.\n\n OverallinchargeofinitiationandimplementationofISO-9001QualityManagement\n\n System.ISO-9001auditdonesuccessfullywithoutanyNon-ConformityinSep-2008.\n\n SalientAchievements\n\n HelpedthecompanygrowataCAGRof40%forthelast10years.\n\n IncreasedProductSatisfactionIndexbymorethan20%from58to78.\n\n IncreasedSupportSatisfactionIndexbymorethan24%from61to85.\n\n HelpedQLCtransitionfromasingleproductcompanytofourseparateproductline.\n\n EachProductLinehadmultipleproductextensions(plug-ins&modules).\n\n ClientshandledincludeTimesOfIndia,KansaiNerolac,OverniteExpress,Federal\n\n Bank,CitigateDawson,Videocon,BalajiTelefilms,AdityaBirlaGroup,TISS,ONGC,\n\n JustDial,Bridgestone,SonaKoyo,AnagramStockBroking,NishitDesai&Co.\n\nAddress: D/50 Anu Apts, Milan Subway Road, Santacruz West, Mumbai 400054\n\nRes Tel: +91-22-2612-3126 / +91-22-2619-4058 Page: 3/5\n\n Date: Apr-2016\n\nEmail – cyrus@lentins.co.in Cyrus Lentin - Resume \n\nProfessionalExperienceDetailed(cont) Mobile +91-98200-94236\n\nC am o x ( M u m b a i) / P r a x i s S o f t w a r e , I n c . ( D a y t o n O H , U S A n o w i n O r l a n d o , F L , U S A )\n\nJun-1995–Jul-2000 Camoxhasanventurewith“PraxisSoftware,Inc.”(PraxSoft).Camoxhadadual\n\n reportingsystemwhereinreportedtoVicePresident–TechnicalbasedinUSforall\n\n technicalmattersandtheManagingDirectorofCamox(Bombay)foralladministrative\n\n matters.\n\n Ledtheteamofupto9programmersinIndiaworkinginVisualBasic/VisualC++.\n\n Designed&developedtheWeatherActiveseriesofproducts-basicallyahardware/\n\n softwaresolutionforweatherdatacollation&distributionasrequiredbyUSOffice.\n\nD a r s h a n C om p u t e r s P v t L t d ( M u m b a i )\n\nJun-1992–Jun-1995 DarshanComputerswereregisteredShareTransferAgentsandRegistrarsToIssuewith\n\n SEBI.Ledtheteamofupto5programmersworkinginFoxProandTurboC.\n\n ManualoperationsofShareTransferAgentsandRegistrarsToIssuewere\n\n transformedtohighlyITenabled,networkedandscalableoperations.\n\n CompletelyresponsibleforIT-EnablingandStrategicPlanning.Managedtheentire\n\n softwaredevelopmentneedsoftheorganization.\n\nM a e g a b y t e C om p u t e r A c a d em y ( M u m b a i )\n\nManager–MIS/Training Nov-1988–Jun-1992\n\n MaegabyteComputerAcademy,afranchiseoperationwithover100trainingcenters\n\n acrossIndia.Corefocusonimpartingtrainingoncomputerlanguages.Startedasa\n\n deputationlecturer.Trainingexperiencecomprisesofconductingcoursesonalllevels\n\n rightfromintroductorycoursestoadvancedcourses.\n\n UndertakenCorporateTrainingforparticipantsfromdifferentcompanies.\n\n Asadeputationlecturer,haveaddressedseminarsonvariouscomputerrelated\n\n subjectsalloverIndia.\n\n OtherNoteworthyItems 1990.\n\n 1.WinnerofMaegabyteExcellenceAwardasthe“BestExecutiveSupport”intheyear\n\n 2.Initiatedandcontributedarticlesforapopularcolumncalled“DataBaseForum”\n\n (now“TechForum”)for“ExpressComputers”foraspancoveringmorethanayear.\n\n 3.WasVisitingFaculty(PartTime)forcomputereducationinstituteORTIndia(1991–\n\n 1995).Conductedtrainingsessionsonprogramminglanguages.\n\n 4.InDec-2011wasProjectManagerforimplementationofOpenSourceEmailSystem\n\n forTimesOfIndiaGrouptohandleover10,000usersusingaclusterof40servers\n\n allworkinginredundantmodewhichwasdeployedinrecordtimeofsixmonths.\n\n 5.InJun-2015,conductedaworkshopon‘BigData-Hadoop&HadoopEcoSystem’in\n\n SPJainInstituteOfManagement&Research.\n\n 6.InNov-2015,conductedaworkshopon‘BigData-Hadoop&HadoopEcoSystem’in\n\n MukeshPatelSchoolOfTrainingManagement&Engineering[NMIMS].\n\n 7.InNov/Dec-2015,conductedaworkshopon‘BusinessAnalyticsusingR’forthe\n\n studentsofWelingkarInstituteOfManagementDevelopment&Research.\n\n 8.InJan-Feb-2016,conductedaworkshopon‘BusinessAnalyticsusingExcel’forthe\n\n studentsofWelingkarInstituteOfManagementDevelopment&Research.\n\n 9.FoundingTeamMember&Platform/SolutionArchitectforIndusGuruNetworksLLP.\n\n Responsibleforalltechnical/onlinerequirementsofthecompany.\n\nAddress: D/50 Anu Apts, Milan Subway Road, Santacruz West, Mumbai 400054 Res Tel: +91-22-2612-3126 / +91-22-2619-4058 Page: 4/5 Date: Apr-2016\n\nEmail – cyrus@lentins.co.in Cyrus Lentin - Resume C e r t i f i c a t i o n s Mobile +91-98200-94236\n\n1.Appearedandsuccessfullycompletedthe“CertificateOfProgrammingInC”course offeredbyIndianInstituteofComputerEducationin1989.\n\n 2.AppearedandsuccessfullycompletedtheLeadAuditorcourseforISO-9001(Quality\n\n 3.AppearedandsuccessfullycompletedtheLeadAuditorcourse\n\n forISO-27001\n\n ManagementSystems)inAug-2007.\n\n CouncilinJul-2009.\n\n 4.AttendedandcompletedthecourseforCertifiedEthicalHackeraccreditedtoEC-\n\n 5.AttendedandcompletedthecourseforProductManagerPlanner&ProductManager\n\n Marketer,bothaccreditedtoBlackblotinJan-2011.\n\n 6.In2013,successfullycompletedcourse\n\n inAndroidProgramming\n\n forMobile\n\n ApplicationDevelopment. TheSpecializationcoveredExploringData,DataVisualization,StatisticalInference, ofMaryland,CollegePark. 12.In2015,successfullycompletedCoursera’s“CustomerAnalytics”,“Operations project“BusinessAnalyticsSpecialization”offeredbyUniversityofPennsylvania.\n\n 7.In2014,successfullycompletedCloudera’scourseinBigDataAnalyticsusing\n\n Hadoop,JavaMapReduce,Pig,Hive,Impala,Hbase&Sqoop.\n\n 8.In2015,successfullycompletedCoursera’sDataScientistSpecialization,a9-course\n\n specializationplusindustrystandardprojectofferedbyJohnsHopkinsUniversity.\n\n RegressionAnalysis,MachineLearning&ShinyAppsusingR-Programming.\n\n 9.In2015,successfullycompletedCoursera’sProgrammingMobileApplicationsfor\n\n AndroidHandheldSystems:Part1(Basic)&Part2(Advanced)offeredbyUniversity\n\n 10.In2015,successfullycompletedCoursera’sCybersecurityandItsTenDomains\n\n offeredbyUniversitySystemofGeorgia.\n\n 11.In2015,successfullycompletedCoursera’s“MachineLearningFoundations:ACase\n\nLearning SampleDashboard https://cyruslentin.shinyapps.io/kiei https://cyruslentin.shinyapps.io/swiftkey ExploratoryAnalysis RegressionAnalysis http://rpubs.com/cyruslentin/mtcars-regression MachineLearning http://rpubs.com/cyruslentin/machine-learning\n\ncertificatesplusproject “Machine\n\n StudyApproach”,partof4\n\n Specialization”offeredbyUniversityofWashington.\n\n Analytics”,“PeopleAnalytics”&“AccountingAnalytics”aspartof4certificatesplus\n\n AnalyticsAssignmentsShowcase\n\n TextMining\n\n http://rpubs.com/cyruslentin/Swiftkey-ExploratoryAnalysis\n\n UsefulLinks LinkedIn:https://in.linkedin.com/in/cyruslentin\n\nAddress: D/50 Anu Apts, Milan Subway Road, Santacruz West, Mumbai 400054\n\nRes Tel: +91-22-2612-3126 / +91-22-2619-4058 Page: 5/5\n\n Date: Apr-2016",
-          "document_id": 310
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "qas": [
-            {
-              "question": "What is your designation in current organization?",
-              "id": 96,
-              "answers": [
-                {
                   "answer_id": 761,
                   "document_id": 311,
                   "question_id": 96,
@@ -5527,6 +5316,12 @@
               "is_impossible": false
             },
             {
+              "question": "how much is your total working experience?",
+              "id": 92,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
               "question": "In which technology or area have you done your recent internships or trainings?",
               "id": 93,
               "answers": [
@@ -6002,17 +5797,8 @@
             {
               "question": "What is your area of specialization in your work experience till date?",
               "id": 94,
-              "answers": [
-                {
-                  "answer_id": 261,
-                  "document_id": 288,
-                  "question_id": 94,
-                  "text": "onfigured and managed AD, Exchange, DHCP, WSUS, WDS, Antivirus and backup servers in the corporate network.",
-                  "answer_start": 1650,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "What is your Date of birth?",
@@ -6638,389 +6424,6 @@
           ],
           "context": "Sample resume (graduate) Make sure your email address is professional \n\nFrank Ashbury 27 Appleby Rd Chapman ACT 2611 Tel: 0422 123 456\n\nEmail: f.ashbury@gmail.com\n\nObjective Driven and energetic, I am seeking to start my career in investment banking by using my strong communication and problem solving skills, and further developing my leadership skills in a graduate position with a leading multinational investment bank.\n\nTailored to the organisation, your objective states your future career goals and how the position you’re applying for fits in\n\nB Laws / B Comm., Australian National University Distinction average, Expected completion 2014 Tsinghua University, Beijing, China Semester long program, studying Finance subjects Narrabunda College, ACT. TER: 97.4 2013\n\nList your degree(s) and educational achievements in reverse chronological order\n\nDeveloped strong oral communication skills through my role as Community Volunteer with Oxfam Australia, presenting Oxfam at community groups and schools, tailoring my language to different audiences. Extended my interpersonal skills through my retail experience and active involvement at networking events at the Financial Services Institute of Australasia (FINSIA). Further developed written communication skills in my work as Paralegal with Smith & Education 2010 – Partners.\n\n2008 – 2009 Skills summary Communication\n\nTeamwork Strong team player, illustrated by my involvement with the Uni-Norths Rugby Canberra Owls, placing first in the local Rugby Sevens Tournament in 2011. Further enhanced my team work skills through part-time sales roles at David Jones and WeFreeze ice-cream parlour, and group work at university.\n\nInitiative and Problem solving\n\ndifficulties Sought out and organised a study program in Beijing, China: I managed language Liaised with ANU and University of Tsinghua staff; organised finances and found accommodation; made travel arrangements; and engaged with extracurricular activities. Proposed additions and alterations to a physical activity program for school aged kids in my role as volunteer Coach Assistant with Bluearth Foundation. Suggestions were included in the program and I received positive feedback from participants and activity leader.\n\nLed, motivated and supported twenty adolescents as a Rugby League coach for under 14s Leadership at Weston Creek Rugby Club. Research and analysis Preparing oral presentations and written documents in my role as Paralegal at Smith & Partners required strong research and analysis skills. Competent user of various electronic legal databases.\n\nUse the Skills\n\nSummary to highlight a number of relevant skills, developed in a variety of contexts. Choose your best examples, tailored to the organisation and job. The summary is meant to provide a brief overview: you might not mention certain skills if they’re not relevant\n\nSample resume (graduate) Internship Experience  Dec 2012 – Feb 2013\n\nIn the sections emphasising what you have done (whether internship, professional, extracurricular, or other) make sure that you highlight relevant duties to tailor your application. This means that you emphasise certain information and might omit less important\n\nProfessional Experience Mar 2012 –\n\nContributed to a project aimed at increasing participation of ‘young’ investors (under 30s) Research and analysis of characteristics of ‘young’ investors client base Reporting on relevant financial market data for project’s target group Attended a three-day business skill development workshop\n\nParalegal, Smith & Partners, Commercial law firm, ACT\n\nGeneral administration Drafting documents Trial preparation, including interviewing clients Briefs to council Legal administration for commercial litigation matters\n\nFeb 2009 – Mar 2012 Retail Assistant, David Jones, ACT\n\nJan 2008 – Feb 2009 2012 –\n\nResponding to customer inquiries and requests Offering product information Maintained and restocked inventory Handling cash register\n\nSales Assistant, WeFreeze ice-cream parlour\n\nServed customers, opened & locked-up shop Volunteer Coach Assistant with Bluearth Foundation Discussed team strategy, attended team meetings 2010 – 2012 Rugby League coach for under 14s, Weston Creek Rugby Club Developed strategy, Uni-Norths Rugby Canberra Owls team member Oxfam Australia community volunteer What does this achievement communicate to employers? ANU College of Business & Economics Undergraduate Merit Award Finance and Banking Society (FINSOC) Financial Services Institute of Australasia (FINSIA) 2009 (Mar – Oct) Achievements 2013 Memberships\n\nMr Smith, Partner Smith & Partners, Commercial law firm, ACT 02 6123 4567 smith@smithandpartners.com.au\n\nMs Gold, Finance analyst WeInvest pty. ltd. 02 6123 7890 gold@weinvest.com.au Choose your referees appropriate to the\n\n2009 – 2009 –\n\n 2009 –\n\n Referees\n\nStating membership can be useful, particularly if you’ve been actively involved",
           "document_id": 291
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "qas": [
-            {
-              "question": "What is your designation in current organization?",
-              "id": 96,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What skillset or technologies you have used in your most recent projects?",
-              "id": 98,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was the name of your company before the recent one?",
-              "id": 100,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was your most major job responsibility in your current organization?",
-              "id": 102,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your graduation from?",
-              "id": 104,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your highest qualification?",
-              "id": 97,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was the duration of your employment in your recent company?",
-              "id": 99,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was your designation in your older company?",
-              "id": 101,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which city or state do you live in?",
-              "id": 103,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your post graduation from?",
-              "id": 105,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "a) how much total experience do you have",
-              "id": 75,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "are you married?",
-              "id": 76,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "a) what is your name?",
-              "id": 77,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "b) tell me about your recent work experience company?",
-              "id": 78,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "b) what is your most recent designation",
-              "id": 79,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "c) what are your recent job responsibilities",
-              "id": 80,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "d) any accomplishments or carrier highlights or awards?",
-              "id": 82,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "d) what are your top skills or expertise",
-              "id": 83,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "e) tell me about your recent certifications",
-              "id": 84,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "e) tell me about your recent training or internships",
-              "id": 85,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "e) whats your most recent education degree",
-              "id": 86,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "e) when did you passout?",
-              "id": 87,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "e) which is your most recent projects",
-              "id": 88,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "f) what are your favorite extra curricular activatives or hobbies",
-              "id": 89,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "Have you done any valid Certification courses?",
-              "id": 90,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how long did you work for in your old company?",
-              "id": 91,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how much is your total working experience?",
-              "id": 92,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your Date of birth?",
-              "id": 95,
-              "answers": [],
-              "is_impossible": true
-            }
-          ],
-          "context": "IOSR Journal of Engineering (IOSRJEN) www.iosrjen.org ISSN (e): 2250-3021, ISSN (p): 2278-8719 Volume 4, PP 01-04\n\nResume Ranker\n\nDevraj Redkar1, Sanjay Payiri2, Durgesh Sawant3, Vishal Prajapati4, Nileema\n\nPathak5 (Information Technology, Atharva College of Engineering/Mumbai University, India)\n\n (Information\n\nTechnology, Atharva College of Engineering/Mumbai University, India) (Information Technology, Atharva 2 3 College of Engineering/Mumbai University, India) (Information Technology, Atharva College of Engineering/Mumbai University, India) (Information Technology, Atharva College of Engineering/Mumbai 4 5 University, India)\n\nAbstract : The proposed method is to understand the intelligence behind the hiring pattern and apply the machine learning to accommodate the identified intelligence. The proposed method offers the ranking system according to the hiring patterns. This paper proposes a highly trained models along with the traditional search method, predicts the ranking and sorting of resumes with high accuracy and simplifies the job of human resourcing efficiently. Keywords - Docopt, Hiring Pattern, Human Resources, PyPDF2, Python, Resume.\n\nI. Introduction\n\nHuman Resource (HR) agencies use various head hunting tools and online search methods. These search methods connected with the database of millions of resumes. These are the simple search engines who parses the resumes against the given keywords and offers the best match results. The list of the searching keywords is usually prepared by the HR after reading the job description several times. The HR downloads these searched resumes and does the manual work by opening and reading the resumes. By this way, HR person tries to find the resumes which are best match to the Job description. This is a cumbersome process and requires reasonable time and multiple discussion with the candidate before offering the resume to the client. Usually, due to the complexity of the database, many efficient resumes missed out from the search results or not considered due to stringent timeline ofclosure.\n\nTraditionalmethod 1 Human Resource (HR) agencies use various head hunting tools and online search methods. These search methods connected with the database of millions of resumes. These are the simple search engines who parses the resumes against the given keywords and offers the best match results. The list of the searching keywords is usually prepared by the HR after reading the job description several times. The HR downloads these searched resumes and does the manual work by opening and reading the resumes. By this way, HR person tries to find the resumes which are best match to the Job Description. This is a cumbersome process and requires reasonable time and multiple discussion with the candidate before offering the resume to the client. Usually, due to the complexity of the database, many efficient resumes missed out from the search results or not considered due to stringent time lines ofclosure.[1]\n\nA. II.\n\n Literaturereview\n\n B.\n\nVarious online portals like naukri.com, rezscore.com, resumegrade.com offer online resume screening and provide general optimal score for the uploaded resume.[4][5]\n\nResumeRater Our System consists of 3 modules: III. Methodologies\n\n 1.\n\n 2.\n\n 3.\n\n List ofResumes. ParsingCV. List ofKeywords.\n\nInternational Conference on Innovative and Advanced Technologies in Engineering (March-2018) 1 |Page\n\nResume Ranker 1. List ofResumes. HR manager collects resumes which are to be ranked and creates a list of resumes. The resumes should be in given format, so that the algorithm can rank the resumes based on that format.[2] 2. Parsing CV: Resumes can be in any format such as TEXT, PDF & DOCX. So for pre-processing and parsing of keywords from the resumes for processing by the algorithm, we are using different packages for each file format.  PyPDF2: PyPDF2 is a pure-python PDF toolkit originating from the PyPdf project. It is currently maintained by Phaseit, Inc. PyPDF2 can extract data from PDF files, or manipulate existing PDFs to produce a newfile.PyPDF2iscompatiblewithPythonversions2.6,2.7,and3.2-3.5.  Docopt: docopt is based on conventions that have been used for decades in help messages and man pages for describing a program's interface. An interface description in docopt is such a help message, but formalized.  Python-docx: python-docx is a Python library for creating and updating Microsoft Word (.docx)files. IV. List Ofkeywords: The company will provide a list of skills required for a particular post. The company will also give weight- age of each skill to be assigned in the keyword file. The algorithm will rank the resumes based on the keyword file.\n\nALGORITHM:\n\nSupport Vector Machine (SVM) is a machine learning technique to separate data which tries to maximize the gap between the categories (a.k.a Margin).[3] Maximum Margin Classifieris the simple way to divide the data if it is linearly (or via a plane in multi- is dimensionalspace)separable.Butduetoobviousreasonsitcan‟tbeappliedtothedatawherenoclearlinear boundary possible. Support Vector Classifier is an extension to maximum margin classifier where some misclassifications are allowed to happen. Support Vector Machine is a further extension to SVC to accommodate non-linear boundaries. Though there is a clear distinction between various definitions but people prefer to call all of them as SVM to avoid any complications. SVM is a further extension of SVC that results from enlarging the feature space in a specific way using “KERNELS”. The main idea is that the system may want to enlarge its feature space in order to accommodate a\n\nInternational Conference on Innovative and Advanced Technologies in Engineering (March-2018) 2 |Page\n\nResume Ranker non-linear boundary between the classes. Dealing with high dimensional data or enlarging the feature space requires high computational power. The Kernel approach is simply an efficient computational approach for the same. Solution to the Support Vector Classifier problem involves only the inner – product of the observations and not the variables themselves. This is the basic idea behind using a Kernel technique. A Kernel is a function that quantifies the similarity of two observations. When a Support Vector Classifier is combined with a non- linear Kernel, the resulting classifier is known as SVM. Depending on the data one has to select the Kernel which best classifies it. There is no direct rule or formula which can choose a Kernel, most of the timesit will be trialanderror.Therearevariouscoefficientslike„gamma‟,\n\n„coef‟ whichonecantuneinordertoreacha bestclassification.\n\n „degree‟,\n\n V.\n\n Figures\n\n Figure 1: System Block Diagram\n\nHR manager collects resumes which are to be ranked and creates a list of resumes. Resumes are also collected from Github and LinkedIn. Resumes can be in any format such as TEXT, PDF & DOCX. The company will provide a list of skills required for a particular post. The company will also give weight-age of each skill to be assigned in the keyword file. The algorithm will rank the resumes based on the keyword file.\n\nInternational Conference on Innovative and Advanced Technologies in Engineering (March-2018) 3 |Page\n\nResume Ranker VI.  Expected Output\n\nResumes are ranked according to the keywords provided by the user and algorithm ranks the resumes from 1 to x, with rank one having 100 percentile. Here‟s the format of how the output will be displayed: (File_Format/Percentile/ [count] /Resume_name). A file_format is a type of the file which can be a .pdf or .docx or .txt. The percentile is calculated using a function (percentile = self.get_percentile(d, self.files)), where “d” is the method of parsing. Depending on the keywords and multiplier of that keywords assigned by the user, a count will be generated for a particular resume which will be displayed in square brackets. The formula to calculate count is (count = count + (keyword * multiplier)). Resume_name is the name of the file. Example: (PDF / 68.87% / [8] / DevrajRedkarResume). The formula for ranking of these resumes is (rank = rank + word_percentage).\n\nVII.\n\nFuture Scope As future work we plan to expand the application functionalities by using Support Vector Machine (SVM) for large data sets especially for large organizations. Also for processing large amount of data based on text input we can improve the performance by using Natural LanguageProcessing.\n\nVIII. Conclusion\n\nA benchmarking is done to observe the results obtained by the manual process and the resumes recommended by the proposed method through Machine Learning. The results obtained by the proposed method are mathematically and practically much better than traditional methods. Ranking and Re-ranking based on the Hiring Pattern are very useful for next generation Head Huntingsolution.\n\nReferences\n\n[1]. [2]. [3]. “Machine Learning Methods for Solving Complex Ranking and Sorting Issues in HumanResourcing”, Institute of Electrical and Electronics Engineers (IEEE) 2017 “IntelligentHiringwithResumeParserandRankingusingNaturalLanguageProcessingandMachine Learning”, International Journal of Innovative Research in Computer and Communication Engineering(IJIRCCE) Swapnil Parsing with Named Entity Clustering Algorithm, http://www.slideshare.net/swapnilmsonar/resume-parsing-with-named-entity-clustering-algorithm Sovren Resume/CV Parser,http://www.sovren.com IEEE Research, may2012, Sonar, Resume [4]. [5]. Connectifier,http://www.connectifier.com [6]. Rchillies,http://www.rchillies.com\n\nInternational Conference on Innovative and Advanced Technologies in Engineering (March-2018) 4 |Page",
-          "document_id": 292
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "qas": [
-            {
-              "question": "What is your designation in current organization?",
-              "id": 96,
-              "answers": [
-                {
-                  "answer_id": 363,
-                  "document_id": 293,
-                  "question_id": 96,
-                  "text": "SENIORACCOUNTEXECUTIVE",
-                  "answer_start": 1442,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What skillset or technologies you have used in your most recent projects?",
-              "id": 98,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was the name of your company before the recent one?",
-              "id": 100,
-              "answers": [
-                {
-                  "answer_id": 367,
-                  "document_id": 293,
-                  "question_id": 100,
-                  "text": " AFTER’STUDIO(Post-productionHouse:AdFilms)",
-                  "answer_start": 2247,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your most major job responsibility in your current organization?",
-              "id": 102,
-              "answers": [
-                {
-                  "answer_id": 369,
-                  "document_id": 293,
-                  "question_id": 102,
-                  "text": "d e s i g n s o l u t i o n s a n d c o n c e p t u a l i z i n g a r t f o r m s / s c u l p t u r e s / i n st a l l a t i o n s ,\n\nwebsitedesigning,product&packagingetc",
-                  "answer_start": 1269,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "which college did you complete your graduation from?",
-              "id": 104,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your highest qualification?",
-              "id": 97,
-              "answers": [
-                {
-                  "answer_id": 364,
-                  "document_id": 293,
-                  "question_id": 97,
-                  "text": "MastersofArtsinEntertainment,MediaandAdvertising ",
-                  "answer_start": 4514,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was the duration of your employment in your recent company?",
-              "id": 99,
-              "answers": [
-                {
-                  "answer_id": 366,
-                  "document_id": 293,
-                  "question_id": 99,
-                  "text": "( M a y 2 0 1 7 - Pr e s e n t )",
-                  "answer_start": 1006,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your designation in your older company?",
-              "id": 101,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which city or state do you live in?",
-              "id": 103,
-              "answers": [
-                {
-                  "answer_id": 370,
-                  "document_id": 293,
-                  "question_id": 103,
-                  "text": "Al Ba rsha, D uba i ",
-                  "answer_start": 15,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "which college did you complete your post graduation from?",
-              "id": 105,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "are you married?",
-              "id": 76,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "Have you done any valid Certification courses?",
-              "id": 90,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how long did you work for in your old company?",
-              "id": 91,
-              "answers": [
-                {
-                  "answer_id": 358,
-                  "document_id": 293,
-                  "question_id": 91,
-                  "text": "July2013-July2015",
-                  "answer_start": 2290,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "how much is your total working experience?",
-              "id": 92,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
-              "answers": [
-                {
-                  "answer_id": 360,
-                  "document_id": 293,
-                  "question_id": 93,
-                  "text": "AftercompletionoftheupdatedMediaList,haveworkedon variousPRandMediaactivitiesforeventslikeHomecoming",
-                  "answer_start": 3512,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
-              "answers": [
-                {
-                  "answer_id": 361,
-                  "document_id": 293,
-                  "question_id": 94,
-                  "text": "TheFlagshipadvertisingisacreativecommunicationagencyandhas developedimpressivecommunicationcampaignsinallsectors.\n",
-                  "answer_start": 1040,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your Date of birth?",
-              "id": 95,
-              "answers": [],
-              "is_impossible": true
-            }
-          ],
-          "context": "JESSICAD’SOUZA Al Ba rsha, D uba i \n\n+971588434516|jessdsouzaa30@gmail.com\n\nPA S S P O R T N U M B E R - P 4 1 4 7 1 4 1 | E X P I R Y D AT E : 1 1 / 0 8 / 2 0 2 8\n\nCLIENTSERVICINGEXECUTIVE PROFESSIONAL SUMMARY\n\nFo c u s e d a n d G o a l o r i e n t e d p r o f e s s i o n a l w i t h a n i n - d e p t h k n o w l e d g e\n\nofthefunctioningoftheAdvertisingworld. Keenlymotivatedtoleverageexperienceandknowledgetosignificantly\n\na d d v a l u e b y e f f i c i e n t h a n d l i n g o f a l l s t a k e h o l d e r s i n t h e i n d u s t r y.\n\nEnjoytakingaleadingroleinbuildingclients’businesses\n\nb y i n t r o d u c i n g n e w, i n n o v a t i v e s t r a t e g i e s t o a c h i e v e r e v e n u e g o a l s .\n\nKEY COMPETENCIES\n\n• Fu t u r e P l a n n i n g\n\n• Te a m M a n a g e m e n t\n\n•RelationshipManagement •ContractNegotiations •Problemsolving •Leadership •MarketingManagement •NewBusinessDevelopment •Research\n\nEXPERIENCE EXPERIENCE \n\nT H E F L A G S H I P A D V E R T I S I N G P V T. LT D . ( M a y 2 0 1 7 - Pr e s e n t )\n\nTheFlagshipadvertisingisacreativecommunicationagencyandhas developedimpressivecommunicationcampaignsinallsectors.\n\nT h e c o m p a n y h a s a n e x c e l l e n t t r a c k r e c o r d f o r c r e a t i n g s p e c i a l iz e d\n\nd e s i g n s o l u t i o n s a n d c o n c e p t u a l i z i n g a r t f o r m s / s c u l p t u r e s / i n st a l l a t i o n s ,\n\nwebsitedesigning,product&packagingetc. SENIORACCOUNTEXECUTIVE\n\n •NurturingrelationshipwithkeybrandsfromRealEstatesector\n\nJ e w e l o f Q u e e n , M S R e a l t y G r o u p a n d H o m e Fu r n i s h i n g b r a n d l i k e\n\nShyamAhujaandPublishinghouse-NavneetEducationLtd... •Thoughtfulstudyofclientproblemsandpreparingclientbriefin\n\na n e f f e c t i v e m a n n e r w h i c h w i l l b o o s t c r e a t i v e o u t p u t a t t h e a g e n c y.\n\nadvertisingstrategies. •Overseeingbrandlaunchesbyprovidingdesignsolutionsforbranding\n\n• Pe r f o r m i n - d e p t h r e s e a r c h i n c o m p e t i t i v e m a r k e t p l a c e\n\ntoidentifyopportunities. •Skillfulprojectmanagementasperclienttimelinesaidedbyefficient\n\n managementofbudget.\n\n •Conductingsitevisitsforthoroughunderstandingoftheproductand\n\n creatingstrategiestomarketthebrand.\n\n AFTER’STUDIO(Post-productionHouse:AdFilms)July2013-July2015\n\n Afterstudioisatop-notchqualityserviceintherealmof\n\n videopost-production,DigitalIntermediate,visualeffectsandGraphics\n\na n d a n i m a t i o n a r e s e c o n d t o n o n e . S i n c e i t s i n c e p t i o n i t h a s ca p t u r e d\n\naconsiderablepieofthemarketshareandhasbecomeoneofthe mostpreferredfacilitiesforpost-productioninMumbai.\n\n •Cherishedpartnershipswithproductionhouseslike\n\nN i r v a n a F i l m s , C h r o m e P i c t u r e s , Ta g F i l m s , E q u i n o x F i l m s t h r o u g h\n\nskilfulaccountmanagementandrelationshipmanagement •Collaboratedwithallstakeholderstoensuresmoothprojectexecution\n\n •Developedengagingsalespitchandcompetitivepricingstrategies\n\n andclientservicing\n\nt o a t t r a c t n e w c u s t o m e r.\n\ntwitterandlinkedin. •Enhancedsocialmediapresencebyengagingtargetgrouponfacebook,\n\nINTERNSHIPS P U B L I C R E L AT I O N S E X E C U T I V E\n\nM I S S I N D I A O R G A N I S AT I O N ( T I M E S G R O U P ) ( J u l y 2 0 1 6 - O c t o b e r 2 0 1 6 )\n\n•WorkedwiththePRDepartmentofMissIndiaOrganisationand havesuccessfullyupdatedanddeliveredMedialistof30cities\n\n(600 odd j our na lis t, pho togr a phe r, bl o gge r s, wr i t er s ) i n a s pa n of 3 m onths .\n\n•AftercompletionoftheupdatedMediaList,haveworkedon variousPRandMediaactivitiesforeventslikeHomecomingof\n\nM r. W o r l d 2 0 1 6 ; M i s s D i v a 2 0 1 6 L a u n c h Pa r t y ; M i s s I n d i a a u d i t i o n i n g\n\ninDelhiandBangalore. INTERNSHIPS\n\n CLIENTSERVICINGEXECUTIVE\n\nM O L E C U L E M E D V E R T I S I N G ( Fe b r u a r y 2 0 1 6 To J u n e 2 0 1 6 )\n\n•InMoleculeMedvertising,themaintaskwastoensurethe smoothworkflowofdailytasksassignedtothecreativeteamand\n\n deliveredontimetotheclient.\n\n •Handledfewsalesrepeventbycommunicatingwiththevendorsand\n\n gettinginstallationsanddesignsetupasinstructedbytheclient.\n\n LEADERSHIP ACTIVITIESAND AWARDS\n\n• A w a r d e d a s t h e Yo u n g E m p l o y e e o f t h e Ye a r i n N o v e m b e r 2 0 1 4\n\nat‘after’studioandrewardedwithcashprize. •….“andfindhertobeoneofthemostdiligent,personable,\n\n marketingexecutives..”-RobLang‘DigitalFilmColorist(LinkedIn)\n\n• Headed the ‘Mar ke ti ng Te am ’ o f t he M e di a Co nf er e nc e 20 17 at KC C oll ege .\n\nMastersofArtsinEntertainment,MediaandAdvertising EDUCATIONAL QUALIFICATION (SpecializationinAdvertising) (SpecializationinAdvertising)\n\n BachelorsinMassMedia\n\n COMPUTER SKILLS INTEREST Dancing\n\n MSOFFICE\n\n M S O U T LO O K\n\n PHOTOSHOP\n\n RunningMarathons\n\nM o n s o o n Tr a i l s",
-          "document_id": 293
         }
       ]
     },
@@ -8329,11 +7732,11 @@
               "id": 97,
               "answers": [
                 {
-                  "answer_id": 526,
+                  "answer_id": 1949,
                   "document_id": 302,
                   "question_id": 97,
-                  "text": "M.COM, Ph.D. (Business Administration)",
-                  "answer_start": 4133,
+                  "text": "Ph.D",
+                  "answer_start": 272,
                   "answer_category": "SHORT"
                 }
               ],
@@ -9783,28 +9186,19 @@
             {
               "question": "What is your designation in current organization?",
               "id": 96,
-              "answers": [
-                {
-                  "answer_id": 1006,
-                  "document_id": 319,
-                  "question_id": 96,
-                  "text": "MARKETING MANAGER",
-                  "answer_start": 1173,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "What skillset or technologies you have used in your most recent projects?",
               "id": 98,
               "answers": [
                 {
-                  "answer_id": 1007,
-                  "document_id": 319,
+                  "answer_id": 1535,
+                  "document_id": 335,
                   "question_id": 98,
-                  "text": "communications and new product development",
-                  "answer_start": 1337,
+                  "text": "Eclipse, jMeter, Linux, Bash, Solr",
+                  "answer_start": 1198,
                   "answer_category": "SHORT"
                 }
               ],
@@ -9813,77 +9207,32 @@
             {
               "question": "what was the name of your company before the recent one?",
               "id": 100,
-              "answers": [
-                {
-                  "answer_id": 1010,
-                  "document_id": 319,
-                  "question_id": 100,
-                  "text": "Parmalat Australia",
-                  "answer_start": 2749,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "what was your most major job responsibility in your current organization?",
               "id": 102,
-              "answers": [
-                {
-                  "answer_id": 1012,
-                  "document_id": 319,
-                  "question_id": 102,
-                  "text": "Communications Management",
-                  "answer_start": 1210,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "which college did you complete your graduation from?",
               "id": 104,
-              "answers": [
-                {
-                  "answer_id": 1014,
-                  "document_id": 319,
-                  "question_id": 104,
-                  "text": "QUEENSLAND UNIVERSITY OF TECHNOLOGY",
-                  "answer_start": 3508,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "What is your highest qualification?",
               "id": 97,
-              "answers": [
-                {
-                  "answer_id": 1005,
-                  "document_id": 319,
-                  "question_id": 97,
-                  "text": "Bachelor",
-                  "answer_start": 3544,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "what was the duration of your employment in your recent company?",
               "id": 99,
-              "answers": [
-                {
-                  "answer_id": 1008,
-                  "document_id": 319,
-                  "question_id": 99,
-                  "text": "Oct 2016 - Current",
-                  "answer_start": 2653,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "what was your designation in your older company?",
@@ -9920,11 +9269,11 @@
               "id": 91,
               "answers": [
                 {
-                  "answer_id": 999,
-                  "document_id": 319,
+                  "answer_id": 1951,
+                  "document_id": 335,
                   "question_id": 91,
-                  "text": "Jun 2015 - Apr 2016",
-                  "answer_start": 2691,
+                  "text": "2001-present",
+                  "answer_start": 576,
                   "answer_category": "SHORT"
                 }
               ],
@@ -9933,38 +9282,29 @@
             {
               "question": "how much is your total working experience?",
               "id": 92,
-              "answers": [
-                {
-                  "answer_id": 1000,
-                  "document_id": 319,
-                  "question_id": 92,
-                  "text": "15 years",
-                  "answer_start": 57,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
               "answers": [],
               "is_impossible": true
             },
             {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
+              "question": "In which technology or area have you done your recent internships or trainings?",
+              "id": 93,
               "answers": [
                 {
-                  "answer_id": 1002,
-                  "document_id": 319,
-                  "question_id": 94,
-                  "text": " Marketing Management Visual Presentations\n\n Strategic Planning\n\n Social Media Strategy",
-                  "answer_start": 249,
+                  "answer_id": 1524,
+                  "document_id": 335,
+                  "question_id": 93,
+                  "text": "Web/Mobile",
+                  "answer_start": 772,
                   "answer_category": "SHORT"
                 }
               ],
               "is_impossible": false
+            },
+            {
+              "question": "What is your area of specialization in your work experience till date?",
+              "id": 94,
+              "answers": [],
+              "is_impossible": true
             },
             {
               "question": "What is your Date of birth?",
@@ -9973,8 +9313,8 @@
               "is_impossible": true
             }
           ],
-          "context": "MELISSA PACKHAM BRAND&MARKETINGSTRATEGIST  PROFILE\n\nWith 15 years experience and a background in FMCG marketing, I now run my own consulting business helping SMEs create inspiring and commercially- focussed brand and marketing strategies.\n\nEXPERTISE Marketing Management Visual Presentations\n\n Strategic Planning\n\n Social Media Strategy\n\nEXPERIENCE Brand Strategy CONSULTANT - A BRAND IS NOT A LOGO Brand strategy and marketing consulting for a number of start-ups, and small to medium sized businesses both in Australia and globally. My remit includes brand strategy, communications strategy and social media strategy development. I also educate via downloadable templates which I sell online.\n\n>> TRAVEL << After a long and linear career, my husband and I took some time for ourselves to travel the world. This period saw us visiting 18 countries in 9 months across South East Asia, Europe, UK and the Caribbean. I took the opportunity to do some independent learning and completed several online courses from the University of Pennsylvania. I was privileged to speak and host a brand strategy workshop on the 2016 Nomad Cruise and also at Dojo Coworking Space in Bali.\n\nMARKETING MANAGER - CAMPBELL'S SOUP\n\nCommunications Management for the portfolio of Campbell's Soup in Australia which included the development of 3-year strategy, communications and new product development. Fostering cross-functional relationships with Sales, Category, Insights, R&D and Manufacturing stakeholders.\n\nCONTACT BRAND MANAGER - VITA-WEAT & CRUSKITS\n\n +61 404 223 411\n\nLed the development of NPD and pack graphic updates across the healthy crispbread portfolio. Developed social media strategy for Vita-Weat. Developed a full year shopper marketing activation. activation).\n\nmelissa@abrandisnotalogo.com abrandisnotalogo.com SENIOR PRODUCT MANAGER - BEVERAGES\n\nManaged the iced coffee portfolio, including flagship brand Ice Break. Included leading communications (TVC), customer activations (account specific promotions) and events (Breaka 4 Star Pro Men's and 6 Star Pro Women's surf event, Uni Games brand\n\nmelissapackham.me SOCIALMEDIA\n\n PRODUCT MANAGER - BEVERAGES\n\n lnked.in/melissapackham\n\nManaged the OAK, Breaka and Pauls Iced Coffee brands. Developed second @abrandisnotalogo @melissa_muses installment of OAK 'hungrythirsty' 360-degree campaign, including award-winning digital campaign. Launched OAK into 3 new state / territory markets, delivering incremental volume to the brand and markets. Managed national OAK Penrith Panthers sponsorship relationship. Selected to attend Digital Marketing Conference at Lactalis Global HQ (France).\n\nSelf Employed | Oct 2016 - CurrentCampbell Arnott's | Jun 2015 - Apr 2016Campbell Arnott's | Jan 2014 - Jun 2015Parmalat Australia | 2012 - 2013Parmalat Australia | 2011 - 2012Apr 2016 - Feb 2017\n\nASSISTANT PRODUCT MANAGER Worked with Product Managers & Senior Product Managers across both Milk and Beverage portfolios, which enabled me to work on exciting projects from NPD, ATL and BTL activity, across a broad number of brands.\n\nMARKETING ASSISTANT As I was finishing my degree, I jumped at the chance to work for one of the largest dairy companies in the world. I worked part-time for the Beverages team until I graduated, at which time I was offered a full time role which saw me assisting the Milk & Beverages teams across multiple brands and sub brands.\n\nEDUCATION UNIVERSITY OF PENNSYLVANIA (ONLINE) Gamification Viral Marketing & How to Craft Contagious Content QUEENSLAND UNIVERSITY OF TECHNOLOGY Bachelor of Business (major in Marketing, minor in Integrated Marketing Comms) / Bachelor of Business (major in International & Global Studies, minor in Comms Design)\n\nCONTACT\n\nMOREABOUTME + My Gallup Strengths are Empathy, Developer, Restorative, Achiever, Connectedness\n\n+61 404 223 411\n\n+ I'm an INFJ - I listen first, speak later\n\n+ I'm creative, collaborative, pragmatic, passionate and self-motivated\n\nfeel good optional. I believe: + Brands have to be a force for good - Corporate Social Responsibility is no longer a + Jargon is boring. We need to be more human in the way we communicate - to be better understood. To be better all round. + In community over competition. When we work together to lift others up, we all rise. + There should be no such thing as “work-life” - it’s all just “life”.\n\nmelissapackham.me SOCIALMEDIA\n\n lnked.in/melissapackham\n\n @abrandisnotalogo\n\n @melissa_muses\n\n2001 - 2005Parmalat Australia | 2004 - 2007Parmalat Australia | 2007 - 20092016",
-          "document_id": 319
+          "context": "[v2013-02] Identifying technology suitable for the client, evaluating and prioritizing software platforms/solutions aligned with the cli- ent's strategic goals. Finding the optimal way of integration with existing infrastructure elements – strategically and econo- mically. Supporting the management decision-making process by providing the client with precise and up-to-date documentation. Resume – Chris Schwarzfischer Focus and Objective Play an active role in building the client‘s solution. Deliver results on the highest quality level.\n\nExperience Freelance Consultant (2001-present)\n\n 2013 Portal optimization\n\n Mobile App Architecture Role: Consultant\n\n• Requirements analysis/streamlining • Technology selection • Decision on implementation strategy\n\nTechnology: Web/Mobile 2013\n\nRole: Consultant • Identify potential for optimization • Customer facing • SEO • Propose steps for improvement • Coordinate implementation\n\nTechnology: Web page 1 of 12 herzogstraße 103 • 80796 münchen • germany\n\n chris schwarzfischer contact@nwt.ac\n\nQA Management • Definition of quality metrics • Establishment of automatic end-to-end test procedure • Continuous integration system integration\n\nTechnology: Eclipse, jMeter, Linux, Bash, Solr\n\n2012-2013 REST endpoint for secure data transport and aggregation Role: Architect, Senior Developer\n\n• High performance data processing • Automated caching and serialization strategy • Data conversion • Reporting • Digital Signature and Encryption\n\n2012-2013 Native iPhone application for secure message transport\n\nRole: Senior Developer\n\n• Data retrieval from backend and display • Offline Storage and Data Entry • Data Signing and Encryption • Push notification integration\n\nTechnology: Xcode, Objective C, AFNetworking, Coredata Team Size: 3\n\n Technology: X.509, RFC3161 Timestamping, Redis, Apache, Python, PHP\n\n herzogstraße 103 • 80796 münchen • germany\n\n page 2 of 12\n\n• Requirements definition for extensions to a recently introduced CRM system 2012 Requirements Management • Data migration strategy • Monitoring\n\nFocus: CRM 2012 VoIP Convergence Consulting\n\n Role: Analyst\n\n• Vendor selection and screening • M&A scenario analysis • Development of proposal for going forward\n\nTeam Size: 5 2012 Mobile Transaction Interface\n\n Role: Architect\n\n• Mediation interface for MNO functionality • Integration of MNO transaction interfaces • Secure operation of standardized interfaces\n\nTechnology: Spring, Oracle, PHP, RoR Team Size: 5\n\n2012 (ongoing) ETL Process Implementation Role: Senior Developer • Extension of existing solutions Technology: Pentaho Data Integration, MySQL, CakePHP\n\nTeam Size: 3 herzogstraße 103 • 80796 münchen • germany\n\n page 3 of 12\n\nNative iPhone application for radio streaming Role: Senior Developer\n\n• Live radio streaming • Facebook integration • Playlist integration\n\nTechnology: Xcode, Objective C\n\n2011-2012 Native iPhone Application(s) Role: Project Lead, Senior Developer\n\n• Data retrieval from backend and display • Offline Storage and Data Entry • Server synchronisation • Push notification integration\n\nTechnology: Xcode, Objective C, Restkit, Coredata Team Size: 5\n\n 2011 Customer portal change management Role: Senior Consultant\n\n • Portal analysis\n\n• Analysis of current usage KPIs • Development and presentation of change proposal\n\n2011 Secure File Transfer System Role: Architect, Senior Developer\n\n• Custom mechanism for automatic secure file transport between systems • Receipt generation and processing\n\nherzogstraße 103 • 80796 münchen • germany chris schwarzfischer contact@nwt.ac\n\n page 4 of 12\n\n• Digital Signature and Encryption Technology: Bash, OpenSSH, X.509, RFC3161 Timestamping, SQLite, Apache, PHP Team Size: 5\n\n2011 Mobile Web HTML Game Role: Senior Developer\n\nTeam Size: 3 2010-2011 iPhone Web Application(s) Role: Senior Developer\n\n• Desktop browser fallback for reuse in „standard“ web page Technology: HTML5, CSS3, jQuery, jQTouch, MySQL, CakePHP\n\n• Analysis/Decision on frameworks • Reuse of common components to support recurring marketing campaigns Technology: CakePHP, MySQL, jQuery, jQTouch Team Size: 4\n\n2010 ETL Process Implementation Role: Senior Developer\n\n• Parallel processing of bet data • Report generation • Management Interface Technology: Pentaho Data Integration, MySQL, CakePHP\n\n• Simple game supporting marketing campaign(s) Team Size: 2 herzogstraße 103 • 80796 münchen • germany chris schwarzfischer contact@nwt.ac\n\npage 5 of 12\n\nTechnology: XCode, Objective C, PHP, MySQL, Varnish, Apache 2010 Asterisk VoIP implementation Role: Project lead • Asterisk deployment for local SMB • Call routing / Dial plan setup\n\nNative iPhone Application Role: Senior Developer • Push Notifications\n\n • Optimized Transfer • High frequency server updates\n\n Team Size: 3 Team Size: 3\n\n Team Size: 3\n\n 2009-2010 iPhone Web Application Role: Senior Developer\n\n• Database backed web application • Look & Feel identical to native iPhone app • Geolocation support for automated user data entry\n\nTechnology: CakePHP, MySQL, jQuery JS Library 2009-2010 ETL Process Implementation Role: Senior Developer\n\n• Extraction from COBOL generated data files • Transformation based on database backed configuration\n\nherzogstraße 103 • 80796 münchen • germany page 6 of 12",
+          "document_id": 335
         }
       ]
     },
@@ -12961,136 +12301,6 @@
             {
               "question": "What is your designation in current organization?",
               "id": 96,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What skillset or technologies you have used in your most recent projects?",
-              "id": 98,
-              "answers": [
-                {
-                  "answer_id": 1535,
-                  "document_id": 335,
-                  "question_id": 98,
-                  "text": "Eclipse, jMeter, Linux, Bash, Solr",
-                  "answer_start": 1198,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was the name of your company before the recent one?",
-              "id": 100,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was your most major job responsibility in your current organization?",
-              "id": 102,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your graduation from?",
-              "id": 104,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your highest qualification?",
-              "id": 97,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was the duration of your employment in your recent company?",
-              "id": 99,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was your designation in your older company?",
-              "id": 101,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which city or state do you live in?",
-              "id": 103,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your post graduation from?",
-              "id": 105,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "are you married?",
-              "id": 76,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "Have you done any valid Certification courses?",
-              "id": 90,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how long did you work for in your old company?",
-              "id": 91,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how much is your total working experience?",
-              "id": 92,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
-              "answers": [
-                {
-                  "answer_id": 1524,
-                  "document_id": 335,
-                  "question_id": 93,
-                  "text": "Web/Mobile",
-                  "answer_start": 772,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your Date of birth?",
-              "id": 95,
-              "answers": [],
-              "is_impossible": true
-            }
-          ],
-          "context": "[v2013-02] Identifying technology suitable for the client, evaluating and prioritizing software platforms/solutions aligned with the cli- ent's strategic goals. Finding the optimal way of integration with existing infrastructure elements – strategically and econo- mically. Supporting the management decision-making process by providing the client with precise and up-to-date documentation. Resume – Chris Schwarzfischer Focus and Objective Play an active role in building the client‘s solution. Deliver results on the highest quality level.\n\nExperience Freelance Consultant (2001-present)\n\n 2013 Portal optimization\n\n Mobile App Architecture Role: Consultant\n\n• Requirements analysis/streamlining • Technology selection • Decision on implementation strategy\n\nTechnology: Web/Mobile 2013\n\nRole: Consultant • Identify potential for optimization • Customer facing • SEO • Propose steps for improvement • Coordinate implementation\n\nTechnology: Web page 1 of 12 herzogstraße 103 • 80796 münchen • germany\n\n chris schwarzfischer contact@nwt.ac\n\nQA Management • Definition of quality metrics • Establishment of automatic end-to-end test procedure • Continuous integration system integration\n\nTechnology: Eclipse, jMeter, Linux, Bash, Solr\n\n2012-2013 REST endpoint for secure data transport and aggregation Role: Architect, Senior Developer\n\n• High performance data processing • Automated caching and serialization strategy • Data conversion • Reporting • Digital Signature and Encryption\n\n2012-2013 Native iPhone application for secure message transport\n\nRole: Senior Developer\n\n• Data retrieval from backend and display • Offline Storage and Data Entry • Data Signing and Encryption • Push notification integration\n\nTechnology: Xcode, Objective C, AFNetworking, Coredata Team Size: 3\n\n Technology: X.509, RFC3161 Timestamping, Redis, Apache, Python, PHP\n\n herzogstraße 103 • 80796 münchen • germany\n\n page 2 of 12\n\n• Requirements definition for extensions to a recently introduced CRM system 2012 Requirements Management • Data migration strategy • Monitoring\n\nFocus: CRM 2012 VoIP Convergence Consulting\n\n Role: Analyst\n\n• Vendor selection and screening • M&A scenario analysis • Development of proposal for going forward\n\nTeam Size: 5 2012 Mobile Transaction Interface\n\n Role: Architect\n\n• Mediation interface for MNO functionality • Integration of MNO transaction interfaces • Secure operation of standardized interfaces\n\nTechnology: Spring, Oracle, PHP, RoR Team Size: 5\n\n2012 (ongoing) ETL Process Implementation Role: Senior Developer • Extension of existing solutions Technology: Pentaho Data Integration, MySQL, CakePHP\n\nTeam Size: 3 herzogstraße 103 • 80796 münchen • germany\n\n page 3 of 12\n\nNative iPhone application for radio streaming Role: Senior Developer\n\n• Live radio streaming • Facebook integration • Playlist integration\n\nTechnology: Xcode, Objective C\n\n2011-2012 Native iPhone Application(s) Role: Project Lead, Senior Developer\n\n• Data retrieval from backend and display • Offline Storage and Data Entry • Server synchronisation • Push notification integration\n\nTechnology: Xcode, Objective C, Restkit, Coredata Team Size: 5\n\n 2011 Customer portal change management Role: Senior Consultant\n\n • Portal analysis\n\n• Analysis of current usage KPIs • Development and presentation of change proposal\n\n2011 Secure File Transfer System Role: Architect, Senior Developer\n\n• Custom mechanism for automatic secure file transport between systems • Receipt generation and processing\n\nherzogstraße 103 • 80796 münchen • germany chris schwarzfischer contact@nwt.ac\n\n page 4 of 12\n\n• Digital Signature and Encryption Technology: Bash, OpenSSH, X.509, RFC3161 Timestamping, SQLite, Apache, PHP Team Size: 5\n\n2011 Mobile Web HTML Game Role: Senior Developer\n\nTeam Size: 3 2010-2011 iPhone Web Application(s) Role: Senior Developer\n\n• Desktop browser fallback for reuse in „standard“ web page Technology: HTML5, CSS3, jQuery, jQTouch, MySQL, CakePHP\n\n• Analysis/Decision on frameworks • Reuse of common components to support recurring marketing campaigns Technology: CakePHP, MySQL, jQuery, jQTouch Team Size: 4\n\n2010 ETL Process Implementation Role: Senior Developer\n\n• Parallel processing of bet data • Report generation • Management Interface Technology: Pentaho Data Integration, MySQL, CakePHP\n\n• Simple game supporting marketing campaign(s) Team Size: 2 herzogstraße 103 • 80796 münchen • germany chris schwarzfischer contact@nwt.ac\n\npage 5 of 12\n\nTechnology: XCode, Objective C, PHP, MySQL, Varnish, Apache 2010 Asterisk VoIP implementation Role: Project lead • Asterisk deployment for local SMB • Call routing / Dial plan setup\n\nNative iPhone Application Role: Senior Developer • Push Notifications\n\n • Optimized Transfer • High frequency server updates\n\n Team Size: 3 Team Size: 3\n\n Team Size: 3\n\n 2009-2010 iPhone Web Application Role: Senior Developer\n\n• Database backed web application • Look & Feel identical to native iPhone app • Geolocation support for automated user data entry\n\nTechnology: CakePHP, MySQL, jQuery JS Library 2009-2010 ETL Process Implementation Role: Senior Developer\n\n• Extraction from COBOL generated data files • Transformation based on database backed configuration\n\nherzogstraße 103 • 80796 münchen • germany page 6 of 12",
-          "document_id": 335
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "qas": [
-            {
-              "question": "What is your designation in current organization?",
-              "id": 96,
               "answers": [
                 {
                   "answer_id": 1590,
@@ -13696,199 +12906,6 @@
           ],
           "context": "VITA ALEXANDER WOODS Associate Professor of Accounting College of William and Mary Mason School of Business P.O. Box 8795 Williamsburg, VA 23187-8795 Email: Alex.Woods@mason.wm.edu Phone: 757-221-2967\n\nEDUCATION Ph.D., Business Administration (Primary Field: Accounting), Michigan State University, 2008 M.B.A., Colorado State University (Beta Gamma Sigma), 2001 B.S., Wright State University, Accountancy and Finance (Cum Laude), 1992\n\nACADEMIC EMPLOYMENT HISTORY\n\nCollege of William and Mary, 2014-present, Associate Professor of Accounting College of William and Mary, 2008-2014, Assistant Professor of Accounting\n\nRESEARCH INTERESTS Managerial and cost accounting, performance measurement and evaluation, incentives, and management control within and between organizational collaborations.\n\nRESEARCH PUBLICATIONS • The role of calibration committees in subjective performance evaluation systems (with Karen Sedatole and Will Demere). Accepted and Forthcoming at Management Science. • Mastilak M. C., L. Matuszewski, F. Miller, and A. Woods. 2018. Self-Fulfilling Prophecy? An Examination of Exposure to Agency Theory and Unethical Behavior. Research on Professional Responsibility and Ethics in Accounting, Volume 21: 111–152. • • Received the Best Applied Research Award (2016) from the Professionalism and Ethics Committee and Public Interest Section of the American Accounting Association • Reichert, B. E., and Woods. 2017. Does motivational orientation impact the effectiveness of incentive contracts? Journal of Management Accounting Research, 29(2): 87-103. • Sedatole K. L., A. Swaney, and A. Woods. 2016. The Implicit Incentive Effects of Horizontal Monitoring and Team Member Dependence on Individual Performance. Contemporary Accounting Research, 33(3): 889-919.\n\nof 7\n\n• Demere, W. A., R. Krishnan, K. L. Sedatole, and A. Woods. 2016. Do the incentive effects of relative performance measurement vary with the ex ante probability of promotion? Management Accounting Research, 30: 18-31. • Paz, M., B. E. Reichert, and A. Woods. 2013. How does peer honesty affect focal manager honesty in a budget reporting setting? Advances in Accounting Behavioral Research, 16: 85- 114. • Woods, A. 2012. Subjective adjustments to objective performance measures: the influence of prior performance. Accounting, Organizations and Society, 37(6): 403-425. • • Received the Emerging Scholar Manuscript Award (2013), which acknowledges “the exceptional manuscript contribution of a single emerging scholar” that demonstrates “practical value to accounting and finance professionals.” • Mastilak, C., F. Miller, L. Matuszewski, and A. Woods. 2012. Evaluating conflicting performance on driver and outcome measures: the effect of strategy maps. Journal of Management Control, 23(2): 97-114.\n\nEDUCATIONAL AND PRACTITIONER PUBLICATIONS\n\nDemeré, W., K. Sedatole, and A. Woods. 2018. Why Managers Shouldn’t Have the Final Say in Performance Reviews. Harvard Business Review (June 11, 2018). • Picconi, M., K. Smith, and A. Woods. 2013. Arborista, Inc.: An Instructional Resource Case. Issues in Accounting Education, 28(3): 681-690. • Mastilak, C., F. Miller, L. Matuszewski, and A. Woods. 2011. Designing honesty into your organization. Strategic Finance, December 2011: 34-40. • • Received the Lybrand Medal for one of the outstanding articles of the year (2012).\n\nRESEARCH IN PROGRESS\n\n• Can measuring performance poorly increase employee productivity? Expect to submit manuscript to Financial Times top-40 journal in 2018. • Accounting for character: Character strengths of accounting students and implications for education and practice. Expect to submit to Issues in Accounting Education in 2018. • Brain activity mediates performance-dependent compensation. Data analysis in progress. • Decision rights and information asymmetry in calibration committees: is accuracy or procedural fairness the overriding concern? Initial stages\n\nof 7\n\n• Using teamwork in course design to impact students’ future success as employees. Data analysis stage.\n\nRESEARCH AWARDS • Institute of Management Accounting (IMA) Incubator Award, 2017 • Best Applied Research Award, 2016 • Emerging Scholar Award, 2013 • Lybrand Medal, 2012 • Frank Wood Faculty Fellow Award, 2012 • Peterson Grant to Promote Student Involvement in Research, 2009, 2011, 2012 • PricewaterhouseCoopers INQuires Grant, 2011 • Michigan State University Dissertation Completion Fellowship, 2007\n\nPRESS AND PRACTITIONER MENTIONS OF RESEARCH\n\nHow a calibration committee can correct bias in employee evaluations, HR Drive, June 13, 2018, by Katie https://www.hrdive.com/news/how-a-calibration-committee-can-correct-bias-in-employee- Scheu. evaluations/525548/ Money for Lunch, online radio interview, May 1, 2018. http://bertmartinez.com/karen-sedatole-using- calibration-committees-for-your-performance-reviews/ Lenz on Business, News 95.5, AM 750 WSB, and wsbradio.com interview, April 28, 2018. https://lenzonbusiness.com/2018/04/28/karen-sedatole-professor-of-accounting-emory- universitys-goizueta-business-school/ Improving Performance Evaluations, Human Resource Executive, April 16, 2018, by Carol Patton, http://hrexecutive.com/improving-performance-evaluations/ WorkZone: Can your supervisor be trusted to review your work? Pittsburgh Post-Gazette, April 2, 2018, by Len Boselovic, http://www.post-gazette.com/business/career-workplace/2018/04/02/WorkZone- performance-reviews-by-supervisor-trusted-questioned/stories/201804010013 Performance”\n\n• University of South Carolina, October 2013 • College of William and Mary, September 2011 • The Virginia Area Research Conference, May 2013 • Human Resources Research Organization, Jan 2015 PRESENTATIONS (all titles current; *presented by coauthor) “The role of calibration committees in subjective performance evaluation systems” “How does peer honesty affect focal manager honesty in a budget reporting setting?” • AAA, Management Accounting Section Midyear Research Conference, January 2013* Do the incentive effects of relative performance measurement vary with the ex ante probability of promotion?) “Subjective Adjustments to Objective Performance Measures: The Influence of Prior\n\n• AAA, Management Accounting Section Midyear Research Conference, January 2014 • AAA, Management Accounting Section Midyear Research Conference, January 2011 • College of William and Mary, November 2009\n\nof 7\n\n• AAA, Accounting, Behavior, and Organizations Conference, October 2010\n\n• AAA, Midwest Region Meeting Conference, October 2010* • AAA, Management Accounting Section Midyear Research Conference, January 2009 • AAA, Annual Meeting, August 2008 • AAA, Management Accounting Section Midyear Research Conference, January 2010* • AAA, Management Accounting Section, ISEOR Conference, June 2010* • AAA, Accounting, Behavior, and Organizations Conference, October 2010* “Evaluating Conflicting Performance on Driver and Outcome Measures: The Effect of Strategy Maps” “An Experimental Investigation of Buyer’s Acquisition of Supplier Cost Information” Discussant: “The Effects of Time Pressure and Tournament Incentive Compensation Schemes on Group Performance in a Creative Setting • AAA, Management Accounting Section Midyear Research Conference, January 2014 Discussant: “The Impact of Supplier Selection and Supplier’s Information Sharing Behavior on Initial Trust, Controls and Collaboration” • AAA, Management Accounting Section Midyear Research Conference, January 2013 Discussant: “The Use of Management Control Practices for Managing Supply Chain Relations” • AAA, Management Accounting Section Midyear Research Conference, January 2011 Discussant: “Performance Evaluation Justice: The Impact of Personality and Context” Discussant: “Corporate Restructuring Quality and CEO Compensation” Discussant: “Executive Compensation and Firm Performance around Layoffs: Maximizing Shareholder Value or Rent Extraction?” • AAA, Management Accounting Section Midyear Research Conference, January 2009 • AAA, Annual Meeting, August 2008 • AAA, Annual Meeting, August 2008\n\nof 7\n\n• College of William and Mary • AAA, Annual Meeting, August 2008\n\n• University of Illinois • University of Notre Dame • University of Utah • North Carolina State University • Iowa State University • University of Richmond\n\nPRESENTATIONS (all titles current; *presented by coauthor)\n\nDiscussant: “The Limits of Empire: CEO Compensation and its Link to Acquisitions and Divestitures” “Subjective Adjustments to Objective Performance Measures: The Influence of Prior\n\nTEACHING INTERESTS Management accounting, cost accounting, strategic cost management, performance measurement, and management control at both the graduate and undergraduate levels.\n\nTEACHING AWARDS • College of William and Mary, Faculty Excellence Teaching Award, MAcc Program, 2017 • College of William and Mary, Alfred N. Page Graduate Teaching Award, Full-time MBA Spring 2008 Spring 2008 Spring 2008 Spring 2008 Spring 2008 Spring 2008 Spring 2008 Program, 2013 • College of William and Mary, Faculty Excellence Teaching Award, Flex MBA Program, 2012 • Michigan State University PhD Student Excellence in Teaching Award, 2008 • Michigan State University Department of Residence Life Award (Student-nominated; given to an instructor who “inspires and helps get students actively engaged in their learning”\n\nTEACHING ASSIGNMENTS Performance” • Strategic Cost Management, 2016-2018 • Accounting for Managerial Decision-Making, 2009-2015 • Driving Organizational Performance (Advanced Cost/Managerial), 2014-2019 • Managerial Accounting, 2009-2013, 2016 • BUAD 596, Field Consultancy, “Operational Model for a Long-term Care Practice,” 2010/11 • BUAD 581A, Global Issues Juntos (Clean Energy, Cost of Security, World Healthcare Crisis, Consumer Revolution in Healthcare, Business Lobbying in the U.S. Political System), 2011- 2015\n\nof 7\n\nUNIVERSITY SERVICE • Honors Committee member for Xiaoqing Wan, 2018 • Evaluation Committee Chair for Dr. Jamie Diaz, 2018 • School of Business, Chair of Curriculum Committee, 2017-18 • Accounting Programs Assurance of Learning Committee Chair, 2017 • School of Business, Curriculum Committee, 2017 • Evaluation Committee Member for Dr. Ken Njroge, 2017 • Accounting Programs Extra- and Co-curricular Activities Committee Member, 2016 • Accounting Programs Assurance of Learning Committee Member, 2016 • Accounting Programs Admissions Committee Member, 2016-17 • Accounting Programs Faculty Secretary, 2016-17 • Evaluation Committee Member for Dr. Vladimir Atanasov, 2016 • Evaluation Committee Member for the Mason School of Business Dean Larry Pulley, 2015-16 • Full-time MBA Redesign Team Committee Member, 2015-17 • Faculty Secretary, 2014-15 • On-line MBA Program Development Team, 2014 • Search Committee Member, Associate Dean for MBA Programs, 2014 • Strategic Plan Task Force, 2014 • Accounting Program Advisory Board Committee, 2013 • Accounting Research Workshop Series Coordinator, 2009-2015 • Master of Accounting Faculty Advisor, 2008-2009, 2009-2010 • BUAD 597, Independent Study Faculty Advisor: Audit Processes and their Similarities and Differences across Engagements, 2014 • BUAD 597, Independent Study Faculty Advisor: Budget and Variance Analysis at Soley Manufacturing, 2012 • BUAD 597, Independent Study Faculty Advisor: Program Assessment of the U. S. Coast Guard Training Center (Yorktown): Morale, Well-Being and Recreation, 2012 • BUAD 597, Independent Study Faculty Advisor: The Price of Cutting Costs: Examining Methods of Reducing Costs for Hospitals, 2009-2010 • BUAD 597, Independent Study Reader: The Five Project, 2010-2011 • BUAD 597, Independent Study Reader: Effective Coaching, 2013 • Peterson Student/Faculty Research Grant Program, 2008-2009, 2010-2011, 2011-2012\n\nPROFESSIONAL SERVICE & RELATED ACTIVITIES\n\n• Editorial Board, Journal of Management Accounting Research, 2013-2015 • Ad hoc reviewer, The Accounting Review, Contemporary, Accounting Research, Journal of Business Ethics, Behavioral Research in Accounting, European Accounting Review, Midwest Region Meeting, Journal of Management Accounting Research • Member, American Accounting Association, 2003 – present • Member, Institute of Management Accountants, 2010 – present • Management Accounting Section Research Conference Attendant, 2007-2009, 2011-2012 • Global Management Accounting Research Symposium Attendant, 2004, 2007 • Accounting, Behavior, and Organizations Conference Attendant, 2007, 2010\n\nof 7",
           "document_id": 362
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "qas": [
-            {
-              "question": "What is your designation in current organization?",
-              "id": 96,
-              "answers": [
-                {
-                  "answer_id": 1693,
-                  "document_id": 361,
-                  "question_id": 96,
-                  "text": "CEO ",
-                  "answer_start": 636,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What skillset or technologies you have used in your most recent projects?",
-              "id": 98,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "what was the name of your company before the recent one?",
-              "id": 100,
-              "answers": [
-                {
-                  "answer_id": 1698,
-                  "document_id": 361,
-                  "question_id": 100,
-                  "text": ", Sarbanes Oxley",
-                  "answer_start": 906,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your most major job responsibility in your current organization?",
-              "id": 102,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your graduation from?",
-              "id": 104,
-              "answers": [
-                {
-                  "answer_id": 1702,
-                  "document_id": 361,
-                  "question_id": 104,
-                  "text": "University of California, Berkeley",
-                  "answer_start": 5522,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your highest qualification?",
-              "id": 97,
-              "answers": [
-                {
-                  "answer_id": 1694,
-                  "document_id": 361,
-                  "question_id": 97,
-                  "text": "EDUCATION Bachelor of Arts in English",
-                  "answer_start": 5483,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was the duration of your employment in your recent company?",
-              "id": 99,
-              "answers": [
-                {
-                  "answer_id": 1696,
-                  "document_id": 361,
-                  "question_id": 99,
-                  "text": "2005 Present IT for multinational biotechnology (promoted IT Manager January 2009",
-                  "answer_start": 715,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "what was your designation in your older company?",
-              "id": 101,
-              "answers": [
-                {
-                  "answer_id": 1699,
-                  "document_id": 361,
-                  "question_id": 101,
-                  "text": "strategic partner\n\nin head a IT infrastructure",
-                  "answer_start": 1037,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "which city or state do you live in?",
-              "id": 103,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "which college did you complete your post graduation from?",
-              "id": 105,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "are you married?",
-              "id": 76,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "Have you done any valid Certification courses?",
-              "id": 90,
-              "answers": [
-                {
-                  "answer_id": 1688,
-                  "document_id": 361,
-                  "question_id": 90,
-                  "text": " CERTIFICATIONS MCSA 2003 MCSE NT 4.0",
-                  "answer_start": 5444,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "how long did you work for in your old company?",
-              "id": 91,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "how much is your total working experience?",
-              "id": 92,
-              "answers": [
-                {
-                  "answer_id": 1689,
-                  "document_id": 361,
-                  "question_id": 92,
-                  "text": "10 years of experience designing, ",
-                  "answer_start": 307,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "In which technology or area have you done your recent internships or trainings?",
-              "id": 93,
-              "answers": [],
-              "is_impossible": true
-            },
-            {
-              "question": "What is your area of specialization in your work experience till date?",
-              "id": 94,
-              "answers": [
-                {
-                  "answer_id": 1691,
-                  "document_id": 361,
-                  "question_id": 94,
-                  "text": ", VMware, BES Cisco Networking, HP ProLiant RAID, SATA, UPS, backup, Polycom Cat5 Networking TCP/IP, POP3, IMAP, FTP,",
-                  "answer_start": 2123,
-                  "answer_category": "SHORT"
-                }
-              ],
-              "is_impossible": false
-            },
-            {
-              "question": "What is your Date of birth?",
-              "id": 95,
-              "answers": [],
-              "is_impossible": true
-            }
-          ],
-          "context": "state, city, NAME Sample Resume by Thea Kelley \n\nphone # zip OF INFORMATION TECHNOLOGY DIRECTOR\n\n email\n\n Hands‐on\n\nTechnical Leadership * Compliance Expertise * Internationally and and and and and and an and and and international and\n\nPROFESSIONAL PROFILE CAREER HIGHLIGHTS\n\n TECHNICAL EXPERTISE\n\n • Over\n\n10 years of experience designing, implementing scaling highly efficient technical environments for global, companies. • Exceptional skill in building collaboration with levels, Department Heads IT team. A experience harmonizing networks global team. technical Head implement technical\n\nin‐depth high‐tech\n\n rapport\n\n all\n\n from\n\nCEO to a IT for multinational Associate Director, Confidential, Inc., City, CA 2005 Present IT for multinational biotechnology (promoted IT Manager January 2009). Direct globally aligned department including service desk, documentation, vendor relationships, development, Sarbanes Oxley on with CEO with to departments’ Maximize network with years. on to development technology to for Sarbanes Oxley\n\nstrategic partner\n\nin head a IT infrastructure IT IT a in Seamlessly integrated network acquired company in Germany, enabling organizational collaboration. Completed project three months ahead schedule. Train overseas IT governance high‐performing in US Demonstrate responsiveness, IT 20% expertise 30% desk Polycom in two 404 in US Maintain 100% date.\n\ndriving\n\nbusiness record of accomplishments the of reduction, security, network integration flawless current of the Internet‐based R&D • Demonstrated proactive energy, developed expansive business “big picture” owner/operator of business services. of develop infrastructure of proactive security reduction of IT record\n\nresults. • Extensive\n\n managing\n\n • Dynamic\n\n areas\n\n cost\n\n data\n\n compliance\n\n position\n\n as\n\n company.\n\n • Built\n\n complete\n\n from\n\n ground\n\n up\n\n as\n\n manager\n\n firm.\n\n acumen\n\n gained\n\n perspective\n\n as\n\n IT‐focused\n\n providing\n\n mission‐critical\n\nSystems Software Hardware Windows Server 2000/2003/2008, Active Directory, Windows XP/Vista/7, OS Linux Exchange MS SQL 2005, Enterprise Protection/Backup Exec, VMware, BES Cisco Networking, HP ProLiant RAID, SATA, UPS, backup, Polycom Cat5 Networking TCP/IP, POP3, IMAP, FTP,\n\nX, 2003/2007,\n\n Symantec\n\n Servers,\n\n SAS,\n\n SCSI,\n\n NAS,\n\n tape\n\n video\n\n conferencing,\n\n DNS,\n\n DHCP,\n\n HTTP/S,\n\n VPN,\n\n RAS,\n\n IIS,\n\n SSL,\n\n SMTP,\n\n WSUS,\n\n SSH,\n\n LAN,\n\n WAN,\n\n Wi‐Fi\n\n PROFESSIONAL EXPERIENCE\n\n –\n\n firm\n\n from\n\n all\n\n aspects\n\n data\n\n center,\n\n asset\n\n lifecycles,\n\n budget\n\n compliance\n\n disaster\n\n recovery\n\n planning.\n\n Drive\n\n decisions\n\n corporate\n\n policies\n\n procedures,\n\n partnering\n\n three‐year\n\n roadmap.\n\n Collaborate\n\n managers\n\n plan\n\n meet\n\n strategic\n\n needs.\n\n uptime,\n\n only\n\n few\n\n hours\n\n downtime\n\n five\n\n •\n\n cross‐\n\n audit\n\n staff\n\n requirements.\n\n • Train\n\n manage\n\n team\n\n system\n\n administrators\n\n consultants\n\n Germany.\n\n elicit\n\n ongoing\n\n dedication\n\n listening,\n\n clear\n\n communication,\n\n problem‐solving\n\n timely\n\n results.\n\n • Transitioned\n\n support\n\n model\n\n from\n\n outsourced\n\n in‐house,\n\n realizing\n\n annual\n\n cost\n\n savings\n\n improved\n\n efficiencies\n\n from\n\n internal\n\n retention.\n\n • Realized\n\n greater\n\n data\n\n help\n\n support\n\n requests\n\n through\n\n enforcement\n\n policies\n\n procedures.\n\n • Deployed\n\n state‐of‐the‐art\n\n video\n\n conference\n\n facilitate\n\n more\n\n than\n\n 50\n\n meetings\n\n years,\n\n reducing\n\n travel\n\n costs\n\n significantly\n\n while\n\n increasing\n\n interoffice\n\n communication.\n\n • Built\n\n processes\n\n corporate\n\n controls\n\n Section\n\n compliance\n\n both\n\n offices.\n\n successful\n\n compliance\n\nNAME # phone – \n\n2 client downtime from 10% zero major client by migrating network from Windows Server 2000 2003. Installed, configured deployed file/Exchange desktop replacement project 40+ network: deployed equipment, • Configured Cisco switches major US by 15%. • Partnered processes. Windows Server\n\n– email\n\n Engineer, Confidential LLC, Network CA\n\n San Jose, CEO, Confidential Co., San Jose,\n\nNetwork Engineer for IT consulting organization providing technical premium customer Implemented IT infrastructure: desktops, networking equipment, backup for service for\n\nto to to and and and to of to and and Founder, owner and operator of retail Internet business and gaming center. Provided Internet access, conference print/fax capability, and technical support. Managed corporate customer/vendor staff. and and and\n\nfinancial\n\nwith a with in business plan, raised over $150,000 in capital. Forged strategic business relationships with Moscone Convention Center, San Francisco Visitor’s Center, hotels, cafes. • Acquired, deployed, managed maintained PC network. over 2500 services.\n\nfocus service.\n\n all\n\n aspects\n\n servers,\n\n printers,\n\n devices,\n\n –\n\n 2005 2004\n\n • Reduced\n\n servers.\n\n • Managed\n\n user\n\n built\n\n installed\n\n disk\n\n images,\n\n oversaw\n\n team\n\n members.\n\n installed\n\n using\n\n port\n\n security\n\n technology\n\n meet\n\n regulatory\n\n standards.\n\n •\n\n Spearheaded\n\n development\n\n patch\n\n management\n\n process\n\n all\n\n branches\n\n bank,\n\n which\n\n reduced\n\n exploited\n\n system\n\n vulnerabilities\n\n tools\n\n automate\n\n testing,\n\n validation\n\n documentation\n\n controls.\n\n •\n\n banking\n\n providers\n\n resolving\n\n vertical\n\n application\n\n issues\n\n maintaining\n\n back‐\n\n end\n\n transaction\n\n rooms,\n\n top‐notch\n\n finances,\n\n relations,\n\n on‐site\n\n 2002\n\n –\n\n • Wrote\n\n •\n\n local\n\n restaurants\n\n 50‐node\n\n • Wired\n\n square\n\n feet\n\n voice\n\n data\n\n CERTIFICATIONS MCSA 2003 MCSE NT 4.0\n\nEDUCATION Bachelor of Arts in English, University of California, Berkeley\n\nADDITIONAL SKILLS Fluent in Italian Extensive European travel experience",
-          "document_id": 361
         }
       ]
     },
@@ -16768,6 +15785,208 @@
           ],
           "context": "Resume of Henry W. Meyerding, CPLP Sultan, WA 98294 360-793-1564 / 360-665-0730 hwm@goomba.com \n\nOBJECTIVE: PROFESSIONAL SUMMARY\n\nContract or permanent position in the field of Performance Technology, Learning Development, Project Management or Technical Communications in the Pacific Northwest.\n\nMore than twenty years of instructional design/curriculum development experience, including:\n\n Curriculum Planning & Development  Task & Competency Analysis  Certification Tests and Course Evaluation Materials  Online Asynchronous and Synchronous learning objects  Single Source coordination with documentation  Training instructors for domestic and International audiences  Technical training, sales training, and customer training  Website and CD-ROM delivery  Conformance to Chicago Manual of Style  FrameMaker + SGML / HTML / Dreamweaver MX / Authorware\n\nTwelve years of technical writing / editing experience, involving both staff & contract assignments as a senior technical writer, editor, and desktop publications specialist, including:\n\n\n\nInternet Publishing  Hardware / Software Manuals  Sarbanes – Oxley Compliance Documentation  Web Development - Information Solutions  Reference Guides & Training Materials  Online Help Systems  Template Development  Style Guides  Business Plans & Marketing Materials  Procedures, Specifications, and White Papers  Conformance to Chicago Manual of Style, SP Style Book, Microsoft Online Style Guide, Boeing Manual of Style and other style references.  Word / FrameMaker + SGML / HTML / SGML / XML / PDF / Authorware / HTMLHelp / Winhelp\n\nSix years of online documentation systems design and production for both UNIX and Windows operating systems at all user audience skill levels. This experience includes:\n\nSix years of systems administration experience, including UNIX, Linux, Windows NT, Windows 95/98/3.1, and DOS/Novell: office automation, networking solutions; manufacturing, database & integrated accounting systems, including: 1\n\n Software Product Documentation  System Administration References  Process Documentation  Quick Start Documentation  SDK Kits  Man Pages and Command Line Help\n\n Desktop and Server operations  Hardware / Network Upgrade Management  Enterprise Software Management  Network Security and Policy Management  Software Evaluation and Testing\n\nHenry Meyerding PROFESSIONAL SUMMARY (Continued) Page 2 \n\nFour years of accounting and financial system design, cash flow management, troubleshooting, financial analysis, vendor/creditor negotiations, policy and procedural development, A/R, A/P, G/L, I/N, F/A, interstate P/R, tax reporting and training accounting/bookkeeping staff. Four years of manufacturing management: computer operations, purchasing, scheduling, communications and coordination between departments.\n\nSUMMARY of SKILLS:\n\nInstructional Design Learning Objectives ... Blended learning solutions ... Online curriculum development ... ILT development ... Syllabus conformance evaluations ... Competency analysis ... Distance learning activities ... Assessments ... Course planning ... Test methodology ... Metrics and evaluations ... Train-the-Trainer ... LMS / LCMS ...\n\nTechnical Communication Technical writing ... Systems design & management ... Single source documentation ... Editing ... Internet publication ... Sarbanes – Oxley documentation ... Online help systems ... Procedural references ... Localization ... Chicago Manual of Style … AP Style Book … Microsoft Manual of Style … Boeing Manual of Style … Other style references … Concordances …\n\nWeb Development & Graphics\n\nWeb site management ... HTML / SGML / XML / XHTML / PHP / Cold Fusion ... Apache Web server ... Web site analysis ... W3C standards ... Web content development ... Perl / CGI ... Configuration management ... Image manipulation ... Graphics optimization\n\n...OutStart Evolution … Single Source Development ... Computer O/S & Languages\n\nLinux (Red Hat / SuSE) ... UNIX (Solaris / HP-UX / SCO) ... X-Windows … Shell Scripts ... Microsoft Windows 10/8/7/2000/NT ... Perl / CGI ... TCP/IP ... JavaScript ... Java ... HTML Help ... javascript ... LaTex ... VMWare ... UML2 and RUP ...\n\nDatabase and Configuration Management\n\nORACLE ... Designer 2000 ... SQL Queries ... MySQL ... SCORM ... Web Integration ... Paradox ... FoxPro ... Access ... Clear Case ... RCS ... CVS ... Perforce ... Visual Source\n\nSafe ...\n\nHenry Meyerding SUMMARY OF SKILLS (Continued) Tools FrameMaker ... Structured FrameMaker (SGML / XML) ... Microsoft Office Pro: MS- Project, Excel, Access, Power Point, MS-Query, Outlook ... Kile .. LyX ... LaTex ... Open Office ... Applixware ... Word Perfect ... Dreamweaver ... Camtasia … Quanta Pro ... HTML - Kit ... Homesite … Pagemaker ... Lotus Notes ... Search Maker Pro ... Photoshop ... Adobe Illustrator ... GIMP ... GNU Tools ... DocBook ...\n\nPage 3\n\nOther Project Management … Training Operations … Netscape ... Internet Explorer ... ISO Compliance ... BitRoom / NetMeeting ... P+ ...IMPACT ... ACCPAC+ ... QuattroPro ... ... Lotus 1-2-3 …Lotus Notes ... Rational Application Developer / Rational Software Architect …\n\nEDUCATION: Certified Professional in Learning and Performance The ATD Certification Institute; Alexandria, VA Instructional Design and Technical Communication Langevin, MindLeaders & Smart Certify Coursework, Macromedia University; online seminar series ASTD and STC conference sessions Certified Professional in Learning and Performance (CPLP) ATD; Alexandria, Virginia CTT+ Certified Technical Trainer CompTIA. Oakbrook Terrace, IL Computer Technology Certificates and/or completion of courses in computer technology, web development, indexing, technical\n\ncommunications, Dreamweaver, Fireworks, MS-Office products, Flash, Linux, Oracle, and others. System Administration & Accounting Bellevue Community College / North Seattle Community College Employer sponsored education M.A. Adult Education Pennsylvania State University; College Park, PA B.A. Liberal Arts Antioch University; Seattle, Washington\n\nHenry Meyerding CHRONOLOGY: Philips Healthcare; Bothell, Washington TECHNICAL CURRICULUM DESIGNER Responsibilities: design new technical course methodology; task analysis; competency definition; curriculum planning; instructional design; collection of course content materials; develop eLearning and blended learning instructional materials; train trainers; related operations.. S&T Onsite; Seattle, Washington Instructional Designer Responsibilities: collect, organize and develop course content materials; develop story boards; create instructional graphics; develop course presentations, instructor and student training matter for technical and non-technical audiences. COMSYS / Venturi Partners; Bellevue, Washington Instructional Designer Responsibilities: collect, organize and develop course content materials; develop story boards; create instructional graphics; develop course presentations, instructor and student training matter for technical audiences; analysis and development of master class content. TEKSystems, Inc.; Bellevue, Washington SENIOR TECHNICAL WRITER Responsibilities: create Sarbanes-Oxley compliance documentation; test plans; gap remediations; interviewing subject matter experts; analysis of business and technical procedures; related duties. Page 4 2006 - Present 2005 - 2006 2004 – 2005 2004 AT&T Wireless ; Redmond, Washington INSTRUCTIONAL DESIGNER Work as part of an instructional design team to design, develop, and evaluate new product courses and learning solutions targeted primarily to Business Systems, Policies & Procedures audiences in support of national product roll-outs, on a quick turn-around basis. Responsibilities include: 2003 - 2004 Canyon News; Los Angeles, CA STAFF WRITER 2001 - Present\n\nProduce bi-monthly Op-Ed column; produce bi-monthly Labor Issues and Events column; other journalism assignments as required; research; interviews.\n\nHoly Innocents Catholic Church; Duvall, WA SYSTEM ADMINISTRATOR/WEBMASTER 2000 - 2002\n\nResponsibilities: plan, implement and maintain servers (Linux); design and maintain web content; manage local mail services; manage mailing lists and other distribution systems; upgrade and troubleshoot software systems; facilitate integration with Windows clients.\n\n1998 - Present\n\nAvaya Inc. / Accenture ; Redmond, Washington (formerly Lucent Technologies) 2000 - 2002\n\nINSTRUCTIONAL DESIGNER\n\nResponsible for: curriculum plans, working with subject matter experts, instructors, and stake-holders to assemble course materials; preparation of instructor lead training materials, self-paced learning materials, and eLearning; department FrameMaker templates; research in document conversions; document server, web server, ftp server management and administration; preparation of procedural documents; conduct peer reviews and copy editing of source an d final documents; coordination with other departments.\n\nHenry Meyerding CHRONOLOGY (Continued) Page 5 \n\nInteliant Corp.; Bellevue, Washington TECHNICAL WRITER Responsible for: supporting multiple documentation projects; devising enterprise style guides and templates; research and recommendations for documentation systems – XML and UML compliant systems; preparation of planning and budgetary materials; organization of enterprise documentation archives; related functions. 1999 – 2000 Hall Kinion; Bellevue, Washington INSTRUCTIONAL DESIGNER Responsible for: revision of course materials to include new material; review videotapes of new classes and produce instructor guides and companion materials; conformance with Chicago Manual of Style; revise existing materials to conform to style guide, update course presentations; related functions. 1999 Superior Group, Inc.; Kirkland, Washington TECHNICAL WRITER3 Responsible for: support of software development by writing process documents and end user documentation; assisting architects to describe and document enterprise architecture development and deployment strategies; writing and managing interactive intranet web sites; web standards development; assist in preparing usability assessments; prepare and revise specifications; configuration management; create HTML based online help systems; consult with project staff to develop schedules and requirements; editing; edits to Boeing Manual of Style; participation in cross-functional teams; create management presentations; organize documentation plans; assist with other activities and writing needs as required. 1998 – 1999 Wasser, Incorporated; Seattle, Washington 1997 – 1998\n\nLEAD WRITER / TECHNICAL WRITER\n\nResponsibilities: directing a team of writers to develop and maintain product documentation for leading edge software product; interview developers and coordinate documentation technical review process; manage localization hand-offs; scheduling; supervision of documentation build; documentation testing; supply HTML-Help documentation; liaison with other product teams. 1997 – 1998 Wall Data, Incorporated; Redmond, Washington SENIOR TECHNICAL WRITER 1996 – 1997\n\nResponsibilities: work with development teams to document new software, extend and update existing online help documentation, analyze requirements and resources to develop documentation plans.\n\nVectra Fitness, Inc.; Redmond, Washington MIS DIRECTOR Responsibilities: system administration, payroll supervision, operator training, research, system design, 1992 – 1994\n\nsoftware selection and implementation.\n\nEasmar Associates, Inc ASSOCIATE CONSULTANT / BUSINESS PLAN WRITER\n\nResponsibilities: interview business clients to obtain financial information; organize information from consultants into a variety of formats for financial reports and business plans; devise and maintain client database records; create customized cash flow templates.\n\n1990 – 1992\n\nETC Communications; Seattle, Washington TECHNICAL WRITER / CONSULTANT Responsibilities: write marketing, internal training, and white paper materials for clients; organize client documentation departments -obtain and implement networked hardware solutions in PC/Mac operating\n\nenvironments; train client personnel; develop individualized training materials and general curricula.\n\n1984 - 1990\n\nPage 6 Henry Meyerding WRITING SAMPLES: \n\nLNP Basics XML and Content Reuse Systems for Instructional Design Product CBT Extract Curriculum Map and Lesson Design Facing Ethical Issues, an STC Book Project NetShow Basics White Paper Installation Checklist Example Introduction to Asynchronous Transfer Mode\n\nAFFILIATIONS: Excellence Award 2003-2004 Online Communication Competition Society for Technical Communication (STC), Senior Member IWA – HWG International Webmasters Association / HTML Writers Guild, Member International Society for Performance Improvement, Member American Society for Training and Development, Member National Writers Union, Member Washington State Notary Public\n\nPUBLICATIONS: XML Content Reuse Systems for Instructional Design eLearning Guild Journal, Jan-March 2004 (3 articles) Presenter, 2001 Pan-Pacific Conference Documentation Tools for Linux Society for Technical Communication, Region 10 Digest, Submissions of Technical Topics Frame Users’ Digest 1994-2002\n\nREFERENCES: Excellent personal and professional references available upon request.",
           "document_id": 347
+        }
+      ]
+    },
+    {
+      "paragraphs": [
+        {
+          "qas": [
+            {
+              "question": "What is your designation in current organization?",
+              "id": 96,
+              "answers": [
+                {
+                  "answer_id": 1006,
+                  "document_id": 319,
+                  "question_id": 96,
+                  "text": "MARKETING MANAGER",
+                  "answer_start": 1173,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "What skillset or technologies you have used in your most recent projects?",
+              "id": 98,
+              "answers": [
+                {
+                  "answer_id": 1007,
+                  "document_id": 319,
+                  "question_id": 98,
+                  "text": "communications and new product development",
+                  "answer_start": 1337,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "what was the name of your company before the recent one?",
+              "id": 100,
+              "answers": [
+                {
+                  "answer_id": 1010,
+                  "document_id": 319,
+                  "question_id": 100,
+                  "text": "Parmalat Australia",
+                  "answer_start": 2749,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "what was your most major job responsibility in your current organization?",
+              "id": 102,
+              "answers": [
+                {
+                  "answer_id": 1012,
+                  "document_id": 319,
+                  "question_id": 102,
+                  "text": "Communications Management",
+                  "answer_start": 1210,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "which college did you complete your graduation from?",
+              "id": 104,
+              "answers": [
+                {
+                  "answer_id": 1014,
+                  "document_id": 319,
+                  "question_id": 104,
+                  "text": "QUEENSLAND UNIVERSITY OF TECHNOLOGY",
+                  "answer_start": 3508,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "What is your highest qualification?",
+              "id": 97,
+              "answers": [
+                {
+                  "answer_id": 1950,
+                  "document_id": 319,
+                  "question_id": 97,
+                  "text": "Bachelor of Business",
+                  "answer_start": 3544,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "what was the duration of your employment in your recent company?",
+              "id": 99,
+              "answers": [
+                {
+                  "answer_id": 1008,
+                  "document_id": 319,
+                  "question_id": 99,
+                  "text": "Oct 2016 - Current",
+                  "answer_start": 2653,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "what was your designation in your older company?",
+              "id": 101,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "which city or state do you live in?",
+              "id": 103,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "which college did you complete your post graduation from?",
+              "id": 105,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "are you married?",
+              "id": 76,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "Have you done any valid Certification courses?",
+              "id": 90,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "how long did you work for in your old company?",
+              "id": 91,
+              "answers": [
+                {
+                  "answer_id": 999,
+                  "document_id": 319,
+                  "question_id": 91,
+                  "text": "Jun 2015 - Apr 2016",
+                  "answer_start": 2691,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "how much is your total working experience?",
+              "id": 92,
+              "answers": [
+                {
+                  "answer_id": 1000,
+                  "document_id": 319,
+                  "question_id": 92,
+                  "text": "15 years",
+                  "answer_start": 57,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "In which technology or area have you done your recent internships or trainings?",
+              "id": 93,
+              "answers": [],
+              "is_impossible": true
+            },
+            {
+              "question": "What is your area of specialization in your work experience till date?",
+              "id": 94,
+              "answers": [
+                {
+                  "answer_id": 1002,
+                  "document_id": 319,
+                  "question_id": 94,
+                  "text": " Marketing Management Visual Presentations\n\n Strategic Planning\n\n Social Media Strategy",
+                  "answer_start": 249,
+                  "answer_category": "SHORT"
+                }
+              ],
+              "is_impossible": false
+            },
+            {
+              "question": "What is your Date of birth?",
+              "id": 95,
+              "answers": [],
+              "is_impossible": true
+            }
+          ],
+          "context": "MELISSA PACKHAM BRAND&MARKETINGSTRATEGIST  PROFILE\n\nWith 15 years experience and a background in FMCG marketing, I now run my own consulting business helping SMEs create inspiring and commercially- focussed brand and marketing strategies.\n\nEXPERTISE Marketing Management Visual Presentations\n\n Strategic Planning\n\n Social Media Strategy\n\nEXPERIENCE Brand Strategy CONSULTANT - A BRAND IS NOT A LOGO Brand strategy and marketing consulting for a number of start-ups, and small to medium sized businesses both in Australia and globally. My remit includes brand strategy, communications strategy and social media strategy development. I also educate via downloadable templates which I sell online.\n\n>> TRAVEL << After a long and linear career, my husband and I took some time for ourselves to travel the world. This period saw us visiting 18 countries in 9 months across South East Asia, Europe, UK and the Caribbean. I took the opportunity to do some independent learning and completed several online courses from the University of Pennsylvania. I was privileged to speak and host a brand strategy workshop on the 2016 Nomad Cruise and also at Dojo Coworking Space in Bali.\n\nMARKETING MANAGER - CAMPBELL'S SOUP\n\nCommunications Management for the portfolio of Campbell's Soup in Australia which included the development of 3-year strategy, communications and new product development. Fostering cross-functional relationships with Sales, Category, Insights, R&D and Manufacturing stakeholders.\n\nCONTACT BRAND MANAGER - VITA-WEAT & CRUSKITS\n\n +61 404 223 411\n\nLed the development of NPD and pack graphic updates across the healthy crispbread portfolio. Developed social media strategy for Vita-Weat. Developed a full year shopper marketing activation. activation).\n\nmelissa@abrandisnotalogo.com abrandisnotalogo.com SENIOR PRODUCT MANAGER - BEVERAGES\n\nManaged the iced coffee portfolio, including flagship brand Ice Break. Included leading communications (TVC), customer activations (account specific promotions) and events (Breaka 4 Star Pro Men's and 6 Star Pro Women's surf event, Uni Games brand\n\nmelissapackham.me SOCIALMEDIA\n\n PRODUCT MANAGER - BEVERAGES\n\n lnked.in/melissapackham\n\nManaged the OAK, Breaka and Pauls Iced Coffee brands. Developed second @abrandisnotalogo @melissa_muses installment of OAK 'hungrythirsty' 360-degree campaign, including award-winning digital campaign. Launched OAK into 3 new state / territory markets, delivering incremental volume to the brand and markets. Managed national OAK Penrith Panthers sponsorship relationship. Selected to attend Digital Marketing Conference at Lactalis Global HQ (France).\n\nSelf Employed | Oct 2016 - CurrentCampbell Arnott's | Jun 2015 - Apr 2016Campbell Arnott's | Jan 2014 - Jun 2015Parmalat Australia | 2012 - 2013Parmalat Australia | 2011 - 2012Apr 2016 - Feb 2017\n\nASSISTANT PRODUCT MANAGER Worked with Product Managers & Senior Product Managers across both Milk and Beverage portfolios, which enabled me to work on exciting projects from NPD, ATL and BTL activity, across a broad number of brands.\n\nMARKETING ASSISTANT As I was finishing my degree, I jumped at the chance to work for one of the largest dairy companies in the world. I worked part-time for the Beverages team until I graduated, at which time I was offered a full time role which saw me assisting the Milk & Beverages teams across multiple brands and sub brands.\n\nEDUCATION UNIVERSITY OF PENNSYLVANIA (ONLINE) Gamification Viral Marketing & How to Craft Contagious Content QUEENSLAND UNIVERSITY OF TECHNOLOGY Bachelor of Business (major in Marketing, minor in Integrated Marketing Comms) / Bachelor of Business (major in International & Global Studies, minor in Comms Design)\n\nCONTACT\n\nMOREABOUTME + My Gallup Strengths are Empathy, Developer, Restorative, Achiever, Connectedness\n\n+61 404 223 411\n\n+ I'm an INFJ - I listen first, speak later\n\n+ I'm creative, collaborative, pragmatic, passionate and self-motivated\n\nfeel good optional. I believe: + Brands have to be a force for good - Corporate Social Responsibility is no longer a + Jargon is boring. We need to be more human in the way we communicate - to be better understood. To be better all round. + In community over competition. When we work together to lift others up, we all rise. + There should be no such thing as “work-life” - it’s all just “life”.\n\nmelissapackham.me SOCIALMEDIA\n\n lnked.in/melissapackham\n\n @abrandisnotalogo\n\n @melissa_muses\n\n2001 - 2005Parmalat Australia | 2004 - 2007Parmalat Australia | 2007 - 20092016",
+          "document_id": 319
         }
       ]
     },
