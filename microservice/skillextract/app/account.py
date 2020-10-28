@@ -19,18 +19,15 @@ def initDB(account_name, account_config):
 
     return db_hosts[account_name]
 
-
-
 import redis 
 from pymemcache.client.base import PooledClient
 
 redis_hosts = {}
+memcached_hosts = {}
 
 def connect_redis(account_name, account_config):
-    if "use_cache" not in account_config:
-        account_config["use_cache"] = "redis"
-
-    if account_config["use_cache"] == "redis":
+    
+    if account_config["usecache"] == "redis":
         global redis_hosts
 
         if account_name not in redis_hosts:
@@ -38,99 +35,98 @@ def connect_redis(account_name, account_config):
 
         return redis_hosts[account_name]
     
-    elif account_config["use_cache"] == "memcached":
-        if account_name not in redis_hosts:
-            redis_hosts[account_name] = PooledClient(account_config["memcached"]["host"], max_pool_size=4)
-        return redis_hosts[account_name]
+    elif account_config["usecache"] == "memcached":
+        # if account_name not in memcached_hosts:
+        #     memcached_hosts[account_name] = PooledClient(account_config["memcached"]["host"], max_pool_size=4)
+        # from pymemcache.client.base import Client
+        # return Client(account_config["memcached"]["host"])
+        return PooledClient(account_config["memcached"]["host"], max_pool_size=4)
 
 from app.logging import logger
 def r_exists(key, account_name, account_config):
-    account_config["use_cache"] = "memcached"
     key = account_name + "_" + key
     key = key.replace(" ", "")
     r = connect_redis(account_name, account_config)
-    if account_config["use_cache"] == "redis":
-        return r.exists(key)
+
+    if account_config["usecache"] == "redis":
+        ret = r.exists(key)
     else:
         if r.get(key) is None:
-            return False
+            ret = False
         else:
-            return True
+            ret = True
+
+    if account_config["usecache"] == "memcached":
+        r.close()
+    
+    return ret
 
 import json
 def r_get(key, account_name, account_config):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     key = account_name + "_" + key
     key = key.replace(" ", "")
     ret = r.get(key)
     if not ret:
         ret = json.dumps("")
+        
+    if account_config["usecache"] == "memcached":
+        r.close()
+
     return ret
 
-
 def r_set(key, value, account_name, account_config, ex = None):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     key = account_name + "_" + key 
     key = key.replace(" ", "")
     try:
         if ex:
-            if account_config["use_cache"] == "redis":
+            if account_config["usecache"] == "redis":
                 r.set(key, value, ex=ex)
             else:
                 r.set(key, value, expire=ex)
         else:
-            r.set(key , value)
+            if account_config['usecache'] == "redis":
+                r.set(key , value)
+            else:
+                ret = r.set(key, value)
     except Exception as e:
         logger.critical("redis exception")
         logger.critical(e)
 
+    if account_config["usecache"] == "memcached":
+        r.close()
+
 def r_scan_iter(account_name, account_config, match=None):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
-    if account_config["use_cache"] == "redis":
+    if account_config["usecache"] == "redis":
         if match:
             ret = r.scan_iter(match=match)
         else:
             ret = r.scan_iter()
-    elif account_config["use_cache"] == "memcached":
-        ret = r.stats()
+    elif account_config["usecache"] == "memcached":
+        # ret = r.stats("items")
+        ret = []
     
     scan = []
     for key in ret:
         if account_name + "_" in str(key):
             scan.append(key)
 
+    if account_config["usecache"] == "memcached":
+        r.close()
+
     return scan
 
 def r_flushdb(account_name, account_config):
-    account_config["use_cache"] = "memcached"
     r = connect_redis(account_name, account_config)
     # r.flushdb()
-    for key in r_scan_iter(account_name, account_config):
-        r.delete(key)
+    if account_config["usecache"] == "redis":
+        for key in r_scan_iter(account_name, account_config):
+            r.delete(key)
 
-has_redis = False
-try:
-    import redis 
-    has_redis = True   
-except ModuleNotFoundError as e:
-    pass
-    
-
-
-redis_hosts = {}
-
-def connect_redis(account_name, account_config):
-    if not has_redis:
-        return None
-    global redis_hosts
-
-    if account_name not in redis_hosts:
-        redis_hosts[account_name] = redis.StrictRedis(host=account_config["redis"]["host"], port=account_config["redis"]["port"], db=account_config["redis"]["db_index"], decode_responses=True)
-
-    return redis_hosts[account_name]
+    if account_config["usecache"] == "memcached":
+        r.close()
 
 
 has_es = False
