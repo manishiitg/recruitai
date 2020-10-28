@@ -9,7 +9,7 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 
 
-from app.account import initDB, connect_redis
+from app.account import initDB, connect_redis, r_exists, r_set, r_get
 
 def get_exp_display(account_name, account_config):
     return get_exp_display_range()
@@ -105,9 +105,9 @@ def getSampleData(mongoid, account_name, account_config):
             skip = 0
 
         
-        if r.exists("job_" + mongoid) and False:
+        if r_exists("job_" + mongoid, account_name, account_config) and False:
             logger.critical("data from redis")
-            data = r.get("job_" + mongoid)
+            data = r_get("job_" + mongoid, account_name, account_config)
             # logger.critical("data from redis %s", data)
             dataMap = json.loads(data)
             data = []
@@ -125,20 +125,20 @@ def getSampleData(mongoid, account_name, account_config):
             
             for row in ret:
                 row["_id"] = str(row["_id"])
-                r.set(row["_id"], json.dumps(row, default=str))
+                r_set(row["_id"], json.dumps(row, default=str), account_name, account_config)
                 jobMap.append(row)
 
             data = jobMap
-            # r.set("job_" + mongoid  , json.dumps(jobMap))
+            # r_set("job_" + mongoid  , json.dumps(jobMap), account_name, account_config)
 
     elif "," in mongoid:
         mongoid = mongoid.split(",")
 
         data = []
         for mid in mongoid:
-            if r.exists(mid) and False:
+            if r_exists(mid, account_name, account_config) and False:
                 logger.critical("data from redis")
-                row = r.get(mid)
+                row = r_get(mid, account_name, account_config)
                 data.append(json.loads(row))
             else:
                 logger.critical("data from mongo")
@@ -146,14 +146,14 @@ def getSampleData(mongoid, account_name, account_config):
                     "_id" : ObjectId(mid)
                 })
                 row["_id"] = str(row["_id"])
-                r.set(mid, json.dumps(row, default=str))
+                r_set(mid, json.dumps(row, default=str), account_name, account_config)
                 data.append(row)
 
             
     else:
-        if r.exists(mongoid) and False:
+        if r_exists(mongoid, account_name, account_config) and False:
             logger.critical("data from redis")
-            row = json.loads(r.get(mongoid))
+            row = json.loads(r_get(mongoid, account_name, account_config))
             data = [row]
         else:
             logger.critical("data from mongo")
@@ -163,7 +163,7 @@ def getSampleData(mongoid, account_name, account_config):
             if row:
                 row["_id"] = str(row["_id"])
                 data = [row]
-                r.set(mongoid, json.dumps(row, default=str))
+                r_set(mongoid, json.dumps(row, default=str), account_name, account_config)
 
     logger.critical("processing data line %s", len(data))
 
@@ -184,7 +184,7 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
     candidate_score = 0
     full_debug = []
     db = initDB(account_name, account_config)
-    # row = r.get(id)
+    # row = r_get(id, account_name, account_config)
     # if row:
     #     row = json.loads(row)
     # else:
