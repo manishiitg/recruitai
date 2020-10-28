@@ -13,7 +13,7 @@ import os
 
 indexCreated = False
 
-from app.account import get_es_index, init_elastic_search, connect_redis, initDB
+from app.account import get_es_index, init_elastic_search, connect_redis, initDB, r_set, r_get, r_exists
 
 def getIndex(account_name, account_config):
     return get_es_index(account_name, account_config)
@@ -114,7 +114,7 @@ def searchDoc(searchText, account_name, account_config):
     hits = ret["hits"]
     for idx, hit in enumerate(hits["hits"]):
         id = hit["_id"]
-        data = r.get(id)
+        data = r_get(id)
         
         if not data:
             db = initDB(account_name, account_config)
