@@ -13,7 +13,7 @@ from datetime import datetime
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-from app.account import initDB, connect_redis
+from app.account import initDB, connect_redis, r_set, r_get, r_exists
 
 
 import traceback
@@ -375,9 +375,9 @@ class TaskQueue(object):
 
         duplicate_key_check = 1
         key_duplicate_check = "image_convert_" + message["mongoid"]
-        if r.exists(key_duplicate_check):
+        if r_exists(key_duplicate_check, account_name, account_config):
 
-            duplicate_key_check = int(r.get(key_duplicate_check))
+            duplicate_key_check = int(r_get(key_duplicate_check, account_name, account_config))
             if duplicate_key_check > 5 and False: #temporary false
                 LOGGER.critical("redis key exists")
                 self.acknowledge_message(delivery_tag)
@@ -385,8 +385,8 @@ class TaskQueue(object):
             else:
                 duplicate_key_check += 1
 
-        if r.exists(key):
-            ret = r.get(key)
+        if r_exists(key, account_name, account_config):
+            ret = r_get(key, account_name, account_config)
             ret = json.loads(ret)
             LOGGER.critical("redis key exists")
             LOGGER.critical(ret)
@@ -405,7 +405,7 @@ class TaskQueue(object):
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"],
                                     account_name=account_name, account_config=account_config)
-            r.set(key_duplicate_check, duplicate_key_check, ex=1 * 60 * 60 * 24)
+            r_set(key_duplicate_check, duplicate_key_check, account_name, account_config , ex=1 * 60 * 60 * 24)
             if "error" in ret:
                 LOGGER.critical(ret)
 
@@ -451,7 +451,7 @@ class TaskQueue(object):
                 self.acknowledge_message(delivery_tag)
                 return
 
-            r.set(key, json.dumps(ret))
+            r_set(key, json.dumps(ret), account_name, account_config)
 
         updateStats({
             "action": "resume_pipeline_update",
