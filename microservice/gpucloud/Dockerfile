@@ -50,4 +50,6 @@ RUN pip install apscheduler
 RUN pip install sendgrid
 RUN pip install slackclient
 
+RUN pip install pymemcache redis
+
 CMD ["/usr/bin/supervisord"]
