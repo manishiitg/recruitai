@@ -30,7 +30,7 @@ import time
 import datetime
 
 from app.account import initDB
-from app.account import connect_redis
+from app.account import connect_redis, r_exists, r_get, r_set
 from app.account import get_queues, get_resume_priority
 
 def moveKey(candidate_id, from_key, to_key, account_name, account_config):
@@ -116,7 +116,7 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
     logger.critical("job profile %s", job_profile_id)
     mapKey = "job_" + job_profile_id
     if mapKey not in redisKeyMap[account_name]:
-        job_profile_data = r.get(mapKey)
+        job_profile_data = r_get(mapKey, account_name, account_config)
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
         else:
@@ -152,7 +152,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         
     mapKey = "job_" + job_profile_id
     if mapKey not in redisKeyMap[account_name]:
-        job_profile_data = r.get(mapKey)
+        job_profile_data = r_get(mapKey, account_name, account_config)
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
         else:
@@ -170,7 +170,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
         else:
             job_profile_data[row["_id"]] = row
             
-        r.set(str(row["_id"])  , json.dumps(row,default=str)) # just like that oct
+        r_set(str(row["_id"])  , json.dumps(row,default=str), account_name, account_config) # just like that oct
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -183,7 +183,7 @@ def bulkUpdate(candidates, job_profile_id, account_name, account_config):
             logger.critical("candidate labels %s", candidate_label)
             mapKey2 = "classify_" + candidate_label
             if mapKey2 not in redisKeyMap[account_name]:
-                candidate_data = r.get(mapKey2)
+                candidate_data = r_get(mapKey2, account_name, account_config)
                 if candidate_data:
                     candidate_data = json.loads(candidate_data)
                 else:
@@ -222,7 +222,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
     logger.critical("bulk add job profile %s", job_profile_id)
     mapKey = "job_" + job_profile_id
     if mapKey not in redisKeyMap[account_name]:
-        job_profile_data = r.get(mapKey)
+        job_profile_data = r_get(mapKey, account_name, account_config)
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
         else:
@@ -233,7 +233,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
     for row in docs:
         row["_id"] = str(row["_id"])
         job_profile_data[row["_id"]] = row
-        r.set(str(row["_id"])  , json.dumps(row,default=str)) # just like that remove it 
+        r_set(str(row["_id"])  , json.dumps(row,default=str), account_name, account_config) # just like that remove it 
 
         candidate_label = None
         if "candidateClassify" in row:
@@ -246,7 +246,7 @@ def bulkAdd(docs, job_profile_id, account_name, account_config):
             logger.critical("candidate labels %s", candidate_label)
             mapKey2 = "classify_" + candidate_label
             if mapKey2 not in redisKeyMap[account_name]:
-                candidate_data = r.get(mapKey2)
+                candidate_data = r_get(mapKey2, account_name, account_config)
                 if candidate_data:
                     candidate_data = json.loads(candidate_data)
                 else:
@@ -291,7 +291,7 @@ def bulkDelete(candidate_ids, job_profile_id, account_name, account_config):
         mapKey = "classify_" + job_profile_id
 
     if mapKey not in redisKeyMap[account_name]:
-        job_profile_data = r.get(mapKey)
+        job_profile_data = r_get(mapKey, account_name, account_config)
         if job_profile_data:
             job_profile_data = json.loads(job_profile_data)
         else:
@@ -400,14 +400,14 @@ def queue_process(is_direct = False, add_thread = True):
                 logger.critical("key redis dirty %s", key)
                 logger.critical("updating redis %s" , key)
                 logger.critical("redis data len %s", len(redisKeyMap[account_name][key]))
-                r.set(key, json.dumps(redisKeyMap[account_name][key], default=str))
+                r_set(key, json.dumps(redisKeyMap[account_name][key], default=str), account_name, account_config)
                 # r.set(key + "_len", len(redisKeyMap[account_name][key]))  doing it using candidate_len_map now 
-                r.set(key + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
+                r_set(key + "_time", time.time(), account_name, account_config) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
                 logger.critical("updated redis %s" , key)
 
                 if "classify_" in key:
-                    if r.exists("classify_list"):
-                        classify_list = r.get("classify_list")
+                    if r_exists("classify_list", account_name, account_config):
+                        classify_list = r_get("classify_list", account_name, account_config)
                         classify_list = json.loads(classify_list)
                     else:
                         classify_list = []
@@ -418,7 +418,7 @@ def queue_process(is_direct = False, add_thread = True):
                     # print("[pppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
                     # print(key)
                     # print(classify_list)
-                    r.set("classify_list", json.dumps(classify_list))
+                    r_set("classify_list", json.dumps(classify_list), account_name, account_config)
 
                 dirtyMap[account_name][key]["redis_dirty"] = False  
             if operations["filter_dirty"]:
@@ -663,7 +663,7 @@ def init_maps(dirtyMap, redisKeyMap, account_config_map, account_name, account_c
         for key in r.scan_iter():
             if "job_" in key or "classify_" in key:
                 logger.critical("loading key %s", key)
-                redisKeyMap[account_name][key] = json.loads(r.get(key))
+                redisKeyMap[account_name][key] = json.loads(r_get(key, account_name, account_config))
 
         logger.critical("loaded redis key map")
 
@@ -762,7 +762,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     doc["tag_id"] = ""
 
 
-                r.set(doc['job_profile_id'] + "_time", time.time()) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
+                r_set(doc['job_profile_id'] + "_time", time.time(), account_name, account_config) # we basically set a time when this redis was last updated. and use that in filtermq where we cache things
 
                 # obj = {
                 #     'tag_id' : doc["tag_id"],
@@ -870,7 +870,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                 if len(row['job_profile_id'].strip()) == 0:
                     del row['job_profile_id']
 
-                r.set(str(row["_id"])  , json.dumps(row,default=str))
+                r_set(str(row["_id"])  , json.dumps(row,default=str), account_name, account_config)
 
 
             if "cvParsedInfo" in row:
@@ -1056,7 +1056,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
             if findtype == "syncCandidate" or findtype == "syncJobProfile":
                 # if job_profile_id:
-                #     job_profile_data_existing = r.get("job_" + job_profile_id)
+                #     job_profile_data_existing = r_get("job_" + job_profile_id, , account_name, account_config)
                 #     job_profile_data_now = json.dumps(row,default=json_util.default)
 
             
@@ -1074,7 +1074,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     logger.critical("job profile %s", job_profile_id)
                     mapKey = "job_" + job_profile_id
                     if mapKey not in redisKeyMap[account_name]:
-                        job_profile_data = r.get(mapKey)
+                        job_profile_data = r_get(mapKey, account_name, account_config)
                         
 
                         if job_profile_data:
@@ -1159,7 +1159,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if days < 90: # as using mongo directly and keeping redis light
                         if mapKey not in redisKeyMap[account_name]:
-                            job_data = r.get(mapKey)
+                            job_data = r_get(mapKey, account_name, account_config)
                             if job_data is None:
                                 job_data = {}
                             else:
@@ -1194,7 +1194,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if days < 30: # as using mongo directly and keeping redis light
                         if mapKey not in redisKeyMap[account_name]:
-                            candidate_data = r.get(mapKey)
+                            candidate_data = r_get(mapKey, account_name, account_config)
                             if candidate_data:
                                 candidate_data = json.loads(candidate_data)
                             else:
@@ -1226,7 +1226,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
 
                     if days < 30: # as using mongo directly and keeping redis light
                         if mapKey not in redisKeyMap[account_name]:
-                            candidate_data = r.get(mapKey)
+                            candidate_data = r_get(mapKey, account_name, account_config)
                             if candidate_data:
                                 candidate_data = json.loads(candidate_data)
                             else:
@@ -1260,7 +1260,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
             
             for job_profile_id in job_profile_map:
                 logger.critical("filter sync job %s ", job_profile_id)
-                r.set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default))
+                r_set("job_" + job_profile_id  , json.dumps(job_profile_map[job_profile_id] , default=json_util.default), account_name, account_config)
                 # ret = updateFilter({
                 #     "id" : job_profile_id,
                 #     "fetch" : "job_profile",
@@ -1281,8 +1281,8 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
                     continue
 
                 logger.critical("filter sync candidate_label %s ", candidate_label)
-                r.set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default))
-                r.set("classify_" + candidate_label + "_len", candidate_len_map[candidate_label])
+                r_set("classify_" + candidate_label  , json.dumps(candidate_map[candidate_label] , default=json_util.default), account_name, account_config)
+                r_set("classify_" + candidate_label + "_len", candidate_len_map[candidate_label], account_name, account_config)
                 # ret = updateFilter({
                 #     "id" : candidate_label,
                 #     "fetch" : "candidate",
@@ -1359,7 +1359,7 @@ def sendToSearchIndex(row, r, from_type, account_name, account_config):
     
     if len(finalLines) > 0:
         # logger.critical("add to search")
-        if not r.exists(row['_id']):
+        if not r_exists(row['_id'], account_name, account_config):
             # if key exists in redis, this means before search was already indexed. the content doesn't change at all much
             t = Thread(target=addToSearch, args=(row["_id"],finalLines,{}, account_name, account_config))
             t.start()
