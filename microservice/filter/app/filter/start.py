@@ -28,13 +28,13 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
             logger.critical("get request to %s", url)
             data = requests.get(url + "?accessToken=" + access_token, timeout=10)
             data = data.json()
-            logger.critical("data %s", data)
+            # logger.critical("data %s", data)
             data = json.dumps(data)
         else:
             logger.critical("post request to %s with payload %s", url, payload)
             data = requests.post(url + "?accessToken=" + access_token , data = payload, timeout=10)
             data = data.json()
-            logger.critical("data %s", data)
+            # logger.critical("data %s", data)
             data = json.dumps(data)
         
         logger.critical("updating redis data for get speed up api")
@@ -101,7 +101,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 
-use_unique_cache_feature = False
+use_unique_cache_feature = True
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
@@ -615,15 +615,17 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
     if filter_type == "job_profile":
         job_profile_data = r_get("job_fx_" + mongoid, account_name, account_config)
+        job_profile_data = json.loads(job_profile_data)
+        # logger.critical("length of job profile data %s", len(job_profile_data))
     else:
         job_profile_data = r_get("classify_fx_" + mongoid, account_name, account_config)
-        # logger.critical("length of job profile data %s", len(json.loads(job_profile_data)))
+        job_profile_data = json.loads(job_profile_data)
+        # logger.critical("length of job profile data %s", len(job_profile_data))
         # job_profile_data = False
 
     
 
-    if job_profile_data and json.loads(job_profile_data) and use_unique_cache_feature:
-        job_profile_data = json.loads(job_profile_data)
+    if job_profile_data  and use_unique_cache_feature:
         if job_profile_data is None:
             job_profile_data = {}
         elif isinstance(job_profile_data, list):
@@ -631,7 +633,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         else:
             logger.critical("using cached data")
     else:
-        # logger.critical("keys not found some problem! fetch from db")
+        logger.critical("keys not found unable to use cached data")
         job_profile_data = None
         if filter_type == "job_profile":
             job_profile_data = get_job_profile_data(mongoid, account_name, account_config)
