@@ -217,8 +217,9 @@ services:
 
     memcached:
         image: 'bitnami/memcached:latest'
+        command: /opt/bitnami/scripts/memcached/run.sh -I 256m -vvv
         environment:
-            - MEMCACHED_CACHE_SIZE=1024
+            - MEMCACHED_CACHE_SIZE=10240
             - MEMCACHED_THREADS=8
         ports:
             - 11211:11211
