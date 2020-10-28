@@ -111,6 +111,7 @@ cd /home/jupyter/drive/recruitai
 
 sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
 sudo echo "116.202.234.182 redis" >> /etc/hosts
+sudo echo "116.202.234.182 memcached" >> /etc/hosts
 
 
 ########################
