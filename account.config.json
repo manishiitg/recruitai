@@ -8,7 +8,7 @@
             "bucket" : "airecruitai.excellencetechnologies.in",
             "url" : "https://airecruitai.excellencetechnologies.in/"
         },
-        "usecache" : "redis",
+        "usecache" : "memcached",
         "redis" : {
             "host" : "redis",
             "port" : "6379",
@@ -33,7 +33,7 @@
             "bucket" : "airecruitai.excellencetechnologies.in",
             "url" : "https://airecruitai.excellencetechnologies.in/"
         },
-        "usecache" : "redis",
+        "usecache" : "memcached",
         "redis" : {
             "host" : "redis",
             "port" : "6379",
@@ -58,7 +58,7 @@
             "bucket" : "airecruitai.excellencetechnologies.in",
             "url" : "https://airecruitai.excellencetechnologies.in/"
         },
-        "usecache" : "redis",
+        "usecache" : "memcached",
         "redis" : {
             "host" : "redis",
             "port" : "6379",
