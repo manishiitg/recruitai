@@ -17,6 +17,7 @@ from bson.objectid import ObjectId
 import traceback
 
 from app.publishdatasync import sendMessage as datasync
+from app.account import r_exists, r_get, r_set, connect_redis
 
 amqp_url = os.getenv('RABBIT_DB')
 
@@ -339,9 +340,9 @@ class TaskQueue(object):
 
         duplicate_key = "summary_bart_cnn_large" + message["mongoid"]
         duplicate_key_check = 1
-        if r.exists(duplicate_key):
+        if r_exists(duplicate_key, account_name, account_config):
 
-            duplicate_key_check = int(r.get(duplicate_key))
+            duplicate_key_check = int(r_get(duplicate_key, account_name, account_config))
 
             if duplicate_key_check > 5:
                 LOGGER.critical("redis key exists")
@@ -370,7 +371,7 @@ class TaskQueue(object):
         else:
             LOGGER.critical("skipping summary for priority less than 2")
 
-        r.set(duplicate_key, duplicate_key_check, ex=1 * 60 * 60 * 24)
+        r_set(duplicate_key, duplicate_key_check, account_name, account_config, ex=1 * 60 * 60 * 24)
 
         datasync({
             "id": message["mongoid"],
