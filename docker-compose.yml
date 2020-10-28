@@ -220,7 +220,8 @@ services:
         environment:
             - MEMCACHED_CACHE_SIZE=1024
             - MEMCACHED_THREADS=8
-
+        ports:
+            - 11211:11211
         networks:
             - ai
 
