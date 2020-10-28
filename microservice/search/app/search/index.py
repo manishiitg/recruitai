@@ -127,7 +127,7 @@ def searchDoc(searchText, account_name, account_config):
                 data = {}
             else:
                 data["_id"] = str(data["_id"])
-                r.set(data["_id"]  , json.dumps(data,default=json_util.default))
+                r_set(data["_id"]  , json.dumps(data,default=json_util.default), , account_name, account_config)
                 data = json.loads(json.dumps(data,default=json_util.default))
         else:
             data = json.loads(data)
