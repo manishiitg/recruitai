@@ -181,7 +181,7 @@ export FLASK_APP=app && export FLASK_DEBUG=1 && export FLASK_ENV=development && 
 
  ===
 
- curl -XPUT -H "Content-Type: application/json" http://127.0.0.1:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+ curl --user elastic:DkIedPPSCb -XPUT -H "Content-Type: application/json" http://127.0.0.1:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
 
 
 
