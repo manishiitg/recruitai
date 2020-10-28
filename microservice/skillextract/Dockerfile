@@ -48,5 +48,6 @@ RUN gsutil ls
 
 RUN mkdir /workspace/word2vec
 
+RUN pip install pymemcache redis
 
 CMD ["/usr/bin/supervisord"]

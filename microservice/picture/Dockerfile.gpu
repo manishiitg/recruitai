@@ -75,4 +75,6 @@ RUN apt-get clean
 RUN echo "116.202.234.182 rabbitmq" >> /etc/hosts
 RUN echo "116.202.234.182 redis" >> /etc/hosts
 
+RUN pip install pymemcache redis
+
 CMD ["/usr/bin/supervisord"]
