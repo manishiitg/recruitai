@@ -303,6 +303,8 @@ class TaskQueue(object):
         LOGGER.info("message %s",message)
         LOGGER.info(type(message))
 
+
+
         account_name = None
         if "account_name" in message:
             account_name = message["account_name"]
@@ -310,6 +312,7 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
+        return self.acknowledge_message(delivery_tag)
         
         account_config = message["account_config"]
 
@@ -511,7 +514,7 @@ class ReconnectingTaskQueue(object):
 from app.classify.start import loadModel
 
 def main():
-    loadModel()
+    # loadModel()
     
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
