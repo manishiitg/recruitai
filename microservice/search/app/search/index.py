@@ -114,7 +114,7 @@ def searchDoc(searchText, account_name, account_config):
     hits = ret["hits"]
     for idx, hit in enumerate(hits["hits"]):
         id = hit["_id"]
-        data = r_get(id)
+        data = r_get(id, account_name, account_config)
         
         if not data:
             db = initDB(account_name, account_config)
@@ -127,7 +127,7 @@ def searchDoc(searchText, account_name, account_config):
                 data = {}
             else:
                 data["_id"] = str(data["_id"])
-                r_set(data["_id"]  , json.dumps(data,default=json_util.default), , account_name, account_config)
+                r_set(data["_id"]  , json.dumps(data,default=json_util.default), account_name, account_config)
                 data = json.loads(json.dumps(data,default=json_util.default))
         else:
             data = json.loads(data)
