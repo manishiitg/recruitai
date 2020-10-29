@@ -81,7 +81,7 @@ def create_app(test_config=None):
 
 
 # Scheduler which will run at interval of 60 seconds for user checkin scoresadf;ojawpof8qp134i
-# checkin_score_scheduler = BackgroundScheduler()
-# checkin_score_scheduler.add_job(ping, trigger='interval', seconds=5) #*2.5
-# checkin_score_scheduler.start()
+checkin_score_scheduler = BackgroundScheduler()
+checkin_score_scheduler.add_job(ping, trigger='interval', seconds=60 * 15) #*2.5
+checkin_score_scheduler.start()
 # ping() # this delays starting on flask as batch operation starts lock due to redis, lock removed now
