@@ -12,22 +12,34 @@ from app.publisher.statsdata import sendBlockingMessage as pingstatsdata
 from app.publisher.gender import sendBlockingMessage as pinggender
 from app.publisher.classify import sendBlockingMessage as pingclassify
 from app.publisher.skillextract import sendBlockingMessage as pingskillextract
+import time
 def ping():
+    logger.info("ping stats")
     pingstatsdata({
         "action" : "ping"
     })
+    time.sleep(1)
+    logger.info("ping filter")
     pingfiltermessage({
         "action" : "ping"
     })
+    time.sleep(1)
+    logger.info("ping gender")
     pinggender({
         "action" : "ping"
     })
+    time.sleep(1)
+    logger.info("ping classify")
     pingclassify({
         "action" : "ping"
     })
+    time.sleep(1)
+    logger.info("ping skill extract")
     pingskillextract({
         "action" : "ping"
     })
+    time.sleep(1)
+    logger.info("ping completed")
 
 def process_resumes():
    
