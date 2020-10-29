@@ -42,7 +42,7 @@ def queue_process():
     global run_combined_gpu
 
     if is_process_running:
-        if (time.time() - last_process_running_time) < 1 * 60 * 60:
+        if (time.time() - last_process_running_time) < 1 * 60 * 15:
             LOGGER.critical("already running process so returnning")
             return
 
@@ -91,7 +91,9 @@ def queue_process():
                 type_instance_name = "torch-cpu" + queue_type
             LOGGER.critical("checking for queue type %s", type_instance_name)
             instance_status = check_compute_running(type_instance_name)
-            if int(queues[queue_type]['in_process']) > min_process_to_start_gpu or len(instance_status) > 0:
+            if int(queues[queue_type]['in_process']) > min_process_to_start_gpu: 
+                # or len(instance_status) > 0 add this condition is causing the instance to not stop at the end
+                # but need to this properly. this removal
 
                 
                 LOGGER.critical("number of running %s instances %s",
@@ -203,35 +205,32 @@ def queue_process():
                                 queue_type, min_process_to_start_gpu, queues[queue_type])
 
                 instance_status = check_compute_running("torch") # need to check for torch only else it causes problem with different queue tpyes
-                LOGGER.critical("number of running instances %s",
-                                len(instance_status))
-                if len(instance_status) > 0 and queue_type == "all":
-                    if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
-                        for instance in instance_status:
-                            is_any_torch_running = instance["is_any_torch_running"]
-                            is_torch_responding = instance["is_torch_responding"]
-                            running_instance_name = instance["running_instance_name"]
-                            running_instance_zone = instance["zone"]
-                            created_at = instance["created_at"]
+                LOGGER.critical("number of running instances %s query type %s",
+                                len(instance_status), queue_type)
+                if len(instance_status) > 0: 
+                    if  queue_type == "all":
+                        if int(queues[queue_type]['in_process']) <= max_process_to_kill_gpu:
+                            for instance in instance_status:
+                                is_any_torch_running = instance["is_any_torch_running"]
+                                is_torch_responding = instance["is_torch_responding"]
+                                running_instance_name = instance["running_instance_name"]
+                                running_instance_zone = instance["zone"]
+                                created_at = instance["created_at"]
 
-                            LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
-                                                type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
-                            if created_at > min_run_gpu * 60  or not use_gpu:
-                                LOGGER.critical("killing running gpus as work completed")
-                                slack_message(f"killing running gpus {running_instance_name} as work completed: {queues[queue_type]['in_process']}")
-                                delete_instance(running_instance_name,
-                                                running_instance_zone, "work completed")
-                                if running_instance_name in running_instance_check:
-                                    del running_instance_check[running_instance_name]
-                            else:
-                                LOGGER.critical("not killing instance and running minimum of %s minutes", min_run_gpu)
+                                LOGGER.critical("instance status for type %s is_any_torch_running %s is_torch_responding %s, running_instance_name %s ",
+                                                    type_instance_name, is_any_torch_running, is_torch_responding, running_instance_name)
+                                if created_at > min_run_gpu * 60  or not use_gpu:
+                                    LOGGER.critical("killing running gpus as work completed")
+                                    slack_message(f"killing running gpus {running_instance_name} as work completed: {queues[queue_type]['in_process']}")
+                                    delete_instance(running_instance_name,
+                                                    running_instance_zone, "work completed")
+                                    if running_instance_name in running_instance_check:
+                                        del running_instance_check[running_instance_name]
+                                else:
+                                    LOGGER.critical("not killing instance and running minimum of %s minutes", min_run_gpu)
+                        else:
+                            LOGGER.critical("not killing running gpu")
                     else:
-                        LOGGER.critical("not killing running gpu")
-                else:
-
-                    
-                    
-                    if queue_type != "all":
                         max_instance_count_to_start = 0
 
                         if not use_gpu:
@@ -244,6 +243,7 @@ def queue_process():
                             if queue_type in running_instance_name:
                                 queue_type_instance.append(instance)
 
+                        LOGGER.critical("query type instances running %s", len(queue_type_instance))
                         if len(queue_type_instance) > 0:
                             if len(queue_type_instance) > max_instance_count_to_start:
                                 running_instance_name = queue_type_instance[-1]["running_instance_name"]
@@ -347,11 +347,11 @@ def check_compute_running(instance_name):
 
             created_at = datetime.strptime(
                 vm["creationTimestamp"], '%Y-%m-%dT%H:%M:%S.%f%z')
-            print("created_at", created_at)
+            # print("created_at", created_at)
             now = datetime.now(timezone(timedelta(hours=5, minutes=30)))
             difference = now - created_at
-            print("now", now)
-            print("difference", difference.total_seconds())
+            # print("now", now)
+            # print("difference", difference.total_seconds())
             # process.exit()
 
             running_instance_name = vm['name']
