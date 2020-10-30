@@ -243,9 +243,9 @@ def check_ai_missing_data(account_name, account_config):
     ret = db.emailStored.find({
             "$or" : [
                 {"cvParsedAI" : { "$exists" : False }},
-                {"cvParsedAI.error" : { "$exists" : True }},
+                {"cvParsedInfo.error" : { "$exists" : True }},
             ], 
-            'check_ai_missing_data' : { "$exists" : False }
+            # 'check_ai_missing_data' : { "$exists" : False }
             # "attachment" : {  }
         },
         {"body": 0, "cvParsedInfo.debug": 0}
