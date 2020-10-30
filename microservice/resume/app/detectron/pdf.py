@@ -10,9 +10,9 @@ def covertPDFToImage(cv, output_dir, cvfilename, logger):
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     doc = fitz.open(cv)  # open document
-    pages = len(doc)
-    if len(pages) >= 20:
-        raise Exception("too many pages not a cv " + str(len(pages)))
+    pages = doc.pageCount
+    if pages >= 20:
+        raise Exception("too many pages not a cv " + str(pages))
 
     for i, page in enumerate(doc):  # iterate through the pages
         pix = page.getPixmap(alpha = False)  # render page to an image
