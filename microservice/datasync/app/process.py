@@ -245,7 +245,7 @@ def check_ai_missing_data(account_name, account_config):
                 {"cvParsedAI" : { "$exists" : False }},
                 {"cvParsedInfo.error" : { "$exists" : True }},
             ], 
-            # 'check_ai_missing_data' : { "$exists" : False }
+            'check_ai_missing_data' : { "$exists" : False }
             # "attachment" : {  }
         },
         {"body": 0, "cvParsedInfo.debug": 0}
