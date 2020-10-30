@@ -76,5 +76,6 @@ RUN mkdir /workspace/recruit-tags-flair-roberta-word2vec
 RUN mkdir /workspace/detectron4_5000_fpn
 
 RUN pip install pymemcache redis
+RUN pip install PyMuPDF
 
 CMD ["/usr/bin/supervisord"]
