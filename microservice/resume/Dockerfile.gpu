@@ -78,5 +78,6 @@ RUN mkdir /workspace/detectron4_5000_fpn
 RUN mkdir /workspace/cvreconstruction
 
 RUN pip install pymemcache redis
+RUN pip install PyMuPDF
 
 CMD ["/usr/bin/supervisord"]
