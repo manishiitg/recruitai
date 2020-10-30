@@ -128,8 +128,9 @@ skip_count = 0
 
 def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config, is_fast_ai = False):
     count = 0
+    actual_count = 0
     for row in ret:
-        
+        actual_count += 1
         logger.critical("checking %s", str(row["_id"]))
         
         if "email_timestamp" not in row:
@@ -216,6 +217,7 @@ def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config
                 }
             })
 
+    logger.critical("total data count %s", actual_count)
     return count
 
 def check_ai_missing_data(account_name, account_config):
