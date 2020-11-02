@@ -339,6 +339,17 @@ def cleanContent(content , cvpage , jsonOutput):
   cleanLineData = []
   for line in lineData:
     line = re.sub('\s+', ' ', line).strip() # this is giving warning on server
+
+    len_words = 0
+    for word in list(filter(None, line.split(' '))):
+      if len(word) > len_words:
+        len_words = len(word)
+
+    if len_words == 1 and len(list(filter(None, line.split(' ')))) > 2:
+        # print("some issue with line %s", line)
+        line = "".join(line.split(" "))
+        # print("new line %s", line)
+
     # line = ' '.join(line.split())
     if len(line) > 0:
       words = line.split(" ")
