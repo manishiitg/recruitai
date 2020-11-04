@@ -103,7 +103,7 @@ def processAPI(file, account_name, account_config, maxPage = False):
   predictor , cfg = loadTrainedModel()
   compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
   assert len(compressedStructuredContent) == 1
-
+  logger.critical("page contents sssssss %s", page_contents)
   return compressedStructuredContent[0] , basePath , timeAnalysis, predictions, jsonOutputbbox, page_contents
 
 def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}):
