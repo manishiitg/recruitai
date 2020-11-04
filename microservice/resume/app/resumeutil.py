@@ -77,7 +77,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             parsing_type = "fast"
 
 
-        # parsing_type = "full" # full always for now 
+        parsing_type = "full" # temp for testing full always for now 
         # removing this now. old email need to be parsed fast else it takes lot of time 
 
         timeAnalysis = {}
@@ -104,9 +104,9 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
             logger.critical("========================================== time analysis ==========================================")
         else:
-            response = processFast(os.path.join(dest, filename))
+            response , page_contents = processFast(os.path.join(dest, filename))
             timeAnalysis = {}
-        
+    
 
         full_time_analysis = {
             "resume_construction" : {
@@ -126,6 +126,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 logger.info(pagerow)
                 finalLines.append(pagerow["line"])
 
+        
         if mongoid:
             # addToSearch(mongoid,finalLines,{}, account_name, account_config)
             
@@ -282,6 +283,10 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
             "page_contents" : page_contents
         }
+
+        # print(combinData["compressedStructuredContent"])
+        # process.exit(0)
+
         cvdir = ''.join(e for e in filename if e.isalnum())
         shutil.rmtree(BASE_PATH + "/../cvreconstruction/" + cvdir , ignore_errors = True) 
         logger.critical("processing completed, final filename %s", filename)
