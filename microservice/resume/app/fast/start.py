@@ -12,7 +12,7 @@ import subprocess
 
 def process(finalPdf):
     content = ""
-
+    page_contents = []
     try:
         content = extract_text(finalPdf)
         content = str(content)
@@ -37,6 +37,8 @@ def process(finalPdf):
         content = " ".join(pages_data_extract)
 
     logger.critical("content %s", content)  
+    page_contents.append(content)
+
     # sometimes this gives content like this 
     # Tomakeacareerinrepudiatedfieldandwishtojoinanorganizationthatoffersmea
     # how to handle it??
@@ -54,7 +56,7 @@ def process(finalPdf):
     return [{
             "compressedStructuredContent" : ret
         }
-    ]
+    ], page_contents
 
 
 def convert_for_tagging(text):
