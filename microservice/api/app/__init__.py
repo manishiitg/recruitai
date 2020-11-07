@@ -15,7 +15,6 @@ jwt = token.init_token()
 from app.scheduler import ping
 import json
 
-
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -57,6 +56,7 @@ def create_app(test_config=None):
     from app.api import candidate
     from app.api import training
     from app.api import stats
+    from app.api import qa
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(skill.bp)
@@ -69,6 +69,7 @@ def create_app(test_config=None):
     app.register_blueprint(candidate.bp)
     app.register_blueprint(training.bp)
     app.register_blueprint(stats.bp)
+    app.register_blueprint(qa.bp)
     
 
 
