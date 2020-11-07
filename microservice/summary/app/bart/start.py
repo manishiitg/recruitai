@@ -197,15 +197,17 @@ def loadModel():
     # tokenizer.save_pretrained("/workspace/pretrained/bart")
 
     logger.critical("gpu %s", torch.cuda.is_available())
-    if torch.cuda.is_available():
-        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn", device=0)
-    else:
-        summarizer = pipeline("summarization" , model="facebook/bart-large-cnn")
-
-    if torch.cuda.is_available():
-        summarizer_fast = pipeline('summarization', model='sshleifer/distilbart-cnn-6-6')
-    else:
-        summarizer_fast = pipeline('summarization', model='sshleifer/distilbart-cnn-6-6')
+    if summarizer is None:
+        if torch.cuda.is_available():
+            summarizer = pipeline("summarization" , model="facebook/bart-large-cnn", device=0)
+        else:
+            summarizer = pipeline("summarization" , model="facebook/bart-large-cnn")
+    
+    if summarizer_fast is None:
+        if torch.cuda.is_available():
+            summarizer_fast = pipeline('summarization', model='sshleifer/distilbart-cnn-6-6')
+        else:
+            summarizer_fast = pipeline('summarization', model='sshleifer/distilbart-cnn-6-6')
         
     # summarizer = pipeline("summarization" , model="sshleifer/distilbart-cnn-12-6")
     
