@@ -9,6 +9,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 import time
 import subprocess
+import cleanContent from app.detectron.start
 
 def process(finalPdf):
     content = ""
