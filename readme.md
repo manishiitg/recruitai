@@ -50,7 +50,7 @@ sudo docker-compose up -d
 
 docker exec -it recruit_ai_1 bash
 
-sudo docker-compose  up -d --scale=resumemq=4 --scale=imagemq=4 --scale=picturemq=2
+sudo docker-compose  up -d --scale=resumemq=2 --scale=qamq=2 --scale=imagemq=4 --scale=picturemq=2
 
 # running this multiple either via scale or prefetch queue is taking more time than running one at time
 
@@ -213,8 +213,38 @@ supervisorctl restart recruitai
 
 
 
+
+
+
+
+
+QA System TODO
+======================
+
+a) i am getting different data from QA and which is good. its more specific to sections and questions asked.
+
+b) so next steps is to combine QA and NER. NER should follow QA, so that if we get experiance say 2years from ner, we know if its from intership or projects or actual exp. This was not possible from pure QA.
+
+b.1) for fast parsing we can skip summary/detectron/ner etc and only do QA?
+b.2) for full parsing we will do everything?
+
+c) from NER need to solve i.e showing better data section wise.
+
+d) first is need to remove NER from current system and combine it with QA
+
+f) need to integrate with filters
+
+g) can we match resume to a job based on this yet????
+h) can we make candidate database better with this? we can remove detectron as such from candidata database and instead just do qa?
+
+i) replace things like \u2022 etc with actual bullet poitns
+
+j) this should affect skilexill extract also. now we whave specific lines to extract skill instead of entire resume
+
+k) do longformer with ner
+
 =========
-TODO
+OLD TODO
 
 b) Classification of emails (done)
 c) Word2Vec skill api (done)
