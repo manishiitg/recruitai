@@ -634,7 +634,7 @@ def get_job_criteria(mongoid,account_name, account_config):
         db = initDB(account_name, account_config)
 
         job_profile_rows = db.jobprofiles.find({
-            "active_status": True
+            # "active_status": True
         }) 
         for job_profile_row in job_profile_rows:
             critera = {}
