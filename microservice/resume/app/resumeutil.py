@@ -256,7 +256,8 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "newCompressedStructuredContent": newCompressedStructuredContent,
             "finalEntity": combinData["finalEntity"],
             "timeTaken": time.time() - init_timer,
-            "parsing_type" : parsing_type
+            "parsing_type" : parsing_type,
+            "page_contents" : page_contents
         }
 
         # if mongoid:
