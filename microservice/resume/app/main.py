@@ -29,6 +29,7 @@ from app.publishcandidate import sendMessage as extractCandidateClassifySkill
 from app.publishsummary import sendMessage as sendSummary
 from app.publishdatasync import sendMessage as datasync
 from app.statspublisher import sendMessage as updateStats
+from app.publishqa import sendMessage as updateQA
 
 
 class TaskQueue(object):
@@ -402,6 +403,8 @@ class TaskQueue(object):
             "_id" : ObjectId(message["mongoid"])
         })
 
+        
+
         if count == 0:
             LOGGER.critical("candidate not found in db %s", message["mongoid"])
             return self.acknowledge_message(delivery_tag)
@@ -418,35 +421,32 @@ class TaskQueue(object):
                 is_cache = True
 
                 if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
-                    if skills is None:
-                        skills = ""
-
-                    if not isinstance(skills, list):
-                        skills = skills.split(",")
-
-                    indexcandidateskill({
-                        "action" : "extractSkill",
-                        "mongoid" : message["mongoid"],
-                        "filename" : message["filename"],
-                        "skills" : skills,
-                        # "meta" : meta,
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
-
-                    # skillExtracted =  extractSkillMessage({
-                    #     "action" : "extractSkill",
-                    #     "mongoid" : message["mongoid"],
-                    #     "filename" : message["filename"],
-                    #     "skills" : skills,
-                    #     "meta" : meta,
-                    #     "account_name" : account_name,
-                    #     "account_config" : account_config
-                    # })
-
-                    # ret["skillExtracted"] = skillExtracted
+                    pass
 
                 self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
+                if skills is None:
+                    skills = ""
+
+                if not isinstance(skills, list):
+                    skills = skills.split(",")
+                
+                updateQA({
+                    "action" : "qa_pipeline",
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
+                    "account_name" : account_name,
+                    "account_config" : account_config,
+                    "priority" : message["priority"]
+                })
+                indexcandidateskill({
+                    "action" : "extractSkill",
+                    "mongoid" : message["mongoid"],
+                    "filename" : message["filename"],
+                    "skills" : skills,
+                    # "meta" : meta,
+                    "account_name" : account_name,
+                    "account_config" : account_config
+                })
 
                 updateStats({
                     "action" : "resume_pipeline_update",
@@ -513,34 +513,32 @@ class TaskQueue(object):
                 r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
                 
             if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
-                if skills is None:
-                    skills = ""
-                if not isinstance(skills, list):
-                    skills = skills.split(",")
+                pass
 
-                
-                indexcandidateskill({
-                    "action" : "extractSkill",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "skills" : skills,
-                    # "meta" : meta,
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
-
-                # skillExtracted =  extractSkillMessage({
-                #     "action" : "extractSkill",
-                #     "mongoid" : message["mongoid"],
-                #     "filename" : message["filename"],
-                #     "skills" : skills,
-                #     "meta" : meta,
-                #     "account_name" : account_name,
-                #     "account_config" : account_config
-                # })
-                # ret["skillExtracted"] = skillExtracted
 
             self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
+            if skills is None:
+                skills = ""
+            if not isinstance(skills, list):
+                skills = skills.split(",")
+
+            updateQA({
+                "action" : "qa_pipeline",
+                "mongoid" : message["mongoid"],
+                "filename" : message["filename"],
+                "account_name" : account_name,
+                "account_config" : account_config,
+                "priority" : message["priority"]
+            })
+            indexcandidateskill({
+                "action" : "extractSkill",
+                "mongoid" : message["mongoid"],
+                "filename" : message["filename"],
+                "skills" : skills,
+                # "meta" : meta,
+                "account_name" : account_name,
+                "account_config" : account_config
+            })
             updateStats({
                 "action" : "resume_pipeline_update",
                 "resume_unique_key" : message["filename"],
@@ -562,18 +560,7 @@ class TaskQueue(object):
                 "account_config" : account_config,
                 "priority" : message["priority"] 
             })
-            # if "criteria" in meta:
-            #     extractCandidateScore({
-            #         "action" : "candidate_score",
-            #         "mongoid" : message["mongoid"],
-            #         "filename" : message["filename"],
-            #         "id" : message["mongoid"],
-            #         "account_name" : account_name,
-            #         "account_config" : account_config,
-            #         "priority" : message["priority"], 
-            #         "criteria" : meta["criteria"]
-            #     })
-
+            
             sendSummary({
                 "mongoid": message["mongoid"],
                 "filename": message["filename"],
