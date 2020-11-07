@@ -33,7 +33,7 @@ from app.fast.start import process as processFast
 from app.statspublisher import sendMessage as updateStats
 
 import sys
-
+import copy
 
 from app.account import initDB, get_cloud_bucket, get_cloud_url
 
@@ -77,7 +77,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             parsing_type = "fast"
 
 
-        # parsing_type = "full" # temp for testing full always for now 
+        parsing_type = "full" # temp for testing full always for now 
         # removing this now. old email need to be parsed fast else it takes lot of time 
 
         timeAnalysis = {}
@@ -117,11 +117,11 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         }
 
         timer = time.time()
-
         
-
+        compressedStructuredContent = []
         finalLines = []
         for page in response:
+            compressedStructuredContent.append(copy.deepcopy(page["compressedStructuredContent"]))
             for pagerow in page["compressedStructuredContent"]:
                 logger.info(pagerow)
                 finalLines.append(pagerow["line"])
@@ -145,13 +145,16 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         nertoparse = []
         row = []
+        
         for page in response:
             row.append(page["compressedStructuredContent"])
+            
 
         nertoparse.append({"compressedStructuredContent": row})
 
+        
 
-        nerExtracted = extractNer(nertoparse)
+        nerExtracted = extractNer(copy.deepcopy(nertoparse))
 
         full_time_analysis["ner"] = {
                 "time_taken" : time.time() - timer,
@@ -159,7 +162,6 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             }
         
         timer = time.time()
-            
 
         logger.critical("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ner time taken %s ", time.time() - timer)
         # fullResponse["nerExtracted"] = nerExtracted
@@ -172,7 +174,12 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             row["compressedStructuredContent"][str(
                 pageIdx + 1)] = page["compressedStructuredContent"]
 
+
         combinData = classifyNer([row])[0]
+
+        print("========================================")
+
+        
 
         if "finalEntity" in combinData:
             if "PERSON" in combinData["finalEntity"]:
@@ -278,7 +285,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         ret["debug"] = {
             "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": combinData["compressedStructuredContent"],
+            "compressedStructuredContent": compressedStructuredContent,
             "nerExtracted" : nerExtracted,
             "predictions" : json.loads(json.dumps(predictions, default=str)),
             "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
