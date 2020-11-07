@@ -693,9 +693,9 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
         structuredContent[sttIdx]['line'] = finalLine
 
     ###############################################################
-
+    
     finalStructureContent = compressTables(structuredContent)
-
+    
     logger.debug("+++++++++++++++++++++++++++++Only Matched Content+++++++++++++++++++++++++++++++++++++++++++")
     for rr in finalStructureContent:
       if not rr["matched"]:
@@ -708,6 +708,8 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
         continue 
       logger.debug(rr["line"])
 
+
+    
 
     ###############################################################
 
