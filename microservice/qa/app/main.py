@@ -5,8 +5,6 @@ import pika
 import json
 import threading
 import os 
-from app.logging import logger
-
 
 from datetime import datetime
 
@@ -14,14 +12,8 @@ import traceback
 
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.skillextract.start import start as extractSkill, get_job_criteria
-from app.skillsword2vec.start import loadModel, loadDomainModel
+from app.qa.start import ask_question, loadModel, qa_candidate_db
 from app.statspublisher import sendMessage as updateStats
-from app.account import initDB
-from bson.objectid import ObjectId
-from app.publishfilter import sendBlockingMessage as extractCandidateScore
-from app.publishdatasync import sendMessage as datasync
-
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -35,8 +27,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'skillextractindex'
-    ROUTING_KEY = 'skillextractindex.parsing'
+    QUEUE = 'qa'
+    ROUTING_KEY = 'qa.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -298,11 +290,11 @@ class TaskQueue(object):
     def do_work(self, delivery_tag, body):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
-        print(fmt1.format(thread_id, delivery_tag, body))
+        # print(fmt1.format(thread_id, delivery_tag, body))
         LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        LOGGER.info(body)
+        # LOGGER.info(body)
 
         account_name = None
         if "account_name" in message:
@@ -313,127 +305,48 @@ class TaskQueue(object):
 
         account_config = message["account_config"]
 
+        if "elasticsearch" not in account_config:
+            LOGGER.critical("invalid config")
+            return self.acknowledge_message(delivery_tag)
 
 
         body = message
         if isinstance(body, dict):
-            
-            if body["action"] == "extractSkill":
-                mongoid = body["mongoid"]
-                findSkills = body["skills"]
-                try:
-                        
-                    if findSkills is None:
-                        findSkills = []
-
-                    findSkills = list(filter(len, findSkills))
-
-
-                    candidate_criteria = None
-                    logger.critical("find skills %s", findSkills)
-                    job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
-                    logger.critical("found job profile id %s", job_profile_id)
-                    if job_profile_id:
-
-                        
-                        print("################################################")
-                        print(job_criteria_map)
-                        if len(findSkills) == 0 and job_profile_id and job_profile_id in job_criteria_map:
-                            criteria = job_criteria_map[job_profile_id]
-                            candidate_criteria = criteria
-                            findSkills = []
-                            if "skills" in criteria:
-                                for value in criteria['skills']["values"]:
-                                    findSkills.append(value["value"])
-
-                            logger.critical("find skills for job %s", findSkills)
-                            ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
-                        else:
-
-                            ret = {}
-                            for job_id in job_criteria_map:
-
-                                criteria = job_criteria_map[job_id]
-                                findSkills = []
-                                if "skills" in criteria:
-                                    for value in criteria['skills']["values"]:
-                                        findSkills.append(value["value"])
-
-                                retSkill = extractSkill(findSkills, mongoid, False, account_name, account_config)
-                                avg_value = 0
-                                if mongoid in retSkill:
-                                    for key in retSkill[mongoid]["skill"]:
-                                        avg_value += retSkill[mongoid]["skill"][key]
-
-                                    if len(retSkill[mongoid]["skill"]) > 0:
-                                        retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
-                                    else:
-                                        retSkill[mongoid]["avg"] = 0
-                                        
-                                    ret[job_id] = retSkill[mongoid]
-                                else:
-                                    ret[job_id] = {} 
-                            
-                            
-
-                    else:
-                        ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
-                        logger.critical("find skill found %s", ret)
-                        
-                    db = initDB(account_name, account_config)
-                    db.emailStored.update_one(
-                        {'_id' : ObjectId(mongoid)},
-                        {
-                            "$set" : {
-                                "cvParsedInfo.skillExtracted" : ret
-                            }
-                        }
-                    )                  
-
-                    if "priority" in body:
-                        priority = body["priority"]
-                    else:
-                        priority = 0
-
-                    logger.critical("candidate criteria %s", candidate_criteria)
-                    if candidate_criteria:
-                        extractCandidateScore({
-                            "action" : "candidate_score_bulk",
-                            "mongoid" : mongoid,
-                            "id" : mongoid,
-                            "account_name" : account_name,
-                            "account_config" : account_config,
-                            "priority" :  priority, 
-                            "criteria" : candidate_criteria
-                        })      
-
-                    datasync({
-                        "action" : "syncCandidate",
-                        "mongoid" : mongoid,
-                        "id" : mongoid,
+            if "action" in body:
+                action = body["action"]
+                ret = {}
+                
+                if action == "qa_candidate_db":
+                    ret = qa_candidate_db(body["mongoid"], account_name, account_config)
+                elif action == "qa_pipeline":
+                    updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : message["filename"],
+                        "meta" : {
+                            "mongoid" : message["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "resume_qa_start",
+                            "priority" : message["priority"] 
+                        },
                         "account_name" : account_name,
-                        "account_config" : account_config,
-                        "priority" :  priority
+                        "account_config" : account_config
+                    })
+                    qa_candidate_db(body["mongoid"], account_name, account_config)
+                    updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : message["filename"],
+                        "meta" : {
+                            "mongoid" : message["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "resume_qa",
+                            "priority" : message["priority"] 
+                        },
+                        "account_name" : account_name,
+                        "account_config" : account_config
                     })
 
-                    try:
-                        if "meta" in body:
-                            meta = body["meta"]
-                            if "callback_url" in meta:
-                                body["extractSkill"] = ret
-                                meta["message"] = json.loads(json.dumps(body))
-                                requests.post(meta["callback_url"], json=meta)
-
-                    except Exception as e:
-                        traceback.print_exc()
-                        LOGGER.critical(e)
-
-                        
-                except Exception as e:
-                    ret = str(e)
-                    traceback.print_exc()
-                
-                logger.critical("completed")
                 
 
 
@@ -567,8 +480,10 @@ class ReconnectingTaskQueue(object):
 
 
 import time
-def main():    
+def main():     
+    loadModel()
 
+    # time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
