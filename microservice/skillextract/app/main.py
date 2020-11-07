@@ -82,14 +82,15 @@ def thread_task( conn, ch, method_frame, properties, body):
                     findSkills = list(filter(len, findSkills))
 
                     logger.critical("find skills %s", findSkills)
+                    job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
+                    logger.critical("found job profile id %s", job_profile_id)
+                    if job_profile_id:
 
-                    if len(findSkills) == 0:
-
-                        job_profile_id, job_criteria_map = get_job_criteria(mongoid, account_name, account_config)
-
-                        logger.critical("found job profile id %s", job_profile_id)
-
-                        if job_profile_id and job_profile_id in job_criteria_map:
+                        
+                        print("################################################")
+                        print(job_criteria_map)
+                        if len(findSkills) == 0 and job_profile_id and job_profile_id in job_criteria_map:
+                            
                             criteria = job_criteria_map[job_profile_id]
                             findSkills = []
                             if "skills" in criteria:
