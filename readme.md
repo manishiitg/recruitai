@@ -243,6 +243,8 @@ j) this should affect skilexill extract also. now we whave specific lines to ext
 
 k) do longformer with ner
 
+l) need to create edge cases for qa manual labelling further. like if qa model is able to return total work yers but unable to return company name its a problem. needd to see that. and also create similar questions or compare it with ner. or similar use score and generate docs with lowest score.
+
 =========
 OLD TODO
 
