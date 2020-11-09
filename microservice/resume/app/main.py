@@ -596,8 +596,8 @@ class TaskQueue(object):
         if "error" in ret:
             isError = True
         ret = json.loads(json.dumps(ret))
-        ret["ai_version_processed"] = "detectron4_flairtaggerv2.0_no_classify"
-        ret["ai_version"] = "0.2"
+        ret["ai_version_processed"] = "detectron4_flairtaggerv3.0_qa_model"
+        ret["ai_version"] = "0.3"
         LOGGER.critical("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
