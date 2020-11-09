@@ -28,13 +28,13 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
             logger.critical("get request to %s", url)
             data = requests.get(url + "?accessToken=" + access_token, timeout=10)
             data = data.json()
-            # logger.critical("data %s", data)
+            logger.critical("data %s", data)
             data = json.dumps(data)
         else:
             logger.critical("post request to %s with payload %s", url, payload)
             data = requests.post(url + "?accessToken=" + access_token , data = payload, timeout=10)
             data = data.json()
-            # logger.critical("data %s", data)
+            logger.critical("data %s", data)
             data = json.dumps(data)
         
         logger.critical("updating redis data for get speed up api")
@@ -58,7 +58,10 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
             logger.critical("speed up data returned from redis %s", redisKey)
             t = Thread(target = get_speedup_api, args=(redisKey, url, payload, access_token, account_name, account_config))
             t.start()
-            return r_get(redisKey, account_name, account_config)
+            data = r_get(redisKey, account_name, account_config)
+            if data:
+                print("not returning data from cache")
+                return data
 
     except Exception as e:
         logger.critical("critical error %s", e)
