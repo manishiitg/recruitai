@@ -61,7 +61,7 @@ def queue_process():
         min_process_to_start_gpu = 1000
 
     if not use_gpu:
-        min_process_to_start_gpu = 200
+        min_process_to_start_gpu = 100
 
     try:
         queues = get_queues()
@@ -71,9 +71,9 @@ def queue_process():
     
     indv_queue_count_thresh = 3000
     if not use_gpu:
-        indv_queue_count_thresh = 500
+        indv_queue_count_thresh = 50
 
-    for queue_type in ["all", "summary", "picture", "resume", "qa"]:
+    for queue_type in ["all", "qa", "summary", "picture", "resume"]:
         if run_combined_gpu:
             if queue_type != "all":
                 
@@ -105,6 +105,8 @@ def queue_process():
                     if not use_gpu:
                         max_instance_count_to_start = int(queues[queue_type]['in_process']) / indv_queue_count_thresh
                         max_instance_count_to_start = math.floor(max_instance_count_to_start)
+                        if max_instance_count_to_start == 0:
+                            max_instance_count_to_start = 1 # keep atleast one instance running until. all work is completed
 
                     if max_instance_count_to_start > 5:
                         max_instance_count_to_start = 5
