@@ -66,7 +66,7 @@ services:
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/picture/app:/workspace/app 
+            - ./microservice/qa/app:/workspace/app 
             - ./home/jupyter/.cache:/root/.cache            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
