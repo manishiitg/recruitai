@@ -236,7 +236,6 @@ def nerlines(compressedStructuredContent):
             nerlines[idx]["line"] = nerlines[idx-1]["line"] + \
                 " " + nerlines[idx]["line"]
             nerlines[idx-1]["line"] = ""
-            logger.info("yyy", idx)
             nerlines[idx]["contentIdx"] = [idx-1, idx]
             prepend = False
 
