@@ -59,9 +59,9 @@ questions_needed_for_initial_data = [
     "exp_duration",
     "projects_name",
     "skills",
-    # "education_degree", # will fetch this from ner itself
+    "education_degree", # will fetch this from ner itself
     # "education_year", # will fetch this from ner itself
-    "certifications",
+    # "certifications",
     "training",
     # "personal_location", # will fetch this from ner itself
     # "personal_dob", # will fetch this from ner itself
