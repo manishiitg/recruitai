@@ -68,7 +68,7 @@ questions_needed_for_initial_data = [
     # "awards"
 ]
 
-def qa_candidate_db(idx, account_name, account_config, page_contents = None):
+def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_contents = None):
     db = initDB(account_name, account_config)
     
     error = None
@@ -94,7 +94,27 @@ def qa_candidate_db(idx, account_name, account_config, page_contents = None):
             }
 
     if page_contents:
-        answer_map = ask_question(idx, page_contents)
+
+        db = initDB(account_name, account_config)
+        exist_answer_map = {}
+        candidate_row = db.emailStored.find_one({"_id" : ObjectId(idx)})
+        if "cvParsedInfo" in candidate_row:
+            cvParsedInfo = candidate_row["cvParsedInfo"]
+            if "answer_map" in cvParsedInfo:
+                exist_answer_map = cvParsedInfo["answer_map"]
+
+
+        answer_map = ask_question(idx, page_contents, only_initial_data, exist_answer_map)
+        if not answer_map:
+            logger.info("error: some problem with page content")
+            db.emailStored.update_one({
+                "_id" : ObjectId(idx)
+            }, {
+                '$set' : {
+                    "cvParsedInfo.answer_map" : {"error":"page_content issue"}
+                }
+            })
+            return 
 
         logger.info(answer_map)
         
@@ -109,14 +129,17 @@ def qa_candidate_db(idx, account_name, account_config, page_contents = None):
         logger.info("error %s", error)
 
 
-def ask_question(idx, page_contents, only_initial_data = True):
+def ask_question(idx, page_contents, only_initial_data = True, exist_answer_map = {}):
 
     page_content_map = clean_page_content_map(idx, page_contents)
+
+
     if not page_content_map:
-        # need to handle this
-        return 
+        return None
 
     answer_map = {}
+
+
     
     for idx in page_content_map:
         page_content = page_content_map[idx]
@@ -138,7 +161,10 @@ def ask_question(idx, page_contents, only_initial_data = True):
             if only_initial_data:
                 if key not in questions_needed_for_initial_data:
                     continue
-
+            
+            if key in exist_answer_map:
+                logger.critical("anser already exists for question %s", key)
+                continue
 
             start_time = time.time()
             if key in skip_question:
