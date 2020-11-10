@@ -178,10 +178,11 @@ def ask_question(idx, page_contents, only_initial_data = True, exist_answer_map 
                         },handle_impossible_answer = True, max_seq_len = max_seq_len, doc_stride = 328) 
             
 
-                if key == "exp_company" and len(answer["answer"]) == 0:
-                    skip_question.extend(["exp_designation",'exp_duration'])
-                else:
-                    skip_question.extend(["projects_name",'certifications','training','awards'])
+                if key == "exp_company":
+                    if len(answer["answer"]) == 0:
+                        skip_question.extend(["exp_designation",'exp_duration'])
+                    else:
+                        skip_question.extend(["projects_name",'certifications','training','awards'])
 
                 if key == "projects_desc" and len(answer["answer"]) == 0:
                     skip_question.extend(["projects_skills"])
