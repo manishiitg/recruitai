@@ -104,7 +104,7 @@ def general_api_speed_up(url, payload, access_token, account_name, account_confi
 
 
 
-use_unique_cache_feature = False
+use_unique_cache_feature = True
 use_unique_cache_only_for_classify_data = True
 use_unique_cache_only_for_ai_data = True
 
