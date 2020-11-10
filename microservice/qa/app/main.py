@@ -14,6 +14,7 @@ amqp_url = os.getenv('RABBIT_DB')
 
 from app.qa.start import ask_question, loadModel, qa_candidate_db
 from app.statspublisher import sendMessage as updateStats
+from app.publishdatasync import sendMessage as datasync
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -332,7 +333,7 @@ class TaskQueue(object):
                         "account_name" : account_name,
                         "account_config" : account_config
                     })
-                    qa_candidate_db(body["mongoid"], account_name, account_config)
+                    qa_candidate_db(body["mongoid"], True, account_name, account_config)
                     updateStats({
                         "action" : "resume_pipeline_update",
                         "resume_unique_key" : message["filename"],
@@ -345,6 +346,14 @@ class TaskQueue(object):
                         },
                         "account_name" : account_name,
                         "account_config" : account_config
+                    })
+                    datasync({
+                        "id" : message["mongoid"],
+                        "action" : "syncCandidate",
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
+                        "field" : "cvParsedInfo"
                     })
 
                 
