@@ -104,6 +104,9 @@ def process(filename, mongoid, priority, account_name, account_config):
         logger.critical("mongo id not found")
         return {"error" : "mongo id not found"}
 
+    if "aisummary" in row:
+        return {"error" : "already summary exists"}
+
     finalLines = []
     content = ""
     if "cvParsedInfo" in row:
