@@ -2,36 +2,19 @@ import functools
 import time
 from app.logging import logger as LOGGER
 import pika
-from app.resumeutil import fullResumeParsing
 import json
 import threading
-import redis
 import os 
 
 from datetime import datetime
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-
-
-from app.account import initDB, connect_redis, r_exists, r_get, r_set
 
 import traceback
 
-import requests
-
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.publishskill import sendBlockingMessage as extractSkillMessage
-from app.publishfilter import sendBlockingMessage as extractCandidateScore
-from app.pushlishskillindex import sendMessage as indexcandidateskill
-
-from app.publishcandidate import sendMessage as extractCandidateClassifySkill
-from app.publishsummary import sendMessage as sendSummary
-from app.publishdatasync import sendMessage as datasync
+from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel
 from app.statspublisher import sendMessage as updateStats
-from app.publishqa import sendMessage as updateQA
-from app.publisherqafull import sendMessage as publisherqafull
-
+from app.publishdatasync import sendMessage as datasync
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -45,8 +28,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'resume'
-    ROUTING_KEY = 'resume.parsing'
+    QUEUE = 'qa_full'
+    ROUTING_KEY = 'qa_full.parsing'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -64,7 +47,7 @@ class TaskQueue(object):
         self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
-        self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
+        self._prefetch_count = 1
 
 
     def connect(self):
@@ -73,7 +56,7 @@ class TaskQueue(object):
         will be invoked by pika.
         :rtype: pika.SelectConnection
         """
-        # LOGGER.info('Connecting to %s', self._url)
+        LOGGER.info('Connecting to %s', self._url)
         return pika.SelectConnection(
             parameters=pika.URLParameters(self._url),
             on_open_callback=self.on_connection_open,
@@ -83,10 +66,9 @@ class TaskQueue(object):
     def close_connection(self):
         self._consuming = False
         if self._connection.is_closing or self._connection.is_closed:
-            # LOGGER.info('Connection is closing or already closed')
-            pass
+            LOGGER.info('Connection is closing or already closed')
         else:
-            # LOGGER.info('Closing connection')
+            LOGGER.info('Closing connection')
             self._connection.close()
 
     def on_connection_open(self, _unused_connection):
@@ -95,7 +77,7 @@ class TaskQueue(object):
         case we need it, but in this case, we'll just mark it unused.
         :param pika.SelectConnection _unused_connection: The connection
         """
-        # LOGGER.info('Connection opened')
+        LOGGER.info('Connection opened')
         self.open_channel()
 
     def on_connection_open_error(self, _unused_connection, err):
@@ -104,7 +86,7 @@ class TaskQueue(object):
         :param pika.SelectConnection _unused_connection: The connection
         :param Exception err: The error
         """
-        # LOGGER.error('Connection open failed: %s', err)
+        LOGGER.error('Connection open failed: %s', err)
         self.reconnect()
 
     def on_connection_closed(self, _unused_connection, reason):
@@ -119,7 +101,7 @@ class TaskQueue(object):
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            # LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
+            LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
             self.reconnect()
 
     def reconnect(self):
@@ -135,7 +117,7 @@ class TaskQueue(object):
         command. When RabbitMQ responds that the channel is open, the
         on_channel_open callback will be invoked by pika.
         """
-        # LOGGER.info('Creating a new channel')
+        LOGGER.info('Creating a new channel')
         self._connection.channel(on_open_callback=self.on_channel_open)
 
     def on_channel_open(self, channel):
@@ -144,7 +126,7 @@ class TaskQueue(object):
         Since the channel is now open, we'll declare the exchange to use.
         :param pika.channel.Channel channel: The channel object
         """
-        # LOGGER.info('Channel opened')
+        LOGGER.info('Channel opened')
         self._channel = channel
         self.add_on_channel_close_callback()
         self.setup_exchange(self.EXCHANGE)
@@ -153,7 +135,7 @@ class TaskQueue(object):
         """This method tells pika to call the on_channel_closed method if
         RabbitMQ unexpectedly closes the channel.
         """
-        # LOGGER.info('Adding channel close callback')
+        LOGGER.info('Adding channel close callback')
         self._channel.add_on_close_callback(self.on_channel_closed)
 
     def on_channel_closed(self, channel, reason):
@@ -165,7 +147,7 @@ class TaskQueue(object):
         :param pika.channel.Channel: The closed channel
         :param Exception reason: why the channel was closed
         """
-        # LOGGER.warning('Channel %i was closed: %s', channel, reason)
+        LOGGER.warning('Channel %i was closed: %s', channel, reason)
         self.close_connection()
 
     def setup_exchange(self, exchange_name):
@@ -174,7 +156,7 @@ class TaskQueue(object):
         be invoked by pika.
         :param str|unicode exchange_name: The name of the exchange to declare
         """
-        # LOGGER.info('Declaring exchange: %s', exchange_name)
+        LOGGER.info('Declaring exchange: %s', exchange_name)
         # Note: using functools.partial is not required, it is demonstrating
         # how arbitrary data can be passed to the callback when it is called
         cb = functools.partial(
@@ -190,7 +172,7 @@ class TaskQueue(object):
         :param pika.Frame.Method unused_frame: Exchange.DeclareOk response frame
         :param str|unicode userdata: Extra user data (exchange name)
         """
-        # LOGGER.info('Exchange declared: %s', userdata)
+        LOGGER.info('Exchange declared: %s', userdata)
         self.setup_queue(self.QUEUE)
 
     def setup_queue(self, queue_name):
@@ -199,7 +181,7 @@ class TaskQueue(object):
         be invoked by pika.
         :param str|unicode queue_name: The name of the queue to declare.
         """
-        # LOGGER.info('Declaring queue %s', queue_name)
+        LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
         self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
 
@@ -213,8 +195,8 @@ class TaskQueue(object):
         :param str|unicode userdata: Extra user data (queue name)
         """
         queue_name = userdata
-        # LOGGER.info('Binding %s to %s with %s', self.EXCHANGE, queue_name,
-        #             self.ROUTING_KEY)
+        LOGGER.info('Binding %s to %s with %s', self.EXCHANGE, queue_name,
+                    self.ROUTING_KEY)
         cb = functools.partial(self.on_bindok, userdata=queue_name)
         self._channel.queue_bind(
             queue_name,
@@ -228,7 +210,7 @@ class TaskQueue(object):
         :param pika.frame.Method _unused_frame: The Queue.BindOk response frame
         :param str|unicode userdata: Extra user data (queue name)
         """
-        # LOGGER.info('Queue bound: %s', userdata)
+        LOGGER.info('Queue bound: %s', userdata)
         self.set_qos()
 
     def set_qos(self):
@@ -246,7 +228,7 @@ class TaskQueue(object):
         which will invoke the needed RPC commands to start the process.
         :param pika.frame.Method _unused_frame: The Basic.QosOk response frame
         """
-        # LOGGER.info('QOS set to: %d', self._prefetch_count)
+        LOGGER.info('QOS set to: %d', self._prefetch_count)
         self.start_consuming()
 
     def start_consuming(self):
@@ -258,7 +240,7 @@ class TaskQueue(object):
         cancel consuming. The on_message method is passed in as a callback pika
         will invoke when a message is fully received.
         """
-        # LOGGER.info('Issuing consumer related RPC commands')
+        LOGGER.info('Issuing consumer related RPC commands')
         self.add_on_cancel_callback()
         self._consumer_tag = self._channel.basic_consume(
             self.QUEUE, self.on_message)
@@ -270,7 +252,7 @@ class TaskQueue(object):
         for some reason. If RabbitMQ does cancel the consumer,
         on_consumer_cancelled will be invoked by pika.
         """
-        # LOGGER.info('Adding consumer cancellation callback')
+        LOGGER.info('Adding consumer cancellation callback')
         self._channel.add_on_cancel_callback(self.on_consumer_cancelled)
 
     def on_consumer_cancelled(self, method_frame):
@@ -278,8 +260,8 @@ class TaskQueue(object):
         receiving messages.
         :param pika.frame.Method method_frame: The Basic.Cancel frame
         """
-        # LOGGER.info('Consumer was cancelled remotely, shutting down: %r',
-                    # method_frame)
+        LOGGER.info('Consumer was cancelled remotely, shutting down: %r',
+                    method_frame)
         if self._channel:
             self._channel.close()
 
@@ -295,14 +277,14 @@ class TaskQueue(object):
         :param pika.Spec.BasicProperties: properties
         :param bytes body: The message body
         """
-        # LOGGER.info('Received message # %s from %s: %s',
-        #             basic_deliver.delivery_tag, properties.app_id, body)
+        LOGGER.info('Received message # %s from %s: %s',
+                    basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
         t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
-        self.threads.append(t)
+        # self.threads.append(t)
 
         # self.acknowledge_message(basic_deliver.delivery_tag)
 
@@ -310,10 +292,10 @@ class TaskQueue(object):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
-        # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
         
         message = json.loads(body)
-        LOGGER.critical(body)
+        # LOGGER.info(body)
 
         account_name = None
         if "account_name" in message:
@@ -322,350 +304,79 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
-        
         account_config = message["account_config"]
 
-        if "mongoid" not in message:
-            message["mongoid"] = ""
-            
-        if message["mongoid"] is None:
-            message["mongoid"] = ""
-
-        if "skills" in message:
-            skills = message["skills"]
-        else:
-            skills = None
-
-        priority = 0
-
-        if "priority" in message:
-            LOGGER.critical("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", message["priority"])
-            priority = int(message["priority"])
-        else:
-            LOGGER.critical("priority not found")
-
-
-        meta = {}
-        if "meta" in message:
-            meta = message["meta"]
-
-        key = message["filename"]
-
-        key = ''.join(e for e in key if e.isalnum()) 
-
-        LOGGER.critical("redis key %s", key)
-
-        doProcess = False
-
-        r = connect_redis(account_name, account_config)
-
-        updateStats({
-            "action" : "resume_pipeline_update",
-            "resume_unique_key" : message["filename"],
-            "meta" : {
-                "mongoid" : message["mongoid"]
-            },
-            "stage" : {
-                "pipeline" : "resume_start",
-                "priority" : message["priority"] 
-            },
-            "account_name" : account_name,
-            "account_config" : account_config
-        })
-
-        if "finalImages" in message:
-            if len(message["finalImages"]) >= 10:
-                ret = {
-                    "error" : "too many pages wont process it " + str(len(message["finalImages"]))
-                }
-                LOGGER.critical(ret)
-                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
-                self.acknowledge_message(delivery_tag)
-
-                updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : message["filename"],
-                    "meta" : {
-                        "error" : ret["error"],
-                        "mongoid" : message["mongoid"]
-                    },
-                    "stage" : {
-                        "pipeline" : "resume",
-                        "priority" : message["priority"] 
-                    },
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
-
-                return
-        
-        db = initDB(account_name, account_config)
-        count = db.emailStored.count({
-            "_id" : ObjectId(message["mongoid"])
-        })
-
-        
-
-        if count == 0:
-            LOGGER.critical("candidate not found in db %s", message["mongoid"])
+        if "elasticsearch" not in account_config:
+            LOGGER.critical("invalid config")
             return self.acknowledge_message(delivery_tag)
+
+
+        body = message
+        if isinstance(body, dict):
+            if "action" in body:
+                action = body["action"]
+                ret = {}
+                
+                if action == "qa_candidate_db":
+                    ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                elif action == "qa_pipeline":
+                    updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : message["filename"],
+                        "meta" : {
+                            "mongoid" : message["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "resume_qa_full_start",
+                            "priority" : message["priority"] 
+                        },
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    })
+                    qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    updateStats({
+                        "action" : "resume_pipeline_update",
+                        "resume_unique_key" : message["filename"],
+                        "meta" : {
+                            "mongoid" : message["mongoid"]
+                        },
+                        "stage" : {
+                            "pipeline" : "resume_qa_full",
+                            "priority" : message["priority"] 
+                        },
+                        "account_name" : account_name,
+                        "account_config" : account_config
+                    })
+                    datasync({
+                        "id" : message["mongoid"],
+                        "action" : "syncCandidate",
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
+                        "field" : "cvParsedInfo"
+                    })
+
+                
+
+
+        LOGGER.critical("completed")
+        self.acknowledge_message(delivery_tag)
+        
             
-        start_time = time.time()
-
-        is_cache = False
-        if r_exists(key, account_name, account_config) and False: # turning of cache because testing with ai models
-            ret = r_get(key, account_name, account_config)
-            ret = json.loads(ret)
-            LOGGER.critical("redis key exists")
-            if "error" not in ret:
-
-                is_cache = True
-
-                if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
-                    pass
-
-                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
-                if skills is None:
-                    skills = ""
-
-                if not isinstance(skills, list):
-                    skills = skills.split(",")
-                
-                
-                updateQA({
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
-                })
-                indexcandidateskill({
-                    "action" : "extractSkill",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "skills" : skills,
-                    # "meta" : meta,
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
-
-                updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : message["filename"],
-                    "meta" : {
-                        "mongoid" : message["mongoid"],
-                        "is_cache" : is_cache
-                    },
-                    "stage" : {
-                        "pipeline" : "resume",
-                        "priority" : message["priority"] 
-                    },
-                    "account_name" : account_name,
-                    "account_config" : account_config
-                })
-                
-                extractCandidateClassifySkill({
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"] 
-                })
-                # if "criteria" in meta:
-                #     extractCandidateScore({
-                #         "action" : "candidate_score",
-                #         "id" : message["mongoid"],
-                #         "mongoid" : message["mongoid"],
-                #         "filename" : message["filename"],
-                #         "account_name" : account_name,
-                #         "account_config" : account_config,
-                #         "priority" : message["priority"],
-                #         "criteria" : meta["criteria"]
-                #     })
-
-                sendSummary({
-                    "mongoid": message["mongoid"],
-                    "filename": message["filename"],
-                    "priority": message["priority"],
-                    "account_name": account_name,
-                    "account_config": account_config
-                })
-                LOGGER.critical(" data sync calledddd 121221")
-                datasync({
-                    "id" : message["mongoid"],
-                    "action" : "syncCandidate",
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"],
-                    "field" : "tag_id"
-                })
-
-                self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
-
-            else:
-                LOGGER.critical("redis key exists but previously error status so reprocessing")
-                doProcess = True
-        else:
-            doProcess = True
-                
-        if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config)
-            if "parsing_type" in ret and ret["parsing_type"] is not "fast":
-                r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
-                
-            if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
-                pass
-
-
-            self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
-            if skills is None:
-                skills = ""
-            if not isinstance(skills, list):
-                skills = skills.split(",")
-            if ret["parsing_type"] == "full":
-                publisherqafull({  
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
-                })
-                
-            else:
-                updateQA({  
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
-                })
-            indexcandidateskill({
-                "action" : "extractSkill",
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "skills" : skills,
-                # "meta" : meta,
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-            updateStats({
-                "action" : "resume_pipeline_update",
-                "resume_unique_key" : message["filename"],
-                "meta" : {
-                    "mongoid" : message["mongoid"],
-                    "is_cache" : is_cache
-                },
-                "stage" : {
-                    "pipeline" : "resume",
-                    "priority" : message["priority"] 
-                },
-                "account_name" : account_name,
-                "account_config" : account_config
-            })
-            extractCandidateClassifySkill({
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "account_name" : account_name,
-                "account_config" : account_config,
-                "priority" : message["priority"] 
-            })
-            
-            sendSummary({
-                "mongoid": message["mongoid"],
-                "filename": message["filename"],
-                "priority": message["priority"],
-                "account_name": account_name,
-                "account_config": account_config
-            })
-
-            LOGGER.critical(" data sync calledddd")
-
-
-            datasync({
-                    "id" : message["mongoid"],
-                    "action" : "syncCandidate",
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"],
-                    "field" : "tag_id"
-            })
-
-            self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
-
-        LOGGER.critical("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ total time taken %s", (time.time() - start_time))    
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        self.acknowledge_message(delivery_tag)
-
-    def updateInDB(self, ret, mongoid , message, account_name, account_config):
-        isError = False
-        if "error" in ret:
-            isError = True
-        ret = json.loads(json.dumps(ret))
-        ret["ai_version_processed"] = "detectron4_flairtaggerv3.0_qa_model"
-        ret["ai_version"] = "0.3"
-        LOGGER.critical("mongo id %s", mongoid)
-        if ObjectId.is_valid(mongoid):
-            db = initDB(account_name, account_config)
-            ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
-            }, {
-                "$set": {
-                    "cvParsedInfo": ret,
-                    "cvParsedAI": not isError,
-                    "updatedTime" : datetime.now()
-                }
-            })
-            LOGGER.critical(ret)
-
-        else:
-            LOGGER.critical("invalid mongoid")
-
-    def notifyNodeSystem(self, ret, mongoid , message, account_name, account_config):
-        isError = False
-        if "error" in ret:
-            isError = True
-        try:
-            if "meta" in message:
-                LOGGER.critical("sending resume data to nodejs")
-                meta = message["meta"]
-
-                if "criteria" in meta:
-                    del meta["criteria"]
-
-                if "callback_url" in meta:
-                    LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
-                    
-                    message["parsed"] = {
-                        # "cvParsedInfo": ret,
-                        "cvParsedAI": not isError,
-                        "updatedTime" : datetime.now()
-                    }
-                    meta["message"] = json.loads(json.dumps(message, default=str))
-                    LOGGER.critical(meta)
-                    x = requests.post(meta["callback_url"], json=meta)
-                    LOGGER.critical(x.text)
-
-        except Exception as e:
-            LOGGER.critical(meta)
-            traceback.print_exc()
-            LOGGER.critical(e)
-
-            
         
 
+          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
-        # LOGGER.info('Acknowledging message %s', delivery_tag)
+        LOGGER.info('Acknowledging message %s', delivery_tag)
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
@@ -677,7 +388,7 @@ class TaskQueue(object):
         Basic.Cancel RPC command.
         """
         if self._channel:
-            # LOGGER.info('Sending a Basic.Cancel RPC command to RabbitMQ')
+            LOGGER.info('Sending a Basic.Cancel RPC command to RabbitMQ')
             cb = functools.partial(
                 self.on_cancelok, userdata=self._consumer_tag)
             self._channel.basic_cancel(self._consumer_tag, cb)
@@ -691,16 +402,16 @@ class TaskQueue(object):
         :param str|unicode userdata: Extra user data (consumer tag)
         """
         self._consuming = False
-        # LOGGER.info(
-        #     'RabbitMQ acknowledged the cancellation of the consumer: %s',
-        #     userdata)
+        LOGGER.info(
+            'RabbitMQ acknowledged the cancellation of the consumer: %s',
+            userdata)
         self.close_channel()
 
     def close_channel(self):
         """Call to close the channel with RabbitMQ cleanly by issuing the
         Channel.Close RPC command.
         """
-        # LOGGER.info('Closing the channel')
+        LOGGER.info('Closing the channel')
         self._channel.close()
 
     def run(self):
@@ -725,13 +436,13 @@ class TaskQueue(object):
 
         if not self._closing:
             self._closing = True
-            # LOGGER.info('Stopping')
+            LOGGER.info('Stopping')
             if self._consuming:
                 self.stop_consuming()
                 self._connection.ioloop.start()
             else:
                 self._connection.ioloop.stop()
-            # LOGGER.info('Stopped')
+            LOGGER.info('Stopped')
 
 
 class ReconnectingTaskQueue(object):
@@ -762,7 +473,7 @@ class ReconnectingTaskQueue(object):
         if self._consumer.should_reconnect:
             self._consumer.stop()
             reconnect_delay = self._get_reconnect_delay()
-            # LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
+            LOGGER.info('Reconnecting after %d seconds', reconnect_delay)
             time.sleep(reconnect_delay)
             self._consumer = TaskQueue(self._amqp_url)
 
@@ -775,35 +486,20 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-from app.detectron.start import loadTrainedModel 
-from app.cvlinepredict.start import loadModel
-from app.ner.start import loadModel as loadModelTagger
 
+
+import time
 import subprocess
-import torch
-
-def main():
-
-    is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
-    if is_gpu_mandatory == 1:
-        if not torch.cuda.is_available():
-            LOGGER.critical("gpu is not there cannot start without it as it is mandatory")
-            return
-
+def main():     
+    loadModel()
 
     result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
                              'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
 
     print(result)
+    loadTaggerModel()
 
-    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
-                             'gs://recruitaiwork/detectron4_5000_fpn', '/workspace/detectron4_5000_fpn'], stdout=subprocess.PIPE)
-
-    print(result)
-
-    loadTrainedModel()
-    # loadModel()
-    loadModelTagger()
+    # time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 

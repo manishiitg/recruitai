@@ -98,7 +98,6 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
         })
         if row:
             if "cvParsedInfo" in row:
-                print(list(row["cvParsedInfo"].keys()))
                 if "page_contents" in row["cvParsedInfo"]:
                     page_contents = row["cvParsedInfo"]["page_contents"]
                 else:
@@ -119,15 +118,26 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
 
     if page_contents:
 
+        page_content_map = {}
+        bbox_map = {}
+
         db = initDB(account_name, account_config)
         exist_answer_map = {}
         candidate_row = db.emailStored.find_one({"_id" : ObjectId(idx)})
         if "cvParsedInfo" in candidate_row:
             cvParsedInfo = candidate_row["cvParsedInfo"]
             if "answer_map" in cvParsedInfo:
-                exist_answer_map = cvParsedInfo["answer_map"]
+                exist_answer_map[str(row["_id"])] = cvParsedInfo["answer_map"]
+            else:
+                exist_answer_map[str(row["_id"])] = {}
+
+            bbox_map[str(row["_id"])] = row["cvParsedInfo"]["newCompressedStructuredContent"]
 
         logger.critical("asking question %s", exist_answer_map)
+
+        page_content_map = clean_page_content_map(idx, page_contents)
+        
+
         answer_map = ask_question(idx, page_contents, only_initial_data, exist_answer_map)
         if not answer_map:
             logger.critical("error: some problem with page content")
@@ -149,11 +159,130 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
                 "cvParsedInfo.answer_map" : answer_map[idx]
             }
         })
+
+        parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, account_config)
     else:
         logger.critical("error %s", error)
 
+from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers
+import json
+import traceback
 
-def ask_question(idx, page_contents, only_initial_data = True, exist_answer_map = {}):
+
+def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, account_config):
+    db = initDB(account_name, account_config)
+
+    # try:
+    
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume" : {}
+        }
+    })
+
+    bbox_map_int, page_box_count = get_page_and_box_map(bbox_map)
+    logger.info(json.dumps(page_box_count, indent=True))
+
+    
+
+    section_match_map = get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content_map)
+    logger.info(json.dumps(section_match_map, indent = True))
+
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume.section_match_map" : section_match_map[idx]
+        }
+    })
+
+    new_section_match_map = get_resolved_section_match_map(section_match_map)
+    logger.info(json.dumps(new_section_match_map, indent = True))
+
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume.new_section_match_map" : new_section_match_map[idx]
+        }
+    })
+
+    section_content_map , absorbed_map, full_question_key_absorted = do_section_identification_down(new_section_match_map, bbox_map_int, page_box_count)
+    logger.info(json.dumps(section_content_map, indent=True))
+
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume.section_content_map" : section_content_map[idx]
+        }
+    })
+
+    validate(new_section_match_map, section_content_map, full_question_key_absorted)
+
+    up_section_content_map, up_absorbed_map= do_up_section_identification(new_section_match_map, bbox_map_int, page_box_count, absorbed_map)
+    logger.info(json.dumps(up_section_content_map, indent=True))
+
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume.up_section_content_map" : up_section_content_map[idx]
+        }
+    })
+
+    combined_section_content_map = create_combined_section_content_map(section_content_map, up_section_content_map)
+    logger.info(json.dumps(combined_section_content_map, indent=True))
+
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.debug.qa_parse_resume.combined_section_content_map" : combined_section_content_map[idx]
+        }
+    })
+
+    complete_section_match_map, complete_absorbed_map = do_subsection_identification(combined_section_content_map, absorbed_map, up_absorbed_map, answer_map, bbox_map_int, page_box_count)
+    logger.info(json.dumps(complete_section_match_map, indent=True))
+
+    orphan_section_map = get_orphan_section_map(answer_map, bbox_map_int, absorbed_map, up_absorbed_map, complete_absorbed_map)
+
+    # print(json.dumps(combined_section_content_map, indent=True))
+    logger.info("==========================")
+    logger.info(json.dumps(complete_section_match_map, indent=True))
+    logger.info("==========================")
+    logger.info(json.dumps(orphan_section_map, indent=True))
+    if len(list(orphan_section_map.keys())) != 0:
+        logger.critical("orphan has keys!") # pass nothing else to do
+        assert(len(list(orphan_section_map.keys())) == 0)
+
+    tagger = loadTaggerModel()
+    section_ui_map = get_tags_subsections_subanswers(complete_section_match_map, tagger)
+
+    logger.info(section_ui_map)
+    db.emailStored.update_one({
+        "_id" : ObjectId(idx)
+    }, {
+        '$set' : {
+            "cvParsedInfo.qa_parse_resume" : section_ui_map[idx]
+        }
+    })
+
+    # except Exception as e:
+    #     traceback.print_exc()
+    #     db.emailStored.update_one({
+    #         "_id" : ObjectId(idx)
+    #     }, {
+    #         '$set' : {
+    #             "cvParsedInfo.debug.qa_parse_resume.error" : str(e)
+    #         }
+    #     })
+    #     logger.critical(e)
+        
+
+def ask_question(idx, page_contents, only_initial_data = False, exist_answer_map = {}):
 
     page_content_map = clean_page_content_map(idx, page_contents)
 
@@ -186,8 +315,9 @@ def ask_question(idx, page_contents, only_initial_data = True, exist_answer_map 
                 if key not in questions_needed_for_initial_data:
                     continue
             
-            if key in exist_answer_map:
-                logger.critical("anser already exists for question %s", key)
+            if key in exist_answer_map[idx]:
+                logger.critical("answer already exists for question %s", key)
+                answer_map[idx][key] = exist_answer_map[idx][key]
                 continue
 
             start_time = time.time()
@@ -244,3 +374,14 @@ def loadModel():
 
     
     return question_answerer
+
+tagger = None
+from flair.models import SequenceTagger
+
+def loadTaggerModel():
+    global tagger
+    if tagger is None:
+        logger.critical("loading tagger model")
+        tagger = SequenceTagger.load("/workspace/recruit-tags-flair-roberta-word2vec/recruit-tags-flair-roberta-word2vec/best-model.pt")
+        logger.critical("model tagger loaded")
+    return tagger
