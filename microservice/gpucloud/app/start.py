@@ -108,8 +108,8 @@ def queue_process():
                         if max_instance_count_to_start == 0:
                             max_instance_count_to_start = 1 # keep atleast one instance running until. all work is completed
 
-                    if max_instance_count_to_start > 5:
-                        max_instance_count_to_start = 5
+                    if max_instance_count_to_start > 1:
+                        max_instance_count_to_start = 1
 
                     for instance in instance_status:
                         running_instance_name = instance["running_instance_name"]
