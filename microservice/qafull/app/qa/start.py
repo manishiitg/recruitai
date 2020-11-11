@@ -49,6 +49,25 @@ questions_tag_mapping = {
   "extra":"Extra Curricular",
   "references" : "References"
 }
+questions_ordering = [
+  "exp_years",
+  "exp_company",
+  "exp_designation",
+  "exp_duration",
+  "projects_name",
+  "skills",
+  "education_degree",
+  "education_year",
+  "certifications",
+  "training",
+  "awards",
+  "personal_name",
+  "summary",
+  "personal_location",
+  "personal_dob",
+  "extra",
+  "references"
+]
 
 questions = {
   "personal_name": "what is your name?",
