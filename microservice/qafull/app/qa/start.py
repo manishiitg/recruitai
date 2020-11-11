@@ -90,7 +90,11 @@ questions_needed_for_initial_data = [
 
 def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_contents = None):
     db = initDB(account_name, account_config)
-    
+    if not ObjectId.is_valid(idx):
+        logger.critical(f"invalid id {idx}")
+        return {
+            "error" : f"invalid id {idx}"
+        }
     error = None
     if not page_contents:
         row = db.emailStored.find_one({
