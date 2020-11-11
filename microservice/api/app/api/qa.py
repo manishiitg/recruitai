@@ -12,6 +12,8 @@ from flask_jwt_extended import (
 )
 
 from app.publisher.qa import sendMessage
+from app.publisher.qa_full import sendMessage as sendFullQA
+
 from app.util import check_and_validate_account
 
 bp = Blueprint('qa', __name__, url_prefix='/qa')
@@ -24,6 +26,26 @@ def qa_parse(id):
     try:
 
         sendMessage({
+            "action": "qa_candidate_db",
+            "mongoid" : id,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('full/<string:id>', methods=['GET'])
+@check_and_validate_account
+def qa_parse_full(id):
+    logger.info("got candidate %s", id)
+
+    try:
+
+        sendFullQA({
             "action": "qa_candidate_db",
             "mongoid" : id,
             "account_name": request.account_name,
