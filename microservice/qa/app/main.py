@@ -318,7 +318,7 @@ class TaskQueue(object):
                 ret = {}
                 
                 if action == "qa_candidate_db":
-                    ret = qa_candidate_db(body["mongoid"], account_name, account_config)
+                    ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
                 elif action == "qa_pipeline":
                     updateStats({
                         "action" : "resume_pipeline_update",
@@ -359,7 +359,7 @@ class TaskQueue(object):
                 
 
 
-        LOGGER.info("completed")
+        LOGGER.critical("completed")
         self.acknowledge_message(delivery_tag)
         
             
