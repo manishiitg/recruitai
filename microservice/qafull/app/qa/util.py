@@ -300,7 +300,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
 
                     inner_section_match_idx = []
 
-                    max_match_ratio = 0
+                    max_match_ratio = 10
                     max_match_row = None
                     for page in bbox_list:
                         for box_id, bbox in enumerate(bbox_list[page]):
@@ -380,7 +380,8 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
 
                     if not found:
                         # assert(False)
-                        section_match_idx.append(max_match_row)
+                        if max_match_row:
+                            section_match_idx.append(max_match_row)
                         # not sure what to something detector and resume don't match at all. and this happen rarely.
                         # i guess can simply just take the highest match
                         # pass
