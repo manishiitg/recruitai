@@ -732,6 +732,9 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                 if not should_break:
                     # if should break means another match was found
 
+                    if "matched" not in sub_matched_box:
+                        sub_matched_box["matched"] = False
+                        
                     if sub_matched_box["matched"]:
                         bucketurl = sub_matched_box["matchedRow"]["bucketurl"]
                         if "Title" in bucketurl:
