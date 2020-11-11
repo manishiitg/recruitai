@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:    
+    qafullmq:
+        image: recruitai/qafullmq
+        build:
+            dockerfile: Dockerfile
+            context: microservice/qafull
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/qafull/app:/workspace/app 
+            - ./home/jupyter/.cache:/root/.cache            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
+            PARALLEL_PROCESS: 1 
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
