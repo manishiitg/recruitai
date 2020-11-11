@@ -194,59 +194,59 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     section_match_map = get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content_map)
     logger.info(json.dumps(section_match_map, indent = True))
 
-    db.emailStored.update_one({
-        "_id" : ObjectId(idx)
-    }, {
-        '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume.section_match_map" : section_match_map[idx]
-        }
-    })
+    # db.emailStored.update_one({
+    #     "_id" : ObjectId(idx)
+    # }, {
+    #     '$set' : {
+    #         "cvParsedInfo.debug.qa_parse_resume.section_match_map" : section_match_map[idx]
+    #     }
+    # })
 
     new_section_match_map = get_resolved_section_match_map(section_match_map)
     logger.info(json.dumps(new_section_match_map, indent = True))
 
-    db.emailStored.update_one({
-        "_id" : ObjectId(idx)
-    }, {
-        '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume.new_section_match_map" : new_section_match_map[idx]
-        }
-    })
+    # db.emailStored.update_one({
+    #     "_id" : ObjectId(idx)
+    # }, {
+    #     '$set' : {
+    #         "cvParsedInfo.debug.qa_parse_resume.new_section_match_map" : new_section_match_map[idx]
+    #     }
+    # })
 
     section_content_map , absorbed_map, full_question_key_absorted = do_section_identification_down(new_section_match_map, bbox_map_int, page_box_count)
     logger.info(json.dumps(section_content_map, indent=True))
 
-    db.emailStored.update_one({
-        "_id" : ObjectId(idx)
-    }, {
-        '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume.section_content_map" : section_content_map[idx]
-        }
-    })
+    # db.emailStored.update_one({
+    #     "_id" : ObjectId(idx)
+    # }, {
+    #     '$set' : {
+    #         "cvParsedInfo.debug.qa_parse_resume.section_content_map" : section_content_map[idx]
+    #     }
+    # })
 
     validate(new_section_match_map, section_content_map, full_question_key_absorted)
 
     up_section_content_map, up_absorbed_map= do_up_section_identification(new_section_match_map, bbox_map_int, page_box_count, absorbed_map)
     logger.info(json.dumps(up_section_content_map, indent=True))
 
-    db.emailStored.update_one({
-        "_id" : ObjectId(idx)
-    }, {
-        '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume.up_section_content_map" : up_section_content_map[idx]
-        }
-    })
+    # db.emailStored.update_one({
+    #     "_id" : ObjectId(idx)
+    # }, {
+    #     '$set' : {
+    #         "cvParsedInfo.debug.qa_parse_resume.up_section_content_map" : up_section_content_map[idx]
+    #     }
+    # })
 
     combined_section_content_map = create_combined_section_content_map(section_content_map, up_section_content_map)
     logger.info(json.dumps(combined_section_content_map, indent=True))
 
-    db.emailStored.update_one({
-        "_id" : ObjectId(idx)
-    }, {
-        '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume.combined_section_content_map" : combined_section_content_map[idx]
-        }
-    })
+    # db.emailStored.update_one({
+    #     "_id" : ObjectId(idx)
+    # }, {
+    #     '$set' : {
+    #         "cvParsedInfo.debug.qa_parse_resume.combined_section_content_map" : combined_section_content_map[idx]
+    #     }
+    # })
 
     complete_section_match_map, complete_absorbed_map = do_subsection_identification(combined_section_content_map, absorbed_map, up_absorbed_map, answer_map, bbox_map_int, page_box_count)
     logger.info(json.dumps(complete_section_match_map, indent=True))
