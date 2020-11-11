@@ -256,7 +256,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     logger.info(json.dumps(orphan_section_map, indent=True))
     if len(list(orphan_section_map.keys())) != 0:
         logger.critical("orphan has keys!") # pass nothing else to do
-        assert(len(list(orphan_section_map.keys())) == 0)
+        # assert(len(list(orphan_section_map.keys())) == 0)
 
     tagger = loadTaggerModel()
     section_ui_map = get_tags_subsections_subanswers(complete_section_match_map, tagger)
