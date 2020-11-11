@@ -247,6 +247,8 @@ l) need to create edge cases for qa manual labelling further. like if qa model i
 
 m) need to jobs overview with qa model as well and get data
 
+n) need to remove ner and candidate classify from resumemq
+
 =========
 OLD TODO
 
