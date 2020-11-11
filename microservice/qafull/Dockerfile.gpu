@@ -1,0 +1,55 @@
+FROM  pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime
+LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
+
+WORKDIR /workspace
+
+VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
+
+RUN apt-get update && \
+	apt-get install supervisor gcc curl gnupg -y && \
+    apt-get -y autoclean && \
+	rm -rf /var/cache/apk/*
+
+COPY ./supervisor/conf.d/qa_full.conf /etc/supervisor/conf.d/qa_full.conf
+
+RUN truncate -s 0 /workspace/logs/qa_full*.log
+
+RUN pip install pika
+RUN pip install redis
+
+RUN pip install fuzzywuzzy
+RUN pip install python-Levenshtein
+
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+
+RUN pip install transformers
+RUN pip install pymongo
+
+RUN apt-get install -y debconf-utils
+ENV TZ=Asia/Kolkata
+RUN echo $TZ > /etc/timezone
+# RUN rm /etc/localtime
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN apt-get install -y tzdata
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+RUN apt-get clean
+
+RUN pip install pymemcache redis
+RUN pip install -q flair
+
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN apt-get install apt-transport-https ca-certificates -y
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+RUN apt-get update && apt-get install google-cloud-sdk -y
+
+COPY ./app/RecruitAI.json /workspace
+
+RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
+RUN gcloud config set project recruitai-266705
+RUN gsutil ls
+RUN mkdir recruit-tags-flair-roberta-word2vec
+CMD ["/usr/bin/supervisord"]
