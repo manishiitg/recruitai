@@ -302,6 +302,18 @@ services:
         networks:
             - ai
 
+    qafullmq:
+        image: recruitai/qafullmq:latest
+        build: microservice/qafull
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/qafull/app:/workspace/app            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+        networks:
+            - ai
+
     classifymq:
         image: recruitai/classifymq:latest
         build: microservice/classify
