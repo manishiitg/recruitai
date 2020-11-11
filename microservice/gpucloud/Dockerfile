@@ -38,12 +38,15 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyri
 RUN apt-get update && apt-get install google-cloud-sdk -y
 
 COPY ./app/java-ref-7a9117277dda.json /workspace
+COPY ./app/RecruitAI-full.json /workspace
 # COPY ./app/gcloud_setup_summary.sh /workspace
 # COPY ./app/start.sh /workspace
 # RUN chmod +x /workspace/start.sh
 
 RUN gcloud auth activate-service-account --key-file=/workspace/java-ref-7a9117277dda.json
 RUN gcloud config set project java-ref
+# RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI-full.json
+# RUN gcloud config set project recruitai-266705
 RUN  pip install --upgrade google-api-python-client
 
 RUN pip install apscheduler
