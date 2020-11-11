@@ -112,6 +112,8 @@ cd /home/jupyter/drive/recruitai
 sudo echo "116.202.234.182 rabbitmq" >> /etc/hosts
 sudo echo "116.202.234.182 redis" >> /etc/hosts
 sudo echo "116.202.234.182 memcached" >> /etc/hosts
+
+
 ########################
 
 
@@ -126,16 +128,17 @@ sudo mkdir -p /var/log/recruitai
 ==========================
 
 
+cd /home/jupyter/drive/recruitai
 
 cat my_password.txt | docker login --username exceltech --password-stdin
 
-sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet --ignore-pull-failures
-sudo docker-compose -f docker-compose-cpu-all.yml up -d --scale=picturemq=2 --scale=qafull=1 --scale=resumemq=2 --scale=summarymq=1 --scale=qamq=1
+sudo docker-compose -f docker-compose-cpu-qafull.yml pull --quiet
+sudo docker-compose -f docker-compose-cpu-qafull.yml up -d --scale=qamq=4
 
 for i in `seq 1 1000`;
 do
   sleep 30m
   echo "restarting docker $i"
-  sudo docker-compose -f docker-compose-cpu-all.yml restart
+  sudo docker-compose -f docker-compose-cpu-qafull.yml restart
   
 done
