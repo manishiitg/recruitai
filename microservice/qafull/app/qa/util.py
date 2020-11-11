@@ -914,6 +914,9 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
                     if not should_break:
                         # logger.info(sub_matched_box)
+                        if "matched" not in sub_matched_box:
+                            sub_matched_box["matched"] = False
+
                         if sub_matched_box["matched"]:
 
                             if "Title" in sub_matched_box["matchedRow"]["bucketurl"]:
@@ -1108,6 +1111,9 @@ def do_subsection_identification(combined_section_content_map, absorbed_map, up_
                 if not should_break:
                     # if should break means another match was found
 
+                    if "matched" not in sub_matched_box:
+                        sub_matched_box["matched"] = False
+
                     if sub_matched_box["matched"]:
                         ret_section_title, ret_section_content, ret_absorbed_section_boxes = util_match_row(
                             sub_matched_box, page, box_id, question_key, ques_idx)
@@ -1195,7 +1201,10 @@ def get_orphan_section_map(answer_map, bbox_map_int, absorbed_map, up_absorbed_m
                     if not found:
                         logger.info(
                             f"line not matched.. page {page} box {box_id} {bbox['line']} ")
-                        
+                            
+                        if "matched" not in bbox:
+                            bbox["matched"] = False
+
                         if bbox["matched"]:
                             ret_section_title, ret_section_content, ret_absorbed_section_boxes = util_match_row(
                                 bbox, page, box_id, "", -1)
