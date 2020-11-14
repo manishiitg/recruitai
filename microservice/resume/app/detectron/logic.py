@@ -24,12 +24,14 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
     lineData = cleanLineData
 
     while lineIdx < len(lineData):
-        logger.debug("=====: %s", lineIdx)
+        logger.info("=====: %s", lineIdx)
+
         if lineIdx in claimedLinesIDX:
             lineIdx += 1
             continue
 
         line = lineData[lineIdx]
+        logger.info("=====: %s", line)
         # some times getting headings like this K A M N A M A D H W A N I , S K I L L S this is causing issue.
         # so need to check for this and fix
         maxwordLength = 0
@@ -67,7 +69,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
         words = line.split(" ")
         if len(words) <= 2:
-            logger.debug("is orphan? %s", line)
+            logger.info("is orphan? %s", line)
 
             maxratio = 0
             maxRow = False
@@ -169,7 +171,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                         break
 
             # let's find is this text is avaiable
-            logger.debug({"pdf line": line})
+            logger.info({"pdf line": line})
             matchStrIndex = 2
 
             finalMatchedRow = False
@@ -184,7 +186,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                 # conflict can arise because matchString can match multiple line in jsonoutput
                 # so we need to find the best math
                 matchString = " ".join(line.split(" ")[0:matchStrIndex])
-                if len(matchString) < 5 and matchStrIndex == 2:
+                if len(matchString) < 5: # and matchStrIndex == 2 commented this on 14 nov, not sure why. just because its not on google colab code
                     matchStrIndex += 1
                     continue
 
@@ -192,7 +194,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                 if not isStartingWithList:
                     # this is because some times fist character is not properly matched in ocr
                     matchString = matchString[1:]
-                logger.debug("match string is %s", matchString)
+                logger.info("match string is %s", matchString)
                 # this is to do extact string match.
                 # this means that if our matchString is found exactly in jsonOutput
                 howManyMatchStringFound, matchLines = countMatchString(
@@ -201,10 +203,10 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                 if howManyMatchStringFound > 1:
                     # if it does then increase match string lenght by one and check again for conflict.
                     if matchStrIndex >= 5:
-                        logger.debug(
+                        logger.info(
                             "didn't match for even 4 index resolving by taking lowest index of match")
                         lowIdx = 9999
-                        logger.debug(matchLines)
+                        logger.info(matchLines)
                         jsonIdx = -1
                         for mi, mrow in enumerate(matchLines):
                             idx = mrow["correctLine"].lower().index(
@@ -217,7 +219,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                         finalMatchedRow = jsonOutput[jsonIdx]
                         jsonOutput[jsonIdx]["isClaimed"] = True
                         finalClaimedIdx = jsonIdx
-                        logger.debug("clamed this json id %s", finalClaimedIdx)
+                        logger.info("clamed this json id %s", finalClaimedIdx)
                         isConflictResolved = True
 
                     # sometimes what happens is that when we increase a word then no string matches
@@ -239,31 +241,31 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                         correctLine = matchLines[0]["correctLine"]
                         jsonOutput[matchLines[0]["idx"]]["isClaimed"] = True
                         finalClaimedIdx = matchLines[0]["idx"]
-                        logger.debug("clamed this json id %s", finalClaimedIdx)
+                        logger.info("clamed this json id %s", finalClaimedIdx)
                         finalMatchedRow = matchLines[0]
 
                     isConflictResolved = True
 
             if howManyMatchStringFound == 0:
                 if backupBestRow:
-                    logger.debug("we have backup so no need for fuzzy")
+                    logger.info("we have backup so no need for fuzzy")
                     correctLine = backupBestRow["correctLine"]
                     jsonOutput[backupBestIdx]["isClaimed"] = True
                     finalClaimedIdx = backupBestIdx
-                    logger.debug("clamed this json id %s", finalClaimedIdx)
+                    logger.info("clamed this json id %s", finalClaimedIdx)
                     finalMatchedRow = backupBestRow
 
                 else:
                     matchedRow, matchedRowIdx = doFuzzyMatch(line, jsonOutput)
                     if matchedRow:
-                        logger.debug("found via fuzzy!")
+                        logger.info("found via fuzzy!")
                         correctLine = matchedRow["correctLine"]
                         jsonOutput[matchedRowIdx]["isClaimed"] = True
                         finalClaimedIdx = matchedRowIdx
-                        logger.debug("clamed this json id %s", finalClaimedIdx)
+                        logger.info("clamed this json id %s", finalClaimedIdx)
                         finalMatchedRow = matchedRow
                     else:
-                        logger.debug(
+                        logger.info(
                             "there is a pblm, no match string matched")
                         localLineNonMatchList = checkOccuranceOfLineInAllBlocks(
                             line, jsonOutput)
@@ -279,7 +281,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                         lineIdx += 1
                         continue
 
-            logger.debug("found starting matching string in line %s",
+            logger.info("found starting matching string in line %s",
                          finalMatchedRow["correctLine"])
 
             # if jsonIdx in matchIdx:
@@ -309,7 +311,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                     ocrMatchString = " ".join(
                         correctLine.split(" ")[octMatchCountWords:])
 
-            logger.debug("ocr match string %s", ocrMatchString)
+            logger.info("ocr match string %s", ocrMatchString)
             # ocrMatchString = ocrMatchString[:-1]
             #  not needed since already using fuzzy match
             # this is because some times last character is not properly matched in ocr
@@ -325,18 +327,18 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
             prevMaxFullMatchRatio = False
             while(True):
                 if internalLineIdx >= len(lineData):
-                    logger.debug("all lines finished breaking out")
+                    logger.info("all lines finished breaking out")
                     break
 
                 newNextLine = False
-                logger.debug("... %s ", lineData[internalLineIdx])
+                logger.info("... %s ", lineData[internalLineIdx])
                 if internalLineIdx == lineIdx:
                     nline = lineData[lineIdx]
                     newLineIdx = list(range(lineIdx, lineIdx + 1))
                     newLine = [nline]
                 else:
                     if internalLineIdx + 1 >= len(lineData):
-                        logger.debug("all lines finished breaking out")
+                        logger.info("all lines finished breaking out")
                         break
                     newLineIdx = list(range(lineIdx, internalLineIdx + 1))
                     newLineIdx = [
@@ -359,12 +361,12 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                     # we will check this only after we have found some sort of coherance in text............
                     # hmmmmm... not sure about above as well. if needed or not.......
                     ratio3 = fuzz.partial_ratio(newNextLine, correctLine)
-                    logger.debug(
+                    logger.info(
                         "partial ratio3 for just the next line %s", ratio3)
                     if ratio3 < 70:
-                        logger.debug(
+                        logger.info(
                             "ratio3 is quite low....... this can be a problem.")
-                        logger.debug(
+                        logger.info(
                             "this would be mean the this next doesn't belong this sequence and has come in between by mistake.")
                         # should i check if there is a high match in some other text???
                         foundhighmatch = False
@@ -372,17 +374,17 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                             ratio3test = fuzz.partial_ratio(
                                 newNextLine, testrow["correctLine"])
                             if ratio3test > 90:
-                                logger.debug(
+                                logger.info(
                                     "ok, there is a high match on some other line as well ....... %s", testrow["correctLine"])
                                 foundhighmatch = True
                                 break
 
                         if foundhighmatch:
                             # how.....
-                            logger.debug("we should skip this in this batch")
+                            logger.info("we should skip this in this batch")
                             excludeLowMatchIdx.append(internalLineIdx)
                             internalLineIdx += 1
-                            logger.debug("going to next line..")
+                            logger.info("going to next line..")
                             # many time when we go to next line we just break out this will result in exclude Not getting any effect
                             newLineIdx = list(
                                 range(lineIdx, internalLineIdx + 1))
@@ -395,20 +397,20 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
                 ratio = fuzz.ratio(ocrMatchString, " ".join(
                     nline.split(" ")[-octMatchCountWords:]))
-                logger.debug(
+                logger.info(
                     "ocrMatchString.lower() %s  === lines substring %s", ocrMatchString,  nline)
-                logger.debug("line:# %s", nline)
+                logger.info("line:# %s", nline)
                 logger.debug(" ===== ratio %s ==ocr match string %s   concat line %s",
                              ratio, ocrMatchString,  " ".join(nline.split(" ")[-octMatchCountWords:]))
 
                 ratio2 = fuzz.ratio(correctLine, nline)
-                logger.debug("ratio of full line match %s", ratio2)
-                logger.debug("correctLine.lower() %s", correctLine)
-                logger.debug("line.lower() %s", nline.lower())
+                logger.info("ratio of full line match %s", ratio2)
+                logger.info("correctLine.lower() %s", correctLine)
+                logger.info("line.lower() %s", nline.lower())
 
                 # new exprimental
                 if prevMaxFullMatchRatio and ratio2 < prevMaxFullMatchRatio:
-                    logger.debug(
+                    logger.info(
                         "exprimental....ratio2 got reduce we should breakout and remove the last added line as well")
                     newLineIdx = list(range(lineIdx, internalLineIdx + 1 - 1))
                     newLineIdx = [
@@ -446,7 +448,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                                 maxRatio = ratioRow["ratio"]
                                 maxRatioIdx = ratioRow["internalLineIdx"]
 
-                        logger.debug("found match via full matching itself")
+                        logger.info("found match via full matching itself")
 
                         newLineIdx = list(range(lineIdx, maxRatioIdx + 1))
                         logger.debug("before idx %s", newLineIdx)
@@ -469,8 +471,10 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
             if len(newLine) > 0:
                 combinedLine = " ".join(newLine)
-                logger.debug("final combined line is %s", combinedLine)
-                logger.debug("idx is at %s", lineIdx)
+                logger.info("final combined line is %s", combinedLine)
+                logger.info("idx is at %s", lineIdx)
+                import json
+                logger.info("new lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee %s", json.dumps(newLine, indent=1))
                 sortLines = {}
                 for ix, txl in enumerate(newLine):
                     sortLines[newLineIdx[ix]] = txl
@@ -507,9 +511,6 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                 })
 
         lineIdx += 1
-
-        # if lineIdx > 10:
-        #   break
 
     # checking all no match string for occurance
 
@@ -649,7 +650,9 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
                             row["finalClaimedIdx"]: row["line"]
 
                         }
+                    
 
+                    logger.info("@#$#@$#################################@$#@$#@$#@$#@$#@$#@$#@$#@$#@4")
                     row["sortLines"][stRow["lineIdx"]] = stRow["line"]
                     foundMatchingStruct = True
 
@@ -682,6 +685,7 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
 
         else:
             logger.debug("unable to find a final row")
+
 
     for sttIdx, row in enumerate(structuredContent):
       if row["matched"] and "sortLines" in row:
@@ -733,6 +737,7 @@ def chooseBBoxVsSegment(jsonOutput, jsonOutputbbox):
     finalJsonOutput = []
     if len(jsonOutput) == 0:
         jsonOutput = jsonOutputbbox
+
     for i, row in enumerate(jsonOutput):
         # we will remove the bbox images from this and keep only one.
         # either the bbox image or the roi image
@@ -814,13 +819,13 @@ def identifyTableData(lineData, tableRow, jsonOutput):
                     continue
 
                 text = row["text"]
-                # text = row["correctLine"]
+                # text = row["correctLine"]  # does not work with this
                 text = text.replace("\n", " ")
-                logger.debug("table text: %s", text)
+                logger.info("table text: %s", text)
                 lineIdx = 0
                 while lineIdx < len(lineData):
                     if lineIdx in tableLineMatchedIndexes:
-                        logger.debug("already matched to a table")
+                        logger.info("already matched to a table")
                         lineIdx += 1
                         continue
                     line = lineData[lineIdx]
@@ -828,10 +833,10 @@ def identifyTableData(lineData, tableRow, jsonOutput):
 
                     totalMatches = 0
                     if ratio > fuzzRatioTolerance or line in text:
-                        logger.debug("line : %s", line)
-                        logger.debug("ratio %s", ratio)
+                        logger.info("line : %s", line)
+                        logger.info("ratio %s", ratio)
                         tableMatches = [line]
-                        logger.debug('we might have something?')
+                        logger.info('we might have something?')
                         totalMatches += 1
                         # need we need to see how may consicutive matches do we have
                         # should be ateast 5
@@ -842,13 +847,13 @@ def identifyTableData(lineData, tableRow, jsonOutput):
                         while (True and checkLineIdx < len(lineData) - 1):
                             checkLineIdx += 1
                             line = lineData[checkLineIdx]
-                            logger.debug("line : %s", line)
+                            logger.info("line : %s", line)
                             ratio = fuzz.partial_ratio(line, text)
-                            logger.debug("ratio : %s", ratio)
+                            logger.info("ratio : %s", ratio)
 
                             if ratio < fuzzRatioTolerance:
                                 if line in text:
-                                    logger.debug("full match")
+                                    logger.info("full match")
                                     totalMatches += 1
                                     localtableLineMatchedIndexes.append(
                                         checkLineIdx)
@@ -859,7 +864,7 @@ def identifyTableData(lineData, tableRow, jsonOutput):
                                 # hence we cannot totally break out at as
                                 # but we will break out after maximum 2 errors
                                 if errorCount > errorCountTolerance:
-                                    logger.debug("it broke out")
+                                    logger.info("it broke out")
                                     break
                             else:
                                 totalMatches += 1
@@ -874,10 +879,10 @@ def identifyTableData(lineData, tableRow, jsonOutput):
                                 "lineIds": localtableLineMatchedIndexes,
                                 "row": row
                             })
-                            logger.debug(
+                            logger.info(
                                 "ok we found a table match ########################### level %s", levelIdx + 1)
                             tableRow[tableIdx]["isMatched"] = True
-                            logger.debug(
+                            logger.info(
                                 jsonOutput[tableRow[tableIdx]["orgIdx"]]["correctLine"])
                             jsonOutput[tableRow[tableIdx]
                                        ["orgIdx"]]["isClaimed"] = True
@@ -889,20 +894,20 @@ def identifyTableData(lineData, tableRow, jsonOutput):
                             }
                             break
                         else:
-                            logger.debug(
+                            logger.info(
                                 "we couldn't find a table??????????????????????????")
 
                     lineIdx += 1
 
                 if tableRow[tableIdx]["isMatched"] is False:
-                    logger.debug(
+                    logger.info(
                         "unable to find any match for this table %%%%%%%%%%%%%%%%%%%%%%%%%%")
 
     else:
-        logger.debug("no tables found via detectron! life is simple :P")
+        logger.info("no tables found via detectron! life is simple :P")
 
-    logger.debug("actual no of tables %s", len(tableRow))
-    logger.debug("table matches done %s", len(seperateTableLineMatchedIndexes))
+    logger.info("actual no of tables %s", len(tableRow))
+    logger.info("table matches done %s", len(seperateTableLineMatchedIndexes))
     return seperateTableLineMatchedIndexes, jsonOutput
 
 # a) table are matched first and all words are assigned to it
@@ -1014,7 +1019,17 @@ def checkOccuranceOfLineInAllBlocks(line, jsonOutput):
                 continue
 
         correctLine = row["correctLine"]
-        ratio2 = fuzz.partial_ratio(line, correctLine)
+        # this is a problem. 
+        # this line • AMCAT Certificate (Software Development Trainee) is getting matched with "at" because of partial ratio
+
+        len_diff = abs(len(line) - len(correctLine))
+
+        len_diff_percentage = (len_diff / len(line))
+        if len_diff_percentage < .1:
+            ratio2 = fuzz.ratio(line, correctLine)
+        else:
+            ratio2 = fuzz.partial_ratio(line, correctLine)
+
         logger.debug("ratio2 %s  matched with %s", ratio2, correctLine)
         if ratio2 > 90:
             # this is possible match in another block
