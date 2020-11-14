@@ -126,7 +126,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
                 logger.info(pagerow)
                 finalLines.append(pagerow["line"])
 
-        
+        # print(json.dumps(compressedStructuredContent, indent=1))
         if mongoid:
             # addToSearch(mongoid,finalLines,{}, account_name, account_config)
             
