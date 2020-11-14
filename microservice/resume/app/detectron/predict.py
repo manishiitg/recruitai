@@ -20,7 +20,7 @@ def fourChannels(img):
 
     return img
 
-def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cfg, thing_classes=[], save_viz = True, save_withoutbbox = True):
+def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cfg, thing_classes=[], save_viz = True, save_withoutbbox = False):
     logger.debug("reading filename %s", os.path.join(inputFolder, filename))
 
     # Image data
@@ -173,7 +173,7 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
         finalfilenamebbox = os.path.join(outputFolder, filenameonlyalnum + "_" + str(idx) +
                                          "_" + str(classname) + "_" + str(score.item()) + "_bbox_" + ".png")
 
-        logger.debug("writing image %s", finalfilenamebbox)
+        logger.critical("writing image %s", finalfilenamebbox)
         # cv2_imshow(bboximage)
         cv2.imwrite(finalfilenamebbox, bboximage)
 
