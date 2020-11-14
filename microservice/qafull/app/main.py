@@ -318,7 +318,13 @@ class TaskQueue(object):
                 ret = {}
                 
                 if action == "qa_candidate_db":
-                    ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    if "parsing" in body:
+                        if body['parsing'] == "fast":
+                            ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
+                        else:
+                            ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    else:
+                        ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
                 elif action == "qa_pipeline":
                     updateStats({
                         "action" : "resume_pipeline_update",
@@ -333,7 +339,14 @@ class TaskQueue(object):
                         "account_name" : account_name,
                         "account_config" : account_config
                     })
-                    qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    if "parsing" in body:
+                        if body['parsing'] == "fast":
+                            ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
+                        else:
+                            ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    else:
+                        ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+
                     updateStats({
                         "action" : "resume_pipeline_update",
                         "resume_unique_key" : message["filename"],
