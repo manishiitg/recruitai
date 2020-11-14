@@ -11,9 +11,8 @@ from flask_jwt_extended import (
     verify_jwt_in_request
 )
 
-from app.publisher.qa import sendMessage
+# from app.publisher.qa import sendMessage
 from app.publisher.qa_full import sendMessage as sendFullQA
-
 from app.util import check_and_validate_account
 
 bp = Blueprint('qa', __name__, url_prefix='/qa')
@@ -25,9 +24,10 @@ def qa_parse(id):
 
     try:
 
-        sendMessage({
+        sendFullQA({
             "action": "qa_candidate_db",
             "mongoid" : id,
+            "parsing_type" : "fast",
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
