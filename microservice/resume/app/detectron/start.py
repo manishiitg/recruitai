@@ -173,7 +173,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       foldername = ''.join(e for e in f if e.isalnum())
       Path(os.path.join(output_dir, foldername)).mkdir(parents=True, exist_ok=True)
-      p = savePredictionPartsToFile(f , output_dir ,os.path.join(basePath,output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"], save_viz=True, save_withoutbbox=True)
+      p = savePredictionPartsToFile(f , output_dir ,os.path.join(basePath,output_dir, foldername) , predictor, cfg, ["Text","Title", "List","Table", "Figure"], save_viz=True, save_withoutbbox=False)
 
       timeAnalysis[fileIdx]["savePredictionPartsToFile" + str(cvpages)] = time.time() - start_time
       start_time = time.time()
@@ -218,7 +218,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
 
       jsonOutput, tableRow = chooseBBoxVsSegment(jsonOutput, jsonOutputbbox)
       timeAnalysis[fileIdx]["chooseBBoxVsSegment" + str(cvpages)] = time.time() - start_time
-      start_time = time.time()
+      start_time = time.time()      
 
       ##################################
 
@@ -232,6 +232,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       
       # logger.debug(content)
       # pdfminer.high_level.extract_text(pdf_file, password='', page_numbers=None, maxpages=0, caching=True, codec='utf-8', laparams=None)
+      
       try:
         content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
         content = str(content)
@@ -268,7 +269,6 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
         logger.info(cvpage)
         content = pages_data_extract[cvpage-1]
         
-
       # logger.info("contenttt %s", content)
 
       page_contents.append(content)
@@ -282,12 +282,14 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
       #   continue
       #   pass
 
+     
       ########################################
 
       seperateTableLineMatchedIndexes , jsonOutput =  identifyTableData(cleanLineData, tableRow,jsonOutput)
       timeAnalysis[fileIdx]["identifyTableData" + str(cvpages)] = time.time() - start_time
       start_time = time.time()
 
+      
       ########################################
     
       compressedStructuredContent, newstructuredContent = finalCompressedContent(cleanLineData, jsonOutput , seperateTableLineMatchedIndexes, logger, predictions)
