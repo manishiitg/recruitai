@@ -73,7 +73,7 @@ def queue_process():
     if not use_gpu:
         indv_queue_count_thresh = 50
 
-    for queue_type in ["all", "qa", "qafull", "summary", "picture", "resume"]:
+    for queue_type in ["all", "qafull", "summary", "picture", "resume"]: #, "qa" is replaced with qafull
         if run_combined_gpu:
             if queue_type != "all":
                 
