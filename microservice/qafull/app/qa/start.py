@@ -47,7 +47,8 @@ questions_tag_mapping = {
   "personal_dob":"Date of Birth",
   "awards": "Awards",
   "extra":"Extra Curricular",
-  "references" : "References"
+  "references" : "References",
+  "hobbies" : "Hobbies"
 }
 questions_ordering = [
   "exp_years",
@@ -88,7 +89,8 @@ questions = {
   "personal_dob":"what is your date of birth",
   "awards": "any accomplishments or carrier highlights or awards?",
   "extra":"what are your favorite extra curricular activatives or hobbies",
-  "references" : "do you have any references"
+  "references" : "do you have any references",
+  "hobbies" : "what are you hobbies",
 }
 questions_needed_for_initial_data = [
     # "personal_name", # will fetch this from ner itself
@@ -187,7 +189,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
     else:
         logger.critical("error %s", error)
 
-from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers
+from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui
 import json
 import traceback
 
@@ -196,7 +198,28 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     db = initDB(account_name, account_config)
 
     # try:
+    are_all_answers_empty = True
+    for idxxxx in answer_map:
+        answers = answer_map[idxxxx]
+
+        for key in answers:
+            if "error" in answers[key]:
+                continue
+            print(f"key {key} answer: {answers[key]['answer']}")
+            if len(answers[key]["answer"]) != 0:
+                are_all_answers_empty = False
     
+    if are_all_answers_empty:
+        logger.critical("all answers are empty")
+        db.emailStored.update_one({
+            "_id" : ObjectId(idx)
+        }, {
+            '$set' : {
+                "cvParsedInfo.debug.qa_parse_resume.error" : "all answers are empty check page content"
+            }
+        })
+        return 
+
     db.emailStored.update_one({
         "_id" : ObjectId(idx)
     }, {
@@ -282,14 +305,17 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         # assert(len(list(orphan_section_map.keys())) == 0)
 
     tagger = loadTaggerModel()
-    section_ui_map = get_tags_subsections_subanswers(complete_section_match_map, tagger)
+    question_answerer = loadModel()
+    section_ui_map = get_tags_subsections_subanswers(complete_section_match_map, tagger, question_answerer)
+
+    final_section_ui_map = merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagger)
 
     logger.info(section_ui_map)
     db.emailStored.update_one({
         "_id" : ObjectId(idx)
     }, {
         '$set' : {
-            "cvParsedInfo.qa_parse_resume" : section_ui_map[idx]
+            "cvParsedInfo.qa_parse_resume" : final_section_ui_map[idx]
         }
     })
 
