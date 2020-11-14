@@ -432,10 +432,11 @@ class TaskQueue(object):
                     skills = skills.split(",")
                 
                 
-                updateQA({
+                publisherqafull({
                     "action" : "qa_pipeline",
                     "mongoid" : message["mongoid"],
                     "filename" : message["filename"],
+                    "parsing" : "fast",
                     "account_name" : account_name,
                     "account_config" : account_config,
                     "priority" : message["priority"]
@@ -534,10 +535,11 @@ class TaskQueue(object):
                 })
                 
             else:
-                updateQA({  
+                publisherqafull({  
                     "action" : "qa_pipeline",
                     "mongoid" : message["mongoid"],
                     "filename" : message["filename"],
+                    "parsing" : "fast",
                     "account_name" : account_name,
                     "account_config" : account_config,
                     "priority" : message["priority"]
