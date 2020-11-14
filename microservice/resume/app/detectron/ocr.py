@@ -7,6 +7,11 @@ import numpy as np
 from tesserocr import PyTessBaseAPI, PSM, OEM
 from app.config import IN_COLAB
 
+# import cv2
+# print(cv2.__version__)
+# process.exit()
+
+
 IMAGE_SIZE = 400
 
 if IN_COLAB:
@@ -147,7 +152,7 @@ def removeBordersFromTable(filename):
     return or_image
 
 
-def extractOcrTextFromSegments(cvpage, output_dir , outputFolder, increase_dpi_for_small_image = False):
+def extractOcrTextFromSegments(cvpage, output_dir , outputFolder, increase_dpi_for_small_image = True):
     folders = []
 
     for file in os.listdir(output_dir):
