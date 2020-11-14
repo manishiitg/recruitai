@@ -6,6 +6,7 @@ import re
 from app.logging import logger
 import json
 
+
 def clean_page_content_map(idx, page_contents):
 
     page_content_map = {}
@@ -97,7 +98,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
     for i, idx in enumerate(answer_map):
         question_answers = answer_map[idx]
         bbox_list = bbox_map_int[idx]
-        logger.info(f"idx {idx}")
+        print(f"idx {idx}")
 
         # this array will contain which questions answer matched which line sections
         section_match_idx = []
@@ -106,12 +107,12 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
             if "error" in answer:
                 continue
             if len(answer['answer']) == 0:
-                logger.info("skipping %s answer %s",
-                            answer['question'], answer["answer"])
+                print("skipping no answer ",
+                      answer['question'], " answer ", answer["answer"])
                 continue
 
-            logger.info(
-                f"checking {answer['question']} question key {answer['question_key']}")
+            print("checking", answer['question'],
+                  "question key", answer['question_key'])
             answer_found_in_boxes = False
             found_single_match = False
 
@@ -121,7 +122,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
             for page in bbox_list:
                 for box_id, bbox in enumerate(bbox_list[page]):
                     # bbox = bbox_list[page][box_idx]
-                    # logger.info(bbox.keys())
+                    # print(bbox.keys())
 
                     line = bbox["line"].strip()
                     line_start_idx = line_idx
@@ -131,18 +132,18 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                         start_idx = answer["start"]
                         end_idx = answer["end"]
 
-                        # logger.info(f"answer {answer_text}  line {line}")
+                        # print(f"answer {answer_text}  line {line}")
                         if answer_text.lower() in line.lower():
-                            logger.info(
+                            print(
                                 f"idx {page}-{box_id} question :{answer['question_key']}: answer {answer_text} found in line {line}")
                             # found_single_match = True
-                            logger.info(
+                            print(
                                 f"idxs' line_start_idx : {line_start_idx} line_end_idx :{line_idx}  start_idx :{start_idx}  end_idx :{end_idx}")
                             # if start_idx > (line_start_idx - 20) and end_idx < (line_idx + 20):
                 # need to match based on index and not just the first string:
                 # taking padding of 20 characters on both sides for spaces etc
                             answer_found_in_boxes = True
-                # logger.info("matched")
+                # print("matched")
                             inner_section_match_idx.append({
                                 "page": page,
                                 "box_id": box_id,
@@ -157,7 +158,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                             })
 
                         else:
-                            # logger.info(bbox)
+                            # print(bbox)
                             pass
 
             # if found_single_match and not answer_found_in_boxes:
@@ -168,13 +169,13 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                     best_match = None
                     best_match_dist = 99999999
                     for x_match in inner_section_match_idx:
-                        logger.info(x_match)
+                        print(x_match)
                         dist = x_match["dist"]
                         if dist < best_match_dist:
                             best_match_dist = dist
                             best_match = x_match
 
-                    logger.info(f"best match {best_match}")
+                    print(f"best match {best_match}")
                     section_match_idx.append(best_match)
                 else:
                     section_match_idx.extend(inner_section_match_idx)
@@ -184,7 +185,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                 reverse_answer_found = False
                 lines = []
 
-                logger.info(
+                print(
                     f"          anwser not found :{answer['question']}: with answer :{answer['answer']}: need to debug")
 
                 # should have consicutive matches here. this happens for skills etc where we have skills in multiples lines
@@ -198,12 +199,12 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                     if reverse_answer_found:
                         break
                     for box_id, bbox in enumerate(bbox_list[page]):
-                        # logger.info(f"{page}-{box_id} === {bbox['line']}")
+                        # print(f"{page}-{box_id} === {bbox['line']}")
                         line = bbox["line"].strip().lower()
                         lines.append(line)
                         answer_text = answer['answer'].strip().lower()
 
-                        logger.info(f":::::::::::::::::: {line}")
+                        print("::::::::::::::::::", line)
                         line = " ".join([re.sub('[\W\_]', '', word)
                                          for word in line.split(" ")]).strip()
                         if len(line) > 0:
@@ -213,20 +214,20 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                                 [re.sub('[\W\_]', '', word) for word in answer_text.split(" ")])
 
                             ratio = fuzz.partial_ratio(line, answer_text)
-                            logger.info(
+                            print(
                                 f"---- ratio {ratio} for :{answer_text}: line :{line}:  page :{page} box_id :{box_id}")
                             if len(line) < len(answer_text):
                                 if ratio > 95:
                                     is_one_sentence_match_fine = True
                                 if line in answer_text or ratio >= 80:
                                     line_match_count += 1
-                                    logger.info(
+                                    print(
                                         f"...............reverse match found #{line}# in #{answer_text}#  line match count {line_match_count}")
                                     line_match_index.append(
                                         {"page": page, "box_id": box_id, "question_key": answer['question_key'], "score": answer["score"], "ques_idx": ques_idx})
                                 else:
                                     if line_match_count >= 2 or is_one_sentence_match_fine:
-                                        logger.info(
+                                        print(
                                             f"found conscicutive matches so its good {len(line_match_index)}")
                                         reverse_answer_found = True
                                         # section_match_idx.extend(line_match_index)
@@ -238,7 +239,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                                         break
 
                                     elif line_match_count == 1:
-                                        logger.info(
+                                        print(
                                             "not found consituve matches its bad")
                                         line_match_index = []
                                         # assert(False) # debug this
@@ -247,8 +248,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
 
                 # break
                 if not reverse_answer_found:
-                    logger.info(
-                        f"every reverse match not found================z")
+                    print(f"every reverse match not found================z")
                     # case here was experiance matched as 4.5 years but in prediction match 4.5 was not there at all it was just year..
                     # so in this case need to match futher words. of the match and get a best match. not exact match
                     start_idx = answer["start"]
@@ -280,7 +280,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                     padded_sentence = page_content[start_idx:incr_idx]
                     padded_sentence = " ".join(
                         [re.sub('[\W\_]', '', word) for word in padded_sentence.split(" ")])
-                    logger.info(
+                    print(
                         f"padded sentence for :{answer['answer']}:  is := {padded_sentence} count chars {count_chars} max words {max_words} answer start {answer['start']}")
 
                     found = False
@@ -295,13 +295,14 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                     # even if answer is present in that specific
                     # line_end_idx becomes greater than end_idx + 200 if line is very long
                     # so fixing that below in lines 218
-                    logger.info(
+                    print(
                         f"start_idx: {start_idx}  end_idx :{end_idx} line_padding :{line_padding}")
 
                     inner_section_match_idx = []
 
                     max_match_ratio = 10
                     max_match_row = None
+                    min_dist = None
                     for page in bbox_list:
                         for box_id, bbox in enumerate(bbox_list[page]):
 
@@ -334,12 +335,19 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                                         ratio = fuzz.partial_ratio(
                                             padded_sentence, line)
 
-                                logger.info(
-                                    f"##### ratio {ratio} for line {line}   start idx {line_start_idx}")
+                                dist = abs(line_start_idx - start_idx)
+                                print(
+                                    f"##### ratio {ratio}  dist {dist} for line {line}   start idx {line_start_idx}")
                                 if ratio > max_match_ratio:
                                     max_match_ratio = ratio
+                                    min_dist = dist
                                     max_match_row = {"low_ratio_match": True, "page": page, "box_id": box_id, "question_key": answer[
-                                        'question_key'], "score": answer["score"], "ques_idx": ques_idx, "ratio": ratio}
+                                        'question_key'], "score": answer["score"], "ques_idx": ques_idx, "ratio": ratio, "line": line}
+                                elif ratio == max_match_ratio:
+                                    if dist < min_dist:
+                                        min_dist = dist
+                                        max_match_row = {"low_ratio_match": True, "page": page, "box_id": box_id, "question_key": answer[
+                                            'question_key'], "score": answer["score"], "ques_idx": ques_idx, "ratio": ratio, "line": line}
 
                                 if ratio >= 80:
                                     # this is wrong. basically this valid only len of line is greated than len of paddded_sentence
@@ -349,14 +357,13 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                                     # so its gets mached across consicute lines.
 
                                     # need to add logic to handle these both cases
-                                    logger.info(
-                                        f"ratio {ratio} for line {line}")
+                                    print(f"ratio {ratio} for line {line}")
                                     dist = abs(line_start_idx - start_idx)
                                     inner_section_match_idx.append(
                                         {"page": page, "box_id": box_id, "question_key": answer['question_key'], "score": answer["score"], "ques_idx": ques_idx, "ratio": ratio, "dist": dist})
                                     found = True
                             else:
-                                logger.info(
+                                print(
                                     f"skipping line {line} start idx {line_start_idx}  >  (start_idx - line_padding) : {(start_idx - line_padding)} and line_end_idx: {line_end_idx} < (end_idx + line_padding) {(end_idx + line_padding)}")
                                 line_start_idx = line_end_idx
                                 continue
@@ -379,12 +386,16 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
                         section_match_idx.append(inner_section_match_idx[0])
 
                     if not found:
-                        # assert(False)
-                        if max_match_row:
-                            section_match_idx.append(max_match_row)
-                        # not sure what to something detector and resume don't match at all. and this happen rarely.
-                        # i guess can simply just take the highest match
-                        # pass
+                        if max_match_ratio > 50:
+                            print(f"max match row {max_match_row}")
+                            if max_match_row:
+                                section_match_idx.append(max_match_row)
+                            # not sure what to something detector and resume don't match at all. and this happen rarely.
+                            # i guess can simply just take the highest match
+                            # pass
+                        else:
+                            pass
+                            # assert(False)
 
         section_match_map[idx] = section_match_idx
 
@@ -416,8 +427,13 @@ def get_resolved_section_match_map(section_match_map):
 
                     if page == page2 and box_id == box_id2:
 
-                        if question_key.split("_")[0] == question_key2.split("_")[0]:
-                            continue
+                        # if question_key.split("_")[0] == question_key2.split("_")[0]:
+                        # continue # commenting this because of below argument
+
+                        # but above is causing a problem e.g on 5fad61dd10b05d00394b35f1 devrecruit. in this finally when we display
+                        # resume. it showing 2 sections of wrk exp because its matching same things to like exp_duration, exp_company.
+                        # but will solve this down the line, during display instead for now. not here
+                        # i think this should be handled here only
 
                         # now a new problem came. in one candidate resume. name was getting repeated in many places and it was getting conflicted
                         # again and again. even if questions are not sub subsections its getting conflicted.
@@ -449,6 +465,11 @@ def get_resolved_section_match_map(section_match_map):
     return new_section_match_map
 
 
+def rreplace(s, old, new, occurrence):
+    li = s.rsplit(old, occurrence)
+    return new.join(li)
+
+
 def util_match_row(matched_box, page, box_id, question_key, ques_idx):
     matchedRow = matched_box["matchedRow"]
     section_title = ""
@@ -458,6 +479,17 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
     if "Title" in matchedRow["bucketurl"]:
         # section_title = matchedRow["correctLine"] # we should not use correctLine as that is line from ocr only
         section_title = matched_box["line"]
+
+        if "Title" in matchedRow["bucketurl"]:
+            # this mean this is not actual title rather is full line formed by appennding multiple lines
+            # but we only need the actual title
+            if "append" in matched_box:
+                for app in matched_box["append"]:
+                    ap_line = app["row"]['line']
+                    if ap_line:
+                        assert(ap_line in section_title)
+                        section_title = rreplace(section_title, ap_line, "", 1)
+                        # section_title = section_title.replace(ap_line,"") # need to replace from last and one first occurance.
 
         if "sortLines" in matched_box:
             ap_sortLines = matched_box["sortLines"]
@@ -544,13 +576,13 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                 "question_key": question_key, "ques_idx": ques_idx}
         )
     else:
-        logger.info(f"look at this {matchedRow['bucketurl']}")
-        # assert(False)
-        raise Exception(f"look at this {matchedRow['bucketurl']}")
+        print(f"look at this {matchedRow['bucketurl']}")
+        assert(False)
 
     if "append" in matched_box:
         append = matched_box["append"]
         for appen in append:
+            ap_line = None
             ap_type = appen["type"]
             ap_matchedRow = appen['row']["matchedRow"]
             if "List" in ap_matchedRow["bucketurl"]:
@@ -572,7 +604,11 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                 )
 
             elif "Text" in ap_matchedRow["bucketurl"]:
-                ap_line = ap_matchedRow["correctLine"]
+                ap_line = appen['row']["line"]
+                if "sortLines" in appen['row']:
+                    sort_lines = appen['row']["sortLines"]
+                else:
+                    sort_lines = ""
                 section_content.append({
                     "type": "text",
                     "content": ap_line,
@@ -585,7 +621,7 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                         "question_key": question_key, "ques_idx": ques_idx}
                 )
             elif "Table" in ap_matchedRow["bucketurl"]:
-                ap_line = ap_matchedRow["correctLine"]
+                ap_line = appen['row']["line"]
                 section_content.append({
                     "type": "table",
                     "content": ap_line,
@@ -598,7 +634,7 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                         "question_key": question_key, "ques_idx": ques_idx}
                 )
             elif "Title" in ap_matchedRow["bucketurl"]:
-                ap_line = ap_matchedRow["correctLine"]
+                ap_line = appen['row']["line"]
                 section_content.append({
                     "type": "title",
                     "content": ap_line,
@@ -611,10 +647,9 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                         "question_key": question_key, "ques_idx": ques_idx}
                 )
             else:
-                logger.info(ap_matchedRow)
-                logger.info(f"look at this {ap_matchedRow['bucketurl']}")
-                raise Exception(f"look at this {ap_matchedRow['bucketurl']}")
-                # assert(False)
+                print(ap_matchedRow)
+                print(f"look at this {ap_matchedRow['bucketurl']}")
+                assert(False)
 
     return section_title, section_content, absorbed_section_boxes
 
@@ -735,7 +770,7 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
 
                     if "matched" not in sub_matched_box:
                         sub_matched_box["matched"] = False
-                        
+
                     if sub_matched_box["matched"]:
                         bucketurl = sub_matched_box["matchedRow"]["bucketurl"]
                         if "Title" in bucketurl:
@@ -1202,7 +1237,7 @@ def get_orphan_section_map(answer_map, bbox_map_int, absorbed_map, up_absorbed_m
                     if not found:
                         logger.info(
                             f"line not matched.. page {page} box {box_id} {bbox['line']} ")
-                            
+
                         if "matched" not in bbox:
                             bbox["matched"] = False
 
@@ -1232,12 +1267,12 @@ def get_orphan_section_map(answer_map, bbox_map_int, absorbed_map, up_absorbed_m
                             print(f"addend to content and absorbing it")
 
                             orphan_sections.append({
-                                "type" : "text",
+                                "type": "text",
                                 "content": line,
-                                "page" : page,
-                                "box_id" : box_id
+                                "page": page,
+                                "box_id": box_id
                             })
-                            
+
         if len(orphan_sections) > 0:
             orphan_section_map[idx] = orphan_sections
 
@@ -1371,7 +1406,8 @@ questions_heading_map = {
     "personal_dob": "PERSONAL INFOMATION",
     "awards": "AWARDS",
     "extra": "EXTRA",
-    "references": "REFERENCES"
+    "references": "REFERENCES",
+    "hobbies": "Hobbies"
 }
 questions_to_direct_answer = ["personal_name", "exp_years", "exp_company",
                               "exp_designation", "exp_duration", "personal_dob", "personal_location"]
@@ -1390,18 +1426,20 @@ sub_question_to_ask = {
 }
 
 
-def get_tags_subsections_subanswers(complete_section_match_map, tagger):
+def get_tags_subsections_subanswers(complete_section_match_map, tagger, question_answerer):
     section_ui_map = {}
     for idx in complete_section_match_map:
-        logger.info(f"idx: {idx}")
+        print("idx: ", idx)
         complete_section_match = complete_section_match_map[idx]
         section_ui = {}
+        section_already_in_ui = []
         for section in complete_section_match:
+            print(section)
             question_key = section['current_answer']['question_key']
             section_ui[question_key] = []
 
             if question_key in questions_to_direct_answer:
-                logger.info(f"qa answer {section['current_answer']['answer']}")
+                print(f"qa answer {section['current_answer']['answer']}")
 
             heading = questions_heading_map[question_key]
             section_ui[question_key].append({
@@ -1410,55 +1448,139 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger):
             })
 
             sentence = []
-            sub_sections = []
+            # sub_sections = []
             # need to break based on title here as well, but in some cases like in case of personal name etc. we should not do this
             # this is more specific to bigger sections
             if len(section["section_title"]) > 0:
                 sentence.append(section["section_title"])
                 section_ui[question_key].append({
                     "type": "heading_alternate",
-                    "text": fix_single_char_line(section["section_title"])
+                    "text": fix_single_char_line(section["section_title"]),
+                    # 'page': section['page'],
+                    # 'box_id': section['box_id']
                 })
 
             display_text = []
+            was_prev_text_pre = False
             for x in section["section_content"]:
                 if x["type"] == "title":
-                    if len(sentence) > 0:
-                        sub_sections.append(sentence)
+                    if 'ap_type' not in x:
+                        x['ap_type'] = ''
+                    if 'sortlines' not in x:
+                        x['sortlines'] = ''
+
+                    # we got a sub section in between. better to braek this and create new
+                    if len(display_text) > 0 and display_text[-1]['type'] != "title":
+                        # sub_sections.append(sentence)
                         section_ui[question_key].append({
-                            "type": x["type"],
-                            "text": fix_single_char_line(" ".join(sentence))
+                            'type': 'text',
+                            'sentence': sentence,
+                            "display_text": display_text
                         })
                         sentence = []
+                        display_text = []
+                        was_prev_text_pre = False
 
-                if isinstance(x["content"], list):
-                    for con in x["content"]:
-                        new_x_content = []
-                        for ll in x["content"]:
-                            new_x_content.append(fix_single_char_line(ll))
+                        question_key = question_key + \
+                            ''.join(e for e in " ".join(
+                                x["content"]) if e.isalnum())
+                        if question_key not in section_ui:
+                            section_ui[question_key] = []
 
-                        x['content'] = new_x_content
-                        sentence.extend(x['content'])
-                else:
-                    sentence.append(x['content'])
+                        print(
+                            f"new question keykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykeykey {question_key}")
 
-                display_text.append({
+                        section_ui[question_key].append({
+                            "type": "heading",
+                            "text": fix_single_char_line(x["content"])
+                        })
+                        continue
+                    else:
+                        section_ui[question_key].append({
+                            "type": x["type"],
+                            "text": fix_single_char_line(x["content"]),
+                            'sortlines': x["sortlines"],
+                            # 'page': x['page'],
+                            # 'box_id': x['box_id'],
+                            'ap_type': x['ap_type']
+                        })
+
+                if 'ap_type' not in x:
+                    x['ap_type'] = ''
+                if 'sortlines' not in x:
+                    x['sortlines'] = ''
+
+                current_display_text = {
                     "type": x["type"],
-                    "text": x["content"]
-                })
+                    "text": x["content"],
+                    'sortlines': x["sortlines"],
+                    'page': x['page'],
+                    'box_id': x['box_id'],
+                    'ap_type': x['ap_type']
+                }
+
+                if was_prev_text_pre:
+                    was_prev_text_pre = False
+                    prev_display_text = copy.deepcopy(display_text[-1])
+                    display_text[-1] = {
+                        "type": x["type"],
+                        "text": x["content"],
+                        'sortlines': x["sortlines"],
+                        'page': x['page'],
+                        'box_id': x['box_id'],
+                        'ap_type': x['ap_type']
+                    }
+                    display_text.append(prev_display_text)
+
+                    prev_sentence_text = copy.deepcopy(sentence[-1])
+
+                    if isinstance(x["content"], list):
+                        sentence.pop()
+                        # this will not working properly. because we need to actually pop all sentences from the list not just the last.
+                        # but let it be for now.
+                        for con in x["content"]:
+                            new_x_content = []
+                            for ll in x["content"]:
+                                new_x_content.append(fix_single_char_line(ll))
+
+                            x['content'] = new_x_content
+                            sentence.extend(x['content'])
+                            sentence.append(prev_sentence_text)
+                    else:
+                        sentence[-1] = x['content']
+                        sentence.append(prev_sentence_text)
+                else:
+                    display_text.append(current_display_text)
+                    if isinstance(x["content"], list):
+                        for con in x["content"]:
+                            new_x_content = []
+                            for ll in x["content"]:
+                                new_x_content.append(fix_single_char_line(ll))
+
+                            x['content'] = new_x_content
+                            sentence.extend(x['content'])
+                    else:
+                        sentence.append(x['content'])
+
+                if x["ap_type"] == "pre":
+                    was_prev_text_pre = True
 
             if len(sentence) > 0:
-                sub_sections.append(sentence)
+                # sub_sections.append(sentence)
                 section_ui[question_key].append({
                     'type': 'text',
                     'sentence': sentence,
                     "display_text": display_text
                 })
                 sentence = []
+                display_text = []
 
-            logger.info(f">>>> {section['current_answer']['question_key']}")
+            print(f">>>> {section['current_answer']['question_key']}")
             # instead of sub_sections
+
+        for question_key in section_ui.keys():
             for idx2, ui in enumerate(section_ui[question_key]):
+
                 # if ui['type'] == "title" or  ui['type'] == "heading" or  ui['type'] == "heading_alternate":
                 #   continue
 
@@ -1467,25 +1589,38 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger):
                 else:
                     line = " ".join(ui['sentence'])
 
-                logger.info("=================")
-                # logger.info(json.dumps(sentence, indent=1))
+                print("=================")
+                # print(json.dumps(sentence, indent=1))
 
-                logger.info(line)
-                logger.info("_____")
+                print(line)
+                print("_____")
 
                 if len(line.strip()) == 0:
                     continue
 
-                logger.info("length line %s", len(line.split(" ")))
+                print("length line %s", len(line.split(" ")))
+
                 section_ui[question_key][idx2]["questions"] = []
+
+                section_found = False
+                for section in complete_section_match:
+                    if question_key == section['current_answer']['question_key']:
+                        section_found = True
+                        break
+
+                if not section_found:
+                    continue
+
                 if len(line.split(" ")) > 10:  # atleast 10 words to ask any questions else no use
                     for key in sub_question_to_ask:
+                        print(
+                            f"key {key} section['current_answer']['question_key'] {section['current_answer']['question_key']}")
                         if key in section['current_answer']["question_key"] or key == section['current_answer']["question_key"]:
                             for sub_ques_key in sub_question_to_ask[key]:
                                 sub_question = sub_question_to_ask[key][sub_ques_key]
 
-                                logger.info("****** asking question *********")
-                                logger.info(sub_question)
+                                print("****** asking question *********")
+                                print(sub_question)
 
                                 start_time = time.time()
                                 try:
@@ -1498,19 +1633,21 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger):
                                         'question': sub_question,
                                         'context': new_line
                                     }, handle_impossible_answer=True)
-                                    logger.info(answer)
+                                    print(answer)
+                                    answer['question'] = sub_question
                                     section_ui[question_key][idx2]["questions"].append(
                                         answer)
-                                    logger.info("time taken for answer :",
+                                    print("time taken for answer :",
                                           time.time() - start_time)
-                                    logger.info("context length: ", len(line))
+                                    print("context length: ", len(line))
 
-                                except Exception as e:
+                                except KeyError as e:
+                                    logger.critical("key error %s", e)
                                     pass
 
-                logger.info("************extracting tags************")
+                print("************extracting tags************")
                 start_time = time.time()
-                logger.info(f"ner line: {line}")
+                print(f"ner line: {line}")
                 if len(line) < 512:
                     sentence = Sentence(line, use_tokenizer=False)
                     tagger.predict(sentence)
@@ -1522,26 +1659,183 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger):
                     "https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+", line)
                 if urls:
 
-                    logger.info("found urls:")
+                    print("found urls:")
                     # in this spaces are coming 5f70cfe80f22e9003956efe4
-                    # logger.info(line)
-                    logger.info(urls)
+                    # print(line)
+                    print(urls)
                     section_ui[question_key][idx2]["urls"] = urls
 
                 tag_dict = sentence.to_dict(tag_type='ner')
                 # for entity in sentence.get_spans('ner'):
-                # logger.info(entity)
-                # logger.info(json.dumps(tag_dict, indent=1, default=str))
-                # logger.info(tag_dict)
+                # print(entity)
+                # print(json.dumps(tag_dict, indent=1, default=str))
+                # print(tag_dict)
                 custom_entities, new_tag_dict = combine_ner_into_entites(
                     tag_dict)
                 section_ui[question_key][idx2]["tags"] = custom_entities
-                logger.info(json.dumps(custom_entities, indent=1))
-                logger.info("time taken for answer : %s", time.time() - start_time)
-                logger.info("----------------------------------")
+                print(json.dumps(custom_entities, indent=1))
+                print("time taken for answer :", time.time() - start_time)
+                print("----------------------------------")
 
         section_ui_map[idx] = section_ui
 
     return section_ui_map
 
 
+def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagger):
+    merged_section_ui_map = {}
+    for idx in section_ui_map:
+        print(f"idx {idx}")
+        merged_section_ui_map[idx] = {}
+        section_ui = copy.deepcopy(section_ui_map[idx])
+        if idx in orphan_section_map:
+            orphan_section = orphan_section_map[idx]
+        else:
+            orphan_section = []
+        page_box = page_box_count[idx]
+
+        sections = []
+        section_title = ""
+        section_content = []
+        prev_page = -1
+        prev_box_id = -1
+        prev_title_page = -1
+        prev_title_box_id = -1
+        for x in orphan_section:
+            print(x)
+            if x["type"] == "title":
+                if prev_box_id == -1:
+                    section_title = x["content"]
+                    prev_page = x['page']
+                    prev_box_id = x['box_id']
+                    prev_title_page = x['page']
+                    prev_title_box_id = x['box_id']
+                    print(
+                        f"title found i.e new section {section_title} prev_page {prev_page} prev_box_id {prev_box_id}")
+                else:
+                    isCountinous = False
+                    page = x['page']
+                    box_id = x['box_id']
+                    print(
+                        f"page {page} box_id {box_id} prev_page {prev_page} prev_box_id {prev_box_id}")
+                    if page == prev_title_page:
+                        if box_id == prev_title_box_id + 1:
+                            print("is containues")
+                            isCountinous = True
+                        else:
+                            pass
+                    else:
+                        if page == prev_title_page + 1 and box_id == 0:
+                            print("is containues")
+                            isCountinous = True
+                        else:
+                            pass
+
+                    if isCountinous:
+                        section_title = section_title + " " + x["content"]
+                    else:
+                        sections.append({
+                            "section_title": section_title,
+                            "section_content": section_content
+                        })
+                        section_content = []
+                        section_title = x["content"]
+
+                    prev_page = x['page']
+                    prev_box_id = x['box_id']
+                    prev_title_page = x['page']
+                    prev_title_box_id = x['box_id']
+
+            else:
+                isCountinous = False
+                if "ap_type" in x:
+                    if x["ap_type"] == "pre":
+                        if len(section_content) == 0:
+                            section_title = section_title + x["content"]
+                        else:
+                            prev_content = section_content.pop()
+                            section_content.append(x)
+                            section_content.append(prev_content)
+
+                        continue
+                    else:
+                        assert(False)
+                page = x['page']
+                box_id = x['box_id']
+                print(
+                    f"page {page} box_id {box_id} prev_page {prev_page} prev_box_id {prev_box_id}")
+                if page == prev_page:
+                    if box_id == prev_box_id + 1:
+                        print("is containues")
+                        isCountinous = True
+                    else:
+                        pass
+                else:
+                    if page == prev_page + 1 and box_id == 0:
+                        print("is containues")
+                        isCountinous = True
+                    else:
+                        pass
+
+                if isCountinous:
+                    section_content.append(x)
+                    prev_page = x['page']
+                    prev_box_id = x['box_id']
+
+        if len(section_content) > 0:
+            sections.append({
+                "section_title": section_title,
+                "section_content": section_content
+            })
+            section_content = []
+
+        for section in sections:
+
+            section_title = section["section_title"]
+            print(f"section title {section_title}")
+            question_key = ''.join(e for e in " ".join(
+                section_title) if e.isalnum())
+            section_content = section["section_content"]
+            print(section_content)
+            section_ui[question_key] = [
+                {
+                    "display_text": [
+                        {
+                            "type": "heading",
+                            "text": section_title,
+                        }
+                    ]
+                }
+            ]
+            section_ui[question_key][0]["display_text"].extend(section_content)
+            line = ""
+            sentence = []
+            for x in section_content:
+                if isinstance(x["content"], list):
+                    for con in x["content"]:
+                        new_x_content = []
+                        for ll in x["content"]:
+                            new_x_content.append(fix_single_char_line(ll))
+
+                        x['content'] = new_x_content
+                        sentence.extend(x['content'])
+                else:
+                    sentence.append(x['content'])
+
+            line = " ".join(sentence)
+
+            if len(line) < 512:
+                sentence = Sentence(line, use_tokenizer=False)
+                tagger.predict(sentence)
+            else:
+                sentence = Sentence(line[:512], use_tokenizer=False)
+                tagger.predict(sentence)
+
+            tag_dict = sentence.to_dict(tag_type='ner')
+            custom_entities, new_tag_dict = combine_ner_into_entites(tag_dict)
+            print(custom_entities)
+            section_ui[question_key][0]["tags"] = custom_entities
+
+        merged_section_ui_map[idx] = section_ui
+
+    return merged_section_ui_map
