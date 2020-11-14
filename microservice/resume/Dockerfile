@@ -1,4 +1,4 @@
-FROM  pytorch/pytorch
+FROM  pytorch/pytorch:1.7.0-cuda11.0-cudnn8-runtime
 LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
@@ -8,7 +8,9 @@ RUN apt-get update \
 
 RUN pip install --upgrade cython
 RUN pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
-RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
+# RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
+RUN python -m pip install detectron2 -f \
+  https://dl.fbaipublicfiles.com/detectron2/wheels/cu110/torch1.7/index.html
 
 RUN pip install google-cloud-storage
 RUN pip install pika
@@ -20,7 +22,7 @@ RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -
 RUN apt-get install python-poppler poppler-utils -y \
     && apt-get -y autoclean
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x  | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 
 RUN node --version
