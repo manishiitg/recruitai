@@ -132,22 +132,26 @@ def savePredictionPartsToFile(filename, inputFolder, outputFolder, predictor, cf
         fullname, file_extension = os.path.splitext(filename)
         filenameonlyalnum = ''.join(e for e in filename if e.isalnum())
         if not save_withoutbbox:
-          mask = np.zeros(image.shape, dtype=np.uint8)
-          cv2.fillPoly(mask, np.array([rois], dtype=np.int32), ignore_mask_color)
-          # from Masterfool: use cv2.fillConvexPoly if you know it's convex
+            try:
+                mask = np.zeros(image.shape, dtype=np.uint8)
+                cv2.fillPoly(mask, np.array([rois], dtype=np.int32), ignore_mask_color)
+                # from Masterfool: use cv2.fillConvexPoly if you know it's convex
 
-          # apply the mask
-          masked_image = cv2.bitwise_and(image, mask)
+                # apply the mask
+                masked_image = cv2.bitwise_and(image, mask)
+                
+
+                nimg = masked_image[y:y+h, x:x+w]
+
+                # save the result
+                
+                finalfilename = os.path.join(outputFolder , filenameonlyalnum + "_" + str(idx) + \
+                    "_" + str(classname) + "_" + str(score.item()) + ".png")
+                logger.critical("writing image %s", finalfilename)
+                cv2.imwrite(finalfilename, nimg)
+            except cv2.error as e:
+                pass
           
-
-          nimg = masked_image[y:y+h, x:x+w]
-
-          # save the result
-          
-          finalfilename = os.path.join(outputFolder , filenameonlyalnum + "_" + str(idx) + \
-              "_" + str(classname) + "_" + str(score.item()) + ".png")
-          logger.critical("writing image %s", finalfilename)
-          cv2.imwrite(finalfilename, nimg)
 
         padding = 10
         paddingX = x - padding
