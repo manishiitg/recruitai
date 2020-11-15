@@ -439,7 +439,7 @@ def main():
     # time.sleep(10) #wait for rabbitmq and redis to start
     
     while True:
-        # queue_process()
+        queue_process()
         time.sleep(60)
     # consumer = ReconnectingTaskQueue(amqp_url)
     # consumer.run()
