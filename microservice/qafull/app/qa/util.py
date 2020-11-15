@@ -492,8 +492,15 @@ def util_match_row(matched_box, page, box_id, question_key, ques_idx):
                         # section_title = section_title.replace(ap_line,"") # need to replace from last and one first occurance.
 
         if "sortLines" in matched_box:
+
+            # remove duplicates in title. have been many times when it has sortLines and section_title
+            section_title = " ".join(
+                list(dict.fromkeys(section_title.split(" "))))
             ap_sortLines = matched_box["sortLines"]
             ap_list = list(ap_sortLines.values())
+            # duplicates are there in sortlines sometimes
+            ap_list = list(set(ap_list))
+
             new_ap_list = []
             for l in ap_list:
                 if section_title in l:
@@ -660,8 +667,7 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
     absorbed_map = {}
     for i, idx in enumerate(new_section_match_map):
 
-        logger.info(
-            "==================================== section identification down ===================================== ")
+        print("==================================== section identification down ===================================== ")
 
         section_map = []
         absorbed_section_boxes = []  # when we go down, which boxes we added more
@@ -677,22 +683,22 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
             section_title = ""
             section_content = []
 
-            logger.info(
+            print(
                 f">>> checking section page: {page}   box_id : {box_id} question key: {question_key} <<<")
 
             if question_key in skip_absorbed_key:
-                logger.info(
+                print(
                     f"skipping {question_key} because it is already absorbed")
                 continue
 
             matched_box = bbox_list[page][box_id]
-            logger.info(matched_box)
+            print(matched_box)
             matchedRow = None
             if "matchedRow" in matched_box:
                 matchedRow = matched_box["matchedRow"]
 
             if matchedRow:
-                logger.info("found a matched row!")
+                print("found a matched row!")
                 ret_section_title, ret_section_content, ret_absorbed_section_boxes = util_match_row(
                     matched_box, page, box_id, question_key, ques_idx)
                 if len(ret_section_title) > 0:
@@ -703,7 +709,7 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                     absorbed_section_boxes.extend(ret_absorbed_section_boxes)
 
             else:
-                # logger.info("this is not a title. need to find surrounding first going down only and finding down limit of section")
+                # print("this is not a title. need to find surrounding first going down only and finding down limit of section")
                 section_content.append({
                     "type": "text",
                     "content": matched_box["line"],
@@ -723,15 +729,14 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                         page += 1
                         box_id = 0
                         if page not in page_box_count[idx]:
-                            logger.info(
-                                f"breaking page {page} box id {box_id}")
+                            print(f"breaking page {page} box id {box_id}")
                             break
 
                 else:
-                    logger.info(f"breaking page {page} box id {box_id}")
+                    print(f"breaking page {page} box id {box_id}")
                     break
 
-                logger.info(f"page {page} box id {box_id}")
+                print(f"page {page} box id {box_id}")
                 sub_matched_box = bbox_list[page][box_id]
 
                 should_break = False
@@ -743,13 +748,13 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                     sub_question_key = subsection["question_key"]
                     if page == sub_page:
                         if box_id == sub_box_id:
-                            logger.info(
+                            print(
                                 f"sub section exists with a match question key :{question_key}: and sub_question_key :{sub_question_key} sub_page: {sub_page} box id {sub_box_id}")
                             if "_" in question_key:
                                 key1 = question_key.split("_")[0]
                                 key2 = sub_question_key.split("_")[0]
                                 if key1 == key2:
-                                    logger.info(
+                                    print(
                                         f"is just continuation of keys so will append itself {sub_question_key}")
                                     full_question_key_absorted.append(
                                         sub_question_key)
@@ -764,23 +769,19 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                                 should_break = True
                                 break
 
-                # logger.info(sub_matched_box)
+                # print(sub_matched_box)
                 if not should_break:
                     # if should break means another match was found
-
-                    if "matched" not in sub_matched_box:
-                        sub_matched_box["matched"] = False
 
                     if sub_matched_box["matched"]:
                         bucketurl = sub_matched_box["matchedRow"]["bucketurl"]
                         if "Title" in bucketurl:
-                            logger.info("next title found so breaking")
+                            print("next title found so breaking")
                             should_break = True
                             # we will break it here, so that once traversing up in the next iternatino we can match title.
                             # but then there should be 3rd iteration which doest break on this
                         else:
-                            logger.info(
-                                f"sub matched addend to content and absorbing it")
+                            print(f"sub matched addend to content and absorbing it")
 
                             section_content.append({
                                 "type": "line",
@@ -799,7 +800,7 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                         if len(line.strip()) == 0:
                             continue
 
-                        logger.info(f"addend to content and absorbing it")
+                        print(f"addend to content and absorbing it")
 
                         section_content.append({
                             "type": "text",
@@ -813,7 +814,7 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                         )
 
                 if should_break:
-                    logger.info("breaking out")
+                    print("breaking out")
                     break
 
             section_map.append({
@@ -857,8 +858,7 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
     for i, idx in enumerate(new_section_match_map):
 
-        logger.info(
-            "==================================== section identification up ===================================== ")
+        print("==================================== section identification up ===================================== ")
 
         bbox_list = bbox_map_int[idx]
         section_map = []
@@ -873,7 +873,7 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
             question_key = section["question_key"]
             ques_idx = section["ques_idx"]
 
-            logger.info(
+            print(
                 f">>>> checking section page: {page}   box_id : {box_id} question key: {question_key} page {page} box {box_id} <<<<<")
             matched_box = bbox_list[page][box_id]
             matchedRow = None
@@ -886,14 +886,14 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
             if matchedRow:
                 if "Title" in matchedRow["bucketurl"]:
-                    logger.info("skip as its a matched title")
+                    print("skip as its a matched title")
                     pass
                 else:
                     should_parse = True
 
             else:
                 should_parse = True
-                logger.info(
+                print(
                     "this is not a matched row. need to find surrounding first going up only and finding up limit of section")
 
             if should_parse:
@@ -903,9 +903,9 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
                         page -= 1
                         box_id = 0
 
-                    logger.info(f"page {page} box id {box_id}")
+                    print(f"page {page} box id {box_id}")
                     if page == 0:
-                        logger.info(f"breaking page {page} box id {box_id}")
+                        print(f"breaking page {page} box id {box_id}")
                         break
 
                     sub_matched_box = bbox_list[page][box_id]
@@ -913,13 +913,13 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
                     # check if the next box is either a title or if its matched by another section
 
-                    logger.info(prev_absorbed_section_boxes)
+                    print(prev_absorbed_section_boxes)
                     for boxes in prev_absorbed_section_boxes:
                         prev_page = boxes['page']
                         prev_box_id = boxes['box_id']
-                        # logger.info(f"prev page {prev_page}  prev box id {prev_box_id} page {page} box id {box_id}")
+                        # print(f"prev page {prev_page}  prev box id {prev_box_id} page {page} box id {box_id}")
                         if page == prev_page and box_id == prev_box_id:
-                            logger.info(
+                            print(
                                 f"sub already absorbed section exists with a match question key :{boxes['question_key']}:")
                             should_break = True
 
@@ -929,13 +929,13 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
                         sub_question_key = subsection["question_key"]
                         if page == sub_page:
                             if box_id == sub_box_id:
-                                logger.info(
+                                print(
                                     f"sub section exists with a match question key :{question_key}: and sub_question_key :{sub_question_key}")
                                 if "_" in question_key:
                                     key1 = question_key.split("_")[0]
                                     key2 = sub_question_key.split("_")[0]
                                     if key1 == key2:
-                                        logger.info(
+                                        print(
                                             f"is just continuation of keys so will append itself")
                                         # absorbed_section_boxes.append(
                                         #     {"page": sub_page, "box_id" : sub_box_id, "question_key": question_key, "ques_idx": ques_idx}
@@ -949,25 +949,25 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
                                     break
 
                     if not should_break:
-                        # logger.info(sub_matched_box)
-                        if "matched" not in sub_matched_box:
-                            sub_matched_box["matched"] = False
-
+                        # print(sub_matched_box)
                         if sub_matched_box["matched"]:
 
                             if "Title" in sub_matched_box["matchedRow"]["bucketurl"]:
                                 should_break = True
-                                logger.info(
+                                print(
                                     "breaking as found title, but adding the title as well")
 
                             ret_section_title, ret_section_content, ret_absorbed_section_boxes = util_match_row(
                                 sub_matched_box, page, box_id, question_key, ques_idx)
+                            # print(ret_section_title)
+                            # print(ret_section_content)
+                            # print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                             if len(ret_section_title) > 0:
                                 section_title = ret_section_title
                             if len(ret_section_content) > 0:
                                 section_content.extend(ret_section_content)
                             if len(ret_absorbed_section_boxes) > 0:
-                                logger.info("absorted the content")
+                                print("absorted the content")
                                 absorbed_section_boxes.extend(
                                     ret_absorbed_section_boxes)
                                 # even current match should not get repeated again
@@ -978,10 +978,10 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
                             line = sub_matched_box["line"]
                             if len(line.strip()) == 0:
-                                logger.info("empty line")
+                                print("empty line")
                                 continue
 
-                            logger.info(
+                            print(
                                 f"addend to content and absorbing it page :{page} box id : {box_id}")
 
                             section_content.append({
@@ -1000,10 +1000,11 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
                             )  # even current match should not get repeated again
 
                     if should_break:
-                        logger.info("breaking")
+                        print("breaking")
                         break
 
             if len(section_content) > 0 or len(section_title) > 0:
+                section_content.reverse()
                 section_map.append({
                     "section_title": section_title,
                     "question_key": question_key,
@@ -1390,7 +1391,7 @@ def fix_single_char_line(line):
 questions_heading_map = {
     "personal_name": "CONTACT",
     "summary": "SUMMARY",
-    "exp_years": "WORK EXPERIANCE",
+    "total_experiance": "EXPERIANCE SUMMARY",
     "exp_company": "WORK EXPERIANCE",
     "exp_designation": "WORK EXPERIANCE",
     "exp_duration": "WORK EXPERIANCE",
@@ -1431,9 +1432,42 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
     for idx in complete_section_match_map:
         print("idx: ", idx)
         complete_section_match = complete_section_match_map[idx]
+        merged_complete_section_match = []
+        skip_merged_sections = []
+        for sidx, section in enumerate(complete_section_match):
+            question_key = section['current_answer']['question_key']
+            if question_key in skip_merged_sections:
+                print(f"skipping already merged section {question_key}")
+                continue
+
+            if "_" in question_key:
+                first = question_key.split("_")[0]
+                for sidx2, section2 in enumerate(complete_section_match):
+                    if sidx2 > sidx:
+                        question_key2 = section2['current_answer']['question_key']
+                        if "_" in question_key2:
+                            first2 = question_key2.split("_")[0]
+                            if first == first2:
+                                print(
+                                    f"merge these questions question_key {question_key} sidx {sidx}   question_key2 {question_key2} sidx2 {sidx2}")
+                                section_title = section2["section_title"]
+                                section_content = section2["section_content"]
+                                section["section_content"].append({
+                                    "type": "text",
+                                    "content": section_title,
+                                    "merged": question_key2,
+                                    "page": -1,
+                                    "box_id": -1
+                                })
+                                section["section_content"].extend(
+                                    section_content)
+                                skip_merged_sections.append(question_key2)
+
+            merged_complete_section_match.append(section)
+
         section_ui = {}
         section_already_in_ui = []
-        for section in complete_section_match:
+        for section in merged_complete_section_match:
             print(section)
             question_key = section['current_answer']['question_key']
             section_ui[question_key] = []
@@ -1469,8 +1503,11 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                     if 'sortlines' not in x:
                         x['sortlines'] = ''
 
+                    ismerged = False
+                    if 'merged' in x:
+                        ismerged = True
                     # we got a sub section in between. better to braek this and create new
-                    if len(display_text) > 0 and display_text[-1]['type'] != "title":
+                    if not ismerged and len(display_text) > 0 and display_text[-1]['type'] != "title":
                         # sub_sections.append(sentence)
                         section_ui[question_key].append({
                             'type': 'text',
@@ -1504,6 +1541,8 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                             # 'box_id': x['box_id'],
                             'ap_type': x['ap_type']
                         })
+                        if ismerged:
+                            continue
 
                 if 'ap_type' not in x:
                     x['ap_type'] = ''
@@ -1521,21 +1560,19 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
 
                 if was_prev_text_pre:
                     was_prev_text_pre = False
-                    prev_display_text = copy.deepcopy(display_text[-1])
-                    display_text[-1] = {
+                    prev_display_text = display_text.pop()
+                    display_text.append({
                         "type": x["type"],
                         "text": x["content"],
                         'sortlines': x["sortlines"],
                         'page': x['page'],
                         'box_id': x['box_id'],
                         'ap_type': x['ap_type']
-                    }
+                    })
                     display_text.append(prev_display_text)
 
-                    prev_sentence_text = copy.deepcopy(sentence[-1])
-
                     if isinstance(x["content"], list):
-                        sentence.pop()
+                        prev_sent = sentence.pop()
                         # this will not working properly. because we need to actually pop all sentences from the list not just the last.
                         # but let it be for now.
                         for con in x["content"]:
@@ -1545,20 +1582,20 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
 
                             x['content'] = new_x_content
                             sentence.extend(x['content'])
-                            sentence.append(prev_sentence_text)
+                            sentence.append(prev_sent)
                     else:
-                        sentence[-1] = x['content']
-                        sentence.append(prev_sentence_text)
+                        prev_sent = sentence.pop()
+                        sentence.append(x['content'])
+                        sentence.append(prev_sent)
                 else:
                     display_text.append(current_display_text)
                     if isinstance(x["content"], list):
+                        new_x_content = []
                         for con in x["content"]:
-                            new_x_content = []
-                            for ll in x["content"]:
-                                new_x_content.append(fix_single_char_line(ll))
+                            new_x_content.append(fix_single_char_line(con))
 
-                            x['content'] = new_x_content
-                            sentence.extend(x['content'])
+                        x['content'] = new_x_content
+                        sentence.extend(x['content'])
                     else:
                         sentence.append(x['content'])
 
@@ -1602,13 +1639,48 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
 
                 section_ui[question_key][idx2]["questions"] = []
 
+                print("************extracting tags************")
+                start_time = time.time()
+                print(f"ner line: {line}")
+                # if len(line) < 512:
+                # if work exp section is long.
+                # doing this results is skipping in identifing multiple work experiances 
+                sentence = Sentence(line) # , use_tokenizer=False
+                tagger.predict(sentence)
+                # else:
+                #     sentence = Sentence(line[:512], use_tokenizer=False)
+                #     tagger.predict(sentence)
+
+                urls = re.findall(
+                    "https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+", line)
+                if urls:
+
+                    print("found urls:")
+                    # in this spaces are coming 5f70cfe80f22e9003956efe4
+                    # print(line)
+                    print(urls)
+                    section_ui[question_key][idx2]["urls"] = urls
+
+                tag_dict = sentence.to_dict(tag_type='ner')
+                # for entity in sentence.get_spans('ner'):
+                # print(entity)
+                # print(json.dumps(tag_dict, indent=1, default=str))
+                # print(tag_dict)
+                custom_entities, new_tag_dict = combine_ner_into_entites(
+                    tag_dict)
+                section_ui[question_key][idx2]["tags"] = custom_entities
+                print(json.dumps(custom_entities, indent=1))
+                print("time taken for answer :", time.time() - start_time)
+                print("----------------------------------")
+
                 section_found = False
-                for section in complete_section_match:
+                for section in merged_complete_section_match:
                     if question_key == section['current_answer']['question_key']:
                         section_found = True
                         break
 
                 if not section_found:
+                    # we are only asking questions, tags from orignial headings. not from new sections we find
                     continue
 
                 if len(line.split(" ")) > 10:  # atleast 10 words to ask any questions else no use
@@ -1641,41 +1713,8 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                                           time.time() - start_time)
                                     print("context length: ", len(line))
 
-                                except KeyError as e:
-                                    logger.critical("key error %s", e)
+                                except Exception as e:
                                     pass
-
-                print("************extracting tags************")
-                start_time = time.time()
-                print(f"ner line: {line}")
-                if len(line) < 512:
-                    sentence = Sentence(line, use_tokenizer=False)
-                    tagger.predict(sentence)
-                else:
-                    sentence = Sentence(line[:512], use_tokenizer=False)
-                    tagger.predict(sentence)
-
-                urls = re.findall(
-                    "https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+", line)
-                if urls:
-
-                    print("found urls:")
-                    # in this spaces are coming 5f70cfe80f22e9003956efe4
-                    # print(line)
-                    print(urls)
-                    section_ui[question_key][idx2]["urls"] = urls
-
-                tag_dict = sentence.to_dict(tag_type='ner')
-                # for entity in sentence.get_spans('ner'):
-                # print(entity)
-                # print(json.dumps(tag_dict, indent=1, default=str))
-                # print(tag_dict)
-                custom_entities, new_tag_dict = combine_ner_into_entites(
-                    tag_dict)
-                section_ui[question_key][idx2]["tags"] = custom_entities
-                print(json.dumps(custom_entities, indent=1))
-                print("time taken for answer :", time.time() - start_time)
-                print("----------------------------------")
 
         section_ui_map[idx] = section_ui
 
@@ -1825,10 +1864,10 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
             line = " ".join(sentence)
 
             if len(line) < 512:
-                sentence = Sentence(line, use_tokenizer=False)
+                sentence = Sentence(line) # , use_tokenizer=False
                 tagger.predict(sentence)
             else:
-                sentence = Sentence(line[:512], use_tokenizer=False)
+                sentence = Sentence(line[:512]) # , use_tokenizer=False
                 tagger.predict(sentence)
 
             tag_dict = sentence.to_dict(tag_type='ner')
