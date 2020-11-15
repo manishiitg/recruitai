@@ -1790,7 +1790,10 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
                 if "ap_type" in x:
                     if x["ap_type"] == "pre":
                         if len(section_content) == 0:
-                            section_title = section_title + x["content"]
+                            if isinstance(x["content"], str):
+                                section_title = section_title + x["content"]
+                            else:
+                                section_content.append(x)    
                         else:
                             prev_content = section_content.pop()
                             section_content.append(x)
@@ -1798,7 +1801,17 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
 
                         continue
                     else:
-                        assert(False)
+                        if len(section_content) == 0:
+                            if isinstance(x["content"], str):
+                                section_title = x["content"] + section_title
+                            else:
+                                section_content.append(x)  
+                        else:
+                            prev_content = section_content.pop()
+                            section_content.append(prev_content)
+                            section_content.append(x)
+                        continue
+
                 page = x['page']
                 box_id = x['box_id']
                 print(
