@@ -22,7 +22,7 @@ RabbitMQLOGIN = os.getenv("RABBIT_LOGIN")
 running_instance_check = {}
 running_computes = []
 
-max_instances_to_run_together = 1
+max_instances_to_run_together = 5
 
 run_combined_gpu = True
 
@@ -73,7 +73,7 @@ def queue_process():
     if not use_gpu:
         indv_queue_count_thresh = 50
 
-    for queue_type in ["all", "qafull", "summary", "picture", "resume"]: #, "qa" is replaced with qafull
+    for queue_type in ["all", "qafull", "summary", "picture", "resume"]:
         if run_combined_gpu:
             if queue_type != "all":
                 
@@ -108,8 +108,8 @@ def queue_process():
                         if max_instance_count_to_start == 0:
                             max_instance_count_to_start = 1 # keep atleast one instance running until. all work is completed
 
-                    if max_instance_count_to_start > 1:
-                        max_instance_count_to_start = 1
+                    if max_instance_count_to_start > 5:
+                        max_instance_count_to_start = 5
 
                     for instance in instance_status:
                         running_instance_name = instance["running_instance_name"]
@@ -278,10 +278,11 @@ def get_queues():
     running_process = 0
     total = 0
     for queue in queues:
-        if queue["name"] == "resume" or queue["name"] == "picture" or queue["name"] == "summary" or queue["name"] == "qa" or queue["name"] == "qafull":
+        if queue["name"] == "resume" or queue["name"] == "picture" or queue["name"] == "summary" or queue["name"] == "qa_full":
 
             # print(queue)
             if "consumers" in queue.keys():
+                queue["name"] = queue["name"].replace("_","")
                 mq_status[queue["name"]] = {
                     "consumers": queue["consumers"],
                     "in_process": queue["messages_unacknowledged_ram"] + queue["messages_ready"]
@@ -497,27 +498,23 @@ def start_compute(instance_name, zone, queue_type):
                 result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             elif queue_type == "resume":
                 result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_resume.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=100GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
-            elif queue_type == "qa":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qa.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             elif queue_type == "qafull":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qafull.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qa_full.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             else:
                 result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         else:
             image_family_name = "common-cpu"
             #  --network-interface=no-address 
             if queue_type == "picture":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_picture.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             elif queue_type == "summary":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_summary.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_summary.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             elif queue_type == "resume":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_resume.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
-            elif queue_type == "qa":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qa.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_resume.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             elif queue_type == "qafull":
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qafull.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qa_full.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             else:
-                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
+                result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n2-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         # LOGGER.critical("stdout", result)
 
         # if result.stderr and len(result.stderr) > 0:
