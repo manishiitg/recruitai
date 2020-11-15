@@ -33,7 +33,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 questions_tag_mapping = {
   "personal_name": "Name",
   "summary": "Objective/Executive Summary",
-  "exp_years":"Total Experiance",
+  "total_experiance":"Total Experiance",
   "exp_company": "Recent Organization",
   "exp_designation": "Designation",
   "exp_duration": "Recent Duration",
@@ -51,7 +51,7 @@ questions_tag_mapping = {
   "hobbies" : "Hobbies"
 }
 questions_ordering = [
-  "exp_years",
+  "total_experiance",
   "exp_company",
   "exp_designation",
   "exp_duration",
@@ -73,7 +73,7 @@ questions_ordering = [
 questions = {
   "personal_name": "what is your name?",
   "summary": "what is your career objective or executive summary",
-  "exp_years":"how much total experience do you have?",
+  "total_experiance":"how much total experience do you have?",
   "exp_company": "which company did you work with most recently?",
   "exp_designation": "what was your most recent designation",
   "exp_duration": "what was the duration of your employment in your recent company?",
@@ -88,13 +88,13 @@ questions = {
   "personal_location":"where do you live",
   "personal_dob":"what is your date of birth",
   "awards": "any accomplishments or carrier highlights or awards?",
-  "extra":"what are your favorite extra curricular activatives or hobbies",
+  "extra":"what are your extra curricular activatives",
   "references" : "do you have any references",
   "hobbies" : "what are you hobbies",
 }
 questions_needed_for_initial_data = [
     # "personal_name", # will fetch this from ner itself
-    "exp_years",
+    "total_experiance",
     "exp_company",
     "exp_designation",
     "exp_duration",
@@ -224,7 +224,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         "_id" : ObjectId(idx)
     }, {
         '$set' : {
-            "cvParsedInfo.debug.qa_parse_resume" : {}
+            "cvParsedInfo.qa_parse_resume" : {}
         }
     })
 
@@ -310,7 +310,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
 
     final_section_ui_map = merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagger)
 
-    logger.info(section_ui_map)
+    logger.info(final_section_ui_map)
     db.emailStored.update_one({
         "_id" : ObjectId(idx)
     }, {
@@ -355,8 +355,7 @@ def ask_question(idx, page_contents, only_initial_data = False, exist_answer_map
             max_seq_len = max_model_seq_len
 
         logger.critical(f"max seq len {max_seq_len}")
-        skip_question = []
-        
+        skip_question = []        
 
         for key in questions:
             question = questions[key]
@@ -384,11 +383,14 @@ def ask_question(idx, page_contents, only_initial_data = False, exist_answer_map
                 if key == "exp_company":
                     if len(answer["answer"]) == 0:
                         skip_question.extend(["exp_designation",'exp_duration'])
-                    else:
-                        skip_question.extend(["projects_name",'certifications','training','awards'])
+                    
+                    # else:
+                    #     skip_question.extend(["projects_name",'certifications','training','awards'])
+                    # even for experiances ppl we need to ask these questions
 
-                if key == "projects_desc" and len(answer["answer"]) == 0:
-                    skip_question.extend(["projects_skills"])
+                if key == "projects_desc":
+                    if len(answer["answer"]) == 0:
+                        skip_question.extend(["projects_skills"])
 
                 
                 answer["question"] = question
