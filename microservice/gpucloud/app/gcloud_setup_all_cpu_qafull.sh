@@ -133,7 +133,7 @@ cd /home/jupyter/drive/recruitai
 cat my_password.txt | docker login --username exceltech --password-stdin
 
 sudo docker-compose -f docker-compose-cpu-qafull.yml pull --quiet
-sudo docker-compose -f docker-compose-cpu-qafull.yml up -d --scale=qamq=4
+sudo docker-compose -f docker-compose-cpu-qafull.yml up -d --scale=qafullmq=4
 
 for i in `seq 1 1000`;
 do
