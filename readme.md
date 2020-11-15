@@ -237,7 +237,7 @@ f) need to integrate with filters
 g) can we match resume to a job based on this yet????
 h) can we make candidate database better with this? we can remove detectron as such from candidata database and instead just do qa?
 
-i) replace things like \u2022 etc with actual bullet poitns
+i) replace things like \u2022 \u25cf etc with actual bullet poitns
 
 j) this should affect skilexill extract also. now we whave specific lines to extract skill instead of entire resume
 
@@ -248,6 +248,14 @@ l) need to create edge cases for qa manual labelling further. like if qa model i
 m) need to jobs overview with qa model as well and get data
 
 n) need to remove ner and candidate classify from resumemq
+
+o) for proper display of a resume, i need to capture spacing as well. not just text. right now i am missing spacing fully.
+this is a problem!
+
+p) should i ask questions like references/hobbies only if these text exist in the page content? as these are very rare.
+and why do i event want reference? it come in orphans
+
+# http://176.9.137.77:81/dashboard/candidate-details/candidate/ATOZZ/5fafefc410b05d00394b3609 tag this manually
 
 =========
 OLD TODO
