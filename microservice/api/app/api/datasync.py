@@ -57,6 +57,7 @@ def stats():
 
     return jsonify({}) , 200
 
+import time
 
 @bp.route('/speedup', methods=['POST'])
 @check_and_validate_account
@@ -66,16 +67,30 @@ def speed_up():
         if "payload" not in request.json:
             request.json["payload"] = {}
         
-        ret = sendFilterMessage({
-            "action" : "speed_up",
-            "account_name": request.account_name,
-            "account_config" : request.account_config,
-            "url" : request.json["url"],
-            "access_token" : request.json["access_token"],
-            "payload" : request.json["payload"]
-        })
+        try:
+            ret = sendFilterMessage({
+                "action" : "speed_up",
+                "account_name": request.account_name,
+                "account_config" : request.account_config,
+                "url" : request.json["url"],
+                "access_token" : request.json["access_token"],
+                "payload" : request.json["payload"]
+            })
 
-        return jsonify(ret), 200
+            return jsonify(ret), 200
+        except Exception as e:
+            time.sleep(1)
+            ret = sendFilterMessage({
+                "action" : "speed_up",
+                "account_name": request.account_name,
+                "account_config" : request.account_config,
+                "url" : request.json["url"],
+                "access_token" : request.json["access_token"],
+                "payload" : request.json["payload"]
+            })
+
+            return jsonify(ret), 200
+        
     
     except KeyError as e:
         logger.critical(e)
