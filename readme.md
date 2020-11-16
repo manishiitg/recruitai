@@ -222,40 +222,89 @@ QA System TODO
 ======================
 
 a) i am getting different data from QA and which is good. its more specific to sections and questions asked.
+==== done
 
-b) so next steps is to combine QA and NER. NER should follow QA, so that if we get experiance say 2years from ner, we know if its from intership or projects or actual exp. This was not possible from pure QA.
+b.1) so next steps is to combine QA and NER. NER should follow QA, so that if we get experiance say 2years from ner, we know if its from intership or projects or actual exp. This was not possible from pure QA.
+b.2) from NER need to solve i.e showing better data section wise.
+b.3) first is need to remove NER from current system and combine it with QA
+b.4) this should affect skilexill extract also. now we whave specific lines to extract skill instead of entire resume
+b.5) need to remove ner and candidate classify from resumemq
 
-b.1) for fast parsing we can skip summary/detectron/ner etc and only do QA?
-b.2) for full parsing we will do everything?
+b.6. fix location based on correct section
+======
 
-c) from NER need to solve i.e showing better data section wise.
+c) for proper display of a resume, i need to capture spacing as well. not just text. right now i am missing spacing fully.
+this is a problem!
 
-d) first is need to remove NER from current system and combine it with QA
+
+
+c.1) for fast parsing we can skip summary/detectron/ner etc and only do QA?
+c.2) for full parsing we will do everything?
+
 
 f) need to integrate with filters
+
 
 g) can we match resume to a job based on this yet????
 h) can we make candidate database better with this? we can remove detectron as such from candidata database and instead just do qa?
 
 i) replace things like \u2022 \u25cf etc with actual bullet poitns
 
-j) this should affect skilexill extract also. now we whave specific lines to extract skill instead of entire resume
 
 k) do longformer with ner
 
 l) need to create edge cases for qa manual labelling further. like if qa model is able to return total work yers but unable to return company name its a problem. needd to see that. and also create similar questions or compare it with ner. or similar use score and generate docs with lowest score.
 
-m) need to jobs overview with qa model as well and get data
+m) need to jobs overview with qa n  model as well and get data
 
-n) need to remove ner and candidate classify from resumemq
-
-o) for proper display of a resume, i need to capture spacing as well. not just text. right now i am missing spacing fully.
-this is a problem!
 
 p) should i ask questions like references/hobbies only if these text exist in the page content? as these are very rare.
 and why do i event want reference? it come in orphans
 
 # http://176.9.137.77:81/dashboard/candidate-details/candidate/ATOZZ/5fafefc410b05d00394b3609 tag this manually
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 =========
 OLD TODO
