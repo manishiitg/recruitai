@@ -320,7 +320,9 @@ class TaskQueue(object):
             
             if body["action"] == "extractSkill":
                 mongoid = body["mongoid"]
-                findSkills = body["skills"]
+                findSkills = []
+                if "skills" in body:
+                    findSkills = body["skills"]
                 try:
                         
                     if findSkills is None:
