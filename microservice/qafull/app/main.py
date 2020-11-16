@@ -12,7 +12,7 @@ import traceback
 
 amqp_url = os.getenv('RABBIT_DB')
 
-from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel
+from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel, get_short_answer_senctence
 from app.statspublisher import sendMessage as updateStats
 from app.publishdatasync import sendMessage as datasync
 
@@ -321,6 +321,8 @@ class TaskQueue(object):
                     if "parsing" in body:
                         if body['parsing'] == "fast":
                             ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
+                        elif body['parsing'] == "mini":
+                            ret = get_short_answer_senctence(body["mongoid"], account_name, account_config)
                         else:
                             ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
                     else:
@@ -342,6 +344,8 @@ class TaskQueue(object):
                     if "parsing" in body:
                         if body['parsing'] == "fast":
                             ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
+                        elif body['parsing'] == "mini":
+                            ret = get_short_answer_senctence(idx, account_name, account_config)
                         else:
                             ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
                     else:
