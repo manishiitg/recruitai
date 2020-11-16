@@ -1,3 +1,4 @@
+import spacy
 import time
 from flair.data import Sentence
 import copy
@@ -302,7 +303,7 @@ def get_section_match_map(answer_map, bbox_map_int, page_box_count, page_content
 
                     max_match_ratio = 10
                     max_match_row = None
-                    min_dist = None
+                    min_dist = -1
                     for page in bbox_list:
                         for box_id, bbox in enumerate(bbox_list[page]):
 
@@ -1644,8 +1645,8 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                 print(f"ner line: {line}")
                 # if len(line) < 512:
                 # if work exp section is long.
-                # doing this results is skipping in identifing multiple work experiances 
-                sentence = Sentence(line) # , use_tokenizer=False
+                # doing this results is skipping in identifing multiple work experiances
+                sentence = Sentence(line)  # , use_tokenizer=False
                 tagger.predict(sentence)
                 # else:
                 #     sentence = Sentence(line[:512], use_tokenizer=False)
@@ -1683,7 +1684,8 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                     # we are only asking questions, tags from orignial headings. not from new sections we find
                     continue
 
-                if len(line.split(" ")) > 10:  # atleast 10 words to ask any questions else no use
+                if len(line.split(" ")) > 10 and False:  # atleast 10 words to ask any questions else no use
+                    # temp as this not used and thing takes time
                     for key in sub_question_to_ask:
                         print(
                             f"key {key} section['current_answer']['question_key'] {section['current_answer']['question_key']}")
@@ -1793,7 +1795,7 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
                             if isinstance(x["content"], str):
                                 section_title = section_title + x["content"]
                             else:
-                                section_content.append(x)    
+                                section_content.append(x)
                         else:
                             prev_content = section_content.pop()
                             section_content.append(x)
@@ -1805,7 +1807,7 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
                             if isinstance(x["content"], str):
                                 section_title = x["content"] + section_title
                             else:
-                                section_content.append(x)  
+                                section_content.append(x)
                         else:
                             prev_content = section_content.pop()
                             section_content.append(prev_content)
@@ -1877,10 +1879,10 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
             line = " ".join(sentence)
 
             if len(line) < 512:
-                sentence = Sentence(line) # , use_tokenizer=False
+                sentence = Sentence(line)  # , use_tokenizer=False
                 tagger.predict(sentence)
             else:
-                sentence = Sentence(line[:512]) # , use_tokenizer=False
+                sentence = Sentence(line[:512])  # , use_tokenizer=False
                 tagger.predict(sentence)
 
             tag_dict = sentence.to_dict(tag_type='ner')
@@ -1891,3 +1893,157 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
         merged_section_ui_map[idx] = section_ui
 
     return merged_section_ui_map
+
+
+nlp = spacy.load('en_core_web_sm')
+
+# for fast parsing when we don't have detectron
+
+
+answers_having_sentance = [
+    "projects_name",
+    "training",
+    "certifications",
+    # "skills",
+    "awards",
+    "extra",
+    "hobbies",
+    "summary"
+]
+
+
+def get_short_answer(answer_map, page_content_map):
+    # only for fast cv parsing with no detectron
+    short_answer_map = {}
+    for idx in answer_map:
+        short_answer_map[idx] = {}
+
+        for answer_key in answer_map[idx]:
+            if answer_key not in answers_having_sentance:
+                continue
+
+            if "error" in answer_map[idx][answer_key]:
+                continue
+
+            page_content = page_content_map[idx]
+
+            answer = answer_map[idx][answer_key]
+            start_idx = answer["start"]
+            end_idx = answer["end"]
+            if start_idx == 0:
+                continue
+
+            # print(answer_map[idx][answer_key])
+
+            doc = nlp(page_content)
+            is_found = False
+
+            answer_no_special = ''.join(
+                e for e in answer['answer'] if e.isalnum())
+            # reverse_found = False
+            # reverse = []
+            # reverse_idx = -1
+            for sidx, sent in enumerate(doc.sents):
+                # print(sent.text)
+                sent_remove_special = ''.join(
+                    e for e in sent.text if e.isalnum())
+                # print(f"{answer['answer']} in {sent.text}")
+                if answer_no_special in sent_remove_special:
+                    print(f">>>>>>>>>>>>>>>>> {json.dumps(sent.text)}")
+                    short_answer_map[idx][answer_key] = sent.text
+                    is_found = True
+                    break
+    return short_answer_map
+
+
+questions_minimal = [
+    "exp_company",
+    "skills"
+]
+
+
+def get_fast_search_space(answer_map, page_content_map, tagger):
+    search_space_map = {}
+    for idx in answer_map:
+        print(f"idx: {idx}")
+        search_space_map[idx] = {}
+        page_content = page_content_map[idx]
+
+        for answer_key in answer_map[idx]:
+            for min_question_key in questions_minimal:
+                if answer_key == min_question_key:
+                    answer = answer_map[idx][answer_key]
+                    print(answer_key)
+                    print(answer)
+                    if "error" in answer:
+                        continue
+                    
+                    if len(answer['answer']) == 0:
+                        continue
+
+                    doc = nlp(page_content)
+                    is_found = False
+                    answer_no_special = ''.join(
+                        e for e in answer['answer'] if e.isalnum())
+                    lines = []
+                    match_idx = -1
+                    
+                    for sidx, sent in enumerate(doc.sents):
+                        sent_remove_special = ''.join(
+                            e for e in sent.text if e.isalnum())
+                        lines.append(sent.text)
+                        if answer_no_special in sent_remove_special and not is_found:
+                            is_found = True
+                            match_idx = sidx
+                            print(f"found at {sent.text} sdix {sidx}")
+
+                    if is_found:
+                        final_sents_to_search = lines[match_idx -
+                                                      2: match_idx + 10]
+                        if answer_key == "skills":
+                            final_sents_to_search = lines[match_idx -
+                                                          2: match_idx + 15]
+
+                        print("final_search_lines")
+                        print(" ".join(final_sents_to_search))
+                        search_space_map[idx][answer_key] = {}
+
+                        search_space_map[idx][answer_key]["line"] = " ".join(
+                            final_sents_to_search)
+
+                    if not is_found:
+                        start_idx = answer["start"]
+                        end_idx = answer["end"]
+                        start_idx = start_idx - 20  # start 15 characters behind
+                        incr_idx = start_idx
+                        max_words = 100
+                        if answer_key == "skills":
+                            max_words = 30
+
+                        count_words = 0
+                        while True:
+                            if incr_idx > len(page_content) - 1:
+                                break
+
+                            padded_sentence = page_content[start_idx:incr_idx]
+                            if len(padded_sentence.split()) > max_words:
+                                break
+                            incr_idx += 1
+
+                        padded_sentence = page_content[start_idx:incr_idx]
+                        search_space_map[idx][answer_key] = {}
+                        search_space_map[idx][answer_key]["line"] = padded_sentence
+
+                        print(
+                            f"final search space: {padded_sentence} words {len(padded_sentence.split())}")
+
+                    if answer_key == "exp_company":
+                        sentence = Sentence(search_space_map[idx][answer_key]["line"])
+                        tagger.predict(sentence)
+                        tag_dict = sentence.to_dict(tag_type='ner')
+                        custom_entities, new_tag_dict = combine_ner_into_entites(
+                            tag_dict)
+                        print(json.dumps(custom_entities, indent=1))
+                        search_space_map[idx][answer_key]["tags"] = custom_entities
+
+    return search_space_map
