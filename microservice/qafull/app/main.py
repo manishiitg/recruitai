@@ -15,6 +15,7 @@ amqp_url = os.getenv('RABBIT_DB')
 from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel, get_short_answer_senctence
 from app.statspublisher import sendMessage as updateStats
 from app.publishdatasync import sendMessage as datasync
+from app.pushlishskillindex import sendMessage as indexcandidateskill
 
 class TaskQueue(object):
     """This is an example consumer that will handle unexpected interactions
@@ -327,6 +328,24 @@ class TaskQueue(object):
                             ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
                     else:
                         ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
+                    
+                    datasync({
+                        "id" : message["mongoid"],
+                        "action" : "syncCandidate",
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
+                        "field" : "cvParsedInfo"
+                    })
+
+                    indexcandidateskill({
+                        "action" : "extractSkill",
+                        "mongoid" : message["mongoid"],
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
+                    })
+
                 elif action == "qa_pipeline":
                     updateStats({
                         "action" : "resume_pipeline_update",
@@ -345,7 +364,7 @@ class TaskQueue(object):
                         if body['parsing'] == "fast":
                             ret = qa_candidate_db(body["mongoid"], True, account_name, account_config)
                         elif body['parsing'] == "mini":
-                            ret = get_short_answer_senctence(idx, account_name, account_config)
+                            ret = get_short_answer_senctence(body["mongoid"], account_name, account_config)
                         else:
                             ret = qa_candidate_db(body["mongoid"], False, account_name, account_config)
                     else:
@@ -371,6 +390,13 @@ class TaskQueue(object):
                         "account_config" : account_config,
                         "priority" : message["priority"],
                         "field" : "cvParsedInfo"
+                    })
+                    indexcandidateskill({
+                        "action" : "extractSkill",
+                        "mongoid" : message["mongoid"],
+                        "account_name" : account_name,
+                        "account_config" : account_config,
+                        "priority" : message["priority"],
                     })
 
                 
