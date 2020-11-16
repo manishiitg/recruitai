@@ -53,4 +53,7 @@ RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
 RUN mkdir recruit-tags-flair-roberta-word2vec
+RUN pip install spacy
+RUN mkdir spacy
+RUN python -m spacy download en_core_web_sm
 CMD ["/usr/bin/supervisord"]
