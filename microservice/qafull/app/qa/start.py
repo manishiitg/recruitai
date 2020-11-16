@@ -108,6 +108,10 @@ questions_needed_for_initial_data = [
     # "awards"
 ]
 
+questions_minimal = [
+    "exp_company",
+    "skills"
+]
 
 def get_short_answer_senctence(idx, account_name, account_config):
     db = initDB(account_name, account_config)
@@ -164,19 +168,66 @@ def get_short_answer_senctence(idx, account_name, account_config):
         answer_map = ask_question(
             idx, page_contents, True, exist_answer_map, True)
 
-        qa_short_answers = get_short_answer(answer_map, page_content_map)
-        tagger = loadTaggerModel()
-        fast_search_space = get_fast_search_space(answer_map, page_content_map, tagger)
+        finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, questions_minimal)
 
         db.emailStored.update_one({
             "_id": ObjectId(idx)
         }, {
             '$set': {
+                "cvParsedInfo.qa_type" : "mini",
+                "cvParsedInfo.qa_parse_resume" : {},
                 "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
-                "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx]
+                "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
+                "cvParsedInfo.finalEntity" : finalEntity
             }
         })
 
+def get_fast_tags(idx, answer_map, page_content_map, row, questions, parsing_type = "mini"):
+    qa_short_answers = get_short_answer(answer_map, page_content_map)
+    tagger = loadTaggerModel()
+    fast_search_space = get_fast_search_space(answer_map, page_content_map, tagger, questions)
+
+    finalEntity = {}
+
+    if "cvParsedInfo" in row:
+        cvParsedInfo = row["cvParsedInfo"]
+        if "finalEntity" in cvParsedInfo:
+            finalEntity = cvParsedInfo["finalEntity"]
+    
+    for answer_key in fast_search_space[idx]:
+        if answer_key == "exp_company":
+            
+            tags = fast_search_space[idx][answer_key]["tags"]
+            if len(tags) > 0:
+                finalEntity['wrkExp'] = []
+                if "Designation" in finalEntity:
+                    del finalEntity['Designation']
+                for tag in tags:
+                    # we won't be adding Additional etc here. as this is fast search. so only latest is needed
+                    tag["after_qa"] = 1
+                    if tag["label"] == "ORG" and len(finalEntity['wrkExp']) == 0:
+                        tag['org'] = tag['text']
+                        finalEntity['wrkExp'].append([tag])
+                    if tag["label"] == "Designation" and 'Designation' not in finalEntity:
+                        if len(finalEntity['wrkExp']) > 0:
+                            finalEntity['wrkExp'][0][0]["Designation"] = tag["text"]
+
+                        finalEntity['Designation'] = tag
+                        if 'additional-Designation' in finalEntity:
+                            del finalEntity['additional-Designation']
+
+                    if tag["label"] == "DATE":
+                        if len(finalEntity['wrkExp']) > 0:
+                            finalEntity['wrkExp'][0][0]["DATE"] = tag["text"]
+            else:
+                if "wrkExp" in finalEntity:
+                    del finalEntity['wrkExp']
+
+                if "Designation" in finalEntity:
+                    del finalEntity['Designation']
+
+                        
+    return finalEntity , qa_short_answers , fast_search_space
 
 def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_contents=None):
     db = initDB(account_name, account_config)
@@ -232,8 +283,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
 
         page_content_map = clean_page_content_map(idx, page_contents)
 
-        answer_map = ask_question(
-            idx, page_contents, only_initial_data, exist_answer_map)
+        answer_map = ask_question(idx, page_contents, only_initial_data, exist_answer_map)
         if not answer_map:
             logger.critical("error: some problem with page content")
             db.emailStored.update_one({
@@ -255,8 +305,33 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             }
         })
 
-        parse_resume(idx, answer_map, page_content_map,
-                     bbox_map, account_name, account_config)
+        if only_initial_data:
+            finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, questions_needed_for_initial_data)
+            db.emailStored.update_one({
+                "_id": ObjectId(idx)
+            }, {
+                '$set': {
+                    "cvParsedInfo.qa_type" : "fast",
+                    "cvParsedInfo.qa_parse_resume" : {},
+                    "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
+                    "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
+                    "cvParsedInfo.finalEntity" : finalEntity
+                }
+            })
+        else:
+            parse_resume(idx, answer_map, page_content_map,
+                        bbox_map, account_name, account_config)
+
+            finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, list(questions.keys()) , "full")
+            db.emailStored.update_one({
+            "_id": ObjectId(idx)
+            }, {
+                '$set': {
+                    "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
+                    "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
+                    "cvParsedInfo.finalEntity" : finalEntity
+                }
+            })
     else:
         logger.critical("error %s", error)
 
@@ -389,6 +464,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         "_id": ObjectId(idx)
     }, {
         '$set': {
+            "cvParsedInfo.qa_type" : "full",
             "cvParsedInfo.qa_parse_resume": final_section_ui_map[idx]
         }
     })
@@ -406,7 +482,6 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
 
 
 
-from app.qa.util import questions_minimal
 
 def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={} , is_mini = False):
 
