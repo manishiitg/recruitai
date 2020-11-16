@@ -471,6 +471,13 @@ def process(data, isPageWiseData=False):
         logger.info(json.dumps(extractEntity,
                                indent=1, sort_keys=False))
 
+        # if "wrkExp" in finalEntity:
+        #     del finalEntity["wrkExp"]
+        # if "Designation" in finalEntity:
+        #     del finalEntity["Designation"]
+        # uncomment this once finalized qa with ui
+        
+
         combinData[rowIdx] = {
             "finalEntity": finalEntity,
             "extractEntity": extractEntity,
