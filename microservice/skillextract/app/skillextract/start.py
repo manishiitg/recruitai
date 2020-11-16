@@ -589,37 +589,74 @@ def getSampleData(mongoid, account_name, account_config):
         total_documents += 1
 
         cvParsedInfo = row["cvParsedInfo"]
-        for page in cvParsedInfo["newCompressedStructuredContent"]:
-            for line in cvParsedInfo["newCompressedStructuredContent"][page]:
-
-                if "classify" not in line:
-                    line["classify"] = ""
-
-                if isinstance(line["classify"], list):
-                    line["classify"] = line["classify"][0]
-
-                # if line["classify"] == "CONTACT" or line["classify"] == "EDU" or line["classify"] == "ENDINFO":
-                    # continue 
-                    # pass
-
-                # logger.critical(line["classify"])
-                # logger.critical(line["line"])
-
-                if "token_line" in line:
-                    line = line["token_line"] #pretokenize and save to db
-                else:
-                    logger.critical("token line found. this should not happen")
-                    if shouldTokenize:
-                        doc = nlp(line["line"].lower()) #this is making slower for large data
-                        line = [d.text for d in doc]
-                    else:
-                        line = line["line"].lower().split(" ")
+        isSearchSpaceFound = False
+        if account_name == "devrecruit":
+            
+            if "qa_parse_resume" in cvParsedInfo:
+                for search_key in cvParsedInfo["qa_parse_resume"]:
                     
-                ngrams = generate_ngrams(" ".join(line), 3)
-                ngrams.extend(generate_ngrams(" ".join(line), 2))
+                    if search_key == "skills" or "exp_" in search_key or "certifications" == search_key or "training" == search_key or "summary" == search_key: 
+                        isSearchSpaceFound = True
+                        for row in cvParsedInfo["qa_parse_resume"][search_key]:
+                            if "sentence" in row:
+                                for line in row['sentence']:
+                                    doc = nlp(line.lower())
+                                    line = [d.text for d in doc]
+                                        
+                                    ngrams = generate_ngrams(" ".join(line), 3)
+                                    ngrams.extend(generate_ngrams(" ".join(line), 2))
+                                    line.extend(["_".join(n.split(" ")) for n in ngrams])
+                                    docLines[docIndex].append(line)
 
-                line.extend(["_".join(n.split(" ")) for n in ngrams])
-                docLines[docIndex].append(line)
+            if "qa_fast_search_space" in cvParsedInfo and not isSearchSpaceFound:
+                
+                for search_key in cvParsedInfo["qa_fast_search_space"]:
+                    
+                    if search_key == "skills" or "exp_" in search_key or "certifications" == search_key or "training" == search_key or "summary" == search_key: 
+                        skills = cvParsedInfo["qa_fast_search_space"][search_key]
+                        isSearchSpaceFound = True
+                        
+                        line = skills["line"]
+                        doc = nlp(line.lower()) #this is making slower for large data
+                        line = [d.text for d in doc]
+                            
+                        ngrams = generate_ngrams(" ".join(line), 3)
+                        ngrams.extend(generate_ngrams(" ".join(line), 2))
+                        line.extend(["_".join(n.split(" ")) for n in ngrams])
+                        docLines[docIndex].append(line)
+
+        if not isSearchSpaceFound:
+            for page in cvParsedInfo["newCompressedStructuredContent"]:
+                for line in cvParsedInfo["newCompressedStructuredContent"][page]:
+
+                    if "classify" not in line:
+                        line["classify"] = ""
+
+                    if isinstance(line["classify"], list):
+                        line["classify"] = line["classify"][0]
+
+                    # if line["classify"] == "CONTACT" or line["classify"] == "EDU" or line["classify"] == "ENDINFO":
+                        # continue 
+                        # pass
+
+                    # logger.critical(line["classify"])
+                    # logger.critical(line["line"])
+
+                    if "token_line" in line:
+                        line = line["token_line"] #pretokenize and save to db
+                    else:
+                        logger.critical("token line found. this should not happen")
+                        if shouldTokenize:
+                            doc = nlp(line["line"].lower()) #this is making slower for large data
+                            line = [d.text for d in doc]
+                        else:
+                            line = line["line"].lower().split(" ")
+                        
+                    ngrams = generate_ngrams(" ".join(line), 3)
+                    ngrams.extend(generate_ngrams(" ".join(line), 2))
+
+                    line.extend(["_".join(n.split(" ")) for n in ngrams])
+                    docLines[docIndex].append(line)
 
     logger.critical("total documents %s", total_documents)
     # logger.critical(doc2Idx)
