@@ -27,7 +27,7 @@ def qa_parse(id):
         sendFullQA({
             "action": "qa_candidate_db",
             "mongoid" : id,
-            "parsing_type" : "fast",
+            "parsing" : "fast",
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
@@ -48,6 +48,27 @@ def qa_parse_full(id):
         sendFullQA({
             "action": "qa_candidate_db",
             "mongoid" : id,
+            "account_name": request.account_name,
+            "account_config" : request.account_config
+        })
+
+        return jsonify([]), 200
+    
+    except KeyError as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('mini/<string:id>', methods=['GET'])
+@check_and_validate_account
+def qa_parse_mini(id):
+    logger.info("got candidate %s", id)
+
+    try:
+
+        sendFullQA({
+            "action": "qa_candidate_db",
+            "mongoid" : id,
+            "parsing" : "mini",
             "account_name": request.account_name,
             "account_config" : request.account_config
         })
