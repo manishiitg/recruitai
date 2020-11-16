@@ -17,7 +17,7 @@ from app.util import check_and_validate_account
 
 bp = Blueprint('qa', __name__, url_prefix='/qa')
 
-@bp.route('/<string:id>', methods=['GET'])
+@bp.route('fast/<string:id>', methods=['GET'])
 @check_and_validate_account
 def qa_parse(id):
     logger.info("got candidate %s", id)
