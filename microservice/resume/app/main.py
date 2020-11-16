@@ -400,16 +400,23 @@ class TaskQueue(object):
                 return
         
         db = initDB(account_name, account_config)
-        count = db.emailStored.count({
+        candidate_row = db.emailStored.find_one({
             "_id" : ObjectId(message["mongoid"])
         })
 
         
 
-        if count == 0:
+        if not candidate_row:
             LOGGER.critical("candidate not found in db %s", message["mongoid"])
             return self.acknowledge_message(delivery_tag)
-            
+
+        has_job_profile = False
+        # this needs to be changed after i think about candidate db
+        if "job_profile_id" in candidate_row:
+            job_profile_id = candidate_row["job_profile_id"]
+            if len(job_profile_id) > 0:
+                has_job_profile = True
+
         start_time = time.time()
 
         is_cache = False
@@ -431,12 +438,15 @@ class TaskQueue(object):
                 if not isinstance(skills, list):
                     skills = skills.split(",")
                 
-                
+                qa_parsing_type = "fast"
+                if not job_profile_id:
+                    qa_parsing_type = "mini"
+
                 publisherqafull({
                     "action" : "qa_pipeline",
                     "mongoid" : message["mongoid"],
                     "filename" : message["filename"],
-                    "parsing" : "fast",
+                    "parsing" : qa_parsing_type,
                     "account_name" : account_name,
                     "account_config" : account_config,
                     "priority" : message["priority"]
@@ -524,25 +534,23 @@ class TaskQueue(object):
                 skills = ""
             if not isinstance(skills, list):
                 skills = skills.split(",")
+
+            qa_parsing_type = "fast"
+            
+            if not job_profile_id:
+                qa_parsing_type = "mini"
+
             if ret["parsing_type"] == "full":
-                publisherqafull({  
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
-                })
-                
-            else:
-                publisherqafull({  
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "parsing" : "fast",
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
+                qa_parsing_type = "full"
+
+            publisherqafull({  
+                "action" : "qa_pipeline",
+                "mongoid" : message["mongoid"],
+                "filename" : message["filename"],
+                "parsing" : qa_parsing_type,
+                "account_name" : account_name,
+                "account_config" : account_config,
+                "priority" : message["priority"]
                 })
             indexcandidateskill({
                 "action" : "extractSkill",
