@@ -934,6 +934,15 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                             cvParsedInfo = doc["cvParsedInfo"]
                             if "debug" in cvParsedInfo:
                                 del cvParsedInfo["debug"]
+                            
+                            if "qa_parse_resume" in cvParsedInfo:
+                                del cvParsedInfo["qa_parse_resume"]
+
+                            if "page_contents" in cvParsedInfo:
+                                del cvParsedInfo["page_contents"]
+
+                            if "qa_fast_search_space" in cvParsedInfo:
+                                del cvParsedInfo["qa_fast_search_space"]
 
                             # if "newCompressedStructuredContent" in cvParsedInfo:
                             #     del cvParsedInfo["newCompressedStructuredContent"]
