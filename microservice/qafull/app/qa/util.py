@@ -1292,6 +1292,7 @@ def combine_ner_into_entites(tag_dict):
     entity_str = ""
     prev_label = ''
     prev_label_confidance = 0
+    conf_count = 0
     for entity in tag_dict["entities"]:
         new_labels = []
 
@@ -1309,51 +1310,58 @@ def combine_ner_into_entites(tag_dict):
             for label in labels:
                 new_labels.append(label.to_dict())
 
-            # logger.info(entity)
+            # print(entity)
             start_pos = entity["start_pos"]
             end_pos = entity["end_pos"]
             if tag == prev_label:
-                # logger.info(f"end pos {start_pos} and prev pos {prev_pos}")
+                # print(f"same label start pos {start_pos} end pos {end_pos} and prev pos {prev_pos}")
                 if start_pos == prev_pos + 1:
-                    # logger.info("continue: ", entity["text"])
+                    # print("continue: ", entity["text"])
                     entity_str += " " + entity["text"]
                     prev_pos = end_pos
                     prev_label = tag
-                    prev_label_confidance = confidence
+                    prev_label_confidance += confidence
+                    conf_count += 1
                 else:
-                    custom_start_pos = start_pos
-                    # logger.info("finishing next: ", entity["text"])
+                    # print("same lable finishing next: ", entity["text"])
                     custom_entities.append({
                         "text": entity_str,
                         "label": prev_label,
                         "start_pos": custom_start_pos,
-                        "end_pos": end_pos
+                        "end_pos": prev_pos,
+                        "confidance": prev_label_confidance / conf_count
                     })
+                    custom_start_pos = start_pos
                     # new entity now
                     prev_pos = end_pos
                     prev_label = tag
                     prev_label_confidance = confidence
+                    conf_count = 1
                     entity_str = entity["text"]
             else:
                 if len(entity_str) == 0:
-                    # logger.info("frsit time: ", entity["text"])
+                    # print("frsit time: ", entity["text"])
                     custom_start_pos = start_pos
                     entity_str = entity["text"]
                     prev_pos = end_pos
                     prev_label = tag
-                    prev_label_confidance = confidence
+                    prev_label_confidance += confidence
+                    conf_count += 1
                 else:
-                    # logger.info("finishing next: ", entity["text"])
+                    # print("diff lable finishing next: ", entity["text"])
                     custom_entities.append({
                         "text": entity_str,
                         "label": prev_label,
                         "start_pos": custom_start_pos,
-                        "end_pos": end_pos
+                        "end_pos": prev_pos,
+                        "confidance": prev_label_confidance / conf_count
                     })
                     # new entity now
                     prev_pos = end_pos
+                    custom_start_pos = start_pos
                     prev_label = tag
                     prev_label_confidance = confidence
+                    conf_count = 1
                     entity_str = entity["text"]
 
         entity['labels'] = new_labels
@@ -1364,7 +1372,8 @@ def combine_ner_into_entites(tag_dict):
             "text": entity_str,
             "label": prev_label,
             "start_pos": custom_start_pos,
-            "end_pos": end_pos
+            "end_pos": end_pos,
+            "confidance": prev_label_confidance / conf_count
         })
 
     return custom_entities, new_tag_dict
@@ -1646,7 +1655,9 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                 # if len(line) < 512:
                 # if work exp section is long.
                 # doing this results is skipping in identifing multiple work experiances
-                sentence = Sentence(line)  # , use_tokenizer=False
+                line = re.sub(' +', ' ', line)
+                # , use_tokenizer=False
+                sentence = Sentence(line, use_tokenizer=False)
                 tagger.predict(sentence)
                 # else:
                 #     sentence = Sentence(line[:512], use_tokenizer=False)
@@ -1684,7 +1695,8 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                     # we are only asking questions, tags from orignial headings. not from new sections we find
                     continue
 
-                if len(line.split(" ")) > 10 and False:  # atleast 10 words to ask any questions else no use
+                # atleast 10 words to ask any questions else no use
+                if len(line.split(" ")) > 10 and False:
                     # temp as this not used and thing takes time
                     for key in sub_question_to_ask:
                         print(
@@ -1877,12 +1889,14 @@ def merge_orphan_to_ui(section_ui_map, orphan_section_map, page_box_count, tagge
                     sentence.append(x['content'])
 
             line = " ".join(sentence)
-
+            line = re.sub(' +', ' ', line)
             if len(line) < 512:
-                sentence = Sentence(line)  # , use_tokenizer=False
+                # , use_tokenizer=False
+                sentence = Sentence(line, use_tokenizer=False)
                 tagger.predict(sentence)
             else:
-                sentence = Sentence(line[:512])  # , use_tokenizer=False
+                # , use_tokenizer=False
+                sentence = Sentence(line[:512], use_tokenizer=False)
                 tagger.predict(sentence)
 
             tag_dict = sentence.to_dict(tag_type='ner')
@@ -1956,19 +1970,14 @@ def get_short_answer(answer_map, page_content_map):
     return short_answer_map
 
 
-questions_minimal = [
-    "exp_company",
-    "skills"
-]
-
-
-def get_fast_search_space(answer_map, page_content_map, tagger):
+def get_fast_search_space(answer_map, page_content_map, tagger, questions_minimal):
     search_space_map = {}
     for idx in answer_map:
         print(f"idx: {idx}")
         search_space_map[idx] = {}
         page_content = page_content_map[idx]
 
+        is_completed = []
         for answer_key in answer_map[idx]:
             for min_question_key in questions_minimal:
                 if answer_key == min_question_key:
@@ -1977,39 +1986,48 @@ def get_fast_search_space(answer_map, page_content_map, tagger):
                     print(answer)
                     if "error" in answer:
                         continue
-                    
+
                     if len(answer['answer']) == 0:
                         continue
-
-                    doc = nlp(page_content)
-                    is_found = False
-                    answer_no_special = ''.join(
-                        e for e in answer['answer'] if e.isalnum())
-                    lines = []
-                    match_idx = -1
                     
-                    for sidx, sent in enumerate(doc.sents):
-                        sent_remove_special = ''.join(
-                            e for e in sent.text if e.isalnum())
-                        lines.append(sent.text)
-                        if answer_no_special in sent_remove_special and not is_found:
-                            is_found = True
-                            match_idx = sidx
-                            print(f"found at {sent.text} sdix {sidx}")
+                    dup_key = answer_key
+                    if "_" in answer_key:
+                        dup_key = answer_key.split("_")[0]
+                    
+                    if dup_key in is_completed:
+                        continue 
 
-                    if is_found:
-                        final_sents_to_search = lines[match_idx -
-                                                      2: match_idx + 10]
-                        if answer_key == "skills":
+                    is_found = False
+                    if answer_key != "skills":  # for skills need to do below one only
+                        doc = nlp(page_content)
+
+                        answer_no_special = ''.join(
+                            e for e in answer['answer'] if e.isalnum())
+                        lines = []
+                        match_idx = -1
+
+                        for sidx, sent in enumerate(doc.sents):
+                            sent_remove_special = ''.join(
+                                e for e in sent.text if e.isalnum())
+                            lines.append(sent.text)
+                            if answer_no_special in sent_remove_special and not is_found:
+                                is_found = True
+                                match_idx = sidx
+                                print(f"found at {sent.text} sdix {sidx}")
+
+                        if is_found:
                             final_sents_to_search = lines[match_idx -
-                                                          2: match_idx + 15]
+                                                          2: match_idx + 10]
+                            if answer_key == "skills":
+                                final_sents_to_search = lines[match_idx -
+                                                              2: match_idx + 15]
 
-                        print("final_search_lines")
-                        print(" ".join(final_sents_to_search))
-                        search_space_map[idx][answer_key] = {}
+                            print("final_search_lines")
+                            print(" ".join(final_sents_to_search))
+                            search_space_map[idx][answer_key] = {}
 
-                        search_space_map[idx][answer_key]["line"] = " ".join(
-                            final_sents_to_search)
+                            search_space_map[idx][answer_key]["line"] = " ".join(
+                                final_sents_to_search)
 
                     if not is_found:
                         start_idx = answer["start"]
@@ -2037,13 +2055,28 @@ def get_fast_search_space(answer_map, page_content_map, tagger):
                         print(
                             f"final search space: {padded_sentence} words {len(padded_sentence.split())}")
 
-                    if answer_key == "exp_company":
-                        sentence = Sentence(search_space_map[idx][answer_key]["line"])
+                    if "exp_" in answer_key or "personal_" in answer_key:
+                        if len(search_space_map[idx][answer_key]["line"].strip()) == 0:
+                            continue
+                        dup_key = answer_key
+                        if "_" in answer_key:
+                            dup_key = answer_key.split("_")[0]
+                        
+                        if dup_key in is_completed:
+                            continue 
+
+                        is_completed.append(dup_key)
+                        search_space_map[idx][answer_key]["line"] = re.sub(
+                            ' +', ' ', search_space_map[idx][answer_key]["line"])
+                        sentence = Sentence(
+                            search_space_map[idx][answer_key]["line"], use_tokenizer=False)
                         tagger.predict(sentence)
                         tag_dict = sentence.to_dict(tag_type='ner')
                         custom_entities, new_tag_dict = combine_ner_into_entites(
                             tag_dict)
                         print(json.dumps(custom_entities, indent=1))
                         search_space_map[idx][answer_key]["tags"] = custom_entities
+
+                    break
 
     return search_space_map
