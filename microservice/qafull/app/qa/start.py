@@ -1,3 +1,4 @@
+import copy
 from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui
 from app.account import initDB, get_cloud_bucket, connect_redis
 from flair.models import SequenceTagger
@@ -113,6 +114,8 @@ questions_minimal = [
     "skills"
 ]
 
+
+# this is for mini parsing
 def get_short_answer_senctence(idx, account_name, account_config):
     db = initDB(account_name, account_config)
     if not ObjectId.is_valid(idx):
@@ -162,72 +165,105 @@ def get_short_answer_senctence(idx, account_name, account_config):
                      ] = row["cvParsedInfo"]["newCompressedStructuredContent"]
 
         logger.critical("asking question %s", exist_answer_map)
-
-        page_content_map = clean_page_content_map(idx, page_contents)
+        if len(page_contents) > 2:
+            page_contents = page_contents[:1]
+            # for mini parsing only first 2 page max
         
+        page_content_map = clean_page_content_map(idx, page_contents)
+
         answer_map = ask_question(
             idx, page_contents, True, exist_answer_map, True)
 
-        finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, questions_minimal)
+        finalEntity, qa_short_answers, fast_search_space = get_fast_tags(
+            idx, answer_map, page_content_map, row, questions_minimal)
 
         db.emailStored.update_one({
             "_id": ObjectId(idx)
         }, {
             '$set': {
-                "cvParsedInfo.qa_type" : "mini",
-                "cvParsedInfo.qa_parse_resume" : {},
+                "cvParsedInfo.qa_type": "mini",
+                "cvParsedInfo.qa_parse_resume": {},
                 "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
-                "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
-                "cvParsedInfo.finalEntity" : finalEntity
+                "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
+                "cvParsedInfo.finalEntity": finalEntity
             }
         })
 
-def get_fast_tags(idx, answer_map, page_content_map, row, questions, parsing_type = "mini"):
+
+def get_fast_tags(idx, answer_map, page_content_map, row, questions, parsing_type="mini"):
     qa_short_answers = get_short_answer(answer_map, page_content_map)
-    tagger = loadTaggerModel()
-    fast_search_space = get_fast_search_space(answer_map, page_content_map, tagger, questions)
-
     finalEntity = {}
+    fast_search_space = {}
+    if parsing_type != "full":
+        tagger = loadTaggerModel()
+        fast_search_space = get_fast_search_space(
+            answer_map, page_content_map, tagger, questions)
+        
+        
+        if "cvParsedInfo" in row:
+            cvParsedInfo = row["cvParsedInfo"]
+            if "finalEntity" in cvParsedInfo:
+                finalEntity = cvParsedInfo["finalEntity"]
 
-    if "cvParsedInfo" in row:
-        cvParsedInfo = row["cvParsedInfo"]
-        if "finalEntity" in cvParsedInfo:
-            finalEntity = cvParsedInfo["finalEntity"]
-    
-    for answer_key in fast_search_space[idx]:
-        if answer_key == "exp_company":
+        for answer_key in fast_search_space[idx]:
+            if answer_key == "exp_company":
+                tags = fast_search_space[idx][answer_key]["tags"]
+                finalEntity = extract_final_entity_work(tags, finalEntity)
+
+
+
             
-            tags = fast_search_space[idx][answer_key]["tags"]
-            if len(tags) > 0:
-                finalEntity['wrkExp'] = []
-                if "Designation" in finalEntity:
-                    del finalEntity['Designation']
-                for tag in tags:
-                    # we won't be adding Additional etc here. as this is fast search. so only latest is needed
-                    tag["after_qa"] = 1
-                    if tag["label"] == "ORG" and len(finalEntity['wrkExp']) == 0:
-                        tag['org'] = tag['text']
-                        finalEntity['wrkExp'].append([tag])
-                    if tag["label"] == "Designation" and 'Designation' not in finalEntity:
-                        if len(finalEntity['wrkExp']) > 0:
-                            finalEntity['wrkExp'][0][0]["Designation"] = tag["text"]
+    return finalEntity, qa_short_answers, fast_search_space
 
-                        finalEntity['Designation'] = tag
-                        if 'additional-Designation' in finalEntity:
-                            del finalEntity['additional-Designation']
 
-                    if tag["label"] == "DATE":
-                        if len(finalEntity['wrkExp']) > 0:
-                            finalEntity['wrkExp'][0][0]["DATE"] = tag["text"]
-            else:
-                if "wrkExp" in finalEntity:
-                    del finalEntity['wrkExp']
+def extract_final_entity_work(tags, finalEntity, only_first = True):
 
-                if "Designation" in finalEntity:
-                    del finalEntity['Designation']
+    tags = copy.deepcopy(tags)
+    if len(tags) > 0:
+        finalEntity['wrkExp'] = []
+        orphan_designation = ""
+        orphan_date = ""
+        if "Designation" in finalEntity:
+            del finalEntity['Designation']
+        if "ExperianceYears" in finalEntity:
+            del finalEntity['ExperianceYears']
+        for tag in tags:
+            # we won't be adding Additional etc here. as this is fast search. so only latest is needed
+            tag["after_qa"] = 1
+            if tag["label"] == "ORG":
+                tag['org'] = tag['text']
+                if len(orphan_designation) > 0:
+                    tag["Designation"] = orphan_designation
+                    orphan_designation = ""
 
-                        
-    return finalEntity , qa_short_answers , fast_search_space
+                if len(orphan_date) > 0:
+                    tag["DATE"] = orphan_date
+                    orphan_date = ""
+
+                finalEntity['wrkExp'].append([tag])
+            if tag["label"] == "Designation" and 'Designation' not in finalEntity:
+                if len(finalEntity['wrkExp']) > 0:
+                    finalEntity['wrkExp'][0][-1]["Designation"] = tag["text"]
+                else:
+                    orphan_designation = tag["text"]
+                finalEntity['Designation'] = tag
+                if 'additional-Designation' in finalEntity:
+                    del finalEntity['additional-Designation']
+
+            if tag["label"] == "DATE":
+                if len(finalEntity['wrkExp']) > 0:
+                    finalEntity['wrkExp'][0][-1]["DATE"] = tag["text"]
+                else:
+                    orphan_date = tag["text"]
+    else:
+        if "wrkExp" in finalEntity:
+            del finalEntity['wrkExp']
+
+        if "Designation" in finalEntity:
+            del finalEntity['Designation']
+    
+    return finalEntity
+
 
 def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_contents=None):
     db = initDB(account_name, account_config)
@@ -275,6 +311,13 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
                 exist_answer_map[str(row["_id"])] = cvParsedInfo["answer_map"]
             else:
                 exist_answer_map[str(row["_id"])] = {}
+            
+            if "qa_type" in row:
+                qa_type = row["qa_type"]
+                if qa_type == "mini":
+                    exist_answer_map[str(row["_id"])] = {} 
+                    #discard mini answers are mini we are fetching only with first 2 pages
+                    # experimental
 
             bbox_map[str(row["_id"])
                      ] = row["cvParsedInfo"]["newCompressedStructuredContent"]
@@ -283,7 +326,8 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
 
         page_content_map = clean_page_content_map(idx, page_contents)
 
-        answer_map = ask_question(idx, page_contents, only_initial_data, exist_answer_map)
+        answer_map = ask_question(
+            idx, page_contents, only_initial_data, exist_answer_map)
         if not answer_map:
             logger.critical("error: some problem with page content")
             db.emailStored.update_one({
@@ -306,30 +350,54 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
         })
 
         if only_initial_data:
-            finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, questions_needed_for_initial_data)
+            finalEntity, qa_short_answers, fast_search_space = get_fast_tags(
+                idx, answer_map, page_content_map, row, questions_needed_for_initial_data)
             db.emailStored.update_one({
                 "_id": ObjectId(idx)
             }, {
                 '$set': {
-                    "cvParsedInfo.qa_type" : "fast",
-                    "cvParsedInfo.qa_parse_resume" : {},
+                    "cvParsedInfo.qa_type": "fast",
+                    "cvParsedInfo.qa_parse_resume": {},
                     "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
-                    "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
-                    "cvParsedInfo.finalEntity" : finalEntity
+                    "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
+                    "cvParsedInfo.finalEntity": finalEntity
                 }
             })
         else:
-            parse_resume(idx, answer_map, page_content_map,
-                        bbox_map, account_name, account_config)
+            final_section_ui_map = parse_resume(idx, answer_map, page_content_map,
+                                                bbox_map, account_name, account_config)
 
-            finalEntity , qa_short_answers , fast_search_space = get_fast_tags(idx, answer_map, page_content_map, row, list(questions.keys()) , "full")
+            if not final_section_ui_map:
+                return 
+                
+
+            finalEntity, qa_short_answers, fast_search_space = get_fast_tags(
+                idx, answer_map, page_content_map, row, list(questions.keys()) , "full")
+
+            finalEntity = {}
+            if "cvParsedInfo" in row:
+                cvParsedInfo = row["cvParsedInfo"]
+                if "finalEntity" in cvParsedInfo:
+                    finalEntity = cvParsedInfo["finalEntity"]
+
+            all_work_tags = []
+            for answer_key in final_section_ui_map[idx]:
+                if "exp_" in answer_key :
+                    for row in final_section_ui_map[idx][answer_key]:
+                        if "tags" in row:
+                            if len(row["tags"]) > 0:
+                                all_work_tags.extend(row["tags"])
+            
+            if len(all_work_tags) > 0:
+                finalEntity = extract_final_entity_work(all_work_tags, finalEntity)
+
+            
             db.emailStored.update_one({
-            "_id": ObjectId(idx)
+                "_id": ObjectId(idx)
             }, {
                 '$set': {
                     "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
-                    "cvParsedInfo.qa_fast_search_space" : fast_search_space[idx],
-                    "cvParsedInfo.finalEntity" : finalEntity
+                    "cvParsedInfo.finalEntity": finalEntity
                 }
             })
     else:
@@ -464,10 +532,12 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         "_id": ObjectId(idx)
     }, {
         '$set': {
-            "cvParsedInfo.qa_type" : "full",
+            "cvParsedInfo.qa_type": "full",
             "cvParsedInfo.qa_parse_resume": final_section_ui_map[idx]
         }
     })
+
+    return final_section_ui_map
 
     # except Exception as e:
     #     traceback.print_exc()
@@ -481,9 +551,10 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     #     logger.critical(e)
 
 
+def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={}, is_mini=False):
+    
 
-
-def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={} , is_mini = False):
+    logger.critical(f"only_initial_data {only_initial_data}  is_mini {is_mini} ")
 
     page_content_map = clean_page_content_map(idx, page_contents)
 
@@ -496,7 +567,7 @@ def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={
         page_content = page_content_map[idx]
         answer_map[idx] = {}
         logger.critical("==================================")
-        logger.critical(page_content)
+        # logger.critical(page_content)
 
         max_seq_len = len(page_content)
         if max_seq_len > max_model_seq_len:
@@ -514,8 +585,8 @@ def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={
                 continue
 
             if is_mini:
-               if key not in questions_minimal:
-                   continue  
+                if key not in questions_minimal:
+                    continue
             elif only_initial_data:
                 if key not in questions_needed_for_initial_data:
                     continue
