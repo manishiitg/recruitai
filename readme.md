@@ -231,6 +231,14 @@ b.4) this should affect skilexill extract also. now we whave specific lines to e
 b.5) need to remove ner and candidate classify from resumemq
 
 b.6. fix location based on correct section
+b.7. skills score is not used at all. need to revist it .
+b.8. tag for other sections except company are not used at all.... 
+
+
+ideas from morning. 
+can we improve just simple basic ner more. if yes, then we can get fast parsing as we are skipping detectron.
+all is good in this mainly except work exp.
+
 ======
 
 c) for proper display of a resume, i need to capture spacing as well. not just text. right now i am missing spacing fully.
