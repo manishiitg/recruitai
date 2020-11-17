@@ -344,6 +344,9 @@ class TaskQueue(object):
         else:
             LOGGER.critical("priority not found")
 
+        if not ObjectId.is_valid(message["mongoid"]):
+            LOGGER.critical("invalid mongoid. unable to proceed")
+            return self.acknowledge_message(delivery_tag)
 
         meta = {}
         if "meta" in message:
