@@ -379,15 +379,28 @@ class TaskQueue(object):
                             
 
                     else:
-                        ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
-                        logger.critical("find skill found %s", ret)
+                        retSkill = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                        logger.critical("find skill found %s", retSkill)
+                        avg_value = 0
+                        if mongoid in retSkill:
+                            for key in retSkill[mongoid]["skill"]:
+                                avg_value += retSkill[mongoid]["skill"][key]
+
+                            if len(retSkill[mongoid]["skill"]) > 0:
+                                retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
+                            else:
+                                retSkill[mongoid]["avg"] = 0
+                                
+                            ret[job_id] = retSkill[mongoid]
+                        else:
+                            ret[job_id] = {} 
                         
                     db = initDB(account_name, account_config)
                     db.emailStored.update_one(
                         {'_id' : ObjectId(mongoid)},
                         {
                             "$set" : {
-                                "cvParsedInfo.skillExtracted" : ret
+                                "cvParsedInfo.skillExtracted" : retSkill
                             }
                         }
                     )                  
