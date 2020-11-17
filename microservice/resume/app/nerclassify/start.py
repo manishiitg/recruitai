@@ -353,8 +353,12 @@ def process(data, isPageWiseData=False):
                                 finalEntity["wrkExp"][-1]["ExperianceYears"] = " ".join(
                                     extractEntity[pageno][lineno]["ExperianceYears"])
                         else:
-                            finalEntity, foundEntity = updateSingleEntity(
-                                ["ExperianceYears"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
+                            # finalEntity, foundEntity = updateSingleEntity(
+                            #     ["ExperianceYears"], extractEntity[pageno][lineno], finalEntity, pageno, contentIdx)
+                            # i dont think we should update experiance years without work
+                            # getting wrong data updated on 17th Nov 2020
+                            pass
+
                     elif "Designation" in extractEntity[pageno][lineno]:
                         logger.info(
                             "need to review this why this happened? orpahn Designation")
@@ -475,6 +479,8 @@ def process(data, isPageWiseData=False):
         #     del finalEntity["wrkExp"]
         # if "Designation" in finalEntity:
         #     del finalEntity["Designation"]
+        # if "ExperianceYears" in finalEntity:
+        #     del finalEntity["ExperianceYears"]
         # uncomment this once finalized qa with ui
         
 
