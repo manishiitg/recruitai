@@ -773,6 +773,8 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                 # print(sub_matched_box)
                 if not should_break:
                     # if should break means another match was found
+                    if "matched" not in sub_matched_box:
+                        sub_matched_box["matched"] = False
 
                     if sub_matched_box["matched"]:
                         bucketurl = sub_matched_box["matchedRow"]["bucketurl"]
@@ -951,6 +953,9 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
 
                     if not should_break:
                         # print(sub_matched_box)
+                        if 'matched' not in sub_matched_box:
+                            sub_matched_box['matched'] = False
+
                         if sub_matched_box["matched"]:
 
                             if "Title" in sub_matched_box["matchedRow"]["bucketurl"]:
@@ -1918,7 +1923,7 @@ answers_having_sentance = [
     "projects_name",
     "training",
     "certifications",
-    # "skills",
+    "skills",
     "awards",
     "extra",
     "hobbies",
