@@ -1,7 +1,7 @@
 from app.logging import logger
 from app import token
 from flask import (
-    Blueprint, flash, jsonify, abort, request, render_template, Response, redirect, send_from_directory
+    Blueprint, flash, jsonify, abort, request, render_template, Response, redirect, send_from_directory, send_file
 )
 
 from bson.objectid import ObjectId
@@ -363,7 +363,7 @@ def get_with_pic_for_annotation():
 @bp.route("/viz/download/<string:candidate_id>/<int:page>", methods=["GET"])
 @check_and_validate_account
 def download_viz_file(candidate_id, page):
-    ## https://staticrecruitai.excellencetechnologies.in/1993d124dda9e43c6369830e865117fcpdf/page0png/page0.png_viz_.png
+    ## https://airecruitai.excellencetechnologies.in/1993d124dda9e43c6369830e865117fcpdf/page0png/page0.png_viz_.png
 
 
     db = initDB(request.account_name, request.account_config)
@@ -408,7 +408,111 @@ def download_viz_file(candidate_id, page):
 
 
 
+@bp.route("/qa/find_incorrect", methods=["GET"])
+@bp.route("/qa/find_incorrect/<int:download>", methods=["GET"])
+@check_and_validate_account
+def qa_find_incorrect(download = 0):
+    db = initDB(request.account_name, request.account_config)
+    rows = db.emailStored.find({"cvParsedInfo.qa_type":  "full" })
+    ret_msgs = {
+        "empty" : [],
+        "duplicates" : []
+    }
+    page_content_map = {}
+    for row in rows:
+        answer_map = row["cvParsedInfo"]["answer_map"]
+        answer = answer_map["personal_name"]
+        if "error" in answer:
+            continue
+            
+        if len(answer["answer"]) == 0:
+            page_content_map[str(row['_id'])] = row["cvParsedInfo"]["page_contents"]
+            ret_msgs["empty"].append(str(row['_id']))
+            continue
 
+        answer_list = []
+        for answer_key in answer_map:
+            answer = answer_map[answer_key]
+            if "error" in answer:
+                continue
+            
+            if len(answer["answer"]) > 0:
+                answer_list.append(answer["answer"].strip())
+
+        if len(answer_list) > 0:
+            if len(answer_list) != len(set(answer_list)):
+                msg = f"duplicate answer found: {str(row['_id'])} "
+                duplicates = []
+                for aidx1, answer_key in enumerate(answer_map):
+                    answer = answer_map[answer_key]
+                    if "error" in answer:
+                        continue
+
+                    if len(answer["answer"].strip()) == 0:
+                        continue
+
+                    for aidx2, answer_key2 in enumerate(answer_map):
+                        if aidx2 < aidx1:
+                            continue
+
+                        answer2 = answer_map[answer_key2]
+                        if "error" in answer2:
+                            continue
+                        
+                        if len(answer2["answer"].strip()) == 0:
+                            continue
+
+                        if answer_key != answer_key2:
+                            if answer2["answer"] == answer["answer"]:
+                                duplicates.append({
+                                    "answer_key" : answer_key,
+                                    "answer_key2" : answer_key2
+                                })
+                                msg += f"dupcate answer for answer_key {answer_key}  answer_key 2 {answer_key2}"
+                
+                if len(duplicates) > 2:
+                    page_content_map[str(row['_id'])] = row["cvParsedInfo"]["page_contents"]
+                    ret_msgs["duplicates"].append({
+                        "id" : str(row["_id"]),
+                        "duplicates": duplicates,
+                        "no_dups" : len(duplicates)
+                    })
+
+
+
+    ret_msgs["duplicates"] = sorted(ret_msgs["duplicates"], key=lambda k: k['no_dups'] , reverse=True) 
+
+    if download == 1:
+        files = []
+        for idd in ret_msgs["empty"][:10]:
+            files.append({
+                "fileName" : f"{idd}.txt",
+                "fileData" : "\n\n".join(page_content_map[idd])
+            })
+
+        for idd in ret_msgs["duplicates"][:40]:
+            idd = idd["id"]
+            files.append({
+                "fileName" : f"{idd}.txt",
+                "fileData" : "\n\n".join(page_content_map[idd])
+            })
+
+        # import shutil
+        # shutil.make_archive("qa_candidates.zip", 'zip', "/workspace/tmp_qa")
+        from io import BytesIO
+        import zipfile
+
+        memory_file = BytesIO()
+        with zipfile.ZipFile(memory_file, 'w') as zf:
+            for individualFile in files:
+                data = zipfile.ZipInfo(individualFile['fileName'])
+                data.date_time = time.localtime(time.time())[:6]
+                data.compress_type = zipfile.ZIP_DEFLATED
+                zf.writestr(data, individualFile['fileData'])
+        memory_file.seek(0)
+        return send_file(memory_file, attachment_filename='qa_candidates.zip', as_attachment=True)
+    else:
+        return json.dumps(ret_msgs, indent=1)
 
 # can we automatically find cv link
 # in which there is too much bouding box overlap
@@ -476,8 +580,8 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                     width = float(bbox[2])
                     height = float(bbox[3])
 
-                    intersections[str(row["_id"])][pred_idx]["aurl"] = inst["filename"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
-                    filename2 = inst["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
+                    intersections[str(row["_id"])][pred_idx]["aurl"] = inst["filename"].replace("/workspace/app/detectron/../../cvreconstruction",f"https://airecruitai.excellencetechnologies.in/{request.account_name}")
+                    filename2 = inst["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction",f"https://airecruitai.excellencetechnologies.in/{request.account_name}")
 
                     obj = {
                         "filename" : filename2,
@@ -493,7 +597,7 @@ def find_inncorrect_annotation(display_type = "bbox_json"):
                             width2 = float(bbox2[2])
                             height2 = float(bbox2[3])
 
-                            filename2 = inst2["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction","https://staticrecruitai.excellencetechnologies.in")
+                            filename2 = inst2["finalfilenamebbox"].replace("/workspace/app/detectron/../../cvreconstruction",f"https://airecruitai.excellencetechnologies.in/{request.account_name}")
 
 
                             
