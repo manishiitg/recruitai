@@ -137,7 +137,7 @@ sudo docker-compose -f docker-compose-cpu-picture.yml up -d --scale=picturemq=9
 
 for i in `seq 1 1000`;
 do
-  sleep 30m
+  sleep 60m
   echo "restarting docker $i"
   sudo docker-compose -f docker-compose-cpu-picture.yml restart
   
