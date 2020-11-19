@@ -37,7 +37,7 @@ import copy
 
 from app.account import initDB, get_cloud_bucket, get_cloud_url
 
-def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, account_name = "", account_config = {}):
+def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, account_name = "", account_config = {}, candidate_row = None):
     try:
 
 
