@@ -25,6 +25,14 @@ from app.account import initDB, get_cloud_bucket, get_cloud_url
 
 def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config):
     try:
+        db = initDB(account_name, account_config)
+        candidaterow = db.emailStored.find_one({"_id" : ObjectId(mongoid)})
+        if "cvimage" in candidaterow:
+            if "images" in candidaterow["cvimage"]:
+                logger.critical("this was already processed. remove this if new ai model comes")
+                return{}
+
+
 
         GOOGLE_BUCKET_URL = get_cloud_url(account_name, account_config)
         timer = time.time()
@@ -79,8 +87,7 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
                     "$set": {
                         "cvimage.picture": response
                     }
-                })
-            
+                })  
 
 
         
