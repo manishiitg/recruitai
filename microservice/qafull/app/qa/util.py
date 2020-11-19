@@ -1701,7 +1701,7 @@ def get_tags_subsections_subanswers(complete_section_match_map, tagger, question
                     continue
 
                 # atleast 10 words to ask any questions else no use
-                if len(line.split(" ")) > 10 and False:
+                if len(line.split(" ")) > 10:
                     # temp as this not used and thing takes time
                     for key in sub_question_to_ask:
                         print(
