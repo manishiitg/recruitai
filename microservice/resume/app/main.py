@@ -524,7 +524,7 @@ class TaskQueue(object):
             doProcess = True
                 
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config)
+            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config, candidate_row)
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
                 r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
                 
