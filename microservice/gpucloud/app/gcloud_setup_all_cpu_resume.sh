@@ -133,11 +133,11 @@ cd /home/jupyter/drive/recruitai
 cat my_password.txt | docker login --username exceltech --password-stdin
 
 sudo docker-compose -f docker-compose-cpu-resume.yml pull --quiet
-sudo docker-compose -f docker-compose-cpu-resume.yml up -d --scale=resumemq=5
+sudo docker-compose -f docker-compose-cpu-resume.yml up -d --scale=resumemq=2
 
 for i in `seq 1 1000`;
 do
-  sleep 30m
+  sleep 60m
   echo "restarting docker $i"
   sudo docker-compose -f docker-compose-cpu-resume.yml restart
   

@@ -87,7 +87,7 @@ def test():
 
 
 
-def processAPI(file, account_name, account_config, maxPage = False):
+def processAPI(file, account_name, account_config, maxPage = False, candidate_row = None):
 
 
   
@@ -101,15 +101,30 @@ def processAPI(file, account_name, account_config, maxPage = False):
   Path(inputDir).mkdir(parents=True, exist_ok=True)
   Path(basePath).mkdir(parents=True, exist_ok=True)
   predictor , cfg = loadTrainedModel()
-  compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config)
+  compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents = startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage, account_name, account_config, candidate_row)
   assert len(compressedStructuredContent) == 1
   logger.critical("page contents sssssss %s", page_contents)
   return compressedStructuredContent[0] , basePath , timeAnalysis, predictions, jsonOutputbbox, page_contents
 
-def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}):
+def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage = False, account_name = "", account_config = {}, candidate_row = None):
   timeAnalysis = {}
 
   combinedCompressedContent = {}
+  exist_predictions = None
+  exist_jsonOutputbbox = None
+
+  # if "cvParsedInfo" in candidate_row:
+  #   cvParsedInfo = candidate_row["cvParsedInfo"]
+  #   if "debug" in cvParsedInfo:
+  #     debug = cvParsedInfo["debug"]
+  #     if "predictions" in debug:
+  #       exist_predictions = debug["predictions"]
+  #     if "jsonOutputbbox" in debug:
+  #       exist_jsonOutputbbox = debug["jsonOutputbbox"]
+    
+  #   # not sure how to use these. need to think
+  #   # basically not need to parse resume everytime again and again
+
   for fileIdx in tqdm(range(len(filestoparse))):
 
     timeAnalysis[fileIdx] = {}
@@ -321,7 +336,7 @@ def startProcessing(filestoparse, inputDir, basePath , predictor, cfg , maxPage 
     timeAnalysis[fileIdx]["gsutil" + str(cvpages)] = time.time() - start_time
     start_time = time.time()
     
-
+  # compressedStructuredContent , timeAnalysis, predictions, jsonOutputbbox, page_contents
   return combinedCompressedContent , timeAnalysis, predictions, bboxocroutputs, page_contents
 
 
