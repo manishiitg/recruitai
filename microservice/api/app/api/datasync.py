@@ -342,25 +342,46 @@ def filter_fetch(id,fetch, tags = "", page = 0, limit = 25, ai = "0",starred = "
 
                 if "unparsed" in options:
                     unparsed = True
- 
-        ret = sendFilterMessage({
-            "id" : id,
-            "fetch" : fetch,
-            "page" : page,
-            "limit" : limit,
-            "tags" : tags,
-            "action" : "fetch",
-            "filter" : filter,
-            "ai" : ai,
-            "sortby" : sortby,
-            "sortorder" : sortorder,
-            "starred" : starred,
-            "conversation" : conversation,
-            "highscore" : highscore,
-            "unparsed" : unparsed,
-            "account_name": request.account_name,
-            "account_config" : request.account_config
-        })
+
+        try:
+            ret = sendFilterMessage({
+                "id" : id,
+                "fetch" : fetch,
+                "page" : page,
+                "limit" : limit,
+                "tags" : tags,
+                "action" : "fetch",
+                "filter" : filter,
+                "ai" : ai,
+                "sortby" : sortby,
+                "sortorder" : sortorder,
+                "starred" : starred,
+                "conversation" : conversation,
+                "highscore" : highscore,
+                "unparsed" : unparsed,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
+        except Exception as e:
+            time.sleep(1)
+            ret = sendFilterMessage({
+                "id" : id,
+                "fetch" : fetch,
+                "page" : page,
+                "limit" : limit,
+                "tags" : tags,
+                "action" : "fetch",
+                "filter" : filter,
+                "ai" : ai,
+                "sortby" : sortby,
+                "sortorder" : sortorder,
+                "starred" : starred,
+                "conversation" : conversation,
+                "highscore" : highscore,
+                "unparsed" : unparsed,
+                "account_name": request.account_name,
+                "account_config" : request.account_config
+            })
 
         return jsonify(ret), 200
     
