@@ -112,9 +112,10 @@ def thread_task( ch, method_frame, properties, body):
                 index(fetch_id, fetch_type, account_name, account_config)
                 # ret = json.dumps(ret)
         elif body["action"] == "filter_index_get":
-
-            ret = get_index(body["tag_id"], account_name, account_config)
-            print(ret)
+            if "job_profile_id" in body:
+                ret = get_index(body["tag_id"], body["job_profile_id"], account_name, account_config)
+            else:
+                ret = get_index(body["tag_id"], None, account_name, account_config)
             add_threadsafe_callback(ch, method_frame,properties, ret)
 
         elif body["action"] == "speed_up":
