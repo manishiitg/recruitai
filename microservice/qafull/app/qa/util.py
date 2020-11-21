@@ -6,7 +6,31 @@ from fuzzywuzzy import fuzz
 import re
 from app.logging import logger
 import json
+from app.account import initDB
+from bson.objectid import ObjectId
 
+def get_page_content_from_compressed_content(idx, account_name, account_config):
+    db = initDB(account_name, account_config)
+    row = db.emailStored.find_one({
+        "_id": ObjectId(idx)
+    })
+    new_page_content = None
+    lines = []
+    if "cvParsedInfo" in row:
+        cvParsedInfo = row["cvParsedInfo"]
+        if "newCompressedStructuredContent" in cvParsedInfo:
+            newCompressedStructuredContent = cvParsedInfo["newCompressedStructuredContent"]
+            for page in newCompressedStructuredContent:
+                for row in newCompressedStructuredContent[page]:
+                    lines.append(row["line"])
+
+    if len(lines) > 0:
+        new_page_content = "\n".join(lines)
+        return {
+            idx : new_page_content
+        }
+
+    return new_page_content
 
 def clean_page_content_map(idx, page_contents):
 
@@ -57,16 +81,21 @@ def clean_page_content_map(idx, page_contents):
 
     line_without_space = 0
     for line in cleanLineData:
-        if " " not in line.strip() and len(line) > 10:  # if more than 10 its not a single word
+        #  HighSchoolfrom RPICKALYANPURJAUNPUR2013withaggregate
+        #  HighSchoolfrom RPICKALYANPURJAUNPUR2013withaggregate
+        #  Intermediatefrom RPICKALYANPURJAUNPUR2015withaggregate78%
+        #  Ihavedone1yearpreprationofIITJEE(2015-2016).
+        # one cv has many lines like this
+        if len(line.strip().split(" ")) <= 2 and len(line) > 10: # if more than 10 its not a single word
             line_without_space += 1
         else:
             words = line.split(" ")
             if len(words) == 2:
                 line_without_space += 1
 
-    if (line_without_space > len(cleanLineData) / 2) and len(cleanLineData) > 10:
-        logger.info("line issue skipping")
-        # logger.info(content)
+    if (line_without_space > len(cleanLineData) * .3) and len(cleanLineData) > 10:
+        logger.critical("line issue skipping")
+        # print(content)
         return None
 
     page_content_map[idx] = "\n".join(cleanLineData)
