@@ -122,9 +122,10 @@ def queue_process():
                             LOGGER.critical("simple_idx %s", simple_idx)
                             if simple_idx > max_start_idx:
                                 max_start_idx = simple_idx
-                                LOGGER.critical("max_start_idx %s", max_start_idx)
+                                
                             # process.exit()
-                        
+                    
+                    LOGGER.critical("max_start_idx %s", max_start_idx)
 
                     if instance_count < max_instance_count_to_start:
                         LOGGER.critical(f"need to start another gpu as more than {indv_queue_count_thresh} jobs pending")
@@ -445,7 +446,7 @@ def start_compute_preementable(instance_name, queue_type, start_idx = -1):
         # if idx <= start_idx:
         #     continue
 
-        name = instance_name + str(idx)
+        name = instance_name + str(start_idx)
         if use_gpu:
             log = f"trying to start gpu for instance name {name} for zone regision {zone['name']}"
         else:
