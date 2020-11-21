@@ -149,13 +149,14 @@ def generateClassifyList(account_name, account_config):
                     month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
                     days =  abs(time.time() - timestamp_seconds)  / (60 * 60 * 24 )
 
-                    if days < 15:
+                    if days < 30:
                         is_old = False
                     else:
                         is_old = True
-                        if days > 365:
-                            is_year_old = True
-                            month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                        # if days > 365:
+                            # is_year_old = True
+                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                            # month_year = ":OLD"
 
                     
 
@@ -164,17 +165,20 @@ def generateClassifyList(account_name, account_config):
                 
                 if is_old:
                     mapKey = "NOT_ASSIGNED" + month_year
-
-                candidate_label = mapKey
                 
-                if candidate_label not in candidate_len_map:
-                    candidate_len_map[candidate_label] = 0
-                
-                candidate_len_map[candidate_label] += 1
+                if not is_old:
+                    # skipping old candidates for now 
+                    candidate_label = mapKey
+                    
+                    if candidate_label not in candidate_len_map:
+                        candidate_len_map[candidate_label] = 0
+                    
+                    candidate_len_map[candidate_label] += 1
             
             
         is_year_old = False
         if "ex_job_profile" in row:
+            continue # skipping ex job profile for now 
             if row["ex_job_profile"] and "name" in row["ex_job_profile"]:
                 candidate_label = "Ex:" + row["ex_job_profile"]["name"]
                 mapKey = candidate_label
@@ -221,22 +225,22 @@ def generateClassifyList(account_name, account_config):
                         candidate_len_map[candidate_label] = 0
 
                 if candidate_label:
-                    month_year = ""
-                    is_year_old = False
-                    days = 0
-                    if "email_timestamp" in row:
-                        timestamp_seconds = int(row["email_timestamp"])/1000
-                        month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
+                    # month_year = ""
+                    # is_year_old = False
+                    # days = 0
+                    # if "email_timestamp" in row:
+                    #     timestamp_seconds = int(row["email_timestamp"])/1000
+                    #     month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y-%b')
 
-                        cur_time = time.time()
-                        days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
+                    #     cur_time = time.time()
+                    #     days =  abs(cur_time - timestamp_seconds)  / (60 * 60 * 24 )
 
-                        if days > 15:
-                            if days > 365:
-                                is_year_old = True
-                                month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
+                    #     if days > 15:
+                    #         if days > 365:
+                    #             is_year_old = True
+                    #             month_year = "-" +  datetime.fromtimestamp(timestamp_seconds).strftime('%Y')
                     
-                    candidate_label = candidate_label + month_year
+                    # candidate_label = candidate_label + month_year
 
                     
                     if candidate_label not in candidate_len_map:
@@ -457,7 +461,7 @@ def get_job_profile_data(mongoid, account_name, account_config):
     r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
     return job_profile_data
 
-def get_classify_data(mongoid, account_name, account_config):
+def get_classify_data(mongoid, page, limit, account_name, account_config):
     r = connect_redis(account_name, account_config) 
     db = initDB(account_name, account_config)
     if "NOT_ASSIGNED" in mongoid:
@@ -569,18 +573,30 @@ def get_classify_data(mongoid, account_name, account_config):
                     row["_id"] = str(row["_id"])
                     job_profile_data[row["_id"]] = row
             else:
-                ret = db.emailStored.find(
-                    {
-                        
-                        "candidateClassify.label" : label,
-                    }, 
-                    {"body": 0, "cvParsedInfo.debug": 0})
+                ret = {}
+                if limit == -1:
+                    ret = db.emailStored.find(
+                        {
+                            
+                            "candidateClassify.label" : label,
+                        }, 
+                        {"body": 0, "cvParsedInfo.debug": 0})
+                else:
+                    ret = db.emailStored.find(
+                        {
+                            
+                            "candidateClassify.label" : label,
+                        }, 
+                        {"body": 0, "cvParsedInfo.debug": 0}).sort("email_date", -1).limit(limit).skip(page*limit)
+
                 for row in ret:
                     row["_id"] = str(row["_id"])
                     job_profile_data[row["_id"]] = row
 
         if job_profile_data:
-            r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
+            # r_set("job_fx_" + mongoid, json.dumps(job_profile_data, default=str), account_name, account_config)
+            # not putting classify data in db
+            pass
         else:
             job_profile_data = {}
 
@@ -641,8 +657,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         if filter_type == "job_profile":
             job_profile_data = get_job_profile_data(mongoid, account_name, account_config)
         else:
-            job_profile_data = get_classify_data(mongoid, account_name, account_config)
-
+            job_profile_data = get_classify_data(mongoid, page, limit, account_name, account_config)
         # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
 
         
@@ -856,7 +871,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         
         if len(tags) == 1:
             logger.critical("tag id %s", tags[0])
-            ret =  r_get(tags[0] + "_filter", account_name, account_config)
+            ret =  r_get(tags[0] + "_filter_children", account_name, account_config)
             if ret is not None:
                 ret = json.loads(ret)
             else:
@@ -964,7 +979,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         logger.critical("sending response..")
         
         response = json.dumps({
-            "filter" : ret,
+            "filter" : {}, # ret temp code to comment filters as its coming from another api only now 
             "candidate_map" : paged_candidate_map,
             "candidate_len" : len(paged_candidate_map),
             "tag_count_map" : tag_count_map
@@ -1062,13 +1077,17 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config = {}):
     pass
     
-def get_index(tag_id, account_name, account_config):
+def get_index(tag_id, job_profile_id, account_name, account_config):
     r = connect_redis(account_name, account_config)
     logger.critical("checking index %s", tag_id)
     if r_exists(tag_id + "_filter", account_name, account_config):
         ret =  r_get(tag_id + "_filter", account_name, account_config)
     else:
-        ret = "-1"
+        if job_profile_id:
+            index(job_profile_id, "job_profile", account_name, account_config)
+            return r_get(tag_id + "_filter", account_name, account_config)
+        else:
+            return "-1"
 
     return ret
 
@@ -1121,7 +1140,7 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         if data and json.loads(data) and use_unique_cache_feature:
             dataMap = json.loads(data)
         else:
-            dataMap = get_classify_data(mongoid, account_name, account_config)
+            dataMap = get_classify_data(mongoid, 0, -1, account_name, account_config)
 
         
         
@@ -1201,13 +1220,43 @@ def generateFilterMap(key, data, account_name, account_config):
     work_filter = designation(wrkExpList, wrkExpIdxMap)
     gpe_filter = location(gpeList,gpeIdxMap)
 
+    r_set(key + "_filter_children" , json.dumps({
+        "exp_filter" : exp_filter,
+        "edu_filter" : edu_filter,
+        "work_filter" : work_filter,
+        "gpe_filter" : gpe_filter
+    }), account_name, account_config)
+
+    for key2 in exp_filter:
+        # exp_filter[key]["children"] = []
+        if "children" in exp_filter[key2]:
+            del exp_filter[key2]["children"]
+        if "sub_range" in exp_filter[key2]:
+            for key3 in exp_filter[key2]["sub_range"]:
+                if "children" in exp_filter[key2]["sub_range"][key3]:
+                    del exp_filter[key2]["sub_range"][key3]["children"]
+
+    for key2 in edu_filter:
+        # edu_filter[key]["children"] = []
+        del edu_filter[key2]["children"]
+
+    for key2 in work_filter:
+        # work_filter[key]["children"] = []
+        del work_filter[key2]["children"]
+        
+    for key2 in gpe_filter:
+        # gpe_filter[key]["children"] = []
+        del gpe_filter[key2]["children"]
+
     logger.critical("generating filter completed %s", key)
+    # print(edu_filter)
     r_set(key + "_filter" , json.dumps({
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
         "gpe_filter" : gpe_filter
     }), account_name, account_config)
+
 
     logger.critical("completed for key %s", key)
 
