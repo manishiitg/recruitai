@@ -182,13 +182,20 @@ def finalCompressedContent(cleanLineData, jsonOutput, seperateTableLineMatchedIn
             # this is for direct match of string.
 
             finalClaimedIdx = False
+            iter_count = 0
             while not isConflictResolved:
+                iter_count += 1
                 # conflict can arise because matchString can match multiple line in jsonoutput
                 # so we need to find the best math
                 matchString = " ".join(line.split(" ")[0:matchStrIndex])
                 if len(matchString) < 5: # and matchStrIndex == 2 commented this on 14 nov, not sure why. just because its not on google colab code
                     matchStrIndex += 1
-                    continue
+                    logger.debug(matchStrIndex)
+                    logger.debug(len(line.split(" ")))
+                    if matchStrIndex > len(line.split(" ")) and iter_count > 100:  # new code add much later on this was doing in infinite loop thats why this was added.
+                        pass
+                    else:
+                        continue
 
                 matchString = matchString.replace("\n", " ").strip()
                 if not isStartingWithList:
