@@ -254,10 +254,12 @@ def filter_index_new(id, type):
     return jsonify(ret), 200
 
 @bp.route('/filter/get/<string:tag_id>', methods=['GET'])
+@bp.route('/filter/get/<string:tag_id>/<string:job_profile_id>', methods=['GET'])
 @check_and_validate_account
-def filter_index_get(tag_id):
+def filter_index_get(tag_id, job_profile_id = None):
     ret = sendFilterMessage({
         "tag_id" : tag_id,
+        "job_profile_id" : job_profile_id,
         "action" : "filter_index_get",
         "account_name": request.account_name,
         "account_config" : request.account_config
