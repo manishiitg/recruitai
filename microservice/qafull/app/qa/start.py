@@ -1,5 +1,5 @@
 import copy
-from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui
+from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui, get_page_content_from_compressed_content
 from app.account import initDB, get_cloud_bucket, connect_redis
 from flair.models import SequenceTagger
 import json
@@ -171,8 +171,16 @@ def get_short_answer_senctence(idx, account_name, account_config):
         
         page_content_map = clean_page_content_map(idx, page_contents)
 
+        page_content_map = clean_page_content_map(idx, page_contents)
+
+        if not page_content_map:
+            # this mean some issue with data. 
+            page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
+            if not page_content_map:
+                return None
+
         answer_map = ask_question(
-            idx, page_contents, True, exist_answer_map, True)
+            idx, page_content_map, True, exist_answer_map, True)
 
         finalEntity, qa_short_answers, fast_search_space = get_fast_tags(
             idx, answer_map, page_content_map, row, questions_minimal)
@@ -325,9 +333,15 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
         logger.critical("asking question %s", exist_answer_map)
 
         page_content_map = clean_page_content_map(idx, page_contents)
+        if not page_content_map:
+            # this mean some issue with data. 
+            page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
+            if not page_content_map:
+                return None
 
+        exist_answer_map[str(row["_id"])] = {} # temp code
         answer_map = ask_question(
-            idx, page_contents, only_initial_data, exist_answer_map)
+            idx, page_content_map, only_initial_data, exist_answer_map)
         if not answer_map:
             logger.critical("error: some problem with page content")
             db.emailStored.update_one({
@@ -551,15 +565,10 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     #     logger.critical(e)
 
 
-def ask_question(idx, page_contents, only_initial_data=False, exist_answer_map={}, is_mini=False):
+def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_map={}, is_mini=False):
     
 
     logger.critical(f"only_initial_data {only_initial_data}  is_mini {is_mini} ")
-
-    page_content_map = clean_page_content_map(idx, page_contents)
-
-    if not page_content_map:
-        return None
 
     answer_map = {}
 
