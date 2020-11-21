@@ -215,8 +215,9 @@ def get_fast_tags(idx, answer_map, page_content_map, row, questions, parsing_typ
 
         for answer_key in fast_search_space[idx]:
             if answer_key == "exp_company":
-                tags = fast_search_space[idx][answer_key]["tags"]
-                finalEntity = extract_final_entity_work(tags, finalEntity)
+                if 'tags' in fast_search_space[idx][answer_key]:
+                    tags = fast_search_space[idx][answer_key]["tags"]
+                    finalEntity = extract_final_entity_work(tags, finalEntity)
 
 
 
