@@ -319,6 +319,8 @@ class TaskQueue(object):
         if isinstance(body, dict):
             
             if body["action"] == "extractSkill":
+                retSkill = {}
+                ret = {}
                 mongoid = body["mongoid"]
                 findSkills = []
                 if "skills" in body:
@@ -349,10 +351,24 @@ class TaskQueue(object):
                                     findSkills.append(value["value"])
 
                             logger.critical("find skills for job %s", findSkills)
-                            ret = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                            retSkill = extractSkill(findSkills, mongoid, False, account_name, account_config)
+                            avg_value = 0
+                            ret = {}
+                            if mongoid in retSkill:
+                                for key in retSkill[mongoid]["skill"]:
+                                    avg_value += retSkill[mongoid]["skill"][key]
+
+                                if len(retSkill[mongoid]["skill"]) > 0:
+                                    retSkill[mongoid]["avg"] = avg_value/len(retSkill[mongoid]["skill"])
+                                else:
+                                    retSkill[mongoid]["avg"] = 0
+                                    
+                                ret[job_profile_id] = retSkill[mongoid]
+                            else:
+                                ret[job_profile_id] = {} 
                         else:
 
-                            ret = {}
+                            
                             for job_id in job_criteria_map:
 
                                 criteria = job_criteria_map[job_id]
@@ -394,7 +410,9 @@ class TaskQueue(object):
                             ret[job_id] = retSkill[mongoid]
                         else:
                             ret[job_id] = {} 
-                        
+                    
+
+                    logger.critical("updating to db %s", retSkill)
                     db = initDB(account_name, account_config)
                     db.emailStored.update_one(
                         {'_id' : ObjectId(mongoid)},
