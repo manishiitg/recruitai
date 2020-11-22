@@ -415,6 +415,7 @@ class TaskQueue(object):
 
         has_job_profile = False
         # this needs to be changed after i think about candidate db
+        job_profile_id = None
         if "job_profile_id" in candidate_row:
             job_profile_id = candidate_row["job_profile_id"]
             if len(job_profile_id) > 0:
@@ -442,7 +443,7 @@ class TaskQueue(object):
                     skills = skills.split(",")
                 
                 qa_parsing_type = "fast"
-                if not job_profile_id:
+                if not has_job_profile:
                     qa_parsing_type = "mini"
 
                 publisherqafull({
@@ -540,7 +541,7 @@ class TaskQueue(object):
 
             qa_parsing_type = "fast"
             
-            if not job_profile_id:
+            if not has_job_profile:
                 qa_parsing_type = "mini"
 
             if ret["parsing_type"] == "full":
