@@ -2,27 +2,27 @@ version: '3.8'
 
 services:    
     
-    resumegpu:
-        # image: recruitai/resumemq:latest
-        build:
-            dockerfile: Dockerfile.gpu
-            context: microservice/resume
-        device_requests:
-            - capabilities:
-                - gpu
-        volumes:
-            - ./pretrained:/workspace/pretrained:ro
-            - /var/log/recruitai:/workspace/logs  
-            - ./microservice/resume/app:/workspace/app       
-            - ./home/jupyter/.cache:/root/.cache      
-        environment:
-            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
-            RESUME_PARALLEL_PROCESS: 3
-            GPU_MANDATORY: 1
-        extra_hosts:
-            - "rabbitmq:116.202.234.182"
-            - "redis:116.202.234.182"
-            - "memcached:116.202.234.182"
+    # resumegpu:
+    #     # image: recruitai/resumemq:latest
+    #     build:
+    #         dockerfile: Dockerfile.gpu
+    #         context: microservice/resume
+    #     device_requests:
+    #         - capabilities:
+    #             - gpu
+    #     volumes:
+    #         - ./pretrained:/workspace/pretrained:ro
+    #         - /var/log/recruitai:/workspace/logs  
+    #         - ./microservice/resume/app:/workspace/app       
+    #         - ./home/jupyter/.cache:/root/.cache      
+    #     environment:
+    #         RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
+    #         RESUME_PARALLEL_PROCESS: 3
+    #         GPU_MANDATORY: 1
+    #     extra_hosts:
+    #         - "rabbitmq:116.202.234.182"
+    #         - "redis:116.202.234.182"
+    #         - "memcached:116.202.234.182"
 
     summarygpu:
         # image: recruitai/summarygpu
@@ -60,6 +60,29 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/picture/app:/workspace/app 
+            - ./home/jupyter/.cache:/root/.cache            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
+            PARALLEL_PROCESS: 1
+            GPU_MANDATORY: 1
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
+
+    qafullgpu:
+        # image: recruitai/picturegpu
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/qafull
+        device_requests:
+            - capabilities:
+                - gpu
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - ./cvreconstruction:/workspace/cvreconstruction 
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/qafull/app:/workspace/app 
             - ./home/jupyter/.cache:/root/.cache            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
