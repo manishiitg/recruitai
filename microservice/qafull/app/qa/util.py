@@ -2139,6 +2139,9 @@ def get_nlp_sentences(final_section_ui_map):
             sections = question_map[question_key]
             for row in sections:
                 # print("=========================section=========================")
+                if "type" not in row:
+                    row["type"] = ""
+                    
                 if row["type"] == "text":
                     sentence = row["sentence"]
                     display_text = row["display_text"]
