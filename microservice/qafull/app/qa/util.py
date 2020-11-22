@@ -92,15 +92,15 @@ def clean_page_content_map(idx, page_contents):
             words = line.split(" ")
             big_word_count = 0
             small_word_count = 0
-        for word in words:
-            if len(word) > max_word_len:
-                big_word_count += 1
-            elif len(word) > 2:  # alteast should have two characters
-                small_word_count += 1
+            for word in words:
+                if len(word) > max_word_len:
+                    big_word_count += 1
+                elif len(word) > 2:  # alteast should have two characters
+                    small_word_count += 1
 
-        if big_word_count >= small_word_count and big_word_count != 0:
-            # print("issue line: ", line)
-            line_without_space += 1
+            if big_word_count >= small_word_count and big_word_count != 0:
+                # print("issue line: ", line)
+                line_without_space += 1
 
     if (line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10:
         # if line_without_space > 15:
@@ -2125,3 +2125,70 @@ def get_fast_search_space(answer_map, page_content_map, tagger, questions_minima
                     break
 
     return search_space_map
+
+
+def get_nlp_sentences(final_section_ui_map):
+    for idx in final_section_ui_map:
+        # print(f"idx {idx}")
+        question_map = final_section_ui_map[idx]
+        for question_key in question_map:
+            sections = question_map[question_key]
+            for row in sections:
+                # print("=========================section=========================")
+                if row["type"] == "text":
+                    sentence = row["sentence"]
+                    display_text = row["display_text"]
+                    mini_sentence = []
+                    new_dispaly_text = []
+                    for display_row in display_text:
+                        if display_row['type'] == "text" or display_row["type"] == "table" or display_row["type"] == "line":
+                            mini_sentence.append(display_row["text"])
+                        else:
+                            if len(mini_sentence) > 0:
+                                if len(mini_sentence) == 1:
+                                    new_dispaly_text.append({
+                                        "type": "text",
+                                        "text": mini_sentence[0]
+                                    })
+                                else:
+                                    doc = nlp(" ".join(mini_sentence))
+                                    all_sents = []
+                                    for sidx, sent in enumerate(doc.sents):
+                                        sent = " ".join(sent.text.split())
+                                        # print(f":{sent}")
+                                        all_sents.append(sent)
+
+                                    new_dispaly_text.append({
+                                        "type": "text",
+                                        "text": all_sents
+                                    })
+                                mini_sentence = []
+
+                            new_dispaly_text.append(display_row)
+                            pass
+
+                    if len(mini_sentence) > 0:
+                        if len(mini_sentence) == 1:
+                            new_dispaly_text.append({
+                                "type": "text",
+                                "text": mini_sentence[0]
+                            })
+                        else:
+                            doc = nlp(" ".join(mini_sentence))
+                            all_sents = []
+                            for sidx, sent in enumerate(doc.sents):
+                                sent = " ".join(sent.text.split())
+                                # print(f":{sent}")
+                                all_sents.append(sent)
+
+                            new_dispaly_text.append({
+                                "type": "text",
+                                "text": all_sents
+                            })
+                        mini_sentence = []
+
+                    row["new_dispaly_text"] = new_dispaly_text
+                    # print("***************")
+                    # print(sentence)
+
+    return final_section_ui_map
