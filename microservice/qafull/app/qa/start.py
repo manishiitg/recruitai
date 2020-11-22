@@ -340,7 +340,6 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             if not page_content_map:
                 return None
 
-        exist_answer_map[str(row["_id"])] = {} # temp code
         answer_map = ask_question(
             idx, page_content_map, only_initial_data, exist_answer_map)
         if not answer_map:
