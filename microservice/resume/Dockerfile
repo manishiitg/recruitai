@@ -1,4 +1,4 @@
-FROM  pytorch/pytorch:1.7.0-cuda11.0-cudnn8-runtime
+FROM  pytorch/pytorch
 LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
