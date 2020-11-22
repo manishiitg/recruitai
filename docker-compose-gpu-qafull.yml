@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+    qfullgpu:
+        build:
+            dockerfile: Dockerfile.gpu
+            context: microservice/qafull
+        device_requests:
+            - capabilities:
+                - gpu
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/qafull/app:/workspace/app 
+            - ./home/jupyter/.cache:/root/.cache            
+        environment:
+            RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5 
+            PARALLEL_PROCESS: 2
+            GPU_MANDATORY: 1
+        extra_hosts:
+            - "rabbitmq:116.202.234.182"
+            - "redis:116.202.234.182"
+            - "memcached:116.202.234.182"
