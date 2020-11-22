@@ -1,5 +1,5 @@
 import copy
-from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui, get_page_content_from_compressed_content
+from app.qa.util import get_page_and_box_map, get_section_match_map, get_resolved_section_match_map, do_section_identification_down, do_up_section_identification, create_combined_section_content_map, do_subsection_identification, get_orphan_section_map, validate, get_tags_subsections_subanswers, merge_orphan_to_ui, get_page_content_from_compressed_content, get_nlp_sentences
 from app.account import initDB, get_cloud_bucket, connect_redis
 from flair.models import SequenceTagger
 import json
@@ -542,13 +542,15 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     final_section_ui_map = merge_orphan_to_ui(
         section_ui_map, orphan_section_map, page_box_count, tagger)
 
-    logger.info(final_section_ui_map)
+    final_nlp_section_ui_map = get_nlp_sentences(final_section_ui_map)
+
+    logger.info(final_nlp_section_ui_map)
     db.emailStored.update_one({
         "_id": ObjectId(idx)
     }, {
         '$set': {
             "cvParsedInfo.qa_type": "full",
-            "cvParsedInfo.qa_parse_resume": final_section_ui_map[idx]
+            "cvParsedInfo.qa_parse_resume": final_nlp_section_ui_map[idx]
         }
     })
 
