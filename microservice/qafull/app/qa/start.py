@@ -593,6 +593,19 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
             if key in exist_answer_map[idx]:
                 logger.critical("answer already exists for question %s", key)
                 answer_map[idx][key] = exist_answer_map[idx][key]
+                if key == "exp_company":
+                    if len(answer["answer"]) == 0:
+                        skip_question.extend(
+                            ["exp_designation", 'exp_duration'])
+
+                    # else:
+                    #     skip_question.extend(["projects_name",'certifications','training','awards'])
+                    # even for experiances ppl we need to ask these questions
+
+                if key == "projects_desc":
+                    if len(answer["answer"]) == 0:
+                        skip_question.extend(["projects_skills"])
+                        
                 continue
 
             if is_mini:
