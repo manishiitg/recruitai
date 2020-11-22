@@ -187,6 +187,8 @@ def queue_process():
                                         max_time_passed = 60 * 5
                                         if queue_type == "resume":
                                             max_time_passed = 60 * 10
+                                        if queue_type == "all":
+                                            max_time_passed = 60 * 20
 
                                     if time_passed > max_time_passed:
                                         slack_message(f"some wrong majorly so deleting instance {running_instance_name} as time passed {time_passed}")
@@ -496,7 +498,7 @@ def start_compute(instance_name, zone, queue_type):
 
         # pytorch-latest-gpu # this is giving more errors with cuda docker
 
-        image_family = ["common-cu101", "common-cu100"]
+        image_family = ["common-cu101", "common-cu100", "common-cu110"]
 
         # sometimes nvidia randomly fails
         image_family_name = random.choice(image_family)
@@ -525,6 +527,7 @@ def start_compute(instance_name, zone, queue_type):
             elif queue_type == "qafull":
                 result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-4 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu_qa_full.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
             else:
+                image_family_name = random.choice(image_family)
                 # result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all_cpu.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
                 result = subprocess.call(shlex.split(f"gcloud beta compute instances create {instance_name} --zone={zone} --image-family={image_family_name} --image-project=deeplearning-platform-release --maintenance-policy=TERMINATE --accelerator type=nvidia-tesla-t4,count=1 --metadata install-nvidia-driver=True --machine-type=n1-standard-8 --boot-disk-type=pd-ssd --metadata-from-file startup-script=/workspace/app/gcloud_setup_all.sh --scopes=logging-write,compute-rw,cloud-platform --create-disk size=200GB,type=pd-ssd,auto-delete=yes --preemptible --format=json"), stdout=subprocess.PIPE)
         # LOGGER.critical("stdout", result)
