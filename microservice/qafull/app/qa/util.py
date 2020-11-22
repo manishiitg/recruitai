@@ -87,6 +87,8 @@ def clean_page_content_map(idx, page_contents):
         # if more than 10 its not a single word
         if len(line.strip().split(" ")) <= 2 and len(line) > 30:
             # print("issue line: ", line)
+            if "@" in line or "://" in line:
+                continue
             line_without_space += 1
         else:
             words = line.split(" ")
@@ -100,6 +102,8 @@ def clean_page_content_map(idx, page_contents):
 
             if big_word_count >= small_word_count and big_word_count != 0:
                 # print("issue line: ", line)
+                if "@" in line or "://" in line:
+                    continue
                 line_without_space += 1
 
     if (line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10:
