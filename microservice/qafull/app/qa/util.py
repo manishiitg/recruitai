@@ -93,7 +93,7 @@ def clean_page_content_map(idx, page_contents):
             if len(words) == 2:
                 line_without_space += 1
 
-    if (line_without_space > len(cleanLineData) * .3) and len(cleanLineData) > 10:
+    if (line_without_space > len(cleanLineData) * .8) and len(cleanLineData) > 10:
         logger.critical("line issue skipping")
         # print(content)
         return None
