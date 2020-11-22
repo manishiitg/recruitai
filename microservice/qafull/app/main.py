@@ -534,6 +534,12 @@ class ReconnectingTaskQueue(object):
 import time
 import subprocess
 def main():     
+    is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
+    if is_gpu_mandatory == 1:
+        if not torch.cuda.is_available():
+            LOGGER.critical("gpu is not there cannot start without it as it is mandatory")
+            return
+            
     loadModel()
 
     result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
