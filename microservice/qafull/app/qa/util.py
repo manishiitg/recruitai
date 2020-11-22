@@ -9,6 +9,7 @@ import json
 from app.account import initDB
 from bson.objectid import ObjectId
 
+
 def get_page_content_from_compressed_content(idx, account_name, account_config):
     db = initDB(account_name, account_config)
     row = db.emailStored.find_one({
@@ -27,10 +28,11 @@ def get_page_content_from_compressed_content(idx, account_name, account_config):
     if len(lines) > 0:
         new_page_content = "\n".join(lines)
         return {
-            idx : new_page_content
+            idx: new_page_content
         }
 
     return new_page_content
+
 
 def clean_page_content_map(idx, page_contents):
 
@@ -54,47 +56,39 @@ def clean_page_content_map(idx, page_contents):
 
         new_lines.append(line)
 
-    cleanLineData = []
-    for line in new_lines:
-        # line = re.sub('\s+', ' ', line).strip() # this is giving warning on server
-        # line = ' '.join(line.split())
-        new_words = []
-        for word in line.split(" "):
-            if word.find("(cid:") >= 0 and word.find(")") >= 0:
-                pass
-            else:
-                new_words.append(word)
-
-        line = " ".join(new_words)
-
-        len_words = 0
-        for word in list(filter(None, line.split(' '))):
-            if len(word) > len_words:
-                len_words = len(word)
-
-        if len_words == 1 and len(list(filter(None, line.split(' ')))) > 2:
-            # logger.info("some issue with line %s", line)
-            line = "".join(line.split(" "))
-            # logger.info("new line %s", line)
-
-        cleanLineData.append(line)
-
     line_without_space = 0
     for line in cleanLineData:
+        if len(line.strip()) == 0:
+            continue
         #  HighSchoolfrom RPICKALYANPURJAUNPUR2013withaggregate
         #  HighSchoolfrom RPICKALYANPURJAUNPUR2013withaggregate
         #  Intermediatefrom RPICKALYANPURJAUNPUR2015withaggregate78%
         #  Ihavedone1yearpreprationofIITJEE(2015-2016).
+        # 5fb505b9bea0290084140944
         # one cv has many lines like this
-        if len(line.strip().split(" ")) <= 2 and len(line) > 10: # if more than 10 its not a single word
+        max_word_len = 20  # assuming most words are under twenlty letters
+        # if more than 10 its not a single word
+        if len(line.strip().split(" ")) <= 2 and len(line) > 30:
+            # print("issue line: ", line)
             line_without_space += 1
         else:
             words = line.split(" ")
-            if len(words) == 2:
-                line_without_space += 1
+            big_word_count = 0
+            small_word_count = 0
+        for word in words:
+            if len(word) > max_word_len:
+                big_word_count += 1
+            elif len(word) > 2:  # alteast should have two characters
+                small_word_count += 1
 
-    if (line_without_space > len(cleanLineData) * .8) and len(cleanLineData) > 10:
-        logger.critical("line issue skipping")
+        if big_word_count >= small_word_count and big_word_count != 0:
+            # print("issue line: ", line)
+            line_without_space += 1
+
+    if (line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10:
+        # if line_without_space > 15:
+        # print(f"line_without_space {line_without_space}")
+        # print(f"len(cleanLineData) {len(cleanLineData)}")
         # print(content)
         return None
 
@@ -2023,13 +2017,13 @@ def get_fast_search_space(answer_map, page_content_map, tagger, questions_minima
 
                     if len(answer['answer']) == 0:
                         continue
-                    
+
                     dup_key = answer_key
                     if "_" in answer_key:
                         dup_key = answer_key.split("_")[0]
-                    
+
                     if dup_key in is_completed:
-                        continue 
+                        continue
 
                     is_found = False
                     if answer_key != "skills":  # for skills need to do below one only
@@ -2095,9 +2089,9 @@ def get_fast_search_space(answer_map, page_content_map, tagger, questions_minima
                         dup_key = answer_key
                         if "_" in answer_key:
                             dup_key = answer_key.split("_")[0]
-                        
+
                         if dup_key in is_completed:
-                            continue 
+                            continue
 
                         is_completed.append(dup_key)
                         search_space_map[idx][answer_key]["line"] = re.sub(
