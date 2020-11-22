@@ -593,6 +593,7 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
             if key in exist_answer_map[idx]:
                 logger.critical("answer already exists for question %s", key)
                 answer_map[idx][key] = exist_answer_map[idx][key]
+                answer = exist_answer_map[idx][key]
                 if key == "exp_company":
                     if len(answer["answer"]) == 0:
                         skip_question.extend(
@@ -605,7 +606,7 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
                 if key == "projects_desc":
                     if len(answer["answer"]) == 0:
                         skip_question.extend(["projects_skills"])
-                        
+
                 continue
 
             if is_mini:
