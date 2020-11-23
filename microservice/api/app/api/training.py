@@ -419,6 +419,7 @@ def qa_find_incorrect(download = 0):
         "duplicates" : []
     }
     page_content_map = {}
+    score_map = {}
     for row in rows:
         answer_map = row["cvParsedInfo"]["answer_map"]
         answer = answer_map["personal_name"]
@@ -431,11 +432,18 @@ def qa_find_incorrect(download = 0):
             continue
 
         answer_list = []
+        
         for answer_key in answer_map:
             answer = answer_map[answer_key]
             if "error" in answer:
                 continue
             
+            score = answer["score"]
+            if "exp_" in answer_key or "edu_" in answer_key or "project" in answer_key:
+                score_map[str(row['_id']) + "_" + answer_key] = {
+                    "score" : score,
+                    "answer" : answer["answer"]
+                }
             if len(answer["answer"]) > 0:
                 answer_list.append(answer["answer"].strip())
 
@@ -478,8 +486,17 @@ def qa_find_incorrect(download = 0):
                         "no_dups" : len(duplicates)
                     })
 
+    score_map = {k: v for k, v in sorted(score_map.items(), key=lambda item: item[1]["score"])}
 
+    from itertools import islice
 
+    def take(n, iterable):
+        "Return first n items of the iterable as a list"
+        return list(islice(iterable, n))
+
+    n_items = take(100, score_map.items())
+
+    ret_msgs["n_items"] = n_items
     ret_msgs["duplicates"] = sorted(ret_msgs["duplicates"], key=lambda k: k['no_dups'] , reverse=True) 
 
     if download == 1:
