@@ -132,6 +132,7 @@ cat my_password.txt | docker login --username exceltech --password-stdin
 sudo docker-compose -f docker-compose-cpu-all.yml pull --quiet --ignore-pull-failures
 sudo docker-compose -f docker-compose-cpu-all.yml up -d --scale=picturemq=1 --scale=qafull=1 --scale=resumemq=1 --scale=summarymq=1
 
+
 for i in `seq 1 1000`;
 do
   sleep 30m
