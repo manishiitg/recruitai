@@ -86,9 +86,9 @@ def clean_page_content_map(idx, page_contents):
         max_word_len = 20  # assuming most words are under twenlty letters
         # if more than 10 its not a single word
         if len(line.strip().split(" ")) <= 2 and len(line) > 30:
-            # print("issue line: ", line)
             if "@" in line or "://" in line:
                 continue
+            print("issue line: ", line)
             line_without_space += 1
         else:
             words = line.split(" ")
@@ -101,9 +101,9 @@ def clean_page_content_map(idx, page_contents):
                     small_word_count += 1
 
             if big_word_count >= small_word_count and big_word_count != 0:
-                # print("issue line: ", line)
                 if "@" in line or "://" in line:
                     continue
+                print("issue line: ", line)
                 line_without_space += 1
 
     if (line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10:
@@ -773,9 +773,17 @@ def do_section_identification_down(new_section_match_map, bbox_map_int, page_box
                     if box_id >= max_box_id:
                         page += 1
                         box_id = 0
+                        # if page not in page_box_count[idx]:
+                        #     print(f"breaking page {page} box id {box_id}")
+                        #     break
+                        
                         if page not in page_box_count[idx]:
-                            print(f"breaking page {page} box id {box_id}")
-                            break
+                            # unique case in this one page itself was blank and resume and missing
+                            if (page+1) not in page_box_count[idx]:
+                                print(f"breaking page {page} box id {box_id}")
+                                break
+                            else:
+                                continue
 
                 else:
                     print(f"breaking page {page} box id {box_id}")
@@ -954,6 +962,14 @@ def do_up_section_identification(new_section_match_map, bbox_map_int, page_box_c
                     if page == 0:
                         print(f"breaking page {page} box id {box_id}")
                         break
+
+                    if page not in page_box_count[idx]:
+                        if (page-1) not in page_box_count[idx]:
+                            print(f"breaking page {page} box id {box_id}")
+                            break
+                        else:
+                            continue
+                    
 
                     sub_matched_box = bbox_list[page][box_id]
                     should_break = False
@@ -1170,10 +1186,11 @@ def do_subsection_identification(combined_section_content_map, absorbed_map, up_
                         page += 1
                         box_id = 0
                         if page not in page_box_count[idx]:
-                            logger.info(
-                                f"breaking page {page} box id {box_id}")
-                            break
-
+                            if (page+1) not in page_box_count[idx]:
+                                print(f"breaking page {page} box id {box_id}")
+                                break
+                            else:
+                                continue
                 else:
                     logger.info(f"breaking 2 page {page} box id {box_id}")
                     break
