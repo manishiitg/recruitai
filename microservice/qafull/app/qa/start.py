@@ -190,7 +190,7 @@ def get_short_answer_senctence(idx, account_name, account_config):
         }, {
             '$set': {
                 "cvParsedInfo.qa_type": "mini",
-                "cvParsedInfo.qa_parse_resume": {},
+                # "cvParsedInfo.qa_parse_resume": {},
                 "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                 "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                 "cvParsedInfo.finalEntity": finalEntity
@@ -321,6 +321,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             else:
                 exist_answer_map[str(row["_id"])] = {}
             
+            
             if "qa_type" in row:
                 qa_type = row["qa_type"]
                 if qa_type == "mini":
@@ -328,14 +329,16 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
                     #discard mini answers are mini we are fetching only with first 2 pages
                     # experimental
 
-            bbox_map[str(row["_id"])
-                     ] = row["cvParsedInfo"]["newCompressedStructuredContent"]
+            bbox_map[str(row["_id"])] = row["cvParsedInfo"]["newCompressedStructuredContent"]
 
         logger.critical("asking question %s", exist_answer_map)
 
         page_content_map = clean_page_content_map(idx, page_contents)
         if not page_content_map:
             # this mean some issue with data. 
+            exist_answer_map[str(row["_id"])] = {} # temp code to remove
+            logger.critical("issue with data for sure!")
+            process.exit()
             page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
             if not page_content_map:
                 return None
@@ -371,7 +374,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             }, {
                 '$set': {
                     "cvParsedInfo.qa_type": "fast",
-                    "cvParsedInfo.qa_parse_resume": {},
+                    # "cvParsedInfo.qa_parse_resume": {},
                     "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                     "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                     "cvParsedInfo.finalEntity": finalEntity
@@ -429,6 +432,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         for key in answers:
             if "error" in answers[key]:
                 continue
+
             print(f"key {key} answer: {answers[key]['answer']}")
             if len(answers[key]["answer"]) != 0:
                 are_all_answers_empty = False
@@ -466,6 +470,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     #         "cvParsedInfo.debug.qa_parse_resume.section_match_map" : section_match_map[idx]
     #     }
     # })
+    
 
     new_section_match_map = get_resolved_section_match_map(section_match_map)
     logger.info(json.dumps(new_section_match_map, indent=True))
@@ -490,6 +495,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     #     }
     # })
 
+    # print(idx)
     validate(new_section_match_map, section_content_map,
              full_question_key_absorted)
 
