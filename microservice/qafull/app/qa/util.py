@@ -106,7 +106,7 @@ def clean_page_content_map(idx, page_contents):
                 print("issue line: ", line)
                 line_without_space += 1
 
-    if (line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10:
+    if ((line_without_space > len(cleanLineData) * .1) and len(cleanLineData) > 10) or (len(cleanLineData) == 1):
         # if line_without_space > 15:
         # print(f"line_without_space {line_without_space}")
         # print(f"len(cleanLineData) {len(cleanLineData)}")
