@@ -213,7 +213,7 @@ def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config
                 "_id" : row["_id"]
             }, {
                 "$set" : {
-                    "check_ai_fast_ai" : True
+                    "check_ai_fast_ai_2" : True
                 }
             })
 
@@ -222,14 +222,14 @@ def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config
 
 def check_ai_missing_data(account_name, account_config):
     # need to check here if queue is empty first else this will cause problem
-    # return {}
+    return {}
     try:
         queues = get_queues()
     except Exception as e:
         logger.critical(e)
         return
     
-    in_process = queues["resume"]["in_process"]
+    in_process = queues["resume"]["in_process"] + queues["qa_full"]["in_process"]
     logger.critical("resume in progress %s", in_process)
 
     if in_process > 10:
@@ -288,13 +288,17 @@ def check_ai_missing_data(account_name, account_config):
 
     if count == 0:
         logger.critical("checking for slow parsing, as cpu is empty can utilize it more")
-        if reduce_priority <= 5:
+        if reduce_priority >= 5:
             logger.critical("not checking due to low priority %s", reduce_priority)
             return 
             
         ret = db.emailStored.find({
-                "cvParsedInfo.parsing_type" : "fast" ,
-                'check_ai_fast_ai' : { "$exists" : False }
+                
+                "$or": [
+                    {"cvParsedInfo.qa_type" : {"$ne" : "full"}},
+                    {"cvParsedInfo.qa_type" : {"$exists" : False}},
+                ],
+                'check_ai_fast_ai_2' : { "$exists" : False }
                 # "attachment" : {  }
             },
             {"body": 0, "cvParsedInfo.debug": 0}
