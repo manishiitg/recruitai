@@ -338,7 +338,6 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             # this mean some issue with data. 
             exist_answer_map[str(row["_id"])] = {} # temp code to remove
             logger.critical("issue with data for sure!")
-            process.exit()
             page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
             if not page_content_map:
                 return None
