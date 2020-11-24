@@ -222,7 +222,7 @@ def check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config
 
 def check_ai_missing_data(account_name, account_config):
     # need to check here if queue is empty first else this will cause problem
-    return {}
+    # return {}
     try:
         queues = get_queues()
     except Exception as e:

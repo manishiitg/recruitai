@@ -10,32 +10,34 @@ from bson.objectid import ObjectId
 import time
 import subprocess
 from app.detectron.start import cleanContent
+from app.detectron.text import get_content_from_resume
 
 def process(finalPdf):
     content = ""
     page_contents = []
-    try:
-        content = extract_text(finalPdf)
-        content = str(content)
-    except PDFTextExtractionNotAllowed as e:
-        logger.critical(e)
+    content, timeAnalysis = get_content_from_resume(cv, -1, {}, 0, 0)
+    # try:
+    #     content = extract_text(finalPdf)
+    #     content = str(content)
+    # except PDFTextExtractionNotAllowed as e:
+    #     logger.critical(e)
             
-        logger.critical("skipping due to error in cv extration %s " , finalPdf)
+    #     logger.critical("skipping due to error in cv extration %s " , finalPdf)
     
-    except Exception as e:
+    # except Exception as e:
         
-        logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , finalPdf)
-        x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True, timeout=60)
-        x = x.decode("utf-8") 
-        # x = re.sub(' +', ' ', x)
-        logger.critical(x)
-        start = "[ '"
-        end = "' ]"
+    #     logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , finalPdf)
+    #     x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True, timeout=60)
+    #     x = x.decode("utf-8") 
+    #     # x = re.sub(' +', ' ', x)
+    #     logger.critical(x)
+    #     start = "[ '"
+    #     end = "' ]"
 
-        x = x.replace(start, "")
-        x = x.replace(end, "")
-        pages_data_extract = x.split("',")
-        content = " ".join(pages_data_extract)
+    #     x = x.replace(start, "")
+    #     x = x.replace(end, "")
+    #     pages_data_extract = x.split("',")
+    #     content = " ".join(pages_data_extract)
 
     logger.critical("content %s", content)  
     page_contents.append(content)
