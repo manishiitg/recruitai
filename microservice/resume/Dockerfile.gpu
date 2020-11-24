@@ -79,5 +79,5 @@ RUN mkdir /workspace/cvreconstruction
 
 RUN pip install pymemcache redis
 RUN pip install PyMuPDF
-
+RUN npm install -g pdf2json
 CMD ["/usr/bin/supervisord"]
