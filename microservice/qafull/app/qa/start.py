@@ -171,10 +171,12 @@ def get_short_answer_senctence(idx, account_name, account_config):
         
         page_content_map = clean_page_content_map(idx, page_contents)
 
-        page_content_map = clean_page_content_map(idx, page_contents)
-
+        is_page_content_corrupt = False
+        exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
+            logger.critical("issue with data for sure!")
+            is_page_content_corrupt = True
             page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
             if not page_content_map:
                 return None
@@ -273,6 +275,24 @@ def extract_final_entity_work(tags, finalEntity, only_first = True):
     
     return finalEntity
 
+def extract_final_entity_personal_corrupt(tags, finalEntity, answer_map):
+    
+    if "personal_name" in answer_map:
+        if "error" not in answer_map["personal_name"]:
+            if len(answer_map["personal_name"]['answer']) > 0:
+                finalEntity['PERSON'] = answer_map["personal_name"]['answer']
+    
+    if "personal_dob" in answer_map:
+        if "error" not in answer_map["personal_dob"]:
+            if len(answer_map["personal_dob"]['answer']) > 0:
+                finalEntity['DOB'] = answer_map["personal_dob"]['answer']
+    
+    if "personal_location" in answer_map:
+        if "error" not in answer_map["personal_location"]:
+            if len(answer_map["personal_location"]['answer']) > 0:
+                finalEntity['GPE'] = answer_map["personal_location"]['answer']
+    
+    return finalEntity
 
 def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_contents=None):
     db = initDB(account_name, account_config)
@@ -334,16 +354,19 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
         logger.critical("asking question %s", exist_answer_map)
 
         page_content_map = clean_page_content_map(idx, page_contents)
+        is_page_content_corrupt = False
+        exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
-            exist_answer_map[str(row["_id"])] = {} # temp code to remove
+            
             logger.critical("issue with data for sure!")
+            is_page_content_corrupt = True
             page_content_map = get_page_content_from_compressed_content(idx, account_name, account_config)
             if not page_content_map:
                 return None
 
         answer_map = ask_question(
-            idx, page_content_map, only_initial_data, exist_answer_map)
+            idx, page_content_map, only_initial_data, exist_answer_map, False)
         if not answer_map:
             logger.critical("error: some problem with page content")
             db.emailStored.update_one({
@@ -397,16 +420,24 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
                     finalEntity = cvParsedInfo["finalEntity"]
 
             all_work_tags = []
+            all_personal_tags = []
             for answer_key in final_section_ui_map[idx]:
                 if "exp_" in answer_key :
                     for row in final_section_ui_map[idx][answer_key]:
                         if "tags" in row:
                             if len(row["tags"]) > 0:
                                 all_work_tags.extend(row["tags"])
+                if "personal_" in answer_key:
+                    for row in final_section_ui_map[idx][answer_key]:
+                        if "tags" in row:
+                            if len(row["tags"]) > 0:
+                                all_personal_tags.extend(row["tags"])
             
             if len(all_work_tags) > 0:
                 finalEntity = extract_final_entity_work(all_work_tags, finalEntity)
 
+            if is_page_content_corrupt and len(all_personal_tags) > 0:
+                finalEntity = extract_final_entity_personal_corrupt(all_personal_tags, finalEntity, answer_map[idx])
             
             db.emailStored.update_one({
                 "_id": ObjectId(idx)
