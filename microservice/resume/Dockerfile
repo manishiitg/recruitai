@@ -79,5 +79,7 @@ RUN mkdir /workspace/detectron4_5000_fpn
 
 RUN pip install pymemcache redis
 RUN pip install PyMuPDF
-
+RUN npm install -g pdf2json
+RUN apt-get install imagemagick -y
+RUN sed -i_bak 's/rights="none" pattern="PDF"/rights="read | write" pattern="PDF"/' /etc/ImageMagick-6/policy.xml
 CMD ["/usr/bin/supervisord"]
