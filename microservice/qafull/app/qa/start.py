@@ -172,7 +172,7 @@ def get_short_answer_senctence(idx, account_name, account_config):
         page_content_map = clean_page_content_map(idx, page_contents)
 
         is_page_content_corrupt = False
-        exist_answer_map[str(row["_id"])] = {} # temp code to remove
+        # exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
             logger.critical("issue with data for sure!")
@@ -355,7 +355,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
 
         page_content_map = clean_page_content_map(idx, page_contents)
         is_page_content_corrupt = False
-        exist_answer_map[str(row["_id"])] = {} # temp code to remove
+        # exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
             
@@ -577,15 +577,15 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     final_section_ui_map = merge_orphan_to_ui(
         section_ui_map, orphan_section_map, page_box_count, tagger)
 
-    final_nlp_section_ui_map = get_nlp_sentences(final_section_ui_map)
+    # final_nlp_section_ui_map = get_nlp_sentences(final_section_ui_map)
 
-    logger.info(final_nlp_section_ui_map)
+    logger.info(final_section_ui_map)
     db.emailStored.update_one({
         "_id": ObjectId(idx)
     }, {
         '$set': {
             "cvParsedInfo.qa_type": "full",
-            "cvParsedInfo.qa_parse_resume": final_nlp_section_ui_map[idx]
+            "cvParsedInfo.qa_parse_resume": final_section_ui_map[idx]
         }
     })
 
