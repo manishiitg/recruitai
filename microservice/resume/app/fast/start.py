@@ -15,7 +15,7 @@ from app.detectron.text import get_content_from_resume
 def process(finalPdf):
     content = ""
     page_contents = []
-    content, timeAnalysis = get_content_from_resume(cv, -1, {}, 0, 0)
+    content, timeAnalysis = get_content_from_resume(finalPdf, -1, {}, -1, -1)
     # try:
     #     content = extract_text(finalPdf)
     #     content = str(content)

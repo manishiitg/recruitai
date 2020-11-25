@@ -526,12 +526,18 @@ class TaskQueue(object):
                 
         if doProcess:
             ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config, candidate_row)
-            if "parsing_type" in ret and ret["parsing_type"] is not "fast":
-                r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
-                
             if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
                 pass
 
+            if "error" in ret:
+                self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
+                self.acknowledge_message(delivery_tag)
+                return
+
+            if "parsing_type" in ret and ret["parsing_type"] is not "fast":
+                r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
+                
+            
 
             self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
             if skills is None:
@@ -544,6 +550,7 @@ class TaskQueue(object):
             if not has_job_profile:
                 qa_parsing_type = "mini"
 
+            
             if ret["parsing_type"] == "full":
                 qa_parsing_type = "full"
 
