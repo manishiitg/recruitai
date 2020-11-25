@@ -51,6 +51,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
         blob = bucket.blob(account_name + "/" + filename)
         Path(dest).mkdir(parents=True, exist_ok=True)
         try:
+            filename = filename.replace("'","") #one case we have a file with ' in it which cause issue
             blob.download_to_filename(os.path.join(dest, filename))
             logger.critical("file downloaded at %s", os.path.join(dest, filename))
         except  Exception as e:
