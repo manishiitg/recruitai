@@ -24,8 +24,8 @@ bp = Blueprint('resume', __name__, url_prefix='/resume')
 
 @bp.route('/<string:filename>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET','POST'])
-@bp.route('/<string:filename>/<string:mongoid>/<int:priority>', methods=['GET','POST'])
-@bp.route('/<string:filename>/<string:mongoid>/<int:priority>/<string:skills>', methods=['GET','POST'])
+@bp.route('/<string:filename>/<string:mongoid>/<string:skills>/<int:priority>', methods=['GET','POST'])
+@bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET','POST'])
 @check_and_validate_account
 def fullparsing(filename, mongoid = None, skills = None, priority = 0):
 
