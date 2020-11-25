@@ -41,10 +41,16 @@ def get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages):
             content = clean_page_content_map(content)
 
     if content is None:
-        content = get_content_from_ocr(cv, cvpage)
+        try:
+            content = get_content_from_ocr(cv, cvpage)
+        except Exception as e:
+            logger.critical("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX %s", str(e))
+            return "", timeAnalysis
         
-    timeAnalysis[fileIdx]["extract_text" +
-                          str(cvpages)] = time.time() - start_time
+    if fileIdx != -1:
+        timeAnalysis[fileIdx]["extract_text" +
+                            str(cvpages)] = time.time() - start_time
+    
     return content, timeAnalysis
 
 def get_content_from_ocr(cv, cvpage):
@@ -66,7 +72,7 @@ def get_content_from_ocr(cv, cvpage):
     return None
         
     # print(x)
-
+import os.path
 def get_content_from_pdf2_json(cv, cvpage):
     # ----------------Page (0) Break----------------
     cv_text = cv.replace(".pdf",".content.txt")
@@ -74,6 +80,11 @@ def get_content_from_pdf2_json(cv, cvpage):
     x = subprocess.check_output(
         ['pdf2json -f ' + cv + " -c -s"], shell=True, timeout=60)
     x = x.decode("utf-8")
+    # print('pdf2json -f ' + cv + " -c -s")
+    # print(x)
+    if not os.path.isfile(cv_text):
+        return None 
+        
     with open(cv_text) as f:
         s = f.read()
         pages = s.split("----------------Page")
@@ -162,6 +173,8 @@ def get_content_from_text_extract(cv, cvpage):
 
 
 def clean_page_content_map(page_contents):
+    if not page_contents:
+        return None 
 
     page_content_map = {}
 
