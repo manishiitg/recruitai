@@ -302,7 +302,7 @@ def check_ai_missing_data(account_name, account_config):
                 # "attachment" : {  }
             },
             {"body": 0, "cvParsedInfo.debug": 0}
-        ).sort("email_timestamp", 1).limit(30)
+        ).sort("email_date", -1).limit(30)
         check_and_send_for_ai(ret,job_criteria_map, db, account_name, account_config, True)
     pass
 
