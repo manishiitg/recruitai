@@ -77,8 +77,11 @@ def get_content_from_pdf2_json(cv, cvpage):
     # ----------------Page (0) Break----------------
     cv_text = cv.replace(".pdf",".content.txt")
 
-    x = subprocess.check_output(
-        ['pdf2json -f ' + cv + " -c -s"], shell=True, timeout=60)
+    try:
+        x = subprocess.check_output(['pdf2json -f ' + cv + " -c -s"], shell=True, timeout=60)
+    except subprocess.TimeoutExpired as e:
+        return None
+    
     x = x.decode("utf-8")
     # print('pdf2json -f ' + cv + " -c -s")
     # print(x)
