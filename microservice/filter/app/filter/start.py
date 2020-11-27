@@ -49,7 +49,8 @@ def get_speedup_api(redisKey, url, payload, access_token, account_name, account_
 
 def general_api_speed_up(url, payload, access_token, account_name, account_config):
 
-    redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8') + access_token.encode('utf-8')  ).hexdigest()
+    # + access_token.encode('utf-8')
+    redisKey = "jb_" + hashlib.md5(  (url + json.dumps(payload)).encode('utf-8') ).hexdigest()
     r = connect_redis(account_name, account_config)
     print("checking for redis key")
     try:
