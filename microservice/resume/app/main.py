@@ -1,3 +1,18 @@
+from app.detectron.start import loadTrainedModel
+import torch
+import subprocess
+from app.ner.start import loadModel as loadModelTagger
+from app.cvlinepredict.start import loadModel
+from app.publishfilterindex import sendMessage as fixnamephone
+from app.publisherqafull import sendMessage as publisherqafull
+from app.publishqa import sendMessage as updateQA
+from app.statspublisher import sendMessage as updateStats
+from app.publishdatasync import sendMessage as datasync
+from app.publishsummary import sendMessage as sendSummary
+from app.publishcandidate import sendMessage as extractCandidateClassifySkill
+from app.pushlishskillindex import sendMessage as indexcandidateskill
+from app.publishfilter import sendBlockingMessage as extractCandidateScore
+from app.publishskill import sendBlockingMessage as extractSkillMessage
 import functools
 import time
 from app.logging import logger as LOGGER
@@ -6,7 +21,7 @@ from app.resumeutil import fullResumeParsing
 import json
 import threading
 import redis
-import os 
+import os
 
 from datetime import datetime
 from pymongo import MongoClient
@@ -20,17 +35,6 @@ import traceback
 import requests
 
 amqp_url = os.getenv('RABBIT_DB')
-
-from app.publishskill import sendBlockingMessage as extractSkillMessage
-from app.publishfilter import sendBlockingMessage as extractCandidateScore
-from app.pushlishskillindex import sendMessage as indexcandidateskill
-
-from app.publishcandidate import sendMessage as extractCandidateClassifySkill
-from app.publishsummary import sendMessage as sendSummary
-from app.publishdatasync import sendMessage as datasync
-from app.statspublisher import sendMessage as updateStats
-from app.publishqa import sendMessage as updateQA
-from app.publisherqafull import sendMessage as publisherqafull
 
 
 class TaskQueue(object):
@@ -47,6 +51,7 @@ class TaskQueue(object):
     EXCHANGE_TYPE = 'topic'
     QUEUE = 'resume'
     ROUTING_KEY = 'resume.parsing'
+
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -61,11 +66,10 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = [    ]
+        self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = int(os.getenv("RESUME_PARALLEL_PROCESS", 1))
-
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -201,7 +205,8 @@ class TaskQueue(object):
         """
         # LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
+        self._channel.queue_declare(
+            queue=queue_name, durable=True, callback=cb, arguments={'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -279,7 +284,7 @@ class TaskQueue(object):
         :param pika.frame.Method method_frame: The Basic.Cancel frame
         """
         # LOGGER.info('Consumer was cancelled remotely, shutting down: %r',
-                    # method_frame)
+        # method_frame)
         if self._channel:
             self._channel.close()
 
@@ -299,7 +304,8 @@ class TaskQueue(object):
         #             basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
+        t = threading.Thread(target=self.do_work, kwargs=dict(
+            delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
         self.threads.append(t)
@@ -311,7 +317,7 @@ class TaskQueue(object):
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
         # LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
-        
+
         message = json.loads(body)
         LOGGER.critical(body)
 
@@ -322,12 +328,11 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
-        
         account_config = message["account_config"]
 
         if "mongoid" not in message:
             message["mongoid"] = ""
-            
+
         if message["mongoid"] is None:
             message["mongoid"] = ""
 
@@ -339,7 +344,8 @@ class TaskQueue(object):
         priority = 0
 
         if "priority" in message:
-            LOGGER.critical("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", message["priority"])
+            LOGGER.critical(
+                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", message["priority"])
             priority = int(message["priority"])
         else:
             LOGGER.critical("priority not found")
@@ -354,7 +360,7 @@ class TaskQueue(object):
 
         key = message["filename"]
 
-        key = ''.join(e for e in key if e.isalnum()) 
+        key = ''.join(e for e in key if e.isalnum())
 
         LOGGER.critical("redis key %s", key)
 
@@ -363,51 +369,50 @@ class TaskQueue(object):
         r = connect_redis(account_name, account_config)
 
         updateStats({
-            "action" : "resume_pipeline_update",
-            "resume_unique_key" : message["filename"],
-            "meta" : {
-                "mongoid" : message["mongoid"]
+            "action": "resume_pipeline_update",
+            "resume_unique_key": message["filename"],
+            "meta": {
+                "mongoid": message["mongoid"]
             },
-            "stage" : {
-                "pipeline" : "resume_start",
-                "priority" : message["priority"] 
+            "stage": {
+                "pipeline": "resume_start",
+                "priority": message["priority"]
             },
-            "account_name" : account_name,
-            "account_config" : account_config
+            "account_name": account_name,
+            "account_config": account_config
         })
 
         if "finalImages" in message:
             if len(message["finalImages"]) >= 10:
                 ret = {
-                    "error" : "too many pages wont process it " + str(len(message["finalImages"]))
+                    "error": "too many pages wont process it " + str(len(message["finalImages"]))
                 }
                 LOGGER.critical(ret)
-                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
+                self.updateInDB(
+                    ret, message["mongoid"], message, account_name, account_config)
                 self.acknowledge_message(delivery_tag)
 
                 updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : message["filename"],
-                    "meta" : {
-                        "error" : ret["error"],
-                        "mongoid" : message["mongoid"]
+                    "action": "resume_pipeline_update",
+                    "resume_unique_key": message["filename"],
+                    "meta": {
+                        "error": ret["error"],
+                        "mongoid": message["mongoid"]
                     },
-                    "stage" : {
-                        "pipeline" : "resume",
-                        "priority" : message["priority"] 
+                    "stage": {
+                        "pipeline": "resume",
+                        "priority": message["priority"]
                     },
-                    "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_name": account_name,
+                    "account_config": account_config
                 })
 
                 return
-        
+
         db = initDB(account_name, account_config)
         candidate_row = db.emailStored.find_one({
-            "_id" : ObjectId(message["mongoid"])
+            "_id": ObjectId(message["mongoid"])
         })
-
-        
 
         if not candidate_row:
             LOGGER.critical("candidate not found in db %s", message["mongoid"])
@@ -424,7 +429,8 @@ class TaskQueue(object):
         start_time = time.time()
 
         is_cache = False
-        if r_exists(key, account_name, account_config) and False: # turning of cache because testing with ai models
+        # turning of cache because testing with ai models
+        if r_exists(key, account_name, account_config) and False:
             ret = r_get(key, account_name, account_config)
             ret = json.loads(ret)
             LOGGER.critical("redis key exists")
@@ -435,57 +441,58 @@ class TaskQueue(object):
                 if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
                     pass
 
-                self.updateInDB(ret , message["mongoid"], message, account_name, account_config)
+                self.updateInDB(
+                    ret, message["mongoid"], message, account_name, account_config)
                 if skills is None:
                     skills = ""
 
                 if not isinstance(skills, list):
                     skills = skills.split(",")
-                
+
                 qa_parsing_type = "fast"
                 if not has_job_profile:
                     qa_parsing_type = "mini"
 
                 publisherqafull({
-                    "action" : "qa_pipeline",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "parsing" : qa_parsing_type,
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"]
+                    "action": "qa_pipeline",
+                    "mongoid": message["mongoid"],
+                    "filename": message["filename"],
+                    "parsing": qa_parsing_type,
+                    "account_name": account_name,
+                    "account_config": account_config,
+                    "priority": message["priority"]
                 })
                 indexcandidateskill({
-                    "action" : "extractSkill",
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "skills" : skills,
+                    "action": "extractSkill",
+                    "mongoid": message["mongoid"],
+                    "filename": message["filename"],
+                    "skills": skills,
                     # "meta" : meta,
-                    "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_name": account_name,
+                    "account_config": account_config
                 })
 
                 updateStats({
-                    "action" : "resume_pipeline_update",
-                    "resume_unique_key" : message["filename"],
-                    "meta" : {
-                        "mongoid" : message["mongoid"],
-                        "is_cache" : is_cache
+                    "action": "resume_pipeline_update",
+                    "resume_unique_key": message["filename"],
+                    "meta": {
+                        "mongoid": message["mongoid"],
+                        "is_cache": is_cache
                     },
-                    "stage" : {
-                        "pipeline" : "resume",
-                        "priority" : message["priority"] 
+                    "stage": {
+                        "pipeline": "resume",
+                        "priority": message["priority"]
                     },
-                    "account_name" : account_name,
-                    "account_config" : account_config
+                    "account_name": account_name,
+                    "account_config": account_config
                 })
-                
+
                 extractCandidateClassifySkill({
-                    "mongoid" : message["mongoid"],
-                    "filename" : message["filename"],
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"] 
+                    "mongoid": message["mongoid"],
+                    "filename": message["filename"],
+                    "account_name": account_name,
+                    "account_config": account_config,
+                    "priority": message["priority"]
                 })
                 # if "criteria" in meta:
                 #     extractCandidateScore({
@@ -507,93 +514,102 @@ class TaskQueue(object):
                     "account_config": account_config
                 })
                 LOGGER.critical(" data sync calledddd 121221")
+                fixnamephone({
+                    "id": message["mongoid"],
+                    "action": "fix_name_email_phone",
+                    "account_name": account_name,
+                    "account_config": account_config
+                })
                 datasync({
-                    "id" : message["mongoid"],
-                    "action" : "syncCandidate",
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"],
-                    "field" : "tag_id"
+                    "id": message["mongoid"],
+                    "action": "syncCandidate",
+                    "account_name": account_name,
+                    "account_config": account_config,
+                    "priority": message["priority"],
+                    "field": "tag_id"
                 })
 
-                self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
+                self.notifyNodeSystem(
+                    ret, message["mongoid"], message, account_name, account_config)
 
             else:
-                LOGGER.critical("redis key exists but previously error status so reprocessing")
+                LOGGER.critical(
+                    "redis key exists but previously error status so reprocessing")
                 doProcess = True
         else:
             doProcess = True
-                
+
         if doProcess:
-            ret = fullResumeParsing(message["filename"], message["mongoid"], message , priority, account_name, account_config, candidate_row)
+            ret = fullResumeParsing(message["filename"], message["mongoid"],
+                                    message, priority, account_name, account_config, candidate_row)
             if "error" not in ret and ObjectId.is_valid(message["mongoid"]):
                 pass
 
             if "error" in ret:
-                self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
+                self.updateInDB(
+                    ret, message["mongoid"], message, account_name, account_config)
                 self.acknowledge_message(delivery_tag)
                 return
 
             if "parsing_type" in ret and ret["parsing_type"] is not "fast":
-                r_set(key, json.dumps(ret), account_name, account_config) # 1day or 30days in dev
-                
-            
+                r_set(key, json.dumps(ret), account_name,
+                      account_config)  # 1day or 30days in dev
 
-            self.updateInDB(ret, message["mongoid"], message, account_name, account_config)
+            self.updateInDB(ret, message["mongoid"],
+                            message, account_name, account_config)
             if skills is None:
                 skills = ""
             if not isinstance(skills, list):
                 skills = skills.split(",")
 
             qa_parsing_type = "fast"
-            
+
             if not has_job_profile:
                 qa_parsing_type = "mini"
 
-            
             if ret["parsing_type"] == "full":
                 qa_parsing_type = "full"
 
-            publisherqafull({  
-                "action" : "qa_pipeline",
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "parsing" : qa_parsing_type,
-                "account_name" : account_name,
-                "account_config" : account_config,
-                "priority" : message["priority"]
-                })
+            publisherqafull({
+                "action": "qa_pipeline",
+                "mongoid": message["mongoid"],
+                "filename": message["filename"],
+                "parsing": qa_parsing_type,
+                "account_name": account_name,
+                "account_config": account_config,
+                "priority": message["priority"]
+            })
             indexcandidateskill({
-                "action" : "extractSkill",
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "skills" : skills,
+                "action": "extractSkill",
+                "mongoid": message["mongoid"],
+                "filename": message["filename"],
+                "skills": skills,
                 # "meta" : meta,
-                "account_name" : account_name,
-                "account_config" : account_config
+                "account_name": account_name,
+                "account_config": account_config
             })
             updateStats({
-                "action" : "resume_pipeline_update",
-                "resume_unique_key" : message["filename"],
-                "meta" : {
-                    "mongoid" : message["mongoid"],
-                    "is_cache" : is_cache
+                "action": "resume_pipeline_update",
+                "resume_unique_key": message["filename"],
+                "meta": {
+                    "mongoid": message["mongoid"],
+                    "is_cache": is_cache
                 },
-                "stage" : {
-                    "pipeline" : "resume",
-                    "priority" : message["priority"] 
+                "stage": {
+                    "pipeline": "resume",
+                    "priority": message["priority"]
                 },
-                "account_name" : account_name,
-                "account_config" : account_config
+                "account_name": account_name,
+                "account_config": account_config
             })
             extractCandidateClassifySkill({
-                "mongoid" : message["mongoid"],
-                "filename" : message["filename"],
-                "account_name" : account_name,
-                "account_config" : account_config,
-                "priority" : message["priority"] 
+                "mongoid": message["mongoid"],
+                "filename": message["filename"],
+                "account_name": account_name,
+                "account_config": account_config,
+                "priority": message["priority"]
             })
-            
+
             sendSummary({
                 "mongoid": message["mongoid"],
                 "filename": message["filename"],
@@ -604,19 +620,26 @@ class TaskQueue(object):
 
             LOGGER.critical(" data sync calledddd")
 
-
+            fixnamephone({
+                "id": message["mongoid"],
+                "action": "fix_name_email_phone",
+                "account_name": account_name,
+                "account_config": account_config
+            })
             datasync({
-                    "id" : message["mongoid"],
-                    "action" : "syncCandidate",
-                    "account_name" : account_name,
-                    "account_config" : account_config,
-                    "priority" : message["priority"],
-                    "field" : "tag_id"
+                "id": message["mongoid"],
+                "action": "syncCandidate",
+                "account_name": account_name,
+                "account_config": account_config,
+                "priority": message["priority"],
+                "field": "tag_id"
             })
 
-            self.notifyNodeSystem(ret, message["mongoid"], message, account_name, account_config)
+            self.notifyNodeSystem(
+                ret, message["mongoid"], message, account_name, account_config)
 
-        LOGGER.critical("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ total time taken %s", (time.time() - start_time))    
+        LOGGER.critical(
+            "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ total time taken %s", (time.time() - start_time))
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
@@ -624,7 +647,7 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid , message, account_name, account_config):
+    def updateInDB(self, ret, mongoid, message, account_name, account_config):
         isError = False
         if "error" in ret:
             isError = True
@@ -635,12 +658,12 @@ class TaskQueue(object):
         if ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
             ret = db.emailStored.update_one({
-                "_id" : ObjectId(mongoid)
+                "_id": ObjectId(mongoid)
             }, {
                 "$set": {
                     "cvParsedInfo": ret,
                     "cvParsedAI": not isError,
-                    "updatedTime" : datetime.now()
+                    "updatedTime": datetime.now()
                 }
             })
             LOGGER.critical(ret)
@@ -648,7 +671,7 @@ class TaskQueue(object):
         else:
             LOGGER.critical("invalid mongoid")
 
-    def notifyNodeSystem(self, ret, mongoid , message, account_name, account_config):
+    def notifyNodeSystem(self, ret, mongoid, message, account_name, account_config):
         isError = False
         if "error" in ret:
             isError = True
@@ -661,14 +684,16 @@ class TaskQueue(object):
                     del meta["criteria"]
 
                 if "callback_url" in meta:
-                    LOGGER.info("sending resume data to nodejs to url %s" , meta["callback_url"])
-                    
+                    LOGGER.info(
+                        "sending resume data to nodejs to url %s", meta["callback_url"])
+
                     message["parsed"] = {
                         # "cvParsedInfo": ret,
                         "cvParsedAI": not isError,
-                        "updatedTime" : datetime.now()
+                        "updatedTime": datetime.now()
                     }
-                    meta["message"] = json.loads(json.dumps(message, default=str))
+                    meta["message"] = json.loads(
+                        json.dumps(message, default=str))
                     LOGGER.critical(meta)
                     x = requests.post(meta["callback_url"], json=meta)
                     LOGGER.critical(x.text)
@@ -677,9 +702,6 @@ class TaskQueue(object):
             LOGGER.critical(meta)
             traceback.print_exc()
             LOGGER.critical(e)
-
-            
-        
 
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
@@ -690,8 +712,6 @@ class TaskQueue(object):
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
-
-            
 
     def stop_consuming(self):
         """Tell RabbitMQ that you would like to stop consuming by sending the
@@ -771,12 +791,12 @@ class ReconnectingTaskQueue(object):
                 self._consumer.run()
                 # Wait for all to complete
             except KeyboardInterrupt:
-                self._consumer.stop() 
+                self._consumer.stop()
                 break
             # except Exception as e:
             #     print(traceback.format_exc())
             #     LOGGER.critical(str(e))
-                
+
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
@@ -796,21 +816,15 @@ class ReconnectingTaskQueue(object):
             self._reconnect_delay = 30
         return self._reconnect_delay
 
-from app.detectron.start import loadTrainedModel 
-from app.cvlinepredict.start import loadModel
-from app.ner.start import loadModel as loadModelTagger
-
-import subprocess
-import torch
 
 def main():
 
     is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
     if is_gpu_mandatory == 1:
         if not torch.cuda.is_available():
-            LOGGER.critical("gpu is not there cannot start without it as it is mandatory")
+            LOGGER.critical(
+                "gpu is not there cannot start without it as it is mandatory")
             return
-
 
     result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
                              'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
@@ -827,6 +841,7 @@ def main():
     loadModelTagger()
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
+
 
 if __name__ == '__main__':
     main()
