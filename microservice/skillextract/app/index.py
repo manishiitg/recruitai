@@ -19,7 +19,7 @@ from app.skillsword2vec.start import loadModel, loadDomainModel
 from app.statspublisher import sendMessage as updateStats
 from app.account import initDB
 from bson.objectid import ObjectId
-from app.publishfilter import sendBlockingMessage as extractCandidateScore
+from app.publishfilterindex import sendMessage as extractCandidateScore
 from app.publishdatasync import sendMessage as datasync
 
 
