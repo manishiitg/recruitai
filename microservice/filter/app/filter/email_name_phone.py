@@ -3,6 +3,7 @@ from email_validator import validate_email, EmailNotValidError, EmailSyntaxError
 from app.logging import logger
 from bson.objectid import ObjectId
 from collections import OrderedDict
+from app.publishgender import sendBlockingMessage as getGenderMessage
 
 
 def pre_process_email(Email):
@@ -378,7 +379,7 @@ def email_check_db(row, db):
         logger.info(f"================={id}")
 
 
-def process_name(row, db):
+def process_name(row, db, account_name, account_config):
     if "finalEntity" in row["cvParsedInfo"]:
 
         if "from" in row:
@@ -441,11 +442,13 @@ def process_name(row, db):
 
         id = str(row["_id"])
         if len(final_name) > 0:
+            gender  =  getGender(final_name, account_name, account_config)
             db.emailStored.update_one({
                 "_id": ObjectId(id)
             }, {
                 '$set': {
-                    "from": final_name
+                    "from": final_name,
+                    "finalEntity.gender" : gender
                 }
             })
         logger.info(f"================={id} and final name {final_name}")
@@ -520,6 +523,9 @@ def validate_phone(Phone):
 
     if ":" in Phone:
         Phone = Phone[Phone.index(":") + 1:]
+    
+    if "." in Phone:
+        Phone = Phone[Phone.index(".") + 1:]
 
     Phone = Phone.strip()
     if len(Phone) == 0:
@@ -636,3 +642,10 @@ def fix_phone(row, db):
                 })
 
         # break
+
+def getGender(name, account_name, account_config):
+    return getGenderMessage({
+        "name" : name,
+        "account_name" : account_name,
+        "account_config" : account_config
+    })
