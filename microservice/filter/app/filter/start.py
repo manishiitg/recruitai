@@ -19,6 +19,31 @@ import requests
 import hashlib   
 from app.datasyncpublisher import sendMessage as datasync
 
+from app.filter.email_name_phone import process_name, email_check_db, fix_phone
+from bson.objectid import ObjectId
+
+def fix_name_email_phone_all(account_name, account_config):
+    db = initDB(account_name, account_config)
+    
+    rows = db.emailStored.find({"cvParsedInfo" : {"$exists": True}})
+    for row in rows:
+        process_name(row, db)
+        email_check_db(row, db)
+        fix_phone(row, db)
+
+
+def fix_name_email_phone(id, account_name, account_config):
+    db = initDB(account_name, account_config)
+    if not ObjectId.is_valid(id):
+        return None
+
+    row = db.emailStored.find_one(
+        {"_id": ObjectId(id)}
+    )
+    process_name(row, db)
+    email_check_db(row, db)
+    fix_phone(row, db)
+
 def get_speedup_api(redisKey, url, payload, access_token, account_name, account_config):
 
     
