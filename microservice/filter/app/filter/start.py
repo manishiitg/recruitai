@@ -27,7 +27,7 @@ def fix_name_email_phone_all(account_name, account_config):
     
     rows = db.emailStored.find({"cvParsedInfo" : {"$exists": True}})
     for row in rows:
-        process_name(row, db)
+        process_name(row, db, account_name, account_config)
         email_check_db(row, db)
         fix_phone(row, db)
 
@@ -40,7 +40,7 @@ def fix_name_email_phone(id, account_name, account_config):
     row = db.emailStored.find_one(
         {"_id": ObjectId(id)}
     )
-    process_name(row, db)
+    process_name(row, db, account_name, account_config)
     email_check_db(row, db)
     fix_phone(row, db)
 
