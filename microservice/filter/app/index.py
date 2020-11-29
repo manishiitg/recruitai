@@ -1,23 +1,21 @@
-import torch
-import subprocess
-from app.publishfilterindex import sendMessage as fixnamephone
-from app.pushlishskillindex import sendMessage as indexcandidateskill
-from app.publishdatasync import sendMessage as datasync
-from app.statspublisher import sendMessage as updateStats
-from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel, get_short_answer_senctence
 import functools
 import time
 from app.logging import logger as LOGGER
 import pika
 import json
 import threading
-import os
+import os 
 
 from datetime import datetime
 
 import traceback
 
 amqp_url = os.getenv('RABBIT_DB')
+
+from app.datasyncpublisher import sendMessage as datasync
+
+from app.filter.start import fix_name_email_phone, fix_name_email_phone_all
+from app.filter.start import indexAll, index
 
 
 class TaskQueue(object):
@@ -32,9 +30,8 @@ class TaskQueue(object):
     """
     EXCHANGE = 'message'
     EXCHANGE_TYPE = 'topic'
-    QUEUE = 'qa_full'
-    ROUTING_KEY = 'qa_full.parsing'
-
+    QUEUE = 'filter.index'
+    ROUTING_KEY = 'filter.index'
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -49,10 +46,11 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = []
+        self.threads = [    ]
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = 1
+
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -105,8 +103,7 @@ class TaskQueue(object):
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning(
-                'Connection closed, reconnect necessary: %s', reason)
+            LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
             self.reconnect()
 
     def reconnect(self):
@@ -188,8 +185,7 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(
-            queue=queue_name, durable=True, callback=cb, arguments={'x-max-priority': 10})
+        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -287,8 +283,7 @@ class TaskQueue(object):
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(
-            delivery_tag=delivery_tag, body=body))
+        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
         # self.threads.append(t)
@@ -300,7 +295,7 @@ class TaskQueue(object):
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
         LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
-
+        
         message = json.loads(body)
         # LOGGER.info(body)
 
@@ -317,120 +312,36 @@ class TaskQueue(object):
             LOGGER.critical("invalid config")
             return self.acknowledge_message(delivery_tag)
 
+
         body = message
         if isinstance(body, dict):
             if "action" in body:
                 action = body["action"]
                 ret = {}
-
-                if action == "qa_candidate_db":
-                    if "parsing" in body:
-                        if body['parsing'] == "fast":
-                            ret = qa_candidate_db(
-                                body["mongoid"], True, account_name, account_config)
-                        elif body['parsing'] == "mini":
-                            ret = get_short_answer_senctence(
-                                body["mongoid"], account_name, account_config)
-                        else:
-                            ret = qa_candidate_db(
-                                body["mongoid"], False, account_name, account_config)
-                    else:
-                        ret = qa_candidate_db(
-                            body["mongoid"], False, account_name, account_config)
-
-                    fixnamephone({
-                        "id": message["mongoid"],
-                        "action": "fix_name_email_phone",
-                        "account_name": account_name,
-                        "account_config": account_config
-                    })
-                    datasync({
-                        "id": message["mongoid"],
-                        "action": "syncCandidate",
-                        "account_name": account_name,
-                        "account_config": account_config,
-                        "priority": message["priority"],
-                        "field": "cvParsedInfo"
-                    })
-
-                    indexcandidateskill({
-                        "action": "extractSkill",
-                        "mongoid": message["mongoid"],
-                        "account_name": account_name,
-                        "account_config": account_config,
-                        "priority": message["priority"],
-                    })
-
-                elif action == "qa_pipeline":
-                    updateStats({
-                        "action": "resume_pipeline_update",
-                        "resume_unique_key": message["filename"],
-                        "meta": {
-                            "mongoid": message["mongoid"]
-                        },
-                        "stage": {
-                            "pipeline": "resume_qa_full_start",
-                            "priority": message["priority"]
-                        },
-                        "account_name": account_name,
-                        "account_config": account_config
-                    })
-                    if "parsing" in body:
-                        if body['parsing'] == "fast":
-                            ret = qa_candidate_db(
-                                body["mongoid"], True, account_name, account_config)
-                        elif body['parsing'] == "mini":
-                            ret = get_short_answer_senctence(
-                                body["mongoid"], account_name, account_config)
-                        else:
-                            ret = qa_candidate_db(
-                                body["mongoid"], False, account_name, account_config)
-                    else:
-                        ret = qa_candidate_db(
-                            body["mongoid"], False, account_name, account_config)
-
-                    updateStats({
-                        "action": "resume_pipeline_update",
-                        "resume_unique_key": message["filename"],
-                        "meta": {
-                            "mongoid": message["mongoid"]
-                        },
-                        "stage": {
-                            "pipeline": "resume_qa_full",
-                            "priority": message["priority"]
-                        },
-                        "account_name": account_name,
-                        "account_config": account_config
-                    })
-                    fixnamephone({
-                        "id": message["mongoid"],
-                        "action": "fix_name_email_phone",
-                        "account_name": account_name,
-                        "account_config": account_config
-                    })
-                    datasync({
-                        "id": message["mongoid"],
-                        "action": "syncCandidate",
-                        "account_name": account_name,
-                        "account_config": account_config,
-                        "priority": message["priority"],
-                        "field": "cvParsedInfo"
-                    })
-                    indexcandidateskill({
-                        "action": "extractSkill",
-                        "mongoid": message["mongoid"],
-                        "account_name": account_name,
-                        "account_config": account_config,
-                        "priority": message["priority"],
-                    })
+                
+                if body["action"] == "index":
+                    fetch_type = body["fetch"]
+                    fetch_id = body["id"]
+                    index(fetch_id, fetch_type, account_name, account_config)
+                elif body["action"] == "fix_name_email_phone_all":
+                    fix_name_email_phone_all(account_name, account_config)
+                    
+                elif body["action"] == "fix_name_email_phone":
+                    fix_name_email_phone(
+                        body["id"], account_name, account_config)
 
         LOGGER.critical("completed")
         self.acknowledge_message(delivery_tag)
+        
+            
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
+        
+
+          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
@@ -440,6 +351,8 @@ class TaskQueue(object):
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
+
+            
 
     def stop_consuming(self):
         """Tell RabbitMQ that you would like to stop consuming by sending the
@@ -519,12 +432,12 @@ class ReconnectingTaskQueue(object):
                 self._consumer.run()
                 # Wait for all to complete
             except KeyboardInterrupt:
-                self._consumer.stop()
+                self._consumer.stop() 
                 break
             # except Exception as e:
             #     print(traceback.format_exc())
             #     LOGGER.critical(str(e))
-
+                
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
@@ -545,26 +458,13 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
+
 def main():
-    is_gpu_mandatory = int(os.getenv("GPU_MANDATORY", 0))
-    if is_gpu_mandatory == 1:
-        if not torch.cuda.is_available():
-            LOGGER.critical(
-                "gpu is not there cannot start without it as it is mandatory")
-            return
-
-    loadModel()
-
-    result = subprocess.run(['gsutil', '-m', 'cp', '-rn',
-                             'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
-
-    print(result)
-    loadTaggerModel()
-
     # time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
-
 if __name__ == '__main__':
     main()
+
+

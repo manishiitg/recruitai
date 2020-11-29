@@ -1988,7 +1988,8 @@ answers_having_sentance = [
     "awards",
     "extra",
     "hobbies",
-    "summary"
+    "summary",
+    "personal_name"
 ]
 
 
