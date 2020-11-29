@@ -18,7 +18,6 @@ from app.filter.start import fetch, indexAll, index, clear_unique_cache, get_can
 from app.score.start import get_education_display, get_candidate_score, get_exp_display, get_candidate_score_bulk
 from app.statspublisher import sendMessage as updateStats
 
-
 import time
 
 import threading
