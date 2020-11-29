@@ -72,7 +72,7 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
 
         timer = time.time()
         parsing_type = "full"
-        if priority > 5 :
+        if priority > 7 :
             parsing_type = "full"
         else:
             parsing_type = "fast"
