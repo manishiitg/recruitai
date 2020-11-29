@@ -93,11 +93,11 @@ questions = {
     "hobbies": "what are you hobbies",
 }
 questions_needed_for_initial_data = [
-    # "personal_name", # will fetch this from ner itself
+    "personal_name", 
     "total_experiance",
     "exp_company",
-    "exp_designation",
-    "exp_duration",
+    # "exp_designation", # this will come from ner
+    # "exp_duration", # this will come from ner
     "projects_name",
     "skills",
     "education_degree",  # will fetch this from ner itself
@@ -111,7 +111,8 @@ questions_needed_for_initial_data = [
 
 questions_minimal = [
     "exp_company",
-    "skills"
+    "skills",
+    "personal_name"
 ]
 
 
