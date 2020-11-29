@@ -11,6 +11,7 @@ RUN apt-get update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./supervisor/conf.d/filter.conf /etc/supervisor/conf.d/filter.conf
+COPY ./supervisor/conf.d/index.conf /etc/supervisor/conf.d/index.conf
 
 RUN truncate -s 0 /workspace/logs/filter*.log
 
@@ -31,5 +32,6 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
 RUN pip install pymemcache redis requests
+RUN pip install email-validator
 
 CMD ["/usr/bin/supervisord"]
