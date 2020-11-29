@@ -452,6 +452,9 @@ class TaskQueue(object):
                 qa_parsing_type = "fast"
                 if not has_job_profile:
                     qa_parsing_type = "mini"
+                
+                if message["priority"] <= 5:
+                    qa_parsing_type = "mini"
 
                 publisherqafull({
                     "action": "qa_pipeline",
@@ -565,6 +568,9 @@ class TaskQueue(object):
             qa_parsing_type = "fast"
 
             if not has_job_profile:
+                qa_parsing_type = "mini"
+            
+            if message["priority"] <= 5:
                 qa_parsing_type = "mini"
 
             if ret["parsing_type"] == "full":
