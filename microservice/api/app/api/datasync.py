@@ -125,7 +125,8 @@ def candidate_score_bulk(id):
 
         data = request.json['data']
 
-        ret = sendFilterMessage({
+        # ret = sendFilterMessage({
+        filterindex({
             "id": id,
             "action": "candidate_score_bulk",
             "account_name": request.account_name,
@@ -133,7 +134,7 @@ def candidate_score_bulk(id):
             "criteria": data
         })
 
-        return jsonify(ret), 200
+        return jsonify({}), 200
 
     except KeyError as e:
         logger.critical(e)
@@ -152,7 +153,9 @@ def candidate_score(id):
         else:
             data = {}
 
-        ret = sendFilterMessage({
+        # ret = sendFilterMessage({
+        ret = {}
+        filterindex({
             "id": id,
             "action": "candidate_score",
             "account_name": request.account_name,
