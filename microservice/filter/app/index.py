@@ -1,21 +1,22 @@
+from app.filter.start import indexAll, index
+from app.filter.start import fix_name_email_phone, fix_name_email_phone_all
+from app.datasyncpublisher import sendMessage as datasync
 import functools
+
+from app.score.start import get_education_display, get_candidate_score, get_exp_display, get_candidate_score_bulk
+
 import time
 from app.logging import logger as LOGGER
 import pika
 import json
 import threading
-import os 
+import os
 
 from datetime import datetime
 
 import traceback
 
 amqp_url = os.getenv('RABBIT_DB')
-
-from app.datasyncpublisher import sendMessage as datasync
-
-from app.filter.start import fix_name_email_phone, fix_name_email_phone_all
-from app.filter.start import indexAll, index
 
 
 class TaskQueue(object):
@@ -32,6 +33,7 @@ class TaskQueue(object):
     EXCHANGE_TYPE = 'topic'
     QUEUE = 'filter.index'
     ROUTING_KEY = 'filter.index'
+
     def __init__(self, amqp_url):
         """Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
@@ -46,11 +48,10 @@ class TaskQueue(object):
         self._consumer_tag = None
         self._url = amqp_url
         self._consuming = False
-        self.threads = [    ]
+        self.threads = []
         # In production, experiment with higher prefetch values
         # for higher consumer throughput
         self._prefetch_count = 1
-
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -103,7 +104,8 @@ class TaskQueue(object):
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            LOGGER.warning('Connection closed, reconnect necessary: %s', reason)
+            LOGGER.warning(
+                'Connection closed, reconnect necessary: %s', reason)
             self.reconnect()
 
     def reconnect(self):
@@ -185,7 +187,8 @@ class TaskQueue(object):
         """
         LOGGER.info('Declaring queue %s', queue_name)
         cb = functools.partial(self.on_queue_declareok, userdata=queue_name)
-        self._channel.queue_declare(queue=queue_name, durable=True, callback=cb, arguments = {'x-max-priority': 10})
+        self._channel.queue_declare(
+            queue=queue_name, durable=True, callback=cb, arguments={'x-max-priority': 10})
 
     def on_queue_declareok(self, _unused_frame, userdata):
         """Method invoked by pika when the Queue.Declare RPC call made in
@@ -283,7 +286,8 @@ class TaskQueue(object):
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         delivery_tag = basic_deliver.delivery_tag
-        t = threading.Thread(target=self.do_work, kwargs=dict(delivery_tag=delivery_tag, body=body))
+        t = threading.Thread(target=self.do_work, kwargs=dict(
+            delivery_tag=delivery_tag, body=body))
         t.start()
         LOGGER.info(t.is_alive())
         # self.threads.append(t)
@@ -295,7 +299,7 @@ class TaskQueue(object):
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
         LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
-        
+
         message = json.loads(body)
         # LOGGER.info(body)
 
@@ -312,37 +316,110 @@ class TaskQueue(object):
             LOGGER.critical("invalid config")
             return self.acknowledge_message(delivery_tag)
 
-
         body = message
         if isinstance(body, dict):
             if "action" in body:
                 action = body["action"]
                 ret = {}
-                
+
                 if body["action"] == "index":
                     fetch_type = body["fetch"]
                     fetch_id = body["id"]
                     index(fetch_id, fetch_type, account_name, account_config)
                 elif body["action"] == "fix_name_email_phone_all":
                     fix_name_email_phone_all(account_name, account_config)
-                    
+                    datasync({
+                        "action": "full",
+                        "account_name": account_name,
+                        "account_config": account_config,
+                        "priority": 5
+                    })
+
                 elif body["action"] == "fix_name_email_phone":
                     fix_name_email_phone(
                         body["id"], account_name, account_config)
-                
+                    datasync({
+                        "id": body["id"],
+                        "action": "syncCandidate",
+                        "account_name": account_name,
+                        "account_config": account_config,
+                        "priority": 5,
+                        "field": "tag_id"
+                    })
+                elif body["action"] == "candidate_score_bulk":
+                    LOGGER.critical("candidate_score_bulk")
+                    ret = get_candidate_score_bulk(
+                        body["id"], account_name, account_config, body["criteria"])
+                    datasync({
+                        "id": body["id"],
+                        "action": "syncCandidate",
+                        "account_name": account_name,
+                        "account_config": account_config,
+                        "priority": 5,
+                        "field": "tag_id"
+                    })
+                    ret = json.dumps(ret)
+                    # add_threadsafe_callback(ch, method_frame, properties, ret)
+
+                elif body["action"] == "candidate_score":
+                    LOGGER.critical("candidate_score")
+                    if "filename" in body:
+                        updateStats({
+                            "action": "resume_pipeline_update",
+                            "resume_unique_key": body["filename"],
+                            "meta": {
+                                    "mongoid": body["mongoid"]
+                                    },
+                            "stage": {
+                                "pipeline": "candidate_score_start",
+                                "priority": body["priority"]
+                            },
+                            "account_name": account_name,
+                            "account_config": account_config
+                        })
+
+                    if "criteria" not in body:
+                        body["criteria"] = None
+
+                    ret = get_candidate_score(
+                        body["id"], account_name, account_config, body["criteria"], False, True)
+                    
+                    datasync({
+                        "id": body["id"],
+                        "action": "syncCandidate",
+                        "account_name": account_name,
+                        "account_config": account_config,
+                        "priority": 5,
+                        "field": "tag_id"
+                    })
+                    
+                    ret = json.dumps(ret)
+
+                    # add_threadsafe_callback(ch, method_frame, properties, ret)
+
+                    if "filename" in body:
+                        updateStats({
+                            "action": "resume_pipeline_update",
+                            "resume_unique_key": body["filename"],
+                            "meta": {
+                                    "ret": ret,
+                                    "mongoid": body["mongoid"]
+                                    },
+                            "stage": {
+                                "pipeline": "candidate_score_end",
+                                "priority": body["priority"]
+                            },
+                            "account_name": account_name,
+                            "account_config": account_config
+                        })
 
         LOGGER.critical("completed")
         self.acknowledge_message(delivery_tag)
-        
-            
 
         # cb = functools.partial(self.acknowledge_message, delivery_tag)
         # self._connection.add_callback_threadsafe(cb)
         # threadsafe callback is only on blocking connection
 
-        
-
-          
     def acknowledge_message(self, delivery_tag):
         """Acknowledge the message delivery from RabbitMQ by sending a
         Basic.Ack RPC method for the delivery tag.
@@ -352,8 +429,6 @@ class TaskQueue(object):
 
         if self._channel:
             self._channel.basic_ack(delivery_tag)
-
-            
 
     def stop_consuming(self):
         """Tell RabbitMQ that you would like to stop consuming by sending the
@@ -433,12 +508,12 @@ class ReconnectingTaskQueue(object):
                 self._consumer.run()
                 # Wait for all to complete
             except KeyboardInterrupt:
-                self._consumer.stop() 
+                self._consumer.stop()
                 break
             # except Exception as e:
             #     print(traceback.format_exc())
             #     LOGGER.critical(str(e))
-                
+
             self._maybe_reconnect()
 
     def _maybe_reconnect(self):
@@ -459,13 +534,11 @@ class ReconnectingTaskQueue(object):
         return self._reconnect_delay
 
 
-
 def main():
     # time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
+
 if __name__ == '__main__':
     main()
-
-
