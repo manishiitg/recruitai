@@ -133,51 +133,6 @@ def thread_task( ch, method_frame, properties, body):
             ret = clear_unique_cache(body["job_profile_id"], body["tag_id"], account_name, account_config)
             ret = json.dumps(ret)
             add_threadsafe_callback(ch, method_frame,properties, ret)
-        elif body["action"] == "candidate_score_bulk":
-            ret = get_candidate_score_bulk(body["id"], account_name, account_config, body["criteria"])
-            ret = json.dumps(ret)
-            add_threadsafe_callback(ch, method_frame,properties, ret)
-
-        elif body["action"] == "candidate_score":
-            
-            if "filename" in body:
-                updateStats({
-                        "action" : "resume_pipeline_update",
-                        "resume_unique_key" : body["filename"],
-                        "meta" : {
-                            "mongoid" : body["mongoid"]
-                        },
-                        "stage" : {
-                            "pipeline" : "candidate_score_start",
-                            "priority" : body["priority"] 
-                        },
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
-
-            if "criteria" not in body:
-                body["criteria"] = None
-
-            ret = get_candidate_score(body["id"], account_name, account_config, body["criteria"])
-            ret = json.dumps(ret)
-
-            add_threadsafe_callback(ch, method_frame,properties,ret)
-
-            if "filename" in body:
-                updateStats({
-                        "action" : "resume_pipeline_update",
-                        "resume_unique_key" : body["filename"],
-                        "meta" : {
-                            "ret" : ret,
-                            "mongoid" : body["mongoid"]
-                        },
-                        "stage" : {
-                            "pipeline" : "candidate_score_end",
-                            "priority" : body["priority"] 
-                        },
-                        "account_name" : account_name,
-                        "account_config" : account_config
-                    })
 
         elif body["action"] == "get_education_display":
             ret = get_education_display(body["degree"], account_name, account_config)
