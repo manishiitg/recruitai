@@ -329,6 +329,7 @@ class TaskQueue(object):
                 elif body["action"] == "fix_name_email_phone":
                     fix_name_email_phone(
                         body["id"], account_name, account_config)
+                
 
         LOGGER.critical("completed")
         self.acknowledge_message(delivery_tag)
