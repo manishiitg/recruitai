@@ -622,6 +622,9 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
             max_seq_len = max_model_seq_len
             if only_initial_data or is_mini:
                 page_content = page_content[:max_seq_len-1]
+            
+            if len(page_content) > 2 * max_seq_len:
+                page_content = page_content[:(2 *max_seq_len)-1] # there few cv having more 60k characters?!!!! ad it takes 3 min per ques
 
         logger.critical(f"max seq len {max_seq_len}")
         skip_question = []
