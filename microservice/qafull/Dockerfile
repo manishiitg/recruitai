@@ -25,7 +25,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 
-RUN pip install transformers
+RUN pip install transformers==3.5.1
 RUN pip install pymongo
 
 RUN apt-get install -y debconf-utils
