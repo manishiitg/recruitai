@@ -7,11 +7,13 @@ import time
 
 def get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages):
     start_time = time.time()
+    logger.critical("cv page %s", cvpage)
     try:
         if cvpage == -1:
-            content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
-        else:
             content = extract_text(cv)
+        else:
+            content = extract_text(cv, page_numbers=[cvpage-1], maxpages=1)
+            
 
         content = str(content)
         #content = textract.process(cv , page_numbers=[cvpage-1], maxpages=1)
@@ -54,17 +56,16 @@ def get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages):
         timeAnalysis[fileIdx]["extract_text" +
                             str(cvpages)] = time.time() - start_time
     
-    # process.exit()
     return content, timeAnalysis
 
 def get_content_from_ocr(cv, cvpage):
     cv_tff = cv.replace(".pdf",".tiff")
     if cvpage == -1:
         x = subprocess.check_output(
-            ['convert -density 300 ' + cv+"["+ str(cvpage-1) +"]" + " -depth 8 -strip -background white -alpha off " + cv_tff], shell=True, timeout=60)
+            ['convert -density 300 ' + cv + " -depth 8 -strip -background white -alpha off " + cv_tff], shell=True, timeout=60)
     else:
         x = subprocess.check_output(
-            ['convert -density 300 ' + cv + " -depth 8 -strip -background white -alpha off " + cv_tff], shell=True, timeout=60)
+            ['convert -density 300 ' + cv+"["+ str(cvpage-1) +"]" + " -depth 8 -strip -background white -alpha off " + cv_tff], shell=True, timeout=60)
     
     # print(x)
     cv_output = cv.replace(".pdf","")
