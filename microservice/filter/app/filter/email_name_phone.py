@@ -606,7 +606,8 @@ def fix_phone(row, db):
 
         id = str(row["_id"])
         logger.info(f"================={id}")
-
+        
+        final_phone = list(OrderedDict.fromkeys(final_phone))
         if len(final_phone) > 0:
             if len(final_phone) == 1:
                 db.emailStored.update_one({

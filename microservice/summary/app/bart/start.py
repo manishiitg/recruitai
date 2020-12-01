@@ -32,68 +32,6 @@ import subprocess
 
 def process(filename, mongoid, priority, account_name, account_config):
 
-    # db = initDB(account_name, account_config)
-
-    
-
-    # if count > 0:
-    #     logger.critical("summary exists so skipping")
-    #     return "summary exists"
-
-
-    # dest = BASE_PATH + "/../cvreconstruction/"
-
-    # RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
-
-    # bucket = storage_client.bucket(RESUME_UPLOAD_BUCKET)
-    # blob = bucket.blob(account_name + "/" + filename)
-
-    # Path(dest).mkdir(parents=True, exist_ok=True)
-
-    # try:
-    #     blob.download_to_filename(os.path.join(dest, filename))
-    #     logger.critical("file downloaded at %s", os.path.join(dest, filename))
-    # except  Exception as e:
-    #     logger.critical(str(e))
-    #     traceback.print_exc(file=sys.stdout)
-    #     return {"error" : str(e)}
-
-
-    # dest = BASE_PATH + "/../cvreconstruction/"
-
-    # if os.path.exists(os.path.join(dest, filename)):
-    #     logger.critical("foudn the file")
-    # else:
-    #     return {"error" : "cv file not found"}
-
-    # finalPdf = os.path.join(dest, filename)
-    # content = ""
-
-    # try:
-    #     content = extract_text(finalPdf)
-    #     content = str(content)
-    # except PDFTextExtractionNotAllowed as e:
-    #     logger.critical(e)
-            
-    #     logger.critical("skipping due to error in cv extration %s " , finalPdf)
-    
-    # except Exception as e:
-        
-    #     logger.critical("general exception in trying nodejs text cv extration %s %s " , str(e) , finalPdf)
-    #     x = subprocess.check_output(['pdf-text-extract ' + finalPdf], shell=True , timeout=60)
-    #     x = x.decode("utf-8") 
-    #     # x = re.sub(' +', ' ', x)
-    #     logger.critical(x)
-    #     start = "[ '"
-    #     end = "' ]"
-
-    #     x = x.replace(start, "")
-    #     x = x.replace(end, "")
-    #     pages_data_extract = x.split("',")
-    #     content = " ".join(pages_data_extract)
-
-    # logger.critical(content)
-
     db = initDB(account_name, account_config)
 
     row = db.emailStored.find_one({
@@ -106,7 +44,12 @@ def process(filename, mongoid, priority, account_name, account_config):
 
     if "aisummary" in row:
         return {"error" : "already summary exists"}
-
+    
+    if "subject" in row:
+        subject = row["subject"]
+        if "manually" in subject:
+            priority = priority + 5 # even if priority between 2-4 summary will be generated for manual candidates
+        
     finalLines = []
     content = ""
     if "cvParsedInfo" in row:
