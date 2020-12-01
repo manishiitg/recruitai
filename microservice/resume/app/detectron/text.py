@@ -34,14 +34,17 @@ def get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages):
 
     content = clean_page_content_map(content)
     if content is None:
+        logger.critical("getting content from pdf2 json")
         content = get_content_from_pdf2_json(cv, cvpage)
         content = clean_page_content_map(content)
         if content is None:
+            logger.critical("getting content text extract")
             content = get_content_from_text_extract(cv, cvpage)
             content = clean_page_content_map(content)
 
     if content is None:
         try:
+            logger.critical("getting content from ocr")
             content = get_content_from_ocr(cv, cvpage)
         except Exception as e:
             logger.critical("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX %s", str(e))
@@ -51,6 +54,7 @@ def get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages):
         timeAnalysis[fileIdx]["extract_text" +
                             str(cvpages)] = time.time() - start_time
     
+    # process.exit()
     return content, timeAnalysis
 
 def get_content_from_ocr(cv, cvpage):
@@ -90,7 +94,11 @@ def get_content_from_pdf2_json(cv, cvpage):
         
     with open(cv_text) as f:
         s = f.read()
-        pages = s.split("----------------Page")
+        if "----------------Page" in s:
+            pages = s.split("----------------Page")
+        else:
+            pages = s.split("Break------------")
+
         if cvpage == -1:
             return "\n\n".join(pages)
         else:
