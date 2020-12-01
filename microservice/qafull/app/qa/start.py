@@ -84,7 +84,7 @@ questions = {
     "education_degree": "what is your education qualification",
     "education_year": "when year did you passout?",
     "certifications": "have you done any certifications",
-    "training": "have you done any trainings",
+    "training": "have you done any trainings or internships",
     "personal_location": "where do you live",
     "personal_dob": "what is your date of birth",
     "awards": "any accomplishments or carrier highlights or awards?",
