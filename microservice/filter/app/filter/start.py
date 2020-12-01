@@ -40,9 +40,10 @@ def fix_name_email_phone(id, account_name, account_config):
     row = db.emailStored.find_one(
         {"_id": ObjectId(id)}
     )
-    process_name(row, db, account_name, account_config)
-    email_check_db(row, db)
-    fix_phone(row, db)
+    if row:
+        process_name(row, db, account_name, account_config)
+        email_check_db(row, db)
+        fix_phone(row, db)
 
 def get_speedup_api(redisKey, url, payload, access_token, account_name, account_config):
 
