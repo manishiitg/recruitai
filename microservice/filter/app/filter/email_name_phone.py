@@ -279,6 +279,8 @@ def email_check_db(row, db):
             for question_key in qa_parse_resume:
                 if "personal_" in question_key:
                     sections = qa_parse_resume[question_key]
+                    if not isinstance(sections, list):
+                        sections = [sections] # qa fast search space
                     for section in sections:
                         if "tags" in section:
                             tags = section["tags"]
@@ -421,6 +423,8 @@ def process_name(row, db, account_name, account_config):
             for question_key in qa_parse_resume:
                 if "personal_" in question_key:
                     sections = qa_parse_resume[question_key]
+                    if not isinstance(sections, list):
+                        sections = [sections] # qa fast search space
                     for section in sections:
                         if "tags" in section:
                             tags = section["tags"]
@@ -592,6 +596,8 @@ def fix_phone(row, db):
             for question_key in qa_parse_resume:
                 if "personal_" in question_key:
                     sections = qa_parse_resume[question_key]
+                    if not isinstance(sections, list):
+                        sections = [sections] # qa fast search space
                     for section in sections:
                         if "tags" in section:
                             tags = section["tags"]
