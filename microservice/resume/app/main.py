@@ -442,7 +442,7 @@ class TaskQueue(object):
                     pass
 
                 self.updateInDB(
-                    ret, message["mongoid"], message, account_name, account_config)
+                    ret, candidate_row, message["mongoid"], message, account_name, account_config)
                 if skills is None:
                     skills = ""
 
@@ -550,7 +550,7 @@ class TaskQueue(object):
 
             if "error" in ret:
                 self.updateInDB(
-                    ret, message["mongoid"], message, account_name, account_config)
+                    ret, candidate_row, message["mongoid"], message, account_name, account_config)
                 self.acknowledge_message(delivery_tag)
                 return
 
@@ -558,7 +558,7 @@ class TaskQueue(object):
                 r_set(key, json.dumps(ret), account_name,
                       account_config)  # 1day or 30days in dev
 
-            self.updateInDB(ret, message["mongoid"],
+            self.updateInDB(ret,candidate_row, message["mongoid"],
                             message, account_name, account_config)
             if skills is None:
                 skills = ""
@@ -653,13 +653,17 @@ class TaskQueue(object):
 
         self.acknowledge_message(delivery_tag)
 
-    def updateInDB(self, ret, mongoid, message, account_name, account_config):
+    def updateInDB(self, ret, candidate_row, mongoid, message, account_name, account_config):
         isError = False
         if "error" in ret:
             isError = True
         ret = json.loads(json.dumps(ret))
         ret["ai_version_processed"] = "detectron4_flairtaggerv3.0_qa_model"
         ret["ai_version"] = "0.3"
+        if "cvParsedInfo" in candidate_row:
+            if "answer_map" in candidate_row["cvParsedInfo"]:
+                ret["answer_map"] = candidate_row["cvParsedInfo"]["answer_map"]
+                
         LOGGER.critical("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
