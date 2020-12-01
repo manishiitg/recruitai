@@ -660,7 +660,7 @@ class TaskQueue(object):
         ret = json.loads(json.dumps(ret))
         ret["ai_version_processed"] = "detectron4_flairtaggerv3.0_qa_model"
         ret["ai_version"] = "0.3"
-        if "cvParsedInfo" in candidate_row:
+        if "cvParsedInfo" in candidate_row and False: #temp code
             if "answer_map" in candidate_row["cvParsedInfo"]:
                 ret["answer_map"] = candidate_row["cvParsedInfo"]["answer_map"]
                 
