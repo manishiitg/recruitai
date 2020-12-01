@@ -356,7 +356,6 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
 
         page_content_map = clean_page_content_map(idx, page_contents)
         is_page_content_corrupt = False
-        # exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
             
