@@ -173,7 +173,6 @@ def get_short_answer_senctence(idx, account_name, account_config):
         page_content_map = clean_page_content_map(idx, page_contents)
 
         is_page_content_corrupt = False
-        # exist_answer_map[str(row["_id"])] = {} # temp code to remove
         if not page_content_map:
             # this mean some issue with data. 
             logger.critical("issue with data for sure!")
@@ -193,7 +192,6 @@ def get_short_answer_senctence(idx, account_name, account_config):
         }, {
             '$set': {
                 "cvParsedInfo.qa_type": "mini",
-                # "cvParsedInfo.qa_parse_resume": {}, # temp
                 "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                 "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                 "cvParsedInfo.finalEntity": finalEntity
@@ -396,7 +394,6 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             }, {
                 '$set': {
                     "cvParsedInfo.qa_type": "fast",
-                    # "cvParsedInfo.qa_parse_resume": {}, #temp
                     "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                     "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                     "cvParsedInfo.finalEntity": finalEntity
