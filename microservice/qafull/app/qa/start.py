@@ -84,7 +84,7 @@ questions = {
     "education_degree": "what is your education qualification",
     "education_year": "when year did you passout?",
     "certifications": "have you done any certifications",
-    "training": "have you done any trainings or internships",
+    "training": "have you done any trainings",
     "personal_location": "where do you live",
     "personal_dob": "what is your date of birth",
     "awards": "any accomplishments or carrier highlights or awards?",
@@ -193,7 +193,7 @@ def get_short_answer_senctence(idx, account_name, account_config):
         }, {
             '$set': {
                 "cvParsedInfo.qa_type": "mini",
-                "cvParsedInfo.qa_parse_resume": {}, # temp
+                # "cvParsedInfo.qa_parse_resume": {}, # temp
                 "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                 "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                 "cvParsedInfo.finalEntity": finalEntity
@@ -397,7 +397,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
             }, {
                 '$set': {
                     "cvParsedInfo.qa_type": "fast",
-                    "cvParsedInfo.qa_parse_resume": {}, #temp
+                    # "cvParsedInfo.qa_parse_resume": {}, #temp
                     "cvParsedInfo.qa_short_answers": qa_short_answers[idx],
                     "cvParsedInfo.qa_fast_search_space": fast_search_space[idx],
                     "cvParsedInfo.finalEntity": finalEntity
@@ -633,25 +633,26 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
             question = questions[key]
 
             if key in exist_answer_map[idx]:
-                logger.critical("answer already exists for question %s", key)
-                answer_map[idx][key] = exist_answer_map[idx][key]
-                answer = exist_answer_map[idx][key]
-                if "error" in answer:
+                if exist_answer_map[idx][key]["question"] == questions[key]:
+                    logger.critical("answer already exists for question %s", key)
+                    answer_map[idx][key] = exist_answer_map[idx][key]
+                    answer = exist_answer_map[idx][key]
+                    if "error" in answer:
+                        continue
+                    if key == "exp_company":
+                        if len(answer["answer"]) == 0:
+                            skip_question.extend(
+                                ["exp_designation", 'exp_duration'])
+
+                        # else:
+                        #     skip_question.extend(["projects_name",'certifications','training','awards'])
+                        # even for experiances ppl we need to ask these questions
+
+                    if key == "projects_desc":
+                        if len(answer["answer"]) == 0:
+                            skip_question.extend(["projects_skills"])
+
                     continue
-                if key == "exp_company":
-                    if len(answer["answer"]) == 0:
-                        skip_question.extend(
-                            ["exp_designation", 'exp_duration'])
-
-                    # else:
-                    #     skip_question.extend(["projects_name",'certifications','training','awards'])
-                    # even for experiances ppl we need to ask these questions
-
-                if key == "projects_desc":
-                    if len(answer["answer"]) == 0:
-                        skip_question.extend(["projects_skills"])
-
-                continue
 
             if is_mini:
                 if key not in questions_minimal:
