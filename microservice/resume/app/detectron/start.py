@@ -106,8 +106,8 @@ def startProcessing(filestoparse, inputDir, basePath, predictor, cfg, maxPage=Fa
     timeAnalysis = {}
 
     combinedCompressedContent = {}
-    exist_predictions = None
-    exist_jsonOutputbbox = None
+    # exist_predictions = None
+    # exist_jsonOutputbbox = None
 
     # if "cvParsedInfo" in candidate_row:
     #   cvParsedInfo = candidate_row["cvParsedInfo"]
