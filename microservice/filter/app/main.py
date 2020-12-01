@@ -108,7 +108,7 @@ def thread_task( ch, method_frame, properties, body):
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
                 add_threadsafe_callback(ch, method_frame,properties, json.dumps({}))
-                index(fetch_id, fetch_type, account_name, account_config)
+                index(fetch_id, None, fetch_type, account_name, account_config)
                 # ret = json.dumps(ret)
         elif body["action"] == "filter_index_get":
             if "job_profile_id" in body:
