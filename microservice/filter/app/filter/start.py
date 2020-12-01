@@ -475,10 +475,14 @@ def indexAll(account_name, account_config):
             generateFilterMap(key.replace("job_",""),data, account_name, account_config)
 
 
-def get_job_profile_data(mongoid, account_name, account_config):
+def get_job_profile_data(mongoid, account_name, account_config, tag_id = None):
     db = initDB(account_name, account_config)
     r = connect_redis(account_name, account_config) 
-    ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
+    if not tag_id:
+        ret = db.emailStored.find({"job_profile_id" : mongoid} , {"body": 0, "cvParsedInfo.debug": 0})
+    else:
+        ret = db.emailStored.find({"job_profile_id" : mongoid, "tag_id" : tag_id} , {"body": 0, "cvParsedInfo.debug": 0})
+
     job_profile_data = {}
     for row in ret:
         row["_id"] = str(row["_id"])
@@ -1106,18 +1110,18 @@ def clear_unique_cache(job_profile_id, tag_id, account_name = "", account_config
 def get_index(tag_id, job_profile_id, account_name, account_config):
     r = connect_redis(account_name, account_config)
     logger.critical("checking index %s", tag_id)
-    if r_exists(tag_id + "_filter", account_name, account_config):
+    if r_exists(tag_id + "_filter", account_name, account_config) and False:
         ret =  r_get(tag_id + "_filter", account_name, account_config)
     else:
         if job_profile_id:
-            index(job_profile_id, "job_profile", account_name, account_config)
+            index(job_profile_id, tag_id, "job_profile", account_name, account_config)
             return r_get(tag_id + "_filter", account_name, account_config)
         else:
             return "-1"
 
     return ret
 
-def index(mongoid, filter_type="job_profile", account_name = "", account_config = {}):
+def index(mongoid, tag_id = None, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
 
     logger.critical("index called %s", mongoid)
@@ -1140,7 +1144,6 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
         data = []
         tag_data_map = {}
         for dkey in dataMap:
-            logger.critical(dkey)
             data.append(dataMap[dkey])
             if dataMap[dkey]["tag_id"] not in tag_data_map:
                 tag_data_map[dataMap[dkey]["tag_id"]] = []
@@ -1149,9 +1152,13 @@ def index(mongoid, filter_type="job_profile", account_name = "", account_config 
 
         key = mongoid
 
-        for tag_id in tag_data_map:
-            logger.critical("data len %s for key %s" , len(tag_data_map[tag_id]), tag_id)
-            generateFilterMap(tag_id, tag_data_map[tag_id], account_name, account_config)
+        for x_tag_id in tag_data_map:
+            if tag_id:
+                if x_tag_id != tag_id:
+                    continue
+
+            logger.critical("data len %s for tag id %s" , len(tag_data_map[tag_id]), x_tag_id)
+            generateFilterMap(x_tag_id, tag_data_map[x_tag_id], account_name, account_config)
     
 
         logger.critical("idex completed job profile data")
@@ -1198,8 +1205,59 @@ def generateFilterMap(key, data, account_name, account_config):
     gpeIdxMap = {}
     exp_map = {}
     education_map = {}
-    for row in data:
 
+    is_starred = {"count" : 0, "children": []}
+    is_unread = {"count" : 0, "children": []}
+    is_read = {"count" : 0, "children": []}
+    is_highscore = {}
+    is_note_added = {}
+    call_status = {}
+    conversion_pending = {"count" : 0, "children": []}
+
+    for row in data:
+        if "candidate_star" in row:
+            if len(row["candidate_star"]) > 0:
+                is_starred["count"] += 1
+                is_starred["children"].append(str(row["_id"]))
+        
+        if "unread" in row:
+            if row["unread"]:
+                is_unread["count"] += 1
+                is_unread["children"].append(str(row["_id"]))
+            else:
+                is_read["count"] += 1
+                is_read["children"].append(str(row["_id"]))
+
+        if "cvParsedInfo" in row:
+            if "candidate_score" in row["cvParsedInfo"]:
+                score = row["cvParsedInfo"]["candidate_score"]
+                if score > 5:
+                    if score < 7.5:
+                        if "score_5_75" not in is_highscore:
+                            is_highscore["score_5_75"] = {"count" : 0, "children": []}
+
+                        is_highscore["score_5_75"]["count"] += 1
+                        is_highscore["score_5_75"]["children"].append(str(row["_id"]))
+                    else:
+                        if "score_75_10" not in is_highscore:
+                            is_highscore["score_75_10"] = {"count" : 0, "children": []}
+
+                        is_highscore["score_75_10"]["count"] += 1
+                        is_highscore["score_75_10"]["children"].append(str(row["_id"]))
+
+
+        if "callingStatus" in row:
+            callingStatus = row["callingStatus"]
+            if callingStatus not in call_status:
+                call_status[callingStatus] = {"count" : 0, "children": []}
+            
+            call_status[callingStatus]["count"] += 1
+            call_status[callingStatus]["children"].append(str(row["_id"]))
+
+        if "conversation" in row:
+            if row['conversation']:
+                conversion_pending["count"] += 1
+                conversion_pending["children"].append(str(row["_id"]))
 
         if "cvParsedInfo" in row and  "finalEntity" in row["cvParsedInfo"]:  
 
@@ -1250,8 +1308,32 @@ def generateFilterMap(key, data, account_name, account_config):
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
-        "gpe_filter" : gpe_filter
+        "gpe_filter" : gpe_filter,
+        "is_starred" : is_starred,
+        "is_unread" : is_unread,
+        "is_read" : is_read,
+        "is_highscore" : is_highscore,
+        "is_note_added" : is_note_added,
+        "call_status" : call_status,
+        "conversion_pending" : conversion_pending
     }), account_name, account_config)
+
+    del is_starred["children"]
+    del is_unread["children"]
+    del is_read["children"]
+    del conversion_pending["children"]
+
+    for key2 in is_highscore:
+        # edu_filter[key]["children"] = []
+        del is_highscore[key2]["children"]
+    
+    for key2 in is_note_added:
+        # edu_filter[key]["children"] = []
+        del is_note_added[key2]["children"]
+
+    for key2 in call_status:
+        # edu_filter[key]["children"] = []
+        del call_status[key2]["children"]
 
     for key2 in exp_filter:
         # exp_filter[key]["children"] = []
@@ -1280,7 +1362,14 @@ def generateFilterMap(key, data, account_name, account_config):
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
-        "gpe_filter" : gpe_filter
+        "gpe_filter" : gpe_filter,
+        "is_starred" : is_starred,
+        "is_unread" : is_unread,
+        "is_read" : is_read,
+        "is_highscore" : is_highscore,
+        "is_note_added" : is_note_added,
+        "call_status" : call_status,
+        "conversion_pending" : conversion_pending
     }), account_name, account_config)
 
 
