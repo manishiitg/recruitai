@@ -228,6 +228,8 @@ def extract_valid_email(Email, row):
 
 
 def email_check_db(row, db):
+    if "cvParsedInfo" not in row:
+        return None
     if "finalEntity" in row["cvParsedInfo"]:
 
         if "sender_mail" in row:
@@ -380,6 +382,9 @@ def email_check_db(row, db):
 
 
 def process_name(row, db, account_name, account_config):
+    if "cvParsedInfo" not in row:
+        return None
+
     if "finalEntity" in row["cvParsedInfo"]:
 
         if "from" in row:
@@ -543,6 +548,8 @@ def validate_phone(Phone):
 
 
 def fix_phone(row, db):
+    if "cvParsedInfo" not in row:
+        return None
     if "finalEntity" in row["cvParsedInfo"]:
 
         final_phone = []
