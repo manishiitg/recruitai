@@ -469,7 +469,7 @@ class TaskQueue(object):
                     "action": "extractSkill",
                     "mongoid": message["mongoid"],
                     "filename": message["filename"],
-                    "skills": skills,
+                    "skills": [], # skills it will pick from job profile 
                     # "meta" : meta,
                     "account_name": account_name,
                     "account_config": account_config
@@ -589,7 +589,7 @@ class TaskQueue(object):
                 "action": "extractSkill",
                 "mongoid": message["mongoid"],
                 "filename": message["filename"],
-                "skills": skills,
+                "skills": [], # skills it will pick from job profile id 
                 # "meta" : meta,
                 "account_name": account_name,
                 "account_config": account_config
