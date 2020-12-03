@@ -416,7 +416,8 @@ def qa_find_incorrect(download = 0):
     rows = db.emailStored.find({"cvParsedInfo.qa_type":  "full" })
     ret_msgs = {
         "empty" : [],
-        "duplicates" : []
+        "duplicates" : [],
+        "internship" : []
     }
     page_content_map = {}
     score_map = {}
@@ -425,11 +426,22 @@ def qa_find_incorrect(download = 0):
         answer = answer_map["personal_name"]
         if "error" in answer:
             continue
-            
+        
+        has_internship = False
+        if "intern" in " ".join(row["cvParsedInfo"]["page_contents"]).lower():
+            has_internship = True
+            print("has internship")
+
         if len(answer["answer"]) == 0:
             page_content_map[str(row['_id'])] = row["cvParsedInfo"]["page_contents"]
             ret_msgs["empty"].append(str(row['_id']))
-            continue
+            # continue
+        
+        if "training" in answer_map:
+            training = answer_map["training"]
+            if len(training) == 0 and has_internship:
+                ret_msgs["internship"].append(str(row['_id']))
+
 
         answer_list = []
         
@@ -495,9 +507,13 @@ def qa_find_incorrect(download = 0):
         return list(islice(iterable, n))
 
     n_items = take(100, score_map.items())
-
+   
     ret_msgs["n_items"] = n_items
     ret_msgs["duplicates"] = sorted(ret_msgs["duplicates"], key=lambda k: k['no_dups'] , reverse=True) 
+
+    del ret_msgs["duplicates"]
+    del ret_msgs["empty"]
+    del ret_msgs['n_items']
 
     if download == 1:
         files = []
