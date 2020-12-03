@@ -128,7 +128,7 @@ def get_content_from_text_extract(cv, cvpage):
         pages_data_extract = [x]
 
     logger.critical("***************************")
-    logger.critical(f"len(pages_data_extract) {len(pages_data_extract)}")
+    logger.critical(f"len(pages_data_extract) {len(pages_data_extract)} cvpage {cvpage}")
     
     if cvpage == -1:
         final_content = []
@@ -157,6 +157,11 @@ def get_content_from_text_extract(cv, cvpage):
 
         content = "\n\n".join(final_content)
     else:
+        # print(pages_data_extract)
+        # i dont know why this is happning maybe empty page in resume or something
+        if (cvpage-1) >= len(pages_data_extract):
+            return ""
+
         content = pages_data_extract[cvpage-1]
         if content.count("+") > 5:
             # '                                   SHAZ JAMAL\n' +
