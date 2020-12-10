@@ -345,7 +345,7 @@ def qa_candidate_db(idx, only_initial_data, account_name, account_config, page_c
                 qa_type = row["qa_type"]
                 if qa_type == "mini":
                     exist_answer_map[str(row["_id"])] = {} 
-                    #discard mini answers are mini we are fetching only with first 2 pages
+                    print("#discard mini answers are mini we are fetching only with first 2 pages")
                     # experimental
 
             bbox_map[str(row["_id"])] = row["cvParsedInfo"]["newCompressedStructuredContent"]
