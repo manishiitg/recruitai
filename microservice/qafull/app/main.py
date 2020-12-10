@@ -302,7 +302,7 @@ class TaskQueue(object):
         LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
 
         message = json.loads(body)
-        # LOGGER.info(body)
+        LOGGER.critical(body)
 
         account_name = None
         if "account_name" in message:
