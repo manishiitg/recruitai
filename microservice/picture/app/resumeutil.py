@@ -28,7 +28,7 @@ def fullResumeParsing(imageUrl, mongoid, filename, account_name, account_config)
         db = initDB(account_name, account_config)
         candidaterow = db.emailStored.find_one({"_id" : ObjectId(mongoid)})
         if "cvimage" in candidaterow:
-            if "images" in candidaterow["cvimage"]:
+            if "picture" in candidaterow["cvimage"]:
                 logger.critical("this was already processed. remove this if new ai model comes")
                 return{}
 
