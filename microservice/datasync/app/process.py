@@ -298,6 +298,7 @@ def check_ai_missing_data(account_name, account_config):
                     {"cvParsedInfo.qa_type" : {"$ne" : "full"}},
                     {"cvParsedInfo.qa_type" : {"$exists" : False}},
                 ],
+                "email_date" : { "$gt" : datetime.datetime.now() - datetime.timedelta(days=30) },
                 'check_ai_fast_ai_2' : { "$exists" : False }
                 # "attachment" : {  }
             },
