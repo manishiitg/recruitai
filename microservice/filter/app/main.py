@@ -69,6 +69,16 @@ def thread_task( ch, method_frame, properties, body):
                 if body["starred"]:
                     on_starred = True
 
+            on_is_read = False
+            if 'is_read' in body:
+                if body["is_read"]:
+                    on_is_read = True
+
+            on_is_un_read = False
+            if 'is_unread' in body:
+                if body["is_unread"]:
+                    on_is_un_read = True
+
             on_conversation = False
             if 'conversation' in body:
                 if body["conversation"]: 
@@ -83,9 +93,16 @@ def thread_task( ch, method_frame, properties, body):
             if 'highscore' in body:
                 if body['highscore']:
                     on_highscore = True
- 
-            print("on starred", on_starred)
-            print("on_conversation", on_conversation)
+
+            on_is_note_added = False
+            if 'is_note_added' in body:
+                if body['is_note_added']:
+                    on_is_note_added = True
+            
+            on_calling_status = None
+            if 'calling_status' in body:
+                if body['calling_status']:
+                    on_calling_status = body['calling_status']
 
             filter = {}
 
@@ -103,7 +120,7 @@ def thread_task( ch, method_frame, properties, body):
 
             # job_profile, candidate, full_map
             if action == 'fetch':
-                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversation, on_highscore, on_un_parsed , sortby, sortorder, account_name, account_config)
+                ret = fetch(fetch_id, fetch_type, tags, page, limit, on_ai_data, filter, on_starred, on_conversation, on_highscore, on_un_parsed, on_is_read, on_is_un_read, on_is_note_added, on_calling_status , sortby, sortorder, account_name, account_config)
                 # logger.info(ret)
                 add_threadsafe_callback(ch, method_frame,properties,ret)
             else:
