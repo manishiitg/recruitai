@@ -47,8 +47,9 @@ def process(filename, mongoid, priority, account_name, account_config):
     
     if "subject" in row:
         subject = row["subject"]
-        if "manually" in subject:
-            priority = priority + 5 # even if priority between 2-4 summary will be generated for manual candidates
+        if subject:
+            if "manually" in subject:
+                priority = priority + 5 # even if priority between 2-4 summary will be generated for manual candidates
         
     finalLines = []
     content = ""
