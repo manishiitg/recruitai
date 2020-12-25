@@ -284,14 +284,14 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             "parsing_type" : parsing_type
         }) 
 
-        ret["debug"] = {
-            "extractEntity": combinData["extractEntity"],
-            "compressedStructuredContent": compressedStructuredContent,
-            "nerExtracted" : nerExtracted,
-            "predictions" : json.loads(json.dumps(predictions, default=str)),
-            "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
-            "page_contents" : page_contents
-        }
+        # ret["debug"] = {
+        #     "extractEntity": combinData["extractEntity"],
+        #     "compressedStructuredContent": compressedStructuredContent,
+        #     "nerExtracted" : nerExtracted,
+        #     "predictions" : json.loads(json.dumps(predictions, default=str)),
+        #     "jsonOutputbbox" : json.loads(json.dumps(jsonOutputbbox, default=str)),
+        #     "page_contents" : page_contents
+        # }
 
         # print(combinData["compressedStructuredContent"])
         # process.exit(0)
