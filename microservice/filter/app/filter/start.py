@@ -632,7 +632,7 @@ def get_classify_data(mongoid, page, limit, account_name, account_config):
             job_profile_data = {}
 
     return job_profile_data
-def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversation = False, on_highscore = False, on_un_parsed = False, sortby = None, sortorder = None, account_name = "", account_config = {}):
+def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, on_ai_data = False, filter = {}, on_starred = False, on_conversation = False, on_highscore = False, on_un_parsed = False,on_is_read=False, on_is_un_read=False,on_is_note_added = False, on_calling_status = None, sortby = None, sortorder = None, account_name = "", account_config = {}):
     
     r = connect_redis(account_name, account_config) 
     
@@ -648,6 +648,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
     logger.critical("conversation %s", on_conversation)
     logger.critical("high score %s", on_highscore)
     logger.critical("unparsed %s", on_un_parsed)
+
+    logger.critical("is unread %s", on_is_un_read)
+    logger.critical("is_read %s", on_is_read)
+    logger.critical("on_is_note_added %s", on_is_note_added)
+    logger.critical("on_calling_status %s", on_calling_status)
+
     logger.critical("tags %s",tags)
     logger.critical("len tags %s", len(tags))
     logger.critical("mongo id %s", mongoid)
@@ -696,6 +702,37 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
     # logger.critical("length of job profile data %s", len(job_profile_data))
+    if on_is_un_read:
+        unread_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "unread" in item:
+                if item["unread"]:
+                    unread_job_profile_data[key] = item
+
+        job_profile_data = unread_job_profile_data
+
+    if on_is_read:
+        unread_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "unread" in item:
+                if not item["unread"]:
+                    unread_job_profile_data[key] = item
+
+        job_profile_data = unread_job_profile_data
+
+    if on_is_note_added:
+        unread_job_profile_data = {}
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "notes" in item:
+                if len(item["notes"]) > 0:
+                    unread_job_profile_data[key] = item
+
+        job_profile_data = unread_job_profile_data
 
     if on_starred:
         starred_job_profile_data = {}
@@ -708,6 +745,18 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
         job_profile_data = starred_job_profile_data
     
+    if on_calling_status:
+        starred_job_profile_data = {}
+
+        for key in job_profile_data:
+            item = job_profile_data[key]
+            if "callingStatus" in item:
+                if item["callingStatus"] == on_calling_status:
+                    starred_job_profile_data[key] = item
+
+        job_profile_data = starred_job_profile_data
+
+
     if on_conversation:
         conversion_job_profile_data = {}
 
@@ -915,9 +964,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 print(key)
                 if key not in filter:
                     continue 
+
                 
                 print("key found in filter" , key)
                 for rangekey in ret[key]:
+                    if isinstance(filter[key], bool):
+                        continue 
                     if rangekey not in filter[key]:
                         continue
 
