@@ -664,6 +664,7 @@ class TaskQueue(object):
             if "answer_map" in candidate_row["cvParsedInfo"]:
                 ret["answer_map"] = candidate_row["cvParsedInfo"]["answer_map"]
                 
+        
         LOGGER.critical("mongo id %s", mongoid)
         if ObjectId.is_valid(mongoid):
             db = initDB(account_name, account_config)
