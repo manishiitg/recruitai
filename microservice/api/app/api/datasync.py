@@ -316,6 +316,7 @@ def filter_fetch(id, fetch, tags="", page=0, limit=25, ai="0", starred="0", conv
         sortorder = None
 
         if request.method == 'POST':
+            
             if "filter" in request.json:
                 filter = request.json['filter']
                 logger.info("filter %s", filter)
