@@ -497,6 +497,21 @@ services:
             - rabbitmq
             - redis
             - memcached
+
+    zeroshotmq:
+        image: recruitai/zeroshotmq:latest
+        build: microservice/zeroshot
+        volumes:
+            - ./pretrained:/workspace/pretrained:ro
+            - /var/log/recruitai:/workspace/logs  
+            - ./microservice/zeroshot/app:/workspace/app        
+        environment:
+            RABBIT_DB: 'amqp://127.0.0.1:5672'
+        network_mode: host
+        depends_on: 
+            - rabbitmq
+            - redis
+            - memcached
     
     gpu:
         build: microservice/gpucloud
