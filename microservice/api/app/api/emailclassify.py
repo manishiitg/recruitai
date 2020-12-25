@@ -17,6 +17,8 @@ bp = Blueprint('emailclassify', __name__, url_prefix='/emailclassify')
 from app.logging import logger
 from app.util import check_and_validate_account
 
+from app.publisher.zeroshot import sendMessage as sendClassify
+
 # @bp.route('', methods=['POST', 'GET'])
 # @jwt_required
 # @token.admin_required
@@ -45,6 +47,49 @@ def classify(body = None, subject = None):
                     "account_config" : request.account_config
                 }
             ])), 200
+        
+    except Exception as e:
+        logger.critical(e)
+        return jsonify(str(e)), 500
+
+@bp.route('/zeroshot', methods=[ 'POST'])
+@bp.route('/zeroshot/<string:body>', methods=['GET'])
+@bp.route('/zeroshot/<string:body>/<string:labels>', methods=['GET'])
+@bp.route('/zeroshot/<string:body>/<string:labels>/<string:mongoid>', methods=['GET'])
+@check_and_validate_account
+def classifyzero(body = None, labels = None, mongoid = None):
+    try:
+
+        if request.method == 'POST':
+            labels = request.json.get('labels', "")
+
+        if labels is None:
+            labels = ["yes","no", "maybe"]
+        
+        if isinstance(labels, str):
+            labels = labels.split(",")
+
+        if request.method == 'POST':
+
+            sendClassify({
+                    "text" : request.json.get('body', ""),
+                    "labels" : labels,
+                    "mongoid" : request.json.get('mongoid', ""),
+                    "notifyurl" : request.json.get('notifyurl', ""),
+                    "account_name": request.account_name,
+                    "account_config" : request.account_config
+                })
+        else:
+            
+            sendClassify({
+                    "text" : body,
+                    "labels" : labels,
+                    "mongoid" : mongoid,
+                    "account_name": request.account_name,
+                    "account_config" : request.account_config
+                })
+        
+        return jsonify(""), 200
         
     except Exception as e:
         logger.critical(e)
