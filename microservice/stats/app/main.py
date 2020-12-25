@@ -306,7 +306,7 @@ class TaskQueue(object):
 
         body = json.loads(body)
         
-        if "action" in body:
+        if "action" in body and False: # not using stats for anything meaning full
             if body["action"] == "resume_pipeline_update":
                 resume_pipeline_update(body["resume_unique_key"], body["stage"], body["meta"], body["account_name"], body["account_config"])
 
