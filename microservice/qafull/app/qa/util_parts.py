@@ -456,7 +456,7 @@ def get_new_section_map(final_section_ui_map, classifier):
                                 "score": current_score,
                                 "is_previous": is_previous
                             })
-                            print(current_label, score,
+                            print(current_label, current_score,
                                   ">>>>>>>>>>>>", sentence)
 
                         previous_label = current_label
