@@ -481,12 +481,15 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
         redisKeyMap[account_name] = {}
         local_dirtyMap[account_name] = {}
         
-        
+        data = []
         ret = db.emailStored.find({ } , 
             {"body": 0, "cvParsedInfo.debug": 0}
         )
-
         for row in ret:
+            data.append(row)
+            # pymongo.errors.CursorNotFound: cursor id 7596185392783291209 not found, full error: {'ok': 0.0, 'errmsg': 'cursor id 7596185392783291209 not found', 'code': 43, 'codeName': 'CursorNotFound'}
+
+        for row in data:
             row["_id"] = str(row["_id"])   
             sendToSearchIndex(row , r, "full", account_name, account_config)
             job_profile_id = None
