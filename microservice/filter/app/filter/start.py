@@ -698,11 +698,13 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         # logger.critical("length of job profile data %s label %s start_date %s end_date %s", len(job_profile_data), label, start_date, end_date)
 
         
+    is_option = False
     
 
 
     # logger.critical("length of job profile data %s", len(job_profile_data))
     if on_is_un_read:
+        is_option = True
         unread_job_profile_data = {}
 
         for key in job_profile_data:
@@ -714,6 +716,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = unread_job_profile_data
 
     if on_is_read:
+        is_option = True
         unread_job_profile_data = {}
 
         for key in job_profile_data:
@@ -725,6 +728,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = unread_job_profile_data
 
     if on_is_note_added:
+        is_option = True
         unread_job_profile_data = {}
         for key in job_profile_data:
             item = job_profile_data[key]
@@ -735,6 +739,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = unread_job_profile_data
 
     if on_starred:
+        is_option = True
         starred_job_profile_data = {}
 
         for key in job_profile_data:
@@ -746,6 +751,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = starred_job_profile_data
     
     if on_calling_status:
+        is_option = True
         starred_job_profile_data = {}
 
         for key in job_profile_data:
@@ -758,6 +764,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
 
 
     if on_conversation:
+        is_option = True
         conversion_job_profile_data = {}
 
         for key in job_profile_data:
@@ -771,6 +778,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = conversion_job_profile_data
 
     if on_highscore:
+        is_option = True
         conversion_job_profile_data = {}
 
         for key in job_profile_data:
@@ -783,6 +791,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         job_profile_data = conversion_job_profile_data
 
     if on_un_parsed:
+        is_option = True
         unparsed_job_profile_data = {}
 
         for key in job_profile_data:
@@ -961,7 +970,6 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             
         if len(filter) > 0:
             for key in ret:
-                print(key)
                 if key not in filter:
                     continue 
 
@@ -1004,11 +1012,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             # logger.critical("filter data %s", len(filter_tag_children))
             job_profile_data = filter_tag_children
 
+        logger.info("is_option %s", is_option)
         paged_candidate_map = {}
         for idx, child_id in  enumerate(job_profile_data):
             if idx >= page * limit and idx < limit * (page + 1):
                 doc = job_profile_data[child_id]
-                if len(filter) == 0:
+                if len(filter) == 0 and not is_option:
                     if not on_ai_data:
                         if "pipeline" in doc:
                             del doc["pipeline"]
@@ -1263,11 +1272,16 @@ def generateFilterMap(key, data, account_name, account_config):
     is_unread = {"count" : 0, "children": []}
     is_read = {"count" : 0, "children": []}
     is_highscore = {}
-    is_note_added = {}
+    is_note_added = {"count" : 0, "children": []}
     call_status = {}
     conversion_pending = {"count" : 0, "children": []}
 
     for row in data:
+        if "notes" in row:
+            if len(row["notes"]) > 0:
+                is_note_added["count"] += 1
+                is_note_added["children"].append(str(row["_id"]))
+
         if "candidate_star" in row:
             if len(row["candidate_star"]) > 0:
                 is_starred["count"] += 1
@@ -1287,13 +1301,13 @@ def generateFilterMap(key, data, account_name, account_config):
                 if score > 5:
                     if score < 7.5:
                         if "score_5_75" not in is_highscore:
-                            is_highscore["score_5_75"] = {"count" : 0, "children": []}
+                            is_highscore["score_5_75"] = {"count" : 0, "children": [],"display": f"Score 5 - 7.5"}
 
                         is_highscore["score_5_75"]["count"] += 1
                         is_highscore["score_5_75"]["children"].append(str(row["_id"]))
                     else:
                         if "score_75_10" not in is_highscore:
-                            is_highscore["score_75_10"] = {"count" : 0, "children": []}
+                            is_highscore["score_75_10"] = {"count" : 0, "children": [],"display": f"Score 7.5 - 10"}
 
                         is_highscore["score_75_10"]["count"] += 1
                         is_highscore["score_75_10"]["children"].append(str(row["_id"]))
@@ -1373,16 +1387,13 @@ def generateFilterMap(key, data, account_name, account_config):
 
     del is_starred["children"]
     del is_unread["children"]
+    del is_note_added["children"]
     del is_read["children"]
     del conversion_pending["children"]
 
     for key2 in is_highscore:
         # edu_filter[key]["children"] = []
         del is_highscore[key2]["children"]
-    
-    for key2 in is_note_added:
-        # edu_filter[key]["children"] = []
-        del is_note_added[key2]["children"]
 
     for key2 in call_status:
         # edu_filter[key]["children"] = []
