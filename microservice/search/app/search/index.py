@@ -115,6 +115,12 @@ def searchDoc(searchText, account_name, account_config):
     for idx, hit in enumerate(hits["hits"]):
         id = hit["_id"]
         data = r_get(id, account_name, account_config)
+
+        if len(data) == 0:
+            data = None
+        
+        if data == '""':
+            data = None
         
         if not data:
             db = initDB(account_name, account_config)
