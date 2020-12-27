@@ -451,8 +451,8 @@ def get_new_section_map(final_section_ui_map, classifier):
                                   primary_label, ">>>>>>>>>>>>", sentence)
                         else:
                             label_match_sent_list.append({
-                                "sentence": current_label,
-                                "label": label,
+                                "sentence": sentence,
+                                "label": current_label,
                                 "score": current_score,
                                 "is_previous": is_previous
                             })
