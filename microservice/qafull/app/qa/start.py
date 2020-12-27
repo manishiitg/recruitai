@@ -599,7 +599,7 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         }
     })
 
-    print(json.dumps(complete_section_match_map, indent=1))
+    logger.critical(json.dumps(complete_section_match_map, indent=1))
     
 
     return final_section_ui_map
