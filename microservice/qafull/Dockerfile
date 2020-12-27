@@ -59,4 +59,10 @@ RUN mkdir recruit-tags-flair-roberta-word2vec
 RUN pip install spacy
 RUN mkdir spacy
 RUN python -m spacy download en_core_web_sm
+
+RUN apt-get update && \
+	apt-get install git -y && \
+    apt-get -y autoclean && \
+	rm -rf /var/cache/apk/*
+
 CMD ["/usr/bin/supervisord"]
