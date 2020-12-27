@@ -4,7 +4,7 @@ from app.publishfilterindex import sendMessage as fixnamephone
 from app.pushlishskillindex import sendMessage as indexcandidateskill
 from app.publishdatasync import sendMessage as datasync
 from app.statspublisher import sendMessage as updateStats
-from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel, get_short_answer_senctence
+from app.qa.start import ask_question, loadModel, qa_candidate_db, loadTaggerModel, get_short_answer_senctence, loadClassifierModel
 import functools
 import time
 from app.logging import logger as LOGGER
@@ -559,7 +559,15 @@ def main():
                              'gs://general_ai_works/recruit-tags-flair-roberta-word2vec', '/workspace/recruit-tags-flair-roberta-word2vec'], stdout=subprocess.PIPE)
 
     print(result)
+
     loadTaggerModel()
+    
+    result = subprocess.run(['git', 'clone',
+                             'https://huggingface.co/manishiitg/distilbert-resume-parts-classify'], stdout=subprocess.PIPE)
+    print(result)
+    
+    
+    loadClassifierModel()
 
     # time.sleep(5) # wait 100 sec for elastic search to start.
     consumer = ReconnectingTaskQueue(amqp_url)
