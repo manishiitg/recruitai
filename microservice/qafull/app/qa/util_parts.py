@@ -242,8 +242,10 @@ def get_nlp_sentences(row, debug=True):
 
                                             index = 0
 
-                                            rindex = len(sent1.split(
-                                                " ")) - 1 - sent1.split(" ")[::-1].index(sent2.split(" ")[0])
+                                            try:
+                                                rindex = len(sent1.split(" ")) - 1 - sent1.split(" ")[::-1].index(sent2.split(" ")[0])
+                                            except ValueError as e:
+                                                break
                                             while True:
                                                 if rindex+index >= len(sent1.split(" ")):
                                                     break
