@@ -711,6 +711,7 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
                 pass
 
             logger.critical(f"==================== {time.time() - start_time}")
+            # break #temp
 
     return answer_map
 
