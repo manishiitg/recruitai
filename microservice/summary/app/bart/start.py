@@ -43,6 +43,7 @@ def process(filename, mongoid, priority, account_name, account_config):
         return {"error" : "mongo id not found"}
 
     if "aisummary" in row:
+        logger.critical("summary already exists")
         return {"error" : "already summary exists"}
     
     if "subject" in row:
