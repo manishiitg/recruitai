@@ -460,7 +460,7 @@ def get_new_section_map(final_section_ui_map, classifier):
                                   ">>>>>>>>>>>>", sentence)
 
                         previous_label = current_label
-                        previous_score = score
+                        previous_score = current_score
 
                     if len(label_match_sent_list) > 0:
                         if key not in questions:
