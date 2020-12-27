@@ -434,7 +434,7 @@ def get_new_section_map(final_section_ui_map, classifier):
                                 current_score = previous_score
                                 is_previous = True
 
-                        if current_label != "" and current_label not in allowed_classification[primary_label]:
+                        if current_label != "" and primary_label in allowed_classification and current_label not in allowed_classification[primary_label]:
                             # this is a problem
                             if current_label not in different_sections:
                                 different_sections[current_label] = []
@@ -451,7 +451,7 @@ def get_new_section_map(final_section_ui_map, classifier):
                                   primary_label, ">>>>>>>>>>>>", sentence)
                         else:
                             label_match_sent_list.append({
-                                "sentence": sentence,
+                                "sentence": current_label,
                                 "label": label,
                                 "score": current_score,
                                 "is_previous": is_previous
