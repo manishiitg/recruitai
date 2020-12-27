@@ -607,7 +607,7 @@ def location(gpeList, gpeIdxMap):
                 continue
 
             if gpe.lower() in gpe2.lower():
-                already_merged.append(idx)
+                already_merged.append(idx2)
                 foundMatch = True
 
                 merged_data[gpe]["merge"].append(gpe2)
@@ -620,7 +620,7 @@ def location(gpeList, gpeIdxMap):
                 if len(gpe2.split(" ")) == 1:
                     # single word
                     if gpe2.lower() in gpe.lower():
-                        already_merged.append(idx)
+                        already_merged.append(idx2)
                         foundMatch = True
                         merged_data[gpe]["merge"].append(gpe2)
                         merged_data[gpe]["count"] += gpe_corpus[gpe2]
