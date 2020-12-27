@@ -314,6 +314,10 @@ def filter_fetch(id, fetch, tags="", page=0, limit=25, ai="0", starred="0", conv
 
         sortby = None
         sortorder = None
+        
+        is_read = False
+        is_unread = False
+        is_note_added = False
 
         if request.method == 'POST':
             
@@ -345,6 +349,15 @@ def filter_fetch(id, fetch, tags="", page=0, limit=25, ai="0", starred="0", conv
 
                 if "unparsed" in options:
                     unparsed = True
+                
+                if 'is_read' in options:
+                    is_read = True
+
+                if 'is_unread' in options:
+                    is_unread = True
+                
+                if 'is_note_added' in options:
+                    is_note_added = True
 
         try:
             ret = sendFilterMessage({
@@ -362,6 +375,9 @@ def filter_fetch(id, fetch, tags="", page=0, limit=25, ai="0", starred="0", conv
                 "conversation": conversation,
                 "highscore": highscore,
                 "unparsed": unparsed,
+                "is_read" : is_read,
+                "is_unread" : is_unread,
+                "is_note_added" : is_note_added,
                 "account_name": request.account_name,
                 "account_config": request.account_config
             })
