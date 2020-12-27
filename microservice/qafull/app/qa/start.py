@@ -19,6 +19,7 @@ from app.publishdatasync import sendMessage as datasync
 from transformers import BartTokenizer, BartForConditionalGeneration, pipeline
 import torch
 from app.logging import logger
+from app.qa.util_parts import get_new_section_map as parts_get_new_section_map, combine_new_section_map as parts_combine_new_section_map, get_tags_subsections_subanswers as parts_get_tags_subsections_subanswers
 
 torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -574,8 +575,6 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
     final_section_ui_map = merge_orphan_to_ui(
         section_ui_map, orphan_section_map, page_box_count, tagger)
 
-    # final_nlp_section_ui_map = get_nlp_sentences(final_section_ui_map)
-
     logger.info(final_section_ui_map)
     db.emailStored.update_one({
         "_id": ObjectId(idx)
@@ -585,6 +584,23 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
             "cvParsedInfo.qa_parse_resume": final_section_ui_map[idx]
         }
     })
+
+    classifier = loadClassifierModel()
+    new_section_map = parts_get_new_section_map(final_section_ui_map, classifier)
+    complete_section_match_map = parts_combine_new_section_map(new_section_map)
+    complete_section_match_map = parts_get_tags_subsections_subanswers(complete_section_match_map, tagger)
+#   
+    db.emailStored.update_one({
+        "_id": ObjectId(idx)    
+    }, {
+        '$set': {
+            "cvParsedInfo.qa_type": "full",
+            "cvParsedInfo.complete_section_match_map": complete_section_match_map[idx]
+        }
+    })
+
+    print(json.dumps(complete_section_match_map, indent=1))
+    
 
     return final_section_ui_map
 
@@ -725,3 +741,12 @@ def loadTaggerModel():
             "/workspace/recruit-tags-flair-roberta-word2vec/recruit-tags-flair-roberta-word2vec/best-model.pt")
         logger.critical("model tagger loaded")
     return tagger
+
+classifier = None
+
+def loadClassifierModel():
+    global classifier
+    if classifier is None:
+        classifier = pipeline('sentiment-analysis', "manishiitg/distilbert-resume-parts-classify")
+
+    return classifier
