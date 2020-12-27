@@ -719,8 +719,8 @@ def ask_question(idx, page_content_map, only_initial_data=False, exist_answer_ma
 def loadModel():
     global question_answerer
 
-    logger.critical("gpu %s", torch.cuda.is_available())
     if question_answerer is None:
+        logger.critical("gpu %s", torch.cuda.is_available())
         if torch.cuda.is_available():
             question_answerer = pipeline(
                 'question-answering', device=0, model="manishiitg/longformer-recruit-qa", tokenizer="manishiitg/longformer-recruit-qa")
