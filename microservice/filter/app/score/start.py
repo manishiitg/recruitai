@@ -1,5 +1,5 @@
 from app.logging import logger
-from app.filter.util import parse_experiance_years, getCourseDict, matchCourse, getCourseDict, get_exp_display_range
+from app.filter.util import parse_experiance_years, getCourseDict, matchCourse, getCourseDict, get_exp_display_range, get_passout_year, get_dob_year
 import redis
 
 import os
@@ -230,6 +230,20 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
         candidate_score += edu_score
         full_debug.extend(debug)
 
+        location_score, debug = getLocationScore(criteria, row, total_weight, max_score)
+        candidate_score += location_score
+        full_debug.extend(debug)
+
+        dob_score, debug = getDobScore(criteria, row, total_weight, max_score)
+        candidate_score += dob_score
+        full_debug.extend(debug)
+
+        gender_score, debug = getGenderScore(criteria, row, total_weight, max_score)
+        candidate_score += gender_score
+        full_debug.extend(debug)
+
+        
+
     logger.critical("final candidate score %s", candidate_score)
 
     if updated_db:
@@ -248,7 +262,103 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
         "candidate_score_debug" : full_debug
     }
 
+def getPassoutScore(criteria, row, total_weight, max_score):
+    candidate_score = 0
+    debug = []
+    
+    if "passout" not in criteria:
+        logger.critical("passout not found")
+        debug.append("passout not found")
+        return candidate_score, debug
 
+    if "weight" not in criteria["passout"]:
+        criteria["passout"]['weight'] = 0
+
+    if criteria["passout"]["weight"] > 0:
+        logger.critical("passout critera %s", json.dumps(criteria["passout"], indent=True))
+        debug.append("passout Criteria %s" % json.dumps(criteria["passout"], indent=True))
+        if row and "cvParsedInfo" in row and "answer_map" in row["cvParsedInfo"]:    
+            if "education_year" in row["cvParsedInfo"]["answer_map"]:
+                if "error" not in row["cvParsedInfo"]["answer_map"]["education_year"]:
+
+                    passout_year = row["cvParsedInfo"]["answer_map"]["education_year"]["answer"]
+                    max_year = get_passout_year(passout_year)
+                    debug_str = "candidate passout year {} max year {}".format(passout_year, max_year)
+                    logger.critical(debug_str)                
+                    debug.append(debug_str)
+
+
+                    if max_year in criteria["passout"]["value"].lower():
+                        candidate_score += criteria["passout"]["weight"]/total_weight  * max_score
+                        logger.critical("passout matched candidate score %s", candidate_score)
+                        debug.append("passout matched candidate score %s" % candidate_score)
+                    else:
+                        logger.critical("passout not matched %s", gender)
+                        debug.append("passout not matched %s" % gender)
+
+            else:
+                debug_str = "candidate does not have any passout" 
+                logger.critical(debug_str)
+                debug.append(debug_str)        
+        else:
+            debug_str = "not ai data found" 
+            logger.critical(debug_str)
+            debug.append(debug_str)      
+
+    else:
+        debug_str = "passout criteria not weight is 0" 
+        logger.critical(debug_str)
+        debug.append(debug_str)
+
+    return candidate_score, debug
+
+def getLocationScore(criteria, row, total_weight, max_score):
+    candidate_score = 0
+    debug = []
+    
+    if "location" not in criteria:
+        logger.critical("location not found")
+        debug.append("location not found")
+        return candidate_score, debug
+
+    if "weight" not in criteria["location"]:
+        criteria["location"]['weight'] = 0
+
+    if criteria["location"]["weight"] > 0:
+        logger.critical("location critera %s", json.dumps(criteria["location"], indent=True))
+        debug.append("location Criteria %s" % json.dumps(criteria["location"], indent=True))
+        if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
+            if "GPE" in row["cvParsedInfo"]["finalEntity"]:
+                GPE = row["cvParsedInfo"]["finalEntity"]["GPE"]
+                
+                debug_str = "candidate location {}".format(GPE)
+                logger.critical(debug_str)                
+                debug.append(debug_str)
+
+
+                if GPE.lower() in criteria["location"]["value"].lower():
+                    candidate_score += criteria["location"]["weight"]/total_weight  * max_score
+                    logger.critical("location matched candidate score %s", candidate_score)
+                    debug.append("location matched candidate score %s" % candidate_score)
+                else:
+                    logger.critical("location not matched %s", gender)
+                    debug.append("location not matched %s" % gender)
+
+            else:
+                debug_str = "candidate does not have any location" 
+                logger.critical(debug_str)
+                debug.append(debug_str)        
+        else:
+            debug_str = "not ai data found" 
+            logger.critical(debug_str)
+            debug.append(debug_str)      
+
+    else:
+        debug_str = "location criteria not weight is 0" 
+        logger.critical(debug_str)
+        debug.append(debug_str)
+
+    return candidate_score, debug
 
 def getExpScore(criteria, row, total_weight, max_score):
     candidate_score = 0
@@ -358,6 +468,51 @@ def getGenderScore(criteria, row, total_weight, max_score):
         else:
             logger.critical("gender not matched %s", gender)
             debug.append("gender not matched %s" % gender)
+
+    return candidate_score, debug
+
+def getDobScore(criteria, row, total_weight, max_score):
+    candidate_score = 0
+    debug = []
+    if "dob" not in criteria:
+        debug_str = "dob not found"
+        logger.critical(debug_str)
+        debug.append(debug_str)
+        return candidate_score, debug
+
+    if "weight" not in criteria["dob"]:
+        criteria["dob"]["weight"] = 0
+        
+    if criteria["dob"]["weight"] > 0:
+        debug_str = "dob Score Criteria {}".format(json.dumps(criteria["dob"], indent=True))
+        logger.critical(debug_str)
+        debug.append(debug_str)
+        dob_str = ""
+
+        if "cvParsedInfo" in row:
+        
+            if "answer_map" in row["cvParsedInfo"]:
+                answer_map = row["cvParsedInfo"]["answer_map"]
+                if "personal_dob" in answer_map:
+                    if "error" not in answer_map["personal_dob"]:
+                        dob_str = answer_map["personal_dob"]["answer"]
+                
+            
+            if len(dob_str) == 0:
+                if "finalEntity" in row["cvParsedInfo"]:
+                    if "DOB" in row["cvParsedInfo"]["finalEntity"]:
+                        dob_str = row["cvParsedInfo"]["finalEntity"]["DOB"]["obj"]
+
+        if len(dob_str) > 0:
+            dob_year = get_dob_year(dob_str)
+            if dob_year != 99999:
+                if dob_year >= criteria["dob"]["min-value"] and dob_year <= criteria["dob"]["max-value"]:
+                    candidate_score += criteria["dob"]["weight"]/total_weight  * max_score
+                    logger.critical("dob matched candidate score %s", candidate_score)
+                    debug.append("dob matched candidate score %s" % candidate_score)
+                else:
+                    logger.critical("dob not matched %s", gender)
+                    debug.append("dob not matched %s" % gender)
 
     return candidate_score, debug
 
