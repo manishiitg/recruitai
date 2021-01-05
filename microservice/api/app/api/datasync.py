@@ -268,7 +268,7 @@ def filter_index_get(tag_id, job_profile_id=None):
         "account_name": request.account_name,
         "account_config": request.account_config
     })
-
+    
     return jsonify(ret), 200
 
 # @bp.route('/filter/fetch/<string:id>/<string:fetch>', methods=['GET'])
