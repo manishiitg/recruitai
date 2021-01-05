@@ -60,6 +60,7 @@ def classify(body = None, subject = None):
 def classifyzero(body = None, labels = None, mongoid = None):
     try:
 
+        logger.critical(request.json)
         if request.method == 'POST':
             labels = request.json.get('labels', "")
 
@@ -70,6 +71,7 @@ def classifyzero(body = None, labels = None, mongoid = None):
             labels = labels.split(",")
 
         if request.method == 'POST':
+            
 
             sendClassify({
                     "text" : request.json.get('body', ""),
