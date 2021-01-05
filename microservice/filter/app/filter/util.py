@@ -390,7 +390,56 @@ def matchCourse(education):
 
     return final_course
 
+def get_passout_year(year_string):
+  years = re.findall(r'\d{4}', year_string)
+  print(year_string, " xxxx" , years)
+  
+  years_short = re.findall(r'-\d{2}\b', year_string) # to match something like -20, 2020-21
+  if len(years_short) > 0:
+    print(year_string, "xxx" , years_short)
+    for yshort in years_short:
+      yshort = yshort.replace("-", "20")
+      years.append(yshort)
+      
+  max_year = -1
+  for year in years:
+    if int(year) > max_year:
+      max_year = int(year)
+  
+  return max_year
 
+def getPassoutYearFilters(passout_map):
+    passout_filter = {}
+    for key in passout_map:
+        passout_year = passout_map[key]
+        max_year = get_passout_year(passout_year)
+        print("max year", max_year)
+        if max_year != -1:
+            if max_year not in passout_filter:
+                passout_filter[max_year] = {
+                    "count" : 0,
+                    "children" : []
+                }
+            
+            passout_filter[max_year]["count"] += 1
+            passout_filter[max_year]["children"].append(key)
+
+    return {k: v for k, v in sorted(passout_filter.items(), key=lambda item: item[1]["count"])}
+
+def getGenderFilter(gender_map):
+    gender_filter = {}
+    for key in gender_map:
+        gender = gender_map[key]
+        if gender not in gender_filter:
+            gender_filter[gender] = {
+                "count" : 0,
+                "children" : []
+            }
+        
+        gender_filter[gender]["count"] += 1
+        gender_filter[gender]["children"].append(key)
+
+    return {k: v for k, v in sorted(gender_filter.items(), key=lambda item: item[1]["count"])}
 
 def getEducationFilters(education_map):
     edu_filter = {}
@@ -676,3 +725,32 @@ def location(gpeList, gpeIdxMap):
 
     return combine_merged_data
 
+def get_dob_year(year_string):
+  years = re.findall(r'\d{4}', year_string)
+  print(year_string, " xxxx" , years)
+  
+  max_year = 99999
+  for year in years:
+    if int(year) < max_year:
+      max_year = int(year)
+  
+  return max_year
+
+def get_dob_filter(dob_map):
+    dob_filter = {}
+    for key in dob_map:
+        dob_str = dob_map[key]
+        dob = get_dob_year(dob_str)
+        if dob == 99999:
+            continue
+        
+        if dob not in dob_filter:
+            dob_filter[dob] = {
+                "count" : 0,
+                "children" : []
+            }
+        
+        dob_filter[dob]["count"] += 1
+        dob_filter[dob]["children"].append(key)
+
+    return {k: v for k, v in sorted(dob_filter.items(), key=lambda item: item[1]["count"])}
