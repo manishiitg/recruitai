@@ -1,7 +1,7 @@
 from app.logging import logger
 from pymongo import MongoClient
 
-from app.filter.util import parse_experiance_years, matchCourse, designation, location, getExperianceRange, getEducationFilters
+from app.filter.util import parse_experiance_years, matchCourse, designation, location, getExperianceRange, getEducationFilters, getPassoutYearFilters, getGenderFilter, get_dob_filter
 
 import os
 import redis
@@ -966,7 +966,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             else:
                 ret = {}
         else:
-            ret = {}
+            logger.critical("tag id %s", ",".join(tags))
+            ret =  r_get(",".join(tags) + "_filter_children", account_name, account_config)
+            if ret is not None:
+                ret = json.loads(ret)
+            else:
+                ret = {}
             
         if len(filter) > 0:
             for key in ret:
@@ -1042,6 +1047,9 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                             if "debug" in cvParsedInfo:
                                 del cvParsedInfo["debug"]
                             
+                            if "complete_section_match_map" in cvParsedInfo:
+                                del cvParsedInfo["complete_section_match_map"]
+
                             if "qa_parse_resume" in cvParsedInfo:
                                 del cvParsedInfo["qa_parse_resume"]
 
@@ -1186,6 +1194,7 @@ def get_index(tag_id, job_profile_id, account_name, account_config):
 def index(mongoid, tag_id = None, filter_type="job_profile", account_name = "", account_config = {}):
     data = [] 
 
+
     logger.critical("index called %s", mongoid)
     r = connect_redis(account_name, account_config)
 
@@ -1213,6 +1222,19 @@ def index(mongoid, tag_id = None, filter_type="job_profile", account_name = "", 
             tag_data_map[dataMap[dkey]["tag_id"]].append(dataMap[dkey])
 
         key = mongoid
+
+        if tag_id and "," in tag_id:
+            new_data = []
+            array_tag_id = tag_id.split(",")
+            for x_tag_id in tag_data_map:
+                if x_tag_id in array_tag_id:
+                    new_data.extend(tag_data_map[x_tag_id])
+
+            logger.critical("data len %s for tag id %s" , len(new_data), tag_id)
+            generateFilterMap(tag_id, new_data, account_name, account_config)
+            return {}
+
+
 
         for x_tag_id in tag_data_map:
             if tag_id:
@@ -1267,6 +1289,9 @@ def generateFilterMap(key, data, account_name, account_config):
     gpeIdxMap = {}
     exp_map = {}
     education_map = {}
+    passout_map = {}
+    gender_map = {}
+    dob_map = {}
 
     is_starred = {"count" : 0, "children": []}
     is_unread = {"count" : 0, "children": []}
@@ -1366,16 +1391,52 @@ def generateFilterMap(key, data, account_name, account_config):
                     gpeList.append(GPE["obj"])
                     gpeIdxMap[len(gpeList) - 1] = str(row["_id"])
 
+            
+            if "gender" in row["cvParsedInfo"]["finalEntity"]:
+                gender = row["cvParsedInfo"]["finalEntity"]["gender"][0].lower()
+                if len(gender) > 0:
+                    gender_map[str(row["_id"])] = gender
+
+            if "answer_map" in row["cvParsedInfo"]:
+                answer_map = row["cvParsedInfo"]["answer_map"]
+                if "education_year" in answer_map:
+                    if "error" not in answer_map["education_year"]:
+                        passout_year = answer_map["education_year"]["answer"]
+                        if len(passout_year) > 0:
+                            passout_map[str(row["_id"])] = passout_year
+
+            dob_str = ""
+            if "answer_map" in row["cvParsedInfo"]:
+                answer_map = row["cvParsedInfo"]["answer_map"]
+                if "personal_dob" in answer_map:
+                    if "error" not in answer_map["personal_dob"]:
+                        dob_str = answer_map["personal_dob"]["answer"]
+                        dob_map[str(row["_id"])] = dob_str
+                
+            
+            if len(dob_str) == 0:
+                if "finalEntity" in row["cvParsedInfo"]:
+                    if "DOB" in row["cvParsedInfo"]["finalEntity"]:
+                        dob_str = row["cvParsedInfo"]["finalEntity"]["DOB"]["obj"]
+                        dob_map[str(row["_id"])] = dob_str
+                        
+
     exp_filter = getExperianceRange(exp_map)
     edu_filter = getEducationFilters(education_map)
+    passout_filter = getPassoutYearFilters(passout_map)
     work_filter = designation(wrkExpList, wrkExpIdxMap)
     gpe_filter = location(gpeList,gpeIdxMap)
+    gender_filter = getGenderFilter(gender_map)
+    dob_filter = get_dob_filter(dob_map)
 
     r_set(key + "_filter_children" , json.dumps({
         "exp_filter" : exp_filter,
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
         "gpe_filter" : gpe_filter,
+        "passout_filter" : passout_filter,
+        "gender_filter" : gender_filter,
+        "dob_filter" : dob_filter,
         "is_starred" : is_starred,
         "is_unread" : is_unread,
         "is_read" : is_read,
@@ -1398,6 +1459,7 @@ def generateFilterMap(key, data, account_name, account_config):
     for key2 in call_status:
         # edu_filter[key]["children"] = []
         del call_status[key2]["children"]
+    
 
     for key2 in exp_filter:
         # exp_filter[key]["children"] = []
@@ -1420,6 +1482,19 @@ def generateFilterMap(key, data, account_name, account_config):
         # gpe_filter[key]["children"] = []
         del gpe_filter[key2]["children"]
 
+    for key2 in gender_filter:
+        # gender_filter[key]["children"] = []
+        del gender_filter[key2]["children"]
+
+    for key2 in passout_filter:
+        # passout_filter[key]["children"] = []
+        del passout_filter[key2]["children"]
+
+    for key2 in dob_filter:
+        # dob_filter[key]["children"] = []
+        del dob_filter[key2]["children"]
+    
+
     logger.critical("generating filter completed %s", key)
     # print(edu_filter)
     r_set(key + "_filter" , json.dumps({
@@ -1427,6 +1502,9 @@ def generateFilterMap(key, data, account_name, account_config):
         "edu_filter" : edu_filter,
         "work_filter" : work_filter,
         "gpe_filter" : gpe_filter,
+        "passout_filter" : passout_filter,
+        "gender_filter" : gender_filter,
+        "dob_filter" : dob_filter,
         "is_starred" : is_starred,
         "is_unread" : is_unread,
         "is_read" : is_read,
