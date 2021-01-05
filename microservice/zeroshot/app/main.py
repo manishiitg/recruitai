@@ -301,7 +301,7 @@ class TaskQueue(object):
         thread_id = threading.get_ident()
         fmt1 = 'Thread id: {} Delivery tag: {} Message body: {}'
         # print(fmt1.format(thread_id, delivery_tag, body))
-        LOGGER.info(fmt1.format(thread_id, delivery_tag, body))
+        LOGGER.critical(fmt1.format(thread_id, delivery_tag, body))
 
         message = json.loads(body)
         # LOGGER.critical(body)
@@ -348,8 +348,11 @@ class TaskQueue(object):
         if "notifyurl" in message:
             notifyurl = message["notifyurl"]
 
-        process(message["text"], message["labels"], message["mongoid"], notifyurl, priority, account_name, account_config)
-        
+        if len(message["text"]) > 0 and len(message["labels"]) > 0:
+            process(message["text"], message["labels"], message["mongoid"], notifyurl, priority, account_name, account_config)
+        else:
+            return self.acknowledge_message(delivery_tag)
+
         # datasync({
         #     "id": message["mongoid"],
         #     "action": "syncCandidate",
