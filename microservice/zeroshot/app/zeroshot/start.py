@@ -36,7 +36,7 @@ def process(text, labels, mongoid, notifyurl, priority, account_name, account_co
     max_label, scores, labels =  classifyZeroShot(text, labels, priority)
 
     if notifyurl:
-
+        logger.critical("notify url found %s", notifyurl)
         x = requests.post(notifyurl, data = {
             'text': text,
             "labels" : labels,
@@ -47,6 +47,7 @@ def process(text, labels, mongoid, notifyurl, priority, account_name, account_co
         logger.critical(x)
 
     if mongoid:
+        logger.critical("mongoid %s", mongoid)
         db = initDB(account_name, account_config)
 
         row = db.emailStored.find_one({
