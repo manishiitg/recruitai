@@ -748,6 +748,9 @@ classifier = None
 def loadClassifierModel():
     global classifier
     if classifier is None:
-        classifier = pipeline('sentiment-analysis', "manishiitg/distilbert-resume-parts-classify")
+        if torch.cuda.is_available():
+            classifier = pipeline('sentiment-analysis', "manishiitg/distilbert-resume-parts-classify", device=0)
+        else:
+            classifier = pipeline('sentiment-analysis', "manishiitg/distilbert-resume-parts-classify")
 
     return classifier
