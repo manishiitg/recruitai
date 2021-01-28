@@ -32,6 +32,8 @@ conn  = None
 
 def thread_task( ch, method_frame, properties, body):
     body = json.loads(body)
+    if len(body) == 0:
+        return add_threadsafe_callback(ch, method_frame,properties,'invalid api call')
 
     account_name = None
     if "account_name" in body[0]:
