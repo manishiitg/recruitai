@@ -15,6 +15,7 @@ COPY ./supervisor/conf.d/classify.conf /etc/supervisor/conf.d/classify.conf
 RUN truncate -s 0 /workspace/logs/classify*.log
 
 RUN pip install transformers 
+RUN pip install sentencepiece
 RUN pip install pika
 RUN pip install beautifulsoup4
 
