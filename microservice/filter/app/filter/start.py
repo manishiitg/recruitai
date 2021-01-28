@@ -837,9 +837,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     # 2020-06-17 15:12:44.156000
                     # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
                     # return datetime.utcfromtimestamp(email_timestamp)
-                    return item[1]["email_timestamp"]
+                    if isinstance(item[1]["email_timestamp"], int):
+                        return ""
+                    else:
+                        return item[1]["email_timestamp"]
                 else:
-                    return -1
+                    return ""
 
             job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
         
@@ -850,9 +853,13 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             if "email_timestamp" in item[1]:    
                 # 2020-06-17 15:12:44.156000
                 # return datetime.strptime(item[1]["created_at"], '%Y-%m-%d %H:%M:%S.%f')
-                return item[1]["email_timestamp"]
+                if isinstance(item[1]["email_timestamp"], int):
+                    return ""
+                else:
+                    return item[1]["email_timestamp"]
+
             else:
-                return -1
+                return ""
 
         def custom_sort(item):
                     
@@ -886,6 +893,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                     job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=True)}
                 else:
                     job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=custom_sort_date,reverse=False)}
+
             elif sortby == "score":
                 if sortorder == 1:
                     job_profile_data = {k: v for k, v in sorted(job_profile_data.items(), key=sort_score,reverse=True)}
@@ -974,13 +982,18 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                 ret = {}
             
         if len(filter) > 0:
+            logger.critical("filter")
+            logger.critical(json.dumps(filter, indent=True))
+            logger.critical(list(filter.keys()))
             for key in ret:
-                if key not in filter:
+                logger.critical("key %s", key)
+                if key not in list(filter.keys()):
                     continue 
 
                 
-                print("key found in filter" , key)
+                logger.critical("key found in filter %s" , key)
                 for rangekey in ret[key]:
+                    logger.critical(rangekey)
                     if isinstance(filter[key], bool):
                         continue 
                     if rangekey not in filter[key]:
@@ -993,6 +1006,8 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                         range["children"]  = []
 
                     children = range["children"]
+
+                    logger.critical("children %s", children)
                     newChildren = []
                     for child in children:
                         if isinstance(child, dict):
@@ -1000,7 +1015,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
                         else:
                             child_id = child
 
-                        logger.critical(child_id)
+                        logger.critical("child_id %s", child_id)
                         if child_id in job_profile_data:
                             newChildren.append(child)
                             filter_tag_children[child_id] = job_profile_data[child_id]
