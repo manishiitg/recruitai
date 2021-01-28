@@ -82,9 +82,10 @@ def getSampleCriteria():
 def get_candidate_score_bulk(id, account_name, account_config, criteria):
     data = getSampleData(id, account_name, account_config)
     ret_data = {}
-    for row in data:
-        ret = get_candidate_score(row["_id"], account_name, account_config, criteria, row, True)
-        ret_data[row["_id"]] = ret
+    if data:
+        for row in data:
+            ret = get_candidate_score(row["_id"], account_name, account_config, criteria, row, True)
+            ret_data[row["_id"]] = ret
 
     return ret_data
     
@@ -165,7 +166,8 @@ def getSampleData(mongoid, account_name, account_config):
                 data = [row]
                 r_set(mongoid, json.dumps(row, default=str), account_name, account_config)
 
-    logger.critical("processing data line %s", len(data))
+    if data:
+        logger.critical("processing data line %s", len(data))
 
     return data
 
@@ -234,6 +236,10 @@ def get_candidate_score(id, account_name, account_config, criteria = None, candi
         candidate_score += location_score
         full_debug.extend(debug)
 
+        passout_score, debug = getPassoutScore(criteria, row, total_weight, max_score)
+        candidate_score += passout_score
+        full_debug.extend(debug)
+
         dob_score, debug = getDobScore(criteria, row, total_weight, max_score)
         candidate_score += dob_score
         full_debug.extend(debug)
@@ -287,14 +293,18 @@ def getPassoutScore(criteria, row, total_weight, max_score):
                     logger.critical(debug_str)                
                     debug.append(debug_str)
 
+                    total_passout_weight = 0
+                    for passout_criteria in criteria["passoutYear"]["values"]:
+                        total_passout_weight += loc_criteria["weight"]
 
-                    if max_year in criteria["passout"]["value"].lower():
-                        candidate_score += criteria["passout"]["weight"]/total_weight  * max_score
-                        logger.critical("passout matched candidate score %s", candidate_score)
-                        debug.append("passout matched candidate score %s" % candidate_score)
-                    else:
-                        logger.critical("passout not matched %s", gender)
-                        debug.append("passout not matched %s" % gender)
+                    for passout_criteria in criteria["passoutYear"]["values"]:
+                        if max_year == get_passout_year(passout_criteria["value"]):
+                            candidate_score += passout_criteria["weight"]/total_passout_weight  * max_score
+                            logger.critical("passout matched candidate score %s", candidate_score)
+                            debug.append("passout matched candidate score %s" % candidate_score)
+                        else:
+                            logger.critical("passout not matched %s", gender)
+                            debug.append("passout not matched %s" % gender)
 
             else:
                 debug_str = "candidate does not have any passout" 
@@ -323,26 +333,35 @@ def getLocationScore(criteria, row, total_weight, max_score):
 
     if "weight" not in criteria["location"]:
         criteria["location"]['weight'] = 0
+    
+    if "value" not in criteria["location"]:
+        criteria["location"]['weight'] = 0
 
     if criteria["location"]["weight"] > 0:
         logger.critical("location critera %s", json.dumps(criteria["location"], indent=True))
         debug.append("location Criteria %s" % json.dumps(criteria["location"], indent=True))
         if row and "cvParsedInfo" in row and "finalEntity" in row["cvParsedInfo"]:    
             if "GPE" in row["cvParsedInfo"]["finalEntity"]:
-                GPE = row["cvParsedInfo"]["finalEntity"]["GPE"]
+                GPE = row["cvParsedInfo"]["finalEntity"]["GPE"]["obj"]
                 
                 debug_str = "candidate location {}".format(GPE)
                 logger.critical(debug_str)                
                 debug.append(debug_str)
 
 
-                if GPE.lower() in criteria["location"]["value"].lower():
-                    candidate_score += criteria["location"]["weight"]/total_weight  * max_score
-                    logger.critical("location matched candidate score %s", candidate_score)
-                    debug.append("location matched candidate score %s" % candidate_score)
-                else:
-                    logger.critical("location not matched %s", gender)
-                    debug.append("location not matched %s" % gender)
+                total_location_weight = 0
+                for loc_criteria in criteria["location"]["values"]:
+                    total_location_weight += loc_criteria["weight"]
+                
+                for loc_criteria in criteria["location"]["values"]:
+                    if GPE.lower() in loc_criteria["value"].lower() or GPE.lower() == loc_criteria["value"].lower():    
+                        candidate_score += loc_criteria["weight"]/total_location_weight * max_score
+                        logger.critical("location matched candidate score %s", candidate_score)
+                        debug.append("location matched candidate score %s" % candidate_score)
+                    else:
+                        logger.critical("location not matched %s", gender)
+                        debug.append("location not matched %s" % gender)
+
 
             else:
                 debug_str = "candidate does not have any location" 
@@ -506,13 +525,20 @@ def getDobScore(criteria, row, total_weight, max_score):
         if len(dob_str) > 0:
             dob_year = get_dob_year(dob_str)
             if dob_year != 99999:
-                if dob_year >= criteria["dob"]["min-value"] and dob_year <= criteria["dob"]["max-value"]:
-                    candidate_score += criteria["dob"]["weight"]/total_weight  * max_score
-                    logger.critical("dob matched candidate score %s", candidate_score)
-                    debug.append("dob matched candidate score %s" % candidate_score)
-                else:
-                    logger.critical("dob not matched %s", gender)
-                    debug.append("dob not matched %s" % gender)
+
+                total_dob_weight = 0
+                for dob_criteria in criteria["dob"]["values"]:
+                    total_dob_weight += dob_criteria["weight"]
+
+                for dob_criteria in criteria["dob"]["values"]:
+
+                    if dob_year >= int(dob_criteria["min"]) and dob_year <= int(dob_criteria["max"]):
+                        candidate_score += dob_criteria["weight"]/total_dob_weight  * max_score
+                        logger.critical("dob matched candidate score %s", candidate_score)
+                        debug.append("dob matched candidate score %s" % candidate_score)
+                    else:
+                        logger.critical("dob not matched %s", dob_year)
+                        debug.append("dob not matched %s" % dob_year)
 
     return candidate_score, debug
 
