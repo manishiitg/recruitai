@@ -397,8 +397,9 @@ def process_name(row, db, account_name, account_config):
         if name is None:
             name = ""
 
-        if len(name) > 0:
-            return
+        # if len(name) > 0:
+        #     return
+        # need to replace name from resume. many times from name is not actual name of user
 
         logger.info("=================")
         logger.info(name)
@@ -407,34 +408,43 @@ def process_name(row, db, account_name, account_config):
 
         final_name = ""
         if "PERSON" in row["cvParsedInfo"]["finalEntity"]:
-            Name = row["cvParsedInfo"]["finalEntity"]["PERSON"]["obj"]
-            # logger.info("final entity name ", Name)
-            final_name = Name
+            if "PERSON" in row["cvParsedInfo"]["finalEntity"]:
+                if "obj" in row["cvParsedInfo"]["finalEntity"]["PERSON"]:
+                    Name = row["cvParsedInfo"]["finalEntity"]["PERSON"]["obj"]
+                # logger.info("final entity name ", Name)
+                    final_name = Name
 
         qa_final_name = None
-        qa_parse_resume = None
-        if "qa_parse_resume" in row["cvParsedInfo"]:
-            qa_parse_resume = row["cvParsedInfo"]["qa_parse_resume"]
-        else:
-            if "qa_fast_search_space" in row["cvParsedInfo"]:
-                qa_parse_resume = row["cvParsedInfo"]["qa_fast_search_space"]
+        if "answer_map" in row["cvParsedInfo"]:
+            answer_map = row['cvParsedInfo']["answer_map"]
+            if "personal_name" in answer_map:
+                personal_name = answer_map["personal_name"]
+                if "answer" in personal_name:
+                    final_name = personal_name["answer"]
+        # qa_parse_resume = None
+        # if "qa_parse_resume" in row["cvParsedInfo"]:
+        #     qa_parse_resume = row["cvParsedInfo"]["qa_parse_resume"]
+        # else:
+        #     if "qa_fast_search_space" in row["cvParsedInfo"]:
+        #         qa_parse_resume = row["cvParsedInfo"]["qa_fast_search_space"]
 
-        if qa_parse_resume:
-            for question_key in qa_parse_resume:
-                if "personal_" in question_key:
-                    sections = qa_parse_resume[question_key]
-                    if not isinstance(sections, list):
-                        sections = [sections] # qa fast search space
-                    for section in sections:
-                        if "tags" in section:
-                            tags = section["tags"]
-                            for tag in tags:
-                                if tag["label"] == "PERSON":
-                                    value = tag["text"]
-                                    # logger.info("qa parse", value)
-                                    if qa_final_name is None:
-                                        final_name = value
-                                        qa_final_name = value
+        # if qa_parse_resume:
+        #     for question_key in qa_parse_resume:
+        #         if "personal_" in question_key:
+        #             sections = qa_parse_resume[question_key]
+        #             if not isinstance(sections, list):
+        #                 sections = [sections] # qa fast search space
+        #             for section in sections:
+        #                 if "tags" in section:
+        #                     tags = section["tags"]
+        #                     for tag in tags:
+        #                         if tag["label"] == "PERSON":
+        #                             value = tag["text"].strip()
+        #                             # logger.info("qa parse", value)
+        #                             if len(value) > 0:
+        #                                 if qa_final_name is None:
+        #                                     final_name = value
+        #                                     qa_final_name = value
 
         if final_name:
             if "@" in final_name:
@@ -450,6 +460,7 @@ def process_name(row, db, account_name, account_config):
                 list(OrderedDict.fromkeys(final_name.split(" "))))
 
         id = str(row["_id"])
+
         if len(final_name) > 0:
             gender  =  getGender(final_name, account_name, account_config)
             db.emailStored.update_one({
@@ -457,10 +468,11 @@ def process_name(row, db, account_name, account_config):
             }, {
                 '$set': {
                     "from": final_name,
-                    "finalEntity.gender" : gender
+                    "finalEntity.gender" : gender,
+                    "org_name" : name
                 }
             })
-        logger.info(f"================={id} and final name {final_name}")
+            logger.critical(f"================={id} and final name {final_name} and gender {gender}")
 
 
 def parse_phone_string(Phone):
