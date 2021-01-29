@@ -320,10 +320,12 @@ class TaskQueue(object):
             LOGGER.critical("no account found. unable to proceed")
             return self.acknowledge_message(delivery_tag)
 
+        if account_name == "devrecruit":
+            return self.acknowledge_message(delivery_tag)
+        
+
         account_config = message["account_config"]
         LOGGER.critical("Account name %s", account_name)
-        if account_name == "prodrecruit":
-            return self.acknowledge_message(delivery_tag)
 
         if message["mongoid"] is None:
             message["mongoid"] = ""
