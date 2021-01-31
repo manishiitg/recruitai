@@ -531,6 +531,13 @@ services:
             - redis
             - memcached
 
+    duckling:
+        image: rasa/duckling:latest
+        network_mode: host
+        ports:
+            - "8000:8000"
+
+
 volumes: 
     elasticsearch:
     redis-data:
