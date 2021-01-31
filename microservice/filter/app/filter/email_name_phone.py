@@ -327,7 +327,7 @@ def email_check_db(row, db):
                         '_id': ObjectId(str(row["_id"]))
                     }, {
                         "$set": {
-                            "additional-Email": other_emails
+                            "cvParsedInfo.finalEntity.additional-Email": other_emails
                         }
                     })
         else:
@@ -341,7 +341,7 @@ def email_check_db(row, db):
                         "$set": {
                             "sender_mail": qa_parse_email[0],
                             "sender_mail_ai": 'qa_parse',
-                            "additional-Email": qa_parse_email[1:]
+                            "cvParsedInfo.finalEntity.additional-Email": qa_parse_email[1:]
                         }
                     })
                 elif len(qa_parse_email) == 1:
@@ -365,7 +365,7 @@ def email_check_db(row, db):
                         "$set": {
                             "sender_mail": final_entity_email[0],
                             "sender_mail_ai": 'final_entity',
-                            "additional-Email": final_entity_email[1:]
+                            "cvParsedInfo.finalEntity.additional-Email": final_entity_email[1:]
                         }
                     })
                 elif len(final_entity_email) == 1:
@@ -420,7 +420,25 @@ def process_name(row, db, account_name, account_config):
             if "personal_name" in answer_map:
                 personal_name = answer_map["personal_name"]
                 if "answer" in personal_name:
-                    final_name = personal_name["answer"]
+                    qa_final_name = personal_name["answer"]
+                    logger.critical("qa final name %s actual final name %s", qa_final_name, final_name)
+                    if len(final_name) > 0:
+                        # logger.critical("h1")
+                        if final_name.lower() in qa_final_name.lower() or qa_final_name.lower() in final_name.lower() or final_name.lower() == qa_final_name.lower():
+                            # this means name are similar so will take the longer name
+                            if len(final_name) > len(qa_final_name):
+                                # logger.critical("h2")
+                                pass
+                            else:
+                                final_name = qa_final_name
+                                # logger.critical("h3")
+                        else:
+                            # will prefer qa over ner if name not matching at all
+                            final_name = qa_final_name                            
+                            # logger.critical("h4")
+                    else:
+                        # logger.critical("h5")
+                        final_name = personal_name["answer"]
         # qa_parse_resume = None
         # if "qa_parse_resume" in row["cvParsedInfo"]:
         #     qa_parse_resume = row["cvParsedInfo"]["qa_parse_resume"]
@@ -469,7 +487,7 @@ def process_name(row, db, account_name, account_config):
                 '$set': {
                     "from": final_name,
                     "finalEntity.gender" : gender,
-                    "org_name" : name
+                    # "org_name" : name  # no use of this because its called so many times the from and org_name will keep getting replaced
                 }
             })
             logger.critical(f"================={id} and final name {final_name} and gender {gender}")
