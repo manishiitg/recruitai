@@ -27,6 +27,7 @@ def fix_name_email_phone_all(account_name, account_config):
     
     rows = db.emailStored.find({"cvParsedInfo" : {"$exists": True}})
     for row in rows:
+        # if str(row["_id"]) == "600d9e3126f614003baee93e":
         process_name(row, db, account_name, account_config)
         email_check_db(row, db)
         fix_phone(row, db)
