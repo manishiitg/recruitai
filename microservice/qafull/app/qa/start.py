@@ -559,9 +559,9 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         answer_map, bbox_map_int, absorbed_map, up_absorbed_map, complete_absorbed_map)
 
     # print(json.dumps(combined_section_content_map, indent=True))
-    logger.info("==========================")
+    logger.info("=====================complete_section_match_map------------------=====")
     logger.info(json.dumps(complete_section_match_map, indent=True))
-    logger.info("==========================")
+    logger.info("========================== complete_section_match_map end ===================")
     logger.info(json.dumps(orphan_section_map, indent=True))
     if len(list(orphan_section_map.keys())) != 0:
         logger.critical("orphan has keys!")  # pass nothing else to do
@@ -599,7 +599,9 @@ def parse_resume(idx, answer_map, page_content_map, bbox_map, account_name, acco
         }
     })
 
+    logger.critical("=======================complete_section_match_map===========================")
     logger.critical(json.dumps(complete_section_match_map, indent=1))
+    logger.critical("=======================complete_section_match_map===========================")
     
 
     return final_section_ui_map
