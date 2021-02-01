@@ -1,4 +1,5 @@
 import json
+import jsonlines
 
 # this is data based from our ai recruit system
 
@@ -21,15 +22,21 @@ def convert_file_to_conll(file):
         '5eae0f126294bf0085672b04',
         '5ea079cb873f1f2c0b36616d',
         "5e985c50f754e812f459ce87"]  #this have some issue in db level
-    with open(file, 'r') as f:
-        lines = f.readlines()
+    # with open(file, 'r') as f:
+    #     lines = f.readlines()
+
+    lines = []
+    with jsonlines.open(file) as reader:
+        for data in reader:
+            lines.append(data)
+
     
     no_lines = 0
     for line in lines:
-        data = json.loads(line)
+    #     data = json.loads(line)
 
-        if data["candidateId"] in error_candidates_list:
-            continue
+        # if data["candidateId"] in error_candidates_list:
+        #     continue
 
         print("-----------------------")
         print(data)
@@ -85,7 +92,7 @@ def convert_file_to_conll(file):
 
 
         for annotation in data['tags']:
-
+            
             start = annotation['start_pos']
             if start == -1:
                 start = 0
@@ -139,7 +146,7 @@ def convert_file_to_conll(file):
     return training_data
     
 
-corpus = convert_file_to_conll("v2.json1")
+corpus = convert_file_to_conll("ner-email-final.jsonl")
 # print(training_data)
 
 # exit
@@ -171,7 +178,7 @@ def write_lines_file(filename, entities):
 
             the_file.write("\n")
 
-write_lines_file('ner-full-v2.txt', corpus)
-write_lines_file('ner-train-v2.txt', train_data)
-write_lines_file('ner-test-v2.txt', test_data)
-write_lines_file('ner-dev-v2.txt', dev_data)
+write_lines_file('ner-email-final.jsonl.txt', corpus)
+# write_lines_file('ner-train-v2.txt', train_data)
+# write_lines_file('ner-test-v2.txt', test_data)
+# write_lines_file('ner-dev-v2.txt', dev_data)
