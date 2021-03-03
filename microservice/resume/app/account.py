@@ -159,3 +159,31 @@ def get_cloud_bucket(account_name, account_config):
 
 def get_cloud_url(account_name, account_config):
     return account_config["google_cloud"]["url"]
+
+def extract_email(text):
+
+    payload = {'locale': 'en_GB',
+               'text': text
+               }
+
+    headers = {"Content-Type": "application/x-www-form-urlencoded; "
+               "charset=UTF-8"}
+    # sending post request and saving response as response object
+    response = requests.post(
+        'http://127.0.0.1:8000/parse', data=payload, headers=headers)
+
+    email = False
+    start = -1
+    end = -1
+    if response.status_code == 200:
+        res = response.json()
+        # print(json.dumps(res, indent=1))
+        for row in res:
+            if row["dim"] == "email":
+                email = row['body']
+                start = row["start"]
+                end = row["end"]
+            # if row["dim"] == "url":
+            #   print(row['body'])
+
+    return email, start, end
