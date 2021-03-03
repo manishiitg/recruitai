@@ -32,7 +32,7 @@ def convert_file_to_conll(file):
 
     
     no_lines = 0
-    for line in lines:
+    for data in lines:
     #     data = json.loads(line)
 
         # if data["candidateId"] in error_candidates_list:
@@ -47,7 +47,7 @@ def convert_file_to_conll(file):
         #     continue
 
         # text = text.replace(u'\xa0', u' ')
-        text = text.encode('ascii', 'replace').decode().replace("?", " ")
+        # text = text.encode('ascii', 'replace').decode().replace("?", " ")
         entities = {}
         text_length = len(text)
 
@@ -109,9 +109,11 @@ def convert_file_to_conll(file):
             if start in charIdx2Wrd:
                 wordIdxstart = charIdx2Wrd[start]
             else:
-                start_idx = text.index(tagtext)
-                if abs(start_idx - start) == 1: # for some reason. index just varies by one
+                start_idx = text.index(tagtext, end - len(tagtext) - 2)
+                if abs(start_idx - start) <= 2: # for some reason. index just varies by one
                     start = start_idx
+                else:
+                    print("problem!!! start ", start, " start idx ", start_idx, " tagtext tagtext" , tagtext)
                 
                 wordIdxstart = charIdx2Wrd[start]
                 
@@ -122,8 +124,10 @@ def convert_file_to_conll(file):
             else:
                 end_idx = text.index(tagtext) + len(tagtext) -1 
                 print("trying end idx %s", end_idx)
-                if abs(end_idx - end) == 1:
+                if abs(end_idx - end) <= 2:
                     end = end_idx
+                else:
+                    print("problem!!! end ", end, " end idx ", end_idx, " tagtext tagtext" , tagtext)
                 
                 wordIdxend = charIdx2Wrd[end]
 
