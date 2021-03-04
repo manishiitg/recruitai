@@ -1034,6 +1034,7 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
             job_profile_data = filter_tag_children
 
         logger.info("is_option %s", is_option)
+        total_candidate_len = len(job_profile_data)
         paged_candidate_map = {}
         for idx, child_id in  enumerate(job_profile_data):
             if idx >= page * limit and idx < limit * (page + 1):
@@ -1093,11 +1094,12 @@ def fetch(mongoid, filter_type="job_profile" , tags = [], page = 0, limit = 25, 
         
         
         logger.critical("sending response..")
-        
+
         response = json.dumps({
             "filter" : {}, # ret temp code to comment filters as its coming from another api only now 
             "candidate_map" : paged_candidate_map,
             "candidate_len" : len(paged_candidate_map),
+            "total_candidate_len":total_candidate_len,
             "tag_count_map" : tag_count_map
         }, default=str)
 
