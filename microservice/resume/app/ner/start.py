@@ -9,7 +9,7 @@ import json
 import torch
 import tqdm 
 from flair.data import Sentence
-
+import requests
 device = None
 if torch.cuda.is_available():
     device = torch.device('cuda:0')
@@ -66,6 +66,33 @@ def loadModel():
         logger.critical("model loaded")
     return tagger
 
+def extract_email(text):
+
+    payload = {'locale': 'en_GB',
+               'text': text
+               }
+
+    headers = {"Content-Type": "application/x-www-form-urlencoded; "
+               "charset=UTF-8"}
+    # sending post request and saving response as response object
+    response = requests.post('http://116.202.234.182:8000/parse', data=payload, headers=headers)
+
+    email = False
+    start = -1
+    end = -1
+    if response.status_code == 200:
+        res = response.json()
+        # print(json.dumps(res, indent=1))
+        for row in res:
+            if row["dim"] == "email":
+                email = row['body']
+                start = row["start"]
+                end = row["end"]
+            # if row["dim"] == "url":
+            #   print(row['body'])
+
+    return email, start, end
+
 
 def process(nertoparse, tagger):
     combineNer = {}
@@ -103,8 +130,16 @@ def process(nertoparse, tagger):
                             "text" : line,
                             'entities' : []
                         }
-                    
-                    
+
+                    emails_list = []
+                    if not emails_list:
+                        try:
+                            email, start, end = extract_email(tag_dict['text'])
+                            if email != False:
+                                emails_list.append(email)
+                        except Exception as e:
+                            print("1099999999999999999999999999999999999999999999999999999999",e)
+
 
 
                     
@@ -131,7 +166,13 @@ def process(nertoparse, tagger):
 
                         entity['labels'] = new_labels
                         new_tag_dict["entities"].append(entity)
-                            
+                    email_exists=[] 
+                    is_email = any(d['type'] == "Email" for d in new_tag_dict["entities"])
+                    if is_email:
+                        email_exists.append(True)
+                    if not email_exists and emails_list:
+                        custom_email = {'text': emails_list[0],'start_pos': -1,'end_pos': -1,'labels': [{'value': 'Email','confidence': -1}],'type': 'Email','confidence': -1}
+                        new_tag_dict["entities"].append(custom_email)
                     ner.append({
                         "line": line,
                         "nerline": str(sentence.to_tagged_string()),
