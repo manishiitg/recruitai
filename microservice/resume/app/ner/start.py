@@ -9,8 +9,7 @@ import json
 import torch
 import tqdm 
 from flair.data import Sentence
-from app.account import extract_email
-
+import requests
 device = None
 if torch.cuda.is_available():
     device = torch.device('cuda:0')
@@ -66,6 +65,33 @@ def loadModel():
         tagger = SequenceTagger.load("/workspace/recruit-tags-flair-roberta-word2vec/recruit-tags-flair-roberta-word2vec/best-model.pt")
         logger.critical("model loaded")
     return tagger
+
+def extract_email(text):
+
+    payload = {'locale': 'en_GB',
+               'text': text
+               }
+
+    headers = {"Content-Type": "application/x-www-form-urlencoded; "
+               "charset=UTF-8"}
+    # sending post request and saving response as response object
+    response = requests.post('http://116.202.234.182:8000/parse', data=payload, headers=headers)
+
+    email = False
+    start = -1
+    end = -1
+    if response.status_code == 200:
+        res = response.json()
+        # print(json.dumps(res, indent=1))
+        for row in res:
+            if row["dim"] == "email":
+                email = row['body']
+                start = row["start"]
+                end = row["end"]
+            # if row["dim"] == "url":
+            #   print(row['body'])
+
+    return email, start, end
 
 
 def process(nertoparse, tagger):
@@ -145,7 +171,7 @@ def process(nertoparse, tagger):
                     if is_email:
                         email_exists.append(True)
                     if not email_exists and emails_list:
-                        custom_email = {'text': emails_list[0],'start_pos': 19,'end_pos': 39,'labels': [{'value': 'Email','confidence': 0.995044469833374}],'type': 'Email','confidence': 0.995044469833374}
+                        custom_email = {'text': emails_list[0],'start_pos': -1,'end_pos': -1,'labels': [{'value': 'Email','confidence': -1}],'type': 'Email','confidence': -1}
                         new_tag_dict["entities"].append(custom_email)
                     ner.append({
                         "line": line,
