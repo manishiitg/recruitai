@@ -1,3 +1,4 @@
+import requests
 has_mongo = False
 try:
     from pymongo import MongoClient
@@ -169,8 +170,7 @@ def extract_email(text):
     headers = {"Content-Type": "application/x-www-form-urlencoded; "
                "charset=UTF-8"}
     # sending post request and saving response as response object
-    response = requests.post(
-        'http://127.0.0.1:8000/parse', data=payload, headers=headers)
+    response = requests.post('http://116.202.234.182:8000/parse', data=payload, headers=headers)
 
     email = False
     start = -1
