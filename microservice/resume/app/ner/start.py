@@ -9,6 +9,7 @@ import json
 import torch
 import tqdm 
 from flair.data import Sentence
+from app.account import extract_email
 
 device = None
 if torch.cuda.is_available():
@@ -103,8 +104,16 @@ def process(nertoparse, tagger):
                             "text" : line,
                             'entities' : []
                         }
-                    
-                    
+
+                    emails_list = []
+                    if not emails_list:
+                        try:
+                            email, start, end = extract_email(tag_dict['text'])
+                            if email != False:
+                                emails_list.append(email)
+                        except Exception as e:
+                            print("1099999999999999999999999999999999999999999999999999999999",e)
+
 
 
                     
@@ -131,7 +140,13 @@ def process(nertoparse, tagger):
 
                         entity['labels'] = new_labels
                         new_tag_dict["entities"].append(entity)
-                            
+                    email_exists=[] 
+                    is_email = any(d['type'] == "Email" for d in new_tag_dict["entities"])
+                    if is_email:
+                        email_exists.append(True)
+                    if not email_exists and emails_list:
+                        custom_email = {'text': emails_list[0],'start_pos': 19,'end_pos': 39,'labels': [{'value': 'Email','confidence': 0.995044469833374}],'type': 'Email','confidence': 0.995044469833374}
+                        new_tag_dict["entities"].append(custom_email)
                     ner.append({
                         "line": line,
                         "nerline": str(sentence.to_tagged_string()),
