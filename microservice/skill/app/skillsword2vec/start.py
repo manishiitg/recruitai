@@ -42,6 +42,7 @@ def get_start_match(text, isGlobal = False, domain = None):
     start_ret = []
     for word in model_words_to_use:
         if word.lower().find(text.lower()) == 0:
+            word = word.replace("/","_")
             start_ret.append({
                 "word" : word,
                 "count" : model.wv.vocab[word].count
