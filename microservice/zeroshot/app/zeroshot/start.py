@@ -31,7 +31,7 @@ import sys
 import subprocess
 import requests
 
-def process(text, labels, mongoid, notifyurl, priority, account_name, account_config):
+def process(text, labels, mongoid, notifyurl, priority, account_name, account_config, meta = {}):
     
     max_label, scores, labels =  classifyZeroShot(text, labels, priority)
 
@@ -42,11 +42,12 @@ def process(text, labels, mongoid, notifyurl, priority, account_name, account_co
             "labels" : labels,
             "mongoid" : mongoid,
             "max_label" : max_label,
-            "labels" : labels
+            "labels" : labels,
+            "meta" : meta
         })
         logger.critical(x)
 
-    if mongoid:
+    if mongoid and ObjectId.is_valid(mongoid):
         logger.critical("mongoid %s", mongoid)
         db = initDB(account_name, account_config)
 
