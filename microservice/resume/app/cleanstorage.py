@@ -1,0 +1,43 @@
+from app.config import BASE_PATH
+from app.logging import logger
+from app.config import storage_client
+from pathlib import Path
+import subprocess
+import os
+# from app.search.index import addDoc
+import shutil
+import traceback
+
+from threading import Thread
+
+from app.account import initDB, get_cloud_bucket, get_cloud_url
+from app.config import storage_client
+
+
+def main():
+    dest = BASE_PATH + "/../cvreconstruction/"
+    RESUME_UPLOAD_BUCKET = "airecruitai.excellencetechnologies.in"
+    account_name = "excellencerecruit"
+
+    # gsutil ls -d gs://airecruitai.excellencetechnologies.in/excellencerecruit
+    # x = subprocess.check_call(
+    #     ['gsutil ls -d ' + "gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
+
+    blobs = storage_client.list_blobs(
+        "airecruitai.excellencetechnologies.in", prefix="excellencerecruit")
+
+    idx = 0
+    for blob in blobs:
+        idx = idx + 1
+        if("_" in f and "person" not in f):
+            print("deleting ", blob.name)
+            blob.delete()
+            pass
+        else:
+            print("not deleting ", blob.name)
+        # if idx > 10000:
+        #     break
+
+
+if __name__ == '__main__':
+    main()
