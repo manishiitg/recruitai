@@ -329,9 +329,13 @@ def uploadToGcloud(basePath, basecv, account_name, account_config):
     #  -n
     deleteOcrFiles(os.path.join(basePath, ''.join(
         e for e in basecv if e.isalnum())))
-    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath, ''.join(
-        e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
-    logger.info(x)
+        
+    try:
+        x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath, ''.join(
+            e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
+        logger.info(x)
+    except Exception as e:
+        logger.critical("gcloud upload error %s", e)
 
 
 def cleanContent(content, cvpage, jsonOutput):
