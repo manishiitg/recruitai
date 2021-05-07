@@ -110,9 +110,14 @@ def get_content_from_pdf2_json(cv, cvpage):
 
 
 def get_content_from_text_extract(cv, cvpage):
-    x = subprocess.check_output(
+    try:
+        x = subprocess.check_output(
         ['pdf-text-extract ' + cv], shell=True, timeout=60)
-    x = x.decode("utf-8")
+        x = x.decode("utf-8")
+    except Exception as e:
+        logger.critical("exception %s", e)
+        return None
+    
     # x = re.sub(' +', ' ', x)
     # logger.critical("=======================")
     # logger.critical(x)
