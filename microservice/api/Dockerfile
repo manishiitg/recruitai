@@ -7,7 +7,7 @@ WORKDIR /workspace
 # COPY requirements.txt /workspace/
 
 
-RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apscheduler
+RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended===3.25.1 pytest apscheduler
 # RUN pip install -r requirements.txt
 
 COPY RecruitAI.json /workspace/
