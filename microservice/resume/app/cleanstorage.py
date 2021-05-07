@@ -29,7 +29,7 @@ def main():
     idx = 0
     for blob in blobs:
         idx = idx + 1
-        if("_" in f and "person" not in f):
+        if("_" in blob.name and "person" not in blob.name):
             print("deleting ", blob.name)
             blob.delete()
             pass
