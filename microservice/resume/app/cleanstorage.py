@@ -27,16 +27,20 @@ def main():
         "airecruitai.excellencetechnologies.in", prefix="excellencerecruit")
 
     idx = 0
+    total_delete = 0
     for blob in blobs:
         idx = idx + 1
         if("_" in blob.name and "person" not in blob.name):
             print("deleting ", blob.name)
             blob.delete()
+            total_delete += 1
             pass
         else:
             print("not deleting ", blob.name)
         # if idx > 10000:
         #     break
+    
+    print("total delete %s", total_delete)
 
 
 if __name__ == '__main__':
