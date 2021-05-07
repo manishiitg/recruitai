@@ -54,8 +54,15 @@ def fullResumeParsing(filename, mongoid=None, message = None , priority = 0, acc
             filename = filename.replace("'","") #one case we have a file with ' in it which cause issue
             blob.download_to_filename(os.path.join(dest, filename))
             logger.critical("file downloaded at %s", os.path.join(dest, filename))
+
+
+            logger.critical("file exists %s", os.path.isfile(os.path.join(dest, filename)))
+            if not os.path.isfile(os.path.join(dest, filename)):
+                logger.critical("file not downloaded" + account_name + "/" + filename)
+                return {"error" : "file not downloaded" + account_name + "/" + filename}
+
         except  Exception as e:
-            logger.critical(str(e))
+            logger.critical("error exception %s",str(e))
             traceback.print_exc(file=sys.stdout)
             return {"error" : str(e)}
 
