@@ -26,7 +26,7 @@
     },
    "devrecruit" : {
         "mongodb" : {
-            "host" : "mongodb://176.9.137.77:27017/hr_recruit_dev",
+            "host" : "mongodb://nodeUser:java1234@176.9.137.77:27017/hr_recruit_dev?authSource=hr_recruit_dev",
             "db" : "hr_recruit_dev"
         },
         "google_cloud" : {

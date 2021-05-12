@@ -13,8 +13,6 @@ def initDB(account_name, account_config):
         
     global db_hosts
     if account_name not in db_hosts:
-        if account_name == "devrecruit":
-            account_config["mongodb"]["host"] = "mongodb://176.9.137.77:27017/hr_recruit_dev" # temp
         client = MongoClient(account_config["mongodb"]["host"]) 
         db_hosts[account_name] = client[account_config["mongodb"]["db"]]
 
