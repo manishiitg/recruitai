@@ -301,7 +301,7 @@ def email_check_db(row, db):
 
         qa_parse_email = list(set(qa_parse_email))
         final_entity_email = list(set(final_entity_email))
-        if len(sender_mail) > 0:
+        if sender_mail and len(sender_mail) > 0:
             sender_mail = sender_mail.lower()
             other_emails = []
             for email in final_entity_email:

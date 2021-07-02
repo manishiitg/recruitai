@@ -49,6 +49,8 @@ RUN apt-get update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./supervisor/conf.d/resume.conf /etc/supervisor/conf.d/resume.conf
+COPY ./supervisor/conf.d/cleanresume.conf /etc/supervisor/conf.d/cleanresume.conf
+
 
 RUN truncate -s 0 /workspace/logs/resume*.log
 
