@@ -407,9 +407,10 @@ class TaskQueue(object):
                             else:
                                 retSkill[mongoid]["avg"] = 0
                                 
-                            ret[job_id] = retSkill[mongoid]
+                            # ret[job_id] = retSkill[mongoid]
                         else:
-                            ret[job_id] = {} 
+                            # ret[job_id] = {} 
+                            pass
                     
 
                     logger.critical("updating to db %s", retSkill)

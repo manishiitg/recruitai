@@ -18,9 +18,9 @@ RUN pip install transformers
 RUN pip install pika
 RUN pip install beautifulsoup4
 RUN pip install pymongo
-RUN pip install gensim
+RUN pip install gensim===3.8.3
 RUN pip install scipy
-RUN pip install spacy
+RUN pip install spacy===2.3.5
 RUN python -m spacy download en
 
 RUN apt-get install -y debconf-utils

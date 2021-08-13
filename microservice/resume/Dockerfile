@@ -16,7 +16,7 @@ RUN pip install google-cloud-storage
 RUN pip install pika
 
 RUN add-apt-repository ppa:libreoffice/ppa -y
-RUN apt-get update && apt-get -y autoclean
+RUN apt-get update && apt-get -y autoclean && apt-get install --fix-missing
 RUN apt-get install libreoffice -y
 RUN apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config -y
 RUN apt-get install python-poppler poppler-utils -y \
@@ -49,6 +49,8 @@ RUN apt-get update && \
 	rm -rf /var/cache/apk/*
 
 COPY ./supervisor/conf.d/resume.conf /etc/supervisor/conf.d/resume.conf
+# COPY ./supervisor/conf.d/cleanresume.conf /etc/supervisor/conf.d/cleanresume.conf
+
 
 RUN truncate -s 0 /workspace/logs/resume*.log
 

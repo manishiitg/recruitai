@@ -524,10 +524,10 @@ services:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
-            SENDGRID_API_KEY: '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'
+            SENDGRID_API_KEY: ''
         network_mode: host
         depends_on: 
-            - rabbitmq
+            - rabbitmqgit@github.com:manishiitg/recruitai.git
             - redis
             - memcached
 
