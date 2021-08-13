@@ -21,3 +21,12 @@ node_modules/*
 nvm
 
 logs
+
+account.config.json
+my_password.txt
+RecruitAI.json
+
+microservices/api/RecruitAI.json
+
+label-studio/ner/project/backup/*
+label-studio/ner/project/completions/*
