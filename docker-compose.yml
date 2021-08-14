@@ -305,6 +305,7 @@ services:
             - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
+            HUGGINGFACE_INTERFACE_API: ${HUGGINGFACE_INTERFACE_API}
         networks:
             - ai
 

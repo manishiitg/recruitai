@@ -1,4 +1,4 @@
-from app.bart.start import loadModel
+from app.bart.start import loadModel, extractSummary
 from app.account import connect_redis
 from app.statspublisher import sendMessage as updateStats
 import functools
@@ -540,6 +540,9 @@ def main():
 
     loadModel()
 
+    # summary = extractSummary("MITTAL SOFTWAREENGINEER CARRER OBJECTIVE A position in an organisation with technologies. Have experience in app development using flutter. WORK EXPERIENCE SOftware Engineer responsibilities that will effectively utilise my skills and maximise opportunities to develop and implement leading HOW TO CONTACT ME Addres: RZ-48, Old Raja Puri, Uttam Nagar, New Delhi- 110059. Phone: 8510047686 Email: msakshi1501@gmail.com SOCIAL Linkdin - http://linkedin.com/in/sakshi- mittal-83a917187 HOBBIES Competitions Music Learning New Technologies Trips Dance Reading Novels Deligence Technologies | sept 2018 - present working as a backend & frontent Developer, using Flutter stack and coding. - Responsible for identifying bugs and finding solutions. - Responsible for dealing with clients, understanding requirements and converting their idea to working app. SOftware Developer Wyoming Telemedia Services | jan 2018 - jul 2018 working as a Web Developer using PHP. - Worked on desktop phone,system notice, personal events etc. - Resp", 9)
+    # print(summary)
+    # return
     consumer = ReconnectingTaskQueue(amqp_url)
     consumer.run()
 
