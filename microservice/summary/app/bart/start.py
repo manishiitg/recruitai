@@ -98,7 +98,7 @@ def process(filename, mongoid, priority, account_name, account_config):
         logger.critical("no content found for summary")
 
 
-def extractSummary(text, priority, api=True):
+def extractSummary(text, priority, api=False):
     if len(text) >= 1024:
         text = text[:1024]
     if api:
