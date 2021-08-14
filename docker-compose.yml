@@ -596,6 +596,7 @@ services:
             - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
+            HUGGINGFACE_INTERFACE_API: ${HUGGINGFACE_INTERFACE_API}
         network_mode: host
         depends_on: 
             - rabbitmq
