@@ -1,41 +1,57 @@
+from app.logging import logger
+import redis
+from pymemcache.client.base import PooledClient
+import os
+import json
+
 has_mongo = False
 try:
     from pymongo import MongoClient
     from bson.objectid import ObjectId
-    has_mongo = True   
+    has_mongo = True
 except ModuleNotFoundError as e:
     pass
 
 db_hosts = {}
+
+
 def initDB(account_name, account_config):
     if not has_mongo:
         return None
-        
+
     global db_hosts
     if account_name not in db_hosts:
-        client = MongoClient(account_config["mongodb"]["host"]) 
-        db_hosts[account_name] = client[account_config["mongodb"]["db"]]
+        account_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "account.config.json")
+        if os.path.exists(account_json_path):
+            with open(account_json_path) as ff:
+                account_config = json.load(ff)
+                if account_name in account_config:
+                    account_config = account_config[account_name]
+                    print("123123", account_config)
+                    logger.info("overwriteing account info", account_config)
 
+        print("host", account_config["mongodb"]["host"])
+        client = MongoClient(account_config["mongodb"]["host"])
+        db_hosts[account_name] = client[account_config["mongodb"]["db"]]
 
     return db_hosts[account_name]
 
 
-import redis 
-from pymemcache.client.base import PooledClient
-
 redis_hosts = {}
 memcached_hosts = {}
 
+
 def connect_redis(account_name, account_config):
-    
+
     if account_config["usecache"] == "redis":
         global redis_hosts
 
         if account_name not in redis_hosts:
-            redis_hosts[account_name] = redis.StrictRedis(host=account_config["redis"]["host"], port=account_config["redis"]["port"], db=account_config["redis"]["db_index"], decode_responses=True)
+            redis_hosts[account_name] = redis.StrictRedis(
+                host=account_config["redis"]["host"], port=account_config["redis"]["port"], db=account_config["redis"]["db_index"], decode_responses=True)
 
         return redis_hosts[account_name]
-    
+
     elif account_config["usecache"] == "memcached":
         # if account_name not in memcached_hosts:
         #     memcached_hosts[account_name] = PooledClient(account_config["memcached"]["host"], max_pool_size=4)
@@ -43,7 +59,7 @@ def connect_redis(account_name, account_config):
         # return Client(account_config["memcached"]["host"])
         return PooledClient(account_config["memcached"]["host"], max_pool_size=4)
 
-from app.logging import logger
+
 def r_exists(key, account_name, account_config):
     key = account_name + "_" + key
     key = key.replace(" ", "")
@@ -59,10 +75,10 @@ def r_exists(key, account_name, account_config):
 
     if account_config["usecache"] == "memcached":
         r.close()
-    
+
     return ret
 
-import json
+
 def r_get(key, account_name, account_config):
     r = connect_redis(account_name, account_config)
     key = account_name + "_" + key
@@ -70,15 +86,16 @@ def r_get(key, account_name, account_config):
     ret = r.get(key)
     if not ret:
         ret = json.dumps("")
-        
+
     if account_config["usecache"] == "memcached":
         r.close()
 
     return ret
 
-def r_set(key, value, account_name, account_config, ex = None):
+
+def r_set(key, value, account_name, account_config, ex=None):
     r = connect_redis(account_name, account_config)
-    key = account_name + "_" + key 
+    key = account_name + "_" + key
     key = key.replace(" ", "")
     try:
         if ex:
@@ -88,7 +105,7 @@ def r_set(key, value, account_name, account_config, ex = None):
                 r.set(key, value, expire=ex)
         else:
             if account_config['usecache'] == "redis":
-                r.set(key , value)
+                r.set(key, value)
             else:
                 ret = r.set(key, value)
     except Exception as e:
@@ -97,6 +114,7 @@ def r_set(key, value, account_name, account_config, ex = None):
 
     if account_config["usecache"] == "memcached":
         r.close()
+
 
 def r_scan_iter(account_name, account_config, match=None):
     r = connect_redis(account_name, account_config)
@@ -108,7 +126,7 @@ def r_scan_iter(account_name, account_config, match=None):
     elif account_config["usecache"] == "memcached":
         # ret = r.stats("items")
         ret = []
-    
+
     scan = []
     for key in ret:
         if account_name + "_" in str(key):
@@ -118,6 +136,7 @@ def r_scan_iter(account_name, account_config, match=None):
         r.close()
 
     return scan
+
 
 def r_flushdb(account_name, account_config):
     r = connect_redis(account_name, account_config)
@@ -129,7 +148,7 @@ def r_flushdb(account_name, account_config):
     if account_config["usecache"] == "memcached":
         r.close()
 
-        
+
 has_es = False
 
 try:
@@ -140,13 +159,16 @@ except Exception as e:
 
 
 es = {}
+
+
 def init_elastic_search(username, password, account_name, account_config):
     if not has_es:
         return None
-        
+
     global es
     if account_name not in es:
-        es[account_name] = Elasticsearch(account_config["elasticsearch"]["host"], http_auth=(username, password))
+        es[account_name] = Elasticsearch(
+            account_config["elasticsearch"]["host"], http_auth=(username, password))
 
     return es[account_name]
 
@@ -157,6 +179,7 @@ def get_es_index(account_name, account_config):
 
 def get_cloud_bucket(account_name, account_config):
     return account_config["google_cloud"]["bucket"]
+
 
 def get_cloud_url(account_name, account_config):
     return account_config["google_cloud"]["url"]

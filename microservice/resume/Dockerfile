@@ -48,13 +48,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-<<<<<<< HEAD
 COPY ./microservice/resume/supervisor/conf.d/resume.conf /etc/supervisor/conf.d/resume.conf
-=======
-COPY ./supervisor/conf.d/resume.conf /etc/supervisor/conf.d/resume.conf
-# COPY ./supervisor/conf.d/cleanresume.conf /etc/supervisor/conf.d/cleanresume.conf
-
->>>>>>> c5899353e118f5a98ae4dcbb05326e2db2b74069
 
 RUN truncate -s 0 /workspace/logs/resume*.log
 

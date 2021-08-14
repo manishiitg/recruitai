@@ -132,26 +132,26 @@ services:
     #         - ai
     
 
-    deepset-haystack:
-        image: deepset/haystack-annotation:latest
-        container_name: haystack-annotation
-        environment:
-            DEFAULT_ADMIN_EMAIL: "manish@excellencetechnologies.in"
-            DEFAULT_ADMIN_PASSWORD: "${DEFAULT_ADMIN_PASSWORD}"
-            NODE_ENV: "production"
-            PROD_DB_HOSTNAME: "db"
-            PROD_DB_NAME: "qa123"
-            PROD_DB_USERNAME: "qa"
-            PROD_DB_PASSWORD: "${PROD_DB_PASSWORD}"
-        ports:
-            - "7001:7001"
-        # links:
-        #     - "db:database"
-        depends_on:
-            - db
-        networks:
-            - ai
-        restart: unless-stopped
+    # deepset-haystack:
+    #     image: deepset/haystack-annotation:latest
+    #     container_name: haystack-annotation
+    #     environment:
+    #         DEFAULT_ADMIN_EMAIL: "manish@excellencetechnologies.in"
+    #         DEFAULT_ADMIN_PASSWORD: "${DEFAULT_ADMIN_PASSWORD}"
+    #         NODE_ENV: "production"
+    #         PROD_DB_HOSTNAME: "db"
+    #         PROD_DB_NAME: "qa123"
+    #         PROD_DB_USERNAME: "qa"
+    #         PROD_DB_PASSWORD: "${PROD_DB_PASSWORD}"
+    #     ports:
+    #         - "7001:7001"
+    #     # links:
+    #     #     - "db:database"
+    #     depends_on:
+    #         - db
+    #     networks:
+    #         - ai
+    #     restart: unless-stopped
 
     db:
         image: "postgres:12"
@@ -237,6 +237,8 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs 
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
             - ./account.config.json:/workspace/app/account.config.json:ro
             - ./microservice/api/app:/workspace/app
             - ./label-studio/ner/project:/workspace/ner
@@ -260,7 +262,10 @@ services:
         volumes:
             # - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/resume/app:/workspace/app            
+            - ./microservice/resume/app:/workspace/app       
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro     
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             RESUME_PARALLEL_PROCESS: 1
@@ -277,6 +282,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/picture/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -292,6 +300,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/summary/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -306,6 +317,9 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/qafull/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -321,6 +335,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/classify/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
         networks:
@@ -336,6 +353,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/skill/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         # Environment variables:
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
@@ -353,6 +373,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/search/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
@@ -373,7 +396,10 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/searchindex/app:/workspace/app            
+            - ./microservice/searchindex/app:/workspace/app      
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro      
         environment:
             - RABBIT_DB=amqp://rabbitmq?connection_attempts=5&retry_delay=5&heartbeat=3600
             - ELASTIC_USERNAME=elastic
@@ -394,7 +420,10 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/skillextract/app:/workspace/app            
+            - ./microservice/skillextract/app:/workspace/app   
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro         
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -414,6 +443,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/gender/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -427,7 +459,10 @@ services:
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
-            - ./microservice/image/app:/workspace/app            
+            - ./microservice/image/app:/workspace/app
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro            
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -444,6 +479,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/datasync/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
             CRON_SCHEDULE: '0 0 * * *'
@@ -466,6 +504,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/candidate/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -485,6 +526,9 @@ services:
             - ./cvreconstruction:/workspace/cvreconstruction 
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/filter/app:/workspace/app            
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: amqp://rabbitmq?connection_attempts=5&retry_delay=5
         networks:
@@ -504,6 +548,9 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/stats/app:/workspace/app        
             - /var/run/docker.sock:/var/run/docker.sock
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
@@ -523,6 +570,9 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/statsdata/app:/workspace/app        
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
         network_mode: host
@@ -540,6 +590,9 @@ services:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/zeroshot/app:/workspace/app        
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
         network_mode: host
@@ -557,6 +610,9 @@ services:
             - /var/log/recruitai:/workspace/logs  
             - ./microservice/gpucloud/app:/workspace/app        
             - /var/run/docker.sock:/var/run/docker.sock
+            - ./gcp-service-account.json:/workspace/RecruitAI.json:ro
+            - ./gcp-service-account.json:/workspace/app/RecruitAI.json:ro            
+            - ./account.config.json:/workspace/app/account.config.json:ro
         environment:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
@@ -570,7 +626,7 @@ services:
 
     duckling:
         image: rasa/duckling:latest
-        network_mode: host
+        # network_mode: host
         ports:
             - "8000:8000"
 

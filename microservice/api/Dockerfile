@@ -29,8 +29,6 @@ RUN truncate -s 0 /workspace/logs/flask*.log
 RUN pip install pika
 
 RUN pip install google-cloud-storage
-COPY ./gcp-service-account.json /workspace/RecruitAI.json
-COPY ./account.config.json /workspace/app
 
 RUN pip install jsonlines
 

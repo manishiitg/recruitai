@@ -15,7 +15,7 @@ RUN apt-get install libreoffice python-poppler default-jdk  poppler-utils -y \
 
 
 VOLUME ["/workspace/pretrained","/workspace/batchprocessing","/workspace/cvreconstruction","/workspace/logs"]
-r
+
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 RUN apt-get install apt-transport-https ca-certificates -y
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
@@ -37,7 +37,6 @@ COPY ./microservice/image/supervisor/conf.d/image.conf /etc/supervisor/conf.d/im
 RUN truncate -s 0 /workspace/logs/image*.log
 
 COPY ./gcp-service-account.json /workspace/RecruitAI.json
-COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
 
 RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705

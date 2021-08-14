@@ -59,7 +59,7 @@ RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
-RUN pip install transformers beautifulsoup4 redis pymongo
+RUN pip install transformers==3.5.1 beautifulsoup4 redis pymongo
 
 RUN apt-get install default-jdk -y
 # ADD app /workspace/app, using volume instead

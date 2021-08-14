@@ -6,6 +6,7 @@ try:
 except ModuleNotFoundError as e:
     pass
 
+import os
 db_hosts = {}
 def initDB(account_name, account_config):
     if not has_mongo:
@@ -13,6 +14,15 @@ def initDB(account_name, account_config):
         
     global db_hosts
     if account_name not in db_hosts:
+        account_json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "account.config.json")
+        if os.path.exists(account_json_path):
+            with open(account_json_path) as ff:
+                account_config = json.load(ff)
+                if account_name in account_config:
+                    account_config = account_config[account_name]
+                    logger.info("overwriteing account info", account_config)
+
+
         client = MongoClient(account_config["mongodb"]["host"]) 
         db_hosts[account_name] = client[account_config["mongodb"]["db"]]
 
