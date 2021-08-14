@@ -10,7 +10,10 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/gender.conf /etc/supervisor/conf.d/gender.conf
+COPY ./microservice/gender/supervisor/conf.d/gender.conf /etc/supervisor/conf.d/gender.conf
+
+COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
 
 RUN truncate -s 0 /workspace/logs/gender*.log
 

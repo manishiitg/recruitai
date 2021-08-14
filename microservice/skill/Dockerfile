@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/skill.conf /etc/supervisor/conf.d/skill.conf
+COPY ./microservice/skill/supervisor/conf.d/skill.conf /etc/supervisor/conf.d/skill.conf
 
 RUN truncate -s 0 /workspace/logs/skill*.log
 
@@ -23,7 +23,8 @@ RUN apt-get install apt-transport-https ca-certificates gnupg2 -y
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 RUN apt-get update && apt-get install google-cloud-sdk -y
 
-COPY ./app/RecruitAI.json /workspace
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
+COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
 
 RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705

@@ -4,8 +4,8 @@ services:
     resumegpu:
         # image: recruitai/resumemq:latest
         build:
-            dockerfile: Dockerfile.gpu
-            context: microservice/resume
+            dockerfile: microservice/resume/Dockerfile.gpu
+            context: .
         device_requests:
             - capabilities:
                 - gpu

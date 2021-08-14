@@ -4,9 +4,9 @@ services:
     
     resumemq:
         image: recruitai/resumemq
-        build:
-            dockerfile: Dockerfile
-            context: microservice/resume
+        build: 
+            context: .
+            dockerfile: microservice/resume/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -23,8 +23,8 @@ services:
     summarymq:
         image: recruitai/summarymq
         build:
-            dockerfile: Dockerfile
-            context: microservice/summary
+            dockerfile: microservice/summary/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -42,8 +42,8 @@ services:
     picturemq:
         image: recruitai/picturemq
         build:
-            dockerfile: Dockerfile
-            context: microservice/picture
+            dockerfile: microservice/picture/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -79,8 +79,8 @@ services:
     qafullmq:
         image: recruitai/qafullmq
         build:
-            dockerfile: Dockerfile
-            context: microservice/qafull
+            dockerfile: microservice/qafull/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 

@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/qa_full.conf /etc/supervisor/conf.d/qa_full.conf
+COPY ./microservice/qafull/supervisor/conf.d/qa_full.conf /etc/supervisor/conf.d/qa_full.conf
 
 RUN truncate -s 0 /workspace/logs/qa_full*.log
 
@@ -49,7 +49,8 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyri
 RUN apt-get update && apt-get install google-cloud-sdk -y
 
 
-COPY ./app/RecruitAI.json /workspace
+COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
 
 RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705

@@ -4,8 +4,8 @@ services:
     qafullmq:
         image: recruitai/qafullmq
         build:
-            dockerfile: Dockerfile
-            context: microservice/qafull
+            dockerfile: microservice/qafull/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 

@@ -73,8 +73,8 @@ services:
     qafullgpu:
         # image: recruitai/picturegpu
         build:
-            dockerfile: Dockerfile.gpu
-            context: microservice/qafull
+            dockerfile: microservice/qafull/Dockerfile.gpu
+            context: .
         device_requests:
             - capabilities:
                 - gpu

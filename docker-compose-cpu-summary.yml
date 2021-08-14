@@ -5,8 +5,8 @@ services:
     summarymq:
         image: recruitai/summarymq
         build:
-            dockerfile: Dockerfile
-            context: microservice/summary
+            dockerfile: microservice/summary/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 

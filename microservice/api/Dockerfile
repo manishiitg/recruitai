@@ -7,10 +7,8 @@ WORKDIR /workspace
 # COPY requirements.txt /workspace/
 
 
-RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended pytest apscheduler
+RUN pip install flask Flask-PyMongo Flask-Cors Flask-JWT-Extended===3.25.1 pytest apscheduler
 # RUN pip install -r requirements.txt
-
-COPY RecruitAI.json /workspace/
 
 RUN pip install gunicorn
 
@@ -21,8 +19,8 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/recruitai.conf /etc/supervisor/conf.d/recruitai.conf
-COPY ./supervisor/conf.d/queue.conf /etc/supervisor/conf.d/queue.conf
+COPY ./microservice/api/supervisor/conf.d/recruitai.conf /etc/supervisor/conf.d/recruitai.conf
+COPY ./microservice/api/supervisor/conf.d/queue.conf /etc/supervisor/conf.d/queue.conf
 
 RUN truncate -s 0 /workspace/logs/flask*.log
 
@@ -31,7 +29,8 @@ RUN truncate -s 0 /workspace/logs/flask*.log
 RUN pip install pika
 
 RUN pip install google-cloud-storage
-COPY ./RecruitAI.json /workspace
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
+COPY ./account.config.json /workspace/app
 
 RUN pip install jsonlines
 

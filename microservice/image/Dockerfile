@@ -32,11 +32,12 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/image.conf /etc/supervisor/conf.d/image.conf
+COPY ./microservice/image/supervisor/conf.d/image.conf /etc/supervisor/conf.d/image.conf
 
 RUN truncate -s 0 /workspace/logs/image*.log
 
-COPY ./app/RecruitAI.json /workspace
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
+COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
 
 RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI.json
 RUN gcloud config set project recruitai-266705

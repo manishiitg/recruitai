@@ -4,8 +4,8 @@ services:
     picturemq:
         image: recruitai/picturemq
         build:
-            dockerfile: Dockerfile
-            context: microservice/picture
+            dockerfile: microservice/picture/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 

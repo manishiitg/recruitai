@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/candidate.conf /etc/supervisor/conf.d/candidate.conf
+COPY ./microservice/candidate/supervisor/conf.d/candidate.conf /etc/supervisor/conf.d/candidate.conf
 
 RUN truncate -s 0 /workspace/logs/candidate*.log
 

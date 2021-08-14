@@ -53,8 +53,8 @@ services:
                 hard: -1
         environment:
             - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-            - ELASTIC_USERNAME=elastic
-            - ELASTIC_PASSWORD=DkIedPPSCb
+            - ELASTIC_USERNAME=${ELASTIC_USERNAME}
+            - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
             - xpack.security.enabled=true
             - xpack.security.transport.ssl.enabled=true
             - xpack.security.transport.ssl.verification_mode=certificate
@@ -137,12 +137,12 @@ services:
         container_name: haystack-annotation
         environment:
             DEFAULT_ADMIN_EMAIL: "manish@excellencetechnologies.in"
-            DEFAULT_ADMIN_PASSWORD: "baracuda@123"
+            DEFAULT_ADMIN_PASSWORD: "${DEFAULT_ADMIN_PASSWORD}"
             NODE_ENV: "production"
             PROD_DB_HOSTNAME: "db"
             PROD_DB_NAME: "qa123"
             PROD_DB_USERNAME: "qa"
-            PROD_DB_PASSWORD: "qa"
+            PROD_DB_PASSWORD: "${PROD_DB_PASSWORD}"
         ports:
             - "7001:7001"
         # links:
@@ -159,7 +159,7 @@ services:
         environment:
             POSTGRES_USER: "qa"
             POSTGRES_PASSWORD: "qa123"
-            POSTGRES_DB: "qa"
+            POSTGRES_DB: "${POSTGRES_DB}"
         ports:
             - "5432:5432"
         volumes:
@@ -228,7 +228,9 @@ services:
 
     api:
         image: recruitai/api:latest
-        build: microservice/api
+        build:  
+            context: .
+            dockerfile: microservice/api/Dockerfile
         ports:
             - "8086:5001"
         volumes:
@@ -252,8 +254,9 @@ services:
         
     resumemq:
         image: recruitai/resumemq:latest
-        build: microservice/resume
-        
+        build: 
+            context: .
+            dockerfile: microservice/resume/Dockerfile
         volumes:
             # - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -265,8 +268,10 @@ services:
             - ai
     
     picturemq:
+        build: 
+            context: .
+            dockerfile: microservice/picture/Dockerfile
         image: recruitai/picturemq:latest
-        build: microservice/picture
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -279,7 +284,9 @@ services:
 
     summarymq:
         image: recruitai/summarymq:latest
-        build: microservice/summary
+        build: 
+            context: .
+            dockerfile: microservice/summary/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -292,7 +299,9 @@ services:
 
     qafullmq:
         image: recruitai/qafullmq:latest
-        build: microservice/qafull
+        build: 
+            context: .
+            dockerfile: microservice/qafull/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -304,7 +313,9 @@ services:
 
     classifymq:
         image: recruitai/classifymq:latest
-        build: microservice/classify
+        build: 
+            context: .
+            dockerfile: microservice/classify/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -317,7 +328,9 @@ services:
     
     skillmq:
         image: recruitai/skillmq:latest
-        build: microservice/skill
+        build: 
+            context: .
+            dockerfile: microservice/skill/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -332,7 +345,9 @@ services:
     
     searchmq:
         image: recruitai/searchmq:latest
-        build: microservice/search
+        build: 
+            context: .
+            dockerfile: microservice/search/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -351,7 +366,9 @@ services:
 
     searchindexmq:
         image: recruitai/searchindex:latest
-        build: microservice/searchindex
+        build: 
+            context: .
+            dockerfile: microservice/searchindex/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -370,7 +387,9 @@ services:
 
     skillextractmq:
         image: recruitai/skillextractmq:latest
-        build: microservice/skillextract
+        build: 
+            context: .
+            dockerfile: microservice/skillextract/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -387,7 +406,9 @@ services:
     
     gendermq:
         image: recruitai/gendermq:latest
-        build: microservice/gender
+        build: 
+            context: .
+            dockerfile: microservice/gender/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -400,7 +421,9 @@ services:
 
     imagemq:
         image: recruitai/imagemq:latest
-        build: microservice/image
+        build: 
+            context: .
+            dockerfile: microservice/image/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -413,7 +436,9 @@ services:
 
     datasyncmq:
         image: recruitai/datasyncmq:latest
-        build: microservice/datasync
+        build: 
+            context: .
+            dockerfile: microservice/datasync/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -433,7 +458,9 @@ services:
 
     candidatemq:
         image: recruitai/candidatemq:latest
-        build: microservice/candidate
+        build: 
+            context: .
+            dockerfile: microservice/candidate/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -450,7 +477,9 @@ services:
 
     filtermq:
         image: recruitai/filtermq:latest
-        build: microservice/filter
+        build: 
+            context: .
+            dockerfile: microservice/filter/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - ./cvreconstruction:/workspace/cvreconstruction 
@@ -467,7 +496,9 @@ services:
         
     statsmq:
         image: recruitai/statsmq:latest
-        build: microservice/stats
+        build: 
+            context: .
+            dockerfile: microservice/stats/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -485,7 +516,9 @@ services:
 
     statsdatamq:
         image: recruitai/statsdatamq:latest
-        build: microservice/statsdata
+        build: 
+            context: .
+            dockerfile: microservice/statsdata/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -500,7 +533,9 @@ services:
 
     zeroshotmq:
         image: recruitai/zeroshotmq:latest
-        build: microservice/zeroshot
+        build: 
+            context: .
+            dockerfile: microservice/zeroshot/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -514,7 +549,9 @@ services:
             - memcached
     
     gpu:
-        build: microservice/gpucloud
+        build: 
+            context: .
+            dockerfile: microservice/gpucloud/Dockerfile
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  
@@ -524,7 +561,7 @@ services:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
-            SENDGRID_API_KEY: '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'
+            SENDGRID_API_KEY: ''
         network_mode: host
         depends_on: 
             - rabbitmq

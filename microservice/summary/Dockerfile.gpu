@@ -10,7 +10,8 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/summary.conf /etc/supervisor/conf.d/summary.conf
+COPY ./microservice/summary/supervisor/conf.d/summary.conf /etc/supervisor/conf.d/summary.conf
+COPY ./gcp-service-account.json /workspace/app/RecruitAI.json
 
 RUN truncate -s 0 /workspace/logs/summary*.log
 

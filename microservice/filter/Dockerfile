@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/filter.conf /etc/supervisor/conf.d/filter.conf
-COPY ./supervisor/conf.d/index.conf /etc/supervisor/conf.d/index.conf
+COPY ./microservice/filter/supervisor/conf.d/filter.conf /etc/supervisor/conf.d/filter.conf
+COPY ./microservice/filter/supervisor/conf.d/index.conf /etc/supervisor/conf.d/index.conf
 
 RUN truncate -s 0 /workspace/logs/filter*.log
 

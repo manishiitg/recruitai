@@ -5,8 +5,8 @@ services:
     resumemq:
         image: recruitai/resumemq
         build:
-            dockerfile: Dockerfile
-            context: microservice/resume
+            dockerfile: microservice/resume/Dockerfile
+            context: .
         volumes:
             - ./pretrained:/workspace/pretrained:ro
             - /var/log/recruitai:/workspace/logs  

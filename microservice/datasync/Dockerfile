@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/datasync.conf /etc/supervisor/conf.d/datasync.conf
+COPY ./microservice/datasync/supervisor/conf.d/datasync.conf /etc/supervisor/conf.d/datasync.conf
 
 RUN truncate -s 0 /workspace/logs/datasync*.log
 

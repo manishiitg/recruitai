@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get -y autoclean && \
 	rm -rf /var/cache/apk/*
 
-COPY ./supervisor/conf.d/gpu.conf /etc/supervisor/conf.d/gpu.conf
+COPY ./microservice/gpucloud/supervisor/conf.d/gpu.conf /etc/supervisor/conf.d/gpu.conf
 
 RUN truncate -s 0 /workspace/logs/gpu*.log
 
@@ -37,13 +37,13 @@ RUN apt-get install apt-transport-https ca-certificates -y
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 RUN apt-get update && apt-get install google-cloud-sdk -y
 
-COPY ./app/java-ref-7a9117277dda.json /workspace
-COPY ./app/RecruitAI-full.json /workspace
+COPY ./gcp-compute-service-account.json /workspace/gcp-compute-service-account.json
+COPY ./gcp-service-account.json /workspace/RecruitAI.json
 # COPY ./app/gcloud_setup_summary.sh /workspace
 # COPY ./app/start.sh /workspace
 # RUN chmod +x /workspace/start.sh
 
-RUN gcloud auth activate-service-account --key-file=/workspace/java-ref-7a9117277dda.json
+RUN gcloud auth activate-service-account --key-file=/workspace/gcp-compute-service-account.json
 RUN gcloud config set project java-ref
 # RUN gcloud auth activate-service-account --key-file=/workspace/RecruitAI-full.json
 # RUN gcloud config set project recruitai-266705

@@ -4,8 +4,8 @@ services:
     
     summarygpu:
         build:
-            dockerfile: Dockerfile.gpu
-            context: microservice/summary
+            dockerfile: microservice/summary/Dockerfile.gpu
+            context: .
         device_requests:
             - capabilities:
                 - gpu

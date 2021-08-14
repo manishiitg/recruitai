@@ -1,4 +1,53 @@
-===== Recruit AI =====
+Resume Parsing AI Based 
+==========================
+
+
+This is a project to parse and extract data from candidate resume.
+
+This has lot of different models to extract data including NER, QA, Summary, Bounding boxes, classification, similarly. 
+
+This is built on huggingface and spacy
+
+This uses microservices architecture so that the jobs can be distributed across multiple servers on cloud.
+
+
+Architecture and Detailed Usage
+===============================
+TBD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===== Recruit AI Random Notes =====
 
 Code for different models and predictions only (no training) to deploy on production env.
 
@@ -23,11 +72,11 @@ sudo mkdir /var/log/recruitai
 
 python -m app.main
 
-http://144.76.110.170:5001/#/datasets
+http://ip:5001/#/datasets
 
 redis access
 ==========
-http://116.202.234.182:8081/
+http://ip:8081/
 
 To debug flask app
 ==================
@@ -38,7 +87,7 @@ flask run -p 5001 -h 0.0.0.0
 kibana
 =======
 
-http://116.202.234.182:5601/app/kibana
+http://ip:5601/app/kibana
 
 
 
@@ -107,7 +156,7 @@ docker container rm -f recruitai
 https://stackoverflow.com/questions/47223280/docker-containers-can-not-be-stopped-or-removed-permission-denied-error
 
 
-http://116.202.234.182:9200/_cluster/health?pretty=true
+http://ip:9200/_cluster/health?pretty=true
 
 curl localhost:9200/_cat/health
 
@@ -130,7 +179,7 @@ tail -f /var/log/recruitai/flask_err.log
 NER Data
 ==========
 
-http://144.76.110.170:8086/training/ner/convert_to_label_studio
+http://ip:8086/training/ner/convert_to_label_studio
 
 this url will fetch data from ai errors collection and create version folder like v2, v3 etc.
 
@@ -143,12 +192,12 @@ sudo docker-compose restart label-studio-ner
 COCO Annotator
 =================
 
-http://144.76.110.170:8086/training/viz/convert_for_annotation
+http://ip:8086/training/viz/convert_for_annotation
 
 get cv's for annanotaion. manually download and copy the images
 
 
-http://176.9.137.77:5000/#/datasets
+http://ip:5000/#/datasets
 
 its not part of this docker compse, its using orgianl docker-compose file itself 
 https://github.com/jsbroks/coco-annotator/
@@ -270,7 +319,7 @@ m) need to jobs overview with qa n  model as well and get data
 p) should i ask questions like references/hobbies only if these text exist in the page content? as these are very rare.
 and why do i event want reference? it come in orphans
 
-# http://176.9.137.77:81/dashboard/candidate-details/candidate/ATOZZ/5fafefc410b05d00394b3609 tag this manually
+# http://ip:81/dashboard/candidate-details/candidate/ATOZZ/5fafefc410b05d00394b3609 tag this manually
 
 
 
