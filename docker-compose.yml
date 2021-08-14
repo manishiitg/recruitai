@@ -564,7 +564,7 @@ services:
             SENDGRID_API_KEY: ''
         network_mode: host
         depends_on: 
-            - rabbitmqgit@github.com:manishiitg/recruitai.git
+            - rabbitmq
             - redis
             - memcached
 

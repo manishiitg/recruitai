@@ -1,7 +1,5 @@
 Resume Parsing AI Based 
 ==========================
-<<<<<<< HEAD
-
 
 This is a project to parse and extract data from candidate resume.
 
@@ -36,78 +34,9 @@ TBD
 
 
 
+Random Notes
 
 
-
-
-
-
-
-
-
-
-
-
-===== Recruit AI Random Notes =====
-=======
->>>>>>> c5899353e118f5a98ae4dcbb05326e2db2b74069
-
-
-This is a project to parse and extract data from candidate resume.
-
-This has lot of different models to extract data including NER, QA, Summary, Bounding boxes, classification, similarly. 
-
-This is built on huggingface and spacy
-
-This uses microservices architecture so that the jobs can be distributed across multiple servers on cloud.
-
-
-<<<<<<< HEAD
-gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
-
-mkdir cvreconstruction
-
-sudo mkdir /var/log/recruitai
-
-
-python -m app.main
-
-http://ip:5001/#/datasets
-
-redis access
-==========
-http://ip:8081/
-
-To debug flask app
-==================
-
-open terimnal of microservice api and 
-flask run -p 5001 -h 0.0.0.0
-
-kibana
-=======
-
-http://ip:5601/app/kibana
-
-
-
-Docker
-===========
-
-sudo docker-compose build
-sudo docker-compose up -d
-
-docker exec -it recruit_ai_1 bash
-
-sudo docker-compose  up -d --scale=resumemq=2 --scale=qamq=1 --scale=imagemq=4 --scale=picturemq=2
-sudo docker-compose  up -d --scale=imagemq=4
-
-# running this multiple either via scale or prefetch queue is taking more time than running one at time
-
-
-sudo docker exec -it recruitai_resumemq_1 bash
-
-sudo docker image build -t recruitai .
 
 
 sudo docker exec -it recruitai_rabbitmq_1 rabbitmqctl purge_queue image
@@ -451,15 +380,3 @@ m) need to make this muti account with priority & setup priority tasks for lates
 datasync neds to be faster. right now, there was bulk update of all tag_ids in a job profile.
 this takes very very long  
 done)
-
-
-
-=====
-Statistics Setup
-=====
-=======
-Architecture and Detailed Usage
-===============================
->>>>>>> c5899353e118f5a98ae4dcbb05326e2db2b74069
-
-TBD
