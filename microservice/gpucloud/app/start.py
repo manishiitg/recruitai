@@ -1,3 +1,4 @@
+import logging
 from sendgrid.helpers.mail import *
 import requests
 from requests.auth import HTTPBasicAuth
@@ -598,19 +599,17 @@ def delete_instance(instance_name, zone, reason):
 
     
 
-# checkin_score_scheduler = BackgroundScheduler()
-# checkin_score_scheduler.add_job(
-#     queue_process, trigger='interval', seconds=1 * 60)
-# checkin_score_scheduler.start()
-
-
 from slack import WebClient
-slack_web_client = WebClient(token='xoxb-98246795219-K2wljPXhhowEJoiT1Gua72C7')
+slack_web_client = WebClient(token=os.environ.get('SLACK_TOKEN')
 
 def slack_message(message):
-    slack_web_client.chat_postMessage(channel="gpu", 
-                text=message, username='GPUCloud',
-                icon_emoji=':robot_face:')
+    try:
+        slack_web_client.chat_postMessage(channel="gpu", 
+                    text=message, username='GPUCloud',
+                    icon_emoji=':robot_face:')
+    except Exception as e:
+        logging.critical("Slack error", e) 
+        pass
     
 
 def sendEmail(subject, content):

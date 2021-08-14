@@ -617,7 +617,8 @@ services:
             RABBIT_DB: 'amqp://127.0.0.1:5672'
             RABBIT_API_URL: 'http://127.0.0.1:15672'
             RABBIT_LOGIN: 'guest:guest'
-            SENDGRID_API_KEY: ''
+            SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+            SLACK_TOKEN: ${SLACK_TOKEN}
         network_mode: host
         depends_on: 
             - rabbitmq
