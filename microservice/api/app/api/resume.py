@@ -22,7 +22,7 @@ import time
 
 bp = Blueprint('resume', __name__, url_prefix='/resume')
 
-@bp.route('/<string:filename>', methods=['GET','POST'])
+# @bp.route('/<string:filename>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>/<int:priority>', methods=['GET','POST'])
 @bp.route('/<string:filename>/<string:mongoid>/<string:skills>', methods=['GET','POST'])

@@ -365,7 +365,7 @@ def process(findtype = "full", cur_time = None, mongoid = "", field = None, doc 
     is_queue_process_running = True
 
 
-    # if account_name != "devrecruit":
+    # if account_name == "devrecruit":
     #     # this is temporary need to fix mongo issues for live server
     #     logger.critical("skipping account %s", account_name)
     #     return

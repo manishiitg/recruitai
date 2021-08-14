@@ -61,7 +61,7 @@ def queue_process():
         min_process_to_start_gpu = 1000
 
     if not use_gpu:
-        min_process_to_start_gpu = 100
+        min_process_to_start_gpu = 50
 
     try:
         queues = get_queues()

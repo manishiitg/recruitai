@@ -31,6 +31,5 @@ microservices/api/RecruitAI.json
 label-studio/ner/project/backup/*
 label-studio/ner/project/completions/*
 
-
 gcp-service-account.json
 gcp-compute-service-account.json

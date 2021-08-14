@@ -14,7 +14,7 @@ COPY ./microservice/skill/supervisor/conf.d/skill.conf /etc/supervisor/conf.d/sk
 
 RUN truncate -s 0 /workspace/logs/skill*.log
 
-RUN pip install gensim 
+RUN pip install gensim===3.8.3
 RUN pip install pika
 
 

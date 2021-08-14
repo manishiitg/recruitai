@@ -247,7 +247,8 @@ def startProcessing(filestoparse, inputDir, basePath, predictor, cfg, maxPage=Fa
             # logger.debug(content)
             # pdfminer.high_level.extract_text(pdf_file, password='', page_numbers=None, maxpages=0, caching=True, codec='utf-8', laparams=None)
 
-            content, timeAnalysis = get_content_from_resume(cv, cvpage, timeAnalysis, fileIdx, cvpages)
+            content, timeAnalysis = get_content_from_resume(
+                cv, cvpage, timeAnalysis, fileIdx, cvpages)
             start_time = time.time()
             # logger.info("contenttt %s", content)
 
@@ -310,12 +311,31 @@ def startProcessing(filestoparse, inputDir, basePath, predictor, cfg, maxPage=Fa
     return combinedCompressedContent, timeAnalysis, predictions, bboxocroutputs, page_contents
 
 
+def deleteOcrFiles(folder):
+    import os
+    import glob
+
+    print("fileeeeeeeeeeeeeeeeeeeeeeee %s", folder)
+    folder = folder + "/**/*.png"
+    for f in glob.glob(folder,recursive=True):
+        print("path name %s", f)
+        if("_" in f and "person" not in f):
+            print("deleting %s", f)
+            os.remove(f)
+
+
 def uploadToGcloud(basePath, basecv, account_name, account_config):
     RESUME_UPLOAD_BUCKET = get_cloud_bucket(account_name, account_config)
     #  -n
-    x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath, ''.join(
-        e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
-    logger.info(x)
+    deleteOcrFiles(os.path.join(basePath, ''.join(
+        e for e in basecv if e.isalnum())))
+        
+    try:
+        x = subprocess.check_call(['gsutil -m cp -r ' + os.path.join(basePath, ''.join(
+            e for e in basecv if e.isalnum())) + " gs://" + RESUME_UPLOAD_BUCKET + "/" + account_name], shell=True)
+        logger.info(x)
+    except Exception as e:
+        logger.critical("gcloud upload error %s", e)
 
 
 def cleanContent(content, cvpage, jsonOutput):

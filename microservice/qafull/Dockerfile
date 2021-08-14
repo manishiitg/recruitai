@@ -1,4 +1,4 @@
-FROM  pytorch/pytorch
+FROM  pytorch/pytorch:1.7.0-cuda11.0-cudnn8-runtime
 LABEL maintainer="Manish Prakash<manish@excellencetechnologies.in"
 
 WORKDIR /workspace
@@ -39,7 +39,7 @@ RUN dpkg-reconfigure --frontend noninteractive tzdata
 RUN apt-get clean
 
 RUN pip install pymemcache redis
-RUN pip install -q flair
+RUN pip install -q flair===0.7
 
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update
@@ -57,7 +57,7 @@ RUN gcloud config set project recruitai-266705
 RUN gsutil ls
 
 RUN mkdir recruit-tags-flair-roberta-word2vec
-RUN pip install spacy
+RUN pip install spacy===2.3.5
 RUN mkdir spacy
 RUN python -m spacy download en_core_web_sm
 

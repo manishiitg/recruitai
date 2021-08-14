@@ -326,6 +326,10 @@ class TaskQueue(object):
         if "reduce_priority" in account_config:
             priority = priority - int(account_config["reduce_priority"])
 
+        meta = {}
+        if "meta" in message:
+            meta = message["meta"]
+
         LOGGER.critical("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%priority %s", priority)
 
         # r = connect_redis(account_name, account_config)
@@ -349,7 +353,7 @@ class TaskQueue(object):
             notifyurl = message["notifyurl"]
 
         if len(message["text"]) > 0 and len(message["labels"]) > 0:
-            process(message["text"], message["labels"], message["mongoid"], notifyurl, priority, account_name, account_config)
+            process(message["text"], message["labels"], message["mongoid"], notifyurl, priority, account_name, account_config, meta)
         else:
             return self.acknowledge_message(delivery_tag)
 

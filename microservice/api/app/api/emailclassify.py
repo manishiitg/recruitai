@@ -75,6 +75,7 @@ def classifyzero(body = None, labels = None, mongoid = None):
 
             sendClassify({
                     "text" : request.json.get('body', ""),
+                    "meta": request.json.get('meta', ""),
                     "labels" : labels,
                     "mongoid" : request.json.get('mongoid', ""),
                     "notifyurl" : request.json.get('notifyurl', ""),

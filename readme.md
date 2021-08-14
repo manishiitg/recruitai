@@ -1,5 +1,6 @@
 Resume Parsing AI Based 
 ==========================
+<<<<<<< HEAD
 
 
 This is a project to parse and extract data from candidate resume.
@@ -48,21 +49,20 @@ TBD
 
 
 ===== Recruit AI Random Notes =====
+=======
+>>>>>>> c5899353e118f5a98ae4dcbb05326e2db2b74069
 
-Code for different models and predictions only (no training) to deploy on production env.
 
-Initial Data Copy
-===================
-https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
+This is a project to parse and extract data from candidate resume.
 
-gcloud auth activate-service-account --key-file=RecruitAI.json
+This has lot of different models to extract data including NER, QA, Summary, Bounding boxes, classification, similarly. 
 
-gcloud config set project recruitai-266705
+This is built on huggingface and spacy
 
-gsutil ls
+This uses microservices architecture so that the jobs can be distributed across multiple servers on cloud.
 
-mkdir pretrained
 
+<<<<<<< HEAD
 gsutil -m cp -r gs://recruitaiwork/* pretrained/ 
 
 mkdir cvreconstruction
@@ -457,4 +457,9 @@ done)
 =====
 Statistics Setup
 =====
+=======
+Architecture and Detailed Usage
+===============================
+>>>>>>> c5899353e118f5a98ae4dcbb05326e2db2b74069
 
+TBD
