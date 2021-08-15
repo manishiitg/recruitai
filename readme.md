@@ -22,7 +22,10 @@ TBD
 -
 -
 
+License
+========
 
+GPL - see license.gpl
 
 
 Random Notes

@@ -42,6 +42,11 @@ def queue_process():
     global last_process_running_time
     global run_combined_gpu
 
+    # start_compute_preementable("test","queue_type")
+    # process.exit(1)
+
+    return # not needed as of now 
+
     if is_process_running:
         if (time.time() - last_process_running_time) < 1 * 60 * 15:
             LOGGER.critical("already running process so returnning")
@@ -63,6 +68,8 @@ def queue_process():
 
     if not use_gpu:
         min_process_to_start_gpu = 50
+
+    
 
     try:
         queues = get_queues()
@@ -600,7 +607,7 @@ def delete_instance(instance_name, zone, reason):
     
 
 from slack import WebClient
-slack_web_client = WebClient(token=os.environ.get('SLACK_TOKEN')
+slack_web_client = WebClient(token=os.environ.get('SLACK_TOKEN'))
 
 def slack_message(message):
     try:
@@ -608,7 +615,7 @@ def slack_message(message):
                     text=message, username='GPUCloud',
                     icon_emoji=':robot_face:')
     except Exception as e:
-        logging.critical("Slack error", e) 
+        logging.critical("Slack error %s", e) 
         pass
     
 
