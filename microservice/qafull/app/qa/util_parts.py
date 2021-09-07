@@ -416,6 +416,8 @@ def get_new_section_map(final_section_ui_map, classifier):
                         # sentence = sent.text
                         is_previous = False
                         if len(sentence.split(" ")) > 1:
+                            if len(sentence) > 512:
+                                sentence = sentence[:512]
                             out = classifier(sentence)
                             label_id = int(
                                 out[0]["label"].replace("LABEL_", ""))
