@@ -77,7 +77,7 @@ textract==1.6.3
 tornado==2.4.1
 tzlocal==2.0.0
 urlgrabber==3.10.2
-urllib3==1.25.8
+urllib3==1.26.5
 virtualenv==15.1.0
 Werkzeug==1.0.0
 wrapt==1.11.2
