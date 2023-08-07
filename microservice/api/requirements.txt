@@ -16,7 +16,7 @@ EbookLib==0.17.1
 enum34==1.1.6
 extract-msg==0.23.1
 Flask==1.1.1
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-JWT-Extended==3.24.1
 Flask-PyMongo==2.3.0
 funcsigs==1.0.2
